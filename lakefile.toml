@@ -1,0 +1,19 @@
+name = "bosonize"
+defaultTargets = ["Bosonize"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+
+[[lean_lib]]
+name = "Bosonize"
+globs = ["Bosonize", "Bosonize.+"]
+moreLeanArgs = ["-DwarningAsError=true"]
+
+[[lean_lib]]
+name = "BosonizeStubs"
+globs = ["BosonizeStubs", "BosonizeStubs.+"]
