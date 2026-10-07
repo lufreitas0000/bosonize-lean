@@ -1,6 +1,27 @@
+# Build outputs and downloaded Lake dependencies
 .lake/
 build/
+*.olean
+*.olean.private
+*.olean.server
+*.ilean
+*.ir
+
+# Local Python tooling and agent scratch files
 .venv/
 __pycache__/
+*.pyc
 .agent_dump/
+
+# Local environment settings; keep example templates versionable
 .env
+.env.*
+!.env.example
+!.env.sample
+
+# Editor and operating-system temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

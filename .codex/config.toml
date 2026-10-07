@@ -1,0 +1,4 @@
+[mcp_servers.lean-lsp-mcp]
+command = "uvx"
+args = ["lean-lsp-mcp"]
+env = { LEAN_PROJECT_PATH = "/home/lucas/Projects/Lean/bosonize-lean", LEAN_MCP_DISABLED_TOOLS = "lean_hammer_premise" }

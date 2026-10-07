@@ -6,9 +6,8 @@
                 "lean-lsp-mcp"
             ],
             "env": {
-                "LEAN_PROJECT_PATH": "${workspaceFolder}",
-                "LEAN_REPL": "true",
-                "LEAN_MCP_DISABLED_TOOLS": "hammer_premise"
+                "LEAN_PROJECT_PATH": "/home/lucas/Projects/Lean/bosonize-lean",
+                "LEAN_MCP_DISABLED_TOOLS": "lean_hammer_premise"
             }
         }
     }
