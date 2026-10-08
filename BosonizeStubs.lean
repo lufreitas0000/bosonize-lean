@@ -1,5 +1,4 @@
 import Bosonize
-import BosonizeStubs.Ch01LatticeBand
 
 /-!
 # Bosonize Staging Library

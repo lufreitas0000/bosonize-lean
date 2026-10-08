@@ -34,3 +34,8 @@ Never satisfy a theorem by defining a physical operator as `0`, the identity, or
 
 ## 6. Cumulative Adherence
 Respect the Directed Acyclic Graph (DAG) of the project. You may import preceding chapters, but you are strictly forbidden from modifying upstream, locked Core files located in `Bosonize/Core/`.
+
+## 7. Phase C (Audit, Promote, and Freeze)
+Follow `.agents/workflows/freeze_chapter.md` after the user authorizes Phase C. Audit the complete proofs and standard axioms, then move the approved source into `Bosonize/Core/` without changing its definitions or namespace. Migrate its v2 manifest entry by path while preserving all statement/command hashes, and record its complete source SHA-256 in `docs/spec/core_locks.json`. `stub_lock.py` scans staging and Core; `core_lock.py` additionally freezes every byte of Core files, including proof bodies. Neither routine proof work nor `lock-update` may rewrite an existing Core file or its full-source hash. Move the mirrored companion notebook to `docs/companion/Bosonize/Core/` and update the library aggregators.
+
+CI and `make lock-check` must pass both freeze guards. `STUB_LOCK_BASELINE_REF` selects the approved committed baseline for both guards; an older reference before an authorized promotion naturally lacks the new paths/manifests, so document and commit the reviewed migration before using that new reference for later work. Keep legacy v1 manifests as historical evidence rather than regenerating them after source migration.

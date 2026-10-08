@@ -17,6 +17,8 @@ Operating within VS Code/WSL, the agent attacks the `sorry` stubs. The agent mus
 ### Phase C: Audit and Freeze
 The chapter is built using `lake build`. If the file is free of `sorry` tokens and non-standard axioms, it is migrated to `Bosonize/Core/` and frozen.
 
+The promotion procedure is recorded in `.agents/workflows/freeze_chapter.md`. The definition/statement baseline follows the chapter's new path without changing its hashes. A separate `docs/spec/core_locks.json` manifest records the complete Core source hash, including proof bodies. CI runs both `stub_lock.py` and `core_lock.py`; the latter permits no changes to existing Core sources. The mirrored notebook moves to `docs/companion/Bosonize/Core/`, and the Core aggregator exposes the verified chapter to subsequent work.
+
 ## 3. Infrastructure and Tooling
 
 ### The MCP and Lean LSP Infrastructure
@@ -42,11 +44,11 @@ The orchestrator relies on a structured `.agents` directory to define global rul
 │   └── lean_conventions.md         # Global constraints (e.g., no unbounded operators, no limits)
 ├── workflows/
 │   ├── start_chapter.md            # Slash command to trigger Phase A
-│   └── lock_stub.md                # Slash command to hash and lock signatures
+│   ├── lock_stub.md                # Slash command to hash and lock signatures
+│   └── freeze_chapter.md           # Phase C audit and Core promotion
 └── skills/
     └── formalizer/
         └── SKILL.md                # The primary agent persona and operational loop
 ```
-
 
 

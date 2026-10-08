@@ -1,5 +1,15 @@
 # Chapter 1 freeze audit — 2026-10-08
 
+## Current status: Phase C completed
+
+Chapter 1 is promoted to `Bosonize/Core/Ch01LatticeBand.lean`. Its full v2 manifest entry was moved from the staging path with all 20 header hashes and 24 command entries unchanged. The approved source namespace remains `Bosonize.Ch01`, and every lemma is proved. The v1 manifest is retained as historical evidence rather than regenerated after migration.
+
+`stub_lock.py` now scans both staging and Core. `core_lock.py` additionally checks SHA-256 hashes of complete Core files against `docs/spec/core_locks.json`, including proof bodies and comments. It rejects changed, missing, and unreviewed Core files and has no baseline-update command. CI and `make lock-check` run both guards. The combined suite contains 65 passing tests (59 interface-guard tests and 6 Core-freeze tests). Both library builds pass with no warnings, and all 20 lemma axioms were checked through `import Bosonize`: only standard Lean axioms occur.
+
+This authorized promotion changes the active manifest's chapter path and adds a reviewed complete-source manifest. Future Git-reference checks must use a reference containing that promotion, rather than the earlier staging-only baseline. The original v2 audit below records the state before proof work and promotion.
+
+## Initial v2 audit (historical)
+
 The active v2 baseline, `docs/spec/stub_locks.v2.json`, matches the current chapter: **20 lemma headers and 24 fully frozen command entries**. `python3 scripts/guards/stub_lock.py --check --strict` passes. The migration check, `--legacy-check`, also confirms that all 20 statements still match the prior v1 record. Neither baseline nor the staging Lean source was changed during the v2 audit.
 
 ## Guard behavior

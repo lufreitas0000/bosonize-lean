@@ -59,7 +59,7 @@ from pathlib import Path
 from typing import NamedTuple, Optional
 
 LOCK_VERSION = 2
-DEFAULT_DIRS = ["BosonizeStubs"]
+DEFAULT_DIRS = ["BosonizeStubs", "Bosonize/Core"]
 DEFAULT_LOCK = "docs/spec/stub_locks.v2.json"
 DEFAULT_LEGACY_LOCK = "docs/spec/stub_locks.json"
 
@@ -829,7 +829,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--accept-changes", action="store_true", help="--update may overwrite changed locked content")
     ap.add_argument("--baseline-ref", metavar="GITREF", help="read the lock from this git ref instead of the working tree")
     ap.add_argument("--root", default=".", help="repository root (default: cwd)")
-    ap.add_argument("--dir", action="append", dest="dirs", help="guarded directory (repeatable; default BosonizeStubs)")
+    ap.add_argument("--dir", action="append", dest="dirs", help="guarded directory (repeatable; default BosonizeStubs and Bosonize/Core)")
     ap.add_argument("--lock-file", default=DEFAULT_LOCK)
     ap.add_argument("--legacy-lock", default=DEFAULT_LEGACY_LOCK)
     a = ap.parse_args(argv)

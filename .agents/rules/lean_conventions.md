@@ -20,6 +20,7 @@
 ## 5. Core Completeness
 * Files migrated to `Bosonize/Core/` must compile with zero warnings and zero `sorry` or `admit` tokens.
 * The `#print axioms` output for any theorem must only reveal standard Lean axioms (`propext`, `Classical.choice`, `Quot.sound`).
+* Complete Core sources, including proof bodies, are frozen by `scripts/guards/core_lock.py` against `docs/spec/core_locks.json`. CI and `make lock-check` run this guard as well as the v2 definition/statement guard. Never alter an existing Core source or its approved hash to solve downstream proof problems.
 
 ## 6. Approved Interface Preservation
 * Run `python3 scripts/guards/stub_lock.py --check --strict` before and after Phase B proof batches. Never run `--update` to bypass a failed check; approved baseline changes require explicit human authorization.

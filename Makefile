@@ -26,6 +26,7 @@ lock-update:
 # Check the frozen content and reject new, unreviewed declarations/files.
 lock-check:
 	python3 scripts/guards/stub_lock.py --check --strict
+	python3 scripts/guards/core_lock.py
 
 # Fetch pre-compiled Mathlib binaries to avoid building Mathlib from scratch
 cache-get:
