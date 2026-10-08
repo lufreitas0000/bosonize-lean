@@ -1,8 +1,8 @@
 # Chapter 1 lab notebook: Lattice and band geometry
 
-Status: Phase A draft awaiting human review. The theorem bodies are placeholders, not verified mathematical results.
+Status: the current 20 lemma signatures match the recorded lock baseline (checked 2026-10-08). The lemma bodies remain placeholders; Phase B has not started. The v2 guard also freezes definitions and surrounding non-lemma context; strict checks pass against the approved baseline.
 
-Source: `notes/md/ch01_lattice_band_geometry.md`, definitions 1.1–1.3 and lemma 1.4, equations (1.1)–(1.10). The available chapter headings identify lattice geometry as chapter 1, umbral calculus as chapter 2, and Fourier transforms as chapter 3. No separate master table of contents was found.
+Source: `notes/md/ch01_lattice_band_geometry.md`, definitions 1.1–1.3 and lemma 1.4, equations (1.1)–(1.10). The master index `notes/md/TOC.md` identifies lattice geometry as chapter 1, umbral calculus as chapter 2, and Fourier transforms as chapter 3.
 
 ## Representation and rationale
 
@@ -21,7 +21,7 @@ No `Equiv` or `AddCommGroup` instance is installed in Phase A: constructing thes
 | Source | Lean declarations | Interpretation |
 | --- | --- | --- |
 | (1.1) | `Lattice` | Spatial quotient `ZMod L` |
-| (1.2) | `inBand`, `Band`, `bandFinset` | Exact centered integer band |
+| (1.2) | `inBandPredicate`, `Band`, `bandFinset` | Exact centered integer band |
 | (1.3) | `quotientMap`, `bandProjection` | Quotient projection and restriction |
 | (1.4) | `representative`, `projection_representative` | Concrete representative and section identity |
 | (1.5), (1.6) | `bandAdd`, `bandNeg` | Arithmetic transported through the quotient |
@@ -45,9 +45,19 @@ Lean MCP tools are not exposed in this session. Validation uses the installed pr
 
 `lake build Bosonize` passed, and `lake build BosonizeStubs` passed with only the 20 expected placeholder warnings. The existing Core aggregator remains in legacy format, so the staging aggregator retains that format as well. The new chapter uses Lean 4.35's module system with public, exposed declarations.
 
-All 20 theorem declarations deliberately end in exactly `:= by sorry`. Definitions and instances contain no placeholders. This is signature elaboration and definition validation, not completion of the chapter's proofs. The staging aggregator imports the chapter so `lake build BosonizeStubs` checks it routinely. No source note or Core module is modified.
+All 20 lemma declarations deliberately end in exactly `:= by sorry`. Definitions and instances contain no placeholders. This is signature elaboration and definition validation, not completion of the chapter's proofs. The staging aggregator imports the chapter so `lake build BosonizeStubs` checks it routinely. No source note or Core module is modified.
 
 The review should confirm the exact band bounds, the concrete representative convention, the wrapping equation, the explicit positivity and evenness hypotheses, and whether the supporting interfaces should be retained. Phase B proof search and signature locking await approval, as required by `.agents/workflows/start_chapter.md` step 4 and `.agents/skills/formalizer/SKILL.md` Phase A.
+
+## Freeze and suggestion review (2026-10-08)
+
+`python3 scripts/guards/stub_lock.py --check` passes for all 20 current lemma signatures, including the rename from `inBand` to `inBandPredicate` and the switch from `theorem` to `lemma`. The current staging build passes with the expected 20 placeholder warnings. The saved manifest is left unchanged. The initial v1 audit found definition and context gaps. The subsequent v2 audit verifies 20 lemma headers and 24 frozen command entries. Its 59-test suite and 15 actual-chapter temporary-copy checks pass; strict mode rejects definition, instance, namespace, import, claim, and addition changes. CI now runs guard tests and strict verification before the Lean builds. See `docs/spec/freeze_audit.md` for the evidence and limits. The baselines and Lean source were preserved; future proof work must pass strict verification and source/dependency review.
+
+The chapter-specific proof suggestion is `docs/proof_suggestion/Ch01LatticeBand_GeminiPro.md`. Its dependency plan is useful: basic integer bounds; the two quotient/representative inverse identities; projection compatibility and transported group laws; then cardinality, wrap, and Nyquist cases. This plan is a candidate for Phase B, not a set of accepted proofs.
+
+Compiling an unchanged temporary Lean copy of this suggestion with the current project toolchain exits with errors. Examples include the wrong arguments to `ZMod.val_natCast` (suggestion line 107), missing `NeZero L` (line 118) and finite-lattice instance (line 203), invalid dependent rewrites (line 137), incorrect reliance on `rfl` for projection of zero (lines 185 and 192), and a failed definitional equality between finset cardinality and subtype cardinality (line 208). No suggested proof was copied into the staging file. Any later helper or tactic must be verified for the actual locked interface, with explicit positivity instances where needed.
+
+The available stub suggestion, `docs/stub_suggestion/chapter_2_umbral_calculus_core.md`, concerns chapter 2 rather than this chapter. It is advisory material for a future chapter-2 drafting task. Static review finds unfinished definitions `umbralMap` and `polyForwardDiff`, which violate the complete-definition contract, and an unrestricted `L` in `sum_by_parts`, which does not supply the positive-size condition/instance needed for a finite `ZMod L` sum. Future drafting must also evaluate whether the suggested raw function operators sufficiently expose the source's linear-endomorphism interfaces. The chapter-2 suggestion was not compiler-validated or adopted during this chapter-1 audit.
 
 ## Exact draft declarations
 
@@ -65,7 +75,7 @@ import Lean.Elab.Tactic.Omega
 # Chapter 1: Lattice and band geometry
 
 Phase A interface, following `notes/md/ch01_lattice_band_geometry.md`.
-Definitions are complete; theorem bodies are intentionally staged for review.
+Definitions are complete; lemma bodies are intentionally staged for review.
 The positive boundary is included and the negative boundary is excluded.
 -/
 
@@ -76,28 +86,28 @@ namespace Bosonize.Ch01
 /-- The periodic spatial lattice. All geometric claims require `0 < L`. -/
 abbrev Lattice (L : ℕ) := ZMod L
 
-/-- The exact centered-band condition from equation (1.2). -/
-def inBand (L : ℕ) (k : ℤ) : Prop := -(L : ℤ) < 2 * k ∧ 2 * k ≤ (L : ℤ)
+/-- The predicate for centered-band. -/
+def inBandPredicate (L : ℕ) (k : ℤ) : Prop := -(L : ℤ) < 2 * k ∧ 2 * k ≤ (L : ℤ)
 
-instance (L : ℕ) (k : ℤ) : Decidable (inBand L k) :=
+instance (L : ℕ) (k : ℤ) : Decidable (inBandPredicate L k) :=
   inferInstanceAs (Decidable (_ ∧ _))
 
-/-- Band momenta retain their actual signed integer labels. -/
-abbrev Band (L : ℕ) := {k : ℤ // inBand L k}
+/-- Band subtype. Actual signed integer labels. -/
+abbrev Band (L : ℕ) := {k : ℤ // inBandPredicate L k}
 
 /-- A computable enumeration of the exact band, without a parity assumption. -/
 def bandFinset (L : ℕ) : Finset ℤ :=
-  (Finset.Icc (-(L : ℤ)) (L : ℤ)).filter (inBand L)
+  (Finset.Icc (-(L : ℤ)) (L : ℤ)).filter (inBandPredicate L)
 
 instance (L : ℕ) : Fintype (Band L) :=
   Fintype.ofFinset (bandFinset L) (by
     intro k
-    change k ∈ bandFinset L ↔ inBand L k
+    change k ∈ bandFinset L ↔ inBandPredicate L k
     simp only [bandFinset, Finset.mem_filter, Finset.mem_Icc]
-    unfold inBand
+    unfold inBandPredicate
     omega)
 
-/-- The canonical quotient projection, equation (1.3). -/
+/-- The canonical quotient projection. -/
 def quotientMap (L : ℕ) (k : ℤ) : Lattice L := (k : ZMod L)
 
 /-- The quotient projection restricted to the band. -/
@@ -108,9 +118,9 @@ def representative (L : ℕ) (hL : 0 < L) (x : Lattice L) : Band L := by
   letI : NeZero L := ⟨Nat.ne_of_gt hL⟩
   have hx := ZMod.val_lt x
   exact if h : 2 * (x.val : ℤ) ≤ (L : ℤ) then
-    ⟨(x.val : ℤ), by unfold inBand; omega⟩
+    ⟨(x.val : ℤ), by unfold inBandPredicate; omega⟩
   else
-    ⟨(x.val : ℤ) - (L : ℤ), by unfold inBand; omega⟩
+    ⟨(x.val : ℤ) - (L : ℤ), by unfold inBandPredicate; omega⟩
 
 /-- Transported band addition, equation (1.5). -/
 def bandAdd (L : ℕ) (hL : 0 < L) (k p : Band L) : Band L :=
@@ -122,75 +132,75 @@ def bandNeg (L : ℕ) (hL : 0 < L) (k : Band L) : Band L :=
 
 /-- A concrete zero momentum witnesses that every positive-size band is inhabited. -/
 def zeroMomentum (L : ℕ) (hL : 0 < L) : Band L :=
-  ⟨0, by unfold inBand; omega⟩
+  ⟨0, by unfold inBandPredicate; omega⟩
 
-theorem mem_band_finset (L : ℕ) (k : ℤ) :
-    k ∈ bandFinset L ↔ inBand L k := by sorry
+lemma mem_band_finset (L : ℕ) (k : ℤ) :
+    k ∈ bandFinset L ↔ inBandPredicate L k := by sorry
 
-theorem zero_mem_band (L : ℕ) (hL : 0 < L) : inBand L 0 := by sorry
+lemma zero_mem_band (L : ℕ) (hL : 0 < L) : inBandPredicate L 0 := by sorry
 
-theorem card_band_finset (L : ℕ) (hL : 0 < L) :
+lemma card_band_finset (L : ℕ) (hL : 0 < L) :
     (bandFinset L).card = L := by sorry
 
-theorem card_band (L : ℕ) (hL : 0 < L) :
+lemma card_band (L : ℕ) (hL : 0 < L) :
     Fintype.card (Band L) = L := by sorry
 
 /-- First inverse identity, including the section condition in equation (1.4). -/
-theorem projection_representative (L : ℕ) (hL : 0 < L) (x : Lattice L) :
+lemma projection_representative (L : ℕ) (hL : 0 < L) (x : Lattice L) :
     bandProjection L (representative L hL x) = x := by sorry
 
 /-- Second inverse identity establishes uniqueness of the centered representative. -/
-theorem representative_projection (L : ℕ) (hL : 0 < L) (k : Band L) :
+lemma representative_projection (L : ℕ) (hL : 0 < L) (k : Band L) :
     representative L hL (bandProjection L k) = k := by sorry
 
-theorem band_projection_bijective (L : ℕ) (hL : 0 < L) :
+lemma band_projection_bijective (L : ℕ) (hL : 0 < L) :
     Function.Bijective (bandProjection L) := by sorry
 
-theorem representative_unique (L : ℕ) (hL : 0 < L) (x : Lattice L) (k : Band L)
+lemma representative_unique (L : ℕ) (hL : 0 < L) (x : Lattice L) (k : Band L)
     (hk : bandProjection L k = x) : k = representative L hL x := by sorry
 
 /-- The wrapping integer lies in `{-1,0,1}` and is unique with this property. -/
-theorem band_add_wrap (L : ℕ) (hL : 0 < L) (k p : Band L) :
+lemma band_add_wrap (L : ℕ) (hL : 0 < L) (k p : Band L) :
     ∃! w : ℤ, (-1 ≤ w ∧ w ≤ 1) ∧
       (bandAdd L hL k p).val = k.val + p.val - w * (L : ℤ) := by sorry
 
-theorem band_add_projection (L : ℕ) (hL : 0 < L) (k p : Band L) :
+lemma band_add_projection (L : ℕ) (hL : 0 < L) (k p : Band L) :
     bandProjection L (bandAdd L hL k p) =
       bandProjection L k + bandProjection L p := by sorry
 
-theorem band_neg_projection (L : ℕ) (hL : 0 < L) (k : Band L) :
+lemma band_neg_projection (L : ℕ) (hL : 0 < L) (k : Band L) :
     bandProjection L (bandNeg L hL k) = -bandProjection L k := by sorry
 
-theorem band_add_assoc (L : ℕ) (hL : 0 < L) (k p q : Band L) :
+lemma band_add_assoc (L : ℕ) (hL : 0 < L) (k p q : Band L) :
     bandAdd L hL (bandAdd L hL k p) q = bandAdd L hL k (bandAdd L hL p q) := by sorry
 
-theorem band_add_comm (L : ℕ) (hL : 0 < L) (k p : Band L) :
+lemma band_add_comm (L : ℕ) (hL : 0 < L) (k p : Band L) :
     bandAdd L hL k p = bandAdd L hL p k := by sorry
 
-theorem band_zero_add (L : ℕ) (hL : 0 < L) (k : Band L) :
+lemma band_zero_add (L : ℕ) (hL : 0 < L) (k : Band L) :
     bandAdd L hL (zeroMomentum L hL) k = k := by sorry
 
-theorem band_neg_add_cancel (L : ℕ) (hL : 0 < L) (k : Band L) :
+lemma band_neg_add_cancel (L : ℕ) (hL : 0 < L) (k : Band L) :
     bandAdd L hL (bandNeg L hL k) k = zeroMomentum L hL := by sorry
 
 /-- The even-size interval includes the positive endpoint and omits the negative one. -/
-theorem even_band_bounds (L : ℕ) (hL : 0 < L) (hEven : Even L) (k : ℤ) :
-    inBand L k ↔ -((L / 2 : ℕ) : ℤ) + 1 ≤ k ∧ k ≤ ((L / 2 : ℕ) : ℤ) := by sorry
+lemma even_band_bounds (L : ℕ) (hL : 0 < L) (hEven : Even L) (k : ℤ) :
+    inBandPredicate L k ↔ -((L / 2 : ℕ) : ℤ) + 1 ≤ k ∧ k ≤ ((L / 2 : ℕ) : ℤ) := by sorry
 
 /-- Equation (1.9), stated for a band element with the Nyquist integer label. -/
-theorem nyquist_neg (L : ℕ) (hL : 0 < L) (hEven : Even L) (k : Band L)
+lemma nyquist_neg (L : ℕ) (hL : 0 < L) (hEven : Even L) (k : Band L)
     (hk : k.val = ((L / 2 : ℕ) : ℤ)) : bandNeg L hL k = k := by sorry
 
 /-- Equation (1.10): ordinary integer negation away from the even Nyquist mode. -/
-theorem band_neg_of_ne_nyquist (L : ℕ) (hL : 0 < L) (hEven : Even L)
+lemma band_neg_of_ne_nyquist (L : ℕ) (hL : 0 < L) (hEven : Even L)
     (k : Band L) (hk : k.val ≠ ((L / 2 : ℕ) : ℤ)) :
     (bandNeg L hL k).val = -k.val := by sorry
 
-theorem odd_band_neg (L : ℕ) (hL : 0 < L) (hOdd : Odd L) (k : Band L) :
+lemma odd_band_neg (L : ℕ) (hL : 0 < L) (hOdd : Odd L) (k : Band L) :
     (bandNeg L hL k).val = -k.val := by sorry
 
 /-- At `L = 1`, the entire band consists of zero. -/
-theorem singleton_band (k : Band 1) : k.val = 0 := by sorry
+lemma singleton_band (k : Band 1) : k.val = 0 := by sorry
 
 end Bosonize.Ch01
 

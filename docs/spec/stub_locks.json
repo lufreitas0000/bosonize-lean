@@ -1,0 +1,24 @@
+{
+  "BosonizeStubs/Ch01LatticeBand.lean": {
+    "band_add_assoc": "09b9eba9dc75224ea5315abf46e62e18fff832072fc7ffda89e2120cd43e0df3",
+    "band_add_comm": "8883f8e01ead58e533bc48a061ef743d64d3de5883edb9094e35eae516d8f772",
+    "band_add_projection": "f875dca605ba87022748bb15a3c9a56dbf28279d5134ad050743387b5761f831",
+    "band_add_wrap": "1190089492e8d90604cb96f0c4e29a4effd9aff6d881685cf4e13cbe472f9743",
+    "band_neg_add_cancel": "44e9a3c4f76e271df7235d7a64b18a0bed6cd0ca1c03d50f9dabf1da1160217e",
+    "band_neg_of_ne_nyquist": "f767970b1ce205582475402b9ff773f02e15898b2ea60f8e72f441e8843a3083",
+    "band_neg_projection": "6b46617bfd4596988bea98fe96032196ff218b1d9deb15c96c888483d0fe5851",
+    "band_projection_bijective": "ec57f772ff5189ec9e519590e83307220211a151510b92b357597839ee70e588",
+    "band_zero_add": "4d1d60b4ad26bd4e6bcf9dc007acb9755a22943d5c41d6969f5fa561d34015f8",
+    "card_band": "4095422e53f400a3f4871066cf4da7143a9698892082ca66f47a9beee0054f46",
+    "card_band_finset": "17e6fb8a62c49df1bf6fc227e0ddfc2c524978a6cc6bf18c2062742b8a0fb663",
+    "even_band_bounds": "0d77823d9e413d16676742d56a7f352fe7f6ec1806bbf120a9152a8b3f699786",
+    "mem_band_finset": "c0ec3ddeef2efa9127074ce84036bcd7ab694d0b34a740361b0185fce8b7ccd8",
+    "nyquist_neg": "103e6cfeee170be591ade181b00cf405040ae019a09211a65fa61cb0343809b7",
+    "odd_band_neg": "a1c89f3577bcea094228f5163d4b195cbbdd9c26828f6161416653708970764d",
+    "projection_representative": "a60a50f8cfc58369a5e1fa13bd7a5ee228f7d9b330f39b84020ebd71b72ac5ef",
+    "representative_projection": "81d2c8eb5b09309e350c40e68084689cac810b25640ee1af98130ded9035d455",
+    "representative_unique": "8729f53d733b8d6e65ad89b8e875a0e19caa67f17aed4d913fa11ef9aaf49c07",
+    "singleton_band": "1b8e0614b30aba3dbee28cc8b9c55ae5c1f22cf735fa32d741a434d3764fd6aa",
+    "zero_mem_band": "cfa2b648d92d80ee2b1b83a127700f067ec1d65cb6d1e640c999b313d3667556"
+  }
+}

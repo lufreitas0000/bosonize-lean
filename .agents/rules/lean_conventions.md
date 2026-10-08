@@ -15,8 +15,18 @@
 
 ## 4. The Single-Sorry Contract (Staging)
 * Files in `BosonizeStubs/` must contain completely elaborated `def` and `abbrev` blocks.
-* Theorem and lemma signatures in `BosonizeStubs/` must terminate with exactly one `:= by sorry`. Do not leave trailing or intermediate `sorry` tokens inside partial definitions.
+* In Phase A, theorem and lemma signatures in `BosonizeStubs/` must terminate with exactly one `:= by sorry`. During authorized Phase B work, replace only their proof bodies with complete proofs. Do not leave trailing or intermediate `sorry` tokens inside partial definitions.
 
 ## 5. Core Completeness
 * Files migrated to `Bosonize/Core/` must compile with zero warnings and zero `sorry` or `admit` tokens.
 * The `#print axioms` output for any theorem must only reveal standard Lean axioms (`propext`, `Classical.choice`, `Quot.sound`).
+
+## 6. Approved Interface Preservation
+* Run `python3 scripts/guards/stub_lock.py --check --strict` before and after Phase B proof batches. Never run `--update` to bypass a failed check; approved baseline changes require explicit human authorization.
+* Preserve approved definitions, abbreviations, instances, declaration names, namespaces, hypotheses, and conclusions. The v2 guard freezes these commands and lemma headers in the guarded files. It does not freeze imported dependencies or toolchain state: review source and dependency diffs separately. A matching hash does not certify mathematical correctness or complete proofs.
+* CI runs the guard tests and strict freeze verification before building. New declarations/files need review and baseline approval. Use an approved `--baseline-ref` (or CI variable `STUB_LOCK_BASELINE_REF`) to verify against a committed baseline rather than trusting a modified working-tree lock.
+
+## 7. Critical Use of Suggestions
+* Consult chapter-relevant `docs/stub_suggestion/` files when drafting interfaces and `docs/proof_suggestion/` files when planning and implementing proofs.
+* Suggestions are unverified advisory material. Compare them with `notes/md/`, check all hypotheses and non-vacuity conditions, and validate adopted code with the installed Lean compiler. Reject changes that weaken a claim, hide a domain restriction, or alter a frozen definition merely to accommodate a suggested proof.
+* Record suggestion paths and adopted, adapted, or rejected ideas with reasons in the companion notebook.

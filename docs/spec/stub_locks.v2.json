@@ -1,0 +1,275 @@
+{
+  "files": {
+    "BosonizeStubs/Ch01LatticeBand.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "7024d379b5036b0e8cccf3740d2ff4b764d0476a16bf6256c6b9cd301112a422",
+          "kind": "import",
+          "label": "import Mathlib.Data.ZMod.Basic",
+          "text": "import Mathlib.Data.ZMod.Basic"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "feb684cf0ed58e2d5b43c15a527eff130b499d382aea54332f8c21458141d321",
+          "kind": "import",
+          "label": "import Mathlib.Data.Int.Interval",
+          "text": "import Mathlib.Data.Int.Interval"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "cd4890d24ca99d009078367bb6a46acf9516b89f9c5660fea92935c3e2bac654",
+          "kind": "import",
+          "label": "import Mathlib.Data.Fintype.Card",
+          "text": "import Mathlib.Data.Fintype.Card"
+        },
+        {
+          "hash": "fe071472d485a73579ebce7baa870887e30357bdec094a62dce83f83dc64e27c",
+          "kind": "import",
+          "label": "import Lean.Elab.Tactic.Omega",
+          "text": "import Lean.Elab.Tactic.Omega"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "0e5332f27fda9af54ce4e7ed92bdeb6e1ec2ac2be71de7c8f625e1228d86c00d",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch01",
+          "text": "namespace Bosonize.Ch01"
+        },
+        {
+          "hash": "dc917d82ec8fc4954d703e47590f6b0ff234ce9fc1774afd4295e3726d5aad08",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch01.Lattice",
+          "text": "abbrev Lattice (L : ℕ) := ZMod L"
+        },
+        {
+          "hash": "afcc492a544423130a0e3d4aa98a30ab9a2fafe40b91fcbe51ed1f55110e482d",
+          "kind": "def",
+          "label": "def Bosonize.Ch01.inBandPredicate",
+          "text": "def inBandPredicate (L : ℕ) (k : ℤ) : Prop := -(L : ℤ) < 2 * k ∧ 2 * k ≤ (L : ℤ)"
+        },
+        {
+          "hash": "f2af4390a7f7a57aa2fa8b16f56c14a3adba2cc2d695b9b0ac233b9bc254447c",
+          "kind": "instance",
+          "label": "instance (L : ℕ) (k : ℤ) : Decidable (inBandPredi",
+          "text": "instance (L : ℕ) (k : ℤ) : Decidable (inBandPredicate L k) :=\n  inferInstanceAs (Decidable (_ ∧ _))"
+        },
+        {
+          "hash": "48ead73233986dc9db3b5e1a3520363f3ee7c7b932b71dbbee9e9c9a738e297c",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch01.Band",
+          "text": "abbrev Band (L : ℕ) := {k : ℤ // inBandPredicate L k}"
+        },
+        {
+          "hash": "3b8f61744edd6f6c589504ed769cef207b69e0948305b1098ead3eaf7b0245a3",
+          "kind": "def",
+          "label": "def Bosonize.Ch01.bandFinset",
+          "text": "def bandFinset (L : ℕ) : Finset ℤ :=\n  (Finset.Icc (-(L : ℤ)) (L : ℤ)).filter (inBandPredicate L)"
+        },
+        {
+          "hash": "9b2f18a918a8a42d536185c98bc4c74e7e745fb5b09e0bc841cce2ef5c1da1e7",
+          "kind": "instance",
+          "label": "instance (L : ℕ) : Fintype (Band L) :=",
+          "text": "instance (L : ℕ) : Fintype (Band L) :=\n  Fintype.ofFinset (bandFinset L) (by\n    intro k\n    change k ∈ bandFinset L ↔ inBandPredicate L k\n    simp only [bandFinset, Finset.mem_filter, Finset.mem_Icc]\n    unfold inBandPredicate\n    omega)"
+        },
+        {
+          "hash": "110288f3618bf7b28c71f2e6f50e7276bbf8196acc3866b5f338791098354aff",
+          "kind": "def",
+          "label": "def Bosonize.Ch01.quotientMap",
+          "text": "def quotientMap (L : ℕ) (k : ℤ) : Lattice L := (k : ZMod L)"
+        },
+        {
+          "hash": "7815f3681ed044a5d9c98b1b752b81c056846c5a154846e999e85ff0d6420779",
+          "kind": "def",
+          "label": "def Bosonize.Ch01.bandProjection",
+          "text": "def bandProjection (L : ℕ) (k : Band L) : Lattice L := quotientMap L k.val"
+        },
+        {
+          "hash": "15c80df7c4c98cfef90fec1215d8df933d447fc08f6030bbe2a83406c94bcbb2",
+          "kind": "def",
+          "label": "def Bosonize.Ch01.representative",
+          "text": "def representative (L : ℕ) (hL : 0 < L) (x : Lattice L) : Band L := by\n  letI : NeZero L := ⟨Nat.ne_of_gt hL⟩\n  have hx := ZMod.val_lt x\n  exact if h : 2 * (x.val : ℤ) ≤ (L : ℤ) then\n    ⟨(x.val : ℤ), by unfold inBandPredicate; omega⟩\n  else\n    ⟨(x.val : ℤ) - (L : ℤ), by unfold inBandPredicate; omega⟩"
+        },
+        {
+          "hash": "2f0be73abf3b70cd6ba688930eb73d431c7f4d1892e2d5d5a83fafbb544a05f0",
+          "kind": "def",
+          "label": "def Bosonize.Ch01.bandAdd",
+          "text": "def bandAdd (L : ℕ) (hL : 0 < L) (k p : Band L) : Band L :=\n  representative L hL (bandProjection L k + bandProjection L p)"
+        },
+        {
+          "hash": "128c0d49438e7b43e1bca3b0afb3e68c1b4c1020b1f78d6786def80e6e3efd57",
+          "kind": "def",
+          "label": "def Bosonize.Ch01.bandNeg",
+          "text": "def bandNeg (L : ℕ) (hL : 0 < L) (k : Band L) : Band L :=\n  representative L hL (-bandProjection L k)"
+        },
+        {
+          "hash": "d3e5a5093a9c2c055ce0d33bc81b5f77882e7aa038b3d2713b20eda24a251f6e",
+          "kind": "def",
+          "label": "def Bosonize.Ch01.zeroMomentum",
+          "text": "def zeroMomentum (L : ℕ) (hL : 0 < L) : Band L :=\n  ⟨0, by unfold inBandPredicate; omega⟩"
+        },
+        {
+          "hash": "220a1e085ccc3e4dcfcc48ef64f9ce8a919782859dda59aa7ef40dc75720a4b4",
+          "kind": "end",
+          "label": "end Bosonize.Ch01",
+          "text": "end Bosonize.Ch01"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch01.band_add_assoc": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "09b9eba9dc75224ea5315abf46e62e18fff832072fc7ffda89e2120cd43e0df3",
+          "kind": "lemma",
+          "text": "lemma band_add_assoc (L : ℕ) (hL : 0 < L) (k p q : Band L) : bandAdd L hL (bandAdd L hL k p) q = bandAdd L hL k (bandAdd L hL p q)"
+        },
+        "Bosonize.Ch01.band_add_comm": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "8883f8e01ead58e533bc48a061ef743d64d3de5883edb9094e35eae516d8f772",
+          "kind": "lemma",
+          "text": "lemma band_add_comm (L : ℕ) (hL : 0 < L) (k p : Band L) : bandAdd L hL k p = bandAdd L hL p k"
+        },
+        "Bosonize.Ch01.band_add_projection": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "f875dca605ba87022748bb15a3c9a56dbf28279d5134ad050743387b5761f831",
+          "kind": "lemma",
+          "text": "lemma band_add_projection (L : ℕ) (hL : 0 < L) (k p : Band L) : bandProjection L (bandAdd L hL k p) = bandProjection L k + bandProjection L p"
+        },
+        "Bosonize.Ch01.band_add_wrap": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "1190089492e8d90604cb96f0c4e29a4effd9aff6d881685cf4e13cbe472f9743",
+          "kind": "lemma",
+          "text": "lemma band_add_wrap (L : ℕ) (hL : 0 < L) (k p : Band L) : ∃! w : ℤ, (-1 ≤ w ∧ w ≤ 1) ∧ (bandAdd L hL k p).val = k.val + p.val - w * (L : ℤ)"
+        },
+        "Bosonize.Ch01.band_neg_add_cancel": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "44e9a3c4f76e271df7235d7a64b18a0bed6cd0ca1c03d50f9dabf1da1160217e",
+          "kind": "lemma",
+          "text": "lemma band_neg_add_cancel (L : ℕ) (hL : 0 < L) (k : Band L) : bandAdd L hL (bandNeg L hL k) k = zeroMomentum L hL"
+        },
+        "Bosonize.Ch01.band_neg_of_ne_nyquist": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "f767970b1ce205582475402b9ff773f02e15898b2ea60f8e72f441e8843a3083",
+          "kind": "lemma",
+          "text": "lemma band_neg_of_ne_nyquist (L : ℕ) (hL : 0 < L) (hEven : Even L) (k : Band L) (hk : k.val ≠ ((L / 2 : ℕ) : ℤ)) : (bandNeg L hL k).val = -k.val"
+        },
+        "Bosonize.Ch01.band_neg_projection": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "6b46617bfd4596988bea98fe96032196ff218b1d9deb15c96c888483d0fe5851",
+          "kind": "lemma",
+          "text": "lemma band_neg_projection (L : ℕ) (hL : 0 < L) (k : Band L) : bandProjection L (bandNeg L hL k) = -bandProjection L k"
+        },
+        "Bosonize.Ch01.band_projection_bijective": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "ec57f772ff5189ec9e519590e83307220211a151510b92b357597839ee70e588",
+          "kind": "lemma",
+          "text": "lemma band_projection_bijective (L : ℕ) (hL : 0 < L) : Function.Bijective (bandProjection L)"
+        },
+        "Bosonize.Ch01.band_zero_add": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "4d1d60b4ad26bd4e6bcf9dc007acb9755a22943d5c41d6969f5fa561d34015f8",
+          "kind": "lemma",
+          "text": "lemma band_zero_add (L : ℕ) (hL : 0 < L) (k : Band L) : bandAdd L hL (zeroMomentum L hL) k = k"
+        },
+        "Bosonize.Ch01.card_band": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "4095422e53f400a3f4871066cf4da7143a9698892082ca66f47a9beee0054f46",
+          "kind": "lemma",
+          "text": "lemma card_band (L : ℕ) (hL : 0 < L) : Fintype.card (Band L) = L"
+        },
+        "Bosonize.Ch01.card_band_finset": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "17e6fb8a62c49df1bf6fc227e0ddfc2c524978a6cc6bf18c2062742b8a0fb663",
+          "kind": "lemma",
+          "text": "lemma card_band_finset (L : ℕ) (hL : 0 < L) : (bandFinset L).card = L"
+        },
+        "Bosonize.Ch01.even_band_bounds": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "0d77823d9e413d16676742d56a7f352fe7f6ec1806bbf120a9152a8b3f699786",
+          "kind": "lemma",
+          "text": "lemma even_band_bounds (L : ℕ) (hL : 0 < L) (hEven : Even L) (k : ℤ) : inBandPredicate L k ↔ -((L / 2 : ℕ) : ℤ) + 1 ≤ k ∧ k ≤ ((L / 2 : ℕ) : ℤ)"
+        },
+        "Bosonize.Ch01.mem_band_finset": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "c0ec3ddeef2efa9127074ce84036bcd7ab694d0b34a740361b0185fce8b7ccd8",
+          "kind": "lemma",
+          "text": "lemma mem_band_finset (L : ℕ) (k : ℤ) : k ∈ bandFinset L ↔ inBandPredicate L k"
+        },
+        "Bosonize.Ch01.nyquist_neg": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "103e6cfeee170be591ade181b00cf405040ae019a09211a65fa61cb0343809b7",
+          "kind": "lemma",
+          "text": "lemma nyquist_neg (L : ℕ) (hL : 0 < L) (hEven : Even L) (k : Band L) (hk : k.val = ((L / 2 : ℕ) : ℤ)) : bandNeg L hL k = k"
+        },
+        "Bosonize.Ch01.odd_band_neg": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "a1c89f3577bcea094228f5163d4b195cbbdd9c26828f6161416653708970764d",
+          "kind": "lemma",
+          "text": "lemma odd_band_neg (L : ℕ) (hL : 0 < L) (hOdd : Odd L) (k : Band L) : (bandNeg L hL k).val = -k.val"
+        },
+        "Bosonize.Ch01.projection_representative": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "a60a50f8cfc58369a5e1fa13bd7a5ee228f7d9b330f39b84020ebd71b72ac5ef",
+          "kind": "lemma",
+          "text": "lemma projection_representative (L : ℕ) (hL : 0 < L) (x : Lattice L) : bandProjection L (representative L hL x) = x"
+        },
+        "Bosonize.Ch01.representative_projection": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "81d2c8eb5b09309e350c40e68084689cac810b25640ee1af98130ded9035d455",
+          "kind": "lemma",
+          "text": "lemma representative_projection (L : ℕ) (hL : 0 < L) (k : Band L) : representative L hL (bandProjection L k) = k"
+        },
+        "Bosonize.Ch01.representative_unique": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "8729f53d733b8d6e65ad89b8e875a0e19caa67f17aed4d913fa11ef9aaf49c07",
+          "kind": "lemma",
+          "text": "lemma representative_unique (L : ℕ) (hL : 0 < L) (x : Lattice L) (k : Band L) (hk : bandProjection L k = x) : k = representative L hL x"
+        },
+        "Bosonize.Ch01.singleton_band": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "1b8e0614b30aba3dbee28cc8b9c55ae5c1f22cf735fa32d741a434d3764fd6aa",
+          "kind": "lemma",
+          "text": "lemma singleton_band (k : Band 1) : k.val = 0"
+        },
+        "Bosonize.Ch01.zero_mem_band": {
+          "ctx": "624240a38184d98ff8b3515c66ba23acc9f6b1678cac7b9cae4ac72c6e82b28c",
+          "hash": "cfa2b648d92d80ee2b1b83a127700f067ec1d65cb6d1e640c999b313d3667556",
+          "kind": "lemma",
+          "text": "lemma zero_mem_band (L : ℕ) (hL : 0 < L) : inBandPredicate L 0"
+        }
+      }
+    }
+  },
+  "version": 2
+}
