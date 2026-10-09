@@ -48,6 +48,9 @@ Define `N_i = a_i^\dagger a_i`. Show `N_i |s\rangle = (if i ∈ s then 1 else 0)
 *Lean 4 Proof Strategy:*
 Use the generic identity `[AB, CD] = A{B,C}D - AC{B,D} + {A,C}BD - C{A,D}B` for operators. Write a simplification set `simp [car_simps]` leveraging the identities from Lemma 4. This automatically evaluates commutators of quadratic fermionic observables (like energy or currents) into other quadratics, verifying the Lie algebra structure.
 
+> [!WARNING]
+> **Proof-review correction (2026-10-09):** The displayed four-factor formula is withdrawn as a generic identity. Setting A=C=1 gives 3[B,D] on its right, instead of [B,D]. Prove and reuse the CAR bilinear identity `[c_p† c_k, c_q† c_l] = δ_kq c_p† c_l − δ_pl c_q† c_k` directly. An automatic swap rule also needs a fixed ordering and termination argument; symmetric CAR rewrites are not an unconditional `simp` procedure.
+
 Products of operators in `Module.End` are noncommutative. A `Finset.prod` or `Multiset.prod` is not available merely because the particular number operators commute. Use a fixed ordered product and prove order independence, or use an API that takes explicit pairwise commutativity. The same issue occurs for partition-state products.
 
 For species, choose an explicit lexicographic order/type synonym. Do not rely on a bare Cartesian product to silently select the required total order and phase convention.
@@ -74,11 +77,12 @@ Then `m D_m` is adjoint to multiplication by X_m.
 *Lean 4 Proof Strategy:*
 Define a bilinear form on `MvPolynomial σ ℂ` setting basis vectors orthogonal and scaling their norms by `w(r)`. For Haldane's chiral bosons (`J_m`), use the weight `m^{r_m} r_m!`. Show that `\langle X_m P, Q \rangle = \langle P, m D_m Q \rangle` by evaluating it on monomials `P = X^p, Q = X^q`. The derivative `D_m X_m^k = k X_m^{k-1}` balances the `m` and the factorial weights perfectly.
 
+> [!NOTE]
+> **Proof-review correction (2026-10-09):** Here “bilinear” must be read as a Hermitian, sesquilinear pairing over ℂ. Use positive mode weights, complex conjugation in the first slot, and linearity in the second. The ambient polynomial pairing identity is algebraic; apply the finite-dimensional Hilbert-adjoint API only after restricting to the appropriate finite slices.
+
 This matches the Haldane Gram matrix. In this convention D_m itself is not adjoint to X_m; the dagger notation must refer to the selected form and current normalization. One cannot declare both adjoint conventions on the same carrier without changing the form.
 
 All pairings are finite sums over support. Their restrictions to finite weight slices are ordinary finite inner products. This avoids normalized monomials X^r/√w(r) and their square-root bookkeeping. No Hilbert completion is required for these finite algebraic pairings.
-
-*(Historical Note: Earlier drafts of Chapter 8 wrote the Hamiltonian as $\sum J_m^\dagger a_m$ without the mode weight. The revised Chapter 8 correctly defines $\hat{H}_b = \sum_{m \in Q} m X_m D_m = \sum_{m \in Q} C_m A_m$ in equation (8.5), distinguishing it from the unweighted number operator $\hat{N}_b = \sum X_m D_m$).
 
 ## Normal ordering needs a symbol carrier
 
@@ -89,10 +93,13 @@ Mechanical reordering while ignoring contractions is not a well-defined linear o
 *Lean 4 Proof Strategy:*
 Define `NormalSymbol := MvPolynomial (Mode ⊕ Mode) ℂ`. Define a linear map `eval : NormalSymbol →ₗ[ℂ] Module.End ℂ FockSpace` that sends `X_{(inL i)}` to `a_i^\dagger` and `X_{(inR i)}` to `a_i`, multiplying all creators first, then all annihilators. Since `MvPolynomial` is a free commutative algebra, this map is well-defined. Emphasize that `eval (P * Q) ≠ eval P * eval Q`.
 
-**Theorem 2:** For Wick's theorem on raw words, start with a free associative word algebra and define a rewrite/expansion into normal-ordered symbols, including contractions. Prove termination by word length/inversion count and prove evaluation preservation. *(Historical Note: An early draft of Chapter 8 suggested an evaluation map `MvPolynomial Q ℂ →ₗ End …`, which had too few variables to encode both $r$ and $s$; the symbol carrier `NormalSymbol := MvPolynomial (Mode ⊕ Mode) ℂ` or free word rewriting provides the necessary distinct creator and annihilator variables).*
+**Theorem 2:** For Wick's theorem on raw words, start with a free associative word algebra and define a rewrite/expansion into normal-ordered symbols, including contractions. Prove termination by word length/inversion count and prove evaluation preservation.
 
 *Lean 4 Proof Strategy:*
 Define `FreeAlgebra (Mode ⊕ Mode) ℂ` for raw operator words. Define a rewriting system that applies `a a^\dagger \mapsto -a^\dagger a + {a, a^\dagger}` (using anticommutators/commutators). To formalize Wick's theorem, map free words to `NormalSymbol`. Prove termination by well-founded recursion on the inversion count of the word. Prove that applying the evaluation map (`eval`) after normal ordering equals the natural representation of the raw word. 
+
+> [!WARNING]
+> **Proof-review correction (2026-10-09):** The installed Lean argument order is `FreeAlgebra ℂ (Mode ⊕ Mode)`. Distinguish the fermionic swap above from the bosonic rule `A C = C A + m I`. Define normal-symbol evaluation on fixed ordered monomials and extend linearly; freeness as a commutative algebra does not provide an algebra homomorphism to noncommuting operator images.
 
 **Theorem 3:** Use integer combinatorial contraction coefficients and cast them into ℂ afterward. Prove the Hermite recurrence for `(D+X)^n 1` directly; a generating-function exponential is unnecessary for this finite polynomial theorem.
 

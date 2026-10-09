@@ -62,6 +62,9 @@ The second follows from the first and c²−s²=1. It supplies the nonzero free-
 - Auxiliary Lemma: Prove the bare commutation relations $[C_m, A_n] = m \delta_{mn}$.
 - Conclude the second identity using the auxiliary lemma and the given algebraic identity $c^2 - s^2 = 1$.
 
+> [!WARNING]
+> **Proof-review correction (2026-10-09):** Reverse the CCR order in the preceding auxiliary lemma: `[A_m,C_n] = δ_mn*m*I`; `[C_m,A_n]` has the negative sign. The vacuum assumptions must hold for the stated family of dressed annihilators in a constructed normalized positive state. A single unspecified condition `ω(P†P)=0` does not establish existence or all required contractions.
+
 **Theorem (Ordered Two-Point Function):**
 With vanishing same-branch anomalous contractions in the specified Gaussian state, the ordered two-point function is
 

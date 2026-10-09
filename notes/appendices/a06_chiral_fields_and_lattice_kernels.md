@@ -52,8 +52,6 @@ For the positive orientation field as originally defined, the exact forward diff
 2. Use the linearity of $\Delta$ to move it inside the `Finset.sum`.
 3. Use $\zeta^{m(x+1)} - \zeta^{mx} = (\zeta^m - 1)\zeta^{mx}$ to obtain the result algebraically.
 
-*(Historical Note: Earlier drafts of Chapter 15 omitted the prefactor $i$ and the relative minus sign, or approximated $(\zeta^m - 1)/m \approx i \frac{2\pi}{L}$. In the revised Chapter 15 (Lemma 15.5), the exact forward difference is established with the prefactor $i$ and relative minus sign, and the exact differentiated finite kernel is retained without approximating $(\zeta^m - 1)/m$ by a constant).*
-
 **Theorem (Global Obstruction and Fluctuations):**
 An identity $[\varphi(x),\Delta\theta(y)]=i C \delta_M(x−y)$ with $C \neq 0$ is impossible for periodic fields. A fluctuation-field commutator must have zero average, and requires an explicit subtraction of the zero-mode contribution.
 
@@ -94,6 +92,9 @@ A module-valued spatial shift/difference linear map that is evaluated on operato
 2. Define `opForwardDiff (f : ℤ → Module.End ℂ V) : ℤ → Module.End ℂ V` as `fun x => f (x + 1) - f x`.
 3. Prove linearity of `opForwardDiff` and any summation by parts formula without using commutativity of the `End` algebra.
 
+> [!NOTE]
+> **Proof-review clarification (2026-10-09):** For the actual periodic fields, use the domain `ZMod L`; an ℤ-domain wrapper is a periodic lift, not a replacement domain. The difference uses only the additive structure of the codomain, so it needs no commutative multiplication on `Module.End`. Prove additive/scalar compatibility once and keep the product order explicit in summation by parts.
+
 ## Correct square and normalization audit
 
 Define normal ordering on symbols as in A02. For one chiral field with the Hermitian expansion above, the two mixed terms in the square both contribute. Provided retained indices cannot alias modulo L,
@@ -111,7 +112,7 @@ Define normal ordering on symbols as in A02. For one chiral field with the Hermi
 3. Exchange the spatial sum over $x$ and the momentum sums over $m, m'$.
 4. Use the orthogonality of characters $\sum_x \zeta^{(m \pm m')x} = L \delta_{m, \mp m'}$ to collapse the double momentum sum into a single sum, producing the factor $2L$ from the cross terms.
 
-*(Historical note: early drafts of Chapter 16 omitted the cross-term factor two and lacked an explicit total Sugawara definition; both are now repaired).* With the identity for the sum of $\phi$ and $\theta$ squares supplying another factor of two, and with $\varepsilon(m)=L(\zeta^m-1)(\zeta^{-m}-1)/m^2$, the resulting field Hamiltonian is $4 \sum_{\nu \in \{+1,-1\}} \sum_{m=1}^M \varepsilon(m)\rho_{m,\nu}\rho_{-m,\nu}$ under the no-aliasing condition $2M < L$.
+With the identity for the sum of $\phi$ and $\theta$ squares supplying another factor of two, and with $\varepsilon(m)=L(\zeta^m-1)(\zeta^{-m}-1)/m^2$, the resulting field Hamiltonian is $4 \sum_{\nu \in \{+1,-1\}} \sum_{m=1}^M \varepsilon(m)\rho_{m,\nu}\rho_{-m,\nu}$ under the no-aliasing condition $2M < L$.
 
 **Definition (Total Two-Branch Sugawara Hamiltonian):**
 At mode cutoff $M$, the reference total Sugawara Hamiltonian is:
