@@ -42,6 +42,9 @@ $$
 
 where $\{A, B\} := AB + BA$ and $I$ is the identity endomorphism.
 
+*Lean 4 Proof Strategy:*
+Define this as a structure or typeclass `CAR (V : Type) [InnerProductSpace ℂ V] (ι : Type) [LinearOrder ι]`. The fields will be two maps `c, cdag : ι → Module.End ℂ V`. The axioms will be three equations for the anticommutators expressing $\{A, B\} = A * B + B * A$: `c i * c j + c j * c i = 0`, `cdag i * cdag j + cdag j * cdag i = 0`, and `c i * cdag j + cdag j * c i = if i = j then 1 else 0`. By keeping this abstract, we separate the CAR algebraic properties from the specific Fock space implementation.
+
 **Definition 4.2 (Fock Space and Basis).**
 We define the concrete Fock space as the Euclidean space over the power set of $\iota$:
 
@@ -50,6 +53,9 @@ $$
 $$
 
 For every subset $S \subseteq \iota$, the basis vector $\delta_S \in \mathrm{Fock}(\iota)$ is the indicator function. The collection $\{\delta_S\}_{S \subseteq \iota}$ forms an exact orthonormal basis.
+
+*Lean 4 Proof Strategy:*
+Define `def FockSpace (ι : Type) [Fintype ι] := EuclideanSpace ℂ (Finset ι)`. We use `Finset ι` instead of `Set ι` because $\iota$ is a finite index set. The basis vectors $\delta_S$ can be represented using the standard orthonormal basis of `EuclideanSpace`, which in Lean 4 mathlib is accessed via `PiLp.basisFun`. 
 
 ---
 
@@ -73,11 +79,17 @@ c_i \delta_S := \begin{cases} (-1)^{\sigma(i, S)} \delta_{S \setminus \{i\}} & \
 $$
 These basis actions are then linearly extended to $\mathrm{End}_{\mathbb{C}}(\mathrm{Fock}(\iota))$.
 
+*Lean 4 Proof Strategy:*
+Define `def sigma (i : ι) (S : Finset ι) : ℕ := (S.filter (· < i)).card`. Construct the operators by first defining their action on `Finset ι` into `FockSpace ι` and then extending linearly using `Basis.ext` or `Finsupp.linearCombination`. The sign factor can be written as `(-1 : ℂ) ^ (sigma i S)`. We will need an auxiliary definition for the basis extension, potentially lifting `c i` and `cdag i` to maps in `Module.End ℂ (FockSpace ι)`.
+
 **Definition 4.4 (Observables).**
 For all $i \in \iota$:
 1. **Local Mode Density Operator:** $n_i := c_i^\dagger c_i$.
 2. **Total Particle Number Operator:** $\hat{N}_{\mathrm{tot}} := \sum_{i \in \iota} n_i$.
 3. **Global Parity Operator:** $\Gamma := \overrightarrow{\prod}_{i \in \iota} (I - 2n_i)$. (An explicit ordered product is required because generic endomorphisms are noncommutative).
+
+*Lean 4 Proof Strategy:*
+Define `def n (i : ι) : Module.End ℂ (FockSpace ι) := cdag i * c i`. The total particle number is simply `def N_tot := ∑ i : ι, n i` using `Finset.sum`. For the global parity operator $\Gamma$, since endomorphisms generally do not commute, we need an ordered product. We can map `Finset.univ` to a sorted list `List.prod` using the `LinearOrder ι`: `def Gamma := (Finset.sort (· ≤ ·) Finset.univ).map (fun i => 1 - 2 * n i) |>.prod`. We will need an auxiliary lemma showing that $n_i$ and $n_j$ actually commute, meaning the ordering is technically arbitrary, but defining it with a fixed order is safer.
 
 ---
 
@@ -95,9 +107,17 @@ For any $i, j \in \iota$ and subset $S \subseteq \iota$:
    \sigma(i, S) = \sigma(i, S \setminus \{j\}) + \begin{cases} 1 & \text{if } j < i \\ 0 & \text{otherwise} \end{cases} \tag{4.9}
    $$
 
+*Lean 4 Proof Strategy:*
+Prove these lemmas using `Finset.filter_insert` and `Finset.card_insert_of_not_mem`. For the first part ($j \notin S$), substituting $S \cup \{j\}$ translates to `insert j S`. Filtering by `< i` distributes over `insert`. If `j < i`, it adds `1` to the cardinality, otherwise `0`. The second part is symmetrical; we can apply the first part with $S \setminus \{j\}$ in place of $S$, noting that `insert j (S \ {j}) = S` since $j \in S$. These will be very clean, `simp`-friendly integer math lemmas.
+
 **Lemma 4.6 (Adjointness and Parity).**
 The operations at distinct modes commute as set operations but flip the combined sign exactly according to the CAR. Evaluated on the basis pairs and lifted by finite sums, $c_i^\dagger$ and $c_i$ are exact Hilbert adjoints.
 Furthermore, the number operators commute pairwise, $\Gamma^2 = I$, and $\Gamma^\dagger = \Gamma$.
+
+*Lean 4 Proof Strategy:*
+1. **Adjointness**: Prove `⟪δ_S, c i δ_T⟫_ℂ = ⟪cdag i δ_S, δ_T⟫_ℂ` for all basis vectors $S, T$. Using the linearity of the inner product and `PiLp` EuclideanSpace properties, extend this via `Basis.ext` to prove `c i` and `cdag i` are adjoints.
+2. **Commutativity of $n$**: Show `n i * n j = n j * n i` by applying the CAR anticommutation identities (which will first be proved for `c` and `cdag` explicitly via the sign lemmas).
+3. **Parity**: For $\Gamma^2 = I$, we first need an auxiliary lemma: `lemma n_sq_eq_n (i : ι) : n i * n i = n i`. Then `(1 - 2 * n i)^2 = 1 - 4 * n i + 4 * n i^2 = 1`. Since the $n_i$ commute, the product squared is the product of squares, giving $I$. The self-adjointness $\Gamma^\dagger = \Gamma$ follows from $n_i^\dagger = n_i$.
 
 **Lemma 4.7 (Pure-CAR Commutator Identities).**
 Derived directly and algebraically from the CAR representation without assuming topology:
@@ -111,3 +131,6 @@ $$
 $$
 
 These exact bilinear commutators form the necessary foundation for the density algebra.
+
+*Lean 4 Proof Strategy:*
+These can be proven solely within the `CAR` typeclass algebra without relying on the concrete `FockSpace` implementation. Use the basic commutator relation $[A, BC] = \{A, B\}C - B\{A, C\}$ or generic algebraic expansion. Applying `simp` configured with the CAR anticommutation axioms `c i * c j = - (c j * c i)` and `c i * cdag j = if i = j then 1 else 0 - cdag j * c i`, the expressions will reduce. It is advisable to create an automated `simp` set (e.g., `car_simp`) to mechanically evaluate polynomials in $c$ and $c^\dagger$ to normal order.

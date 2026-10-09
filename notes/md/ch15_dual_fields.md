@@ -13,10 +13,16 @@ $$
 \varphi_\eta(x) := i \sum_{m=1}^{h-1} \frac{1}{m} \left( \zeta^{\eta m x} \rho_{-m, \eta} - \zeta^{-\eta m x} \rho_{m, \eta} \right) \tag{15.1}
 $$
 
+*Lean 4 Proof Strategy:*
+Define `chiralFluctuationField (η : Int) (x : Int) : OperatorAlgebra` (where $\eta$ is strictly constrained to $\pm 1$) as a `Finset` sum over `m ∈ Ico 1 h`. The character $\zeta$ should be treated as a primitive $L$-th root of unity (e.g., via `Complex.exp` or a purely algebraic root). The modes $\rho_{m, \eta}$ should be represented as a map `rho : Int → Int → OperatorAlgebra`. Since these represent independent physics branches, state an explicit physical axiom that opposite orientation branches commute: `[rho m 1, rho n (-1)] = 0`.
+
 By reversing the spatial character, opposite orientations yield opposite chiral kernels while retaining the same standard current modes.
 
 **Lemma 15.2 (Hermiticity).**
 Because $\rho_{-m} = \rho_m^\dagger$, conjugating the roots exactly flips the sum, proving strict self-adjointness: $\varphi_\eta^\dagger(x) = \varphi_\eta(x)$.
+
+*Lean 4 Proof Strategy:*
+Assuming `OperatorAlgebra` implements a `StarRing` typeclass, state the lemma as `star (chiralFluctuationField η x) = chiralFluctuationField η x`. The proof will require applying `star_sum`, `star_mul`, and `star_sub` inside the `Finset` sum. Since `star (ζ) = ζ⁻¹` and `star (rho m η) = rho (-m) η`, conjugating the terms effectively swaps the two components of the subtraction. An auxiliary lemma to formalize the negation swap inside the summand will close the proof.
 
 #### 15.2 The Macroscopic Dual Fields
 
@@ -31,6 +37,9 @@ $$
 \theta(x) := \varphi_{+1}(x) - \varphi_{-1}(x) \tag{15.3}
 $$
 
+*Lean 4 Proof Strategy:*
+Define `phiField (x : Int) := chiralFluctuationField 1 x + chiralFluctuationField (-1) x` and `thetaField (x : Int) := chiralFluctuationField 1 x - chiralFluctuationField (-1) x`.
+
 **Lemma 15.4 (Exact Field Commutators).**
 Using the explicit orientation signs and evaluating on the Kac-Moody budget, the identical-branch commutators cancel correctly, producing the desired macroscopic field commutators with an explicit lattice kernel:
 
@@ -41,6 +50,9 @@ $$
 $$
 [\phi(x), \theta(y)] = 2i \sum_{m=1}^{h-1} \frac{2}{m} \sin\left(\frac{2\pi m (x-y)}{L}\right) I =: 2i C(x,y) I \tag{15.5}
 $$
+
+*Lean 4 Proof Strategy:*
+Using the bilinearity of the Lie bracket (`⁅_, _⁆`), expand the definitions of $\phi$ and $\theta$ into four cross-commutators. By the axiom that opposite chiral branches commute, cross-terms like `⁅chiralFluctuationField 1 x, chiralFluctuationField (-1) y⁆` vanish. The remaining terms are identical-branch commutators. For $\phi$ and $\theta$ self-commutators, these identical-branch commutators are combined with a minus sign and cancel out. For the mixed $\phi, \theta$ commutator, they sum together, yielding the exact finite lattice kernel evaluated via the Kac-Moody budget `[rho_m, rho_{-m}] = m * I`. An auxiliary lemma converting complex exponentials $\zeta - \zeta^{-1}$ to $2i \sin$ will cleanly express the final kernel.
 
 #### 15.3 Exact Gradients and the Zero-Mode Obstruction
 
@@ -54,6 +66,9 @@ $$
 (\Delta \varphi_\eta)(x) = i \sum_{m=1}^{h-1} \frac{1}{m} \left( (\zeta^{\eta m} - 1)\zeta^{\eta m x} \rho_{-m, \eta} - (\zeta^{-\eta m} - 1)\zeta^{-\eta m x} \rho_{m, \eta} \right) \tag{15.6}
 $$
 
+*Lean 4 Proof Strategy:*
+Define a forward difference operator for functions mapping into the operator algebra: `forwardDiff (f : Int → OperatorAlgebra) (x : Int) := f (x + 1) - f x`. Apply it to `chiralFluctuationField` and pull the difference operation inside the `Finset.sum` using the linearity of sums. The proof is a purely algebraic manipulation factoring out `ζ^{±η m x}` from `ζ^{±η m (x+1)} - ζ^{±η m x}`.
+
 *(Note: The factor $(\zeta^m - 1)/m$ is strictly not a constant, and low-momentum limits must not be taken to falsely assert an exact lattice identity).*
 
 **Theorem 15.6 (The Zero-Mode Obstruction).**
@@ -63,6 +78,9 @@ Therefore, a naive exact lattice equation $[\phi(x), (\Delta\theta)(y)] \propto 
 $$
 [\phi(x), (\Delta \theta)(y)] = \Delta_y [ \phi(x), \theta(y) ] = 2i \Delta_y C(x,y) I \tag{15.7}
 $$
+
+*Lean 4 Proof Strategy:*
+State and prove a foundational discrete calculus lemma: the sum of a forward difference over a full period is exactly zero, `∑ x ∈ Ico 0 L, forwardDiff f x = 0`, proven via a telescoping sum argument. Because both $\phi$ and $\theta$ are built solely from $m \neq 0$ fluctuation modes, their resulting commutator's forward difference must mathematically sum to zero over space. In contrast, the Dirichlet kernel sum evaluates to 1 because of the zero-mode $m=0$ contribution. Conclude the theorem by establishing that `sum ⁅phiField x, forwardDiff thetaField y⁆ ≠ c * sum δ_M` for any non-zero constant `c`, which formally proves the obstruction.
 
 #### 15.4 Technical Notes for the Lean 4 Formalization (Chapter 15)
 

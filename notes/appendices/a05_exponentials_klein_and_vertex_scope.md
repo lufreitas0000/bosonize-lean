@@ -11,7 +11,19 @@ Two legitimate choices are:
 - Formal power series in an auxiliary parameter t, with identities interpreted coefficient by coefficient. These are formal algebraic identities and require no analytic limit or convergence evaluation. They may nevertheless enlarge the permitted carrier and should be explicitly approved.
 - Finite expressions modulo t^(d+1), proving identities only through coefficient degree d. Every expression is finite, and the error/remainder is explicit.
 
-For a truly nilpotent endomorphism A with A^(d+1)=0 on its actual carrier, define `expNil(A)=Σ_(j=0)^d A^j/j!`. Prove independence of a larger cutoff, its inverse expNil(−A), and the needed finite coefficient identities. Do not name an arbitrary Taylor polynomial the exact exponential of an unprojected operator.
+**Definition 1 (Nilpotent Exponential):**
+For a truly nilpotent endomorphism A with A^(d+1)=0 on its actual carrier, define `expNil(A)=Σ_(j=0)^d A^j/j!`.
+
+*Lean 4 Proof Strategy:*
+Define `expNil` using `Finset.sum` over `Finset.range (d+1)` of `(A^j) / j!`. Use `LinearMap` or `Module.End` for the endomorphism. The base ring should be a `Field` of characteristic zero (e.g., `ℚ`, `ℝ`, or `ℂ`) or an `Algebra` over `ℚ` to allow division by factorials. The definition requires proof that `A^(d+1) = 0` only if we want to use the nilpotency natively in the type, but usually it's just a definition of a finite sum that takes `d` as a parameter.
+
+**Lemma 1 (Properties of Nilpotent Exponentials):**
+Prove independence of a larger cutoff, its inverse expNil(−A), and the needed finite coefficient identities. Do not name an arbitrary Taylor polynomial the exact exponential of an unprojected operator.
+
+*Lean 4 Proof Strategy:*
+1. **Cutoff independence:** State `∀ d' ≥ d, expNil d' A = expNil d A` given `A^(d+1) = 0`. Prove this by splitting `Finset.range (d'+1)` into `range (d+1)` and the remainder, and show each term in the remainder is zero since `A^j = 0` for `j > d`.
+2. **Inverse:** State `expNil d A * expNil d (-A) = 1` as endomorphisms. Prove via Cauchy product of finite sums. Use the binomial theorem on `(A - A)^k` to show all cross terms for `k > 0` cancel. Nilpotency guarantees the exact truncation without remainders.
+3. **Auxiliary Lemmas:** `Commute A (-A)`, `Nat.factorial` properties, and a lemma relating the Cauchy product of finite sums of nilpotent commuting operators to the sum of `(X+Y)^n / n!`.
 
 Compressed polynomial creators are nilpotent, but their commutator with derivatives has a boundary term and is not central. Therefore their finite exponentials do not inherit the scalar BCH relation from the ambient polynomial representation. For Wick/Hermite identities, direct word induction avoids this problem.
 
@@ -19,9 +31,23 @@ The chapter 8 text's claim that a Heisenberg Lie algebra has no nontrivial finit
 
 ## Klein maps between admissible sectors
 
-The Haldane basis is constructed only in the proved low-energy regime, not as a basis of the entire finite Fock space. Define a Klein map between admissible source and target sector budgets of equal excitation cutoff, with the same partition-label set. To use completeness in both sectors require the regime for N and N−1 (or N+1). `Nmax<h` alone does not guarantee these equal partition dimensions for arbitrarily high K.
+The Haldane basis is constructed only in the proved low-energy regime, not as a basis of the entire finite Fock space. 
 
+**Definition 2 (Klein Map):**
+Define a Klein map between admissible source and target sector budgets of equal excitation cutoff, with the same partition-label set.
+
+*Lean 4 Proof Strategy:*
+Formalize the "source sector" and "target sector" as specific `Submodule`s of the full Fock space, parameterized by the excitation cutoff. The "partition-label set" serves as an indexing type for the basis of these submodules (`Basis ι R M`). Define the Klein map as a `LinearEquiv` between these two submodules by defining it pointwise on the basis vectors indexed by the partition labels.
+
+To use completeness in both sectors require the regime for N and N−1 (or N+1). `Nmax<h` alone does not guarantee these equal partition dimensions for arbitrarily high K.
+
+**Lemma 2 (Isometry of the Klein Map):**
 Keep the normalized current Gram form from A02. Equal Gram factors in both sectors prove isometry of the map. Define its inverse on the target budget; if a global ambient extension is desired, specify how the complementary subspace is handled and do not infer global commutation from the budget construction.
+
+*Lean 4 Proof Strategy:*
+1. **Isometry:** Equip the sectors with a `BilinForm` or `InnerProductSpace` structure. Prove that for any basis elements `e_i, e_j`, `⟪KleinMap e_i, KleinMap e_j⟫_target = ⟪e_i, e_j⟫_source`. Since the Gram factors are identical by hypothesis, the `LinearEquiv` extends to a linear isometry.
+2. **Inverse:** The inverse is intrinsically provided by `LinearEquiv.symm`. 
+3. **Auxiliary Lemma:** If extending globally via `LinearMap.coprod`, prove that the direct sum decomposition into `Budget ⊕ Complement` is orthogonal, and explicitly define the map as zero or identity on the complement to prevent false global commutation relations.
 
 Integer charge signs use integer powers, or an explicit parity character ℤ→{±1}, avoiding natural subtraction. The CAR lexicographic sign uses actual preceding occupation `Σ_(η<ν)(h+N_η)`. The notes use relative charge only. The omitted constant `h * #{η<ν}` can be absorbed into chosen species phases, but that convention must be proved compatible with the fixed occupation-basis ground states. There can also be a same-species ground-ket phase from annihilating the top occupied mode.
 
@@ -29,6 +55,7 @@ Klein shifts have F² generally nonzero and do not generate a finite-dimensional
 
 ## Vertex formula: a concrete obstruction
 
+**Theorem 1 (Obstruction at K=0):**
 Chapter 14's exact unprojected equivalence fails already at K=0. Take h=2, L=4, N=0 and x=0. The sea contains modes {−1,0}. The physical annihilator
 
 \[
@@ -36,6 +63,15 @@ Chapter 14's exact unprojected equivalence fails already at K=0. Take h=2, L=4, 
 \]
 
 has two nonzero orthogonal hole configurations, with relative-sector excitation energies 1 and 0. The proposed K=0 raising exponential is the identity, so FZ produces only the target sector ground ket. It cannot equal this physical c_xΩ. The R2 condition is satisfied. A saved exact CAR computation verifies the missing deep-hole component.
+
+*Lean 4 Proof Strategy:*
+Formalize this counterexample by `decide` or exact computation. 
+1. Define the specific finite-dimensional `Module` for `h=2, L=4, N=0`.
+2. Define the vacuum state `Ω`, and operators `c_{-1}, c_0, c_x`.
+3. Evaluate `c_x Ω` and express it in the orthogonal hole basis.
+4. Evaluate the proposed operator `FZ` at `K=0`.
+5. Prove the inequality `sqrt(L) • c_x Ω ≠ FZ Ω` by showing their projections onto the excitation energy 1 subspace differ (one is non-zero, the other is zero). 
+This serves as a formal proof of negation (`¬ UniversalEquivalence`).
 
 Even the nilpotency premise fails: W⁻Ω≠0 at K=0. Raising out of an input budget is not annihilation unless a projection is actually inserted. Finite full-Fock raising phases are nilpotent because the full energy spectrum has a finite top, but their nilpotency order is not K+1 for an input-only budget.
 
@@ -47,7 +83,15 @@ Furthermore `(W⁺)†=−W⁻`, as correctly observed in chapter 15. Consequent
 
 Before attempting a universal field identity, choose one precise target:
 
-1. An equality of matrix elements between specified source and target budgets, equivalently `P_out c_x inclusion = vertexMap`, with a vertex cutoff depending on the output energy and with boundary phases fixed.
+1. **Theorem 2 (Restricted Vertex Equality):** An equality of matrix elements between specified source and target budgets, equivalently `P_out c_x inclusion = vertexMap`, with a vertex cutoff depending on the output energy and with boundary phases fixed.
+
+*Lean 4 Proof Strategy:*
+State the theorem as an operator equality restricted to budgets: `P_out ∘ c_x ∘ inclusion = vertexMap` (using `LinearMap.comp`). 
+1. **Proof Method:** Proceed by induction on the cyclic basis of the source budget. 
+2. Verify the base case (the ground state) using explicit evaluations of both sides.
+3. For the inductive step, use the intertwining of typed maps and prefix margins with the creation operators that generate the excited states. Show that pushing `c_x` through the creators yields the same result as pushing `vertexMap` through.
+4. **Auxiliary Lemmas:** The exact composition rules and adjoint rules from A03, and the explicit formula for `P_out` commuting/intertwining with `c_x`.
+
 2. An ambient equality using a much larger target space and the full finite nilpotency order, retaining all boundary corrections and proving ground-state matching explicitly.
 3. A formal infinite-wedge/series identity in a different algebraic carrier, separately from finite-Fock realization.
 

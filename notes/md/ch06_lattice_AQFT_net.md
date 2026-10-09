@@ -21,6 +21,10 @@ $$
 
 Over the empty set, the algebra collapses to the scalar field multiples of the identity: $\mathfrak{A}(\emptyset) = \mathbb{C} \cdot I$.
 
+*Lean 4 Proof Strategy:*
+Use Mathlib's `Subalgebra` and `StarAlgebra` concepts. Define `localAlgebra (I : Set Λ) : Subalgebra ℂ (End(Fock(Λ*)))` using `Subalgebra.adjoin ℂ ({c_x | x ∈ I} ∪ {c_x^* | x ∈ I})` to guarantee it is closed under the algebraic star operation. 
+*Auxiliary Lemmas:* Prove `localAlgebra ∅ = ⊥` (which corresponds to scalar multiples of the identity in `Subalgebra`), requiring evaluating the adjoin of an empty set.
+
 **Definition 6.2 (Parity Automorphism and Grading).**
 Using the global parity operator $\Gamma$ defined in Chapter 4, we define the parity automorphism $\alpha \in \mathrm{Aut}(\mathfrak{A}(\Lambda))$ as:
 
@@ -35,6 +39,10 @@ $$
 \mathfrak{A}_\pm(I) := \{ A \in \mathfrak{A}(I) \mid \alpha(A) = \pm A \} \tag{6.3}
 $$
 
+*Lean 4 Proof Strategy:*
+Define the parity operator $\Gamma$ and establish $\Gamma^2 = 1$ and $\Gamma^* = \Gamma$. Then define the parity automorphism `α : End(Fock(Λ*)) ≃ₐ[ℂ] End(Fock(Λ*))` by conjugation `α(A) = Γ * A * Γ`. Prove that `α` restricts to an automorphism on `localAlgebra I`. Model the grading by defining projections $P_\pm(A) = (A \pm \alpha(A))/2$ mapping into linear `Submodule`s (or using Mathlib's `GradedAlgebra` structures over $\mathbb{Z}_2$ for the global space).
+*Auxiliary Lemmas:* Prove that generators $c_x, c_x^*$ are odd ($\alpha(c_x) = -c_x$). Then prove that products of odd operators evaluate to even operators, thus establishing the standard algebra grading properties.
+
 ---
 
 #### 6.2 Lemmas and Theorems
@@ -43,6 +51,11 @@ $$
 The local observable mapping respects spatial inclusions and unions. For all spatial subsets $I, J \subseteq \Lambda$:
 1. **Isotony:** $I \subseteq J \implies \mathfrak{A}(I) \subseteq \mathfrak{A}(J)$.
 2. **Additivity:** $\mathfrak{A}(I \cup J) = \mathfrak{A}(I) \vee \mathfrak{A}(J)$ (where $\vee$ represents the generated algebraic span).
+
+*Lean 4 Proof Strategy:*
+Isotony corresponds directly to `Subalgebra.adjoin_mono`. Define `lemma localAlgebra_mono {I J : Set Λ} (h : I ⊆ J) : localAlgebra I ≤ localAlgebra J`. 
+Additivity corresponds to the supremum of subalgebras. Define `lemma localAlgebra_union (I J : Set Λ) : localAlgebra (I ∪ J) = localAlgebra I ⊔ localAlgebra J`. 
+*Auxiliary Lemmas:* Both properties can mostly be discharged using Mathlib's Galois connection and closure properties associated with algebraic adjoining, simply pushing the set operations through to the generators.
 
 **Lemma 6.4 (Twisted Locality).**
 For any two disjoint spatial regions $I \cap J = \emptyset$, and for any homogeneous elements $A \in \mathfrak{A}_{\sigma_A}(I)$ and $B \in \mathfrak{A}_{\sigma_B}(J)$ with exact parities $\sigma_A, \sigma_B \in \{0, 1\}$:
@@ -55,6 +68,10 @@ $$
 
 To prove this algebraically without topological limits, ordinary adjoin induction is insufficient because it cannot keep arbitrary partial sums homogeneous. Instead, we use a rigorous graded-word lemma over homogeneous polynomials of operators.
 
+*Lean 4 Proof Strategy:*
+Define homogeneous elements via `IsHomogeneous (A) (σ_A)`. Prove twisted locality by induction on the lengths of products of generators. Base case: disjoint CAR relation `c_x * c_y + c_y * c_x = 0` for `x ≠ y`. Inductive step relies on a Graded Commutator helper lemma: prove the behavior of `[AB, C]_±` given known parities. Finally, extend the property from words (monomials) to general linear combinations of homogeneous polynomials by exploiting linearity.
+*Auxiliary Lemmas:* A robust graded-word induction principle over a finitely generated Clifford/CAR algebra, and explicit commutator expansion rules.
+
 **Lemma 6.5 (Global Algebra Irreducibility).**
 The global net evaluated over the entire lattice $\Lambda$ equals the full endomorphism algebra:
 
@@ -63,3 +80,7 @@ $$
 $$
 
 This is proven constructively by building diagonal occupation projectors and exact matrix units $|S\rangle\langle S'|$ from fixed ordered strings of creators and annihilators, carefully dividing out their nonzero algebraic signs.
+
+*Lean 4 Proof Strategy:*
+Formalize this as `lemma global_algebra_eq_top : localAlgebra Set.univ = ⊤`. Construct the vacuum projector $P_0 = \prod_{x \in \Lambda} (1 - c_x^* c_x)$ and show it belongs to the global algebra. Then, systematically construct general matrix units $|S\rangle \langle S'|$ acting on Fock space by conjugating $P_0$ with strings of creation and annihilation operators. Prove that since the local algebra contains a full basis of matrix units, it must span the entire endomorphism space $\mathrm{End}_{\mathbb{C}}(\mathrm{Fock}(\Lambda^*))$.
+*Auxiliary Lemmas:* Verification of the vacuum projector's idempotency and correct action on the Fock space basis. Proof that the vector space dimension of the algebra of these constructed units matches the dimension of the Endomorphism space $4^{|\Lambda|}$.

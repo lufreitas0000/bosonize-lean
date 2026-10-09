@@ -20,6 +20,9 @@ $$
 \forall 1 \le m \le h, \quad [\rho_{-m}, \rho_m] = \sum_{q = -h+1}^{-h+m} n_q - \sum_{q = h-m+1}^{h} n_q \tag{10.2}
 $$
 
+*Lean 4 Proof Strategy:*
+Formalize `[\rho_{-m}, \rho_m]` as `Commutator (rho (-m)) (rho m)`. The proof strategy relies on an auxiliary lemma `dGamma_commutator` establishing `[dGamma A, dGamma B] = dGamma [A, B]`. We then define the single-particle shift matrices `T_m` and evaluate their commutator `[T_{-m}, T_m]`. By matrix arithmetic on the finite basis `q \in [-h+1, h]`, the non-zero entries of this matrix are exactly the diagonal elements at the bottom `m` and top `m` modes. We then use another auxiliary lemma `dGamma_diagonal` which maps a diagonal single-particle operator to a sum of occupation number operators `n_q`.
+
 *Physical Note:* This operator identity is exact on the entire Fock space. It is a dynamical operator, not a scalar. The algebra only becomes bosonic (scalar) when evaluated on vectors restricted by the energy budget.
 
 #### 10.2 The Schwinger Term and Margin Accounting
@@ -36,6 +39,9 @@ every mode in the Bottom Edge interval is identically full ($n_q \psi = \psi$), 
 $$
 \forall \psi \in B(N,K), \quad [\rho_{-m}, \rho_m] \psi = m \psi \tag{10.4}
 $$
+
+*Lean 4 Proof Strategy:*
+We apply `Lemma 10.1` to rewrite the commutator as a difference of occupation number sums. Then, introduce an auxiliary lemma `frozen_margins_eval` which states that for any `psi \in B(N,K)`, if `q \le -h + m` (which is in the bottom frozen margin due to `m + K + |N| \le h`), `n_q psi = psi`. Similarly, if `q > h - m`, `n_q psi = 0`. Summing over the `m` terms in the bottom edge yields `m * psi`, and summing over the top edge yields `0 * psi`. The proof requires `simp` with `frozen_margins_eval` and `Finset.sum_const`.
 
 #### 10.3 The General Kac-Moody Algebra and Excursion Tracking
 
@@ -54,12 +60,18 @@ $$
 \forall m+n \neq 0, \quad [\rho_m, \rho_n] \psi = 0 \tag{10.6}
 $$
 
+*Lean 4 Proof Strategy:*
+Similar to Lemma 10.1, we evaluate the single-particle commutator `[T_m, T_n]`, which results in off-diagonal hopping terms `c^\dagger_{q+m+n} c_q` located only at the edges of the spectrum. We then state an auxiliary lemma `frozen_margins_hopping_annihilation`: for `psi \in B(N,K)`, any hopping operator originating from the top frozen margin or landing in the bottom frozen margin will annihilate `psi`. Under the `M2 Margin Condition`, all residual edge hoppings satisfy this criteria. `simp` using this auxiliary lemma yields `0`.
+
 **Theorem 10.4 (The U(1) Kac-Moody Algebra on the Budget).**
 Combining these results and the normal ordering $:\!\rho_m\!: \ := \rho_m - \delta_{m0} h I$, we obtain the exact Kac-Moody algebra on the budget subspace:
 
 $$
 \forall \psi \in B(N,K), \quad [:\!\rho_m\!:, :\!\rho_n\!:] \psi = -m \delta_{m+n, 0} \psi \tag{10.7}
 $$
+
+*Lean 4 Proof Strategy:*
+This theorem unites Lemmas 10.2 and 10.3. First, expand the normal ordering `:\rho_m:`. The constants added by normal ordering commute, so `[:\rho_m:, :\rho_n:] = [\rho_m, \rho_n]`. Use a case split on whether `m + n = 0` or `m + n \neq 0`. If `m + n = 0`, apply Lemma 10.2 (noting the sign convention `[\rho_m, \rho_{-m}] = -m \psi`). If `m + n \neq 0`, apply Lemma 10.3 to get `0`. The proof is completed using `simp` to evaluate the Kronecker delta.
 
 *(Note: $\rho_m$ for $m > 0$ physically acts as a creation mode, raising energy, mathematically matching the lowering current $J_{-m}$, yielding the minus sign).*
 
@@ -69,4 +81,8 @@ Because $[\rho_{-m}, \rho_m] = \rho_{-m}\rho_m - \rho_m\rho_{-m}$ consists of op
 $$
 2M + K + K_{\text{excursion}} + |N| \le h \tag{10.8}
 $$
+
+*Lean 4 Proof Strategy:*
+Formalize `K_excursion` by defining an upper bound on the energy change caused by sequential applications of density operators up to mode `M`. State a helper lemma `energy_bound_rho`: `rho_m` changes the energy of a state by exactly `m` and the charge by `0`. We formalize the condition as a predicate `ValidMarginSeq` for a list of operators. The proof proceeds by induction on the length of the operator word. For each step, we show that applying `rho_m` yields a new state in `B(N, K')` where `K' \le K + K_excursion`. As long as the maximal `K'` still satisfies the single-operator margin `M + K' + |N| \le h`, the individual commutator evaluations remain valid.
+
 Every restricted scalar identity remains a theorem about its strictly typed action on input vectors, and must not be blindly substituted as a global endomorphism equality over the entire finite carrier.

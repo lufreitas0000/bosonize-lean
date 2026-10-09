@@ -6,17 +6,47 @@ A bare function space `X → ℂ` is algebraically convenient but does not autom
 
 Choose either `EuclideanSpace ℂ (Finset ι)` for the finite Hilbert carrier, with a transport to the algebraic function basis, or matrices indexed by `Finset ι` for the operator proofs, with a later Euclidean interpretation. Prove the transport once. The installed `PiL2` module defines `EuclideanSpace` and its finite-sum inner product. Matrix conjugate transpose provides a particularly direct finite adjoint API.
 
-Creation operators should be constructed from the occupation basis, using `Basis.constr`, or from their matrix coefficients. Record evaluation laws and a basis-extensionality lemma before proving CAR. Do not define a general Hilbert adjoint on unbundled arbitrary linear maps in an infinite-dimensional carrier.
+**Definition 1:** Creation operators should be constructed from the occupation basis, using `Basis.constr`, or from their matrix coefficients. Record evaluation laws and a basis-extensionality lemma before proving CAR. Do not define a general Hilbert adjoint on unbundled arbitrary linear maps in an infinite-dimensional carrier.
+
+*Lean 4 Proof Strategy:*
+Use `Matrix.toLin` or `Basis.constr` over `Finset ι` to bundle operators with their matrix representations. Define the adjoint via `Matrix.conjTranspose`. The occupation basis can be encoded as functions `ι → ZMod 2` or subsets `Finset ι` for fermions. Provide a `@[simp]` lemma for evaluating the creation operator on a basis vector.
 
 ## Required CAR lemma chain
 
-1. Inserting/erasing mode j changes the preceding-mode count only when j < i.
-2. State the erasure count in an addition form when using natural numbers, avoiding truncated subtraction until its nonnegativity is proved.
-3. Signs have square one; the insert/erase operations at distinct modes commute as set operations but flip the relevant combined sign.
-4. Prove all three CAR identities, not merely assume a representation structure for the concrete Fock operators.
-5. Prove adjointness on basis pairs and lift by finite sums.
-6. Derive number operators as coordinate indicators, pairwise commutativity, and parity Γ² = I and Γ† = Γ.
-7. Derive bilinear commutators from CAR. Reuse them in chapter 9 rather than giving duplicate implementations.
+**Lemma 1:** Inserting/erasing mode j changes the preceding-mode count only when j < i.
+
+*Lean 4 Proof Strategy:*
+Define the count of preceding modes for a state `s : Finset ι` up to mode `i` as `(s.filter (· < i)).card`. Prove that `insert j s` increases this count by 1 if and only if `j < i` and `j ∉ s`. Use `Finset.card_insert_of_not_mem` and `Finset.filter_insert`, using case splitting on `j < i`.
+
+**Lemma 2:** State the erasure count in an addition form when using natural numbers, avoiding truncated subtraction until its nonnegativity is proved.
+
+*Lean 4 Proof Strategy:*
+Instead of writing `new_count = old_count - 1`, state it as `old_count = new_count + 1` whenever `j ∈ s`. This avoids `Nat` subtraction underflow issues. Use `Nat.add_right_cancel` and `Nat.add_assoc` to algebraically manipulate the counts without ever needing `Nat.sub`.
+
+**Lemma 3:** Signs have square one; the insert/erase operations at distinct modes commute as set operations but flip the relevant combined sign.
+
+*Lean 4 Proof Strategy:*
+Model the fermionic sign as `(-1) ^ count` inside a `Ring` or `Field`. Prove `(-1)^2 = 1` and `(-1)^(a+b) = (-1)^a * (-1)^b`. For `i ≠ j`, show that inserting/erasing `i` and `j` in either order results in counts that differ by exactly 1, meaning the total sign gets a factor of `(-1)^1 = -1`. Use `Finset.insert_comm` for the underlying set operation.
+
+**Lemma 4:** Prove all three CAR identities, not merely assume a representation structure for the concrete Fock operators.
+
+*Lean 4 Proof Strategy:*
+The CAR identities are `{a_i, a_j} = 0`, `{a_i^\dagger, a_j^\dagger} = 0`, and `{a_i, a_j^\dagger} = \delta_{ij}`. Apply both sides to an arbitrary basis element `|s\rangle`. By Lemma 3, `a_i a_j |s\rangle = - a_j a_i |s\rangle` for `i ≠ j`. For `i = j`, `{a_i, a_i^\dagger} = a_i a_i^\dagger + a_i^\dagger a_i` evaluates to `1 |s\rangle` because any state is either occupied or empty at `i`. Conclude by `Basis.ext`.
+
+**Lemma 5:** Prove adjointness on basis pairs and lift by finite sums.
+
+*Lean 4 Proof Strategy:*
+Prove `\langle s | a_i^\dagger | s' \rangle = \langle a_i s | s' \rangle` for basis vectors `s, s'`. Use `EuclideanSpace.inner` from `PiL2` for the inner product. Then, use the linearity of the inner product and `LinearMap.ext` to lift this adjointness property to arbitrary states, represented as finite linear combinations of basis vectors.
+
+**Lemma 6:** Derive number operators as coordinate indicators, pairwise commutativity, and parity Γ² = I and Γ† = Γ.
+
+*Lean 4 Proof Strategy:*
+Define `N_i = a_i^\dagger a_i`. Show `N_i |s\rangle = (if i ∈ s then 1 else 0) |s\rangle`. Commutativity `[N_i, N_j] = 0` follows because they are diagonal operators. Define parity `Γ = \prod_i (I - 2 N_i)`. Show `Γ^2 = I` since `(1 - 2x)^2 = 1` for `x ∈ {0, 1}`. Show `Γ^\dagger = Γ` since it's a real diagonal matrix. 
+
+**Lemma 7:** Derive bilinear commutators from CAR. Reuse them in chapter 9 rather than giving duplicate implementations.
+
+*Lean 4 Proof Strategy:*
+Use the generic identity `[AB, CD] = A{B,C}D - AC{B,D} + {A,C}BD - C{A,D}B` for operators. Write a simplification set `simp [car_simps]` leveraging the identities from Lemma 4. This automatically evaluates commutators of quadratic fermionic observables (like energy or currents) into other quadratics, verifying the Lie algebra structure.
 
 Products of operators in `Module.End` are noncommutative. A `Finset.prod` or `Multiset.prod` is not available merely because the particular number operators commute. Use a fixed ordered product and prove order independence, or use an API that takes explicit pairwise commutativity. The same issue occurs for partition-state products.
 
@@ -26,17 +56,25 @@ For species, choose an explicit lexicographic order/type synonym. Do not rely on
 
 Use `StarSubalgebra.adjoin` when the ambient operator algebra has a genuine adjoint star, or prove that the ordinary algebra generated by creators and annihilators is star closed. The odd part is a linear subspace, not a unital subalgebra. The even part is a subalgebra; parity decomposition uses division by two and Γ² = I.
 
-For twisted locality, ordinary adjoin induction cannot keep every arbitrary partial sum homogeneous. Prove a graded-word lemma, extend to the span of words of a fixed parity, and then identify these spans with the ±1 eigenspaces of parity. For global irreducibility, construct occupation projectors and matrix units with a fixed ordered creation/annihilation string. Its nonzero sign may need to be divided out; it is not automatically +1.
+**Lemma 8 (Graded-word lemma):** Prove a graded-word lemma, extend to the span of words of a fixed parity, and then identify these spans with the ±1 eigenspaces of parity.
+
+*Lean 4 Proof Strategy:*
+Define a grading `Z_2` on the free algebra of creators/annihilators. Show length `k` words have parity `k mod 2`. Since the operators map between parity eigenspaces of `Γ`, prove `Γ O Γ = (-1)^{parity(O)} O` for homogeneous words `O`. By linearity, extend this to the span of words of fixed parity, confirming the even/odd decomposition of the full algebra without needing component-wise adjoin induction.
+
+For global irreducibility, construct occupation projectors and matrix units with a fixed ordered creation/annihilation string. Its nonzero sign may need to be divided out; it is not automatically +1.
 
 ## Polynomial adjoints without square-root bases
 
-On polynomial monomials X^r, define an algebraic Hermitian form with orthogonal monomials. For ordinary oscillators use weight `∏ r_m!`; then D_m and multiplication by X_m are adjoint. For the unnormalized currents used later, choose weight
-
+**Theorem 1:** On polynomial monomials X^r, define an algebraic Hermitian form with orthogonal monomials. For ordinary oscillators use weight `∏ r_m!`; then D_m and multiplication by X_m are adjoint. For the unnormalized currents used later, choose weight
 \[
  w(r)=\prod_m m^{r_m}r_m!.
 \]
+Then `m D_m` is adjoint to multiplication by X_m.
 
-Then `m D_m` is adjoint to multiplication by X_m. This matches the Haldane Gram matrix. In this convention D_m itself is not adjoint to X_m; the dagger notation must refer to the selected form and current normalization. One cannot declare both adjoint conventions on the same carrier without changing the form.
+*Lean 4 Proof Strategy:*
+Define a bilinear form on `MvPolynomial σ ℂ` setting basis vectors orthogonal and scaling their norms by `w(r)`. For Haldane's chiral bosons (`J_m`), use the weight `m^{r_m} r_m!`. Show that `\langle X_m P, Q \rangle = \langle P, m D_m Q \rangle` by evaluating it on monomials `P = X^p, Q = X^q`. The derivative `D_m X_m^k = k X_m^{k-1}` balances the `m` and the factorial weights perfectly.
+
+This matches the Haldane Gram matrix. In this convention D_m itself is not adjoint to X_m; the dagger notation must refer to the selected form and current normalization. One cannot declare both adjoint conventions on the same carrier without changing the form.
 
 All pairings are finite sums over support. Their restrictions to finite weight slices are ordinary finite inner products. This avoids normalized monomials X^r/√w(r) and their square-root bookkeeping. No Hilbert completion is required for these finite algebraic pairings.
 
@@ -46,8 +84,17 @@ The energy-current substitution in chapter 8.8 also loses a mode weight. With J_
 
 Mechanical reordering while ignoring contractions is not a well-defined linear operation on the already represented operator algebra. The equal operators `a a†` and `a† a + I` would be sent to different results by that rule.
 
-Use a symbol space with separate creator and annihilator labels, for example a commutative polynomial space on `Mode ⊕ Mode`, to describe normal-ordered expressions. Define a linear evaluation map sending a monomial `(r,s)` to a fixed ordered product `(a†)^r a^s`. This evaluation is not an algebra homomorphism from the commutative symbol ring into the noncommutative operator algebra.
+**Definition 2:** Use a symbol space with separate creator and annihilator labels, for example a commutative polynomial space on `Mode ⊕ Mode`, to describe normal-ordered expressions. Define a linear evaluation map sending a monomial `(r,s)` to a fixed ordered product `(a†)^r a^s`. This evaluation is not an algebra homomorphism from the commutative symbol ring into the noncommutative operator algebra.
 
-For Wick's theorem on raw words, start with a free associative word algebra and define a rewrite/expansion into normal-ordered symbols, including contractions. Prove termination by word length/inversion count and prove evaluation preservation. Chapter 8's proposed `MvPolynomial Q ℂ →ₗ End …` has too few variables to encode both r and s.
+*Lean 4 Proof Strategy:*
+Define `NormalSymbol := MvPolynomial (Mode ⊕ Mode) ℂ`. Define a linear map `eval : NormalSymbol →ₗ[ℂ] Module.End ℂ FockSpace` that sends `X_{(inL i)}` to `a_i^\dagger` and `X_{(inR i)}` to `a_i`, multiplying all creators first, then all annihilators. Since `MvPolynomial` is a free commutative algebra, this map is well-defined. Emphasize that `eval (P * Q) ≠ eval P * eval Q`.
 
-Use integer combinatorial contraction coefficients and cast them into ℂ afterward. Prove the Hermite recurrence for `(D+X)^n 1` directly; a generating-function exponential is unnecessary for this finite polynomial theorem.
+**Theorem 2:** For Wick's theorem on raw words, start with a free associative word algebra and define a rewrite/expansion into normal-ordered symbols, including contractions. Prove termination by word length/inversion count and prove evaluation preservation. Chapter 8's proposed `MvPolynomial Q ℂ →ₗ End …` has too few variables to encode both r and s.
+
+*Lean 4 Proof Strategy:*
+Define `FreeAlgebra (Mode ⊕ Mode) ℂ` for raw operator words. Define a rewriting system that applies `a a^\dagger \mapsto -a^\dagger a + {a, a^\dagger}` (using anticommutators/commutators). To formalize Wick's theorem, map free words to `NormalSymbol`. Prove termination by well-founded recursion on the inversion count of the word. Prove that applying the evaluation map (`eval`) after normal ordering equals the natural representation of the raw word. 
+
+**Theorem 3:** Use integer combinatorial contraction coefficients and cast them into ℂ afterward. Prove the Hermite recurrence for `(D+X)^n 1` directly; a generating-function exponential is unnecessary for this finite polynomial theorem.
+
+*Lean 4 Proof Strategy:*
+Define polynomials `H_n(X) = (D + X)^n 1` inductively: `H_0 = 1`, `H_{n+1} = (D + X) H_n = X H_n + D H_n`. Prove the recurrence relation `H_{n+1} = X H_n + n H_{n-1}` by induction on `n`. The induction step relies on the derivation rule `D(X H_n) = H_n + X D H_n`. Keep coefficients in `ℤ` during the induction, then `algebraMap ℤ ℂ` to avoid characteristic zero issues or floating-point artifacts.
