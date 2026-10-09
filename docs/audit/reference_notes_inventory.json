@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-08",
+  "scope": "Full reading of chapters 1-21, TOC, and chapter 3 suggestion; original inputs preserved",
+  "core_checkpoint": "299cfccab24024dcf27eb08ae7a77f4f25f3cd99",
+  "files": [
+    {
+      "path": "notes/md/ch01_lattice_band_geometry.md",
+      "sha256": "fa8497be75b2c91a99126401105c6e44b3adac8ba92ca7420e8fc257c2d59533",
+      "lines": 72
+    },
+    {
+      "path": "notes/md/ch02_umbral_calculus.md",
+      "sha256": "88385c1bb4367902e55a9c78535a11123c64761039f3f8fb8c1faa0ff5905b03",
+      "lines": 90
+    },
+    {
+      "path": "notes/md/ch03_fourier.md",
+      "sha256": "34034e686d94c1763ff899f5418de6c1e760f38675f1903410d70fca8cb7ca45",
+      "lines": 74
+    },
+    {
+      "path": "notes/md/ch04_CAR_Fock_space.md",
+      "sha256": "57d078704295a2f0fa2bfdbae07606a18d57d2e689c0c8fe2c5a55d0e3775731",
+      "lines": 162
+    },
+    {
+      "path": "notes/md/ch05_fermions_lattice_band.md",
+      "sha256": "7521e42c9642cd0692f439521ab80d9bfc2c009a7a13351f915dc89a67e94a10",
+      "lines": 98
+    },
+    {
+      "path": "notes/md/ch06_lattice_AQFT_net.md",
+      "sha256": "d23651c15935184a5b3cff46aba888d4c84f362ca7b3e62d2184be90b9f50ad4",
+      "lines": 80
+    },
+    {
+      "path": "notes/md/ch07_vacuum_budget_space.md",
+      "sha256": "c30ab5c195e3b5dca4d5e185a90968b0246ebd35235636add94f8632103cb663",
+      "lines": 125
+    },
+    {
+      "path": "notes/md/ch08_boson.md",
+      "sha256": "e7f3334680a94a37e35efbd4950ab31ae0dd044755bc5e3bcee9c68a746878c1",
+      "lines": 214
+    },
+    {
+      "path": "notes/md/ch09_density_modes.md",
+      "sha256": "d455d215424969ca1de20b43474b60584d2580f54022e05c6cad1c7fb77cc692",
+      "lines": 168
+    },
+    {
+      "path": "notes/md/ch10_Heisenberg_algebra.md",
+      "sha256": "0dcde7c338f5fa828edb6bbe01d2aff09dce60e09c870345f8355928e3253371",
+      "lines": 151
+    },
+    {
+      "path": "notes/md/ch11_Haldane_completeness.md",
+      "sha256": "e9f5c6e0576d07176ae139526ad8ac570a09bc5d04484cdea7acdc2e11a275a6",
+      "lines": 76
+    },
+    {
+      "path": "notes/md/ch12_Sugawara_construction.md",
+      "sha256": "07e7cfa6efd1626c80bf46c1df40054fcb09e7ba0e752282000fa4bf3dade71a",
+      "lines": 83
+    },
+    {
+      "path": "notes/md/ch13_Klein_factors.md",
+      "sha256": "7df83892ae47be849c182da1997be20a5fa3d4a96462f9252a9c66e696787f2c",
+      "lines": 178
+    },
+    {
+      "path": "notes/md/ch14_Mattis_Mandelstam_formula.md",
+      "sha256": "803ac53a0d53c4bce25e9e56d819654eca3d497cdb225bd069b869ff58aff4b8",
+      "lines": 126
+    },
+    {
+      "path": "notes/md/ch15_dual_fields.md",
+      "sha256": "551b19ff8592dcf7bc76f9d17fcbb88e45be5a5394e6fb11ccacaf5b103db326",
+      "lines": 159
+    },
+    {
+      "path": "notes/md/ch16_field_Hamiltonian.md",
+      "sha256": "098524e1b5ead07f19c8ae3ff26ea95b32579cae93cf3e5a1863657e4b718fca",
+      "lines": 114
+    },
+    {
+      "path": "notes/md/ch17_LL_Models.md",
+      "sha256": "cf23a1ae46fa630a2c15adcb41d1ed1f56e1d5afced435b2f70af1d00e64a242",
+      "lines": 173
+    },
+    {
+      "path": "notes/md/ch18_bogoliubov.md",
+      "sha256": "812ef741622151fd8fa4e317f13698c11210e6edbb6aa68e1822d98366f47d86",
+      "lines": 133
+    },
+    {
+      "path": "notes/md/ch19_correlations.md",
+      "sha256": "58578c2d044ebfe4e2a55b7f02dfe9181294c73d817f1038533d7a2541616491",
+      "lines": 132
+    },
+    {
+      "path": "notes/md/ch20_CDW.md",
+      "sha256": "a5dd6301274aef9022465597b2239aea13a49d15b8ac365f90557c9dbf41a982",
+      "lines": 128
+    },
+    {
+      "path": "notes/md/ch21_spinful_models.md",
+      "sha256": "a6e5df301c7b6ccd91ada23d3c761119a88e9bb96b6b0a24f9dc609365a7ec13",
+      "lines": 157
+    },
+    {
+      "path": "notes/md/TOC.md",
+      "sha256": "2c554a3cd2cd75a36cb9718374185d8e9565de24dad465da24953822169ab2a2",
+      "lines": 132
+    },
+    {
+      "path": "docs/stub_suggestion/chapter_3_fourier_stub_draft.md",
+      "sha256": "77209d3de0b7929ba2fa5f6e3b0d05f4d601efb2c563f29c8a136f8d950d24d5",
+      "lines": 256
+    }
+  ]
+}
