@@ -1,8 +1,8 @@
 # CH06 companion notebook — finite local CAR net
 
-Status: **Phase B proof bodies complete; Phase C not started**. The approved interface is frozen at baseline `34150a5`. This file mirrors `BosonizeStubs/Ch06LocalNet.lean`: 26 complete definitions/abbreviations and 54 complete lemma proof bodies. The historical Phase A source reconciliation and proposed dependency inventory below are retained; the source snapshot is current. Fresh imported-dependency axiom evidence is recorded in the Phase B section.
+Status (2026-10-09): **Phase C complete; promoted and frozen in Core.** `Ch06LocalNet` contains 54 proved lemmas. The historical Phase B checkpoint is `0abdb37` and its interface baseline is `34150a5`; use the committed Phase C promotion checkpoint for current baseline checks.
 
-## Source reconciliation and scope
+## Historical Phase A source reconciliation and scope
 
 The principal source is `notes/md/ch06_lattice_AQFT_net.md`, read with `notes/md/TOC.md`, the finite-CAR appendix `notes/appendices/a02_car_hilbert_and_normal_ordering.md`, the applicable source-contract and noncommutative sections of `.agents/skills/formalizer/references/proof_design.md`, and the dated review `note/proof_suggestions_revision_2026-10-09.md`. The completion ledger `note/notes_review_completion_2026-10-09.md` supplies review context, not Lean proofs. The TOC introductory claim that only CH01–CH02 are frozen is historical and superseded by the current Core and adaptive roadmap.
 
@@ -98,7 +98,7 @@ Disjointness is the exact locality hypothesis; there are no budget margins or hi
 'Bosonize.Ch06.orderedMatrixUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
-## Phase B implementation and validation — 2026-10-09
+## Historical Phase B implementation and validation — 2026-10-09
 
 The user approved Phase B for both CH05 and CH06. All 54 CH06 lemma bodies are complete; definitions, imports, scoped `omit` prefixes, theorem headers, namespaces, and lock records remain exactly as approved at `34150a5`. The locked source module comment still describes its historical Phase A draft; it was preserved as a frozen non-lemma command.
 
@@ -113,7 +113,7 @@ Finite occupation kernels required explicit conversion between the inferred subt
 - Strict interface verification against committed `34150a5` passed all 271 statements and 225 frozen commands after the proof edits.
 - Joint CI passed all 69 guard tests, strict verification of 271 statements and 225 commands against `34150a5`, the six-source Core guard, and both library builds.
 - The fresh combined audit `/tmp/ch0506b-axioms.log` inspected 131 declarations: all 89 CH05/CH06 lemmas and all 42 complete data declarations. Only subsets of `propext`, `Classical.choice`, and `Quot.sound` occur; four data declarations need no axioms. No declaration depends on `sorryAx`. This includes all 54 CH06 lemmas and its 26 data declarations after freshly building the completed CH05 dependency.
-- Current exact source SHA-256: `47300577a84b8895760d32da1ca8fd25696850360bf393e3cc529aac9464f367`.
+- Historical Phase B source SHA-256: `47300577a84b8895760d32da1ca8fd25696850360bf393e3cc529aac9464f367`.
 
 The complete fresh CH06 axiom audit is preserved here:
 
@@ -202,12 +202,107 @@ The complete fresh CH06 axiom audit is preserved here:
 
 Phase C promotion and complete-source freezing remain separately authorized steps.
 
+## Phase C promotion and freeze — 2026-10-09
+
+User authorization covers promotion of CH05 and CH06. This module is now `Bosonize/Core/Ch06LocalNet.lean`, imported by the root `Bosonize` aggregator; direct staging imports were removed. Its companion notebook moved to the matching Core path. Lean namespaces, all definitions, statements and proof bodies are preserved. CH05 moved byte-for-byte; CH06 changes only `public import BosonizeStubs.Ch05Fermions` to `public import Bosonize.Core.Ch05Fermions`.
+
+The active v2 entries moved to their Core paths. CH05 retains every recorded hash and context; CH06 changes only the dependency-import command and the dependent context hashes. All 89 statement hashes are unchanged. The legacy manifest remains historical. Complete-source SHA-256 hashes were added for these two modules; all six previous Core hashes remain unchanged. This module's complete-source hash is `a60c83172eb262f26c73de11e681dd0da373713328edfa789ad7f0486427094f`.
+
+Validation: `make ci` passes all 69 guard tests and both library builds; `make lock-check` verifies 271 statements, 225 commands and eight complete Core files. Both new Core modules pass direct compilation with warnings treated as errors and empty output. Native Lean MCP diagnostics on both Core paths return complete empty results with no failed dependencies. Goal retrieval on CH05's mixed CAR proof shows the final tactic closes its remaining branch. A fresh audit importing `Bosonize` verifies all 271 Core lemmas and the 42 CH05/CH06 data declarations using only permitted standard axioms, with no `sorryAx`. Exact notebook snapshots and source hashes are checked separately.
+
+Use the committed promotion checkpoint (or a later approved reference containing the migrated manifests) as `STUB_LOCK_BASELINE_REF`. Historical staging references retain their old paths and cannot validate the new path baseline. Unrelated note edits and suggestion-file deletions are preserved outside this promotion. The primary formalizer performed this phase; no additional agents were dispatched. CH07/A03 drafting is the next proposed scope and has not started.
+
+### Fresh Core axiom output for this module
+
+```text
+'Bosonize.Ch06.annihilation_mem_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.creation_mem_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_algebra_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_algebra_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_algebra_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_algebra_empty_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_algebra_star_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.operator_star_eq_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_map_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_map_involutive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_map_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_map_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_map_star' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_automorphism_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_creation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parity_preserves_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_parity_automorphism_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.mem_local_part' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.even_subalgebra_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_grading_sup' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_grading_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.even_projection_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.odd_projection_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.projection_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.even_projection_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.odd_projection_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.mixed_projections_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.graded_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.graded_star' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.even_part_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.odd_part_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.annihilation_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_even_proper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_odd_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.word_mem_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.word_homogeneous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.local_part_eq_word_span' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.disjoint_word_swap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.twisted_locality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.even_locality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.momentum_annihilation_mem_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.momentum_creation_mem_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.creator_sign_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.creator_word_vacuum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.annihilator_word_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.vacuum_projector_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.vacuum_projector_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.vacuum_projector_mem_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.matrix_unit_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.ordered_matrix_unit_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.matrix_unit_mem_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.matrix_unit_expansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.global_algebra_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.FockSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.Operators' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.Region' does not depend on any axioms
+'Bosonize.Ch06.Occupation' depends on axioms: [propext, Quot.sound]
+'Bosonize.Ch06.Degree' does not depend on any axioms
+'Bosonize.Ch06.Letter' does not depend on any axioms
+'Bosonize.Ch06.localGenerators' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.localAlgebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parityOperator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.parityMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.degreeSign' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.localPart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.evenPart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.oddPart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.evenProjection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.oddProjection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.letterOperator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.wordOperator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.supportedWord' does not depend on any axioms
+'Bosonize.Ch06.homogeneousWordSpan' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.creatorWord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.annihilatorWord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.creatorSign' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.vacuumProjector' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.matrixUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06.orderedMatrixUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 ## Exact Lean source snapshot
 
 ```lean
 module
 
-public import BosonizeStubs.Ch05Fermions
+public import Bosonize.Core.Ch05Fermions
 public import Bosonize.Core.Ch04CARFock
 public import Mathlib.Algebra.Algebra.Operations
 

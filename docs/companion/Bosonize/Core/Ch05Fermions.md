@@ -1,10 +1,10 @@
 # Chapter 5 position and momentum fermions lab notebook
 
-Status (2026-10-09): **Phase B complete; approved interfaces locked at `34150a5`, awaiting Phase C authorization.** All 35 lemmas are proved in staging. Definitions, headers, imports and existing Core sources retain their approved form.
+Status (2026-10-09): **Phase C complete; promoted and frozen in Core.** `Ch05Fermions` contains 35 proved lemmas. The historical Phase B checkpoint is `0abdb37` and its interface baseline is `34150a5`; use the committed Phase C promotion checkpoint for current baseline checks.
 
-## Source reconciliation and review choices
+## Historical Phase A source reconciliation and review choices
 
-Read [CH05](../../../notes/md/ch05_fermions_lattice_band.md), [A01](../../../notes/appendices/a01_fourier_scalars_and_characters.md), [A04](../../../notes/appendices/a04_density_partitions_and_sugawara.md), [TOC](../../../notes/md/TOC.md), [source audit](../../../docs/audit/reference_notes_lean_audit.md) and [proof corrections](../../../note/proof_suggestions_revision_2026-10-09.md). No CH05-specific suggestion is available: the current checkout has no remaining `docs/stub_suggestion/` or `docs/proof_suggestion/` directories. Inline proof sketches remain advisory. The TOC's claim that only CH01/CH02 are frozen is historical; current Core includes CH01–CH04, A01 and finite-CAR A02. Source notes are unchanged.
+Read [CH05](../../../../notes/md/ch05_fermions_lattice_band.md), [A01](../../../../notes/appendices/a01_fourier_scalars_and_characters.md), [A04](../../../../notes/appendices/a04_density_partitions_and_sugawara.md), [TOC](../../../../notes/md/TOC.md), [source audit](../../../../docs/audit/reference_notes_lean_audit.md) and [proof corrections](../../../../note/proof_suggestions_revision_2026-10-09.md). No CH05-specific suggestion is available: the current checkout has no remaining `docs/stub_suggestion/` or `docs/proof_suggestion/` directories. Inline proof sketches remain advisory. The TOC's claim that only CH01/CH02 are frozen is historical; current Core includes CH01–CH04, A01 and finite-CAR A02. Source notes are unchanged.
 
 Adopt positive annihilation and negative creation character kernels, one real `A01.normalization` scalar cast into ℂ, the canonical primitive root, and the frozen positive-Nyquist band. Reuse A01's character/conjugation/orthogonality proofs rather than reimplementing them. Character negation is ordinary integer negation, so no negative-Nyquist membership is required. `LinearMap.adjoint` is the actual finite-dimensional Hilbert adjoint; its installed signature was verified by native MCP hover.
 
@@ -76,7 +76,7 @@ Review the generic positive-size layer, kernel signs, integer shift and witness 
 'Bosonize.Ch05.parity' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
-## Phase B implementation and validation
+## Historical Phase B implementation and validation
 
 User authorization to proceed to Phase B approved the CH05/CH06 interface; the exact lock was committed as `34150a5`. Proof bodies alone changed. All 35 CH05 lemmas are complete.
 
@@ -86,11 +86,77 @@ Adopted the source's finite Fourier and occupation-basis arguments, adapting the
 
 Validation against `34150a5`: strict guard verifies 271 statements and 225 ordered commands; all six complete Core hashes remain unchanged. All 69 guard regression tests, both libraries and direct warning-as-error compilation pass. Native Lean MCP CH05 diagnostics return a complete empty result with no failed dependencies. Fresh imported axiom inspection covers all 89 CH05/CH06 lemmas and 42 data declarations with only `propext`, `Classical.choice`, and `Quot.sound`; no `sorryAx`. Source search remains unavailable through the MCP server PATH; shell retrieval and compiler/MCP goals were used.
 
-Source-note edits that appeared concurrently in the worktree are outside this proof task and are preserved. The provenance table records Phase A inputs, rather than asserting the current edited notes have those historical hashes. Phase C promotion requires separate authorization.
+Source-note edits that appeared concurrently in the worktree are outside this proof task and are preserved. The provenance table records Phase A inputs, rather than asserting the current edited notes have those historical hashes. At that checkpoint, Phase C promotion still required authorization; it was subsequently granted.
+
+## Phase C promotion and freeze — 2026-10-09
+
+User authorization covers promotion of CH05 and CH06. This module is now `Bosonize/Core/Ch05Fermions.lean`, imported by the root `Bosonize` aggregator; direct staging imports were removed. Its companion notebook moved to the matching Core path. Lean namespaces, all definitions, statements and proof bodies are preserved. CH05 moved byte-for-byte; CH06 changes only `public import BosonizeStubs.Ch05Fermions` to `public import Bosonize.Core.Ch05Fermions`.
+
+The active v2 entries moved to their Core paths. CH05 retains every recorded hash and context; CH06 changes only the dependency-import command and the dependent context hashes. All 89 statement hashes are unchanged. The legacy manifest remains historical. Complete-source SHA-256 hashes were added for these two modules; all six previous Core hashes remain unchanged. This module's complete-source hash is `a19fed9d032daaa60df6bda4980b7470f10dd3e7333a63aec369a41e75c4dd81`.
+
+Validation: `make ci` passes all 69 guard tests and both library builds; `make lock-check` verifies 271 statements, 225 commands and eight complete Core files. Both new Core modules pass direct compilation with warnings treated as errors and empty output. Native Lean MCP diagnostics on both Core paths return complete empty results with no failed dependencies. Goal retrieval on CH05's mixed CAR proof shows the final tactic closes its remaining branch. A fresh audit importing `Bosonize` verifies all 271 Core lemmas and the 42 CH05/CH06 data declarations using only permitted standard axioms, with no `sorryAx`. Exact notebook snapshots and source hashes are checked separately.
+
+Use the committed promotion checkpoint (or a later approved reference containing the migrated manifests) as `STUB_LOCK_BASELINE_REF`. Historical staging references retain their old paths and cannot validate the new path baseline. Unrelated note edits and suggestion-file deletions are preserved outside this promotion. The primary formalizer performed this phase; no additional agents were dispatched. CH07/A03 drafting is the next proposed scope and has not started.
+
+### Fresh Core axiom output for this module
+
+```text
+'Bosonize.Ch05.position_creation_eq_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_annihilation_eq_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_annihilation_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_creation_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_mixed_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_car_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.inverse_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.inverse_creation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.total_number_position' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_number_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_number_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_number_commute' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_annihilation_vacuum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.position_creation_vacuum_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.parity_position_creation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.parity_position_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.total_number_position_creation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.total_number_position_annihilation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.total_number_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.bare_hamiltonian_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.shifted_hamiltonian_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.bare_hamiltonian_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.shifted_hamiltonian_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.bare_creation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.bare_annihilation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.shifted_creation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.shifted_annihilation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.sea_ket_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.bare_hamiltonian_sea' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.shifted_hamiltonian_sea' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.sea_card_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.sea_energy_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.sea_energy_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.bare_sea_action_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.sea_energy_half_size_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.FockSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.Operators' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.momentumAnnihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.momentumCreation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.momentumNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.positionAnnihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.positionCreation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.positionNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.totalNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.occupationEnergy' depends on axioms: [propext, Quot.sound]
+'Bosonize.Ch05.bareHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.seaConfiguration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.seaEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.seaKet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.shiftedHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch05.parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 ## Exact Lean source snapshot
 
-Module SHA-256: `a19fed9d032daaa60df6bda4980b7470f10dd3e7333a63aec369a41e75c4dd81`. This block matches the completed staging source byte-for-byte.
+Module SHA-256: `a19fed9d032daaa60df6bda4980b7470f10dd3e7333a63aec369a41e75c4dd81`. This block matches the frozen Core source byte-for-byte.
 
 ```lean
 module

@@ -1,6 +1,6 @@
 module
 
-public import BosonizeStubs.Ch05Fermions
+public import Bosonize.Core.Ch05Fermions
 public import Bosonize.Core.Ch04CARFock
 public import Mathlib.Algebra.Algebra.Operations
 
