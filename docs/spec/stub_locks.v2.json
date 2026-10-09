@@ -2039,6 +2039,990 @@
           "text": "lemma total_number_ket (S : A02.Occupation ι) : totalNumber (ι := ι) (A02.ket S) = (S.card : ℂ) • A02.ket S"
         }
       }
+    },
+    "BosonizeStubs/Ch05Fermions.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "950283665d6e3ae935a3462f21c373f5a17e62317b15442432273ce68b89042f",
+          "kind": "import",
+          "label": "import Bosonize.Core.A01FourierCharacters",
+          "text": "import Bosonize.Core.A01FourierCharacters"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "43445ae390599ea8e771da31164a83dd3398ceebb5f9349fc44bc2a59bea9f4c",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch03Fourier",
+          "text": "import Bosonize.Core.Ch03Fourier"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "572dab5f3c663ecc210e143e90c1b5ffbd723b010980355998d017c9b31336a7",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch04CARFock",
+          "text": "import Bosonize.Core.Ch04CARFock"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "d814d0575a838d4403db91f60c4292dfd704be72b69d8049aba52b1777afd178",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch05",
+          "text": "namespace Bosonize.Ch05"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "ad438ac3cec8a5bb9f4b061ec40eb2ca76c544d4dfe5b9e0ea23bbf7930feb31",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch05.FockSpace",
+          "text": "abbrev FockSpace (L : ℕ) := A02.FockSpace (Ch01.Band L)"
+        },
+        {
+          "hash": "3cbabf6f7af71307d3d498c68e36edd895cca3fccbc4f66be3129d9825265a7c",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch05.Operators",
+          "text": "abbrev Operators (L : ℕ) := Module.End ℂ (FockSpace L)"
+        },
+        {
+          "hash": "22fa12a22f62ec85aa708df3c5c52a5ed43fa28f7334df5b2279882759fb30b8",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.momentumAnnihilation",
+          "text": "noncomputable def momentumAnnihilation (L : ℕ) (k : Ch01.Band L) : Operators L :=\n  Ch04.annihilation k"
+        },
+        {
+          "hash": "15eb697da1c6b850401b5ffd68b406de1f16e319da48a64875f344d81e65358c",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.momentumCreation",
+          "text": "noncomputable def momentumCreation (L : ℕ) (k : Ch01.Band L) : Operators L :=\n  Ch04.creation k"
+        },
+        {
+          "hash": "c4731055df90c40d26bb71befd1c65577b4c3c9d4e8b5cb29fcef87bcf62d325",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.momentumNumber",
+          "text": "noncomputable def momentumNumber (L : ℕ) (k : Ch01.Band L) : Operators L :=\n  momentumCreation L k * momentumAnnihilation L k"
+        },
+        {
+          "hash": "c13ae9ca6470da8077739be6fb978566a43c025ea3d3ef1674d74a2f58eb8c7b",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.positionAnnihilation",
+          "text": "noncomputable def positionAnnihilation (L : ℕ) [NeZero L]\n    (x : Ch01.Lattice L) : Operators L :=\n  (A01.normalization L : ℂ) • ∑ k : Ch01.Band L,\n    A01.bandCharacter L (A01.canonicalRoot L) k x • momentumAnnihilation L k"
+        },
+        {
+          "hash": "af254bf468d97e23d6d4e04b19aa72baec12446cc6ac5a9c96f198333976d239",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.positionCreation",
+          "text": "noncomputable def positionCreation (L : ℕ) [NeZero L]\n    (x : Ch01.Lattice L) : Operators L :=\n  (A01.normalization L : ℂ) • ∑ k : Ch01.Band L,\n    A01.integerCharacter (A01.canonicalRoot L) (-k.val) (x.val : ℤ) • momentumCreation L k"
+        },
+        {
+          "hash": "d01b2a423f75467d103b1b3063f081841ef8f2e24e50ebef3bb3a361ef9bfb24",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.positionNumber",
+          "text": "noncomputable def positionNumber (L : ℕ) [NeZero L]\n    (x : Ch01.Lattice L) : Operators L :=\n  positionCreation L x * positionAnnihilation L x"
+        },
+        {
+          "hash": "0921592dd1afa820599624e7aea8657f2380223b000a1e0db713ea10afd6c30a",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.totalNumber",
+          "text": "noncomputable def totalNumber (L : ℕ) : Operators L :=\n  ∑ k : Ch01.Band L, momentumNumber L k"
+        },
+        {
+          "hash": "9b1e4fb4825b392b4ca81e398fa2f775c181d78701166e7ce2729af41a5353fe",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.occupationEnergy",
+          "text": "def occupationEnergy (L : ℕ) (S : A02.Occupation (Ch01.Band L)) : ℤ :=\n  ∑ k ∈ S, k.val"
+        },
+        {
+          "hash": "ab0963876927216a535e0434632506ef191d20734a0392ae914023295c1f1069",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.bareHamiltonian",
+          "text": "noncomputable def bareHamiltonian (L : ℕ) : Operators L :=\n  ∑ k : Ch01.Band L, (k.val : ℂ) • momentumNumber L k"
+        },
+        {
+          "hash": "1bc546ea861f28ab82f6fe939027d007e9800c931c72f93b815b1bbdea492f1c",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.seaConfiguration",
+          "text": "def seaConfiguration (L : ℕ) : A02.Occupation (Ch01.Band L) :=\n  Finset.univ.filter (fun k => k.val ≤ 0)"
+        },
+        {
+          "hash": "dc55db94e174aa2c51b7043a897985484a0568793d19d148111135c96e93110b",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.seaEnergy",
+          "text": "def seaEnergy (L : ℕ) : ℤ := occupationEnergy L (seaConfiguration L)"
+        },
+        {
+          "hash": "23651b0f95c9354489a2b211f5623a4ee1880362b1b67637fb32243008b5fcb6",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.seaKet",
+          "text": "noncomputable def seaKet (L : ℕ) : FockSpace L := A02.ket (seaConfiguration L)"
+        },
+        {
+          "hash": "68a27c5b8cfd157de49b4857cddaffe0d9d9365a2e77b918e45236617b63ff83",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.shiftedHamiltonian",
+          "text": "noncomputable def shiftedHamiltonian (L : ℕ) : Operators L :=\n  bareHamiltonian L - (seaEnergy L : ℂ) • (1 : Operators L)"
+        },
+        {
+          "hash": "1b3cc34338302d6c7b3628ced8f563f5ba2771b6cfd35ef9f02d7d13861efeed",
+          "kind": "def",
+          "label": "def Bosonize.Ch05.parity",
+          "text": "noncomputable def parity (L : ℕ) : Operators L := Ch04.parity"
+        },
+        {
+          "hash": "dce23d0db6b4a511d6b5b215f759eb638a4c3027f11d6333a5f03d4236f6c59d",
+          "kind": "section",
+          "label": "section Fourier",
+          "text": "section Fourier"
+        },
+        {
+          "hash": "f45314ce4fc085e6c9cf8ef925bc51dd5613a960b1ab760dc654665b8ce4ef0c",
+          "kind": "variable",
+          "label": "variable (L : ℕ) [NeZero L]",
+          "text": "variable (L : ℕ) [NeZero L]"
+        },
+        {
+          "hash": "c9e320c0c5fb35d74307cdbd4f78a1c626abbe96519ad4dd9c034e06a4369701",
+          "kind": "end",
+          "label": "end Fourier",
+          "text": "end Fourier"
+        },
+        {
+          "hash": "9ed83c5c6311467527e455f31dcd37e4743d8aef70e6e7417bdb1349f4a00a8a",
+          "kind": "section",
+          "label": "section Energy",
+          "text": "section Energy"
+        },
+        {
+          "hash": "7a28cdd05dcfc9e2a91a884da0d238ccb4694ef814fc10cb4bef914b813be6e1",
+          "kind": "variable",
+          "label": "variable (L : ℕ)",
+          "text": "variable (L : ℕ)"
+        },
+        {
+          "hash": "18d4641a86aff61b03f677959d381bfe7c44d8fd0b785e9b0465e06aff186ff7",
+          "kind": "end",
+          "label": "end Energy",
+          "text": "end Energy"
+        },
+        {
+          "hash": "5953b8693669572da922758f75c9d0c12bc836af530a15181ced7c507158d1f2",
+          "kind": "end",
+          "label": "end Bosonize.Ch05",
+          "text": "end Bosonize.Ch05"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch05.bare_annihilation_commutator": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "4203175cb703fbab91b14268d571b1e219fae11ff38e7f6378d4298e6757a1d0",
+          "kind": "lemma",
+          "text": "lemma bare_annihilation_commutator (k : Ch01.Band L) : A02.commutator (bareHamiltonian L) (momentumAnnihilation L k) = (-k.val : ℂ) • momentumAnnihilation L k"
+        },
+        "Bosonize.Ch05.bare_creation_commutator": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "0ff8ed800d8f25e0a25a1e807785eff6eade52db6b6298421fd7f5c8e3dc63c5",
+          "kind": "lemma",
+          "text": "lemma bare_creation_commutator (k : Ch01.Band L) : A02.commutator (bareHamiltonian L) (momentumCreation L k) = (k.val : ℂ) • momentumCreation L k"
+        },
+        "Bosonize.Ch05.bare_hamiltonian_adjoint": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "0e219198b85797954cda44fe2fec0d3123f1126db9f69265998546d721f01249",
+          "kind": "lemma",
+          "text": "lemma bare_hamiltonian_adjoint : LinearMap.adjoint (bareHamiltonian L) = bareHamiltonian L"
+        },
+        "Bosonize.Ch05.bare_hamiltonian_ket": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "7140486ab35c8749ed1db22de36a2f73ea08ddda43ab399ad091acea7e716d38",
+          "kind": "lemma",
+          "text": "lemma bare_hamiltonian_ket (S : A02.Occupation (Ch01.Band L)) : bareHamiltonian L (A02.ket S) = (occupationEnergy L S : ℂ) • A02.ket S"
+        },
+        "Bosonize.Ch05.bare_hamiltonian_sea": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "26bd9cdfd46b04bd33f719ad5bcd48ebfbab1d754f0e78d78ac180fed52e5720",
+          "kind": "lemma",
+          "text": "lemma bare_hamiltonian_sea : bareHamiltonian L (seaKet L) = (seaEnergy L : ℂ) • seaKet L"
+        },
+        "Bosonize.Ch05.bare_sea_action_ne_zero": {
+          "ctx": "a2f0ceea4da551b482e005be5994e8947865ed49a6b9b0671713f3f3df142f58",
+          "hash": "298787b3e7259b466fbae616ec1e53851251d892759b4bbb01ddffa03a3242c4",
+          "kind": "lemma",
+          "text": "lemma bare_sea_action_ne_zero (h : ℕ) (hh : 2 ≤ h) : bareHamiltonian (2*h) (seaKet (2*h)) ≠ 0"
+        },
+        "Bosonize.Ch05.inverse_annihilation": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "1aa22ab93cc7953e8804dc8ab93973903557c400b3e25d884bea190155dc9137",
+          "kind": "lemma",
+          "text": "lemma inverse_annihilation (k : Ch01.Band L) : momentumAnnihilation L k = (A01.normalization L : ℂ) • ∑ x : Ch01.Lattice L, A01.integerCharacter (A01.canonicalRoot L) (-k.val) (x.val : ℤ) • positionAnnihilation L x"
+        },
+        "Bosonize.Ch05.inverse_creation": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "54ad1eac3bbb13ca7dc150933cc99cf18f85f8ca1f883912540378575a42c5fa",
+          "kind": "lemma",
+          "text": "lemma inverse_creation (k : Ch01.Band L) : momentumCreation L k = (A01.normalization L : ℂ) • ∑ x : Ch01.Lattice L, A01.bandCharacter L (A01.canonicalRoot L) k x • positionCreation L x"
+        },
+        "Bosonize.Ch05.parity_position_annihilation": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "8850e7f5e6267e4404a9b9c186d000496382ae9794e7e0082595c99239b8edcd",
+          "kind": "lemma",
+          "text": "lemma parity_position_annihilation (x : Ch01.Lattice L) : parity L * positionAnnihilation L x = -(positionAnnihilation L x * parity L)"
+        },
+        "Bosonize.Ch05.parity_position_creation": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "1126e5cb2b4cf20d87504fe1d242ead1d384d7cda644156bf43436d01de7fb9b",
+          "kind": "lemma",
+          "text": "lemma parity_position_creation (x : Ch01.Lattice L) : parity L * positionCreation L x = -(positionCreation L x * parity L)"
+        },
+        "Bosonize.Ch05.position_annihilation_car": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "d1e30c7e55e1e7eef729d4152780647ee30a4339513e8e14f7c38bf4eed15eff",
+          "kind": "lemma",
+          "text": "lemma position_annihilation_car (x y : Ch01.Lattice L) : A02.anticommutator (positionAnnihilation L x) (positionAnnihilation L y) = 0"
+        },
+        "Bosonize.Ch05.position_annihilation_eq_adjoint": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "0fbeca2de3a4092179817d486e2d07f6e53f8707095943f5c89923c1fffd36d4",
+          "kind": "lemma",
+          "text": "lemma position_annihilation_eq_adjoint (x : Ch01.Lattice L) : positionAnnihilation L x = LinearMap.adjoint (positionCreation L x)"
+        },
+        "Bosonize.Ch05.position_annihilation_vacuum": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "57cae640b36199578e638ea364fb5f416066a003ac0ac31777220eda4a0f437e",
+          "kind": "lemma",
+          "text": "lemma position_annihilation_vacuum (x : Ch01.Lattice L) : positionAnnihilation L x (A02.ket ∅) = 0"
+        },
+        "Bosonize.Ch05.position_car_exists": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "a993aee650ca6fc2ac1ebc1d57c1433e335ceb2401f9b0ed869d42a672ae8eed",
+          "kind": "lemma",
+          "text": "lemma position_car_exists : ∃ R : A02.CAR (Ch01.Lattice L) (FockSpace L), R.annihilation = positionAnnihilation L ∧ R.creation = positionCreation L"
+        },
+        "Bosonize.Ch05.position_creation_car": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "5f1256041712e10533028bb4f8766021f4f019bf38615bf5dcd5162aa0e4fb4b",
+          "kind": "lemma",
+          "text": "lemma position_creation_car (x y : Ch01.Lattice L) : A02.anticommutator (positionCreation L x) (positionCreation L y) = 0"
+        },
+        "Bosonize.Ch05.position_creation_eq_adjoint": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "ce44f540fd61185e7fb104e1817853eefe906ebf8a5d94c7bcb5e15e4a613015",
+          "kind": "lemma",
+          "text": "lemma position_creation_eq_adjoint (x : Ch01.Lattice L) : positionCreation L x = LinearMap.adjoint (positionAnnihilation L x)"
+        },
+        "Bosonize.Ch05.position_creation_vacuum_ne_zero": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "19fc057ab1460a9347f4818caf38ac5a6cdf5c7cb602d73c7e80fb62a430686d",
+          "kind": "lemma",
+          "text": "lemma position_creation_vacuum_ne_zero (x : Ch01.Lattice L) : positionCreation L x (A02.ket ∅) ≠ 0"
+        },
+        "Bosonize.Ch05.position_mixed_car": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "d1e1d910d11b0ccc8e52e6315463acbcd6d76cf2d904cf4e8043eacb476210c8",
+          "kind": "lemma",
+          "text": "lemma position_mixed_car (x y : Ch01.Lattice L) : A02.anticommutator (positionAnnihilation L x) (positionCreation L y) = (if x = y then (1 : ℂ) else 0) • (1 : Operators L)"
+        },
+        "Bosonize.Ch05.position_number_adjoint": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "e57a7881b47c5d5ff83bbb2bf478eae63172576f4de4f27005ddcfe5fe781ead",
+          "kind": "lemma",
+          "text": "lemma position_number_adjoint (x : Ch01.Lattice L) : LinearMap.adjoint (positionNumber L x) = positionNumber L x"
+        },
+        "Bosonize.Ch05.position_number_commute": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "e3bcc38846588391c8dec252bd2cd7144cb247fbb32374b141954ca719fb47ed",
+          "kind": "lemma",
+          "text": "lemma position_number_commute (x y : Ch01.Lattice L) : positionNumber L x * positionNumber L y = positionNumber L y * positionNumber L x"
+        },
+        "Bosonize.Ch05.position_number_idempotent": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "d971ffcb7dba38caeb22036e0dc36f45534a6e1a162c0bd8455ccd2f26b23f15",
+          "kind": "lemma",
+          "text": "lemma position_number_idempotent (x : Ch01.Lattice L) : positionNumber L x * positionNumber L x = positionNumber L x"
+        },
+        "Bosonize.Ch05.sea_card_even": {
+          "ctx": "a2f0ceea4da551b482e005be5994e8947865ed49a6b9b0671713f3f3df142f58",
+          "hash": "27f2ca5b561f58d52f7c83c7ed825ddaceee52f96bcba533bca3a62fedce78ac",
+          "kind": "lemma",
+          "text": "lemma sea_card_even (h : ℕ) (hh : 0 < h) : (seaConfiguration (2*h)).card = h"
+        },
+        "Bosonize.Ch05.sea_energy_even": {
+          "ctx": "a2f0ceea4da551b482e005be5994e8947865ed49a6b9b0671713f3f3df142f58",
+          "hash": "8dbbf1035e0855ed9470496d948752dc98cf4994d8d341942f1719c1ee41b0c5",
+          "kind": "lemma",
+          "text": "lemma sea_energy_even (h : ℕ) (hh : 0 < h) : seaEnergy (2*h) = -((h : ℤ) * ((h : ℤ) - 1) / 2)"
+        },
+        "Bosonize.Ch05.sea_energy_half_size_one": {
+          "ctx": "a2f0ceea4da551b482e005be5994e8947865ed49a6b9b0671713f3f3df142f58",
+          "hash": "4bba1a2f57bddc3fd59ed4aa12ddcc1c1b9074e4602a253055eb252e9f206785",
+          "kind": "lemma",
+          "text": "lemma sea_energy_half_size_one : seaEnergy 2 = 0"
+        },
+        "Bosonize.Ch05.sea_energy_negative": {
+          "ctx": "a2f0ceea4da551b482e005be5994e8947865ed49a6b9b0671713f3f3df142f58",
+          "hash": "bc1f212315b7a86331816f325e52b2b006011a1e7c021a87bd90928072258e0f",
+          "kind": "lemma",
+          "text": "lemma sea_energy_negative (h : ℕ) (hh : 2 ≤ h) : seaEnergy (2*h) < 0"
+        },
+        "Bosonize.Ch05.sea_ket_ne_zero": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "0c9c6af5f8775c1c07029d1f831c6d4e8b79c9294330348a73961f68eed4b428",
+          "kind": "lemma",
+          "text": "lemma sea_ket_ne_zero : seaKet L ≠ 0"
+        },
+        "Bosonize.Ch05.shifted_annihilation_commutator": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "f0b22a63e9c6529a7bdec10448bdc5ae1d910179ac6efd28541d2775459897e3",
+          "kind": "lemma",
+          "text": "lemma shifted_annihilation_commutator (k : Ch01.Band L) : A02.commutator (shiftedHamiltonian L) (momentumAnnihilation L k) = (-k.val : ℂ) • momentumAnnihilation L k"
+        },
+        "Bosonize.Ch05.shifted_creation_commutator": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "a59a01c4e88e9c64f93e2071a3d60e3b4fbbb2112836e77a7ca1779c7a3b727c",
+          "kind": "lemma",
+          "text": "lemma shifted_creation_commutator (k : Ch01.Band L) : A02.commutator (shiftedHamiltonian L) (momentumCreation L k) = (k.val : ℂ) • momentumCreation L k"
+        },
+        "Bosonize.Ch05.shifted_hamiltonian_adjoint": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "bb37c75ab8bb20981bc62897c3845eb6280f4dce5d3007e479be4e7004af00b2",
+          "kind": "lemma",
+          "text": "lemma shifted_hamiltonian_adjoint : LinearMap.adjoint (shiftedHamiltonian L) = shiftedHamiltonian L"
+        },
+        "Bosonize.Ch05.shifted_hamiltonian_ket": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "3d31acd454f5adf9a51fcc39ebd3fcc8b9a8703ab87980030434d1569ed9386d",
+          "kind": "lemma",
+          "text": "lemma shifted_hamiltonian_ket (S : A02.Occupation (Ch01.Band L)) : shiftedHamiltonian L (A02.ket S) = ((occupationEnergy L S - seaEnergy L : ℤ) : ℂ) • A02.ket S"
+        },
+        "Bosonize.Ch05.shifted_hamiltonian_sea": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "1b0c85e7c511e595b4e27ffe78e4f0a43842ad8e52bd73e7c77c8eb530978e21",
+          "kind": "lemma",
+          "text": "lemma shifted_hamiltonian_sea : shiftedHamiltonian L (seaKet L) = 0"
+        },
+        "Bosonize.Ch05.total_number_ket": {
+          "ctx": "1a30ffee488d3ceb8f6c1f3a45043dadb28977a57030c5a2ada3bb1aff7f963e",
+          "hash": "814733b4a7f07685db7504b3b9b8e4584e1003e39803edcefe955291749ae715",
+          "kind": "lemma",
+          "text": "lemma total_number_ket (S : A02.Occupation (Ch01.Band L)) : totalNumber L (A02.ket S) = (S.card : ℂ) • A02.ket S"
+        },
+        "Bosonize.Ch05.total_number_position": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "5e7fdd01150e18e78e160c880bf7e1c6c79a426c24afb531ee65a9d5ef23bf26",
+          "kind": "lemma",
+          "text": "lemma total_number_position : (∑ x : Ch01.Lattice L, positionNumber L x) = totalNumber L"
+        },
+        "Bosonize.Ch05.total_number_position_annihilation_commutator": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "a5f020d61f5a17af141a90f78085a95999f78a57ba90e670b0aa81ab66133ae3",
+          "kind": "lemma",
+          "text": "lemma total_number_position_annihilation_commutator (x : Ch01.Lattice L) : A02.commutator (totalNumber L) (positionAnnihilation L x) = -positionAnnihilation L x"
+        },
+        "Bosonize.Ch05.total_number_position_creation_commutator": {
+          "ctx": "a82924133adba8324e4d2563eba16a15db6978b2a84c313e2487ca97b346214d",
+          "hash": "00787136d03d1fb29c6cab9e6b3da59d573415b5ff47b6d246693738338f8bd5",
+          "kind": "lemma",
+          "text": "lemma total_number_position_creation_commutator (x : Ch01.Lattice L) : A02.commutator (totalNumber L) (positionCreation L x) = positionCreation L x"
+        }
+      }
+    },
+    "BosonizeStubs/Ch06LocalNet.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "a0c899f067fc8c61dca9d3d6031d06ed4ed57169bac13693a6c3dbf5a06c7f25",
+          "kind": "import",
+          "label": "import BosonizeStubs.Ch05Fermions",
+          "text": "import BosonizeStubs.Ch05Fermions"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "572dab5f3c663ecc210e143e90c1b5ffbd723b010980355998d017c9b31336a7",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch04CARFock",
+          "text": "import Bosonize.Core.Ch04CARFock"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "d73042ad1044122255d7f1dfba436136ddd99d5a4ee7e1e5e630df8ed650bee2",
+          "kind": "import",
+          "label": "import Mathlib.Algebra.Algebra.Operations",
+          "text": "import Mathlib.Algebra.Algebra.Operations"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "c94fd780a7e26335a2de0872d8942fb1a8079af28fefaa5425344a4b9b289a72",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch06",
+          "text": "namespace Bosonize.Ch06"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "fb4326c0ba32a11f7d69003d2bf47638dfbbbd4dbdd3634b8cff960e6b569b49",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch06.FockSpace",
+          "text": "abbrev FockSpace (L : ℕ) := Ch05.FockSpace L"
+        },
+        {
+          "hash": "7694cff2bf8ef93979264bb81e8b45e26abbae27f2f7b808293e37625fba9e9a",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch06.Operators",
+          "text": "abbrev Operators (L : ℕ) := Ch05.Operators L"
+        },
+        {
+          "hash": "b34ecc6c37afdf6f723ac236a6d066f04afeddfa5cf968e9e8bb413c9515a443",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch06.Region",
+          "text": "abbrev Region (L : ℕ) := Set (Ch01.Lattice L)"
+        },
+        {
+          "hash": "9d7ae4f39fb3716501f0f8e95d1470cc8b2a7f5c6a5909e2e26c509e130334c0",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch06.Occupation",
+          "text": "abbrev Occupation (L : ℕ) := A02.Occupation (Ch01.Band L)"
+        },
+        {
+          "hash": "64533aae88011ee8ecaadf0baab9c0add169bbc65cb20b5b036c5c2878fd3833",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch06.Degree",
+          "text": "abbrev Degree := Fin 2"
+        },
+        {
+          "hash": "af2731cc370fde268468ef1c3d6090c1c4b1260e649754e8106cc93223c6344b",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch06.Letter",
+          "text": "abbrev Letter (L : ℕ) := Ch01.Lattice L × Bool"
+        },
+        {
+          "hash": "f45314ce4fc085e6c9cf8ef925bc51dd5613a960b1ab760dc654665b8ce4ef0c",
+          "kind": "variable",
+          "label": "variable (L : ℕ) [NeZero L]",
+          "text": "variable (L : ℕ) [NeZero L]"
+        },
+        {
+          "hash": "fcbb5031ba5efb71906feb6ab13a11a6df4021b9d6f0888cd9aaa7172f0b41d4",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.localGenerators",
+          "text": "def localGenerators (I : Region L) : Set (Operators L) :=\n  {A | ∃ x ∈ I, A = Ch05.positionAnnihilation L x ∨ A = Ch05.positionCreation L x}"
+        },
+        {
+          "hash": "b96b987c45e304d2986796010459d3cee245659eb43ee0bbe2e90d91bf31e241",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.localAlgebra",
+          "text": "noncomputable def localAlgebra (I : Region L) : Subalgebra ℂ (Operators L) :=\n  Algebra.adjoin ℂ (localGenerators L I)"
+        },
+        {
+          "hash": "a0797a90b58abc56501400d79f22812d5bf678142d6b2a37cf47f58e1725624f",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.parityOperator",
+          "text": "noncomputable def parityOperator : Operators L := Ch04.parity (ι := Ch01.Band L)"
+        },
+        {
+          "hash": "e6934c3f4c67da457aacebbf3926ca4a4bfa967237edbd803464616ef083bf90",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.parityMap",
+          "text": "noncomputable def parityMap : Operators L →ₗ[ℂ] Operators L :=\n  (LinearMap.mulRight ℂ (parityOperator L)).comp (LinearMap.mulLeft ℂ (parityOperator L))"
+        },
+        {
+          "hash": "c3b74adb93d5931916904131936e752e2223fa3377d8c35bb79c6e8d9b183d37",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.degreeSign",
+          "text": "def degreeSign (σ : Degree) : ℂ := (-1 : ℂ) ^ σ.val"
+        },
+        {
+          "hash": "10a76731ee4fe29cafbf06d44c87d6c51e010d89e46579963f1f4817f43c5e84",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.localPart",
+          "text": "noncomputable def localPart (I : Region L) (σ : Degree) : Submodule ℂ (Operators L) :=\n  (localAlgebra L I).toSubmodule ⊓\n    LinearMap.ker (parityMap L - degreeSign σ • LinearMap.id)"
+        },
+        {
+          "hash": "663c1fa20787f8c95113773293eb121ed496ab91b6c329bbfe5f341ed55acf23",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch06.evenPart",
+          "text": "noncomputable abbrev evenPart (I : Region L) : Submodule ℂ (Operators L) :=\n  localPart L I 0"
+        },
+        {
+          "hash": "a30961f5c5bbdaa7b647093d76a934ca30088de3fbb2e47a0548354b5df19d45",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch06.oddPart",
+          "text": "noncomputable abbrev oddPart (I : Region L) : Submodule ℂ (Operators L) :=\n  localPart L I 1"
+        },
+        {
+          "hash": "5884843837f74936dab85ebd4672b81cf4cca91189ec4238f5c49a6e6b307040",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.evenProjection",
+          "text": "noncomputable def evenProjection : Operators L →ₗ[ℂ] Operators L :=\n  (2 : ℂ)⁻¹ • (LinearMap.id + parityMap L)"
+        },
+        {
+          "hash": "ed7233e2a9c9d1d840948756592eae7b904bbbbbfd97a85bbbd60cd26ad182c7",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.oddProjection",
+          "text": "noncomputable def oddProjection : Operators L →ₗ[ℂ] Operators L :=\n  (2 : ℂ)⁻¹ • (LinearMap.id - parityMap L)"
+        },
+        {
+          "hash": "1f1340237be632ffef3ce5db5168568d5f5dc2b45db15016c4859349c2d57e51",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.letterOperator",
+          "text": "noncomputable def letterOperator (a : Letter L) : Operators L :=\n  if a.2 then Ch05.positionCreation L a.1 else Ch05.positionAnnihilation L a.1"
+        },
+        {
+          "hash": "60cb09f380f1d2f74d2e61b1daa66c5e6d97a0cb67ce2779530ed0ac5d407b70",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.wordOperator",
+          "text": "noncomputable def wordOperator (w : List (Letter L)) : Operators L :=\n  (w.map (letterOperator L)).prod"
+        },
+        {
+          "hash": "5db7907891d9af243cc3d929488b46fd8c48cf752bdd1e59d56f84017a5b0253",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.supportedWord",
+          "text": "def supportedWord (I : Region L) (w : List (Letter L)) : Prop :=\n  ∀ a ∈ w, a.1 ∈ I"
+        },
+        {
+          "hash": "cbe7a2bb16b78c71bf386905bd4ebe3bd79ff4edc4455f2e335b2ece37dc223c",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.homogeneousWordSpan",
+          "text": "noncomputable def homogeneousWordSpan (I : Region L) (σ : Degree) :\n    Submodule ℂ (Operators L) :=\n  Submodule.span ℂ {A | ∃ w : List (Letter L), supportedWord L I w ∧\n    w.length % 2 = σ.val ∧ A = wordOperator L w}"
+        },
+        {
+          "hash": "69e5f4645dde3533fbab75e8b9b54ebfe7120bc5dd4582cf53c86246aa6ff4fa",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.creatorWord",
+          "text": "noncomputable def creatorWord (S : Occupation L) : Operators L :=\n  (((S.sort (· ≤ ·)).reverse).map (Ch05.momentumCreation L)).prod"
+        },
+        {
+          "hash": "deeff1ec1aaa7e0288de6b276ba2bd3aecb88c1de5945e66914b220ee030166d",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.annihilatorWord",
+          "text": "noncomputable def annihilatorWord (S : Occupation L) : Operators L :=\n  ((S.sort (· ≤ ·)).map (Ch05.momentumAnnihilation L)).prod"
+        },
+        {
+          "hash": "bea956362898eb7f75713318bc40714a14d9f0bf279ef39ec4e76d8b01e0e141",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.creatorSign",
+          "text": "def creatorSign (S : Occupation L) : ℂ :=\n  (-1 : ℂ) ^ (S.card * (S.card - 1) / 2)"
+        },
+        {
+          "hash": "bc4e9458c852d2ef39538cdcc9d7e497b2cd6ffdaaef967e22bca4cd4182b544",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.vacuumProjector",
+          "text": "noncomputable def vacuumProjector : Operators L :=\n  (((Finset.univ : Finset (Ch01.Band L)).sort (· ≤ ·)).map\n    (fun k => 1 - Ch04.number k)).prod"
+        },
+        {
+          "hash": "9b7330ca5a7592644939f3a774f3361966f05acb284616362867042370d803f1",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.matrixUnit",
+          "text": "noncomputable def matrixUnit (S T : Occupation L) : Operators L :=\n  A02.extendBasis fun U => if U = T then A02.ket S else 0"
+        },
+        {
+          "hash": "dc26210dcf12954fe3e4656d303b42f3870be2ec8ff39209cc484fa7def336bc",
+          "kind": "def",
+          "label": "def Bosonize.Ch06.orderedMatrixUnit",
+          "text": "noncomputable def orderedMatrixUnit (S T : Occupation L) : Operators L :=\n  (creatorSign L S * creatorSign L T) •\n    (creatorWord L S * vacuumProjector L * annihilatorWord L T)"
+        },
+        {
+          "hash": "1a3f49e7cbc59acf91be0148d6c928cf306535672aefe7bf49b4a7b596acf35d",
+          "kind": "end",
+          "label": "end Bosonize.Ch06",
+          "text": "end Bosonize.Ch06"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch06.annihilation_mem_local": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "03f57f789263dfaf68791aa220e2655dfdb3cec18403214d517f3918d2a19da4",
+          "kind": "lemma",
+          "text": "lemma annihilation_mem_local (I : Region L) (x : Ch01.Lattice L) (hx : x ∈ I) : Ch05.positionAnnihilation L x ∈ localAlgebra L I"
+        },
+        "Bosonize.Ch06.annihilation_nonzero": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "5f54d748e76f3b546bb95c92ab74c4b8c9b2dc62aa84599d4a8c09e8be4c20e6",
+          "kind": "lemma",
+          "text": "lemma annihilation_nonzero (x : Ch01.Lattice L) : Ch05.positionAnnihilation L x ≠ 0"
+        },
+        "Bosonize.Ch06.annihilator_word_adjoint": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "38bef07c2050a6cbbb18941ad22edb2d31cdcbca86b3379458b5852ae757b7be",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma annihilator_word_adjoint (S : Occupation L) : annihilatorWord L S = LinearMap.adjoint (creatorWord L S)"
+        },
+        "Bosonize.Ch06.creation_mem_local": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "119cce1cb43ab086c8abc9b8e653a762f39ec12abe5ff5ec6780d639c29f280c",
+          "kind": "lemma",
+          "text": "lemma creation_mem_local (I : Region L) (x : Ch01.Lattice L) (hx : x ∈ I) : Ch05.positionCreation L x ∈ localAlgebra L I"
+        },
+        "Bosonize.Ch06.creator_sign_square": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "2fd57db7e361b290657e7c7112a06de8cc034f58f5ddde6b875830698d0f8b62",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma creator_sign_square (S : Occupation L) : creatorSign L S * creatorSign L S = 1"
+        },
+        "Bosonize.Ch06.creator_word_vacuum": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "1dea3c2e98057301fdeba2dbf8c00ee7824575012e9a744694a62fab2b9c07cc",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma creator_word_vacuum (S : Occupation L) : creatorWord L S (A02.ket ∅) = creatorSign L S • A02.ket S"
+        },
+        "Bosonize.Ch06.disjoint_word_swap": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "3604173a866a816ed152d4206a0cc45e8b5ef6830ac4c2b7de07675704b4dcfb",
+          "kind": "lemma",
+          "text": "lemma disjoint_word_swap (I J : Region L) (hIJ : Disjoint I J) (u v : List (Letter L)) (hu : supportedWord L I u) (hv : supportedWord L J v) : wordOperator L u * wordOperator L v = (-1 : ℂ) ^ (u.length * v.length) • (wordOperator L v * wordOperator L u)"
+        },
+        "Bosonize.Ch06.even_locality": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "8cdc5ca0a9ece18cd9f05886db5b160b58883c7f9e5515777f1649abe800b630",
+          "kind": "lemma",
+          "text": "lemma even_locality (I J : Region L) (hIJ : Disjoint I J) (A B : Operators L) (hA : A ∈ evenPart L I) (hB : B ∈ evenPart L J) : A02.commutator A B = 0"
+        },
+        "Bosonize.Ch06.even_part_empty": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "16ca84d1c8b15d51d505077b066b3a3a14ac6c7c04517065af38f0461e0ef907",
+          "kind": "lemma",
+          "text": "lemma even_part_empty : evenPart L ∅ = (localAlgebra L ∅).toSubmodule"
+        },
+        "Bosonize.Ch06.even_projection_idempotent": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "2f3b1000cd7842bd9b9a25ed204aece1fa4dda1b2c982d2e751365dab758cf72",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma even_projection_idempotent (A : Operators L) : evenProjection L (evenProjection L A) = evenProjection L A"
+        },
+        "Bosonize.Ch06.even_projection_mem": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "8cb3c50b51e64b407428d53e748f5a33c2c84045bd52cd77ec6a80598844e018",
+          "kind": "lemma",
+          "text": "lemma even_projection_mem (I : Region L) (A : Operators L) (hA : A ∈ localAlgebra L I) : evenProjection L A ∈ evenPart L I"
+        },
+        "Bosonize.Ch06.even_subalgebra_exists": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "7410d2e3fbcb22f70b2deed7c736a4f64a04b42e73994e22890928a79df0f90a",
+          "kind": "lemma",
+          "text": "lemma even_subalgebra_exists (I : Region L) : ∃ E : Subalgebra ℂ (Operators L), E.toSubmodule = evenPart L I"
+        },
+        "Bosonize.Ch06.global_algebra_eq_top": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "6abda966ce839cc4207c6091e4c682aa1e03a13362a4c8fbc9be4b2cf7134366",
+          "kind": "lemma",
+          "text": "lemma global_algebra_eq_top : localAlgebra L Set.univ = ⊤"
+        },
+        "Bosonize.Ch06.graded_mul": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "28e62b4778f759fec38b2aacaf8c884590734ede544b2b2c742722a343ed6d45",
+          "kind": "lemma",
+          "text": "lemma graded_mul (I : Region L) (σ τ : Degree) (A B : Operators L) (hA : A ∈ localPart L I σ) (hB : B ∈ localPart L I τ) : A * B ∈ localPart L I (σ + τ)"
+        },
+        "Bosonize.Ch06.graded_star": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "5ca82d02a2870d6756d31a107320a1b970f8770e320cf0f2d2a3884e9cd92d44",
+          "kind": "lemma",
+          "text": "lemma graded_star (I : Region L) (σ : Degree) (A : Operators L) (hA : A ∈ localPart L I σ) : star A ∈ localPart L I σ"
+        },
+        "Bosonize.Ch06.local_algebra_empty": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "9827be0c5869cce237f583e91466f1b07b439b4808f011a6c26a26a0eea66509",
+          "kind": "lemma",
+          "text": "lemma local_algebra_empty : localAlgebra L ∅ = ⊥"
+        },
+        "Bosonize.Ch06.local_algebra_empty_scalar": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "8e4f58d5047181431384b260e8633ba5fd2f9b8cfff9cf04221343dc5dc80738",
+          "kind": "lemma",
+          "text": "lemma local_algebra_empty_scalar (A : Operators L) : A ∈ localAlgebra L ∅ ↔ ∃ z : ℂ, A = z • (1 : Operators L)"
+        },
+        "Bosonize.Ch06.local_algebra_mono": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "e89b370b85c5dc6acad06793e4ff2275c912e7c7875418d2b467632adf01b832",
+          "kind": "lemma",
+          "text": "lemma local_algebra_mono (I J : Region L) (hIJ : I ⊆ J) : localAlgebra L I ≤ localAlgebra L J"
+        },
+        "Bosonize.Ch06.local_algebra_star_closed": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "c46e9a0cd11da95f67ab7fbaf293ded46154867548bdb549394195d235a0a0ba",
+          "kind": "lemma",
+          "text": "lemma local_algebra_star_closed (I : Region L) (A : Operators L) (hA : A ∈ localAlgebra L I) : star A ∈ localAlgebra L I"
+        },
+        "Bosonize.Ch06.local_algebra_union": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "93c9a2a3588f23d6c5674d7186eeeab00ede0c55b666988489e040c05aa7900b",
+          "kind": "lemma",
+          "text": "lemma local_algebra_union (I J : Region L) : localAlgebra L (I ∪ J) = localAlgebra L I ⊔ localAlgebra L J"
+        },
+        "Bosonize.Ch06.local_even_proper": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "03426c3f4b359884510d75125ec46f1ad1ebc5e83e16091282ac9e4e5a8f9a60",
+          "kind": "lemma",
+          "text": "lemma local_even_proper (I : Region L) (hI : I.Nonempty) : evenPart L I < (localAlgebra L I).toSubmodule"
+        },
+        "Bosonize.Ch06.local_grading_disjoint": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "ef405c1eee74cdc3e259897abd8fbf699163b96e4739783d20b0e424d0128a66",
+          "kind": "lemma",
+          "text": "lemma local_grading_disjoint (I : Region L) : Disjoint (evenPart L I) (oddPart L I)"
+        },
+        "Bosonize.Ch06.local_grading_sup": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "d1b4f7c50be0177f1b64400992b1afc2c4718f92cddb253ac3fc62b5eecc452e",
+          "kind": "lemma",
+          "text": "lemma local_grading_sup (I : Region L) : evenPart L I ⊔ oddPart L I = (localAlgebra L I).toSubmodule"
+        },
+        "Bosonize.Ch06.local_odd_witness": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "5fa84bfe31c07d74eea885c798998af6eb9d03f9db9b928b51784695d5e9c1a8",
+          "kind": "lemma",
+          "text": "lemma local_odd_witness (I : Region L) (x : Ch01.Lattice L) (hx : x ∈ I) : Ch05.positionAnnihilation L x ∈ oddPart L I ∧ Ch05.positionAnnihilation L x ≠ 0"
+        },
+        "Bosonize.Ch06.local_parity_automorphism_exists": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "fd5393d8411bdd80eeaf55dd1f9d586a52a54aa1a7a7a85eba4da9a9c4550cd6",
+          "kind": "lemma",
+          "text": "lemma local_parity_automorphism_exists (I : Region L) : ∃ α : localAlgebra L I ≃ₐ[ℂ] localAlgebra L I, ∀ A, (α A : Operators L) = parityMap L (A : Operators L)"
+        },
+        "Bosonize.Ch06.local_part_eq_word_span": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "ee33fbb54b771cf123280b92ce5991ad4550db90c9fd48f4853676016ed5215f",
+          "kind": "lemma",
+          "text": "lemma local_part_eq_word_span (I : Region L) (σ : Degree) : localPart L I σ = homogeneousWordSpan L I σ"
+        },
+        "Bosonize.Ch06.matrix_unit_expansion": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "7a8b24c81ccf10328bfdd94cb4cddc2eccbcbf090c8e9ad7238adb5af0aba606",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma matrix_unit_expansion (A : Operators L) : A = ∑ S : Occupation L, ∑ T : Occupation L, (A (A02.ket T)) S • matrixUnit L S T"
+        },
+        "Bosonize.Ch06.matrix_unit_ket": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "10f4637ae5cc3104f8150f39e849fcdac9e88eb487223d4383566f6077d1d7bb",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma matrix_unit_ket (S T U : Occupation L) : matrixUnit L S T (A02.ket U) = if U = T then A02.ket S else 0"
+        },
+        "Bosonize.Ch06.matrix_unit_mem_global": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "68f79180bf7574dbd82223478498f4d50d699436ec3e542711f5a609dd15a83a",
+          "kind": "lemma",
+          "text": "lemma matrix_unit_mem_global (S T : Occupation L) : matrixUnit L S T ∈ localAlgebra L Set.univ"
+        },
+        "Bosonize.Ch06.mem_local_part": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "c23a1b1f2fa71c3d4953e7af814fd40a89261d77c8bc10ecfc7607c88545b130",
+          "kind": "lemma",
+          "text": "lemma mem_local_part (I : Region L) (σ : Degree) (A : Operators L) : A ∈ localPart L I σ ↔ A ∈ localAlgebra L I ∧ parityMap L A = degreeSign σ • A"
+        },
+        "Bosonize.Ch06.mixed_projections_zero": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "95d6e4df2483c5b5a65d5534ba8065081c6347dc9df445af9bbc6940dbb525a1",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma mixed_projections_zero (A : Operators L) : evenProjection L (oddProjection L A) = 0 ∧ oddProjection L (evenProjection L A) = 0"
+        },
+        "Bosonize.Ch06.momentum_annihilation_mem_global": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "40e04da496178e19d3457262924c2a16a1a349a3d5d5cd23fb357828e13bc730",
+          "kind": "lemma",
+          "text": "lemma momentum_annihilation_mem_global (k : Ch01.Band L) : Ch05.momentumAnnihilation L k ∈ localAlgebra L Set.univ"
+        },
+        "Bosonize.Ch06.momentum_creation_mem_global": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "4c68b41c1364d2800546f1dc6f8508b64f67bd57fd8cccc2903d3681264a12e1",
+          "kind": "lemma",
+          "text": "lemma momentum_creation_mem_global (k : Ch01.Band L) : Ch05.momentumCreation L k ∈ localAlgebra L Set.univ"
+        },
+        "Bosonize.Ch06.odd_part_empty": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "f8d8b3afb0191c7c71c187aa5b85fad6d226c457ceb602015381dd1bcb782540",
+          "kind": "lemma",
+          "text": "lemma odd_part_empty : oddPart L ∅ = ⊥"
+        },
+        "Bosonize.Ch06.odd_projection_idempotent": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "cdf100b3c6eaa93a6c110d4be6c630ee4a29b92e0151aeaa3e63d31281f47135",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma odd_projection_idempotent (A : Operators L) : oddProjection L (oddProjection L A) = oddProjection L A"
+        },
+        "Bosonize.Ch06.odd_projection_mem": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "3319d97681691e54264ec477a86f8fc9903d530b973920ae48a4270329bbaac8",
+          "kind": "lemma",
+          "text": "lemma odd_projection_mem (I : Region L) (A : Operators L) (hA : A ∈ localAlgebra L I) : oddProjection L A ∈ oddPart L I"
+        },
+        "Bosonize.Ch06.operator_star_eq_adjoint": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "4c8654fbac472e39ef3779c320efd07ea7a837a8b8b7ed6bb1593a751609f9c4",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma operator_star_eq_adjoint (A : Operators L) : star A = LinearMap.adjoint A"
+        },
+        "Bosonize.Ch06.ordered_matrix_unit_eq": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "04496c99bae69f32a4ccab7dc9e5c9716ba496569fcf267410973b52d36e2ba3",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma ordered_matrix_unit_eq (S T : Occupation L) : orderedMatrixUnit L S T = matrixUnit L S T"
+        },
+        "Bosonize.Ch06.parity_annihilation": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "6ea6d93e0a2c6b962e64c7de17ef9c01cfcc3ca5c4a57d87be6f9bb002ab1ec4",
+          "kind": "lemma",
+          "text": "lemma parity_annihilation (x : Ch01.Lattice L) : parityMap L (Ch05.positionAnnihilation L x) = -Ch05.positionAnnihilation L x"
+        },
+        "Bosonize.Ch06.parity_automorphism_exists": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "0f16762bc07985e36465725a31ad145083eadfe1944444b6b8dcda60f099a290",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma parity_automorphism_exists : ∃ α : Operators L ≃ₐ[ℂ] Operators L, (∀ A, α A = parityMap L A) ∧ ∀ A, α (star A) = star (α A)"
+        },
+        "Bosonize.Ch06.parity_creation": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "0cce8b89c8ad64a7cb9a418ff44cd9d343585a5c352bae13b407cb4960d8eb98",
+          "kind": "lemma",
+          "text": "lemma parity_creation (x : Ch01.Lattice L) : parityMap L (Ch05.positionCreation L x) = -Ch05.positionCreation L x"
+        },
+        "Bosonize.Ch06.parity_map_apply": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "27c7754d4d7853aaba510ac01e9533ab559571d40ba4f28968444588ce331eda",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma parity_map_apply (A : Operators L) : parityMap L A = parityOperator L * A * parityOperator L"
+        },
+        "Bosonize.Ch06.parity_map_involutive": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "8d7ea893f5249155e156b618cca469a92f8f4f2d695670358d17c9be774d7e0c",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma parity_map_involutive (A : Operators L) : parityMap L (parityMap L A) = A"
+        },
+        "Bosonize.Ch06.parity_map_mul": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "429f03163a3eadc27a15b8a985aaec19de59ab034bc77e450af7251349c2db2b",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma parity_map_mul (A B : Operators L) : parityMap L (A * B) = parityMap L A * parityMap L B"
+        },
+        "Bosonize.Ch06.parity_map_one": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "c58a19649d14ce6fc8ba2eb9f20474d4e575609b3e3b658dde42a9585e3bb204",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma parity_map_one : parityMap L 1 = 1"
+        },
+        "Bosonize.Ch06.parity_map_star": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "ac07491e6ff2dd7742860c54f14fca7253380bb5fa7e964feb81caee94ec62cf",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma parity_map_star (A : Operators L) : parityMap L (star A) = star (parityMap L A)"
+        },
+        "Bosonize.Ch06.parity_preserves_local": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "e836a6c208535d3cf2d3c2bcb036d0ba5b2f6075c63a037d03d821d83def3076",
+          "kind": "lemma",
+          "text": "lemma parity_preserves_local (I : Region L) (A : Operators L) (hA : A ∈ localAlgebra L I) : parityMap L A ∈ localAlgebra L I"
+        },
+        "Bosonize.Ch06.projection_decomposition": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "b4485ca66705cb088269d803edae0893d0917b7ea62da6e704a397ef2f0d0eff",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma projection_decomposition (A : Operators L) : evenProjection L A + oddProjection L A = A"
+        },
+        "Bosonize.Ch06.twisted_locality": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "51fea80ecc4d13aa6221d76eec837a875f01412ae529a46d1518f2be602e529a",
+          "kind": "lemma",
+          "text": "lemma twisted_locality (I J : Region L) (hIJ : Disjoint I J) (σ τ : Degree) (A B : Operators L) (hA : A ∈ localPart L I σ) (hB : B ∈ localPart L J τ) : A * B = (-1 : ℂ) ^ (σ.val * τ.val) • (B * A)"
+        },
+        "Bosonize.Ch06.vacuum_projector_idempotent": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "f295e7fe697fc948f3b04110a15e0b5c5a8c5efa5915e149d437277698fc2830",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma vacuum_projector_idempotent : vacuumProjector L * vacuumProjector L = vacuumProjector L"
+        },
+        "Bosonize.Ch06.vacuum_projector_ket": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "f25cd6ccf35ad24d5338e5f33c2b41a1b6212f23e3884a1ed48c0e17f6a5ae2a",
+          "kind": "lemma",
+          "text": "omit [NeZero L] in lemma vacuum_projector_ket (S : Occupation L) : vacuumProjector L (A02.ket S) = if S = ∅ then A02.ket ∅ else 0"
+        },
+        "Bosonize.Ch06.vacuum_projector_mem_global": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "863fc5e20870a52f240c2fac95c08481e6eb327f309bcbd8dff1bec42c870f25",
+          "kind": "lemma",
+          "text": "lemma vacuum_projector_mem_global : vacuumProjector L ∈ localAlgebra L Set.univ"
+        },
+        "Bosonize.Ch06.word_homogeneous": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "359a05a2bcca4bd5542a84e757ec86f1e11c561394ef8fd26ebd9967947d562f",
+          "kind": "lemma",
+          "text": "lemma word_homogeneous (w : List (Letter L)) : parityMap L (wordOperator L w) = (-1 : ℂ) ^ w.length • wordOperator L w"
+        },
+        "Bosonize.Ch06.word_mem_local": {
+          "ctx": "d763b3d20607adb4a67ffd5b417c1da6ad999949753054021cdb5bcd47cd1807",
+          "hash": "38ab1ff7a3c60a1be978d5ccc1a0b2ce2d22edeb45f1169dbfba1e33b5a998d8",
+          "kind": "lemma",
+          "text": "lemma word_mem_local (I : Region L) (w : List (Letter L)) (hw : supportedWord L I w) : wordOperator L w ∈ localAlgebra L I"
+        }
+      }
     }
   },
   "version": 2
