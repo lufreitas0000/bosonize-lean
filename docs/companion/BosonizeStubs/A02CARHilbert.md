@@ -109,13 +109,17 @@ All 18 A02 lemmas are proved. The CAR bilinear and number identities use explici
 
 Fresh `lake env lean -DwarningAsError=true BosonizeStubs/A02CARHilbert.lean` exits 0 with empty diagnostics. Native MCP diagnostics also have empty items, no errors, failed dependencies, timeout, or partial result.
 
-Shared validation:
+Historical pre-cleanup validation (baseline `7a2da78`):
 
 - `STUB_LOCK_BASELINE_REF=7a2da78 make ci` passes all 69 guard tests, 182 frozen statements, 152 frozen commands, four complete Core source hashes, and both library builds. The staging build allows the seven reported CH04 linter warnings; passing CI is not a warning-free promotion result.
 - Strict committed-baseline verification passes. All existing Core bytes, all manifests after the approved initial lock, the toolchain, and the dependency manifest remain unchanged throughout proof work.
 - All 69 A02/CH04 lemmas freshly audited through `import BosonizeStubs` use only subsets of `propext`, `Classical.choice`, `Quot.sound`. Zero `sorryAx`, extra axioms, or placeholder proof tokens remain. A fresh data/constructor/projection audit also uses only standard axioms.
 - The exact source snapshot below matches the current Lean file. The current checkpoint remains in staging. No Phase C promotion is authorized or performed.
 - Declaration search's previously observed missing-`rg` limitation was handled by installed-source `rg`/compiler inspection. Native diagnostic and goal tools worked; a search-tool failure is not reported as total MCP/LSP unavailability.
+
+## Approved interface cleanup validation — 2026-10-09
+
+The user approved the 14 CH04 count/sign prefixes and their lock-record migration. Only those theorem records changed; all other records and complete Core hashes are preserved. Fresh warning-as-error compilation of both staging modules exits 0 with empty output. Native MCP diagnostics for both modules are complete, successful and empty, with no failed dependencies or timeout. Fresh axiom inspection of all 69 lemmas permits only `propext`, `Classical.choice`, `Quot.sound`. Strict guards, 69 guard tests and both library builds pass against the approved cleanup manifest. Use the cleanup commit containing this notebook as the committed baseline. Both modules remain in staging; Phase C awaits separate authorization.
 
 ## Fresh theorem axiom audit
 

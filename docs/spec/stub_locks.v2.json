@@ -1830,39 +1830,39 @@
         },
         "Bosonize.Ch04.fermion_sign_conj": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "6bda423e12cde15002d97a315e7ed7f1e803807166a33041c3d9dc3ff4cd86be",
+          "hash": "f272f52e0b26d63a2aba7f1804dc8582cc5f6361f30f8576b6deab87c22c89dd",
           "kind": "lemma",
-          "text": "lemma fermion_sign_conj (i : ι) (S : A02.Occupation ι) : conj (fermionSign i S) = fermionSign i S"
+          "text": "omit [Fintype ι] in lemma fermion_sign_conj (i : ι) (S : A02.Occupation ι) : conj (fermionSign i S) = fermionSign i S"
         },
         "Bosonize.Ch04.fermion_sign_empty": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "c5207efa1bb20f64f38122fa09acdc4c1ed4941c3c78c03d0f23a7528b43b0b4",
+          "hash": "cdfc2b1300908db41c5f34e1dd29f37e741aa9562f08bfe20664743c2396e5c3",
           "kind": "lemma",
-          "text": "lemma fermion_sign_empty (i : ι) : fermionSign i ∅ = 1"
+          "text": "omit [Fintype ι] in lemma fermion_sign_empty (i : ι) : fermionSign i ∅ = 1"
         },
         "Bosonize.Ch04.fermion_sign_erase_self": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "a167f63c2767daf9c562f467234c58fba550b390af60dfed9339a4bd70ad1624",
+          "hash": "e8077ce0ca4ee8a25681e7ba4bba1c2222164a32097a46f9afc58fb0b4e2ba62",
           "kind": "lemma",
-          "text": "lemma fermion_sign_erase_self (i : ι) (S : A02.Occupation ι) : fermionSign i (S.erase i) = fermionSign i S"
+          "text": "omit [Fintype ι] in lemma fermion_sign_erase_self (i : ι) (S : A02.Occupation ι) : fermionSign i (S.erase i) = fermionSign i S"
         },
         "Bosonize.Ch04.fermion_sign_insert_self": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "d73faa37058050e61ce6e48dc989a965e0ccfbf055938f2fabc8bb336f99390f",
+          "hash": "5917b3f93ed24dc6abd6e2b5deb38d32783bee35ce6092b1173145e80834a7d0",
           "kind": "lemma",
-          "text": "lemma fermion_sign_insert_self (i : ι) (S : A02.Occupation ι) : fermionSign i (insert i S) = fermionSign i S"
+          "text": "omit [Fintype ι] in lemma fermion_sign_insert_self (i : ι) (S : A02.Occupation ι) : fermionSign i (insert i S) = fermionSign i S"
         },
         "Bosonize.Ch04.fermion_sign_ne_zero": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "33bd66d31a2d9a21583598d57f585adfaa18ee8b4e46c3f852e949e1ba58434b",
+          "hash": "dfd3fa60052d26688c1f4074c0f429dbe589b0b7399466335a616f6edac6907a",
           "kind": "lemma",
-          "text": "lemma fermion_sign_ne_zero (i : ι) (S : A02.Occupation ι) : fermionSign i S ≠ 0"
+          "text": "omit [Fintype ι] in lemma fermion_sign_ne_zero (i : ι) (S : A02.Occupation ι) : fermionSign i S ≠ 0"
         },
         "Bosonize.Ch04.fermion_sign_square": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "499fdac370a5bdbfb25e1c019e6e194b4cfc9b4b5ac94ec85154eff9e784bd46",
+          "hash": "c0c0e9cfcecddb4573fad19bb5fc3623911e96d447b0f031568190fa5237beca",
           "kind": "lemma",
-          "text": "lemma fermion_sign_square (i : ι) (S : A02.Occupation ι) : fermionSign i S * fermionSign i S = 1"
+          "text": "omit [Fintype ι] in lemma fermion_sign_square (i : ι) (S : A02.Occupation ι) : fermionSign i S * fermionSign i S = 1"
         },
         "Bosonize.Ch04.hopping_adjoint": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
@@ -1968,51 +1968,51 @@
         },
         "Bosonize.Ch04.preceding_count_empty": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "56428357ba7679c95c9eec67f97f31efb51682bdacbf536ec3707f90930912ac",
+          "hash": "ed652bc6d8719ccbe77b40690a67500e642cebcb60fe4ac6e23187987c9c5531",
           "kind": "lemma",
-          "text": "lemma preceding_count_empty (i : ι) : precedingCount i ∅ = 0"
+          "text": "omit [Fintype ι] in lemma preceding_count_empty (i : ι) : precedingCount i ∅ = 0"
         },
         "Bosonize.Ch04.preceding_count_erase": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "f589e3d7f6bc0beb0b9164758ba7abd591bfbc87152c6cbb16770e81f7f135e0",
+          "hash": "d1222e1b259b4a0cf6d170853854ffb3e727f1c275ebfd783b72c82055523a32",
           "kind": "lemma",
-          "text": "lemma preceding_count_erase (i j : ι) (S : A02.Occupation ι) (hj : j ∈ S) : precedingCount i S = precedingCount i (S.erase j) + if j < i then 1 else 0"
+          "text": "omit [Fintype ι] in lemma preceding_count_erase (i j : ι) (S : A02.Occupation ι) (hj : j ∈ S) : precedingCount i S = precedingCount i (S.erase j) + if j < i then 1 else 0"
         },
         "Bosonize.Ch04.preceding_count_erase_self": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "b76fbdbbb928a718e229c89cec8d4edfbf2fa7a611b4f81839437f7ef91ea97b",
+          "hash": "fcd22d669c55319e0ba9da2d217fab7bb91c9c0a76f1c1e07e843dc7463b9920",
           "kind": "lemma",
-          "text": "lemma preceding_count_erase_self (i : ι) (S : A02.Occupation ι) : precedingCount i (S.erase i) = precedingCount i S"
+          "text": "omit [Fintype ι] in lemma preceding_count_erase_self (i : ι) (S : A02.Occupation ι) : precedingCount i (S.erase i) = precedingCount i S"
         },
         "Bosonize.Ch04.preceding_count_insert": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "4103650d8ed53665ac09c0152dfba03907888777d26cad4b6bd634fa54f38a75",
+          "hash": "daba5eac7f950a964ada2703061052af10a069cd85c2e72bed832598c353a6c6",
           "kind": "lemma",
-          "text": "lemma preceding_count_insert (i j : ι) (S : A02.Occupation ι) (hj : j ∉ S) : precedingCount i (insert j S) = precedingCount i S + if j < i then 1 else 0"
+          "text": "omit [Fintype ι] in lemma preceding_count_insert (i j : ι) (S : A02.Occupation ι) (hj : j ∉ S) : precedingCount i (insert j S) = precedingCount i S + if j < i then 1 else 0"
         },
         "Bosonize.Ch04.preceding_count_insert_self": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "97aad738bf3d5bd62ed78ec00ea8c217dd37d113a358a38370db6dca8ebec994",
+          "hash": "8521fe7bdcf724ab1805cf1c869811e5a3584a3412c29989bc003b598e4c7598",
           "kind": "lemma",
-          "text": "lemma preceding_count_insert_self (i : ι) (S : A02.Occupation ι) : precedingCount i (insert i S) = precedingCount i S"
+          "text": "omit [Fintype ι] in lemma preceding_count_insert_self (i : ι) (S : A02.Occupation ι) : precedingCount i (insert i S) = precedingCount i S"
         },
         "Bosonize.Ch04.sign_erase_erase": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "87b43e0e951e718cc3e00ebeb2dd1c1bac868cb379d063aa775b137c580c6044",
+          "hash": "085ad7bc8afa124dad86437afee847d56c87f7d7b7d50c0de50e2dabaaf915a7",
           "kind": "lemma",
-          "text": "lemma sign_erase_erase (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∈ S) (hj : j ∈ S) : fermionSign j S * fermionSign i (S.erase j) = -(fermionSign i S * fermionSign j (S.erase i))"
+          "text": "omit [Fintype ι] in lemma sign_erase_erase (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∈ S) (hj : j ∈ S) : fermionSign j S * fermionSign i (S.erase j) = -(fermionSign i S * fermionSign j (S.erase i))"
         },
         "Bosonize.Ch04.sign_insert_erase": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "b260cf1c0ba6befdec7bc80be5918870fd1f6da1a0f17239574bf6165a1a5952",
+          "hash": "cd4f0976e268dd25f30015ca59011417cef6742f13ae3e6f2c9b25f0123742e2",
           "kind": "lemma",
-          "text": "lemma sign_insert_erase (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∉ S) (hj : j ∈ S) : fermionSign j S * fermionSign i (S.erase j) = -(fermionSign i S * fermionSign j (insert i S))"
+          "text": "omit [Fintype ι] in lemma sign_insert_erase (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∉ S) (hj : j ∈ S) : fermionSign j S * fermionSign i (S.erase j) = -(fermionSign i S * fermionSign j (insert i S))"
         },
         "Bosonize.Ch04.sign_insert_insert": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
-          "hash": "f62fbdde79bd30276c8c2386cd9217e32d9992952ad30dde4d96f67cb4785476",
+          "hash": "5dda6eab73ac83bb273f6b2107e7f7ef1d35f62f2dacf93bb2c449db38157e9f",
           "kind": "lemma",
-          "text": "lemma sign_insert_insert (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∉ S) (hj : j ∉ S) : fermionSign j S * fermionSign i (insert j S) = -(fermionSign i S * fermionSign j (insert i S))"
+          "text": "omit [Fintype ι] in lemma sign_insert_insert (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∉ S) (hj : j ∉ S) : fermionSign j S * fermionSign i (insert j S) = -(fermionSign i S * fermionSign j (insert i S))"
         },
         "Bosonize.Ch04.total_number_adjoint": {
           "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",

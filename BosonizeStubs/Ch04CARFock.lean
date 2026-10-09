@@ -42,9 +42,11 @@ noncomputable def parity : Module.End ℂ (A02.FockSpace ι) :=
 noncomputable def hopping (i j : ι) : Module.End ℂ (A02.FockSpace ι) :=
   creation i * annihilation j
 
+omit [Fintype ι] in
 lemma preceding_count_empty (i : ι) : precedingCount i ∅ = 0 := by
   simp [precedingCount]
 
+omit [Fintype ι] in
 lemma preceding_count_insert (i j : ι) (S : A02.Occupation ι) (hj : j ∉ S) :
     precedingCount i (insert j S) = precedingCount i S + if j < i then 1 else 0 := by
   classical
@@ -52,43 +54,53 @@ lemma preceding_count_insert (i j : ι) (S : A02.Occupation ι) (hj : j ∉ S) :
   · simp [precedingCount, Finset.filter_insert, hji, hj]
   · simp [precedingCount, Finset.filter_insert, hji]
 
+omit [Fintype ι] in
 lemma preceding_count_erase (i j : ι) (S : A02.Occupation ι) (hj : j ∈ S) :
     precedingCount i S = precedingCount i (S.erase j) + if j < i then 1 else 0 := by
   have h := preceding_count_insert i j (S.erase j) (Finset.notMem_erase j S)
   simpa [Finset.insert_erase hj] using h
 
+omit [Fintype ι] in
 lemma preceding_count_insert_self (i : ι) (S : A02.Occupation ι) :
     precedingCount i (insert i S) = precedingCount i S := by
   simp [precedingCount, Finset.filter_insert]
 
+omit [Fintype ι] in
 lemma preceding_count_erase_self (i : ι) (S : A02.Occupation ι) :
     precedingCount i (S.erase i) = precedingCount i S := by
   simp [precedingCount, Finset.filter_erase, Finset.erase_eq_of_notMem]
 
+omit [Fintype ι] in
 lemma fermion_sign_empty (i : ι) : fermionSign i ∅ = 1 := by
   simp [fermionSign, preceding_count_empty]
 
+omit [Fintype ι] in
 lemma fermion_sign_ne_zero (i : ι) (S : A02.Occupation ι) : fermionSign i S ≠ 0 := by
   exact pow_ne_zero _ (by norm_num)
 
+omit [Fintype ι] in
 lemma fermion_sign_square (i : ι) (S : A02.Occupation ι) :
     fermionSign i S * fermionSign i S = 1 := by
   unfold fermionSign
   rw [← mul_pow]
   simp
 
+omit [Fintype ι] in
 lemma fermion_sign_conj (i : ι) (S : A02.Occupation ι) :
     conj (fermionSign i S) = fermionSign i S := by
   simp [fermionSign]
 
+omit [Fintype ι] in
 lemma fermion_sign_insert_self (i : ι) (S : A02.Occupation ι) :
     fermionSign i (insert i S) = fermionSign i S := by
   simp only [fermionSign, preceding_count_insert_self]
 
+omit [Fintype ι] in
 lemma fermion_sign_erase_self (i : ι) (S : A02.Occupation ι) :
     fermionSign i (S.erase i) = fermionSign i S := by
   simp only [fermionSign, preceding_count_erase_self]
 
+omit [Fintype ι] in
 lemma sign_insert_insert (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∉ S) (hj : j ∉ S) :
     fermionSign j S * fermionSign i (insert j S) =
@@ -101,6 +113,7 @@ lemma sign_insert_insert (i j : ι) (S : A02.Occupation ι)
   · simp only [fermionSign, hci, hcj, ite_eq_left hgt, ite_eq_right (not_lt_of_gt hgt), add_zero, pow_succ]
     ring
 
+omit [Fintype ι] in
 lemma sign_erase_erase (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∈ S) (hj : j ∈ S) :
     fermionSign j S * fermionSign i (S.erase j) =
@@ -115,6 +128,7 @@ lemma sign_erase_erase (i j : ι) (S : A02.Occupation ι)
     simp only [fermionSign, hci, hcj, pow_succ]
     ring
 
+omit [Fintype ι] in
 lemma sign_insert_erase (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∉ S) (hj : j ∈ S) :
     fermionSign j S * fermionSign i (S.erase j) =

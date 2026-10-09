@@ -37,6 +37,8 @@ Before editing, run `python3 scripts/guards/stub_lock.py --check --strict` from 
 
 Edit only approved lemma/theorem proof bodies. Preserve names, hypotheses, conclusions, definitions, instances, imports, namespaces, options, and attributes. Local `have` proofs can provide supporting steps inside those bodies. New top-level declarations/files or changes to a frozen interface require explicit review and baseline approval; propose their exact statements and purpose before extending the lock. Never rewrite existing Core to solve a downstream problem.
 
+Revisiting unusual or redundant assumptions is an expected, healthy part of proof development. Check whether each assumption is necessary, satisfiable, and appropriate for downstream use. When compiler or mathematical evidence supports a cleaner frozen interface, present the exact correction for review, then update only the approved lock records and repeat validation. Use approval already given for that correction; proof completion does not by itself authorize an interface change.
+
 Plan a dependency order from verified basis action, grading, and exact edge identities to restricted consequences. Check that proposed helper hypotheses are satisfiable and do not strengthen the locked target unnoticed. A suggested tactic failure is a reason to revise the proof strategy, not the frozen mathematics.
 
 After a proof batch, rerun the strict guard, inspect the source/dependency diff, build the affected staging module, and update the notebook with compiler results and remaining placeholders. Separate passed compilation, proof completion, axiom auditing, and mathematical witness evidence in the report.

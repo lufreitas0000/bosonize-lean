@@ -25,7 +25,7 @@ Deferred: A02 polynomial Hermitian forms, raw words/normal symbols, Wick reducti
 
 ## Concrete definitions and type choices
 
-Namespace `Bosonize.Ch04`. Eight complete definitions and 51 proved lemmas. The operator carrier uses a finite linearly ordered mode type `[Fintype ι] [LinearOrder ι]`; the order supplies decidable equality and comparisons. The Phase A section declaration also automatically included `[Fintype ι]` in count/sign theorem signatures. Phase B compilation revealed that this instance is unnecessary for that layer; it remains in the approved interface pending the reviewed cleanup proposal. The chosen order is part of the fermionic phase convention.
+Namespace `Bosonize.Ch04`. Eight complete definitions and 51 proved lemmas. The operator carrier uses a finite linearly ordered mode type `[Fintype ι] [LinearOrder ι]`; the order supplies decidable equality and comparisons. The Phase A section declaration also automatically included `[Fintype ι]` in count/sign theorem signatures. Phase B compilation revealed that this instance is unnecessary for that layer; the approved cleanup now omits it from all 14 count/sign lemma signatures. The chosen order is part of the fermionic phase convention.
 
 | Definition | Meaning |
 | --- | --- |
@@ -55,7 +55,7 @@ All operators act on the same `A02.FockSpace ι`. No representation structure wi
 
 The mixed CAR target uses a scalar Kronecker indicator times the identity endomorphism. The adjoint basis equation is ⟨δS,cᵢ δT⟩=⟨c†ᵢ δS,δT⟩, with actual finite Hilbert adjoints. The bilinear identity preserves the corrected signs δbc c†a cd − δad c†c cb. Parity uses an explicit ascending list, never `Finset.prod` on an arbitrary noncommutative ring.
 
-No lattice length, half filling or energy margin enters this generic chapter. Empty-mode dimension/vacuum contracts belong to A02; when a mode is supplied, singleton witnesses are available as proposed stubs. No true-for-all-modes conclusion is inferred from the finite sanity checks. All 51 proofs and their 18 A02 dependencies are now complete. The remaining gate is the reviewed unused-instance cleanup and the separately authorized Phase C audit.
+No lattice length, half filling or energy margin enters this generic chapter. Empty-mode dimension/vacuum contracts belong to A02; when a mode is supplied, singleton witnesses are available as proposed stubs. No true-for-all-modes conclusion is inferred from the finite sanity checks. All 51 proofs and their 18 A02 dependencies are now complete. The approved unused-instance cleanup is complete; the remaining step is the separately authorized Phase C audit and promotion.
 
 ## Exact theorem inventory
 
@@ -147,7 +147,7 @@ The user approved Phase B for CH04 and finite-CAR A02. Initial locking added onl
 
 All 51 CH04 lemmas are proved. Atomic signs follow the additive count identities and the two possible orders of distinct modes. Concrete CAR is proved on occupation kets, with membership cases and exact set-operation/sign cancellation; adjoints follow the basis-pair criterion. `concrete_car_exists` now constructs the actual finite Hilbert CAR witness from these proved identities, rather than introducing an assumed representation. Number action is diagonal, and parity is proved by induction over the defining ordered list, transporting only its scalar eigenvalues to a commutative finite product. Oddness, number commutators, and hopping identities then follow from those exact actions and the reusable A02 algebra.
 
-Fresh `lake env lean BosonizeStubs/Ch04CARFock.lean` exits 0, with no errors or placeholders and exactly seven unused-section-variable warnings for the locked `[Fintype ι]` assumption:
+Before the approved cleanup, `lake env lean BosonizeStubs/Ch04CARFock.lean` exited 0, with no errors or placeholders and exactly seven unused-section-variable warnings for the locked `[Fintype ι]` assumption:
 
 - `preceding_count_empty`
 - `preceding_count_insert`
@@ -157,17 +157,21 @@ Fresh `lake env lean BosonizeStubs/Ch04CARFock.lean` exits 0, with no errors or 
 - `fermion_sign_square`
 - `fermion_sign_conj`
 
-Native MCP independently reports those same seven linter warnings, with no errors, failed dependencies, timeout, or partial result. Goal retrieval on `parity_square` shows the product of the two scalar powers becoming the power of `(-1)*(-1)`, before the final simplification closes the proof.
+Before cleanup, native MCP independently reported those same seven linter warnings, with no errors, failed dependencies, timeout, or partial result. Goal retrieval on `parity_square` shows the product of the two scalar powers becoming the power of `(-1)*(-1)`, before the final simplification closes the proof.
 
-The [interface cleanup proposal](../../../note/ch04_unused_fintype_interface_proposal_2026-10-09.md) and its exact unapplied patch remove this redundant implicit instance from the 14-lemma count/sign layer. A full temporary candidate compiles with warnings treated as errors and empty diagnostics. The proposal changes 14 locked theorem headers and therefore needs explicit review; the approved source remains unchanged. Phase C cannot promote CH04 while these warnings remain. No warning suppression or artificial use of the instance was added.
+The user approved the [exact interface cleanup](../../../note/ch04_unused_fintype_interface_proposal_2026-10-09.md). Its 14 scoped `omit [Fintype ι] in` prefixes and only the corresponding lock records are applied. Definitions, proof bodies, conclusions and the finite operator carrier are unchanged. Both modules now compile with warnings treated as errors and empty diagnostics; no linter was suppressed.
 
-Shared validation:
+Historical pre-cleanup validation (baseline `7a2da78`):
 
 - `STUB_LOCK_BASELINE_REF=7a2da78 make ci` passes all 69 guard tests, 182 frozen statements, 152 frozen commands, four complete Core source hashes, and both library builds. The staging build allows the seven reported CH04 linter warnings; passing CI is not a warning-free promotion result.
 - Strict committed-baseline verification passes. All existing Core bytes, all manifests after the approved initial lock, the toolchain, and the dependency manifest remain unchanged throughout proof work.
 - All 69 A02/CH04 lemmas freshly audited through `import BosonizeStubs` use only subsets of `propext`, `Classical.choice`, `Quot.sound`. Zero `sorryAx`, extra axioms, or placeholder proof tokens remain. A fresh data/constructor/projection audit also uses only standard axioms.
 - The exact source snapshot below matches the current Lean file. The current checkpoint remains in staging. No Phase C promotion is authorized or performed.
 - Declaration search's previously observed missing-`rg` limitation was handled by installed-source `rg`/compiler inspection. Native diagnostic and goal tools worked; a search-tool failure is not reported as total MCP/LSP unavailability.
+
+## Approved interface cleanup validation — 2026-10-09
+
+The user approved the 14 CH04 count/sign prefixes and their lock-record migration. Only those theorem records changed; all other records and complete Core hashes are preserved. Fresh warning-as-error compilation of both staging modules exits 0 with empty output. Native MCP diagnostics for both modules are complete, successful and empty, with no failed dependencies or timeout. Fresh axiom inspection of all 69 lemmas permits only `propext`, `Classical.choice`, `Quot.sound`. Strict guards, 69 guard tests and both library builds pass against the approved cleanup manifest. Use the cleanup commit containing this notebook as the committed baseline. Both modules remain in staging; Phase C awaits separate authorization.
 
 ## Fresh theorem axiom audit
 
@@ -229,7 +233,7 @@ Shared validation:
 
 This block matches the current approved source byte-for-byte, including its final newline. All lemma bodies are proved; definitions and statements retain their approved freeze.
 
-Module SHA-256: `b1c2959acc2935a51c1dfb9a07fcf272bb15c9632acf0f8e7090d93026103117`.
+Module SHA-256: `b7e3e8966cd9ebf40aa8a3b8a8f5a64ee1e8cb25814d75ced62c826a130eafee`.
 
 ```lean
 module
@@ -276,9 +280,11 @@ noncomputable def parity : Module.End ℂ (A02.FockSpace ι) :=
 noncomputable def hopping (i j : ι) : Module.End ℂ (A02.FockSpace ι) :=
   creation i * annihilation j
 
+omit [Fintype ι] in
 lemma preceding_count_empty (i : ι) : precedingCount i ∅ = 0 := by
   simp [precedingCount]
 
+omit [Fintype ι] in
 lemma preceding_count_insert (i j : ι) (S : A02.Occupation ι) (hj : j ∉ S) :
     precedingCount i (insert j S) = precedingCount i S + if j < i then 1 else 0 := by
   classical
@@ -286,43 +292,53 @@ lemma preceding_count_insert (i j : ι) (S : A02.Occupation ι) (hj : j ∉ S) :
   · simp [precedingCount, Finset.filter_insert, hji, hj]
   · simp [precedingCount, Finset.filter_insert, hji]
 
+omit [Fintype ι] in
 lemma preceding_count_erase (i j : ι) (S : A02.Occupation ι) (hj : j ∈ S) :
     precedingCount i S = precedingCount i (S.erase j) + if j < i then 1 else 0 := by
   have h := preceding_count_insert i j (S.erase j) (Finset.notMem_erase j S)
   simpa [Finset.insert_erase hj] using h
 
+omit [Fintype ι] in
 lemma preceding_count_insert_self (i : ι) (S : A02.Occupation ι) :
     precedingCount i (insert i S) = precedingCount i S := by
   simp [precedingCount, Finset.filter_insert]
 
+omit [Fintype ι] in
 lemma preceding_count_erase_self (i : ι) (S : A02.Occupation ι) :
     precedingCount i (S.erase i) = precedingCount i S := by
   simp [precedingCount, Finset.filter_erase, Finset.erase_eq_of_notMem]
 
+omit [Fintype ι] in
 lemma fermion_sign_empty (i : ι) : fermionSign i ∅ = 1 := by
   simp [fermionSign, preceding_count_empty]
 
+omit [Fintype ι] in
 lemma fermion_sign_ne_zero (i : ι) (S : A02.Occupation ι) : fermionSign i S ≠ 0 := by
   exact pow_ne_zero _ (by norm_num)
 
+omit [Fintype ι] in
 lemma fermion_sign_square (i : ι) (S : A02.Occupation ι) :
     fermionSign i S * fermionSign i S = 1 := by
   unfold fermionSign
   rw [← mul_pow]
   simp
 
+omit [Fintype ι] in
 lemma fermion_sign_conj (i : ι) (S : A02.Occupation ι) :
     conj (fermionSign i S) = fermionSign i S := by
   simp [fermionSign]
 
+omit [Fintype ι] in
 lemma fermion_sign_insert_self (i : ι) (S : A02.Occupation ι) :
     fermionSign i (insert i S) = fermionSign i S := by
   simp only [fermionSign, preceding_count_insert_self]
 
+omit [Fintype ι] in
 lemma fermion_sign_erase_self (i : ι) (S : A02.Occupation ι) :
     fermionSign i (S.erase i) = fermionSign i S := by
   simp only [fermionSign, preceding_count_erase_self]
 
+omit [Fintype ι] in
 lemma sign_insert_insert (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∉ S) (hj : j ∉ S) :
     fermionSign j S * fermionSign i (insert j S) =
@@ -335,6 +351,7 @@ lemma sign_insert_insert (i j : ι) (S : A02.Occupation ι)
   · simp only [fermionSign, hci, hcj, ite_eq_left hgt, ite_eq_right (not_lt_of_gt hgt), add_zero, pow_succ]
     ring
 
+omit [Fintype ι] in
 lemma sign_erase_erase (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∈ S) (hj : j ∈ S) :
     fermionSign j S * fermionSign i (S.erase j) =
@@ -349,6 +366,7 @@ lemma sign_erase_erase (i j : ι) (S : A02.Occupation ι)
     simp only [fermionSign, hci, hcj, pow_succ]
     ring
 
+omit [Fintype ι] in
 lemma sign_insert_erase (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∉ S) (hj : j ∈ S) :
     fermionSign j S * fermionSign i (S.erase j) =
