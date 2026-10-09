@@ -1313,6 +1313,732 @@
           "text": "lemma unitary_surjective (L : ℕ) [NeZero L] : Function.Surjective (unitaryFourier L)"
         }
       }
+    },
+    "BosonizeStubs/A02CARHilbert.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "966dbbec91d6e112a6c14568f98cf93a7781099d5c526509c0e9f95305dd9c34",
+          "kind": "import",
+          "label": "import Mathlib.Analysis.InnerProductSpace.PiL2",
+          "text": "import Mathlib.Analysis.InnerProductSpace.PiL2"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "38273e13de49a5ff5501b92e29a2108ff2238e8ed67a0f734500a6ce98443b70",
+          "kind": "import",
+          "label": "import Mathlib.Analysis.InnerProductSpace.Adjoint",
+          "text": "import Mathlib.Analysis.InnerProductSpace.Adjoint"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "ce71107ce5318ab1063a4ea476ef1af1ebb976edd6a8a56314e4476054d7ac45",
+          "kind": "import",
+          "label": "import Mathlib.LinearAlgebra.Basis.Defs",
+          "text": "import Mathlib.LinearAlgebra.Basis.Defs"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "fdaf95c801a87a5855f0571f96e6f34e28a516dc5a6779c458c94db8cf899f62",
+          "kind": "import",
+          "label": "import Mathlib.Data.Finset.Sort",
+          "text": "import Mathlib.Data.Finset.Sort"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "72e14e9742cb4b3011dca736190de01f0af0909f808b20d1739ccb3e465e3801",
+          "kind": "namespace",
+          "label": "namespace Bosonize.A02",
+          "text": "namespace Bosonize.A02"
+        },
+        {
+          "hash": "c2b88b0166a46cb5a33f2b8a0f8e75b452221f74d46ed7144d89d40eb513c20f",
+          "kind": "open",
+          "label": "open scoped BigOperators ComplexConjugate",
+          "text": "open scoped BigOperators ComplexConjugate"
+        },
+        {
+          "hash": "d65e44f26c3b2e2568da0e0664da222e63918f47c557aa6e6f5146256f3fb009",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.A02.Occupation",
+          "text": "abbrev Occupation (ι : Type*) := Finset ι"
+        },
+        {
+          "hash": "60b1e3f406e15a43b58014813ce1db1a4bd34876c68df577e5e01980a313ba9b",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.A02.FockSpace",
+          "text": "abbrev FockSpace (ι : Type*) [Fintype ι] [DecidableEq ι] :=\n  EuclideanSpace ℂ (Occupation ι)"
+        },
+        {
+          "hash": "5851c51751e6a5be92d9e88e2d002af6aa5c7bb41f28750474a1235952008bb2",
+          "kind": "def",
+          "label": "def Bosonize.A02.occupationONB",
+          "text": "noncomputable def occupationONB (ι : Type*) [Fintype ι] [DecidableEq ι] :\n    OrthonormalBasis (Occupation ι) ℂ (FockSpace ι) :=\n  EuclideanSpace.basisFun (Occupation ι) ℂ"
+        },
+        {
+          "hash": "f35fc0daf56572b22b0502646524141605fd6d1291908a107d74d9de0424324d",
+          "kind": "def",
+          "label": "def Bosonize.A02.occupationBasis",
+          "text": "noncomputable def occupationBasis (ι : Type*) [Fintype ι] [DecidableEq ι] :\n    Module.Basis (Occupation ι) ℂ (FockSpace ι) :=\n  (occupationONB ι).toBasis"
+        },
+        {
+          "hash": "27092f49915f3bf3d3a0c759e2c9902225a64d7f36835ef0afaa198969693d8b",
+          "kind": "def",
+          "label": "def Bosonize.A02.ket",
+          "text": "noncomputable def ket {ι : Type*} [Fintype ι] [DecidableEq ι]\n    (S : Occupation ι) : FockSpace ι := occupationBasis ι S"
+        },
+        {
+          "hash": "6c9057aa7ed4f2dda57791839c0bf848bb113bbc8425427211ea8be2f156a724",
+          "kind": "def",
+          "label": "def Bosonize.A02.coordinates",
+          "text": "noncomputable def coordinates (ι : Type*) [Fintype ι] [DecidableEq ι] :\n    FockSpace ι ≃ₗ[ℂ] (Occupation ι → ℂ) :=\n  WithLp.linearEquiv 2 ℂ (Occupation ι → ℂ)"
+        },
+        {
+          "hash": "6dc69b0e2bce2f2b9777773c57fa00406ab85ee9ae46513959cf9520ff8d735a",
+          "kind": "def",
+          "label": "def Bosonize.A02.extendBasis",
+          "text": "noncomputable def extendBasis {ι : Type*} [Fintype ι] [DecidableEq ι]\n    (images : Occupation ι → FockSpace ι) : Module.End ℂ (FockSpace ι) :=\n  (occupationBasis ι).constr ℂ images"
+        },
+        {
+          "hash": "0ee3d59dfb3f93df9945801cfea492582e6e193d8fcc148564045e700f008048",
+          "kind": "section",
+          "label": "section Algebraic",
+          "text": "section Algebraic"
+        },
+        {
+          "hash": "b36bca357fcc00a989c8d9d32f7c8f7a26a3c9468612c8ea094c9755a74e2d79",
+          "kind": "variable",
+          "label": "variable {V : Type*} [AddCommGroup V] [Module ℂ V",
+          "text": "variable {V : Type*} [AddCommGroup V] [Module ℂ V]"
+        },
+        {
+          "hash": "ff2b5e74c478259c4896065dea102b64000202597416c7ed6f02a970c84b1d7f",
+          "kind": "def",
+          "label": "def Bosonize.A02.commutator",
+          "text": "def commutator (A B : Module.End ℂ V) : Module.End ℂ V := A * B - B * A"
+        },
+        {
+          "hash": "3c2b5eac1763d6873c4309d40996abfa3330abc8aaf30b104e3e147994ee3319",
+          "kind": "def",
+          "label": "def Bosonize.A02.anticommutator",
+          "text": "def anticommutator (A B : Module.End ℂ V) : Module.End ℂ V := A * B + B * A"
+        },
+        {
+          "hash": "75ae75daba3e4b8a8498805cdeadbc75c81fa73aabdaa013f7443dcebe888a98",
+          "kind": "structure",
+          "label": "structure Bosonize.A02.AlgebraicCAR",
+          "text": "structure AlgebraicCAR (ι : Type*) [DecidableEq ι] (V : Type*)\n    [AddCommGroup V] [Module ℂ V] where\n  annihilation : ι → Module.End ℂ V\n  creation : ι → Module.End ℂ V\n  annihilation_car : ∀ i j, anticommutator (annihilation i) (annihilation j) = 0\n  creation_car : ∀ i j, anticommutator (creation i) (creation j) = 0\n  mixed_car : ∀ i j, anticommutator (annihilation i) (creation j) =\n    (if i = j then (1 : ℂ) else 0) • (1 : Module.End ℂ V)"
+        },
+        {
+          "hash": "f62a5c5dff38a46b2284daa0d8d142c8061cfdfc469cf7f0f8af962f762f06b1",
+          "kind": "def",
+          "label": "def Bosonize.A02.AlgebraicCAR.number",
+          "text": "def AlgebraicCAR.number {ι : Type*} [DecidableEq ι]\n    (R : AlgebraicCAR ι V) (i : ι) : Module.End ℂ V :=\n  R.creation i * R.annihilation i"
+        },
+        {
+          "hash": "b5245e0765c64e220c2e161b04512734b10d2f769fbec142f7537af86a929ce9",
+          "kind": "variable",
+          "label": "variable {ι : Type*} [DecidableEq ι]",
+          "text": "variable {ι : Type*} [DecidableEq ι]"
+        },
+        {
+          "hash": "c092f15a93bd78020d55f0582493cbae5e073cae5495a0a3a690e169d91e7511",
+          "kind": "end",
+          "label": "end Algebraic",
+          "text": "end Algebraic"
+        },
+        {
+          "hash": "4bb742b5ebd280127dbbc0d55a210ff434fb5f82cf6b5959bac467484cf711ad",
+          "kind": "structure",
+          "label": "structure Bosonize.A02.CAR",
+          "text": "structure CAR (ι : Type*) [DecidableEq ι] (V : Type*)\n    [NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V]\n    extends AlgebraicCAR ι V where\n  adjoint_compat : ∀ i, creation i = LinearMap.adjoint (annihilation i)"
+        },
+        {
+          "hash": "5159a343d2c03d6164fb2cc4fd21c66e780c996faae042938cdb1b1b033a9eb7",
+          "kind": "section",
+          "label": "section Occupations",
+          "text": "section Occupations"
+        },
+        {
+          "hash": "7073ad745dfca204be6427c90b484701fb595ee16f91ece6027d04ac390b59ac",
+          "kind": "variable",
+          "label": "variable {ι : Type*} [Fintype ι] [DecidableEq ι]",
+          "text": "variable {ι : Type*} [Fintype ι] [DecidableEq ι]"
+        },
+        {
+          "hash": "c1da074c0896f040771331517d82665eafab28fa73a1fd6100de3f532873ed75",
+          "kind": "end",
+          "label": "end Occupations",
+          "text": "end Occupations"
+        },
+        {
+          "hash": "7da02e70743cb278c0a309116f8682ac22b4d98cad437ed1a2b92fbd7ab040fd",
+          "kind": "end",
+          "label": "end Bosonize.A02",
+          "text": "end Bosonize.A02"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A02.adjoint_of_basis_pairing": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "845515c493c9bf977d8160e2181f7f75693f40a7f18d4bc03c3459e3d3b9e131",
+          "kind": "lemma",
+          "text": "lemma adjoint_of_basis_pairing (A B : Module.End ℂ (FockSpace ι)) (h : ∀ S T : Occupation ι, inner ℂ (ket S) (A (ket T)) = inner ℂ (B (ket S)) (ket T)) : B = LinearMap.adjoint A"
+        },
+        "Bosonize.A02.car_bilinear_commutator": {
+          "ctx": "db9ba431fae7b894a668ffee2d2c951a8f25f224df11d58ea443746cd1c7f7cb",
+          "hash": "a0f54028d04ec56b93d7a25fb501f905386b76b75269d7d3dbde19f757f0607a",
+          "kind": "lemma",
+          "text": "lemma car_bilinear_commutator (R : AlgebraicCAR ι V) (a b c d : ι) : commutator (R.creation a * R.annihilation b) (R.creation c * R.annihilation d) = (if b = c then (1 : ℂ) else 0) • (R.creation a * R.annihilation d) - (if a = d then (1 : ℂ) else 0) • (R.creation c * R.annihilation b)"
+        },
+        "Bosonize.A02.car_number_annihilation_commutator": {
+          "ctx": "db9ba431fae7b894a668ffee2d2c951a8f25f224df11d58ea443746cd1c7f7cb",
+          "hash": "abac8ff5354fdfbe6ad6da491c5b3fcfa78bd04dc4a9d0b2998c7370d65bbb7f",
+          "kind": "lemma",
+          "text": "lemma car_number_annihilation_commutator (R : AlgebraicCAR ι V) (i j : ι) : commutator (R.number i) (R.annihilation j) = -(if i = j then (1 : ℂ) else 0) • R.annihilation j"
+        },
+        "Bosonize.A02.car_number_commute": {
+          "ctx": "db9ba431fae7b894a668ffee2d2c951a8f25f224df11d58ea443746cd1c7f7cb",
+          "hash": "89bc687a578ec0ed5aa7be4dbc764b3b91bd0f79107d9f9a85124a63c1e9aef4",
+          "kind": "lemma",
+          "text": "lemma car_number_commute (R : AlgebraicCAR ι V) (i j : ι) : R.number i * R.number j = R.number j * R.number i"
+        },
+        "Bosonize.A02.car_number_creation_commutator": {
+          "ctx": "db9ba431fae7b894a668ffee2d2c951a8f25f224df11d58ea443746cd1c7f7cb",
+          "hash": "8b172ae0be762ffd9b8bf0770b8a3d659af996977dc2fb45a32223d5b2018460",
+          "kind": "lemma",
+          "text": "lemma car_number_creation_commutator (R : AlgebraicCAR ι V) (i j : ι) : commutator (R.number i) (R.creation j) = (if i = j then (1 : ℂ) else 0) • R.creation j"
+        },
+        "Bosonize.A02.car_number_idempotent": {
+          "ctx": "db9ba431fae7b894a668ffee2d2c951a8f25f224df11d58ea443746cd1c7f7cb",
+          "hash": "dd476dbcbf956cb95968361e66eccd19dc145d9033ab39cfe18015be379efbe1",
+          "kind": "lemma",
+          "text": "lemma car_number_idempotent (R : AlgebraicCAR ι V) (i : ι) : R.number i * R.number i = R.number i"
+        },
+        "Bosonize.A02.coordinates_ket": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "53fa28e2c8fe06ec24adafb0a7685e607ffff0f53a85ff3e61daec665a8a47d7",
+          "kind": "lemma",
+          "text": "lemma coordinates_ket (S T : Occupation ι) : coordinates ι (ket S) T = if T = S then (1 : ℂ) else 0"
+        },
+        "Bosonize.A02.empty_modes_finrank": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "c52f2cf3ad1ac4c0ecb866b0d9cb5275bf565ac1925ea206de649d65e29f8cf0",
+          "kind": "lemma",
+          "text": "lemma empty_modes_finrank [IsEmpty ι] : Module.finrank ℂ (FockSpace ι) = 1"
+        },
+        "Bosonize.A02.end_ext_basis": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "b87fa20131544d372abe013dbc04fbca084988ac607e620f8ba99ec11f4231ca",
+          "kind": "lemma",
+          "text": "lemma end_ext_basis (A B : Module.End ℂ (FockSpace ι)) (h : ∀ S : Occupation ι, A (ket S) = B (ket S)) : A = B"
+        },
+        "Bosonize.A02.extend_basis_ket": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "efd4abdfb8aaeb526289991419bc687114a96501abd284f3bc1b0c620b8242f5",
+          "kind": "lemma",
+          "text": "lemma extend_basis_ket (images : Occupation ι → FockSpace ι) (S : Occupation ι) : extendBasis images (ket S) = images S"
+        },
+        "Bosonize.A02.fock_finrank": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "747e8e2115b584aa229d78dad691dad91dba96060ae91fedc6c4ad3d20228c32",
+          "kind": "lemma",
+          "text": "lemma fock_finrank : Module.finrank ℂ (FockSpace ι) = 2 ^ Fintype.card ι"
+        },
+        "Bosonize.A02.fock_inner": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "dccea534fab7b5311498070c80d12095d581053959ea67a12ab859b093b6021c",
+          "kind": "lemma",
+          "text": "lemma fock_inner (u v : FockSpace ι) : inner ℂ u v = ∑ S : Occupation ι, conj (u S) * v S"
+        },
+        "Bosonize.A02.ket_apply": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "507115a5e7794d8bd15aaa8c5b06677aa94190222654c4ee6a78fae4def42073",
+          "kind": "lemma",
+          "text": "lemma ket_apply (S T : Occupation ι) : ket S T = if T = S then (1 : ℂ) else 0"
+        },
+        "Bosonize.A02.ket_inner": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "3af525c961cf4a121dad8b0f9eaa8ba0b71f38c2f377475afff7c9146e37105d",
+          "kind": "lemma",
+          "text": "lemma ket_inner (S T : Occupation ι) : inner ℂ (ket S) (ket T) = if S = T then (1 : ℂ) else 0"
+        },
+        "Bosonize.A02.ket_ne_zero": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "59ea0a878d47ebc68d55d6e856cdddf8026991d34a8230253c65de9827e48652",
+          "kind": "lemma",
+          "text": "lemma ket_ne_zero (S : Occupation ι) : ket S ≠ 0"
+        },
+        "Bosonize.A02.ket_norm": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "86d268fae021bdcb27b2780d76e23929f723bed785ebe79d2dc72ebb846ef479",
+          "kind": "lemma",
+          "text": "lemma ket_norm (S : Occupation ι) : ‖ket S‖ = 1"
+        },
+        "Bosonize.A02.occupation_expansion": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "3affc20f09ef54df0d5a9c2176102681094e2ec5ad28ec0c970821ed1621ee4e",
+          "kind": "lemma",
+          "text": "lemma occupation_expansion (v : FockSpace ι) : v = ∑ S : Occupation ι, v S • ket S"
+        },
+        "Bosonize.A02.vacuum_ne_zero": {
+          "ctx": "b5f059bb28bc49f1bf73f057dd094a9fad473b83345746007d2d11ab97d8078d",
+          "hash": "87ae0f7dc5fdfe2d4a26b8fb6c90f2ce6f760da13b4275d79c80b810d7ed5ff6",
+          "kind": "lemma",
+          "text": "lemma vacuum_ne_zero : ket (∅ : Occupation ι) ≠ 0"
+        }
+      }
+    },
+    "BosonizeStubs/Ch04CARFock.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "41278832da265e0c37240bf450af8e3a40430cfd8b5e8e145bd551408bff45a0",
+          "kind": "import",
+          "label": "import BosonizeStubs.A02CARHilbert",
+          "text": "import BosonizeStubs.A02CARHilbert"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "8fd41d5ef34bf22b58ba1495853ef1b13bcd5735efbd7aaadaf4cdb91bd20110",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch04",
+          "text": "namespace Bosonize.Ch04"
+        },
+        {
+          "hash": "c2b88b0166a46cb5a33f2b8a0f8e75b452221f74d46ed7144d89d40eb513c20f",
+          "kind": "open",
+          "label": "open scoped BigOperators ComplexConjugate",
+          "text": "open scoped BigOperators ComplexConjugate"
+        },
+        {
+          "hash": "0602e02f88d4d4070ecc1a069baf5327b5e326996c8ac06ef942cd14da7103ef",
+          "kind": "variable",
+          "label": "variable {ι : Type*} [Fintype ι] [LinearOrder ι]",
+          "text": "variable {ι : Type*} [Fintype ι] [LinearOrder ι]"
+        },
+        {
+          "hash": "507cb2f126fff6400ffa42388f70c42ce4369349708cd8893a163890d865308d",
+          "kind": "def",
+          "label": "def Bosonize.Ch04.precedingCount",
+          "text": "def precedingCount (i : ι) (S : A02.Occupation ι) : ℕ := (S.filter (· < i)).card"
+        },
+        {
+          "hash": "05be815775c448af68224a6b65c7aaaceeb18e8d0510242f449cd5114c49ce27",
+          "kind": "def",
+          "label": "def Bosonize.Ch04.fermionSign",
+          "text": "def fermionSign (i : ι) (S : A02.Occupation ι) : ℂ := (-1 : ℂ) ^ precedingCount i S"
+        },
+        {
+          "hash": "676f2403452350275750164b301d42693d4193a76343738e475ef8ff1853ed2e",
+          "kind": "def",
+          "label": "def Bosonize.Ch04.creation",
+          "text": "noncomputable def creation (i : ι) : Module.End ℂ (A02.FockSpace ι) :=\n  A02.extendBasis fun S =>\n    if i ∈ S then 0 else fermionSign i S • A02.ket (insert i S)"
+        },
+        {
+          "hash": "f7476442c301a1270ca2d68b7997dd8e39436fa3172c243c3b7511c98d48ffd7",
+          "kind": "def",
+          "label": "def Bosonize.Ch04.annihilation",
+          "text": "noncomputable def annihilation (i : ι) : Module.End ℂ (A02.FockSpace ι) :=\n  A02.extendBasis fun S =>\n    if i ∈ S then fermionSign i S • A02.ket (S.erase i) else 0"
+        },
+        {
+          "hash": "1a3e6011bdeb45839daabbd07418759f042bbae3fcdca0f4f1cd3a84411a48dd",
+          "kind": "def",
+          "label": "def Bosonize.Ch04.number",
+          "text": "noncomputable def number (i : ι) : Module.End ℂ (A02.FockSpace ι) :=\n  creation i * annihilation i"
+        },
+        {
+          "hash": "a3d12a57d823c8574f0464b03ccd6a80bba8d853ab2af8a7dd060617d9e3fcb5",
+          "kind": "def",
+          "label": "def Bosonize.Ch04.totalNumber",
+          "text": "noncomputable def totalNumber : Module.End ℂ (A02.FockSpace ι) := ∑ i : ι, number i"
+        },
+        {
+          "hash": "98b872db6ef941fd6885d98d67c7ec6992e5ac3152c6a541136e13501779e6cd",
+          "kind": "def",
+          "label": "def Bosonize.Ch04.parity",
+          "text": "noncomputable def parity : Module.End ℂ (A02.FockSpace ι) :=\n  ((Finset.univ : Finset ι).sort (· ≤ ·)).map\n    (fun i => 1 - (2 : ℂ) • number i) |>.prod"
+        },
+        {
+          "hash": "dbec3c3150176008a5d2a6230b5c65a54275986798158168279576cd09713697",
+          "kind": "def",
+          "label": "def Bosonize.Ch04.hopping",
+          "text": "noncomputable def hopping (i j : ι) : Module.End ℂ (A02.FockSpace ι) :=\n  creation i * annihilation j"
+        },
+        {
+          "hash": "1800a3b46af03b7576c66e45f01832e7d15852b460cb4650c043a3d90d5ecb81",
+          "kind": "end",
+          "label": "end Bosonize.Ch04",
+          "text": "end Bosonize.Ch04"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch04.annihilation_car": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "1dc4ce2c2cc86fdd73a8312d7120b33e74ee1433a8db7f05c24127920c85c8d5",
+          "kind": "lemma",
+          "text": "lemma annihilation_car (i j : ι) : A02.anticommutator (annihilation i) (annihilation j) = 0"
+        },
+        "Bosonize.Ch04.annihilation_eq_adjoint": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "697917aa57a91751c4ecdc3a71ab1a31a176369950d986fb977038b69e0ebf7a",
+          "kind": "lemma",
+          "text": "lemma annihilation_eq_adjoint (i : ι) : annihilation i = LinearMap.adjoint (creation i)"
+        },
+        "Bosonize.Ch04.annihilation_ket": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "e1c94159c003578e0ba0132202d46b8e8789c5401bdc9ca36d24a457ed84e36c",
+          "kind": "lemma",
+          "text": "lemma annihilation_ket (i : ι) (S : A02.Occupation ι) : annihilation i (A02.ket S) = if i ∈ S then fermionSign i S • A02.ket (S.erase i) else 0"
+        },
+        "Bosonize.Ch04.annihilation_singleton": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "35685745c2f9d0f585aae39e1660d561bd4e7c04c8ba126e0475259588ba329b",
+          "kind": "lemma",
+          "text": "lemma annihilation_singleton (i : ι) : annihilation i (A02.ket {i}) = A02.ket ∅"
+        },
+        "Bosonize.Ch04.annihilation_singleton_ne_zero": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "dc5885ad8d5171574cce67d529971bb2bc29db7025b058fdd296d82eb172b45b",
+          "kind": "lemma",
+          "text": "lemma annihilation_singleton_ne_zero (i : ι) : annihilation i (A02.ket {i}) ≠ 0"
+        },
+        "Bosonize.Ch04.annihilation_square": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "8fbaf1710d0eb73edaf7ae0982b788f90e4118bb3250fe5ce65bde483b12e4dc",
+          "kind": "lemma",
+          "text": "lemma annihilation_square (i : ι) : annihilation i * annihilation i = 0"
+        },
+        "Bosonize.Ch04.annihilation_vacuum": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "60e6ab141a02cdda1c7a53bd31f710c6f8bf0974c411e8492c73275ed3a5610a",
+          "kind": "lemma",
+          "text": "lemma annihilation_vacuum (i : ι) : annihilation i (A02.ket ∅) = 0"
+        },
+        "Bosonize.Ch04.bilinear_commutator": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "1a230e09f2df50e7f93387897eabff564577ccc920714f82e8a80c24823c243b",
+          "kind": "lemma",
+          "text": "lemma bilinear_commutator (a b c d : ι) : A02.commutator (hopping a b) (hopping c d) = (if b = c then (1 : ℂ) else 0) • hopping a d - (if a = d then (1 : ℂ) else 0) • hopping c b"
+        },
+        "Bosonize.Ch04.concrete_car_exists": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "dfe173a7c05019ef2add64284a1a6eb23bb882b78030076d44a7a1be8183bb31",
+          "kind": "lemma",
+          "text": "lemma concrete_car_exists : ∃ R : A02.CAR ι (A02.FockSpace ι), R.annihilation = annihilation ∧ R.creation = creation"
+        },
+        "Bosonize.Ch04.creation_adjoint_pairing": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "60bd055b8ee6d8df563763d27abef9412c06e9ac2a65623dedabc5c026064430",
+          "kind": "lemma",
+          "text": "lemma creation_adjoint_pairing (i : ι) (S T : A02.Occupation ι) : inner ℂ (A02.ket S) (annihilation i (A02.ket T)) = inner ℂ (creation i (A02.ket S)) (A02.ket T)"
+        },
+        "Bosonize.Ch04.creation_car": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "b3fcc3975deb9f6b5f1944bb508ee72b06d263f34821d870750a1094f9198af0",
+          "kind": "lemma",
+          "text": "lemma creation_car (i j : ι) : A02.anticommutator (creation i) (creation j) = 0"
+        },
+        "Bosonize.Ch04.creation_eq_adjoint": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "d26f1011a6c6203d736d4086983910e324fa28b01f53a4667c51059e273d347c",
+          "kind": "lemma",
+          "text": "lemma creation_eq_adjoint (i : ι) : creation i = LinearMap.adjoint (annihilation i)"
+        },
+        "Bosonize.Ch04.creation_ket": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "04d8fa5ec7d35aeb3936ac2a16d1581738825c5fdf035e61034a5785a23a5041",
+          "kind": "lemma",
+          "text": "lemma creation_ket (i : ι) (S : A02.Occupation ι) : creation i (A02.ket S) = if i ∈ S then 0 else fermionSign i S • A02.ket (insert i S)"
+        },
+        "Bosonize.Ch04.creation_square": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "0869c655dd862ae19dd90e389537b893bb54c49f31a00447a4e71010b7d747f1",
+          "kind": "lemma",
+          "text": "lemma creation_square (i : ι) : creation i * creation i = 0"
+        },
+        "Bosonize.Ch04.creation_vacuum": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "fddaac80bfd2ec7e2171ba66d23599a14eed930bfb91ecaf79645db0f94081d1",
+          "kind": "lemma",
+          "text": "lemma creation_vacuum (i : ι) : creation i (A02.ket ∅) = A02.ket {i}"
+        },
+        "Bosonize.Ch04.creation_vacuum_ne_zero": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "c180331c26fc5a771d881e2054cd6ac597897a5d52c8be351f7cc5f0187dbe3a",
+          "kind": "lemma",
+          "text": "lemma creation_vacuum_ne_zero (i : ι) : creation i (A02.ket ∅) ≠ 0"
+        },
+        "Bosonize.Ch04.fermion_sign_conj": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "6bda423e12cde15002d97a315e7ed7f1e803807166a33041c3d9dc3ff4cd86be",
+          "kind": "lemma",
+          "text": "lemma fermion_sign_conj (i : ι) (S : A02.Occupation ι) : conj (fermionSign i S) = fermionSign i S"
+        },
+        "Bosonize.Ch04.fermion_sign_empty": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "c5207efa1bb20f64f38122fa09acdc4c1ed4941c3c78c03d0f23a7528b43b0b4",
+          "kind": "lemma",
+          "text": "lemma fermion_sign_empty (i : ι) : fermionSign i ∅ = 1"
+        },
+        "Bosonize.Ch04.fermion_sign_erase_self": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "a167f63c2767daf9c562f467234c58fba550b390af60dfed9339a4bd70ad1624",
+          "kind": "lemma",
+          "text": "lemma fermion_sign_erase_self (i : ι) (S : A02.Occupation ι) : fermionSign i (S.erase i) = fermionSign i S"
+        },
+        "Bosonize.Ch04.fermion_sign_insert_self": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "d73faa37058050e61ce6e48dc989a965e0ccfbf055938f2fabc8bb336f99390f",
+          "kind": "lemma",
+          "text": "lemma fermion_sign_insert_self (i : ι) (S : A02.Occupation ι) : fermionSign i (insert i S) = fermionSign i S"
+        },
+        "Bosonize.Ch04.fermion_sign_ne_zero": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "33bd66d31a2d9a21583598d57f585adfaa18ee8b4e46c3f852e949e1ba58434b",
+          "kind": "lemma",
+          "text": "lemma fermion_sign_ne_zero (i : ι) (S : A02.Occupation ι) : fermionSign i S ≠ 0"
+        },
+        "Bosonize.Ch04.fermion_sign_square": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "499fdac370a5bdbfb25e1c019e6e194b4cfc9b4b5ac94ec85154eff9e784bd46",
+          "kind": "lemma",
+          "text": "lemma fermion_sign_square (i : ι) (S : A02.Occupation ι) : fermionSign i S * fermionSign i S = 1"
+        },
+        "Bosonize.Ch04.hopping_adjoint": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "9e3eb38130b2b4436092e59bb8f904da2d698054afb8e8a09685585bcf9978c0",
+          "kind": "lemma",
+          "text": "lemma hopping_adjoint (i j : ι) : LinearMap.adjoint (hopping i j) = hopping j i"
+        },
+        "Bosonize.Ch04.hopping_blocked": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "097bb841fb3546d7a5900d10cfedcade7fab0b185fed53367d38ba1d62d47deb",
+          "kind": "lemma",
+          "text": "lemma hopping_blocked (i j : ι) (S : A02.Occupation ι) (h : j ∉ S ∨ (i ≠ j ∧ i ∈ S)) : hopping i j (A02.ket S) = 0"
+        },
+        "Bosonize.Ch04.hopping_diagonal": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "e79a55a6bd632681c69f11a30befc48d9dad925170f2096c88e8b427e9f507f0",
+          "kind": "lemma",
+          "text": "lemma hopping_diagonal (i : ι) : hopping i i = number i"
+        },
+        "Bosonize.Ch04.hopping_ket": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "5d37c59f903e2f3cb22c741b7119e5fce2f6287327058d0e14f2c68ea19c104c",
+          "kind": "lemma",
+          "text": "lemma hopping_ket (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∉ S) (hj : j ∈ S) : hopping i j (A02.ket S) = (fermionSign j S * fermionSign i (S.erase j)) • A02.ket (insert i (S.erase j))"
+        },
+        "Bosonize.Ch04.mixed_car": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "b4bb7a06e8c52cfeb418403b5b20a011dc5f6800aad4fa95045e61bce62200d6",
+          "kind": "lemma",
+          "text": "lemma mixed_car (i j : ι) : A02.anticommutator (annihilation i) (creation j) = (if i = j then (1 : ℂ) else 0) • (1 : Module.End ℂ (A02.FockSpace ι))"
+        },
+        "Bosonize.Ch04.number_adjoint": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "aa6f05207f96b522648d36e3c81bb06386e17b9d7f3384cc35a2ba5c968a6fa3",
+          "kind": "lemma",
+          "text": "lemma number_adjoint (i : ι) : LinearMap.adjoint (number i) = number i"
+        },
+        "Bosonize.Ch04.number_annihilation_commutator": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "e05909f769aefe208c58462218cd7ed6f076e381cbead24eb0d981b2de0fddc9",
+          "kind": "lemma",
+          "text": "lemma number_annihilation_commutator (i j : ι) : A02.commutator (number i) (annihilation j) = -(if i = j then (1 : ℂ) else 0) • annihilation j"
+        },
+        "Bosonize.Ch04.number_commute": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "15c63dafb7e9b22c0d9b69bc97c6d9b966565356b189a75f44d2f789a9a9199d",
+          "kind": "lemma",
+          "text": "lemma number_commute (i j : ι) : number i * number j = number j * number i"
+        },
+        "Bosonize.Ch04.number_creation_commutator": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "9e09dabea597f581ea8e219e661a027df172f2341372db9398c8a0463014b075",
+          "kind": "lemma",
+          "text": "lemma number_creation_commutator (i j : ι) : A02.commutator (number i) (creation j) = (if i = j then (1 : ℂ) else 0) • creation j"
+        },
+        "Bosonize.Ch04.number_idempotent": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "bca16bfb2f0e2df4092d583403460254d501b14d2d1481ef37900eea963b01e7",
+          "kind": "lemma",
+          "text": "lemma number_idempotent (i : ι) : number i * number i = number i"
+        },
+        "Bosonize.Ch04.number_ket": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "ee83291b7dd2d1f8faffb357be9c6d49de7403bae5c16030f056d2bcd3a09915",
+          "kind": "lemma",
+          "text": "lemma number_ket (i : ι) (S : A02.Occupation ι) : number i (A02.ket S) = (if i ∈ S then (1 : ℂ) else 0) • A02.ket S"
+        },
+        "Bosonize.Ch04.parity_adjoint": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "eefcd941554a29f166428ff5eebbdce7c538e3fab204712fd5f9b19bab37862f",
+          "kind": "lemma",
+          "text": "lemma parity_adjoint : LinearMap.adjoint (parity (ι := ι)) = parity (ι := ι)"
+        },
+        "Bosonize.Ch04.parity_annihilation": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "00f1d3d7c722e7a29714dbbffa8a8f687f37f3eaeb8103dc54ab3ede36719c2e",
+          "kind": "lemma",
+          "text": "lemma parity_annihilation (i : ι) : parity (ι := ι) * annihilation i = -(annihilation i * parity (ι := ι))"
+        },
+        "Bosonize.Ch04.parity_creation": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "c6cd606400636e6d2b2000ad015a02fbf45ddccdf9967e22907f0421352f272a",
+          "kind": "lemma",
+          "text": "lemma parity_creation (i : ι) : parity (ι := ι) * creation i = -(creation i * parity (ι := ι))"
+        },
+        "Bosonize.Ch04.parity_ket": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "df66b4ee0fbafbe0928de62a607200f255e10bc7e00a379ccbdd764fc4455f37",
+          "kind": "lemma",
+          "text": "lemma parity_ket (S : A02.Occupation ι) : parity (ι := ι) (A02.ket S) = (-1 : ℂ) ^ S.card • A02.ket S"
+        },
+        "Bosonize.Ch04.parity_square": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "53bc640940f470761b025cb984ec9165180fd83fc89ac986bacf51dade84ea47",
+          "kind": "lemma",
+          "text": "lemma parity_square : parity (ι := ι) * parity (ι := ι) = 1"
+        },
+        "Bosonize.Ch04.parity_vacuum": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "b235135c687a6d91dbb9eaf2022b4aa5e95c7d9e14e7ac9245d3946ad69c96e5",
+          "kind": "lemma",
+          "text": "lemma parity_vacuum : parity (ι := ι) (A02.ket ∅) = A02.ket ∅"
+        },
+        "Bosonize.Ch04.preceding_count_empty": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "56428357ba7679c95c9eec67f97f31efb51682bdacbf536ec3707f90930912ac",
+          "kind": "lemma",
+          "text": "lemma preceding_count_empty (i : ι) : precedingCount i ∅ = 0"
+        },
+        "Bosonize.Ch04.preceding_count_erase": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "f589e3d7f6bc0beb0b9164758ba7abd591bfbc87152c6cbb16770e81f7f135e0",
+          "kind": "lemma",
+          "text": "lemma preceding_count_erase (i j : ι) (S : A02.Occupation ι) (hj : j ∈ S) : precedingCount i S = precedingCount i (S.erase j) + if j < i then 1 else 0"
+        },
+        "Bosonize.Ch04.preceding_count_erase_self": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "b76fbdbbb928a718e229c89cec8d4edfbf2fa7a611b4f81839437f7ef91ea97b",
+          "kind": "lemma",
+          "text": "lemma preceding_count_erase_self (i : ι) (S : A02.Occupation ι) : precedingCount i (S.erase i) = precedingCount i S"
+        },
+        "Bosonize.Ch04.preceding_count_insert": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "4103650d8ed53665ac09c0152dfba03907888777d26cad4b6bd634fa54f38a75",
+          "kind": "lemma",
+          "text": "lemma preceding_count_insert (i j : ι) (S : A02.Occupation ι) (hj : j ∉ S) : precedingCount i (insert j S) = precedingCount i S + if j < i then 1 else 0"
+        },
+        "Bosonize.Ch04.preceding_count_insert_self": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "97aad738bf3d5bd62ed78ec00ea8c217dd37d113a358a38370db6dca8ebec994",
+          "kind": "lemma",
+          "text": "lemma preceding_count_insert_self (i : ι) (S : A02.Occupation ι) : precedingCount i (insert i S) = precedingCount i S"
+        },
+        "Bosonize.Ch04.sign_erase_erase": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "87b43e0e951e718cc3e00ebeb2dd1c1bac868cb379d063aa775b137c580c6044",
+          "kind": "lemma",
+          "text": "lemma sign_erase_erase (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∈ S) (hj : j ∈ S) : fermionSign j S * fermionSign i (S.erase j) = -(fermionSign i S * fermionSign j (S.erase i))"
+        },
+        "Bosonize.Ch04.sign_insert_erase": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "b260cf1c0ba6befdec7bc80be5918870fd1f6da1a0f17239574bf6165a1a5952",
+          "kind": "lemma",
+          "text": "lemma sign_insert_erase (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∉ S) (hj : j ∈ S) : fermionSign j S * fermionSign i (S.erase j) = -(fermionSign i S * fermionSign j (insert i S))"
+        },
+        "Bosonize.Ch04.sign_insert_insert": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "f62fbdde79bd30276c8c2386cd9217e32d9992952ad30dde4d96f67cb4785476",
+          "kind": "lemma",
+          "text": "lemma sign_insert_insert (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j) (hi : i ∉ S) (hj : j ∉ S) : fermionSign j S * fermionSign i (insert j S) = -(fermionSign i S * fermionSign j (insert i S))"
+        },
+        "Bosonize.Ch04.total_number_adjoint": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "1ce76a7837ed37a3db51310cce72b99134db41d56364c1a4b5d17eaf4322a347",
+          "kind": "lemma",
+          "text": "lemma total_number_adjoint : LinearMap.adjoint (totalNumber (ι := ι)) = totalNumber (ι := ι)"
+        },
+        "Bosonize.Ch04.total_number_annihilation_commutator": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "e2b7918180f2e5224561f70b3a50d1e164011d2891d6ea96eedb62142e0ca7f2",
+          "kind": "lemma",
+          "text": "lemma total_number_annihilation_commutator (i : ι) : A02.commutator (totalNumber (ι := ι)) (annihilation i) = -annihilation i"
+        },
+        "Bosonize.Ch04.total_number_creation_commutator": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "19c4f6a991d034f3af6e6acea6c2a90068bc7f08de7647baed88eb5b6d1ef743",
+          "kind": "lemma",
+          "text": "lemma total_number_creation_commutator (i : ι) : A02.commutator (totalNumber (ι := ι)) (creation i) = creation i"
+        },
+        "Bosonize.Ch04.total_number_ket": {
+          "ctx": "a18efd204c2b4b008320d926494c4f64672b642e1cee3dfda12fc9b11a01a169",
+          "hash": "874bb72dee24c18a39a541d32bb0bb350d57391feedf8c4dbf2c383e924d8a9e",
+          "kind": "lemma",
+          "text": "lemma total_number_ket (S : A02.Occupation ι) : totalNumber (ι := ι) (A02.ket S) = (S.card : ℂ) • A02.ket S"
+        }
+      }
     }
   },
   "version": 2
