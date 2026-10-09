@@ -12,20 +12,21 @@ Use L > 0 (or `[NeZero L]`) throughout. For a practical generic layer, use a fie
 
 Negative powers require a division structure or a unit-valued root. `ζ ^ (n : ℤ)` is not an operation available on an arbitrary `CommRing`. Over a ring, lift ζ to Rˣ using its finite positive order and take integer powers there; alternatively use nonnegative residue exponents. A field layer is simpler for this project's immediate needs.
 
-**Definition:** Define χ(k,x) = ζ^(k*x), with the spatial and momentum indices first regarded as residues. If defining it via integer representatives, prove representative independence before any addition lemma:
+**Definition:** Define χ(k,x) = ζ^(k*x), with the spatial and momentum indices first regarded as residues in `ZMod L × ZMod L`, or lifted to integer representatives. If defining it via integer representatives, prove representative independence before any addition lemma:
 
 1. ζ^L = 1 and ζ ≠ 0 (field) / ζ is a unit (ring).
-2. χ(k,x+tL) = χ(k,x), and χ(k+tL,x) = χ(k,x).
-3. χ(k,x+y) = χ(k,x)χ(k,y).
-4. χ(k+p,x) = χ(k,x)χ(p,x), using transported band addition.
-5. χ(-k,x) = χ(k,x)⁻¹.
-6. In ℂ, conjugate(χ(k,x)) = χ(-k,x), using unit modulus.
+2. Representative independence: χ(k, x + t*L) = χ(k, x) and χ(k + t*L, x) = χ(k, x) for all t ∈ ℤ.
+3. Spatial homomorphism: χ(k, x + y) = χ(k, x)χ(k, y).
+4. Transported band addition: χ(k ⊕ p, x) = χ(k, x)χ(p, x). (Since k ⊕ p = k + p - wL with w ∈ {-1,0,1}, representative independence gives χ(k ⊕ p, x) = χ(k + p, x) = χ(k, x)χ(p, x)).
+5. Inversion / negation: χ(-k, x) = χ(k, x)⁻¹ = χ(⊖ k, x), where -k ∈ ℤ is ordinary integer negation and ⊖ k is transported band negation.
+6. Band subtraction: χ(k ⊖ k', x) = χ(k - k', x) = χ(k, x)χ(k', x)⁻¹, even when integer k - k' leaves the centered band.
+7. In ℂ, conjugate(χ(k,x)) = χ(-k,x), using unit modulus.
 
 *Lean 4 Proof Strategy:*
-- **Auxiliary Lemmas:** `zeta_pow_L`, `chi_well_defined`, `chi_add`, `chi_neg`, `chi_conj`.
-- **Strategy:** Formalize `χ` as a map `ZMod L → ZMod L → K`. If defined using integers `ℤ`, prove well-definedness (representative independence) by showing `ζ^(k * (x + t * L)) = ζ^(k * x) * (ζ^L)^(k * t) = ζ^(k * x) * 1 = ζ^(k * x)` (using `IsPrimitiveRoot`). Properties 3-5 follow algebraically from ring exponentiation rules (`pow_add`, etc.). For property 6, over `ℂ`, use `starRingEnd ℂ` and the fact that primitive roots of unity have modulus 1, so their complex conjugate equals their inverse.
+- **Auxiliary Lemmas:** `zeta_pow_L`, `chi_well_defined`, `chi_add`, `chi_neg`, `chi_sub_eq`, `chi_conj`.
+- **Strategy:** Formalize `χ` as a map `ZMod L → ZMod L → K` or bundled `AddChar (ZMod L) K`. If defined using integers `ℤ`, prove well-definedness (representative independence) by showing `ζ^(k * (x + t * L)) = ζ^(k * x) * (ζ^L)^(k * t) = ζ^(k * x) * 1 = ζ^(k * x)` (using `IsPrimitiveRoot`). Properties 3-6 follow algebraically from ring exponentiation rules (`pow_add`, etc.) combined with `k ⊕ p = k + p - w * L`. For property 7, over `ℂ`, use `starRingEnd ℂ` and the fact that primitive roots of unity have modulus 1, so their complex conjugate equals their inverse.
 
-Prefer an `AddChar` or equivalent bundled character internally. Expose evaluation formulas on `Ch01.Band L` for downstream use; use `Ch01.band_projection_bijective` to transport finite sums. Do not install a new competing group instance on the already frozen band type merely to write the pairing.
+Prefer an `AddChar` or equivalent bundled character internally. Expose evaluation formulas on `Ch01.Band L` for downstream use; use `Ch01.band_projection_bijective` to transport finite sums. Do not install a new competing group instance on the already frozen band type merely to write the pairing. Keep the existing frozen band type and its positive Nyquist convention.
 
 ## Unscaled and normalized transforms
 

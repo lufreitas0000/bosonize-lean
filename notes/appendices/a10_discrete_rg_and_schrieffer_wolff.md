@@ -1,82 +1,156 @@
-# Appendix A10: Discrete RG and Schrieffer-Wolff on Finite Budgets
+# Appendix A10: Discrete Energy-Shell Partitioning and Schrieffer-Wolff Perturbation Theory
 
-## Algebraic Block Decoupling vs. Raw Projection
+## Algebraic Energy-Shell Filtering vs. Mode Decimation
 
-In standard QFT, Renormalization Group (RG) flow integrates out infinitesimal high-momentum shells. On a discrete finite lattice with a strict energy budget $K$, taking infinitesimal limits is impossible. Furthermore, a raw projection $P_{K-1} H P_{K-1}$ fails to capture virtual quantum fluctuations if the interaction $V$ couples the target space $\mathcal{P} := \mathcal{B}_{K-1}$ to the high-energy shell $\mathcal{Q} := \mathcal{H}_K$. 
+In continuum field theory, Renormalization Group (RG) flow integrates out infinitesimal high-momentum shells. On a discrete finite lattice with a strict energy budget $K$, infinitesimal momentum integration is impossible.
 
-Applying a **Schrieffer-Wolff Transformation (SWT)** provides a rigorous, purely algebraic method to formalize a true Renormalization Group step on the discrete lattice without importing continuous topology, differential equations, or path-integral measures.
+We formalize discrete energy-shell projection and the **Schrieffer-Wolff Transformation (SWT)** as a purely algebraic method on finite-dimensional subspaces.
+
+> [!IMPORTANT]
+> **Energy Shell vs. Mode Decimation:**
+> The decomposition $\mathcal{B}_K = \mathcal{B}_{K-1} \oplus \mathcal{H}_K$ is an **energy-shell** decomposition, *not* single-mode decimation.
+> For example, with weighted boson modes 1 and 2 at $K=2$, the budget $\mathcal{B}_2$ has basis $\{1, X_1, X_1^2, X_2\}$.
+> - The energy-shell projection to $\mathcal{B}_1$ keeps $\{1, X_1\}$, discarding both $X_1^2$ and $X_2$ because their partition energy is 2.
+> - Decimating mode 2 alone would keep $\{1, X_1, X_1^2\}$, which is a different subspace and a different projection.
+
+---
 
 ### Step 1: Subspace Partitioning of the Budget
 
 **Definition (Energy Budget Subspaces):**
-The energy budget space $\mathcal{B}_K$ splits into an orthogonal direct sum:
-
-$$ \mathcal{B}_K = \mathcal{P} \oplus \mathcal{Q} $$
-
-* $\mathcal{P} := \mathcal{B}_{K-1}$ is the low-energy target subspace (kept states).
+The energy budget space $\mathcal{B}_K$ splits into an orthogonal direct sum of energy shells:
+$$
+\mathcal{B}_K = \mathcal{P} \oplus \mathcal{Q}
+$$
+* $\mathcal{P} := \mathcal{B}_{K-1}$ is the low-energy target subspace (retained states of total energy $\le K-1$).
 * $\mathcal{Q} := \mathcal{H}_K$ is the maximal-energy boundary shell (states with excitation energy exactly equal to $K$).
 
-Let $P$ and $Q$ be the corresponding orthogonal projectors ($P + Q = I$, $PQ = 0$).
+Let $P$ and $Q$ be the corresponding orthogonal projectors ($P + Q = I$, $PQ = 0$, $P^\dagger = P$, $Q^\dagger = Q$).
 
 *Lean 4 Proof Strategy:*
-We will define $\mathcal{B}_K$ as an orthogonal direct sum of submodules using `DirectSum` or `Submodule.orthogonal`. Since we are dealing with finite-dimensional spaces parameterized by the budget $K$, we can use `FiniteDimensional`. $P$ and $Q$ can be formalized using `OrthogonalProjection`. We will need to prove the operator equations `P + Q = 1` and `P * Q = 0`. Auxiliary lemmas will be required to establish the completeness of the Haldane basis under this partition.
+Formalize $\mathcal{B}_K$ as an orthogonal direct sum of submodules using `DirectSum` or `Submodule.orthogonal`. Since $\mathcal{B}_K$ is finite-dimensional, use `FiniteDimensional`. Formalize $P$ and $Q$ as orthogonal projections, proving $P + Q = I$ and $P Q = 0$.
 
-### Step 2: Hamiltonian Decomposition
+---
 
-**Definition (Hamiltonian Components):**
-Split the total Hamiltonian on $\mathcal{B}_K$ into its diagonal (solvable) Luttinger liquid part and an off-diagonal perturbation (e.g., Umklapp scattering or non-linear band curvature):
+### Step 2: Solvable Baseline and Perturbation
 
-$$ H = H_0 + V $$
+**Definition (Solvable Baseline and Block Decomposition):**
+Consider a self-adjoint Hamiltonian $H = H_0 + t V$ on $\mathcal{B}_K$, where:
+1. $H_0$ is a solvable baseline that commutes with the projectors:
+$$
+[P, H_0] = 0, \quad [Q, H_0] = 0.
+$$
+   Because $\mathcal{P}$ and $\mathcal{Q}$ are $H_0$-invariant, there exists an orthonormal eigenbasis $\{|\lambda\rangle\}$ of $H_0$ adapted to the direct sum $\mathcal{P} \oplus \mathcal{Q}$ (each basis vector $|\lambda\rangle$ lies entirely in either $\mathcal{P}$ or $\mathcal{Q}$, even across degenerate eigenspaces of $H_0$), with real eigenvalues $E_\lambda$.
+2. $V$ is a self-adjoint perturbation, partitioned into block-diagonal and block-off-diagonal parts:
+$$
+V_{\text{diag}} := PVP + QVQ, \quad V_{\text{off}} := PVQ + QVP.
+$$
+3. *Non-resonance hypothesis:* For all pairs $|\lambda\rangle \in \mathcal{P}$ and $|\mu\rangle \in \mathcal{Q}$, if the coupling is non-zero ($\langle \lambda | V_{\text{off}} | \mu \rangle \neq 0$), the spectral gap is non-zero:
+$$
+E_\lambda \neq E_\mu.
+$$
+   (Uncoupled cross-block pairs with $\langle \lambda | V_{\text{off}} | \mu \rangle = 0$ are permitted to have $E_\lambda = E_\mu$.)
 
-where $H_0 = H_{\text{Lutt}}$ is diagonal on the Haldane partition basis $\{\vert{}\lambda; N\rangle\}$ with discrete eigenvalues $E_\lambda = \frac{2\pi u}{L} \sum m r_m$.
+> [!WARNING]
+> *Baseline Solvability:*
+> When inter-branch forward scattering $g_2 \neq 0$, the pairing Hamiltonian $H_{\text{pair}}$ contains $C_R C_L$, which creates pairs from the bare vacuum and is **not** diagonal on the bare Haldane partition basis.
+> Therefore, $H_0$ cannot simply be chosen as bare $H_{\text{Lutt}}$ while assuming it is simultaneously diagonal on the bare partition basis. A valid baseline must be independently block-diagonalized, or chosen as the free Sugawara Hamiltonian $H_0 = H_{\text{sug}}$.
 
-Partition $V$ into block-diagonal and block-off-diagonal components:
-
-$$ V_{\text{diag}} := PVP + QVQ, \quad V_{\text{off}} := PVQ + QVP $$
-
-*Lean 4 Proof Strategy:*
-Formalize $H_0$ and $V$ as operators in `Module.End ℂ ℬ_K`. Define $H_0$ via its spectral decomposition on the Haldane basis. Define $V_{\text{diag}}$ and $V_{\text{off}}$ explicitly using the projectors $P$ and $Q$ from the previous definition. We will need to formally prove basic algebraic properties, such as $V = V_{\text{diag}} + V_{\text{off}}$, $P V_{\text{off}} P = 0$, and that $H_0$ commutes with $P$ and $Q$.
+---
 
 ### Step 3: The Generator Equation
 
-**Theorem (SWT Generator Solution):**
-We seek an anti-Hermitian operator $S \in \mathrm{End}_{\mathbb{C}}(\mathcal{B}_K)$ ($S^\dagger = -S$) that satisfies:
+**Theorem (First-Order Generator Solution):**
+Under the non-resonance hypothesis, there exists an anti-Hermitian operator $S_1 \in \mathrm{End}_{\mathbb{C}}(\mathcal{B}_K)$ ($S_1^\dagger = -S_1$) satisfying:
+$$
+[S_1, H_0] = -V_{\text{off}}.
+$$
+In the adapted eigenbasis of $H_0$, $S_1$ has the piecewise matrix elements:
+$$
+\langle \lambda | S_1 | \mu \rangle = \begin{cases}
+\dfrac{\langle \lambda | V_{\text{off}} | \mu \rangle}{E_\lambda - E_\mu} & \text{if } (|\lambda\rangle \in \mathcal{P}, |\mu\rangle \in \mathcal{Q} \text{ or vice versa}) \text{ and } \langle \lambda | V_{\text{off}} | \mu \rangle \neq 0, \\
+0 & \text{otherwise}.
+\end{cases}
+$$
+Defining $\langle \lambda | S_1 | \mu \rangle = 0$ whenever $\langle \lambda | V_{\text{off}} | \mu \rangle = 0$ avoids any undefined $0/0$ division when uncoupled cross-block pairs are degenerate ($E_\lambda = E_\mu$).
 
-$$ [S, H_0] = -V_{\text{off}} $$
-
-On the discrete Haldane basis, $S$ has an exact algebraic solution:
-
-$$ \langle \lambda \vert{} S \vert{} \mu \rangle = \begin{cases} \dfrac{\langle \lambda \vert{} V_{\text{off}} \vert{} \mu \rangle}{E_\lambda - E_\mu} & \text{if } \vert{}\lambda\rangle \in \mathcal{P}, \vert{}\mu\rangle \in \mathcal{Q} \text{ (or vice versa)}, \\ 0 & \text{otherwise}. \end{cases} $$
-
-Because $\vert{}E_\lambda - E_\mu\vert{} \ge \frac{2\pi u}{L} > 0$, the denominator is strictly non-zero and purely rational. There are **no small denominators and no infrared divergences** in this discrete single step.
-
-*Lean 4 Proof Strategy:*
-We will formalize the equation as a linear operator identity `commutator S H_0 = - V_off`. The proof will proceed by evaluating the matrix elements of both sides on the orthonormal basis states $\vert\lambda\rangle$ and $\vert\mu\rangle$. The key physical auxiliary lemma required is the **Mass Gap Lemma**, proving that for $\lambda \in \mathcal{P}$ and $\mu \in \mathcal{Q}$, $E_\lambda \neq E_\mu$ (specifically bounding $\vert E_\lambda - E_\mu \vert \ge \frac{2\pi u}{L}$). This guarantees that the division in the construction of $S$ does not introduce division by zero. We will also construct an auxiliary lemma proving `IsAntiAdjoint S` given `IsAdjoint V_off`.
-
-### Step 4: Effective Hamiltonian and Loop Corrections
-
-**Lemma (Effective Low-Energy Hamiltonian):**
-Using the BCH expansion, the rotated Hamiltonian $H' = e^S H e^{-S}$ has no linear off-diagonal coupling connecting $\mathcal{P}$ and $\mathcal{Q}$. Projecting onto $\mathcal{P} = \mathcal{B}_{K-1}$ yields the effective low-energy Hamiltonian:
-
-$$ H_{\text{eff}}(K-1) = P H_0 P + P V P + \frac{1}{2} P [S, V] P $$
-
-The second-order commutator explicitly recovers the **virtual quantum fluctuations** (loop corrections) generated by hopping into the high-energy shell $\mathcal{Q}$ and back down to $\mathcal{P}$.
+Because $V_{\text{off}}^\dagger = V_{\text{off}}$ and $E_\lambda, E_\mu \in \mathbb{R}$, $S_1$ is strictly anti-Hermitian. Direct evaluation of the commutator yields:
+$$
+\langle \lambda | [S_1, H_0] | \mu \rangle = (E_\mu - E_\lambda) \langle \lambda | S_1 | \mu \rangle = - \langle \lambda | V_{\text{off}} | \mu \rangle,
+$$
+which holds identically whether $\langle \lambda | V_{\text{off}} | \mu \rangle$ is non-zero (via cancellation of the non-zero difference) or zero ($0 \cdot (E_\mu - E_\lambda) = 0 = -0$).
 
 *Lean 4 Proof Strategy:*
-We will define the unitary transformation $U = \exp(S)$. Because $\mathcal{B}_K$ is finite-dimensional, the operator exponential is perfectly well-defined in Lean without analytic subtleties. We will expand $e^S H e^{-S}$ using a truncated Baker-Campbell-Hausdorff series up to second order in $V$. The proof relies on applying the generator identity from the previous theorem ($[S, H_0] = -V_{\text{off}}$) to demonstrate that the first-order off-diagonal terms precisely cancel. For a fully rigorous formalized bound, we will need auxiliary lemmas bounding the operator norm of $S$ ($\| S \|$) to bound the series truncation error.
+Formalize $[S_1, H_0] = -V_{\text{off}}$ on the adapted eigenbasis of $H_0$. Prove `IsAntiAdjoint S_1` from `IsAdjoint V_off`. Use the non-resonance assumption $\forall \lambda \in \mathcal{P}, \mu \in \mathcal{Q}, \langle\lambda|V_{\text{off}}|\mu\rangle \neq 0 \to E_\lambda \neq E_\mu$ to ensure division by non-zero real denominators, while defining uncoupled entries to be zero.
 
-## Application to Specific Interactions
+---
 
-### Non-Linear Luttinger Liquids and Dispersion Curvature
+### Step 4: Effective Hamiltonian Modulo $t^3$
 
-If the bare electronic band has curvature $\epsilon(k) = v_F k + \frac{k^2}{2m^*}$:
-* The Hamiltonian in density modes acquires a cubic cross-term $V_{\text{cubic}} \propto \sum_{p,q} \rho_p \rho_q \rho_{-(p+q)}$.
-* $P V_{\text{cubic}} P$ leaves the lower cubic terms intact.
-* The second-order SWT term $\frac{1}{2} P [S, V_{\text{cubic}}] P$ generates an effective 4-body density interaction and shifts the sound velocity $u_m$ non-linearly across mode indices $m$, modeling finite plasmon lifetimes.
+**Theorem (Second-Order Schrieffer-Wolff Effective Hamiltonian):**
+For $H(t) = H_0 + t V$, unitary rotation by $e^{t S_1}$ eliminates off-diagonal coupling at first order in $t$.
+Projecting onto the low-energy subspace $\mathcal{P} = \mathcal{B}_{K-1}$, the effective Hamiltonian is given **modulo $t^3$** (in formal perturbation theory) by:
+$$
+H_{\text{eff}}(t) = P H_0 P + t P V P + \frac{t^2}{2} P [S_1, V] P + O(t^3).
+$$
 
-### The Sine-Gordon / Umklapp Model (Mott Transition)
+> [!CAUTION]
+> **SWT is Not an Exact Finite-Matrix Equality:**
+> The second-order expression $P H_0 P + t P V P + \frac{t^2}{2} P [S_1, V] P$ is **not** the exact transformed Hamiltonian $P e^{t S_1} (H_0 + t V) e^{-t S_1} P$.
+> Higher-order nested commutators contribute at $O(t^3)$ and beyond.
+>
+> **Counterexample Witness (2×2 Matrix):**
+> Consider:
+> $$
+> H_0 = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}, \quad
+> V = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad
+> S_1 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}, \quad
+> P = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}.
+> $$
+> Here $[S_1, H_0] = -V$, and $S_1^\dagger = -S_1$. Direct matrix expansion yields:
+> $$
+> P e^{t S_1} (H_0 + t V) e^{-t S_1} P = (-t^2 + t^4 + \cdots) P.
+> $$
+> The exact lower eigenvalue of $H_0 + t V$ at $t = 2/3$ is $-1/3$, whereas the second-order truncation provides $-t^2 = -4/9$. Moreover, the remaining off-diagonal block at order $t^3$ has coefficient $-4/3 \neq 0$.
+> Thus, the second-order formula is valid only modulo $t^3$ (or with an explicit norm remainder bound), not as an unconstrained operator equality.
 
-For the half-filling Umklapp term $V = H_U \propto \sum_x (O_U(x) + O_U^\dagger(x))$:
-1. **First-Order Term ($P V P$):** Projects the vertex operators down to $K-1$, rescaling the bare coupling.
-2. **Second-Order Term ($\frac{1}{2} P [S, V] P$):** Because $O_U \sim e^{i\sqrt{8\pi}\phi_c}$, the product evaluates via the Kac-Moody algebra into a sum of quadratic density bilinears, shifting the Luttinger parameter $g \to g + \delta g$.
-Combining these yields the discrete **Kosterlitz-Thouless flow equations** entirely from matrix commutators.
+**Corollary (Forward Implication on Off-Block Vanishing):**
+If the perturbation satisfies $P V Q = Q V P = 0$, then $V_{\text{off}} = 0$, which implies $S_1 = 0$ and $P [S_1, V] P = 0$. In this case, the second-order cross-block correction vanishes identically, and $H_{\text{eff}} = P (H_0 + t V) P$ is exact modulo higher-order diagonal terms.
+
+> [!WARNING]
+> **No "If and Only If" Equivalence for the Second-Order Correction:**
+> The vanishing of the second-order correction $P [S_1, V] P = 0$ does **not** imply $P V Q = 0$.
+>
+> **Counterexample Witness ($3\times 3$ Matrix):**
+> Consider the 3-dimensional system partitioned into $\mathcal{P} = \operatorname{span}(e_1)$ and $\mathcal{Q} = \operatorname{span}(e_2, e_3)$:
+> $$
+> H_0 = \begin{pmatrix} 0 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{pmatrix}, \quad
+> P = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}, \quad
+> V = \begin{pmatrix} 0 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}.
+> $$
+> Here $P V P = 0$, $Q V Q = 0$, so $V_{\text{off}} = V$, and $P V Q = \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} \neq 0$.
+> All non-zero cross-block couplings are non-resonant ($E_1 - E_2 = 1 \neq 0$, $E_1 - E_3 = -1 \neq 0$). The anti-Hermitian generator $S_1$ has matrix elements:
+> $$
+> \langle 1 | S_1 | 2 \rangle = \frac{1}{0 - (-1)} = 1, \quad \langle 1 | S_1 | 3 \rangle = \frac{1}{0 - 1} = -1 \implies S_1 = \begin{pmatrix} 0 & 1 & -1 \\ -1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}.
+> $$
+> Computing the matrix product:
+> $$
+> (S_1 V)_{11} = 1 \cdot 1 + (-1) \cdot 1 = 0, \quad (V S_1)_{11} = 1 \cdot (-1) + 1 \cdot 1 = 0 \implies (P [S_1, V] P)_{11} = 0.
+> $$
+> Thus $P [S_1, V] P = 0$ holds identically, yet $P V Q \neq 0$. The two opposite energy denominators ($+1$ and $-1$) in the intermediate sum cancel out. Therefore, only the forward implication $P V Q = 0 \implies S_1 = 0 \implies P [S_1, V] P = 0$ is valid; asserting an "if and only if" equivalence is mathematically false.
+
+---
+
+## Physical Applications and Motivational Status
+
+The following applications provide physical motivation and context from condensed matter theory; they are distinct from the exact finite-algebraic identities established above.
+
+### 1. Non-Linear Dispersion Curvature (Physical Motivation)
+If a non-linear band dispersion $\varepsilon(k) = v_F k + \frac{k^2}{2m^*}$ introduces cubic mode couplings $V_{\text{cubic}} \propto \sum \rho_p \rho_q \rho_{-(p+q)}$:
+* The second-order term $\frac{1}{2} P [S_1, V_{\text{cubic}}] P$ generates effective 4-mode interactions in the continuum limit.
+* In physical scaling theory, this leads to mode-dependent sound velocities and finite plasmon lifetimes. On a finite lattice, Hermitian Hamiltonians have purely real spectra; defining an actual decay lifetime requires an operational or thermodynamic continuum formulation.
+
+### 2. Umklapp Scattering and Mott Transition (Physical Motivation)
+For the half-filling Umklapp perturbation $H_U \propto \sum_x (O_U(x) + O_U^\dagger(x))$:
+* In continuum bosonization, $O_U \sim \cos(\sqrt{8\pi}\phi_c)$, and second-order operator product expansions yield the Kosterlitz-Thouless (KT) flow equations, predicting the opening of a charge Mott gap.
+* On the discrete finite lattice, Theorem 21.7 rigorously establishes that $H_U$ violates charge-sector conservation and exhibits budget leakage. Deriving the continuum KT flow equations or thermodynamic Mott gap requires an explicit parameter scaling sequence $(L_n, K_n)$ beyond the single-step discrete matrix algebra.

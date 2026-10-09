@@ -104,26 +104,26 @@ Define `X^{\underline{n}}` recursively or using product over `Fin n`.
 Define `Φ` as a linear map (`R[X] →ₗ[R] R[X]`) using `Polynomial.basisMonomials` to specify the action on the basis `X^n`.
 Define `β` as an endomorphism on `ℤ → R`. Note that `x` acts by scalar multiplication: `x • f(x-1)` or coerced to `R` via `algebraMap ℤ R`.
 
-**Lemma 2.6 (Umbral Commutation).** Let $D = \frac{d}{dX}$ be the formal polynomial derivative. The umbral map intertwines the continuous and discrete derivatives:
+**Lemma 2.6 (Umbral Commutation).** Let $D = \frac{d}{dX}$ be the formal polynomial derivative. Explicitly distinguishing the polynomial forward difference operator $\Delta_{\mathrm{poly}} : R[X] \to R[X]$, defined by $(\Delta_{\mathrm{poly}} p)(X) := p(X+1) - p(X)$, from the function-space operator $\Delta \in \mathrm{End}_R(R^S)$, the umbral map intertwines the continuous and discrete derivatives:
 
 $$
-\Phi \circ D = \Delta \circ \Phi \tag{2.14}
+\Phi \circ D = \Delta_{\mathrm{poly}} \circ \Phi \tag{2.14}
 $$
 
- On the integer lattice $\mathbb{Z}$, the operators form an exact Heisenberg pair:
+ On the integer lattice $\mathbb{Z}$, the function-space operators form an exact Heisenberg pair:
 
 $$
 \Delta \beta - \beta \Delta = I \tag{2.15}
 $$
 
- *(Note: A trace argument forbids any exact finite-dimensional matrix realization of this pair over a field of characteristic 0, necessitating the use of polynomials).*
+ *(Note: A trace argument forbids any exact finite-dimensional matrix realization of this pair on a nonzero carrier over a field of characteristic 0, necessitating the use of infinite-dimensional function/polynomial spaces).*
 
 *Lean 4 Proof Strategy:*
-For `Φ ∘ D = Δ ∘ Φ`: Prove equality of linear maps by checking on the monomial basis `X^n`. 
+For `Φ ∘ D = Δ_poly ∘ Φ`: Prove equality of linear maps by checking on the monomial basis `X^n`.
 *Auxiliary Lemmas:* 
 1. `D (X^n) = n X^{n-1}`.
-2. `Δ (X^{\underline{n}}) = n X^{\underline{n-1}}`.
-Extend by linearity using `LinearMap.ext_ring` or equivalent.
+2. `Δ_poly (X^{\underline{n}}) = n X^{\underline{n-1}}`.
+Extend by linearity using `LinearMap.ext_ring` or equivalent. Note that `Δ_poly` is typed as a linear map on `Polynomial R`, distinct from the function-space operator on `S → R`.
 For the Heisenberg relation `Δ β - β Δ = I`: Expand both sides acting on an arbitrary function `f` at point `x`.
 `((Δ ∘ β) f)(x) - ((β ∘ Δ) f)(x) = βf(x+1) - βf(x) - x(Δf)(x-1)`.
 Substitute definitions: `(x+1)f(x) - x f(x-1) - x (f(x) - f(x-1))`. Distribute and simplify to get `f(x)`, which is `(I f)(x)`.

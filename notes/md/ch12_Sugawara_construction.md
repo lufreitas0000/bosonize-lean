@@ -28,22 +28,23 @@ Ensure that `ρ_m` and `ρ_{-m}` are properly defined as linear operators. The a
 Attempting to prove the Sugawara equivalence by directly substituting commutators into a global equation leads to circular dependencies or unresolvable edge cases (e.g., the $h=1$ case is famously anomalous if evaluated blindly). Instead, the safest, non-circular proof path uses Haldane completeness (Chapter 11) to evaluate the action exactly on the known basis states.
 
 **Lemma 12.2 (Action on Partition States).**
-By commuting the lowering operators $\rho_{-m}$ through the creation word defining a partition state $|\lambda; N\rangle$, one calculates its exact eigenvalue. Under the conservative R2 Margin condition, the energy of the partition state is exactly recovered:
+By commuting the lowering operators $\rho_{-m}$ through the creation word defining a partition state $|\lambda; N\rangle$ with $\lambda \vdash E$ ($0 \le E \le K$), one calculates its exact eigenvalue. Under the conservative R2 Margin condition at $K$ ($2K + |N| \le h$), which guarantees the R2 margin at each $E \le K$, and with cutoff $M \ge K \ge E$:
 
 $$
-H_{\text{sug}}^{(M)} |\lambda; N\rangle = K |\lambda; N\rangle \tag{12.2}
+H_{\text{sug}}^{(M)} |\lambda; N\rangle = E |\lambda; N\rangle \tag{12.2}
 $$
 
-where $K = \sum m \cdot r_m$ is the total excitation energy, and $M \ge K$.
+where $E = \sum m \cdot r_m$ is the excitation energy of partition $\lambda$. (For the empty partition of $E=0$, $H_{\text{sug}}^{(M)} |N\rangle_0 = 0$ since every lowering mode annihilates the ground ket).
 
 *Lean 4 Proof Strategy:*
-This is naturally proven by induction on the construction of the partition state $|\lambda; N\rangle$ (e.g., induction on the number of bosonic creation operators applied to the ground state $|N\rangle$).
-- **Auxiliary Lemma 1 (Density Mode Commutation):** $[\rho_{-m}, \rho_{n}] = m \delta_{m, n}$ on the relevant subspace, capturing the Kac-Moody / Bosonization algebra.
-- **Auxiliary Lemma 2 (Vacuum Annihilation):** $\rho_{-m} |N\rangle = 0$ for all $m > 0$.
-For the inductive step, use the commutation relation to pull $\rho_{-m}$ to the right through the $\rho_{n}$ operators until it hits the ground state $|N\rangle$ and vanishes. The residual terms from the commutators will sum up exactly to the total energy $K$.
+Proven by induction on the creation word of partition state $|\lambda; N\rangle$.
+- **Auxiliary Lemma 1 (Density Mode Commutation):** $[\rho_{-m}, \rho_{n}] = m \delta_{m, n}$ on the relevant subspace.
+- **Auxiliary Lemma 2 (Vacuum Annihilation):** $\rho_{-m} |N\rangle_0 = 0$ for all $m \ge 1$.
+Commuting $\rho_{-m}$ through the word until it hits $|N\rangle_0$ evaluates the eigenvalue to the total partition energy $E$.
 
-**Theorem 12.3 (Sugawara Equivalence on the Budget).**
-Because both the true fermionic excitation energy operator $\hat{E}$ and $H_{\text{sug}}^{(M)}$ correctly measure the energy of every basis state $|\lambda; N\rangle$ as $K$, and because these partition states completely span $B(N,K)$ (Haldane Completeness), the two operators are identical on the subspace.
+**Theorem 12.3 (Sugawara Equivalence on the Whole Budget).**
+By Corollary 11.6, the full budget subspace $B(N,K) = \bigoplus_{E=0}^K H(N,E)$ is spanned by the disjoint union of partition bases $\mathcal{B}_{\text{basis}}(N,K) = \bigcup_{E=0}^K \{|\lambda; N\rangle \mid \lambda \vdash E\}$.
+Because both the true fermionic excitation energy operator $\hat{E}$ and $H_{\text{sug}}^{(M)}$ agree on every basis state $|\lambda; N\rangle$ (yielding eigenvalue $E$), they agree on the entire budget subspace $B(N,K)$.
 Under the R2 Margin condition ($2K + \vert{}N\vert{} \le h$) and $M \ge K$:
 
 $$
@@ -59,13 +60,10 @@ $$
 *(Note: The zero-mode shift is explicitly $\frac{1}{2}N(N+1)$, arising from the asymmetric Fermi level at 0. It must not be artificially symmetrized to $\frac{1}{2}N^2$ without a corresponding chemical potential shift).*
 
 *Lean 4 Proof Strategy:*
-Use the result of Lemma 12.2 and the Haldane Completeness theorem. Since both operators are linear and agree on a spanning set, they agree on the whole subspace.
-- **Auxiliary Lemma 1 (Haldane Completeness):** The set of partition states $\{|\lambda; N\rangle \mid \text{energy of } \lambda = K\}$ spans the budget subspace $B(N, K)$ under the R2 margin condition.
-- **Auxiliary Lemma 2 (Fermionic Energy Action):** $\hat{E} |\lambda; N\rangle = K |\lambda; N\rangle$.
-By linear extension, two linear maps that agree on a basis/spanning set of a vector space are identical on that space.
+Combine Lemma 12.2 and Corollary 11.6. Both operators are linear maps on $B(N,K)$. Since they agree on the spanning basis $\mathcal{B}_{\text{basis}}(N,K)$ of $B(N,K)$, they are identical on the entire subspace.
 ```lean
 theorem sugawara_equivalence {N K M : ℕ} (h_margin : 2 * K + N.natAbs ≤ h) (hM : M ≥ K) :
-  ∀ ψ ∈ B N K, E ψ = sugawara_hamiltonian M ψ
+  ∀ ψ ∈ B N K, E_hat ψ = sugawara_hamiltonian M ψ
 ```
 
 #### 12.3 The Commutator Corollary
@@ -80,11 +78,8 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-This is a straightforward algebraic deduction from Theorem 12.3 applied twice.
+Algebraic deduction from Theorem 12.3 applied twice:
 - **Auxiliary Lemma 1 (Raising Mode Action):** If $\psi \in B(N, K)$, then $\rho_n \psi \in B(N, K+n)$.
-- **Auxiliary Lemma 2 (Fermionic Energy Commutation):** $[\hat{E}, \rho_n] \psi = n \rho_n \psi$ for $\psi \in B(N, K)$.
-Since $2(K+n) + |N| \le h$ and $M \ge K+n$, Theorem 12.3 applies to both $\psi \in B(N, K)$ and $\rho_n \psi \in B(N, K+n)$.
-We compute:
-$H_{\text{sug}}^{(M)} (\rho_n \psi) = \hat{E} (\rho_n \psi) = (K + n) \rho_n \psi$
-$\rho_n (H_{\text{sug}}^{(M)} \psi) = \rho_n (\hat{E} \psi) = \rho_n (K \psi) = K \rho_n \psi$
-Subtracting the second from the first gives the desired commutator identity $[H_{\text{sug}}^{(M)}, \rho_n] \psi = n \rho_n \psi$.
+- **Auxiliary Lemma 2 (Fermionic Energy Commutation):** $[\hat{E}, \rho_n] \psi = n \rho_n \psi$ for $\psi \in B(N, K)$, since $\hat{E}(\rho_n \delta_S) = (e(S)+n)\rho_n \delta_S$.
+Since $2(K+n) + |N| \le h$ and $M \ge K+n$, Theorem 12.3 applies to both $\psi \in B(N, K)$ and $\rho_n \psi \in B(N, K+n)$, giving $H_{\text{sug}}^{(M)}(\rho_n \psi) = \hat{E}(\rho_n \psi)$ and $\rho_n(H_{\text{sug}}^{(M)} \psi) = \rho_n(\hat{E}\psi)$.
+Subtracting the two expressions gives $[H_{\text{sug}}^{(M)}, \rho_n] \psi = [\hat{E}, \rho_n] \psi = n \rho_n \psi$.

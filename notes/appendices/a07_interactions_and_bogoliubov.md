@@ -19,10 +19,10 @@ Fix the physical units and chemical potential once. The chapter 12 ground shift 
 
 ## Two different quadratic models
 
-Let C_R=ρ_(m,R), A_R=ρ_(−m,R), and similarly for L, with `[Aν,Cν]=mI` in the permitted action regime.
+Let $C_R=\rho_{m,R}$, $A_R=\rho_{-m,R}$, and similarly for $L$, with $[A_\nu,C_\nu]=mI$ in the permitted action regime.
 
 **Definition (Number-Conserving Mixing Form):**
-Chapter 17 currently defines a number-conserving mixing form
+*(Historical note: unoriented identical-branch representations produce this number-conserving hopping form)*:
 \[
  H_{hop}=v_1(C_RA_R+C_LA_L)+v_2(C_RA_L+C_LA_R).
 \]
@@ -33,10 +33,10 @@ Formalize `H_{hop}` as an element of a non-commutative *-algebra representing th
 **Strategy:** Define `C_ν` and `A_ν` as formal symbols in an algebra modulo the relations `[A_ν, C_ν] = mI`. Represent `H_{hop}` directly as a linear combination of these bilinear generators. 
 **Missing Framework Info:** A robust definition of the adjoint `†` mapping `A_ν` to `C_ν` must be formally integrated so that we can structurally prove Hamiltonian hermiticity.
 
-Its scalar mode matrix is `[[v1,v2],[v2,v1]]`. A sum/difference rotation diagonalizes it with coefficients v1+v2 and v1−v2. It does not yield two equal coefficients √(v1²−v2²). For v1=5,v2=3, these are 8 and 2, whereas the proposed common u is 4.
+Its scalar mode matrix is `[[v1,v2],[v2,v1]]`. A sum/difference rotation diagonalizes it with coefficients $v_1+v_2$ and $v_1-v_2$. It does not yield two equal coefficients $\sqrt{v_1^2-v_2^2}$. For $v_1=5,v_2=3$, these are 8 and 2, whereas the common $u$ is 4.
 
 **Definition (Pairing Form):**
-The hyperbolic mixing of a right creator and left annihilator belongs instead to a pairing form
+The hyperbolic mixing of a right creator and left annihilator belongs instead to the pairing form:
 \[
  H_{pair}=v_1(C_RA_R+C_LA_L)+v_2(C_RC_L+A_RA_L).
 \]
@@ -46,12 +46,7 @@ Define `H_{pair}` within the same *-algebra as `H_{hop}`.
 **Auxiliary Lemmas:** The action of the commutator `[H_{pair}, C_R]` and similar generators.
 **Strategy:** Construct the pairing Hamiltonian emphasizing that it creates and destroys pairs of excitations. We will map this quadratic form to a matrix representation over the Nambu spinor basis `(C_R, A_L)^T` to facilitate Bogoliubov diagonalization.
 
-Opposite physical chiral momentum conventions can turn a spatial density interaction into this form, but that convention has not been implemented by merely calling two identical species R and L. Choose explicitly:
-
-1. Keep H_hop and use an ordinary scalar rotation, with velocities v1±v2.
-2. Construct the intended opposite-chirality dictionary and derive H_pair, then use the hyperbolic transform.
-
-The second is likely the intended physical Luttinger model, but it requires revising the preceding chiral definitions and interaction factorization. Do not force the existing hopping form through a Bogoliubov proof.
+With consistent computational creators $C_\nu := \rho_{m,\nu}$ and annihilators $A_\nu := \rho_{-m,\nu}$ on both branches ($\nu \in \{R, L\}$), the raw opposite-transfer interaction (17.2) factors into the hopping form $H_{hop}$. The solvable Luttinger model requires the pairing form $H_{pair}$, which corresponds to the pairing/backscattering channel where left-branch transfer has computational index $+m$. Chapter 17 defines $H_{\text{Lutt}}$ directly as this pairing model $H_{pair}$, preserving the standard CCR $[A_\nu, C_\nu] = m I$ across both branches.
 
 ## Scalar parameter package
 

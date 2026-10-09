@@ -2,13 +2,12 @@
 
 ## Duality requires an actual map and mapped domains
 
-**Definition (Duality map):** An exchange φ↔θ is not by itself an `AlgEquiv` of a finite budget endomorphism algebra. Define its action on fundamental generators, prove every relation including adjointness, construct an inverse, and show how it maps charge sectors, the vacuum, and energy/charge cutoffs. Parameterize the Hamiltonian by a complete set of parameters: g alone does not determine u or the zero-mode energy.
+**Definition (Parameterized Model Duality Map):** An exchange $\phi \leftrightarrow \theta$ is not by itself an `AlgEquiv` of a fixed finite budget endomorphism algebra. Define a model instance $\mathcal{M}(P)$ specified by its parameter record $P = (u, c, s, g, g^{-1}) \in \mathtt{LuttingerParams}$, cutoffs $(L, M, K)$, and Hamiltonian $H_{\text{Lutt}}(P)$. The Duality map $\mathcal{D}: \mathcal{M}(P) \to \mathcal{M}(P^*)$ maps $P$ to $P^* = (u, c, -s, g^{-1}, g)$, swapping $g \leftrightarrow 1/g$. It acts on fundamental generators by $\phi \leftrightarrow \theta$ (exchanging chiral orientations $\varphi_R \leftrightarrow \varphi_R, \varphi_L \leftrightarrow -\varphi_L$), maps charge sectors $(N_R, N_L) \to (N_R, -N_L)$, and exchanges the abstract vertex operators $\mathcal{D}(\mathcal{V}_{CDW}) = \mathcal{V}_{SC}, \mathcal{D}(\mathcal{V}_{SC}) = \mathcal{V}_{CDW}$.
 
 *Lean 4 Proof Strategy:*
-To formalize the duality map, define an `AlgEquiv` mapping the generating fields `φ` and `θ` on the full unbounded algebra. We will need auxiliary lemmas to prove that the proposed algebraic map preserves the canonical commutation relations (CCR) and the involution (adjoints). Then, use `Subalgebra.map` to rigorously track how finite energy and charge cutoffs are mapped under the equivalence.
-**Missing physical/mathematical information:** The exact zero-mode parameter map and the precise shift in the vacuum energy and cutoffs must be algebraically specified before the map can be formalized.
+To formalize the duality map, define an equivalence between two model instances `Model P` and `Model P*`. Auxiliary lemmas prove that the proposed algebraic map preserves the canonical commutation relations (CCR) and the involution (adjoints), while mapping charge sectors and excitation energy cutoffs explicitly.
 
-Swapping the symmetric and antisymmetric combinations amounts to changing the sign of the left field. At the fermion level a candidate may involve a left particle-hole transformation. Such a transformation can change the sea and the charge/budget region; it is not automatically an automorphism of the original restricted carrier. A reasonable proposal is an equivalence between two explicitly related models and their mapped budgets, rather than a fixed-budget symmetry asserted before its construction.
+Swapping the symmetric and antisymmetric combinations amounts to changing the sign of the left field. At the fermion level this corresponds to a left-mover particle-hole transformation, changing the Dirac sea and the charge region. Duality is therefore an equivalence between two explicitly related models $\mathcal{M}(P)$ and $\mathcal{M}(P^*)$ and their mapped budgets, rather than a fixed-budget symmetry of a single instance.
 
 **Theorem (Order-parameter transformation):** Prove order-parameter transformation including phases, adjoints, and zero modes. The proportional vertex formulas in chapter 20 are insufficient to freeze the exact isomorphism. Interpretation as topological T-duality also needs a compactification/charge-lattice specification; an algebraic variable exchange alone does not provide that interpretation.
 
@@ -58,10 +57,7 @@ Define the charge lattice `Λ_{c,s}` as the set of pairs `(Q_c, Q_s) : ℤ × �
 
 *Lean 4 Proof Strategy:*
 Formalize the quadratic coupling matrix and its block-diagonalization via an orthogonal transformation.
-**Auxiliary lemma:** Formally prove that the eigenvalues (velocities) `u_c` and `u_s` are distinct if and only if the cross-species coupling parameter is non-zero.
-**Missing information:** State the explicit parameter matrix in terms of the $g_i$ coupling constants and the nondegeneracy inequality required for `u_c \neq u_s`.
-
-The pair expression in chapter 21.10 also needs coefficient checking: reconstructing each original spin species from normalized charge/spin fields introduces 1/√2 in the exponent, and the two singlet terms can carry different Klein/zero-mode products. Define the claimed `Ψ_spin` rather than leaving it an unspecified residual expression.
+*(Historical note: an earlier draft assigned a single Klein factor to both singlet terms; Chapter 21 now uses two distinct Klein products $K_1 = F_{R\uparrow} F_{L\downarrow} Z_{R\uparrow} Z_{L\downarrow}$ and $K_2 = F_{R\downarrow} F_{L\uparrow} Z_{R\downarrow} Z_{L\uparrow}$, because the two terms shift distinct species-charge vectors).* Both terms share the collective charge phase fields, while carrying distinct Klein factors and opposite relative spin-phase signs.
 
 ## Exact Umklapp charges and leakage
 

@@ -47,21 +47,25 @@ $$
 O_{SSC}(x) := c_{(R, \uparrow, x)} c_{(L, \downarrow, x)} - c_{(R, \downarrow, x)} c_{(L, \uparrow, x)} \tag{21.5}
 $$
 
-Reconstructing the bare exponentials explicitly requires the inverse substitution $\rho_{\uparrow} = \frac{1}{2}(R^c + R^s)$, producing explicit rational fractions of the phase fields in the exponent. Using the raw phase fields $W^c$ and $W^s$, the factorization incorporates the required parity phase factors:
+The first term lowers charges $(R\uparrow, L\downarrow)$, while the second lowers $(R\downarrow, L\uparrow)$. Because these target distinct charge vectors, each term requires its own Klein zero-mode product:
 $$
-O_{SSC}(x) = \frac{1}{L} \left( K_{SSC} \cdot \exp\left[\frac{1}{2}(W^-_{c,R} + W^-_{c,L})\right] \exp\left[\frac{1}{2}(W^+_{c,R} + W^+_{c,L})\right] \cdot \Psi_{\text{spin}}(x) \right) \tag{21.6}
+K_1 := F_{R,\uparrow} F_{L,\downarrow} Z_{R,\uparrow} Z_{L,\downarrow}, \quad K_2 := F_{R,\downarrow} F_{L,\uparrow} Z_{R,\downarrow} Z_{L,\uparrow} \tag{21.6}
 $$
-where $K_{SSC} = F_{R,\uparrow} F_{L,\downarrow} Z_{R,\uparrow} Z_{L,\downarrow}$ and $\Psi_{\text{spin}}(x)$ is the exactly formulated algebraic difference of the spin-field exponentials matching the singlet superposition.
+Reconstructing the single-species fields via $\rho_\uparrow = \frac{1}{2}(R^c + R^s)$ and $\rho_\downarrow = \frac{1}{2}(R^c - R^s)$, both terms share the collective charge phase fields, while carrying distinct Klein and spin-phase factors:
+$$
+O_{SSC}(x) = \frac{1}{L} \operatorname{expNil}\left[\frac{1}{2}(W^-_{c,R} + W^-_{c,L})\right] \operatorname{expNil}\left[\frac{1}{2}(W^+_{c,R} + W^+_{c,L})\right] \left( K_1 \mathcal{E}_{s,1}(x) - K_2 \mathcal{E}_{s,2}(x) \right) \tag{21.7}
+$$
+where $\mathcal{E}_{s,1}(x) = \operatorname{expNil}[\frac{1}{2}(W^-_{s,R}-W^-_{s,L})]\operatorname{expNil}[\frac{1}{2}(W^+_{s,R}-W^+_{s,L})]$ and $\mathcal{E}_{s,2}(x)$ has opposite relative spin-phase signs.
 
 *Lean 4 Proof Strategy:*
-Define `O_SSC` directly in terms of the fundamental fermion annihilation operators. To formalize the factorized form (Eq 21.6), define the raw phase fields $W^c$ and $W^s$, and construct an equivalence theorem showing the equality of the fermionic definition and the bosonized factorized form. Provide an auxiliary lemma verifying the exact inverse substitution relating single-spin phase fields to the collective $W^c$ and $W^s$ fields.
+Define `O_SSC` directly in terms of the fundamental fermion annihilation operators. To formalize the factorized form, define the collective charge and spin phase fields $W^c$ and $W^s$, proving that each of the two terms in the difference receives its own verified Klein factor ($K_1, K_2$) shifting into the appropriate target sector.
 
 #### 21.3 Umklapp Scattering, Sector Leakage, and Discrete RG
 
 **Definition 21.5 (The Exact Umklapp Operator).**
 The Umklapp scattering operator destroys two $R$ particles and creates two $L$ particles of opposite spins:
 $$
-O_{U}(x) := c^\dagger_{(L, \uparrow, x)} c^\dagger_{(L, \downarrow, x)} c_{(R, \downarrow, x)} c_{(R, \uparrow, x)} \tag{21.7}
+O_{U}(x) := c^\dagger_{(L, \uparrow, x)} c^\dagger_{(L, \downarrow, x)} c_{(R, \downarrow, x)} c_{(R, \uparrow, x)} \tag{21.8}
 $$
 
 *Lean 4 Proof Strategy:*
@@ -70,7 +74,7 @@ Define $O_U(x)$ explicitly as a product of four creation/annihilation operators.
 **Lemma 21.6 (Charge Sector Shifts).**
 Each fundamental creator adds exactly 1 to its species charge. Evaluated via the exact CAR commutators, the branch shifts are strictly:
 $$
-\Delta \vec{N} = e_{L,\uparrow} + e_{L,\downarrow} - e_{R,\downarrow} - e_{R,\uparrow} \tag{21.8}
+\Delta \vec{N} = e_{L,\uparrow} + e_{L,\downarrow} - e_{R,\downarrow} - e_{R,\uparrow} \tag{21.9}
 $$
 *(Note: Each species shifts by exactly 1, not 2; the total branch shift is $\pm 2$)*.
 
@@ -78,15 +82,25 @@ $$
 1. **Auxiliary Lemma:** Show that commutators of number operators with creation/annihilation operators yield shifted charges, e.g., $[N_{\nu, s}, c^\dagger_{\nu', s'}] = \delta_{\nu, \nu'} \delta_{s, s'} c^\dagger_{\nu', s'}$.
 2. Apply the commutator derivation over the four-fermion product $O_U(x)$ sequentially using the Leibniz rule for commutators. The resulting vector shift will exactly match the stated branch shifts.
 
-**Theorem 21.7 (Budget Leakage and Kosterlitz-Thouless Flow).**
-Because $H_U$ generates explicit non-zero jumps across charge sectors (a physical witness of sector nonconservation), it maps states on the boundary of the energy budget strictly outside $\mathcal{B}_{K, \vec{N}_{max}}$.
-Therefore, $H_U$ cannot be purely block-diagonalized. Applying the **Discrete Schrieffer-Wolff Transformation** (see A10), the off-diagonal Umklapp perturbation generates second-order loop corrections explicitly driving the Kosterlitz-Thouless transition flow. The system leaves the gapless Luttinger fixed line and opens a physical gap (Mott insulator) purely through these discrete matrix commutators.
+**Theorem 21.7 (Charge Sector Non-Conservation and Conditional Budget Leakage Criterion).**
+The Umklapp operator generates non-zero charge-sector shifts $\Delta \vec{N} = (+1, +1, -1, -1)$:
+$$
+[\hat{N}_{\nu,s}, O_U(x)] = (\Delta \vec{N})_{\nu,s} O_U(x). \tag{21.10}
+$$
+1. *Conditional Leakage Criterion:* Let $\mathcal{B}_{K, \vec{N}_{\max}}$ be an energy-and-charge budget space. Given coupling $g_U \neq 0$, if there exists an occupation state $|\psi\rangle \in \mathcal{B}_{K, \vec{N}_{\max}}$ located at the charge boundary (e.g., $N_{L,\uparrow} = N_{\max}$) such that the spatially summed action $H_U |\psi\rangle = \frac{g_U}{L} \sum_{x \in \Lambda} (O_U(x) + O_U^\dagger(x)) |\psi\rangle \neq 0$ (i.e. not annihilated by Pauli exclusion and satisfying lattice momentum conservation), then $H_U |\psi\rangle$ carries non-zero component in target charge sector $\vec{N} + \Delta \vec{N} \not\le \vec{N}_{\max}$, proving:
+$$
+H_U |\psi\rangle \notin \mathcal{B}_{K, \vec{N}_{\max}}.
+$$
+2. *Non-block-diagonality:* Under this criterion, the budget projection $P_{K,\vec{N}_{\max}}$ does not commute with $H_U$; $H_U$ cannot be diagonalized within a single fixed-charge budget space.
+
+> [!NOTE]
+> *Physical Motivation (KT Flow and Mott Gap):* In continuous field theory, Umklapp scattering generates second-order loop corrections described by Kosterlitz-Thouless (KT) scaling equations, driving the opening of a charge Mott gap. On the finite discrete lattice, budget leakage establishes the algebraic non-invariance of the truncated budget space; deriving the thermodynamic Mott gap or KT flow equations requires a separate asymptotic scaling construction.
 
 *Lean 4 Proof Strategy:*
-1. **Auxiliary Lemma 1:** Formalize the energy budget bound $\mathcal{B}_{K, \vec{N}_{max}}$.
-2. **Auxiliary Lemma 2:** Construct a state $|\psi\rangle$ exactly on the upper boundary of the allowable charge sector.
-3. **Auxiliary Lemma 3 (Leakage Witness):** Show that $H_U |\psi\rangle$ produces a state strictly outside $\mathcal{B}_{K, \vec{N}_{max}}$.
-4. For the Schrieffer-Wolff transformation, construct a second-order perturbation expansion mathematically, and show that the off-diagonal Umklapp terms generate effective diagonal components mapping to the Kosterlitz-Thouless flow equations.
+1. **Auxiliary Lemma 1:** Formalize the charge commutator $[\hat{N}_{\nu,s}, O_U(x)] = (\Delta \vec{N})_{\nu,s} O_U(x)$ from CAR.
+2. **Auxiliary Lemma 2:** State the conditional leakage theorem: assuming a boundary state $|\psi\rangle$ with non-zero spatial sum $H_U |\psi\rangle \neq 0$, deduce $H_U |\psi\rangle \notin \mathcal{B}_{K, \vec{N}_{\max}}$ by evaluating the charge observable $\hat{N}_{L,\uparrow}$.
+3. Separate the discrete algebraic non-invariance result from continuous Wilsonian RG flow or thermodynamic gap claims.
+4. Separate the discrete algebraic non-invariance result from continuous Wilsonian RG flow or thermodynamic gap claims.
 
 #### 21.4 Technical Notes for the Lean 4 Formalization
 

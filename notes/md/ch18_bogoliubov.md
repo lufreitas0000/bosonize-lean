@@ -50,44 +50,57 @@ $$
 
 #### 18.3 Exact Diagonalization and the Luttinger Parameters
 
-If we directly expand the diagonal target Hamiltonian $H_{\text{diag}} = \frac{2\pi u}{L} \sum m (\tilde{\rho}_{m, R} \tilde{\rho}_{-m, R} + \tilde{\rho}_{m, L} \tilde{\rho}_{-m, L})$ using the transformation definitions, we obtain:
+If we directly expand the diagonal target Hamiltonian $H_{\text{diag}} = \frac{2\pi u}{L} \sum_{m=1}^M (\tilde{\rho}_{m, R} \tilde{\rho}_{-m, R} + \tilde{\rho}_{m, L} \tilde{\rho}_{-m, L})$ using the transformation definitions (without redundant outer $m$ factors), we obtain:
 $$
-H_{\text{diag}} = \frac{2\pi u}{L} \sum m \left[ (c^2 + s^2)(\rho_{m, R}\rho_{-m, R} + \rho_{m, L}\rho_{-m, L}) + 2cs(\rho_{m, R}\rho_{m, L} + \rho_{-m, R}\rho_{-m, L}) \right] + 2us^2 \frac{2\pi}{L}\sum m I \tag{18.8}
+H_{\text{diag}} = \frac{2\pi u}{L} \sum_{m=1}^M \left[ (c^2 + s^2)(\rho_{m, R}\rho_{-m, R} + \rho_{m, L}\rho_{-m, L}) + 2cs(\rho_{m, R}\rho_{m, L} + \rho_{-m, R}\rho_{-m, L}) \right] + \Delta E_{\text{vac}} \tag{18.8}
 $$
+where the vacuum constant is $\Delta E_{\text{vac}} = \frac{2\pi}{L} \cdot 2us^2 \sum_{m=1}^M m I$.
 
-**Definition 18.5 (Algebraic Luttinger Parameters).**
-We match this expansion to the raw pairing Luttinger Hamiltonian from Chapter 17 ($v_1 = v_F + g_4 / 2\pi$, $v_2 = g_2 / 2\pi$). We require $v_1 > |v_2|$ (not just $v_1^2 > v_2^2$, to guarantee positive energy).
-We define the renormalized sound velocity $u > 0$ and the hyperbolic parameters via:
+**Definition 18.5 (Luttinger Parameter Record `LuttingerParams`).**
+We match this expansion to the raw pairing Luttinger Hamiltonian from Chapter 17 ($v_1 = v_F + g_4 / 2\pi$, $v_2 = g_2 / 2\pi$). We assume stability $v_1 > |v_2|$ (not merely $v_1^2 > v_2^2$, to guarantee positive velocity).
+We define the parameter record `LuttingerParams` containing:
+1. Renormalized sound velocity $u := \sqrt{v_1^2 - v_2^2} > 0$.
+2. Hyperbolic parameters $c, s \in \mathbb{R}$ satisfying $c^2 - s^2 = 1$, determined by:
 $$
-u = \sqrt{v_1^2 - v_2^2} \tag{18.9}
+c^2 + s^2 = \frac{v_1}{u}, \quad 2cs = \frac{v_2}{u} \tag{18.9}
 $$
+3. Luttinger dimensionless parameter $g > 0$ and its inverse $g^{-1}$:
 $$
-c^2 + s^2 = \frac{v_1}{u}, \quad 2cs = \frac{v_2}{u} \tag{18.10}
+g := (c - s)^2 = \frac{v_1 - v_2}{u} = \sqrt{\frac{v_1 - v_2}{v_1 + v_2}} > 0, \quad g^{-1} := (c + s)^2 = \frac{v_1 + v_2}{u} = \sqrt{\frac{v_1 + v_2}{v_1 - v_2}} > 0 \tag{18.10}
 $$
-*(Squaring these yields $(c^2-s^2)^2 = 1$, but we supply the required sign $+1$ explicitly in the structure).*
+Since $(c-s)(c+s) = c^2 - s^2 = 1$, we have the exact algebraic identity $g \cdot g^{-1} = 1$. Note: the symbol $g$ denotes this interaction parameter, kept distinct from the energy budget cutoff $K$.
 
-*Lean 4 Proof Strategy:* Define a function computing $u, c, s$ from $v_1, v_2$ assuming the hypothesis $v_1 > |v_2|$. Prove that the resulting $(c,s)$ form a valid `HyperbolicPair` (satisfying $c^2 - s^2 = 1$) by algebraic verification in `ℝ`. `nlinarith` or `ring` tactics, combined with properties of `Real.sqrt`, will verify the identity algebraically.
+*Lean 4 Proof Strategy:* Bundle $u, c, s, g, g^{-1}$ into a structure `LuttingerParams` with proof fields $u > 0$, $c^2 - s^2 = 1$, $g = (c-s)^2$, $g^{-1} = (c+s)^2$, and $g g^{-1} = 1$. Prove that $v_1 > |v_2|$ yields valid real witnesses using `Real.sqrt` and `positivity`.
 
-**Theorem 18.6 (Exact Diagonalization).**
-By substituting the matching parameters, the interacting Hamiltonian evaluates exactly to the free diagonalized bosonic Hamiltonian on the budget, plus an exact vacuum zero-point shift originating from the $[ \rho_{-m}, \rho_m ]$ normal ordering commutators during expansion:
+**Theorem 18.6 (Exact Diagonalization on Budget).**
+By substituting the matching parameters, the interacting Hamiltonian evaluates on budget vectors $\psi \in \mathcal{B}_{K, \vec{N}_{\max}}$ (satisfying M2 margin conditions) to:
 $$
-\forall \psi \in \mathcal{B}_{K, \vec{N}_{max}}, \quad H_{\text{Lutt}} \psi = \left[ \frac{2\pi u}{L} \sum_{m=1}^{M} m \left( \tilde{\rho}_{m, R} \tilde{\rho}_{-m, R} + \tilde{\rho}_{m, L} \tilde{\rho}_{-m, L} \right) + E_{\text{zero}} - \Delta E_{\text{vac}} \right] \psi \tag{18.11}
+H_{\text{Lutt}} \psi = \left[ \frac{2\pi u}{L} \sum_{m=1}^{M} \left( \tilde{\rho}_{m, R} \tilde{\rho}_{-m, R} + \tilde{\rho}_{m, L} \tilde{\rho}_{-m, L} \right) + E_{\text{zero}} - \Delta E_{\text{vac}} \right] \psi \tag{18.11}
 $$
-where $\Delta E_{\text{vac}} = \frac{2\pi}{L} \cdot 2us^2 \sum m I$.
+where $\Delta E_{\text{vac}} = \frac{2\pi}{L} \cdot 2us^2 \sum_{m=1}^M m I$.
 
-*Lean 4 Proof Strategy:* Express both sides as operators applied to $\psi$ on the specific budget. Expand $H_{\text{Lutt}}$ and the Bogoliubov operators into combinations of raw $\rho$ operators. Match the coefficients term-by-term using the relations from Definition 18.5. The normal-ordering correction $\Delta E_{\text{vac}}$ arises from reordering $\rho_{m} \rho_{-m}$ into $\rho_{-m} \rho_m + m$ via the Kac-Moody relation (requires M2 margin condition). Use `ring` combined with the operator expansions to conclude equality.
+*Lean 4 Proof Strategy:* Express both sides as operators applied to $\psi$. Expand the Bogoliubov operators $\tilde{\rho}$ into raw $\rho$ operators. Match the coefficients term-by-term using Definition 18.5. The normal-ordering correction $\Delta E_{\text{vac}}$ arises from reordering $\rho_{-m} \rho_m = \rho_m \rho_{-m} - m I$ via the Kac-Moody relation, which gives the exact scalar sum $\frac{2\pi}{L} 2us^2 \sum_{m=1}^M m I$.
 
-**Corollary 18.7 (Physical Velocity).**
+**Corollary 18.7 (Physical Velocity Comparison).**
 If $v_1 > 0$ and $v_2 \neq 0$, $u = \sqrt{v_1^2 - v_2^2} < v_1$. Repulsive $g_2$ alone does *not* guarantee a speed larger than the bare $v_F$; the intra-branch $g_4$ contribution must outcompete the $g_2$ mixing.
 
-#### 18.4 State Existence and RG Fixed Line
+#### 18.4 State Semantics and Energy-Shell Schrieffer-Wolff Decomposition
 
-**Theorem 18.8 (Ground State Existence).**
-There is generally no normalized positive vacuum satisfying both bare and dressed annihilation conditions on the exact finite slice. The actual finite Hamiltonian needs its own ground-state construction (e.g. via diagonalizing a finite positive density matrix). The vacuum state evaluated by algebraic trace projections must be separated from an abstract untruncated continuous CCR functional.
+**Theorem 18.8 (Obstruction to Simultaneous Bare and Dressed Vacuum on Current-Action Regime).**
+Let $m \ge 1$ be a retained mode, and assume $s \neq 0$. On any state $\psi$ in a nonvacuous current-action regime where the scalar CCR $[\rho_{-m,\nu}, \rho_{m,\nu}]\psi = m \psi$ holds (such as any sector ground state $|\vec{N}\rangle_0$ in an admissible sector within budget margins):
+(i) The state $\psi$ cannot be simultaneously annihilated by bare lowering modes ($\rho_{-m,\nu}\psi = 0$) and dressed lowering modes ($\tilde{\rho}_{-m,\nu}\psi = 0$).
+*(Proof: If $\rho_{-m,R}\psi = 0$ and $\tilde{\rho}_{-m,R}\psi = (c \rho_{-m,R} + s \rho_{m,L})\psi = 0$ with $s \neq 0$, then $\rho_{m,L}\psi = 0$. Similarly, $\tilde{\rho}_{-m,L}\psi = 0 \implies \rho_{m,R}\psi = 0$. Then $m \psi = [\rho_{-m,R}, \rho_{m,R}]\psi = \rho_{-m,R}(\rho_{m,R}\psi) - \rho_{m,R}(\rho_{-m,R}\psi) = 0$, forcing $\psi = 0$).*
 
-*Lean 4 Proof Strategy:* State this as an impossibility or non-existence theorem: $\neg \exists \psi \neq 0, \forall m, (\rho_{m,R} \psi = 0 \land \tilde{\rho}_{m,R} \psi = 0)$ except when $s = 0$. Proof by contradiction: assuming such a state exists, substituting the inverse Bogoliubov relations would force $s \cdot \rho_{-m,L} \psi = 0$, which contradicts the non-triviality of the state if $s \neq 0$.
+*(Scope Warning: This obstruction requires the nonvacuous current-action hypothesis $[\rho_{-m}, \rho_m]\psi = m\psi$; boundary kets such as the completely empty ket $\delta_\emptyset$ or fully occupied ket $\delta_{\Lambda^*}$ are annihilated by all non-zero density modes $\rho_m$ for trivial degree reasons, so the obstruction does not hold globally on all of finite Fock space).*
 
-**Theorem 18.9 (Luttinger Liquid Fixed Line).**
-Because the interaction maps exactly to a diagonal quadratic matrix, the discrete Schrieffer-Wolff decimation map $\mathbb{E}_K$ (see Appendix A10) cleanly deletes the highest mode $K$ without generating any off-diagonal loop corrections among the lower modes $m < K$. This formalizes the Luttinger Liquid as an exact discrete algebraic RG fixed line.
+Consequently:
+1. The finite Hamiltonian must be evaluated on its own constructed finite ground vector (or density matrix) with boundary corrections.
+2. Abstract quasi-free Gaussian CCR states (where an untruncated state $\omega_{\tilde{\Omega}}$ satisfies the lowering mode annihilation condition $\omega_{\tilde{\Omega}}(\tilde{\rho}_{-m,\nu}^\dagger \tilde{\rho}_{-m,\nu}) = 0$) are representations of an infinite CCR algebra, not finite-Fock vectors. The two frameworks must be kept conceptually distinct.
 
-*Lean 4 Proof Strategy:* Apply the Schrieffer-Wolff map $\mathbb{E}_K$ to the diagonalized Hamiltonian. Since $H_{\text{diag}}$ has no terms coupling mode $K$ to modes $m < K$, the off-diagonal parts $V_{ab}$ in the decimation are exactly zero. Thus the effective Hamiltonian $H_{\text{eff}}$ on the low-energy space is simply the truncation of $H_{\text{diag}}$ up to $K-1$, proving the fixed-line property.
+*Lean 4 Proof Strategy:* Formalize the theorem on the subspace where the CCR holds non-trivially (`[A_m, C_m] ψ = m • ψ` with `m > 0`). Show that if `A_m ψ = 0` and `(c A_m + s C_m) ψ = 0` with `s ≠ 0`, then `C_m ψ = 0`, so `[A_m, C_m] ψ = 0`, forcing `m • ψ = 0` and thus `ψ = 0`. Exclude the empty/full boundary sectors where densities act trivially.
+
+**Theorem 18.9 (Energy-Shell Schrieffer-Wolff Decomposition).**
+Let $\mathcal{B}_K = \mathcal{B}_{K-1} \oplus \mathcal{H}_K$ be the budget decomposition by energy shells.
+1. *Energy shell vs. mode decimation:* Projecting $\mathcal{B}_K \to \mathcal{B}_{K-1}$ discards states with total partition energy $E = K$. This is distinct from removing an oscillator mode factor (e.g., at $K=2$, $\mathcal{B}_2$ contains both $X_1^2$ and $X_2$; shell projection removes both, while mode decimation of mode 2 would retain $X_1^2$).
+2. *Block-diagonal SW transformation:* If an unperturbed baseline $H_0$ is block diagonal with respect to the energy-shell projection $P$, and a perturbation $V$ satisfies $P V Q = Q V P = 0$, then the Schrieffer-Wolff generator $S_1 = 0$, and the effective Hamiltonian on $\mathcal{B}_{K-1}$ has zero second-order correction ($H_{\text{eff}} = P (H_0 + V) P$).
+3. *Physical RG context:* The statement that the Luttinger Liquid is an RG fixed line is a physical continuum scaling interpretation requiring a defined parameter map and rescaling rule, distinct from this finite discrete energy-shell projection.

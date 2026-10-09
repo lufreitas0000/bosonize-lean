@@ -24,69 +24,97 @@ Auxiliary lemmas needed:
 1. `W_plus_adjoint`: Prove that `W_plus` and `W_minus` are related by Hermitian conjugation.
 2. `comm_W_plus_minus`: Evaluate the commutator `[W_plus, W_minus]` using the current algebra.
 
-**Definition 14.2 (Periodic Zero-Mode Phase).**
-The overall baseline momentum of the sector must be shifted when a particle is removed. A naive formula $\omega^{2xN - x}$ is anti-periodic under $x \to x+L$. To strictly maintain lattice periodicity matching $c_x$, we define the zero-mode phase mapped onto the integer charge $N_\nu$:
+**Definition 14.2 (Source Zero-Mode Phase).**
+The overall baseline momentum of the sector must be shifted when a particle is removed. A naive formula $\omega^{2xN - x}$ is anti-periodic under $x \to x+L$. To strictly maintain lattice periodicity matching $c_x$, we define the zero-mode phase operator acting diagonally on the source charge sector $\vec{N}$:
 
 $$
 Z_\nu(x) \vert{}\vec{N}\rangle := \zeta^{x N_\nu} \vert{}\vec{N}\rangle \tag{14.3}
 $$
 
-(A corresponding fixed parity boundary twist or momentum shift must absorb the half-integer offset if exact ground-state phases are tracked, depending on whether periodic or anti-periodic boundaries are chosen for the physical fermions).
+Because $Z_\nu(x)$ acts on the source state *before* the charge is lowered by $F_\nu$, it contributes the exact eigenvalue $\zeta^{x N_\nu}$, matching the physical matrix element ${}_0\langle \vec{N}-e_\nu \mid c_{(\nu, x)} \mid \vec{N}\rangle_0 = \frac{1}{\sqrt{L}} P(\nu, \vec{N}) \zeta^{x N_\nu}$.
+(If $Z_\nu$ were placed after $F_\nu$, it would evaluate on the shifted target charge $N_\nu - 1$, producing an erroneous extra $\zeta^{-x}$ phase).
 
 *Lean 4 Proof Strategy:*
 Formalize `Z_nu(x)` as a linear map on the Hilbert space which acts diagonally on the charge basis `|N>`. Define the operator by its action on the basis elements.
 Auxiliary lemmas:
 1. `Z_nu_commute_W`: Prove that `Z_nu` commutes with `W_plus` and `W_minus` because the latter operators do not change the total charge `N_nu`.
-2. `Z_nu_Klein_commute`: Prove the specific commutation relations between `Z_nu` and the Klein factors `F_nu` (since Klein factors shift `N_nu`).
+2. `Z_nu_Klein_intertwine`: Prove $F_\nu Z_\nu(x) |\vec{N}\rangle_0 = P(\nu, \vec{N}) \zeta^{x N_\nu} |\vec{N}-e_\nu\rangle_0$, correctly reproducing the ground-to-ground CAR matrix element.
 
-#### 14.2 Projected Truncated Exponentials
+#### 14.2 Compressed Nilpotent Phase Exponentials and Cutoff Typing
 
-**Physical Intuition (Nilpotency vs. Projection):**
-A common misconception is that raising operators on a finite budget are natively nilpotent. Applying $W^-$ to a state in $B(N,K)$ maps it strictly into higher budgets; it does not naturally equal zero unless a projection $P_{K'}$ is inserted.
+Let $M \ge 1$ be an independent mode cutoff satisfying $2M < L$. The phase operators are sums over modes $1 \le m \le M$:
+$$
+W^-_\nu(x) := \sum_{m=1}^M \frac{\zeta^{mx} - 1}{m} \rho_{m, \nu}, \qquad W^+_\nu(x) := \sum_{m=1}^M \frac{\zeta^{-mx} - 1}{m} \rho_{-m, \nu} \tag{14.3}
+$$
 
-For a truly nilpotent, compressed endomorphism $A$ with $A^{d+1}=0$ on its restricted carrier, we define its finite algebraic exponential $\mathrm{expNil}(A) = \sum_{j=0}^d A^j/j!$. We define the vertex map component as explicitly projected into the target budget $K_{out}$.
+To define the composite vertex operator between source budget $B_{\text{in}} = B(\vec{N}, K_{\text{in}})$ and target budget $B_{\text{out}} = B(\vec{N}-e_\nu, K_{\text{out}})$, each factor is equipped with its explicit typing, transition map, and nilpotency degree:
+1. **Source Zero-Mode:** $Z_\nu(x): B(\vec{N}, K_{\text{in}}) \to B(\vec{N}, K_{\text{in}})$ acts diagonally with eigenvalue $\zeta^{x N_\nu}$.
+2. **Sector Shift:** $F_\nu: B(\vec{N}, K_{\text{in}}) \to B(\vec{N}-e_\nu, K_{\text{in}})$ shifts charge with ground phase $P(\nu, \vec{N})$ and preserves excitation energy.
+3. **Lowering Exponential:** Because each mode $\rho_{-m,\nu}$ ($m \ge 1$) lowers excitation energy by at least 1, $W^+_\nu(x)$ is strictly nilpotent on $B(\vec{N}-e_\nu, K_{\text{in}})$ with nilpotency degree at most $K_{\text{in}} + 1$. Its unprojected action remains within $B(\vec{N}-e_\nu, K_{\text{in}})$, so its exact finite polynomial exponential is:
+$$
+\operatorname{expNil}_{\text{in}}(W^+_\nu(x)) := \sum_{j=0}^{K_{\text{in}}} \frac{\left( W^+_\nu(x) \right)^j}{j!} \in \mathrm{End}_{\mathbb{C}}(B(\vec{N}-e_\nu, K_{\text{in}})).
+$$
+4. **Cutoff Transition:** The transition map $\Pi_{\text{trans}}: B(\vec{N}-e_\nu, K_{\text{in}}) \to B(\vec{N}-e_\nu, K_{\text{out}})$ is defined as orthogonal projection $P_{K_{\text{out}}}$ if $K_{\text{out}} \le K_{\text{in}}$, or canonical inclusion if $K_{\text{out}} > K_{\text{in}}$.
+5. **Compressed Raising Exponential:** The raising operator $W^-_\nu(x)$ increases excitation energy. On the target space $B(\vec{N}-e_\nu, K_{\text{out}})$, the compressed raising operator is defined by $W^-_{\nu,\text{comp}}(x) := P_{K_{\text{out}}} W^-_\nu(x) P_{K_{\text{out}}}$. Because each step strictly raises energy, $W^-_{\nu,\text{comp}}$ is strictly nilpotent on $B(\vec{N}-e_\nu, K_{\text{out}})$ with degree at most $K_{\text{out}} + 1$. Its compressed exponential is:
+$$
+\operatorname{expNil}_{\text{out}}(W^-_\nu(x)) := \sum_{j=0}^{K_{\text{out}}} \frac{\left( W^-_{\nu,\text{comp}}(x) \right)^j}{j!} \in \mathrm{End}_{\mathbb{C}}(B(\vec{N}-e_\nu, K_{\text{out}})).
+$$
 
 #### 14.3 The Vertex Map Equivalence
 
-**Definition 14.3 (The Bosonized Vertex Map).**
-For each species $\nu \in \mathcal{C}$ and position $x \in \Lambda$, the composite bosonized map $B_\nu(x)$ acts from a source budget $B_{in}$ to a target budget $B_{out}$:
+**Definition 14.3 (The Projected Bosonized Vertex Map).**
+For each species $\nu \in \mathcal{C}$ and position $x \in \Lambda$, the composite bosonized vertex operator $B_\nu(x): B(\vec{N}, K_{\text{in}}) \to B(\vec{N}-e_\nu, K_{\text{out}})$ is defined by:
 
 $$
-B_\nu(x) := \frac{1}{\sqrt{L}} \mathrm{expNil}_{out}(W^-_{\nu}(x)) \mathrm{expNil}_{in}(W^+_{\nu}(x)) Z_\nu(x) F_\nu \tag{14.4}
+B_\nu(x) := \frac{1}{\sqrt{L}} \operatorname{expNil}_{\text{out}}(W^-_{\nu}(x)) \circ \Pi_{\text{trans}} \circ \operatorname{expNil}_{\text{in}}(W^+_{\nu}(x)) \circ F_\nu \circ Z_\nu(x) \tag{14.4}
 $$
 
-*(Note the operator ordering: annihilation phases lower the energy, the Klein map changes the sector, and the creation phase raises the energy, all explicitly tracked between valid finite budgets).*
+*(Operator sequence from right to left: $Z_\nu$ evaluates the source phase $\zeta^{x N_\nu}$; $F_\nu$ shifts charge with phase $P(\nu, \vec{N})$; $\operatorname{expNil}_{\text{in}}(W^+)$ lowers energy on the input cutoff; $\Pi_{\text{trans}}$ transitions to cutoff $K_{\text{out}}$; and compressed $\operatorname{expNil}_{\text{out}}(W^-)$ raises within the target cutoff).*
 
 *Lean 4 Proof Strategy:*
 Define `B_nu(x)` as a composition of linear maps between explicitly typed finite budget spaces `Budget(N_in, K_in) → Budget(N_out, K_out)`.
-`expNil` needs to be defined as a finite Taylor series projection.
+`expNil` is defined as a finite polynomial sum.
 Auxiliary lemmas:
-1. `expNil_W_minus_well_defined`: Prove that the truncated exponential applied to the specific budget size terminates or is correctly projected.
-2. `B_nu_linearity`: Prove the operator is linear.
+1. `expNil_W_minus_well_defined`: Nilpotency degree bounds on both lowering and compressed raising polynomials.
+2. `B_nu_linearity`: Linearity of the composite map.
 
 **Lemma 14.4 (Adjoint Properties).**
-Because $(W^+_{\nu})^\dagger = -W^-_{\nu}$, the adjoint exponentials carry minus signs and reverse order. The formal adjoint map is:
+Taking the Hilbert adjoint reverses operator order, mapping $B^\dagger_\nu(x): B(\vec{N}-e_\nu, K_{\text{out}}) \to B(\vec{N}, K_{\text{in}})$. Because $(W^+_\nu)^\dagger = -W^-_\nu$ and $(W^-_\nu)^\dagger = -W^+_\nu$, the adjoint factors are:
+$$
+\left(\operatorname{expNil}_{\text{out}}(W^-_\nu(x))\right)^\dagger = \operatorname{expNil}_{\text{out}}(-W^+_\nu(x)), \quad \left(\operatorname{expNil}_{\text{in}}(W^+_\nu(x))\right)^\dagger = \operatorname{expNil}_{\text{in}}(-W^-_\nu(x))
+$$
+The exact adjoint vertex map is:
 
 $$
-B^\dagger_\nu(x) = \frac{1}{\sqrt{L}} F^\dagger_\nu Z^{-1}_\nu(x) \mathrm{expNil}_{in}(-W^+_{\nu}(x)) \mathrm{expNil}_{out}(-W^-_{\nu}(x)) \tag{14.5}
+B^\dagger_\nu(x) = \frac{1}{\sqrt{L}} Z^\dagger_\nu(x) \circ F^\dagger_\nu \circ \operatorname{expNil}_{\text{in}}(-W^-_{\nu}(x)) \circ \Pi_{\text{trans}}^\dagger \circ \operatorname{expNil}_{\text{out}}(-W^+_{\nu}(x)) \tag{14.5}
 $$
+
+*(Note: $\operatorname{expNil}(-W^-)$ precedes $\operatorname{expNil}(-W^+)$ in the adjoint; because raising and lowering phases do not commute, swapping this order is an algebraic error).*
 
 *Lean 4 Proof Strategy:*
-State and prove this using the definition of the adjoint for operators on finite-dimensional spaces.
+State and prove this using the adjoint rule $(ABCD)^\dagger = D^\dagger C^\dagger B^\dagger A^\dagger$.
 Auxiliary lemmas:
-1. `expNil_adjoint`: Prove `(expNil(A))^\dagger = expNil(A^\dagger)` for our projected exponentials.
-2. `Klein_adjoint`: `F_nu^\dagger = F_nu^{-1}` (unitarity of Klein factors).
-3. `Z_nu_adjoint`: `Z_nu(x)^\dagger = Z_nu(x)^{-1}` (unitarity of the zero-mode phase).
+1. `expNil_adjoint`: Prove `(expNil(W^+))^\dagger = expNil(-W^-)` and `(expNil(W^-))^\dagger = expNil(-W^+)`.
+2. `Klein_adjoint`: $F_\nu^\dagger = F_\nu^{-1}$ on the budget subspace.
+3. `Z_nu_adjoint`: $Z_\nu(x)^\dagger = Z_\nu(x)^{-1}$ (unitarity of zero-mode phase).
 
 **Theorem 14.5 (Projected Mattis-Mandelstam Equivalence).**
-The unprojected equation $c_x = B_x$ fails as a global algebraic identity on finite systems (e.g., at $K=0$, the vertex map produces only the ground ket, missing deep hole states). Therefore, the exact bosonization theorem is strictly a **projected matrix-element equivalence**.
-If we select a target energy $K_{out}$ and boundary phases are consistently fixed, then on the verified prefix margins:
+The unprojected equation $c_x = B_x$ fails as a global algebraic identity on finite systems (e.g., at $K=0$, the physical $c_x |\vec{N}\rangle_0$ contains deep hole states of excitation energy $>0$). Therefore, the exact bosonization theorem is strictly a **projected matrix-element equivalence**.
+Under the numerical margin condition:
+$$
+2M + \max(K_{\text{in}}, K_{\text{out}}) + \max(|N_\nu|, |N_\nu - 1|) \le h \tag{14.6}
+$$
+the projected physical fermion equals the projected vertex map:
 
 $$
-P_{out} c_{(\nu, x)} P_{in} = B_\nu(x) \tag{14.6}
+P_{\text{out}} c_{(\nu, x)} P_{\text{in}} = B_\nu(x) \tag{14.7}
 $$
 
-This is proven via a cyclic-basis intertwining induction with typed maps. We do not infer Schur irreducibility of a finite slice on which creators do not act as true endomorphisms. We do not infer global CAR by multiplying restricted equalities without explicit target-domain proofs.
+In particular, between sector ground states ($K_{\text{in}} = K_{\text{out}} = 0$), both $\operatorname{expNil}$ operators reduce to $I$, yielding:
+$$
+{}_0\langle \vec{N}-e_\nu \mid c_{(\nu,x)} \mid \vec{N} \rangle_0 = \frac{1}{\sqrt{L}} P(\nu, \vec{N}) \zeta^{x N_\nu}
+$$
+matching the exact physical CAR ground matrix element.
 
 *Lean 4 Proof Strategy:*
 Formalize the theorem as an exact equality of operators `P_{out} ∘ c_{nu, x} ∘ P_{in} = B_nu(x)` acting on `Budget(N_in, K_in)` into `Budget(N_out, K_out)`.

@@ -2,9 +2,10 @@
 
 In this chapter, the abstract index set $\iota$ from Chapter 4 is instantiated as the centered momentum band $\iota = \Lambda^*$. The algebraic and normal-ordering mechanics follow [Appendix A01](../appendices/a01_fourier_scalars_and_characters.md) and [Appendix A04](../appendices/a04_density_partitions_and_sugawara.md).
 
-*Notation Convention:*
+*Lattice and Notation Conventions:*
+- From this chapter onward, we strictly require the lattice size $L = 2h$ to be a positive even integer with $h > 0$. This sets the stage for the half-filled Fermi sea constructed in Chapter 7.
 - Spatial lattice positions are exclusively denoted by $x, y \in \Lambda$.
-- Momentum modes are exclusively denoted by $k, p, q \in \Lambda^* = \{-h+1, \dots, h\}$.
+- Momentum modes are exclusively denoted by $k, p, q \in \Lambda^* = \{-h+1, \dots, h\}$. Note that the centered band is asymmetric and retains the positive Nyquist mode $h = L/2$.
 - Operators $c_k, c_k^\dagger$ are the exact CAR operators from Chapter 4 acting on $\mathrm{Fock}(\Lambda^*)$.
 
 ---

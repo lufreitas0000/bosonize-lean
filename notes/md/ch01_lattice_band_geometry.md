@@ -6,7 +6,7 @@ This document provides the rigorous mathematical specification for the lattice A
 
 ### Chapter 1: Lattice and Band Geometry
 
-In 1+1-dimensional lattice quantum field theory, the exact specification of the discrete spatial manifold and its Fourier-dual momentum space is foundational. Let $L \ge 1$ be a strictly positive integer, representing the number of lattice sites. From Chapter 6 onwards, we will require $L$ to be an even integer to ensure a symmetric Fermi sea.
+In 1+1-dimensional lattice quantum field theory, the exact specification of the discrete spatial manifold and its Fourier-dual momentum space is foundational. Let $L \ge 1$ be a strictly positive integer, representing the number of lattice sites. From Chapter 5 onwards, we will strictly require $L = 2h$ with $h > 0$ to be an even integer to ensure a half-filled Fermi sea (note that the centered integer band $\Lambda^* = \{-h+1, \dots, h\}$ is intrinsically asymmetric, retaining the positive Nyquist mode $h = L/2$, so the lattice coordinates and band representatives are not reflection-symmetric).
 
 **Definition 1.1 (Spatial Lattice).** The 1D spatial lattice is defined as the periodic ring of $L$ sites, identified with the additive quotient group of integers modulo $L$.
 

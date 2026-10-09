@@ -67,7 +67,7 @@ Construct partition-state products as ordered lists/folds in the noncommutative 
 **Definition (Partition-state products):** Given a partition represented by frequencies `r_m`, define the state `(\prod_m \rho_m^{r_m}) \Omega`. Formalize this using a list of parts `[m_1, m_2, \dots]` sorted descending, and fold the application of `\rho_m` over the vacuum ket.
 **Theorem (Ordering independence):** Use the previously proved `[\rho_m, \rho_n] = 0` (for `m, n > 0`) to show by induction over list permutations that any ordering of the same multiset of parts yields the identical state vector.
 
-For the Gram theorem, first prove a commutator-through-a-word lemma with all prefix energy bounds. Then prove the vacuum reduction recursively. Use the explicit R2 regime only after deriving that every required M1/M2 application is justified. The norm is `z_λ=∏ m^(r_m) r_m!`, nonzero over ℂ. Completeness follows from membership, linear independence, and the rectangle-counting bijection. A mere dimension count without the bijection is a substantial missing proof.
+For the Gram theorem, first prove a commutator-through-a-word lemma with all prefix energy bounds. When commuting $\rho_{-m}$ ($m \le K$) past $\rho_n$ ($n \le K$), the remainder to the right has energy $E \le K - n$, so the joint excursion satisfies $m + n + E \le m + K \le 2K$. Under the R2 condition $2K + |N| \le h$, the M2 hypothesis $|m| + |n| + E + |N| \le h$ is satisfied at every step. Then prove the vacuum reduction recursively. The norm is $z_\lambda = \prod m^{r_m} r_m!$, nonzero over $\mathbb{C}$. Completeness follows from membership, linear independence, and the rectangle-counting bijection. A mere dimension count without the bijection is a substantial missing proof.
 
 *Lean 4 Proof Strategy:*
 **Lemma (Commutator-through-a-word and vacuum reduction):** Prove `[\rho_{-m}, \prod \rho_{m_i}]` recursively on the list `[m_i]`. Each pass leaves a term proportional to `m` times the remaining product if `m_i = m`. Use induction on the length of the list, applying the edge commutator identities.
@@ -80,19 +80,22 @@ Write H_sug^(M)=Σ_(m=1)^M ρ_mρ_−m, identifying M explicitly. The assertion 
 *Lean 4 Proof Strategy:*
 **Definition (Sugawara Hamiltonian):** Define `H_{sug}^{(M)} = \sum_{m=1}^M \rho_m \rho_{-m}`. Formulate it using `Finset.sum` over `1 \le m \le M` acting as an operator on the Hilbert space.
 
-Chapter 12.2, as stated for every nonzero n under only `2K+|N|≤h`, is false. At h=1, K=N=0, its H_sug sum is empty, but ρ₁Ω≠0; thus `[H_sug,ρ₁]Ω=0` differs from ρ₁Ω. A saved finite CAR computation checks this case.
+*(Historical Audit Note: In the original unrevised draft, Chapter 12 attempted to prove Sugawara equivalence by using an unrestricted mode commutation identity, which failed at small h/cutoffs, e.g. at h=1, K=N=0).*
 
-A safer proof order is:
+A safe, non-circular proof order is:
 
-1. Evaluate H_sug on each admissible partition state, obtaining its total energy eigenvalue with the needed word margins.
-2. Use Haldane completeness to prove Êψ=H_sugψ on B(N,K).
-3. Derive commutation as a corollary on a specified range of n for which both the input and shifted output lie in budgets where this equivalence has been proved.
+1. Prove Haldane completeness for fixed-energy subspaces: for each $0 \le E \le K$, $\{|\lambda; N\rangle \mid \lambda \vdash E\}$ forms an orthogonal basis of $H(N,E)$.
+2. Assemble the whole budget basis of $B(N,K) = \bigoplus_{E=0}^K H(N,E)$ as the disjoint union $\bigcup_{E=0}^K \{|\lambda; N\rangle \mid \lambda \vdash E\}$ (with $E=0$ spanned by the ground ket $|N\rangle_0$).
+3. Evaluate $H_{\text{sug}}^{(M)}$ on each partition state of energy $E \le K \le M$, obtaining $H_{\text{sug}}^{(M)}|\lambda; N\rangle = E |\lambda; N\rangle = \hat{E}|\lambda; N\rangle$.
+4. Extend by linearity across the whole budget basis to establish $\hat{E}\psi = H_{\text{sug}}^{(M)}\psi$ for all $\psi \in B(N,K)$.
+5. Derive commutation as a corollary on a specified range of $n$ for which both the input and shifted output lie in budgets where this equivalence has been proved.
 
 *Lean 4 Proof Strategy:*
-**Theorem (Sugawara equivalence on budget spans):**
-1. **Lemma:** Prove `H_{sug}^{(M)} |\lambda\rangle = E_\lambda |\lambda\rangle` for any partition state `|\lambda\rangle` by using the word commutator and the vacuum reduction lemma, provided `M` is larger than any part in `\lambda`.
-2. **Theorem:** By the completeness theorem, any state `\psi \in B(N,K)` is a linear combination of partition states. Thus `\hat{P} \psi = H_{sug}^{(M)} \psi` on this subspace.
-3. **Corollary:** For the commutation relation `[H_{sug}^{(M)}, \rho_n] \psi = n \rho_n \psi`, prove it by noting that if `\psi \in B(N,K)`, then `\rho_n \psi \in B(N, K+n)`. Assuming the margins hold for both budgets, apply the eigenvalue equivalence to both `\psi` and `\rho_n \psi`.
+**Theorem (Sugawara equivalence on whole budget spans):**
+1. **Lemma:** Prove `H_{sug}^{(M)} |\lambda\rangle = E |\lambda\rangle` for any partition state `|\lambda\rangle` of energy $E \le K$, provided `M ≥ K`.
+2. **Whole budget basis assembly:** Construct `Basis` of $B(N,K)$ from the direct sum `⨁_{E ≤ K} H(N,E)`.
+3. **Theorem:** Since `H_{sug}^{(M)}` and `\hat{E}` agree on every basis vector in `\mathcal{B}_{basis}(N,K)`, `\hat{E} \psi = H_{sug}^{(M)} \psi` on the entire budget $B(N,K)$.
+4. **Corollary:** For the commutation relation `[H_{sug}^{(M)}, \rho_n] \psi = n \rho_n \psi$, note that if $\psi \in B(N,K)$, then $\rho_n \psi \in B(N, K+n)$. Assuming enlarged margins $2(K+n) + |N| \le h$ and cutoff $M \ge K+n$, apply the eigenvalue equivalence to both $\psi$ and $\rho_n \psi$.
 
 For example, an upward shift n>0 needs an equivalence theorem also on B(N,K+n), a cutoff M≥K+n, and a sufficient enlarged margin such as `2(K+n)+|N|≤h`. This is a sufficient repaired corollary, not a claim of optimal margins. It avoids using an overstrong commutation lemma to establish the equivalence circularly.
 

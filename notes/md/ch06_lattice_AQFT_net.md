@@ -33,7 +33,7 @@ $$
 $$
 
 This induces a strict $\mathbb{Z}_2$-grading $\mathfrak{A}(I) = \mathfrak{A}_+(I) \oplus \mathfrak{A}_-(I)$.
-The even part $\mathfrak{A}_+(I)$ is a strict subalgebra, whereas the odd part $\mathfrak{A}_-(I)$ is merely a linear subspace (since the product of two odd operators is even).
+The even part $\mathfrak{A}_+(I)$ is an even subalgebra (which is a proper subalgebra when $I \neq \emptyset$, but equals the full algebra $\mathfrak{A}(\emptyset) = \mathbb{C} \cdot I$ when $I = \emptyset$), whereas the odd part $\mathfrak{A}_-(I)$ is merely a linear subspace (since the product of two odd operators is even).
 
 $$
 \mathfrak{A}_\pm(I) := \{ A \in \mathfrak{A}(I) \mid \alpha(A) = \pm A \} \tag{6.3}

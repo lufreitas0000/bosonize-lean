@@ -45,43 +45,59 @@ Define density operators parameterized by species `ν : C` and momentum `m : ℤ
 
 A true Klein map is not a global unitary endomorphism on the entire finite-dimensional Fock space. We define it specifically as a mapped linear isometry between admissible source and target sector budgets of equal excitation cutoff.
 
-**Definition 13.4 (Klein Maps on the Haldane Basis).**
-For each species $\nu \in \mathcal{C}$, the Klein map $F_\nu$ is defined between the fixed-energy budget subspace of sector $\vec{N}$ and sector $\vec{N}-e_\nu$. Its action on the bosonic partition basis is:
+**Definition 13.4 (Klein Maps on Budget Subspaces).**
+For each species $\nu \in \mathcal{C}$ and admissible sector pair with $\vec{N}$ and $\vec{N}-e_\nu$ both admissible (meaning $-h+1 \le N_\nu \le h$), under the multispecies completeness condition:
+$$
+\forall \eta \in \mathcal{C}, \quad 2K + \max(|N_\eta|, |N_\eta - \delta_{\nu\eta}|) \le h
+$$
+the Klein map $F_{\nu, \vec{N}, K}$ is defined as a linear map from $B(\vec{N}, K)$ to $B(\vec{N}-e_\nu, K)$ by its action on the bosonic partition basis states $|\vec{\lambda}; \vec{N}\rangle$:
 
 $$
-F_\nu \vert{}\vec{\lambda}; \vec{N}\rangle := P(\nu, \vec{N}) \vert{}\vec{\lambda}; \vec{N} - e_\nu\rangle \tag{13.4}
+F_{\nu, \vec{N}, K} \vert{}\vec{\lambda}; \vec{N}\rangle := P(\nu, \vec{N}) \vert{}\vec{\lambda}; \vec{N} - e_\nu\rangle \tag{13.4}
 $$
 
-To strictly respect the CAR lexicographic sign rules of the underlying Fock space without phase anomalies, the parity sign $P$ counts the *actual total preceding occupation*, not just the relative charge:
+The exact sign factor $P(\nu, \vec{N}) \in \{+1, -1\}$ accounts for both the lexicographic CAR ordering of species and the annihilation of the top mode in the Fermi sea:
 
 $$
-P(\nu, \vec{N}) := (-1)^{\sum_{\eta < \nu} (h + N_\eta)} \times (\text{same-species ground-ket phase}) \tag{13.5}
+P(\nu, \vec{N}) := (-1)^{\sum_{\eta < \nu} (h + N_\eta) + (h + N_\nu - 1)} \tag{13.5}
 $$
 
-By defining the map independently of the bosonic partitions $\vec{\lambda}$, we mathematically enforce that the Klein map commutes with all density modes:
+Because $P(\nu, \vec{N})$ depends only on the charge vector $\vec{N}$ and not on the partition $\vec{\lambda}$, the Klein map intertwines with density modes across a four-budget commuting square. For any raising density mode $\rho_{m, \nu'}$ of weight $m > 0$:
 
 $$
-\forall m \in \mathbb{Z}, \forall \nu, \nu' \in \mathcal{C}, \quad F_\nu \rho_{m, \nu'} = \rho_{m, \nu'} F_\nu \tag{13.6}
+F_{\nu, \vec{N}, K+m} \circ \rho_{m, \nu'} = \rho_{m, \nu'} \circ F_{\nu, \vec{N}, K} \tag{13.6}
 $$
 
-(Note: This is an intertwining equality between maps on the budget spaces, not a global commutator).
+as linear maps from $B(\vec{N}, K)$ into $B(\vec{N}-e_\nu, K+m)$, provided the enlarged multispecies completeness margin:
+$$
+\forall \eta \in \mathcal{C}, \quad 2(K+m) + \max(|N_\eta|, |N_\eta - \delta_{\nu\eta}|) \le h
+$$
+holds across all four budget spaces $B(\vec{N}, K)$, $B(\vec{N}, K+m)$, $B(\vec{N}-e_\nu, K)$, and $B(\vec{N}-e_\nu, K+m)$. For lowering modes $m > 0$, the corresponding square intertwines maps into target cutoff $K$.
 
 *Lean 4 Proof Strategy:*
-Define `F_nu` as a linear map from the fixed-energy subspace of sector `N` to sector `N - e_nu`. Compute the sign function `P(ν, N)` using `Finset.sum` over `{η ∈ C | η < ν}`. Prove that `F_nu` intertwines with the bosonic operators `rho_m_ν'` by explicitly proving `F_nu ∘ rho_m = rho_m ∘ F_nu` evaluated on the `|λ; N⟩` basis states.
+Define `F_nu` as a linear map parameterized by `(ν : C) (N : C → ℤ) (K : ℕ)`. Formalize the phase `P(ν, N)` as `(-1) ^ (∑ η < ν, (h + N η) + (h + N ν - 1))`. Prove the intertwining relation by checking equality on the partition basis states: since `rho_m_ν'` adds part `m` to partition `λ_{ν'}` without altering the charge vector `N`, the phase `P(ν, N)` factors out identically on both sides of the square.
 
 #### 13.3 Exact Algebraic Properties and Isometry
 
 **Lemma 13.5 (Isometry).**
-Because the Haldane basis completeness holds on both the source budget $B(\vec{N}, K)$ and the target budget $B(\vec{N}-e_\nu, K)$ (provided the maximum energy $K$ satisfies the completeness regimes for both $N_\nu$ and $N_\nu - 1$), and because the standard bosonic Gram matrix inner product $z_\lambda$ is independent of the sector charge, the Klein map is an exact **isometry**.
+Because Haldane basis completeness holds on both the source budget $B(\vec{N}, K)$ and target budget $B(\vec{N}-e_\nu, K)$ under the multispecies completeness condition $\forall \eta \in \mathcal{C}, 2K + \max(|N_\eta|, |N_\eta - \delta_{\nu\eta}|) \le h$, and because the standard bosonic Gram matrix inner product $z_\lambda = \prod m^{r_m} r_m!$ is independent of the sector charge, $F_{\nu, \vec{N}, K}$ is an exact **linear isometry**:
+
+$$
+\forall \psi \in B(\vec{N}, K), \quad \| F_{\nu, \vec{N}, K} \psi \| = \| \psi \|
+$$
 
 *Lean 4 Proof Strategy:*
 Use the `LinearIsometry` class in Mathlib to bundle `F_nu`. To prove `∥F_nu v∥ = ∥v∥`, use the fact that `F_nu` maps standard orthogonal basis vectors `|λ; N⟩` to `±|λ; N - e_nu⟩`, and their inner products depend only on `λ` (via `z_λ`), independent of the charge sector `N`. State an auxiliary lemma `inner_product_charge_independent`.
 
 **Lemma 13.6 (Cross-Species Anti-Commutation).**
-Because $F_\nu$ lowers the actual total occupation of species $\nu$ by exactly 1, applying $F_\eta$ after $F_\nu$ strictly drops the sum $\sum_{\gamma < \eta} (h + N_\gamma)$ by 1 if $\nu < \eta$. Consequently, mapping across distinct species anti-commutes:
+Let $\nu \neq \nu'$ be distinct species. Assume the source sector $\vec{N}$, intermediate sectors $\vec{N}-e_\nu$, $\vec{N}-e_{\nu'}$, and final sector $\vec{N}-e_\nu-e_{\nu'}$ are all admissible ($-h \le N_\gamma - \delta_{\nu\gamma} - \delta_{\nu'\gamma} \le h$), and that cutoff $K$ satisfies the completeness margin on all four sectors:
+$$
+\forall \eta \in \mathcal{C}, \quad 2K + \max(|N_\eta|, |N_\eta - \delta_{\nu\eta}|, |N_\eta - \delta_{\nu'\eta}|, |N_\eta - \delta_{\nu\eta} - \delta_{\nu'\eta}|) \le h.
+$$
+Because lowering species $\nu$ changes the preceding occupation count $\sum_{\eta < \nu'} (h + N_\eta)$ by $\pm 1$ whenever $\nu < \nu'$, the two composite paths from $B(\vec{N}, K)$ to $B(\vec{N}-e_\nu-e_{\nu'}, K)$ differ by an exact minus sign:
 
 $$
-F_\nu F_{\nu'} + F_{\nu'} F_\nu = 0 \quad (\text{for } \nu \neq \nu') \tag{13.7}
+F_{\nu', \vec{N}-e_\nu, K} \circ F_{\nu, \vec{N}, K} + F_{\nu, \vec{N}-e_{\nu'}, K} \circ F_{\nu', \vec{N}, K} = 0 \tag{13.7}
 $$
 
 *Correction to Clifford Terminologies:*

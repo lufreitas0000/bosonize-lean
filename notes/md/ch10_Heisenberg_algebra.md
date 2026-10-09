@@ -64,25 +64,35 @@ $$
 Similar to Lemma 10.1, we evaluate the single-particle commutator `[T_m, T_n]`, which results in off-diagonal hopping terms `c^\dagger_{q+m+n} c_q` located only at the edges of the spectrum. We then state an auxiliary lemma `frozen_margins_hopping_annihilation`: for `psi \in B(N,K)`, any hopping operator originating from the top frozen margin or landing in the bottom frozen margin will annihilate `psi`. Under the `M2 Margin Condition`, all residual edge hoppings satisfy this criteria. `simp` using this auxiliary lemma yields `0`.
 
 **Theorem 10.4 (The U(1) Kac-Moody Algebra on the Budget).**
-Combining these results and the normal ordering $:\!\rho_m\!: \ := \rho_m - \delta_{m0} h I$, we obtain the exact Kac-Moody algebra on the budget subspace:
+Let $M \ge 1$ be a mode cutoff. Under the uniform margin condition:
+
+$$
+2M + K + |N| \le h
+$$
+
+which simultaneously satisfies the M1 condition for opposite modes ($|m| + K + |N| \le h$) and the M2 condition for unequal modes ($|m| + |n| + K + |N| \le h$), the normal-ordered densities $:\!\rho_m\!: \ := \rho_m - \delta_{m0} h I$ for all $|m|, |n| \le M$ satisfy the exact Kac-Moody algebra on the budget subspace:
 
 $$
 \forall \psi \in B(N,K), \quad [:\!\rho_m\!:, :\!\rho_n\!:] \psi = -m \delta_{m+n, 0} \psi \tag{10.7}
 $$
 
+*(Note: Without these margin hypotheses, the identity is false: the unrestricted commutator on the full Fock space contains the finite edge terms of Lemma 10.1 and Lemma 10.3).*
+
 *Lean 4 Proof Strategy:*
-This theorem unites Lemmas 10.2 and 10.3. First, expand the normal ordering `:\rho_m:`. The constants added by normal ordering commute, so `[:\rho_m:, :\rho_n:] = [\rho_m, \rho_n]`. Use a case split on whether `m + n = 0` or `m + n \neq 0`. If `m + n = 0`, apply Lemma 10.2 (noting the sign convention `[\rho_m, \rho_{-m}] = -m \psi`). If `m + n \neq 0`, apply Lemma 10.3 to get `0`. The proof is completed using `simp` to evaluate the Kronecker delta.
+State this theorem with explicit premises `|m| ≤ M`, `|n| ≤ M`, and `2 * M + K + N.natAbs ≤ h`. First, expand the normal ordering `:\rho_m:`. The constants added by normal ordering commute, so `[:\rho_m:, :\rho_n:] = [\rho_m, \rho_n]`. Use a case split on whether `m + n = 0` or `m + n \neq 0`. If `m + n = 0`, apply Lemma 10.2 (since $|m| + K + |N| \le 2M + K + |N| \le h$). If `m + n \neq 0`, apply Lemma 10.3 (since $|m| + |n| + K + |N| \le 2M + K + |N| \le h$). The proof is completed using `simp` to evaluate the Kronecker delta.
 
 *(Note: $\rho_m$ for $m > 0$ physically acts as a creation mode, raising energy, mathematically matching the lowering current $J_{-m}$, yielding the minus sign).*
 
 **Lemma 10.5 (Composition Margin Accounting).**
-Because $[\rho_{-m}, \rho_m] = \rho_{-m}\rho_m - \rho_m\rho_{-m}$ consists of operator products, the intermediate state after the first application must also satisfy the margin conditions. An input-only margin is not a margin for the entire calculation. When commuting a word of multiple density operators bounded by a maximum mode cutoff $M$, we define the maximum cumulative upward energy excursion $K_{\text{excursion}}$. The conservative uniform condition for all such commutators to act as exact scalars is:
+Because $[\rho_{-m}, \rho_m] = \rho_{-m}\rho_m - \rho_m\rho_{-m}$ consists of operator products, the intermediate state after the first application must also satisfy the margin conditions. An input-only margin is not a margin for the entire calculation.
+When evaluating an operator word of density modes bounded by mode cutoff $M$, let $K_{\text{excursion}}$ denote the maximum cumulative intermediate upward excitation energy added beyond the input energy $K$ (so that the maximum intermediate energy is bounded by $K + K_{\text{excursion}}$).
+The conservative uniform condition for all intermediate states and commutators to remain valid and act as exact scalars is:
 
 $$
 2M + K + K_{\text{excursion}} + |N| \le h \tag{10.8}
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize `K_excursion` by defining an upper bound on the energy change caused by sequential applications of density operators up to mode `M`. State a helper lemma `energy_bound_rho`: `rho_m` changes the energy of a state by exactly `m` and the charge by `0`. We formalize the condition as a predicate `ValidMarginSeq` for a list of operators. The proof proceeds by induction on the length of the operator word. For each step, we show that applying `rho_m` yields a new state in `B(N, K')` where `K' \le K + K_excursion`. As long as the maximal `K'` still satisfies the single-operator margin `M + K' + |N| \le h`, the individual commutator evaluations remain valid.
+Formalize `K_excursion` by defining an upper bound on the cumulative energy increase caused by sequential applications of density operators up to mode `M`. State a helper lemma `energy_bound_rho`: `rho_m` changes the energy of a state by at most `m` and the charge by `0`. We formalize the condition as a predicate `ValidMarginSeq` for a list of operators. The proof proceeds by induction on the length of the operator word. For each step, we show that applying `rho_m` yields a new state in `B(N, K')` where `K' \le K + K_excursion`. As long as the maximal `K'` still satisfies the margin `2M + K' + |N| \le h`, the individual commutator evaluations remain valid.
 
 Every restricted scalar identity remains a theorem about its strictly typed action on input vectors, and must not be blindly substituted as a global endomorphism equality over the entire finite carrier.

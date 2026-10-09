@@ -42,10 +42,10 @@ Define a Klein map between admissible source and target sector budgets of equal 
 *Lean 4 Proof Strategy:*
 Formalize the "source sector" and "target sector" as specific `Submodule`s of the full Fock space, parameterized by the excitation cutoff. The "partition-label set" serves as an indexing type for the basis of these submodules (`Basis ι R M`). Define the Klein map as a `LinearEquiv` between these two submodules by defining it pointwise on the basis vectors indexed by the partition labels.
 
-To use completeness in both sectors require the regime for N and N−1 (or N+1). `Nmax<h` alone does not guarantee these equal partition dimensions for arbitrarily high K.
+To use completeness in both sectors, require the multispecies completeness condition across all species: $\forall \eta \in \mathcal{C}, 2K + \max(|N_\eta|, |N_\eta - \delta_{\nu\eta}|) \le h$. `Nmax<h` alone does not guarantee these equal partition dimensions for arbitrarily high K.
 
 **Lemma 2 (Isometry of the Klein Map):**
-Keep the normalized current Gram form from A02. Equal Gram factors in both sectors prove isometry of the map. Define its inverse on the target budget; if a global ambient extension is desired, specify how the complementary subspace is handled and do not infer global commutation from the budget construction.
+Keep the normalized current Gram form from A02. Under the multispecies completeness condition $\forall \eta, 2K + \max(|N_\eta|, |N_\eta - \delta_{\nu\eta}|) \le h$, equal Gram factors in both sectors prove isometry of the map $F_{\nu, \vec{N}, K}: B(\vec{N}, K) \to B(\vec{N}-e_\nu, K)$. Define its inverse on the target budget; if a global ambient extension is desired, specify how the complementary subspace is handled and do not infer global commutation from the budget construction.
 
 *Lean 4 Proof Strategy:*
 1. **Isometry:** Equip the sectors with a `BilinForm` or `InnerProductSpace` structure. Prove that for any basis elements `e_i, e_j`, `⟪KleinMap e_i, KleinMap e_j⟫_target = ⟪e_i, e_j⟫_source`. Since the Gram factors are identical by hypothesis, the `LinearEquiv` extends to a linear isometry.
@@ -78,15 +78,19 @@ This serves as a formal proof of negation (`¬ UniversalEquivalence`).
 
 Even the nilpotency premise fails: W⁻Ω≠0 at K=0. Raising out of an input budget is not annihilation unless a projection is actually inserted. Finite full-Fock raising phases are nilpotent because the full energy spectrum has a finite top, but their nilpotency order is not K+1 for an input-only budget.
 
-The zero-mode phase also conflicts with periodicity. If ω is primitive of order 2L and ω²=ζ, then `ω^(2xN−x)` changes sign under x→x+L. It is antiperiodic; the chapter 5 c_x is periodic. Choose a boundary twist and corresponding momentum labels consistently, or repair the zero-mode exponent for the periodic sector. Choosing a canonical representative does not remove the physical mismatch.
+The zero-mode phase also conflicts with periodicity if written as a fractional or target exponent. To match the physical matrix element ${}_0\langle N-1|c_x|N\rangle_0 = L^{-1/2} (-1)^{h+N-1} \zeta^{xN}$, the zero mode $Z(x)$ must act on the source charge sector before $F$ shifts charge, so that the zero-mode part is $F Z(x)$ (or equivalently $Z_{\text{target}}(x) F$ with $Z_{\text{target}}$ having eigenvalue $\zeta^{x(N_{\text{target}}+1)}$). Placing an unshifted $Z$ after $F$ contributes $\zeta^{x(N-1)}$, differing by an extra $\zeta^{-x}$.
 
-Furthermore `(W⁺)†=−W⁻`, as correctly observed in chapter 15. Consequently adjoint exponentials carry minus signs and reverse their order. Chapter 14.7's claimed adjoint expression must be recomputed.
+Furthermore $(W^+)^\dagger = -W^-$ and $(W^-)^\dagger = -W^+$. Consequently, adjoint exponentials carry minus signs and reverse their order:
+\[
+ (E_- E_+ F Z)^\dagger = Z^\dagger F^\dagger E_+^\dagger E_-^\dagger = Z^\dagger F^\dagger \operatorname{expNil}(-W^-) \operatorname{expNil}(-W^+).
+\]
+Placing $\operatorname{expNil}(-W^+)$ before $\operatorname{expNil}(-W^-)$ is an algebraic error because the two factors do not commute.
 
 ## A defensible replacement target
 
 Before attempting a universal field identity, choose one precise target:
 
-1. **Theorem 2 (Restricted Vertex Equality):** An equality of matrix elements between specified source and target budgets, equivalently `P_out c_x inclusion = vertexMap`, with a vertex cutoff depending on the output energy and with boundary phases fixed.
+1. **Theorem 2 (Restricted Vertex Equality):** An equality of matrix elements between specified source and target budgets, equivalently `P_out c_x P_in = vertexMap`, with vertex map $B_\nu(x) = L^{-1/2} \operatorname{expNil}_{\text{out}}(W^-) \circ \Pi_{\text{trans}} \circ \operatorname{expNil}_{\text{in}}(W^+) \circ F_\nu \circ Z_\nu(x)$ and adjoint $B^\dagger_\nu(x) = L^{-1/2} Z^\dagger_\nu(x) \circ F^\dagger_\nu \circ \operatorname{expNil}_{\text{in}}(-W^-) \circ \Pi_{\text{trans}}^\dagger \circ \operatorname{expNil}_{\text{out}}(-W^+)$, under numerical margins $2M + \max(K_{\text{in}}, K_{\text{out}}) + \max(|N_\nu|, |N_\nu - 1|) \le h$, with boundary phases, transitions, and budgets explicitly tracked.
 
 *Lean 4 Proof Strategy:*
 State the theorem as an operator equality restricted to budgets: `P_out ∘ c_x ∘ inclusion = vertexMap` (using `LinearMap.comp`). 

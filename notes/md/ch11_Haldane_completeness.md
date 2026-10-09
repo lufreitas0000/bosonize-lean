@@ -52,15 +52,23 @@ $$
 
 **Lemma 11.4 (Regime R2: Bosonic Orthogonality).**
 *Lean 4 Proof Strategy:*
-Proceed by induction on the length (or total energy) of the partition `λ`. Use an auxiliary "pull-through" lemma (`commutator_through_word`) to evaluate inner products like `⟨0| ρ_{m_1} ... ρ_{m_k} ρ_{-n_1} ... ρ_{-n_l} |0⟩`. The `R2 Margin Condition` (`2K + |N| ≤ h`) must be passed as an explicit assumption to justify the use of Kac-Moody algebra commutators without hitting the edge of the finite Dirac sea. Prove the normalization factor `z_λ` by recursively applying the commutator `[ρ_m, ρ_{-m}] = m`.
+Proceed by induction on the length (or total energy) of the partition `λ`. Use an auxiliary "pull-through" lemma (`commutator_through_word`) to evaluate inner products $\langle N \mid \prod \rho_{-n} \prod \rho_m \mid N \rangle_0$.
+Each part $m$ satisfies $m \le K$, and any intermediate prefix product of creation modes has excitation energy bounded by $K$. Annihilating through the word never increases energy beyond $K$. Thus the effective mode cutoff is $M = K$, and the maximum intermediate energy is bounded by $K$. The R2 condition $2K + |N| \le h$ rigorously validates every intermediate Kac-Moody commutator step via the M2 margin.
+Prove the normalization factor $z_\lambda$ by recursively applying the commutator $[\rho_m, \rho_{-m}] = m$.
 
-To prove orthogonality, we compute the Gram matrix by commuting annihilation modes through the word of creation modes. The intermediate mathematical states acquire transient energies. The required conservative margin must track the maximum upward excursion of these intermediate prefix products. If the parameters satisfy the **R2 Margin Condition**:
+To prove orthogonality, we compute the Gram matrix by commuting annihilation modes through the word of creation modes. For any partition $\lambda \vdash K$, every mode part satisfies $m \le K$.
+When commuting a lowering mode $\rho_{-m}$ ($m \le K$) past a creation mode $\rho_n$ ($n \le K$), the commutator $[\rho_{-m}, \rho_n]$ acts on the remainder sub-word to the right of $\rho_n$. Because the total excitation energy of the partition word is at most $K$, this remainder has energy $E \le K - n$.
+Consequently, the joint excursion for the commutator satisfies:
+$$
+m + n + E \le m + n + (K - n) = m + K \le 2K.
+$$
+Therefore, under the **R2 Margin Condition**:
 
 $$
 2K + \vert{}N\vert{} \le h \tag{11.5}
 $$
 
-then every intermediate step of the nested Kac-Moody commutators is justified by the M2 margin. A rigorous formal induction (commutator-through-a-word lemma) reduces the inner product to the vacuum, yielding the standard Hall inner product:
+we have $m + n + E + |N| \le 2K + |N| \le h$, which rigorously satisfies the M2 margin hypothesis for every off-diagonal commutator (and the M1 margin $2m + E + |N| \le 2K + |N| \le h$ for diagonal steps). A rigorous formal induction (commutator-through-a-word lemma) reduces the inner product to the vacuum, yielding the standard Hall inner product:
 
 $$
 \langle \lambda; N \mid \mu; N \rangle = \delta_{\lambda\mu} z_\lambda \tag{11.6}
@@ -68,8 +76,26 @@ $$
 
 where the exact normalization is $z_\lambda = \prod m^{r_m} r_m!$.
 
-**Theorem 11.5 (Haldane Completeness).**
+**Theorem 11.5 (Haldane Completeness at Energy $K$).**
 *Lean 4 Proof Strategy:*
 Combine `Lemma 11.3` and `Lemma 11.4`. First, use `Lemma 11.4` (orthogonality with strictly positive norm $z_λ \ge 1$) to prove that the set of states `{|λ; N⟩}` is linearly independent. Then, observe that the cardinality of this set is `p(K)`. Since they belong to `ℋ^N_K` and their cardinality equals the dimension of `ℋ^N_K` (from `Lemma 11.3`), they must form a basis. Use Mathlib's linear algebra results (e.g., `basisOfLinearIndependentOfCardEqDim`) to formalize completeness over `ℂ`.
 
-Because $z_\lambda \ge 1$, the norm of every partition state is strictly positive over $\mathbb{C}$, proving linear independence. Combining membership in $\mathcal{H}^N_K$, linear independence, and the exact dimension count established by the rectangle bijection, the set $\{|\lambda; N\rangle \mid \lambda \vdash K \}$ forms a complete orthogonal basis for the fermionic subspace $\mathcal{H}^N_K$.
+Because $z_\lambda \ge 1$, the norm of every partition state is strictly positive over $\mathbb{C}$, proving linear independence. Combining membership in $\mathcal{H}^N_K$, linear independence, and the exact dimension count established by the rectangle bijection, the set $\{|\lambda; N\rangle \mid \lambda \vdash K \}$ forms a complete orthogonal basis for the fixed-energy subspace $\mathcal{H}^N_K = H(N,K)$.
+
+**Corollary 11.6 (Whole Budget Basis Assembly).**
+The full fixed-charge budget subspace $B(N,K)$ decomposes as the orthogonal direct sum of fixed-energy spaces:
+
+$$
+B(N,K) = \bigoplus_{E=0}^K H(N,E) \tag{11.7}
+$$
+
+Because the R2 condition at $K$ ($2K + |N| \le h$) implies the R2 condition at every $E \le K$ ($2E + |N| \le 2K + |N| \le h$), applying Theorem 11.5 at each $0 \le E \le K$ yields that the disjoint union of partition bases:
+
+$$
+\mathcal{B}_{\text{basis}}(N,K) := \bigcup_{E=0}^K \{ |\lambda; N\rangle \mid \lambda \vdash E \} \tag{11.8}
+$$
+
+(where $E=0$ is spanned by the unique ground ket $|0; N\rangle = |N\rangle_0$) forms a complete orthogonal basis for the entire budget subspace $B(N,K)$.
+
+*Lean 4 Proof Strategy:*
+Formalize as an internal direct sum of `Submodule`s: `B(N,K) = ⨁_{E ≤ K} H(N,E)`. Use `Basis.sum` or linear combination of the bases of each $H(N,E)$ to construct the basis of $B(N,K)$. Prove that each $E \le K$ inherits $2E + |N| \le h$ from `2K + |N| ≤ h`.

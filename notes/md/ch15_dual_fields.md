@@ -7,14 +7,15 @@ Phase 4 bridges the discrete momentum modes to macroscopic continuous-looking ph
 If identical copies of the same chiral representation are used, their commutators have the same sign and fail to produce the required cross-field cancellations. We must explicitly construct fields with opposite chirality orientations $\eta \in \{+1, -1\}$.
 
 **Definition 15.1 (Oriented Chiral Fluctuation Field).**
-For each species branch and assigned orientation $\eta$, the purely bosonic, Hermitian chiral fluctuation field is defined exactly as:
+Let $M$ be an independent mode cutoff satisfying $M \ge 1$ and the no-aliasing condition $2M < L$ (so $M \le h-1$).
+For each species branch and assigned orientation $\eta \in \{+1, -1\}$, the purely bosonic, Hermitian chiral fluctuation field is defined on the retained modes:
 
 $$
-\varphi_\eta(x) := i \sum_{m=1}^{h-1} \frac{1}{m} \left( \zeta^{\eta m x} \rho_{-m, \eta} - \zeta^{-\eta m x} \rho_{m, \eta} \right) \tag{15.1}
+\varphi_\eta(x) := i \sum_{m=1}^{M} \frac{1}{m} \left( \zeta^{\eta m x} \rho_{-m, \eta} - \zeta^{-\eta m x} \rho_{m, \eta} \right) \tag{15.1}
 $$
 
 *Lean 4 Proof Strategy:*
-Define `chiralFluctuationField (η : Int) (x : Int) : OperatorAlgebra` (where $\eta$ is strictly constrained to $\pm 1$) as a `Finset` sum over `m ∈ Ico 1 h`. The character $\zeta$ should be treated as a primitive $L$-th root of unity (e.g., via `Complex.exp` or a purely algebraic root). The modes $\rho_{m, \eta}$ should be represented as a map `rho : Int → Int → OperatorAlgebra`. Since these represent independent physics branches, state an explicit physical axiom that opposite orientation branches commute: `[rho m 1, rho n (-1)] = 0`.
+Define `chiralFluctuationField (M : ℕ) (η : Int) (x : Int)` as a `Finset` sum over `m ∈ Icc 1 M`. The character $\zeta$ is a primitive $L$-th root of unity. Opposite orientation branches commute: `[rho m 1, rho n (-1)] = 0`. By choosing an explicit cutoff $M$ distinct from $h-1$, the uniform margin condition $2M + K + N_{\max} \le h$ remains non-vacuous on non-trivial budgets.
 
 By reversing the spatial character, opposite orientations yield opposite chiral kernels while retaining the same standard current modes.
 
@@ -22,7 +23,7 @@ By reversing the spatial character, opposite orientations yield opposite chiral 
 Because $\rho_{-m} = \rho_m^\dagger$, conjugating the roots exactly flips the sum, proving strict self-adjointness: $\varphi_\eta^\dagger(x) = \varphi_\eta(x)$.
 
 *Lean 4 Proof Strategy:*
-Assuming `OperatorAlgebra` implements a `StarRing` typeclass, state the lemma as `star (chiralFluctuationField η x) = chiralFluctuationField η x`. The proof will require applying `star_sum`, `star_mul`, and `star_sub` inside the `Finset` sum. Since `star (ζ) = ζ⁻¹` and `star (rho m η) = rho (-m) η`, conjugating the terms effectively swaps the two components of the subtraction. An auxiliary lemma to formalize the negation swap inside the summand will close the proof.
+Assuming `OperatorAlgebra` implements a `StarRing` typeclass, state the lemma as `star (chiralFluctuationField M η x) = chiralFluctuationField M η x`.
 
 #### 15.2 The Macroscopic Dual Fields
 
@@ -38,21 +39,23 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Define `phiField (x : Int) := chiralFluctuationField 1 x + chiralFluctuationField (-1) x` and `thetaField (x : Int) := chiralFluctuationField 1 x - chiralFluctuationField (-1) x`.
+Define `phiField M x := chiralFluctuationField M 1 x + chiralFluctuationField M (-1) x` and `thetaField M x := chiralFluctuationField M 1 x - chiralFluctuationField M (-1) x`.
 
-**Lemma 15.4 (Exact Field Commutators).**
-Using the explicit orientation signs and evaluating on the Kac-Moody budget, the identical-branch commutators cancel correctly, producing the desired macroscopic field commutators with an explicit lattice kernel:
-
-$$
-[\phi(x), \phi(y)] = 0, \quad [\theta(x), \theta(y)] = 0 \tag{15.4}
-$$
+**Lemma 15.4 (Field Commutators on the Budget).**
+Evaluating on input vectors $\psi \in \mathcal{B}_{K, \vec{N}_{\max}}$ under the uniform margin condition $2M + K + N_{\max} \le h$, the identical-branch commutators cancel correctly for self-commutators, producing the exact field commutators with an explicit lattice kernel:
 
 $$
-[\phi(x), \theta(y)] = 2i \sum_{m=1}^{h-1} \frac{2}{m} \sin\left(\frac{2\pi m (x-y)}{L}\right) I =: 2i C(x,y) I \tag{15.5}
+\forall \psi \in \mathcal{B}_{K, \vec{N}_{\max}}, \quad [\phi(x), \phi(y)] \psi = 0, \quad [\theta(x), \theta(y)] \psi = 0 \tag{15.4}
 $$
+
+$$
+\forall \psi \in \mathcal{B}_{K, \vec{N}_{\max}}, \quad [\phi(x), \theta(y)] \psi = 2i \left[ \sum_{m=1}^{M} \frac{2}{m} \sin\left(\frac{2\pi m (x-y)}{L}\right) \right] \psi =: 2i C(x,y) \psi \tag{15.5}
+$$
+
+*(Note: These are evaluated as actions on budget vectors, not as unrestricted global identities on the full Fock space).*
 
 *Lean 4 Proof Strategy:*
-Using the bilinearity of the Lie bracket (`⁅_, _⁆`), expand the definitions of $\phi$ and $\theta$ into four cross-commutators. By the axiom that opposite chiral branches commute, cross-terms like `⁅chiralFluctuationField 1 x, chiralFluctuationField (-1) y⁆` vanish. The remaining terms are identical-branch commutators. For $\phi$ and $\theta$ self-commutators, these identical-branch commutators are combined with a minus sign and cancel out. For the mixed $\phi, \theta$ commutator, they sum together, yielding the exact finite lattice kernel evaluated via the Kac-Moody budget `[rho_m, rho_{-m}] = m * I`. An auxiliary lemma converting complex exponentials $\zeta - \zeta^{-1}$ to $2i \sin$ will cleanly express the final kernel.
+Expand the Lie brackets into four cross-commutators. Cross-terms between opposite chiral branches vanish. The same-branch commutators evaluate on $\psi \in \mathcal{B}_{K, \vec{N}_{\max}}$ via the Kac-Moody theorem (Theorem 10.4) since $2M + K + N_{\max} \le h$.
 
 #### 15.3 Exact Gradients and the Zero-Mode Obstruction
 
@@ -63,24 +66,24 @@ To define $\partial_x \phi \propto \rho$ strictly algebraically, we use the exac
 Applying $\Delta_x$ explicitly evaluates to:
 
 $$
-(\Delta \varphi_\eta)(x) = i \sum_{m=1}^{h-1} \frac{1}{m} \left( (\zeta^{\eta m} - 1)\zeta^{\eta m x} \rho_{-m, \eta} - (\zeta^{-\eta m} - 1)\zeta^{-\eta m x} \rho_{m, \eta} \right) \tag{15.6}
+(\Delta \varphi_\eta)(x) = i \sum_{m=1}^{M} \frac{1}{m} \left( (\zeta^{\eta m} - 1)\zeta^{\eta m x} \rho_{-m, \eta} - (\zeta^{-\eta m} - 1)\zeta^{-\eta m x} \rho_{m, \eta} \right) \tag{15.6}
 $$
 
 *Lean 4 Proof Strategy:*
-Define a forward difference operator for functions mapping into the operator algebra: `forwardDiff (f : Int → OperatorAlgebra) (x : Int) := f (x + 1) - f x`. Apply it to `chiralFluctuationField` and pull the difference operation inside the `Finset.sum` using the linearity of sums. The proof is a purely algebraic manipulation factoring out `ζ^{±η m x}` from `ζ^{±η m (x+1)} - ζ^{±η m x}`.
+Apply discrete difference to the finite sum and factor out $(\zeta^{\pm \eta m} - 1)$ linearly.
 
 *(Note: The factor $(\zeta^m - 1)/m$ is strictly not a constant, and low-momentum limits must not be taken to falsely assert an exact lattice identity).*
 
 **Theorem 15.6 (The Zero-Mode Obstruction).**
-Summing any periodic forward difference over the lattice identically yields zero. However, the standard band-limited Dirichlet delta kernel $\delta_M(x-y) = \frac{1}{L}\sum \zeta^{m(x-y)}$ contains a zero-mode $m=0$ and sums to 1.
-Therefore, a naive exact lattice equation $[\phi(x), (\Delta\theta)(y)] \propto \delta_M(x-y)$ is mathematically impossible. The actual commutator of periodic fluctuation fields strictly has zero spatial average. We must retain the exact differentiated finite kernel without analytically equating it to a constant times $\delta_M$.
+Summing any periodic forward difference over the lattice identically yields zero. However, for any cutoff $M < L$ strictly avoiding nonzero multiples of $L$, the band-limited Dirichlet delta kernel $\delta_M(x-y) = \frac{1}{L}\sum_{m=-M}^M \zeta^{m(x-y)}$ contains the zero-mode $m=0$ and sums to 1.
+Therefore, a naive exact lattice equation $[\phi(x), (\Delta\theta)(y)] \propto \delta_M(x-y)$ is mathematically impossible. The actual commutator of periodic fluctuation fields strictly has zero spatial average. We must retain the exact differentiated finite kernel without analytically equating it to a constant times $\delta_M$:
 
 $$
-[\phi(x), (\Delta \theta)(y)] = \Delta_y [ \phi(x), \theta(y) ] = 2i \Delta_y C(x,y) I \tag{15.7}
+\forall \psi \in \mathcal{B}_{K, \vec{N}_{\max}}, \quad [\phi(x), (\Delta \theta)(y)] \psi = \Delta_y [ \phi(x), \theta(y) ] \psi = 2i \Delta_y C(x,y) \psi \tag{15.7}
 $$
 
 *Lean 4 Proof Strategy:*
-State and prove a foundational discrete calculus lemma: the sum of a forward difference over a full period is exactly zero, `∑ x ∈ Ico 0 L, forwardDiff f x = 0`, proven via a telescoping sum argument. Because both $\phi$ and $\theta$ are built solely from $m \neq 0$ fluctuation modes, their resulting commutator's forward difference must mathematically sum to zero over space. In contrast, the Dirichlet kernel sum evaluates to 1 because of the zero-mode $m=0$ contribution. Conclude the theorem by establishing that `sum ⁅phiField x, forwardDiff thetaField y⁆ ≠ c * sum δ_M` for any non-zero constant `c`, which formally proves the obstruction.
+Prove $\sum_{x \in \Lambda} \Delta f(x) = 0$ via telescoping. Since $\phi, \theta$ contain only $m \neq 0$ modes, their forward difference commutator sums to 0. Restricting $M < L$ guarantees no multiple of $L$ contributes as an extra zero mode. Thus $\sum [\phi(x), \Delta \theta(y)] = 0 \neq c \sum \delta_M$ for any $c \neq 0$.
 
 #### 15.4 Technical Notes for the Lean 4 Formalization (Chapter 15)
 

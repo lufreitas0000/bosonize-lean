@@ -34,7 +34,9 @@ $$
 $$
 
 **Definition 4.1 (CAR Representation).**
-Let $V$ be a complex Hilbert space. A Canonical Anticommutation Relations (CAR) representation over $\iota$ on $V$ is a pair of maps $c, c^\dagger : \iota \to \mathrm{End}_{\mathbb{C}}(V)$ such that for all $i, j \in \iota$:
+Let $V$ be a finite-dimensional complex Euclidean space. A Canonical Anticommutation Relations (CAR) representation over a finite index set $\iota$ on $V$ is a pair of maps $c, c^\dagger : \iota \to \mathrm{End}_{\mathbb{C}}(V)$ such that:
+1. **Adjoint Compatibility:** For all $i \in \iota$, $c_i^\dagger = (c_i)^\dagger$ is the actual Hilbert adjoint of $c_i$.
+2. **Anticommutation Relations:** For all $i, j \in \iota$:
 
 $$
 \{c_i, c_j\} = 0, \quad \{c_i^\dagger, c_j^\dagger\} = 0, \quad \{c_i, c_j^\dagger\} = \delta_{ij} I \tag{4.3}
@@ -42,8 +44,10 @@ $$
 
 where $\{A, B\} := AB + BA$ and $I$ is the identity endomorphism.
 
+*(Note: The three anticommutation relations alone are purely algebraic; conjugating an algebraic CAR pair by a non-unitary invertible operator preserves the anticommutators while destroying Hilbert adjointness. Adjoint compatibility is therefore an essential, independent requirement).*
+
 *Lean 4 Proof Strategy:*
-Define this as a structure or typeclass `CAR (V : Type) [InnerProductSpace ℂ V] (ι : Type) [LinearOrder ι]`. The fields will be two maps `c, cdag : ι → Module.End ℂ V`. The axioms will be three equations for the anticommutators expressing $\{A, B\} = A * B + B * A$: `c i * c j + c j * c i = 0`, `cdag i * cdag j + cdag j * cdag i = 0`, and `c i * cdag j + cdag j * c i = if i = j then 1 else 0`. By keeping this abstract, we separate the CAR algebraic properties from the specific Fock space implementation.
+Define this as a structure `CAR (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V] (ι : Type) [Fintype ι]`. The fields are `c, cdag : ι → Module.End ℂ V`, an adjoint field `adj_compat : ∀ i, cdag i = LinearMap.adjoint (c i)`, and three anticommutator equations: `c i * c j + c j * c i = 0`, `cdag i * cdag j + cdag j * cdag i = 0`, and `c i * cdag j + cdag j * c i = (if i = j then 1 else 0) • 1`. Restricting to finite-dimensional Euclidean $V$ ensures every linear map admits a well-defined Hilbert adjoint.
 
 **Definition 4.2 (Fock Space and Basis).**
 We define the concrete Fock space as the Euclidean space over the power set of $\iota$:
@@ -110,14 +114,19 @@ For any $i, j \in \iota$ and subset $S \subseteq \iota$:
 *Lean 4 Proof Strategy:*
 Prove these lemmas using `Finset.filter_insert` and `Finset.card_insert_of_not_mem`. For the first part ($j \notin S$), substituting $S \cup \{j\}$ translates to `insert j S`. Filtering by `< i` distributes over `insert`. If `j < i`, it adds `1` to the cardinality, otherwise `0`. The second part is symmetrical; we can apply the first part with $S \setminus \{j\}$ in place of $S$, noting that `insert j (S \ {j}) = S` since $j \in S$. These will be very clean, `simp`-friendly integer math lemmas.
 
-**Lemma 4.6 (Adjointness and Parity).**
-The operations at distinct modes commute as set operations but flip the combined sign exactly according to the CAR. Evaluated on the basis pairs and lifted by finite sums, $c_i^\dagger$ and $c_i$ are exact Hilbert adjoints.
+**Lemma 4.6 (Adjointness, CAR Instantiation, and Parity).**
+The operations at distinct modes commute as set operations but flip the combined sign exactly according to the CAR. Evaluated on the basis pairs and lifted by finite sums:
+1. $c_i^\dagger$ and $c_i$ are exact Hilbert adjoints: $c_i^\dagger = (c_i)^\dagger$.
+2. The concrete operators satisfy all three CAR anticommutation identities (4.3).
+Consequently, the concrete occupation operators constructively instantiate the abstract CAR representation of Definition 4.1.
 Furthermore, the number operators commute pairwise, $\Gamma^2 = I$, and $\Gamma^\dagger = \Gamma$.
 
 *Lean 4 Proof Strategy:*
 1. **Adjointness**: Prove `⟪δ_S, c i δ_T⟫_ℂ = ⟪cdag i δ_S, δ_T⟫_ℂ` for all basis vectors $S, T$. Using the linearity of the inner product and `PiLp` EuclideanSpace properties, extend this via `Basis.ext` to prove `c i` and `cdag i` are adjoints.
-2. **Commutativity of $n$**: Show `n i * n j = n j * n i` by applying the CAR anticommutation identities (which will first be proved for `c` and `cdag` explicitly via the sign lemmas).
-3. **Parity**: For $\Gamma^2 = I$, we first need an auxiliary lemma: `lemma n_sq_eq_n (i : ι) : n i * n i = n i`. Then `(1 - 2 * n i)^2 = 1 - 4 * n i + 4 * n i^2 = 1`. Since the $n_i$ commute, the product squared is the product of squares, giving $I$. The self-adjointness $\Gamma^\dagger = \Gamma$ follows from $n_i^\dagger = n_i$.
+2. **CAR Identities**: Prove `{c i, c j} = 0`, `{cdag i, cdag j} = 0`, and `{c i, cdag j} = δ_ij I` directly from the atomic sign lemmas (Lemma 4.5).
+3. **CAR Instantiation**: Combine adjointness and the CAR identities into an explicit `CAR (FockSpace ι) ι` instance.
+4. **Commutativity of $n$**: Show `n i * n j = n j * n i` by applying the CAR anticommutation identities.
+5. **Parity**: For $\Gamma^2 = I$, use `lemma n_sq_eq_n (i : ι) : n i * n i = n i`. Then `(1 - 2 * n i)^2 = 1 - 4 * n i + 4 * n i^2 = 1`. Since the $n_i$ commute, the product squared is the product of squares, giving $I$. The self-adjointness $\Gamma^\dagger = \Gamma$ follows from $n_i^\dagger = n_i$.
 
 **Lemma 4.7 (Pure-CAR Commutator Identities).**
 Derived directly and algebraically from the CAR representation without assuming topology:

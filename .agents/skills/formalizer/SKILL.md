@@ -1,41 +1,69 @@
-# Role Definition
-You are the Autoformalization Agent for the Bosonize-Lean project. Your objective is to translate 1+1D lattice quantum field theory notes from Markdown into rigorous Lean 4 code. You operate in a deterministic, Lean-first environment using the Model Context Protocol (MCP) to interact directly with the Lean language server.
+---
+name: formalizer
+description: Draft, prove, and audit Bosonize-Lean chapters with mirrored notebooks and frozen interfaces. Use for chapter formalization and review of proposed Lean definitions or proofs in this repository.
+---
 
-# Core Directives
+# Bosonize-Lean formalizer
 
-## 1. Phase A (Draft & Document)
-Read the assigned Markdown chapter in `notes/md/`. Translate the mathematics into Lean 4 signatures inside `BosonizeStubs/`. Write all `def` and `abbrev` blocks completely, but terminate all `theorem` and `lemma` signatures with `:= by sorry`. Simultaneously, generate a mirrored lab notebook at `docs/companion/BosonizeStubs/ChNN.md` detailing your design rationale, type choices, and handling of margin constraints. Await human approval before proceeding.
+Translate the project's 1+1D lattice field-theory notes into rigorous Lean 4. Follow the chapter dependency graph and [Lean conventions](../../rules/lean_conventions.md). Use the installed compiler as the authority for elaboration and proof checking; notes, appendices, and suggested code still need mathematical scrutiny.
 
-Read `notes/md/TOC.md` and any chapter-relevant files in `docs/stub_suggestion/` before designing the interface. Suggestions are candidate designs, not specifications: compare them with the source notes, explicit domain/parity/characteristic assumptions, and downstream requirements. Complete every proposed definition and instance before adopting it; suggestion files containing `sorry` in definitions do not satisfy Phase A. Record adopted, adapted, and rejected suggestions with reasons in the companion notebook. Do not implement a different chapter merely because a suggestion exists.
+Work within the user's authorized chapter and phase. Use approval already given in the conversation; a passing freeze guard alone does not authorize proof work or promotion. Preserve unrelated worktree edits and upstream locked Core sources.
 
-## 2. Phase B (Tactical Execution)
-When authorized to prove a theorem, you must explicitly read the proof sketch provided in the Markdown notes. Use the mathematical logic in the sketch (e.g., structural induction, algebraic cancellation, sum by parts) to guide your tactical approach, translating semantic strategies into specific Mathlib tactics.
+## Source reconciliation and proof design
 
-Before editing, run `python3 scripts/guards/stub_lock.py --check --strict` from the repository root and identify the locked chapter in `docs/spec/stub_locks.v2.json`. A failed check must be investigated; never use `--update` to conceal drift. An existing successful lock is not permission to start Phase B by itself. Preserve approved declaration names, namespaces, hypotheses, conclusions, definitions, abbreviations, and instances. Edit only lemma/theorem proof bodies; propose any additional supporting declarations explicitly and obtain review before extending the baseline. Strict checks reject new declarations/files until they are reviewed and locked.
+Read the chapter, `notes/md/TOC.md`, and chapter-relevant appendices in `notes/appendices/`. Consult `docs/stub_suggestion/` for interfaces and `docs/proof_suggestion/` for proofs. Follow cross-references to applicable review corrections; dated reviews describe snapshots, so check whether each finding still applies to the current source.
 
-Read all chapter-relevant files in `docs/proof_suggestion/` before proof search. Treat suggested Lean code and claims of successful proofs as unverified. Check exact Mathlib names and tactic behavior against the installed compiler; check that helper hypotheses are satisfiable and that proofs establish the locked statement without strengthening assumptions or changing definitions. Use a useful dependency order from suggestions, but adapt or reject failed tactics rather than changing the frozen interface to accommodate them.
+Compare statements and sketches with their actual carriers, adjoints, character assumptions, and downstream uses. A sketch guides proof search only after these contracts are checked. Record adopted, adapted, and rejected ideas in the companion notebook. If a source claim is false or underspecified, report the counterexample or missing obligation and propose a correction; do not silently weaken the theorem or change an operator to make it provable.
 
-After each proof batch, rerun the signature guard, inspect the diff of definitions/instances and surrounding imports/namespaces/attributes, build the affected staging module, and update the notebook with results and remaining placeholders. While placeholders remain, a successful build is not proof completion. Before Core promotion, require no placeholders and audit theorem axioms as specified by the conventions.
+Read the relevant sections of [Proof design](references/proof_design.md) when drafting or proving statements involving restricted operators, noncommutative products, current margins, exponentials, states, or model equivalences. Its topic table routes to the needed sections; loading every chapter or every example is unnecessary for a local goal.
 
-Current guard (v2, tested 2026-10-08): `stub_lock.py` freezes lemma/theorem headers and the ordered non-lemma commands, including complete definitions, abbreviations, instances, imports, namespaces, and attributes. It records preceding non-lemma context for each lemma. Use `--check --strict` so additions and parser warnings fail rather than passing with warnings. `docs/spec/stub_locks.v2.json` is the active baseline; `stub_locks.json` is retained only for legacy migration verification. `scripts/ci.sh` runs guard tests and strict verification before the Lean builds. For protection against working-tree baseline edits, set `STUB_LOCK_BASELINE_REF` to an approved Git ref when running CI, or pass `--baseline-ref` directly. The guard is text-level, not a Lean elaborator or proof audit, and does not freeze imported dependencies outside its guarded directories or toolchain state. Source/diff review and compilation remain required. See `docs/spec/freeze_audit.md`. Never use `--accept-changes` without explicit human authorization; `--update` is disabled when `CI` is set.
+Essential checks:
 
-## 3. MCP-Driven Retrieval Hierarchy
-Do not guess Mathlib names. Execute tools in this strict order:
-1. Use `lean_goal` and `lean_diagnostic_messages` to inspect the exact compiler state and errors.
-2. Use `lean_local_search` to find custom project lemmas and auxiliary definitions.
-3. Use `lean_loogle` for syntactic Mathlib type searches (e.g., `?a * ?b = ?b * ?a`).
-4. Use `lean_leansearch` for semantic natural language searches when syntactic structure is unknown.
+- Identify the carrier and source/target of each map; retain projection remainders unless proved zero.
+- Preserve product order, commutator signs, and adjoint reversal. Separate scalar algebra from operator identities.
+- Attach margins to the inputs where the restricted identity is applied. Prefer useful local hypotheses, with stronger convenient wrappers only when justified.
+- Establish existence/nonzero-action evidence where the claim requires it. A nonempty subspace does not establish a positive vacuum state, a surjective isometry, or a nonzero leakage coefficient.
+- Distinguish algebraic polynomial, finite compressed, formal-series, and analytic constructions. Finite dimension does not imply nilpotency.
 
-## 4. The 3-Strike Loop Breaker
-If a tactic fails, read the diagnostic message and adjust. If you fail against the *exact same goal state* three times, STOP. Inject a `sorry`, log the specific failure and goal state in the companion notebook, and ask the human architect for mathematical guidance or a lemma decomposition.
+## Phase A — Draft and document
 
-## 5. Strict Anti-Vacuity
-Never satisfy a theorem by defining a physical operator as `0`, the identity, or the empty set. You must ensure that hypotheses (like margin constraints) are physically satisfiable.
+Write complete definitions, abbreviations, and instances in `BosonizeStubs/`; each theorem/lemma stub ends with exactly one `:= by sorry`. Definitions and instances must elaborate without placeholders. Check adopted imports, library signatures, and required local instances against the installed Lean/Mathlib before freezing the interface.
 
-## 6. Cumulative Adherence
-Respect the Directed Acyclic Graph (DAG) of the project. You may import preceding chapters, but you are strictly forbidden from modifying upstream, locked Core files located in `Bosonize/Core/`.
+Create the mirrored notebook in `docs/companion/BosonizeStubs/`. Include type choices, exact signatures, source/suggestion paths, unresolved mathematical obligations, proposed helper dependencies, and the reason for each margin. Useful witness lemmas can be Phase A stubs; do not describe their statements or a build with placeholders as proved evidence. If the chapter is already locked, preserve its approved interface rather than redrafting it. Present Phase A for human review before locking or entering Phase B unless that approval has already been supplied.
 
-## 7. Phase C (Audit, Promote, and Freeze)
-Follow `.agents/workflows/freeze_chapter.md` after the user authorizes Phase C. Audit the complete proofs and standard axioms, then move the approved source into `Bosonize/Core/` without changing its definitions or namespace. Migrate its v2 manifest entry by path while preserving all statement/command hashes, and record its complete source SHA-256 in `docs/spec/core_locks.json`. `stub_lock.py` scans staging and Core; `core_lock.py` additionally freezes every byte of Core files, including proof bodies. Neither routine proof work nor `lock-update` may rewrite an existing Core file or its full-source hash. Move the mirrored companion notebook to `docs/companion/Bosonize/Core/` and update the library aggregators.
+## Phase B — Prove the approved statements
 
-CI and `make lock-check` must pass both freeze guards. `STUB_LOCK_BASELINE_REF` selects the approved committed baseline for both guards; an older reference before an authorized promotion naturally lacks the new paths/manifests, so document and commit the reviewed migration before using that new reference for later work. Keep legacy v1 manifests as historical evidence rather than regenerating them after source migration.
+Before editing, run `python3 scripts/guards/stub_lock.py --check --strict` from the repository root and identify the chapter in `docs/spec/stub_locks.v2.json`. Use `--baseline-ref <approved-ref>` when verifying against a committed baseline, or `STUB_LOCK_BASELINE_REF` for CI. Investigate a failed check; never regenerate the baseline to conceal drift.
+
+Edit only approved lemma/theorem proof bodies. Preserve names, hypotheses, conclusions, definitions, instances, imports, namespaces, options, and attributes. Local `have` proofs can provide supporting steps inside those bodies. New top-level declarations/files or changes to a frozen interface require explicit review and baseline approval; propose their exact statements and purpose before extending the lock. Never rewrite existing Core to solve a downstream problem.
+
+Plan a dependency order from verified basis action, grading, and exact edge identities to restricted consequences. Check that proposed helper hypotheses are satisfiable and do not strengthen the locked target unnoticed. A suggested tactic failure is a reason to revise the proof strategy, not the frozen mathematics.
+
+After a proof batch, rerun the strict guard, inspect the source/dependency diff, build the affected staging module, and update the notebook with compiler results and remaining placeholders. Separate passed compilation, proof completion, axiom auditing, and mathematical witness evidence in the report.
+
+The v2 guard freezes theorem headers and ordered non-lemma commands in staging and Core; it does not elaborate Lean or freeze imported dependencies/toolchain state. `docs/spec/stub_locks.v2.json` is active; preserve the legacy manifest as history. See [the freeze audit](../../../docs/spec/freeze_audit.md) for guard details. Do not use `--accept-changes` without explicit authorization; `--update` is disabled in CI.
+
+## Compiler inspection and retrieval
+
+Use the available MCP tools in this order:
+
+1. `lean_goal` and `lean_diagnostic_messages` for the exact goal/error state.
+2. `lean_local_search` for existing project definitions and lemmas.
+3. `lean_loogle` for syntactic library searches.
+4. Available semantic search (`lean_leansearch` or a finder exposed by the server) when syntactic search is insufficient.
+
+If a tool is not exposed or unavailable, report that limitation and continue with the available compiler/local sources. Inspect diagnostics with `lake env lean <path>`; use scratch `#check`/`#print` declarations and `rg` in project sources and `.lake/packages/mathlib/Mathlib`. For an unresolved goal, an isolated scratch copy ending at that goal can use `trace_state` or a failing `exact?`/`assumption` to expose its context without changing the locked module. Scratch placeholders establish only the inspected goal, never proof completion.
+
+Confirm exact imports, signatures, implicit parameters, and instance requirements before adopting a library result. A proposed project-helper name is not evidence that Mathlib already provides it. Keep scratch files outside guarded source directories and remove temporary project artifacts when done. Record direct compiler evidence separately from MCP/LSP evidence; one does not establish the other.
+
+## Retry and lint handling
+
+After three unsuccessful tactic attempts at the exact same goal state, stop retrying that goal. Preserve completed proofs, record the goal, attempted approaches, and missing mathematical step, and request a decomposition or guidance. An existing unproved staging stub may remain; do not introduce new placeholders into completed proofs or Core. Continue independent authorized work where possible.
+
+Resolve warnings at their cause. Use `omit` for unused section assumptions when appropriate, or explicit binders with the intended mathematical hypotheses. Do not disable a linter, suppress a diagnostic, or change the warning threshold to obtain Core promotion. If a fix changes a locked signature/context, treat it as an interface correction requiring the existing review procedure; never patch frozen Core silently.
+
+## Phase C — Audit, promote, and freeze
+
+After authorization, follow [the promotion workflow](../../workflows/freeze_chapter.md). Require zero placeholders, zero warnings, and only the permitted standard axioms (`propext`, `Classical.choice`, `Quot.sound`) in freshly built theorem dependencies. Preserve definitions, statements, and namespaces during promotion; move the v2 entry by path without changing its hashes and add the complete-source hash to `docs/spec/core_locks.json`.
+
+Move the companion notebook and update the aggregators as the workflow specifies. CI and `make lock-check` must pass both guards. `core_lock.py` freezes every byte of existing Core sources, including proofs. Commit the authorized migration before using a reference containing it as the next baseline; retain historical manifests. Do not infer proof completion from a guard or a build with `sorry`.

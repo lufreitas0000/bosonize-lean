@@ -105,14 +105,14 @@ Formalize the vacuum state $|\Omega\rangle$ using its defining annihilation cond
 The norm squared is $\langle \Omega | \rho_{-m} \rho_m | \Omega \rangle$. To compute this, prove an auxiliary lemma for the vacuum expectation value (VEV) of four-fermion operators using Wick's theorem or iterated anticommutators. Only exactly $m$ terms survive the vacuum projection bounds, yielding the result $m$.
 Linear independence directly follows from `eigenvector_linear_independent` for the operator $\hat{P}$, given the states have distinct eigenvalues $m$.
 
-**Lemma 9.8 (Budget Action).**
-The operator $\rho_m$ maps the budget subspace $B(N,K)$ exactly into $B(N, K+m)$. A lowering mode $m > 0$ mapped onto the ground state falls below the zero-energy bound and rigidly annihilates:
+**Lemma 9.8 (Budget Action on Admissible Sectors).**
+For any admissible charge sector $-h \le N \le h$, the operator $\rho_m$ preserves charge ($[\hat{N}, \rho_m] = 0$) and maps the budget subspace $B(N,K)$ into $B(N, K+m)$ for $m \ge 0$. A lowering mode $m \ge 1$ mapped onto the unique sector ground state $|N\rangle_0$ falls below the zero-energy bound and rigidly annihilates:
 
 $$
-\forall m \ge 1, \quad \rho_{-m} |N\rangle_0 = 0 \tag{9.8}
+\forall -h \le N \le h, \quad \forall m \ge 1, \quad \rho_{-m} |N\rangle_0 = 0 \tag{9.8}
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize the budget subspace $B(N,K)$ as the joint eigenspace where $\hat{N}$ has eigenvalue $N$ and $\hat{P}$ is bounded by $K$.
-Using the commutation relations $[\hat{N}, \rho_m] = 0$ and $[\hat{P}, \rho_m] = m \rho_m$ from Lemma 9.6, show that $\rho_m$ maps elements between these subspaces correctly.
-For the annihilation condition, assume by contradiction that $\rho_{-m} |N\rangle_0 \neq 0$. This resulting state would have energy $-m < 0$, which violates the positivity of $\hat{P}$. This requires an auxiliary lemma stating that $\hat{P}$ is a positive semi-definite operator on the Fock space. Thus, the state must be identically 0.
+Formalize using the admissible sector subtype `-h ≤ N ∧ N ≤ h`.
+Using the commutation relations $[\hat{N}, \rho_m] = 0$ and $[\hat{P}, \rho_m] = m \rho_m$ from Lemma 9.6, show that $\rho_m$ maps elements between the budget subspaces correctly.
+For the annihilation condition, assume by contradiction that $\rho_{-m} |N\rangle_0 \neq 0$. This resulting state would have excitation energy $-m < 0$, which contradicts the exact positivity of excitation energy $e(S) \ge 0$ proved in Lemma 7.4. Thus, the state must be identically 0.
