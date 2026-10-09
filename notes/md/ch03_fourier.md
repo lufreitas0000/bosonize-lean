@@ -14,7 +14,7 @@ $$
 Analytically, we will later instantiate this with $\zeta = e^{2\pi i / L}$ in $\mathbb{C}$.
 
 *Lean 4 Proof Strategy:*
-Use Mathlib's `IsPrimitiveRoot ζ L` from `RingTheory.RootsOfUnity.Basic`. The condition $(L : K) \neq 0$ should be formalized using `NeZero (L : K)` or by requiring `CharZero K` if we restrict to characteristic zero fields. For the complex instantiation, use `Complex.exp` and prove it satisfies `IsPrimitiveRoot` using existing Mathlib lemmas like `Complex.isPrimitiveRoot_exp_of_ne_zero`.
+Use `IsPrimitiveRoot ζ L`, a field/domain for cancellation, `[NeZero L]`, and `(L : K) ≠ 0` for inversion. For the canonical complex root, the installed theorem is `Complex.isPrimitiveRoot_exp L hL`, with `hL : L ≠ 0`. Confirm its exponential formula before defining the bridge to the character.
 
 **Definition 3.2 (Algebraic Character and Unscaled DFT).** For any momentum $k \in \Lambda^*$ and position $x \in \Lambda = \mathbb{Z}/L\mathbb{Z}$, the algebraic character $\chi(k,x)$ is defined via integer representatives $\tilde{k}, \tilde{x} \in \mathbb{Z}$ (or as a canonical residue pairing on $\mathbb{Z}/L\mathbb{Z} \times \mathbb{Z}/L\mathbb{Z}$):
 
@@ -52,7 +52,7 @@ TS = L \cdot I, \qquad ST = L \cdot I \tag{3.7}
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize orthogonality using `geom_sum` and `IsPrimitiveRoot.sum_zpow_eq`. The necessary auxiliary lemma is the geometric series sum for roots of unity: if $k \neq k'$, $\zeta^{k-k'}$ is a root of unity $\neq 1$, so its powers sum to $0$. Use `IsPrimitiveRoot.sum_pow_eq` which states exactly this. For the unscaled inversion, compose $T$ and $S$ and swap the sums using `Finset.sum_comm`. Then apply the orthogonality identity to collapse the inner sum to $L \delta_{kk'}$, proving $TS = L \cdot I$. Prove `chi_sub_eq : χ (k ⊖ k', x) = χ (k - k', x)` to transport between band subtraction and integer subtraction.
+Bundle the nontrivial spatial character and use the checked `AddChar.sum_eq_zero_of_ne_one` after proving it is not the trivial character. The diagonal sum is L. Alternatively prove a geometric telescoping identity and cancel the nonzero factor; ζ^m need not have order L when gcd(m,L)>1. Expand both compositions with `Finset.sum_comm` and transport sums through the frozen band equivalence.
 
 **Definition 3.4 (Unitary Physical Normalization).** For the physical fermionic layers defined over $\mathbb{C}$, we isolate the normalization into a single real scalar $a = 1/\sqrt{L}$ satisfying $L a^2 = 1$. The unitary DFT operator $U$ and its exact inverse are defined as:
 
@@ -63,7 +63,7 @@ $$
 Applying this unitary normalization preserves the counting canonical anticommutation relations (CAR) without introducing mixed scalar scalings.
 
 *Lean 4 Proof Strategy:*
-This definition should be made specific to $K = \mathbb{C}$ or an extension field where $a = 1/\sqrt{L}$ exists. In Lean 4, use `Real.sqrt L` or `(L : ℂ) ^ (-1/2)`. Define $U$ as a scaled version of $S$. Define the adjoint $U^\dagger$ using the standard inner product on `Fin L → ℂ` (using `starRingEnd ℂ` for complex conjugation). We will need to prove that $T$ corresponds to the adjoint of $S$ up to conjugation of the characters. Specifically, prove $S^\dagger = T$ under complex conjugation, then use $L a^2 = 1$ to prove $U U^\dagger = I$.
+In the complex Hilbert layer define `a : ℝ := (Real.sqrt (L : ℝ))⁻¹`, prove positivity and `L*a^2=1` once, then cast a to ℂ. Use `EuclideanSpace ℂ (Ch01.Lattice L)` and `EuclideanSpace ℂ (Ch01.Band L)` for the counting inner products. Prove the adjoint kernel identity before bundling `a • S` as a linear isometry equivalence. Keep generic unscaled inversion free of square roots.
 
 **Lemma 3.5 (Diagonalization of Difference Operators).** The umbral difference operators act strictly diagonally on the characters:
 
@@ -83,4 +83,4 @@ $$
 Only upon evaluation in $\mathbb{C}$ with $\zeta = e^{2\pi i / L}$ does this algebraically reduce to the physical dispersion $-4\sin^2\left(\frac{\pi k}{L}\right)$.
 
 *Lean 4 Proof Strategy:*
-Formalize $\Delta f(x) = f(x+1) - f(x)$ and $\nabla f(x) = f(x) - f(x-1)$ using `Fin L` with modular arithmetic. Apply these to $\chi(k, x) = \zeta^{kx}$. The proof uses basic exponent laws `ζ ^ (k * (x + 1)) = ζ ^ (k * x) * ζ ^ k`, factoring out $\zeta^{kx}$. For the reduction to the physical dispersion, introduce an auxiliary lemma converting $\zeta^k + \zeta^{-k} - 2$ in $\mathbb{C}$ to sines using Euler's formula (`Complex.exp_mul_I`) and half-angle trigonometric identities available in Mathlib's `Real.sin` API.
+Use `ZMod L` for the periodic domain and the frozen function-space shifts. Apply additive-character laws rather than treating `Fin L` as an additive group. The algebraic eigenvalue is primary; derive its sine form only for the canonical complex root, with the chosen integer band representative.

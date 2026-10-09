@@ -21,7 +21,7 @@ For $N = 0$, this is the Dirac vacuum subset $S_\Omega := S_0 = \{k \in \Lambda^
 The sector ground state vector is defined on the Fock basis as $|N\rangle_0 := \delta_{S_N}$, with Dirac vacuum $|\Omega\rangle := |0\rangle_0 = \delta_{S_\Omega}$.
 
 *Lean 4 Proof Strategy:*
-Formalize admissible sectors with the subtype `{N : ℤ // -h ≤ N ∧ N ≤ h}`. Define `S_N` as `{k : Int // k ∈ Λ* ∧ k ≤ N}`. Show `S_N.card = h + N`. The ground ket `|N⟩_0` is `Finsupp.single S_N 1` or `PiLp.basisFun S_N`.
+Use integer charge and prove admissibility before defining the ground ket. Define `S_N : Finset (Ch01.Band L)` by filtering `Finset.univ` with `k.val ≤ N`; prove `(S_N.card : ℤ) = (h : ℤ) + N`. On the finite Hilbert carrier, use `EuclideanSpace.basisFun (Finset (Ch01.Band L)) ℂ` for the occupation ket; a subtype of occupied momenta is not itself an occupation Finset.
 
 **Definition 7.2 (Integer Charge, Energy, and Observables).**
 To avoid natural subtraction anomalies, we define all fundamental combinatorial quantities strictly in $\mathbb{Z}$:
@@ -101,7 +101,7 @@ Because the sequence $d_i$ is non-decreasing and non-negative, the sum $e(S) \le
 2. For all $k > N+K$, the mode is rigidly empty.
 
 *Lean 4 Proof Strategy:*
-Given $\sum d_i = e(S) \le K$ and $d_i \ge 0$, we have $d_i \le K$ for all $i$. 
+Given $\sum d_i = e(S) \le K$ and $d_i \ge 0$, we have $d_i \le K$ for all $i$.
 If a mode at $k \le N-K$ were empty, or $k > N+K$ were occupied, $\sum d_i$ would exceed $K$.
 **Auxiliary Lemmas:**
 - `empty_deep_implies_large_e`: If missing a particle at $k \le N-K$, $e(S) > K$.

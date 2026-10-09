@@ -16,7 +16,7 @@ $$
 Any comparison between evaluations in this abstract quasi-free functional $\omega_{\tilde{\Omega}}$ and finite-Fock expectation values requires an explicit comparison map and accounts for finite-boundary corrections.
 
 *Lean 4 Proof Strategy:*
-Formalize the CCR *-algebra $\mathfrak{A}_{\mathrm{CCR}}$ using a free *-algebra quotiented by the Kac-Moody / CCR relations. Define the state $\omega_{\tilde{\Omega}}$ as a `StarAlgHom` or positive `LinearMap` to $\mathbb{C}$ with `omega 1 = 1`, `omega (A * rho_tilde_minus) = 0`, and `omega (rho_tilde_plus * A) = 0`. The property of positivity (`∀ a, 0 ≤ (omega (star a * a)).re`) is specified as a structure field.
+Represent a state as a normalized positive complex-linear functional `ω : A →ₗ[ℂ] ℂ`, including the reality and nonnegativity of `ω (star a * a)`. A multiplicative `StarAlgHom` into ℂ would kill all commutators and contradict nonzero scalar CCR. Construct the carrier and state existence before using vacuum contraction assumptions.
 
 #### 19.2 Algebraic Evaluation of the Mode Correlators
 

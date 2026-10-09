@@ -26,7 +26,7 @@ For admissible $N$, the ground configuration is $S_N = \{k \in \Lambda^* \mid k 
 **Definition:** Distinguish fixed-charge budgets `B(N,K)`, fixed-energy spaces `H(N,E)`, and the charge-box budget `B(K,Nmax)`. Fixed-energy spaces with distinct $E$ are mutually orthogonal, while $B(N,K) = \bigoplus_{E=0}^K H(N,E)$ and $\mathcal{B}_{K,N_{\max}} = \bigoplus_{|N| \le N_{\max}} B(N,K)$ are nested direct sums of coordinate spans.
 Label coordinate projections by their full data: $P_{N,K}$ on $B(N,K)$ and $P_{K,N_{\max}}$ on $\mathcal{B}_{K,N_{\max}}$. For multi-species systems, excitation cutoff is defined as the total excitation energy $\sum_\nu e_\nu(S_\nu) \le K$.
 
-*Lean 4 Proof Strategy:* Define these spaces using `Submodule ℂ V` spanned by `Basis.span`. For coordinate projection, define a linear map using `Finsupp` or `Basis.constr` that acts as the identity on the subset and zero outside, which avoids invoking full Hilbert space projections analytically.
+*Lean 4 Proof Strategy:* Use `Submodule.span ℂ` of the selected occupation basis vectors. Construct the coordinate projection using `Module.Basis.constr`, with identity on retained coordinates and zero elsewhere; prove its range and self-adjointness from the occupation basis.
 
 **Theorem:** Prove the sector ground ket belongs to `B(N,K)` and is nonzero for every admissible `N`. At `K=0` the fixed-charge budget has dimension one: $H(N,0) = \mathbb{C} \cdot |N\rangle_0$. Do not require every anti-vacuity example to have dimension greater than one; use `K≥1` when proving an excited witness.
 
@@ -44,11 +44,11 @@ Label coordinate projections by their full data: $P_{N,K}$ on $B(N,K)$ and $P_{K
 
 **Theorem:** For polynomial creation of weight `m`, `C_m : F≤K → F≤(K+m)` is the natural typed map. Only `P_K C_m` is an endomorphism of `F≤K`. Its CCR has a boundary correction; a scalar CCR on all of the finite slice contradicts the trace theorem already proved in chapter 2.
 
-*Lean 4 Proof Strategy:* Model `C_m` as a typed linear map `F_leq K →ₗ[ℂ] F_leq (K+m)`. The compressed version CCR will involve `P_K (C_m C_n - C_n C_m) P_K`, and the proof will explicitly isolate the boundary terms arising from modes mapping outside `K`. Auxiliary lemma: the trace of a commutator of endomorphisms on a finite-dimensional space is zero.
+*Lean 4 Proof Strategy:* Define the typed raising map and its compression explicitly. For the compressed annihilator/creator commutator `[A_m,C_n]`, expand the exact intermediate-projection remainder. A creator/creator commutator is not the scalar CCR under discussion. Retain the boundary term and use the trace no-go only with its nonzero-carrier and characteristic-zero premises.
 
 ## Composition theorem and margin accounting
 
-If A=B only on a subspace V, the equality cannot automatically be substituted in A Cψ unless Cψ lies in V. 
+If A=B only on a subspace V, the equality cannot automatically be substituted in A Cψ unless Cψ lies in V.
 
 **Lemma:** Introduce a reusable lemma:
 - C sends V into W;
@@ -59,11 +59,11 @@ If A=B only on a subspace V, the equality cannot automatically be substituted in
 
 **Definition:** For an operator word with shifts `d₁,…,d_r` in the actual right-to-left application order, define the maximum cumulative upward excursion. A conservative bound is the sum of positive shifts. Use `K` plus this excursion in every `M1/M2` check needed during a rewrite. An input-only margin is not a margin for the entire calculation.
 
-*Lean 4 Proof Strategy:* Given a list of shifts `d_i : ℤ`, define `cum_max : List ℤ → ℤ` by a fold: `cum_max [] = 0`, `cum_max (d::ds) = max 0 (d + cum_max ds)`. Define the sum of positive shifts as an upper bound: `sum_pos_shifts ds = (ds.filter (· > 0)).sum`.
+*Lean 4 Proof Strategy:* List the shifts in actual application order, form all prefix sums with a scan starting at 0, and take their maximum with 0. The sum of positive shifts is a proved upper bound. Check the example `[2,-2]`, whose maximal excursion is 2; reversing that application-order list would incorrectly give 0 for this word. Recheck suffixes of rewritten words at each substitution.
 
 **Lemma:** Projection must also be tracked. In general `P A P B P ≠ P A B P`; discarded intermediate states can return into the retained slice. This is exactly why projected creators acquire edge terms. Similarly, a restricted equality `(A−B)P=0` implies `P(A†−B†)=0`, not `(A†−B†)P=0`. Adjoint identities require their own source/target argument.
 
-*Lean 4 Proof Strategy:* To formalize `P A P B P ≠ P A B P`, establish that `A` and `B` do not generally commute with `P`. For the adjoint, if `(A - B) ∘ P = 0`, taking adjoints gives `P† ∘ (A† - B†) = 0`, and since `P` is an orthogonal projection, `P† = P`, yielding `P ∘ (A† - B†) = 0`. Auxiliary lemma: `(S ∘ T)† = T† ∘ S†` and `P† = P` for orthogonal projections.
+*Lean 4 Proof Strategy:* Prove the exact difference `P A B P − P A P B P = P A (1−P) B P`. A nonzero value of this remainder on a selected vector proves inequality; merely knowing A or B fails to commute with P is insufficient. For the adjoint, take adjoints of the restricted equality, reverse factors, and use P†=P.
 
 ## Uniform mode cutoffs
 
@@ -74,10 +74,12 @@ If A=B only on a subspace V, the equality cannot automatically be substituted in
 
 *Lean 4 Proof Strategy:* Simply define this as a Prop: `def UniformCutoff (M K N_max h : ℕ) : Prop := 2 * M + K + N_max ≤ h`.
 
-The chapter formulas summing `m=1,…,h−1` do not satisfy this uniformly when `h` is large. Repeated products require replacing `K` by the intermediate-energy bound as well. 
+The chapter formulas summing `m=1,…,h−1` do not satisfy this uniformly when `h` is large. Repeated products require replacing `K` by the intermediate-energy bound as well.
 
 **Lemma:** Algebraic vanishing of a lowering mode `m>K` does not imply that a raising mode `m>K` vanishes; it maps out of the budget and is often nonzero.
 
 *Lean 4 Proof Strategy:* Prove that `Lowering m` on `B(N, K)` is zero when `m > K` (since energy cannot be negative), but `Raising m` can be a valid injection into `B(N, K+m)`. Therefore, applying `P_K` makes it vanish as an endomorphism, but it is not algebraically zero on the ambient space.
 
 The constants in sharper R1/R2 proofs should be derived from the actual word being commuted, rather than adding a guessed strengthening everywhere. Record these dependencies before freezing a theorem.
+
+*Coordinate energy convention:* Here P(S) means the vacuum-subtracted momentum energy `Σ k∈S, k − EΩ`, with `EΩ=−h(h−1)/2`. Then the sector ground has P=t(N), including empty/full admissible sectors. Do not confuse this scalar with bare `Σ k∈S, k`. A restricted commutator identity already proved on its input needs no extra same-budget premise on its two intermediate products.

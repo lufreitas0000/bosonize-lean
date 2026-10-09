@@ -36,7 +36,7 @@ $$
 \rho_{m, R} = c \cdot \tilde{\rho}_{m, R} - s \cdot \tilde{\rho}_{-m, L} \tag{18.6}
 $$
 
-*Lean 4 Proof Strategy:* State the inverse as an equality of operators. The proof will be a direct application of the definitions from 18.2 and using `hp.h` (the identity $c^2 - s^2 = 1$). Use `ring` and `simp` with the linearity of operator addition and scalar multiplication. Auxiliary lemma: a basic algebraic simplification showing `c(c x + s y) - s(s x + c y) = (c^2 - s^2)x = x`.
+Expand scalar actions using module laws, collect the coefficients of each operator, and normalize only the real/complex scalars using `ring` and `hp.h`. The inverse is global linear algebra and needs no CCR hypothesis or commutative operator multiplication.
 
 #### 18.2 Invariance of the Kac-Moody Algebra
 
@@ -79,7 +79,7 @@ H_{\text{Lutt}} \psi = \left[ \frac{2\pi u}{L} \sum_{m=1}^{M} \left( \tilde{\rho
 $$
 where $\Delta E_{\text{vac}} = \frac{2\pi}{L} \cdot 2us^2 \sum_{m=1}^M m I$.
 
-*Lean 4 Proof Strategy:* Express both sides as operators applied to $\psi$. Expand the Bogoliubov operators $\tilde{\rho}$ into raw $\rho$ operators. Match the coefficients term-by-term using Definition 18.5. The normal-ordering correction $\Delta E_{\text{vac}}$ arises from reordering $\rho_{-m} \rho_m = \rho_m \rho_{-m} - m I$ via the Kac-Moody relation, which gives the exact scalar sum $\frac{2\pi}{L} 2us^2 \sum_{m=1}^M m I$.
+*Lean 4 Proof Strategy:* Express both sides as operators applied to $\psi$. Expand the Bogoliubov operators $\tilde{\rho}$ into raw $\rho$ operators. Match the coefficients term-by-term using Definition 18.5. The normal-ordering correction $\Delta E_{\text{vac}}$ arises from reordering $\rho_{-m} \rho_m = \rho_m \rho_{-m} + m I$ via the Kac-Moody relation, which gives the exact scalar sum $\frac{2\pi}{L} 2us^2 \sum_{m=1}^M m I$.
 
 **Corollary 18.7 (Physical Velocity Comparison).**
 If $v_1 > 0$ and $v_2 \neq 0$, $u = \sqrt{v_1^2 - v_2^2} < v_1$. Repulsive $g_2$ alone does *not* guarantee a speed larger than the bare $v_F$; the intra-branch $g_4$ contribution must outcompete the $g_2$ mixing.
@@ -87,7 +87,7 @@ If $v_1 > 0$ and $v_2 \neq 0$, $u = \sqrt{v_1^2 - v_2^2} < v_1$. Repulsive $g_2$
 #### 18.4 State Semantics and Energy-Shell Schrieffer-Wolff Decomposition
 
 **Theorem 18.8 (Obstruction to Simultaneous Bare and Dressed Vacuum on Current-Action Regime).**
-Let $m \ge 1$ be a retained mode, and assume $s \neq 0$. On any state $\psi$ in a nonvacuous current-action regime where the scalar CCR $[\rho_{-m,\nu}, \rho_{m,\nu}]\psi = m \psi$ holds (such as any sector ground state $|\vec{N}\rangle_0$ in an admissible sector within budget margins):
+Let $m \ge 1$ be a retained mode, and assume $s \neq 0$. On any nonzero state $\psi\ne0$ in a current-action regime where the scalar CCR $[\rho_{-m,\nu}, \rho_{m,\nu}]\psi = m \psi$ holds (such as any sector ground state $|\vec{N}\rangle_0$ in an admissible sector within budget margins):
 (i) The state $\psi$ cannot be simultaneously annihilated by bare lowering modes ($\rho_{-m,\nu}\psi = 0$) and dressed lowering modes ($\tilde{\rho}_{-m,\nu}\psi = 0$).
 *(Proof: If $\rho_{-m,R}\psi = 0$ and $\tilde{\rho}_{-m,R}\psi = (c \rho_{-m,R} + s \rho_{m,L})\psi = 0$ with $s \neq 0$, then $\rho_{m,L}\psi = 0$. Similarly, $\tilde{\rho}_{-m,L}\psi = 0 \implies \rho_{m,R}\psi = 0$. Then $m \psi = [\rho_{-m,R}, \rho_{m,R}]\psi = \rho_{-m,R}(\rho_{m,R}\psi) - \rho_{m,R}(\rho_{-m,R}\psi) = 0$, forcing $\psi = 0$).*
 
@@ -97,10 +97,12 @@ Consequently:
 1. The finite Hamiltonian must be evaluated on its own constructed finite ground vector (or density matrix) with boundary corrections.
 2. Abstract quasi-free Gaussian CCR states (where an untruncated state $\omega_{\tilde{\Omega}}$ satisfies the lowering mode annihilation condition $\omega_{\tilde{\Omega}}(\tilde{\rho}_{-m,\nu}^\dagger \tilde{\rho}_{-m,\nu}) = 0$) are representations of an infinite CCR algebra, not finite-Fock vectors. The two frameworks must be kept conceptually distinct.
 
-*Lean 4 Proof Strategy:* Formalize the theorem on the subspace where the CCR holds non-trivially (`[A_m, C_m] ψ = m • ψ` with `m > 0`). Show that if `A_m ψ = 0` and `(c A_m + s C_m) ψ = 0` with `s ≠ 0`, then `C_m ψ = 0`, so `[A_m, C_m] ψ = 0`, forcing `m • ψ = 0` and thus `ψ = 0`. Exclude the empty/full boundary sectors where densities act trivially.
+*Lean 4 Proof Strategy:* Require ψ≠0 explicitly. Use the two-branch transform `tildeA_R=c • A_R+s • C_L`, bare annihilation by A_R and A_L, and scalar CCR `[A_L,C_L]ψ=m • ψ` for one positive retained mode. Dressed right annihilation and s≠0 force C_Lψ=0, contradicting mψ≠0. Do not replace the actual cross-branch transform by a same-branch shorthand.
 
 **Theorem 18.9 (Energy-Shell Schrieffer-Wolff Decomposition).**
 Let $\mathcal{B}_K = \mathcal{B}_{K-1} \oplus \mathcal{H}_K$ be the budget decomposition by energy shells.
 1. *Energy shell vs. mode decimation:* Projecting $\mathcal{B}_K \to \mathcal{B}_{K-1}$ discards states with total partition energy $E = K$. This is distinct from removing an oscillator mode factor (e.g., at $K=2$, $\mathcal{B}_2$ contains both $X_1^2$ and $X_2$; shell projection removes both, while mode decimation of mode 2 would retain $X_1^2$).
 2. *Block-diagonal SW transformation:* If an unperturbed baseline $H_0$ is block diagonal with respect to the energy-shell projection $P$, and a perturbation $V$ satisfies $P V Q = Q V P = 0$, then the Schrieffer-Wolff generator $S_1 = 0$, and the effective Hamiltonian on $\mathcal{B}_{K-1}$ has zero second-order correction ($H_{\text{eff}} = P (H_0 + V) P$).
 3. *Physical RG context:* The statement that the Luttinger Liquid is an RG fixed line is a physical continuum scaling interpretation requiring a defined parameter map and rescaling rule, distinct from this finite discrete energy-shell projection.
+
+*Minimal vacuum-obstruction proof:* Assume one retained positive mode, bare annihilation on both branches, and the dressed right annihilator kills a nonzero ψ. With s≠0 these imply the left creator kills ψ too; the left scalar CCR on ψ then gives mψ=0, a contradiction. A normalized or explicitly nonzero candidate is essential. Same-mode CCR suffices for this obstruction and each diagonalization summand; an all-pair margin is a convenient stronger wrapper only when needed.

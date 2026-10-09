@@ -6,7 +6,7 @@
 A normalized positive functional is more than a linear map with rewrite axioms. Specify a star algebra, normalization ω(I)=1, and positivity `ω(A†A)≥0` in a precise real-valued sense. Prove existence on the actual carrier before using annihilation conditions as an interface.
 
 *Lean 4 Proof Strategy:*
-- Formalize a Star Algebra using a typeclass `StarAlgebra A` over `ℂ`.
+- Use actual ambient instances `[Ring A] [Algebra ℂ A] [StarRing A] [StarModule ℂ A]` and verify their compatibility; `StarAlgebra A` is not an installed typeclass.
 - Define a structure `NormalizedPositiveFunctional` containing a linear map `ω : A →ₗ[ℂ] ℂ`, a normalization axiom `ω 1 = 1`, and a positivity axiom `∀ a : A, 0 ≤ (ω (star a * a)).re` (with imaginary part equal to zero).
 - Separate the abstract CCR word-algebra from finite representations to explicitly construct the positive carrier.
 
@@ -59,7 +59,7 @@ The second follows from the first and c²−s²=1. It supplies the nonzero free-
 - Formalize the Bogoliubov transformation connecting the bare operators $(C_m, A_m)$ to the dressed (Bogoliubov) operators.
 - Introduce the dressed vacuum state $\omega$ mathematically via $\omega(P^\dagger P) = 0$.
 - Prove the first identity $\omega(C_m A_n) = \delta_{mn} m s^2$ by inverting the Bogoliubov transformation and evaluating the expectation on the dressed vacuum.
-- Auxiliary Lemma: Prove the bare commutation relations $[C_m, A_n] = m \delta_{mn}$.
+- Auxiliary Lemma: Prove `[A_m,C_n] = δ_mn*m*I` in the abstract uncompressed carrier; `[C_m,A_n]` has the opposite sign.
 - Conclude the second identity using the auxiliary lemma and the given algebraic identity $c^2 - s^2 = 1$.
 
 > [!WARNING]
@@ -111,4 +111,4 @@ Formulate exact equalities for abstract vertex correlators $\omega_{\tilde{\Omeg
 *Lean 4 Proof Strategy:*
 - Formalize the full correlation function as an explicit equality `=` instead of proportionality `∝`.
 - Define structures for `KleinFactor` and `ZeroMode` and prove their exact algebraic commutation relations with the vertex operators.
-- Incorporate all normalization factors explicitly in the formal identity, ensuring the theorem maps exactly to finite finite-matrix computations without appealing to continuum approximations.
+- Keep the abstract vertex equality on its constructed carrier/state. Any comparison with finite CAR matrices is a separate theorem with explicit error or restriction; the scalar Gaussian is not automatically a finite-Fock expectation.

@@ -22,7 +22,7 @@ $$
 Over the empty set, the algebra collapses to the scalar field multiples of the identity: $\mathfrak{A}(\emptyset) = \mathbb{C} \cdot I$.
 
 *Lean 4 Proof Strategy:*
-Use Mathlib's `Subalgebra` and `StarAlgebra` concepts. Define `localAlgebra (I : Set Λ) : Subalgebra ℂ (End(Fock(Λ*)))` using `Subalgebra.adjoin ℂ ({c_x | x ∈ I} ∪ {c_x^* | x ∈ I})` to guarantee it is closed under the algebraic star operation. 
+Define `localAlgebra I` with `Algebra.adjoin ℂ` of the position annihilators and their adjoints. Prove star closure by generator/word induction. Use actual `StarRing` and `StarModule ℂ` structure on the ambient algebra; there is no installed `StarAlgebra A` typeclass.
 *Auxiliary Lemmas:* Prove `localAlgebra ∅ = ⊥` (which corresponds to scalar multiples of the identity in `Subalgebra`), requiring evaluating the adjoin of an empty set.
 
 **Definition 6.2 (Parity Automorphism and Grading).**
@@ -53,8 +53,8 @@ The local observable mapping respects spatial inclusions and unions. For all spa
 2. **Additivity:** $\mathfrak{A}(I \cup J) = \mathfrak{A}(I) \vee \mathfrak{A}(J)$ (where $\vee$ represents the generated algebraic span).
 
 *Lean 4 Proof Strategy:*
-Isotony corresponds directly to `Subalgebra.adjoin_mono`. Define `lemma localAlgebra_mono {I J : Set Λ} (h : I ⊆ J) : localAlgebra I ≤ localAlgebra J`. 
-Additivity corresponds to the supremum of subalgebras. Define `lemma localAlgebra_union (I J : Set Λ) : localAlgebra (I ∪ J) = localAlgebra I ⊔ localAlgebra J`. 
+Isotony corresponds directly to `Algebra.adjoin_mono`. Define `lemma localAlgebra_mono {I J : Set Λ} (h : I ⊆ J) : localAlgebra I ≤ localAlgebra J`.
+Additivity corresponds to the supremum of subalgebras. Define `lemma localAlgebra_union (I J : Set Λ) : localAlgebra (I ∪ J) = localAlgebra I ⊔ localAlgebra J`.
 *Auxiliary Lemmas:* Both properties can mostly be discharged using Mathlib's Galois connection and closure properties associated with algebraic adjoining, simply pushing the set operations through to the generators.
 
 **Lemma 6.4 (Twisted Locality).**
@@ -84,3 +84,5 @@ This is proven constructively by building diagonal occupation projectors and exa
 *Lean 4 Proof Strategy:*
 Formalize this as `lemma global_algebra_eq_top : localAlgebra Set.univ = ⊤`. Construct the vacuum projector $P_0 = \prod_{x \in \Lambda} (1 - c_x^* c_x)$ and show it belongs to the global algebra. Then, systematically construct general matrix units $|S\rangle \langle S'|$ acting on Fock space by conjugating $P_0$ with strings of creation and annihilation operators. Prove that since the local algebra contains a full basis of matrix units, it must span the entire endomorphism space $\mathrm{End}_{\mathbb{C}}(\mathrm{Fock}(\Lambda^*))$.
 *Auxiliary Lemmas:* Verification of the vacuum projector's idempotency and correct action on the Fock space basis. Proof that the vector space dimension of the algebra of these constructed units matches the dimension of the Endomorphism space $4^{|\Lambda|}$.
+
+*Proof-design dependency:* Before constructing global matrix units in the momentum occupation basis, recover all momentum generators from the position generators using inverse Fourier. A basis in one carrier cannot silently replace a basis in the other.

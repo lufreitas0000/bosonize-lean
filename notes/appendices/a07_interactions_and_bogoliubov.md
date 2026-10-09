@@ -10,12 +10,12 @@ Only even species bilinears commute across different species. The fundamental fe
 Define fermionic four-operator normal ordering before proving any contraction reduction. Reordering a middle creator past an annihilator uses an anticommutator, not the commutator formula claimed in the technical note. In particular `c†c = δI − cc†` in the matched-index case. Ordinary `ring` cannot reorder endomorphisms; expand with distributivity and proved CAR/commutation rules, then normalize only scalar coefficients with `ring`.
 
 *Lean 4 Proof Strategy:*
-To formalize fermionic normal ordering, define a recursive function or inductive relation sorting products of creation/annihilation operators so all creators (`c†`) are left of annihilators (`c`). 
+Specify sea quasiparticle creators and annihilators, then define full quartic Wick ordering on raw words with all contractions and fixed ordering. Bilinear vacuum subtraction does not define quartic ordering. Prove its evaluation lemmas before proposing any raw interaction reduction.
 **Auxiliary Lemmas:** The canonical anticommutation relations (CAR), particularly `c_i† c_j + c_j c_i† = δ_{ij} I` and `c_i c_j + c_j c_i = 0`.
-**Strategy:** Use structural induction on the operator word length, applying CAR rewrite rules. Standard `ring` cannot handle non-commutative operator algebras; instead, write a custom `simp` set (e.g., `simp only [CAR_rules]`) to push creators leftwards, followed by `abel` or `ring` only on the scalar coefficients of the resulting normally-ordered terms.
+**Strategy:** Use a well-founded word expansion with explicit CAR substitutions and decreasing length/inversion count. Expand noncommutative products in fixed order, use additive rearrangement for words, and normalize scalar coefficients separately.
 **Missing Framework Info:** Explicit typeclass boundaries for the CAR algebra and states in the Fock space need to be defined to ensure `δI` properly scales as an identity operator on the state space.
 
-Fix the physical units and chemical potential once. The chapter 12 ground shift is N(N+1)/2; the chapter 17 N²/2 expression differs by N/2 per branch. That change is valid only with an explicit chemical-potential subtraction. With bare H₀=Σk n_k, the vacuum constant must also be removed or retained explicitly.
+Chapter 17 now specifies vacuum subtraction and `μ=πvF/L`, which cancels the linear free zero-mode term. Its displayed coefficient is `(πvF/L + g4/(2L))(NR²+NL²) + (g2/L)NRNL`. Define `H4,current` directly for the chosen solvable model; equivalence to a fully Wick-ordered quartic remains pending and needs one-body/contraction corrections (see the one-quasiparticle obstruction in Chapter 17).
 
 ## Two different quadratic models
 
@@ -30,7 +30,7 @@ Let $C_R=\rho_{m,R}$, $A_R=\rho_{-m,R}$, and similarly for $L$, with $[A_\nu,C_\
 *Lean 4 Proof Strategy:*
 Formalize `H_{hop}` as an element of a non-commutative *-algebra representing the observables.
 **Auxiliary Lemmas:** Verification that `H_{hop}` is self-adjoint (`H_{hop}† = H_{hop}`).
-**Strategy:** Define `C_ν` and `A_ν` as formal symbols in an algebra modulo the relations `[A_ν, C_ν] = mI`. Represent `H_{hop}` directly as a linear combination of these bilinear generators. 
+**Strategy:** Define `C_ν` and `A_ν` as formal symbols in an algebra modulo the relations `[A_ν, C_ν] = mI`. Represent `H_{hop}` directly as a linear combination of these bilinear generators.
 **Missing Framework Info:** A robust definition of the adjoint `†` mapping `A_ν` to `C_ν` must be formally integrated so that we can structurally prove Hamiltonian hermiticity.
 
 Its scalar mode matrix is `[[v1,v2],[v2,v1]]`. A sum/difference rotation diagonalizes it with coefficients $v_1+v_2$ and $v_1-v_2$. It does not yield two equal coefficients $\sqrt{v_1^2-v_2^2}$. For $v_1=5,v_2=3$, these are 8 and 2, whereas the common $u$ is 4.
@@ -46,7 +46,7 @@ Define `H_{pair}` within the same *-algebra as `H_{hop}`.
 **Auxiliary Lemmas:** The action of the commutator `[H_{pair}, C_R]` and similar generators.
 **Strategy:** Construct the pairing Hamiltonian emphasizing that it creates and destroys pairs of excitations. We will map this quadratic form to a matrix representation over the Nambu spinor basis `(C_R, A_L)^T` to facilitate Bogoliubov diagonalization.
 
-With consistent computational creators $C_\nu := \rho_{m,\nu}$ and annihilators $A_\nu := \rho_{-m,\nu}$ on both branches ($\nu \in \{R, L\}$), the raw opposite-transfer interaction (17.2) factors into the hopping form $H_{hop}$. The solvable Luttinger model requires the pairing form $H_{pair}$, which corresponds to the pairing/backscattering channel where left-branch transfer has computational index $+m$. Chapter 17 defines $H_{\text{Lutt}}$ directly as this pairing model $H_{pair}$, preserving the standard CCR $[A_\nu, C_\nu] = m I$ across both branches.
+With consistent computational creators Cν=ρm,ν on both branches, the raw opposite-transfer interaction factors into the hopping form. Chapter 17 chooses the distinct pairing form directly. An identification with a physical pairing/backscattering channel needs an explicit orientation/momentum dictionary and is not established by relabeling the computational currents.
 
 ## Scalar parameter package
 
@@ -54,12 +54,12 @@ With consistent computational creators $C_\nu := \rho_{m,\nu}$ and annihilators 
 For the pairing model over real scalars, require `v1>|v2|`, not just `v1²>v2²`. The latter also permits negative v1 and does not guarantee positive energy. Specify u>0, u²=v1²−v2² and a real hyperbolic pair c,s with c²−s²=1. Prove existence once in the real scalar layer; downstream operator proofs should use only these algebraic relations.
 
 *Lean 4 Proof Strategy:*
-Formalize as a theorem in the real numbers: `∀ v1 v2 : ℝ, v1 > |v2| → ∃ u c s : ℝ, u > 0 ∧ u^2 = v1^2 - v2^2 ∧ c^2 - s^2 = 1 ∧ v1 = u*(c^2 + s^2) ∧ v2 = 2*u*c*s`. 
+Formalize as a theorem in the real numbers: `∀ v1 v2 : ℝ, v1 > |v2| → ∃ u c s : ℝ, u > 0 ∧ u^2 = v1^2 - v2^2 ∧ c^2 - s^2 = 1 ∧ v1 = u*(c^2 + s^2) ∧ v2 = 2*u*c*s`.
 **Auxiliary Lemmas:** Basic inequalities for real numbers, specifically relating squares and absolute values.
-**Strategy:** Construct witnesses `u = √(v1^2 - v2^2)`, `c = cosh(θ)`, `s = sinh(θ)` where `tanh(2θ) = -v2/v1`. The proof utilizes `positivity` to handle the square roots and `ring` / `linarith` coupled with `Real.cosh_sq_sub_sinh_sq` for the hyperbolic identities.
+**Strategy:** Construct `u = √(v1²−v2²)`, `c = √((v1+u)/(2u))`, `s = v2/(2*u*c)`. Under `v1 > |v2|`, prove u>0 and c>0 before division, then prove the matching equations. This covers either sign of v2 and v2=0. Downstream operator lemmas use those equations without unfolding square roots.
 
 > [!WARNING]
-> **Proof-review correction (2026-10-09):** The preceding `tanh(2θ) = −v2/v1` has the wrong sign for the displayed plus-sign transform and `v2 = 2*u*c*s`. An algebraic alternative is `u = √(v1²−v2²)`, `c = √((v1+u)/(2u))`, `s = v2/(2*u*c)`. Under `v1 > |v2|`, prove `u > 0` and `c > 0` before division. This covers negative and zero v2 without an inverse-hyperbolic construction.
+> **Proof-review correction (2026-10-09):** The retired `tanh(2θ) = −v2/v1` witness had the wrong sign for the displayed plus-sign transform and `v2 = 2*u*c*s`. An algebraic alternative is `u = √(v1²−v2²)`, `c = √((v1+u)/(2u))`, `s = v2/(2*u*c)`. Under `v1 > |v2|`, prove `u > 0` and `c > 0` before division. This covers negative and zero v2 without an inverse-hyperbolic construction.
 
 Squaring an identity to obtain `(c²−s²)²=1` does not select c²−s²=+1. Supply its sign or make the desired identity a structure field. If scalars are complex, c²−s²=1 alone does not give a star-preserving transform; require real/self-adjoint scalars or use the appropriate conjugate relations.
 

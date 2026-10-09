@@ -81,7 +81,7 @@ $$
 which holds identically whether $\langle \lambda | V_{\text{off}} | \mu \rangle$ is non-zero (via cancellation of the non-zero difference) or zero ($0 \cdot (E_\mu - E_\lambda) = 0 = -0$).
 
 *Lean 4 Proof Strategy:*
-Formalize $[S_1, H_0] = -V_{\text{off}}$ on the adapted eigenbasis of $H_0$. Prove `IsAntiAdjoint S_1` from `IsAdjoint V_off`. Use the non-resonance assumption $\forall \lambda \in \mathcal{P}, \mu \in \mathcal{Q}, \langle\lambda|V_{\text{off}}|\mu\rangle \neq 0 \to E_\lambda \neq E_\mu$ to ensure division by non-zero real denominators, while defining uncoupled entries to be zero.
+Formalize the generator equation on the adapted eigenbasis. State anti-adjointness as `LinearMap.adjoint S₁ = -S₁` (or `S₁ᴴ=-S₁` for matrices), using self-adjointness of Voff. Require distinct real energies only on nonzero coupled entries; define uncoupled entries as zero. Check an adjoint predicate name before using it.
 
 ---
 
@@ -115,7 +115,7 @@ $$
 > Thus, the second-order formula is valid only modulo $t^3$ (or with an explicit norm remainder bound), not as an unconstrained operator equality.
 
 **Corollary (Forward Implication on Off-Block Vanishing):**
-If the perturbation satisfies $P V Q = Q V P = 0$, then $V_{\text{off}} = 0$, which implies $S_1 = 0$ and $P [S_1, V] P = 0$. In this case, the second-order cross-block correction vanishes identically, and $H_{\text{eff}} = P (H_0 + t V) P$ is exact modulo higher-order diagonal terms.
+If the perturbation satisfies $P V Q = Q V P = 0$, then $V_{\text{off}} = 0$, which implies $S_1 = 0$ and $P [S_1, V] P = 0$. In this case, the second-order cross-block correction vanishes identically, and $H_{\text{eff}} = P (H_0 + t V) P$ is exact for the identity rotation S₁=0; no higher-order rotation terms occur in this case.
 
 > [!WARNING]
 > **No "If and Only If" Equivalence for the Second-Order Correction:**
@@ -153,4 +153,4 @@ If a non-linear band dispersion $\varepsilon(k) = v_F k + \frac{k^2}{2m^*}$ intr
 ### 2. Umklapp Scattering and Mott Transition (Physical Motivation)
 For the half-filling Umklapp perturbation $H_U \propto \sum_x (O_U(x) + O_U^\dagger(x))$:
 * In continuum bosonization, $O_U \sim \cos(\sqrt{8\pi}\phi_c)$, and second-order operator product expansions yield the Kosterlitz-Thouless (KT) flow equations, predicting the opening of a charge Mott gap.
-* On the discrete finite lattice, Theorem 21.7 rigorously establishes that $H_U$ violates charge-sector conservation and exhibits budget leakage. Deriving the continuum KT flow equations or thermodynamic Mott gap requires an explicit parameter scaling sequence $(L_n, K_n)$ beyond the single-step discrete matrix algebra.
+* On the discrete finite lattice, revised Theorem 21.7 requires a nonzero outward component outside the chosen budget. Proposed Lemma 21.8 supplies a direct occupation-coefficient witness family to prove. Charge shifts or nonzero total HU action alone do not establish leakage, KT flow, or a Mott gap.

@@ -1,9 +1,9 @@
 # BOSONIZE-LEAN: Master Table of Contents
 
 This document serves as the structural roadmap and index for the `Bosonize-Lean` mathematical reference notes. It outlines the formalization of 1+1D lattice bosonization. The formal architecture distinguishes between three levels of mathematical statements:
-1. **Verified Finite Targets:** Exact algebraic identities formalized on finite-dimensional energy budget spaces $\mathcal{B}_K$ and CAR/polynomial carrier modules (Parts I–IV, Chapters 17–18, 21.1–21.5).
-2. **Abstract Algebraic Targets:** Infinite-dimensional Weyl and CCR $C^*$-algebraic state functionals $\omega_{\tilde{\Omega}}$ and parameterized model duality structures $\mathcal{D}: \mathcal{M}(P) \to \mathcal{M}(P^*)$ (Chapters 19, 20, Appendix A08–A09).
-3. **Conditional Criteria & Physical Context:** Discrete conditional criteria (such as Umklapp budget leakage conditioned on non-zero spatial matrix elements) and physical condensed matter motivations (such as continuum KT scaling and thermodynamic Mott gaps, delineated from discrete matrix algebra).
+1. **Proposed Finite Targets:** Intended algebraic identities on specified finite budget/CAR carriers. Only Chapters 1–2 currently have proved and frozen Core implementations; later descriptions below name intended results, not completed Lean proofs.
+2. **Pending Abstract Targets:** Polynomial CCR state construction, extended vertex carriers, and model equivalences. Their existence, positivity, domains, and transport laws require proofs before the correlation or duality formulas may be adopted.
+3. **Conditional Criteria & Physical Context:** Budget leakage requires a nonzero outside component. Continuum KT scaling and thermodynamic Mott gaps remain physical context requiring separate asymptotic constructions. See the [current verification](../../note/current_revision_verification_2026-10-09.md) for unresolved contracts.
 
 ---
 
@@ -106,8 +106,8 @@ This document serves as the structural roadmap and index for the `Bosonize-Lean`
 ## Part V: Interactions & Luttinger Liquid Models
 
 ### Chapter 17: Forward Scattering & The Luttinger Hamiltonian
-**Description:** Evaluates $g_2$ and $g_4$ 4-fermion interactions, deriving the hyperbolic pairing form via the physical oriented Left-branch dictionary, removing redundant current weights, and establishing energy-shell SW decomposition.
-*   **Main Definitions:** Raw Scattering Interactions ($H_{4,\text{raw}}, H_{2,\text{raw}}$), Physical Left-Branch Orientation Dictionary (Pairing Form vs Hopping Form), Unweighted Current Bilinears, Zero-Mode Shifts ($E_{\text{zero}}$).
+**Description:** Separates raw opposite-transfer hopping from the chosen pairing model and defines its intra-branch current interaction directly. A fully Wick-ordered raw-quartic reduction is pending. Retains explicit chemical potential and energy-shell SW coefficient identities.
+*   **Main Definitions:** Raw Transfer Interactions, Chosen Current/Pairing Hamiltonian, Full Quartic Ordering Contract (Pending), Zero-Mode Shifts.
 *   **Main Lemmas:** Exact Reduction of Forward Scattering, Bosonized Luttinger Hamiltonian ($H_{\text{Lutt}}$), Energy-Shell Schrieffer-Wolff Decomposition Modulo $t^3$.
 
 ### Chapter 18: The Bogoliubov Transformation
@@ -125,9 +125,9 @@ This document serves as the structural roadmap and index for the `Bosonize-Lean`
 *   **Main Lemmas:** Mode Contraction Theorems (Both $s^2$ and $c^2$ Contractions), Ordered Real-Space Correlator ($D_c(x,y)$), Symmetric vs Ordered Form.
 
 ### Chapter 20: CDW Correlators and the Topological Duality Theorem
-**Description:** Evaluates projected CDW and superconducting order parameters on budgets, computes Weyl correlators in $\omega_{\tilde{\Omega}}$ with logarithmic kernel $D_1(x,y)$, and establishes the exact Duality map between parameterized models $\mathcal{M}(P)$ and $\mathcal{M}(P^*)$ ($g \leftrightarrow 1/g$).
+**Description:** Proposes projected CDW/pairing products subject to the Chapter 14 dictionary and intermediate-projection contracts. Abstract vertex correlators need a constructed extended state; duality needs a charge-compatible generator map. The former direct CDW→SC exchange is withdrawn.
 *   **Main Definitions:** Projected Order Parameters ($P O_{CDW} P, P O_{SC} P$), Finite Logarithmic Kernel ($D_1(x,y)$), Parameterized Model Duality Map ($\mathcal{D}$).
-*   **Main Lemmas:** Correlators in Abstract CCR Functional, Finite CAR vs Weyl Correlator Distinction ($L=4$ Counterexample), Exact Duality Equivalence on Parameterized Models ($g \leftrightarrow 1/g$).
+*   **Main Targets:** Ground Phase Checks, Typed Projected Product Formulas (Pending), Vertex State/Carrier Construction (Pending), Charge-Compatible Dual Model Transport (Pending).
 
 ### Chapter 21: Gaps & Spin-1/2 Generalizations
 **Description:** Formalizes spin-charge separation on the parity-constrained sublattice ($Q_c \equiv Q_s \pmod 2$), constructs the spin-singlet Cooper pair with two distinct species-charge Klein factors ($K_1, K_2$), and formulates the conditional budget leakage criterion for Umklapp scattering.

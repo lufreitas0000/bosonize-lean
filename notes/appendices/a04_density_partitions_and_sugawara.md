@@ -10,12 +10,12 @@ A shift is an integer, not a band element. Define the valid-pair set
 \]
 
 *Lean 4 Proof Strategy:*
-**Definition (Density modes):** Define `D_m` using `Finset.filter` on `Finset.product univ univ` with the condition `p = k + m`, ensuring `p` and `k` are in the band `B` (e.g., `Fin L`). Define `ρ_m` by folding the creation and annihilation operators over this `Finset`. Avoid wrapping addition (`+` modulo `L`) by treating `p, k` as integers or casting to `Int` before checking equality `p = k + m`.
+**Definition (Density modes):** Filter the finite product `Ch01.Band L × Ch01.Band L` with `p.val = k.val + m`, where m is an integer. Sum the CAR bilinears on that domain. Retain the frozen signed band; neither residue addition nor bare zero-based `Fin L` labels describe nonwrapping integer shifts.
 
 Introduce a one-particle partial shift matrix T_m, and the second-quantization map dΓ taking a matrix A to `Σ A_pk c_p†c_k`. Prove `dΓ([A,B])=[dΓ(A),dΓ(B)]` from the CAR bilinear identity. Then ρ_m=dΓ(T_m). This reduces many boundary calculations to finite matrices/intervals before lifting to Fock space.
 
 *Lean 4 Proof Strategy:*
-**Definition (Partial shift matrix and dΓ):** Define `T_m` as an `L \times L` matrix where `(T_m)_{p,k} = 1` if `p = k + m` and `0` otherwise. Define `dΓ(A)` as a linear map from `Matrix (Fin L) (Fin L) ℂ` to the CAR algebra by a double sum over `p, k` of `A_{p,k} c_p^\dagger c_k`.
+**Definition (Partial shift matrix and dΓ):** Index both matrix axes by `Ch01.Band L`, define entries using integer-label equality, and define dΓ by scalar-weighted CAR bilinears. It is a linear Lie map, not an associative algebra homomorphism.
 **Lemma (dΓ Lie algebra homomorphism):** Expand the commutator `[dΓ(A), dΓ(B)]` into a quadruple sum. Use the CAR bilinear identity `[c_p^\dagger c_k, c_q^\dagger c_l] = \delta_{kq} c_p^\dagger c_l - \delta_{pl} c_q^\dagger c_k` to reduce the expression. Collect terms to show it equals `dΓ(A B - B A) = dΓ([A, B])`.
 
 The next lemma chain should establish:
@@ -29,9 +29,9 @@ The next lemma chain should establish:
 
 *Lean 4 Proof Strategy:*
 **Lemma (Density Mode Properties):**
-1. Prove `D_m = \emptyset` for `|m| \geq L` because `p, k \in [0, L-1]`. Hence the sum is empty.
+1. Prove `D_m = \emptyset` for `|m| \geq L` by the bounds `-h+1 ≤ p.val,k.val ≤ h` and their maximal difference L−1. Hence the sum is empty.
 2. For the adjoint, use the property `(c_p^\dagger c_k)^\dagger = c_k^\dagger c_p`. The index change `p = k + m` maps to `k = p - m`, so `D_m` reflects to `D_{-m}`.
-3. Show matrix multiplication `T_m T_n = T_{m+n}` by tracking indices. Then `[\rho_m, \rho_n] = dΓ([T_m, T_n]) = 0` since `T_m` and `T_n` commute.
+3. For m,n≥0, show matrix multiplication `T_m T_n = T_{m+n}` by tracking indices. Mixed-sign composition retains an intermediate-in-band indicator. Then `[\rho_m, \rho_n] = dΓ([T_m, T_n]) = 0` since `T_m` and `T_n` commute.
 4. For opposite shifts, evaluate `[T_m, T_{-m}]` explicitly to find it is diagonal, representing the difference in occupations of the top and bottom edge states. Lift to `\rho_m` via `dΓ`.
 5. For unequal opposite shifts, compute `[T_m, T_{-n}]` to find hopping terms strictly located at the boundaries of the band.
 6. To lift these identities, show that on the restricted budget span (e.g., specific margins of holes and particles), the boundary terms evaluate deterministically or vanish, leveraging the algebraic identities established for `T_m`. This requires an auxiliary lemma about the action of boundary `c_k^\dagger c_k` operators on states within the budget span.
@@ -49,7 +49,7 @@ The bare Hamiltonian is H₀=Σ k n_k. Its vacuum eigenvalue is `−h(h−1)/2`,
 First prove the explicit vacuum norm `||ρ_m Ω||²=m` for 1≤m≤h using orthogonal hop kets. Then distinct energy eigenvalues give linear independence. Using the Schwinger term to prove the first nonzero action would risk a circular dependency if the Schwinger proof itself uses nondegeneracy.
 
 *Lean 4 Proof Strategy:*
-**Lemma (Vacuum norm of density modes):** Expand `||\rho_m \Omega||^2 = \langle \Omega | \rho_{-m} \rho_m | \Omega \rangle`. Use the commutator `[\rho_{-m}, \rho_m]` on the vacuum. Since `\rho_{-m}` annihilates the vacuum for `m > 0`, it reduces to the expectation value of the commutator, which by the edge occupation formula is precisely `m`.
+**Lemma (Vacuum norm of density modes):** Compute ρmΩ as the sum of the m allowed occupation-hop kets, using CAR signs. Distinct hops are orthogonal and each sign has squared norm 1, so the norm squared is m. This establishes first nonzero action without depending on the later restricted scalar CCR.
 **Theorem (Linear independence of density excitations):** Since `\rho_m \Omega` has eigenvalue `E_\Omega + m` under `H_0`, and `||\rho_m \Omega|| > 0` for `1 \le m \le h`, the states for different `m` belong to distinct eigenspaces of a Hermitian operator, and thus are linearly independent.
 
 ## Partitions and completeness
@@ -67,7 +67,7 @@ Construct partition-state products as ordered lists/folds in the noncommutative 
 **Definition (Partition-state products):** Given a partition represented by frequencies `r_m`, define the state `(\prod_m \rho_m^{r_m}) \Omega`. Formalize this using a list of parts `[m_1, m_2, \dots]` sorted descending, and fold the application of `\rho_m` over the vacuum ket.
 **Theorem (Ordering independence):** Use the previously proved `[\rho_m, \rho_n] = 0` (for `m, n > 0`) to show by induction over list permutations that any ordering of the same multiset of parts yields the identical state vector.
 
-For the Gram theorem, first prove a commutator-through-a-word lemma with all prefix energy bounds. When commuting $\rho_{-m}$ ($m \le K$) past $\rho_n$ ($n \le K$), the remainder to the right has energy $E \le K - n$, so the joint excursion satisfies $m + n + E \le m + K \le 2K$. Under the R2 condition $2K + |N| \le h$, the M2 hypothesis $|m| + |n| + E + |N| \le h$ is satisfied at every step. Then prove the vacuum reduction recursively. The norm is $z_\lambda = \prod m^{r_m} r_m!$, nonzero over $\mathbb{C}$. Completeness follows from membership, linear independence, and the rectangle-counting bijection. A mere dimension count without the bijection is a substantial missing proof.
+For the Gram theorem, first prove a commutator-through-a-word lemma with the right-remainder energy invariant. When commuting $\rho_{-m}$ ($m \le K$) past $\rho_n$ ($n \le K$), the remainder to the right has energy $E \le K - n$, so the joint excursion satisfies $m + n + E \le m + K \le 2K$. Under the R2 condition $2K + |N| \le h$, the M2 hypothesis $|m| + |n| + E + |N| \le h$ is satisfied at every step. Then prove the vacuum reduction recursively. The norm is $z_\lambda = \prod m^{r_m} r_m!$, nonzero over $\mathbb{C}$. Completeness follows from membership, linear independence, and the rectangle-counting bijection. A mere dimension count without the bijection is a substantial missing proof.
 
 *Lean 4 Proof Strategy:*
 **Lemma (Commutator-through-a-word and vacuum reduction):** Prove `[\rho_{-m}, \prod \rho_{m_i}]` recursively on the list `[m_i]`. Each pass leaves a term proportional to `m` times the remaining product if `m_i = m`. Use induction on the length of the list, applying the edge commutator identities.
@@ -99,4 +99,6 @@ A safe, non-circular proof order is:
 
 For example, an upward shift n>0 needs an equivalence theorem also on B(N,K+n), a cutoff M≥K+n, and a sufficient enlarged margin such as `2(K+n)+|N|≤h`. This is a sufficient repaired corollary, not a claim of optimal margins. It avoids using an overstrong commutation lemma to establish the equivalence circularly.
 
-Keep the ground-energy shift `N(N+1)/2`. Changing to N²/2 requires a stated chemical-potential subtraction of N/2, which chapter 17 presently omits.
+Keep the ground-energy shift `N(N+1)/2`. Chapter 17 now explicitly subtracts chemical potential `μ=πvF/L` in physical units; this accounts for its symmetric N² form. That scalar correction does not establish the pending raw-quartic/current reduction.
+
+*Proof-design invariant:* Gram pull-through uses the right remainder E≤K−n, giving m+n+E≤m+K≤2K. For Sugawara, split off inactive modes m>K: their lowering action on the right is zero by grading, so no extra margin depending on those inactive modes is needed. Mixed-sign one-particle shift compositions retain the intermediate-in-band indicator.

@@ -61,10 +61,7 @@ $$
 
 *Lean 4 Proof Strategy:*
 Combine Lemma 12.2 and Corollary 11.6. Both operators are linear maps on $B(N,K)$. Since they agree on the spanning basis $\mathcal{B}_{\text{basis}}(N,K)$ of $B(N,K)$, they are identical on the entire subspace.
-```lean
-theorem sugawara_equivalence {N K M : ℕ} (h_margin : 2 * K + N.natAbs ≤ h) (hM : M ≥ K) :
-  ∀ ψ ∈ B N K, E_hat ψ = sugawara_hamiltonian M ψ
-```
+Use integer charge `N : ℤ` and natural cutoffs `K M : ℕ`, with a consistently cast margin such as `2*K + N.natAbs ≤ h`. This is a proposed signature contract; all budget/operator identifiers must be defined before writing executable Lean.
 
 #### 12.3 The Commutator Corollary
 
@@ -83,3 +80,5 @@ Algebraic deduction from Theorem 12.3 applied twice:
 - **Auxiliary Lemma 2 (Fermionic Energy Commutation):** $[\hat{E}, \rho_n] \psi = n \rho_n \psi$ for $\psi \in B(N, K)$, since $\hat{E}(\rho_n \delta_S) = (e(S)+n)\rho_n \delta_S$.
 Since $2(K+n) + |N| \le h$ and $M \ge K+n$, Theorem 12.3 applies to both $\psi \in B(N, K)$ and $\rho_n \psi \in B(N, K+n)$, giving $H_{\text{sug}}^{(M)}(\rho_n \psi) = \hat{E}(\rho_n \psi)$ and $\rho_n(H_{\text{sug}}^{(M)} \psi) = \rho_n(\hat{E}\psi)$.
 Subtracting the two expressions gives $[H_{\text{sug}}^{(M)}, \rho_n] \psi = [\hat{E}, \rho_n] \psi = n \rho_n \psi$.
+
+*Useful cutoff lemma:* For m>K the rightmost lowering mode annihilates every input in B(N,K) by grading. Split the sum into active modes m≤K and inactive modes before pull-through; the inactive terms do not require an additional upper-M current margin.

@@ -79,12 +79,12 @@ $$
 *(Note: Without these margin hypotheses, the identity is false: the unrestricted commutator on the full Fock space contains the finite edge terms of Lemma 10.1 and Lemma 10.3).*
 
 *Lean 4 Proof Strategy:*
-State this theorem with explicit premises `|m| ≤ M`, `|n| ≤ M`, and `2 * M + K + N.natAbs ≤ h`. First, expand the normal ordering `:\rho_m:`. The constants added by normal ordering commute, so `[:\rho_m:, :\rho_n:] = [\rho_m, \rho_n]`. Use a case split on whether `m + n = 0` or `m + n \neq 0`. If `m + n = 0`, apply Lemma 10.2 (since $|m| + K + |N| \le 2M + K + |N| \le h$). If `m + n \neq 0`, apply Lemma 10.3 (since $|m| + |n| + K + |N| \le 2M + K + |N| \le h$). The proof is completed using `simp` to evaluate the Kronecker delta.
+State the signed integer mode bounds with consistent natural/Int casts. Expand normal ordering and handle m=0 or n=0 by the exact number-conservation identity. For opposite nonzero modes apply Lemma 10.2 to the positive absolute mode and use commutator antisymmetry for the sign −m; for unequal modes apply Lemma 10.3 with its two-mode margin. Preserve the input ψ throughout, then simplify the Kronecker delta.
 
 *(Note: $\rho_m$ for $m > 0$ physically acts as a creation mode, raising energy, mathematically matching the lowering current $J_{-m}$, yielding the minus sign).*
 
 **Lemma 10.5 (Composition Margin Accounting).**
-Because $[\rho_{-m}, \rho_m] = \rho_{-m}\rho_m - \rho_m\rho_{-m}$ consists of operator products, the intermediate state after the first application must also satisfy the margin conditions. An input-only margin is not a margin for the entire calculation.
+A proved restricted identity $[\rho_{-m},\rho_m]\psi=m\psi$ needs its stated input margin on $\psi$ only. When substituting such an identity inside a longer word, check the state produced by the right suffix at the substitution point. The two products in the already proved commutator do not impose a second same-budget premise by themselves.
 When evaluating an operator word of density modes bounded by mode cutoff $M$, let $K_{\text{excursion}}$ denote the maximum cumulative intermediate upward excitation energy added beyond the input energy $K$ (so that the maximum intermediate energy is bounded by $K + K_{\text{excursion}}$).
 The conservative uniform condition for all intermediate states and commutators to remain valid and act as exact scalars is:
 

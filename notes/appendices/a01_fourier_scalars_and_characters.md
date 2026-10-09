@@ -38,13 +38,13 @@ Prefer an `AddChar` or equivalent bundled character internally. Expose evaluatio
 \]
 
 *Lean 4 Proof Strategy:*
-- **Strategy:** Define `S` and `T` as `LinearMap K (Band L → K) (Band L → K)`. Use `Finset.sum` over `Finset.univ` since `Band L` is a `Fintype`. The formulas can be written explicitly using scalar multiplication and evaluation of the character `χ`.
+- **Strategy:** Define `S : (Ch01.Lattice L → K) →ₗ[K] (Ch01.Band L → K)` and `T : (Ch01.Band L → K) →ₗ[K] (Ch01.Lattice L → K)` with finite sums. The maps have different source/target carriers; use the frozen bijection only to transport sums, not to silently identify their types.
 
 **Lemma:** For a nontrivial exponent m, prove the geometric-sum identity `(ζ^m−1) Σ_x ζ^(mx) = (ζ^m)^L−1 = 0`; the domain/field assumption cancels the nonzero factor. This covers non-coprime m too. Merely applying a primitive-root theorem to ζ^m with order L would fail when gcd(m,L)>1. Establish the diagonal branch by summing ones.
 
 *Lean 4 Proof Strategy:*
-- **Auxiliary Lemmas:** `geom_sum_mul_sub_one`.
-- **Strategy:** Apply Mathlib's `geom_sum_mul_sub_one`: `(∑ i ∈ range L, (ζ^m)^i) * (ζ^m - 1) = (ζ^m)^L - 1 = (ζ^L)^m - 1 = 1^m - 1 = 0`. Since `K` is a domain (or field), this implies either `ζ^m - 1 = 0` (meaning `L ∣ m` and the sum is just `∑_x 1 = L`) or `∑_x ζ^(mx) = 0`. This establishes character orthogonality.
+- **Checked API:** `AddChar.sum_eq_zero_of_ne_one`; prove nontriviality for each nonzero frequency difference before applying it.
+- **Strategy:** Either use the bundled-character sum theorem, or prove the finite geometric telescoping identity directly and cancel ζ^m−1. Do not assume ζ^m has order L for non-coprime m. Any alternative library geometric-sum name must be checked before use.
 
 **Theorem:** Once both orthogonality identities are proved, finite-sum rearrangement gives
 
@@ -66,13 +66,13 @@ T is an unscaled synthesis map, not the inverse of S until the factor L is remov
 
 *Lean 4 Proof Strategy:*
 - **Auxiliary Lemmas:** `Real.sqrt_pos`.
-- **Strategy:** Define `a : ℝ := 1 / Real.sqrt (L : ℝ)`. Use `Real.sqrt_pos` and the hypothesis `L > 0` to prove `a > 0`. Map `a` into `ℂ` using coercion. Complex conjugation is the identity on coerced reals (`RCLike.conj_coe`), giving `conj a = a`. The relation `L * a^2 = 1` follows from `Real.mul_inv_cancel` and `Real.sq_sqrt`.
+- **Strategy:** Define `a : ℝ := (Real.sqrt (L : ℝ))⁻¹`. Prove sqrt positivity/nonzero and its squared identity, then the scalar normalization. Cast the finished identities to ℂ and simplify conjugation of real casts with the installed simp lemmas. Avoid guessed names for cast/conjugation/cancellation results.
 
 **Theorem:** Then U = aS and U⁻¹ = aT. The conjugate-transpose kernel proves U† = aT, and the two unscaled composition identities give unitarity.
 
 *Lean 4 Proof Strategy:*
 - **Auxiliary Lemmas:** `LinearMap.adjoint`, inner product spaces properties.
-- **Strategy:** Define `U = a • S` and `U_inv = a • T`. Their product yields `a^2 * (T ∘ S) = a^2 * L * I = I`. To compute `U†`, first compute `S†` on `EuclideanSpace ℂ (Band L)`. Expand `⟨S f, g⟩`, swap sums, and use `conj (χ(-k, y)) = χ(k, y)` to identify it as `⟨f, T g⟩`. Hence `S† = T`. Thus `U† = conj(a) * S† = a * T = U⁻¹`. Unitarity is captured by constructing a `LinearIsometryEquiv`.
+- **Strategy:** Define `U = a • S` and `U_inv = a • T`. Their product yields `a^2 * (T ∘ S) = a^2 * L * I = I`. To compute `U†`, first compute `S†` between `EuclideanSpace ℂ (Ch01.Band L)` and `EuclideanSpace ℂ (Ch01.Lattice L)`. Expand `⟨S f, g⟩`, swap sums, and use `conj (χ(-k, y)) = χ(k, y)` to identify it as `⟨f, T g⟩`. Hence `S† = T`. Thus `U† = conj(a) * S† = a * T = U⁻¹`. Unitarity is captured by constructing a `LinearIsometryEquiv`.
 
 Use a `LinearIsometryEquiv` on `EuclideanSpace ℂ _` when Hilbert APIs are needed; a `LinearEquiv` alone asserts invertibility, not preservation of the inner product. Alternatively prove matrix conjugate-transpose identities first and transport to Euclidean spaces.
 

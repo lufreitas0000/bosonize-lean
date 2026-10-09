@@ -14,7 +14,7 @@ D_m := \{ (p, k) \in \Lambda^* \times \Lambda^* \mid p = k + m \} \tag{9.1}
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize $D_m$ as a `Finset` or a `Set` over `Int × Int`, depending on how the lattice $\Lambda^*$ is represented (a `Finset` is preferred if $\Lambda^*$ is bounded). Example definition: `def D (m : ℤ) : Set (Λ × Λ) := { pk | pk.1 = pk.2 + m }`. Auxiliary lemmas: properties of finite intersections within lattice bounds. The lattice boundaries $\Lambda^*$ should be explicitly defined as `{-L, ..., L-1}` to ensure $D_m$ is well-behaved.
+Use `Finset.univ.filter` on `Ch01.Band L × Ch01.Band L` with the integer predicate `p.val = k.val + m`. Reuse the positive-Nyquist band `{-h+1,...,h}` from Core. The periodic position lattice and integer band labels must not be interchanged.
 
 **Definition 9.2 (One-Particle Shift Matrix).**
 We define the one-particle partial shift matrix $T_m \in \mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*))$ exactly on the single-particle indices:
@@ -24,10 +24,10 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize $T_m$ as a matrix `Matrix Λ Λ ℂ` or a linear map `(Λ → ℂ) →ₗ[ℂ] (Λ → ℂ)`.
+Formalize $T_m$ as a matrix `Matrix (Ch01.Band L) (Ch01.Band L) ℂ` or a linear map `(Ch01.Band L → ℂ) →ₗ[ℂ] (Ch01.Band L → ℂ)`.
 ```lean
-def T (m : ℤ) : Matrix Λ Λ ℂ :=
-  fun p k => if p = k + m then 1 else 0
+def T (m : ℤ) : Matrix (Ch01.Band L) (Ch01.Band L) ℂ :=
+  fun p k => if p.val = k.val + m then 1 else 0
 ```
 Auxiliary lemmas needed: proving that $T_m T_n$ corresponds to $T_{m+n}$ under the right conditions, and establishing the adjoint $(T_m)^\dagger = T_{-m}$.
 
@@ -39,9 +39,9 @@ d\Gamma(A) := \sum_{p,k \in \Lambda^*} A_{pk} c_p^\dagger c_k \tag{9.3}
 $$
 
 *Lean 4 Proof Strategy:*
-Define $d\Gamma$ as a linear map from `Matrix Λ Λ ℂ` to the algebra of Fock space operators, e.g., `FockOperator Λ`.
+Define $d\Gamma$ as a linear map from `Matrix (Ch01.Band L) (Ch01.Band L) ℂ` to the algebra of Fock space operators, e.g., `Module.End ℂ (FockSpace (Ch01.Band L))`.
 ```lean
-def dGamma (A : Matrix Λ Λ ℂ) : FockOperator Λ :=
+def dGamma (A : Matrix (Ch01.Band L) (Ch01.Band L) ℂ) : Module.End ℂ (FockSpace (Ch01.Band L)) :=
   ∑ p k, A p k • (cDag p * c k)
 ```
 Auxiliary lemma: `dGamma_comm : ⁅dGamma A, dGamma B⁆ = dGamma ⁅A, B⁆`. This relies on the canonical anticommutation relations (CAR) of $c_p^\dagger$ and $c_k$, requiring careful index manipulation and simplification.
@@ -103,7 +103,7 @@ Because applying $\rho_m$ to the vacuum yields a non-zero state with distinct en
 *Lean 4 Proof Strategy:*
 Formalize the vacuum state $|\Omega\rangle$ using its defining annihilation conditions (e.g., $c_p |\Omega\rangle = 0$ for $p > 0$ and $c_p^\dagger |\Omega\rangle = 0$ for $p \le 0$).
 The norm squared is $\langle \Omega | \rho_{-m} \rho_m | \Omega \rangle$. To compute this, prove an auxiliary lemma for the vacuum expectation value (VEV) of four-fermion operators using Wick's theorem or iterated anticommutators. Only exactly $m$ terms survive the vacuum projection bounds, yielding the result $m$.
-Linear independence directly follows from `eigenvector_linear_independent` for the operator $\hat{P}$, given the states have distinct eigenvalues $m$.
+After the exact occupation-hop norm calculation, prove independence of the resulting vectors by orthogonal distinct-energy eigenspaces (or a verified eigenvector API). Independence of the density maps follows by evaluating a linear relation at the vacuum. Do not invoke the later scalar CCR to prove this first norm lemma.
 
 **Lemma 9.8 (Budget Action on Admissible Sectors).**
 For any admissible charge sector $-h \le N \le h$, the operator $\rho_m$ preserves charge ($[\hat{N}, \rho_m] = 0$) and maps the budget subspace $B(N,K)$ into $B(N, K+m)$ for $m \ge 0$. A lowering mode $m \ge 1$ mapped onto the unique sector ground state $|N\rangle_0$ falls below the zero-energy bound and rigidly annihilates:

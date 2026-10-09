@@ -14,7 +14,7 @@ $$
 The vacuum state is the constant polynomial $1 \in \mathcal{F}_b$.
 
 *Lean 4 Proof Strategy:*
-Formalize the index set as `Q := Fin M` or `Q := { i : ℕ // 1 ≤ i ∧ i ≤ M }`. Define the algebraic carrier space $\mathcal{F}_b$ as the ring of multivariate polynomials `MvPolynomial Q ℂ`. The vacuum state $|0\rangle$ is defined as the constant polynomial `MvPolynomial.C 1`.
+Use `Fin M` with positive weight `weight i := i.val + 1`, or the subtype of positive modes at most M. The zero-based value alone is not a mode weight: it would make a fixed weight slice infinite-dimensional. Define the carrier `MvPolynomial Q ℂ` and constant vacuum 1.
 
 **Definition 8.2 (Operators, Currents, and Adjoint Form).**
 For each mode $m \in Q$, the algebraic operators on $\mathcal{F}_b$ are defined as:
@@ -45,7 +45,7 @@ $$
 On a single-mode state $X_m$, $\hat{N}_b X_m = X_m$ (eigenvalue 1) and $\hat{H}_b X_m = m X_m$ (eigenvalue $m$).
 
 *Lean 4 Proof Strategy:*
-Define $C_m$ as `LinearMap.mulLeft ℂ (MvPolynomial.X m)` and $A_m$ as `m • MvPolynomial.pderiv m`. Define the Haldane bilinear form on monomials with weight $w(r)$. Prove $\langle C_m P, Q \rangle = \langle P, A_m Q \rangle$. Define $\hat{N}_b$ and $\hat{H}_b$ as linear combinations of $C_m \circ A_m$.
+Use the checked creator `LinearMap.mulLeft ℂ (MvPolynomial.X i)` and derivative `(MvPolynomial.pderiv i).toLinearMap`: `pderiv` is a bundled derivation. Scale it by the positive mode weight. Define the Haldane Hermitian form by finite support sums, conjugate-linear in the first argument and linear in the second, and prove the creator/annihilator pairing identity on monomials.
 
 #### 8.2 Filtrations and Nilpotency
 
@@ -56,7 +56,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Define a custom weight function `weightedDegree : MvPolynomial Q ℂ → ℕ` mapping monomials $\prod X_m^{r_m}$ to $\sum m \cdot r_m$ using `Finsupp.sum`. Define $\mathcal{F}_{\le K}$ as the submodule of polynomials bounded by this weight. To prove strict nilpotency of $A_m$ on this subspace, show that `MvPolynomial.pderiv m` strictly decreases the power of $X_m$, thus taking a sufficiently high power of the derivative evaluates to $0$ on any restricted subspace of bounded weight.
+Define the budget as the span of bounded-weight monomials, equivalently requiring every supported monomial to have weight at most K. Prove closure under addition/scalars, finiteness of its index set from positive weights, and the derivative grading. These establish finite dimension and power vanishing; finite dimension alone is insufficient.
 
 On this finite subspace, the annihilation operator $A_m$ is strictly **nilpotent**. The creation operator $C_m$ maps outside the subspace. If a compressed endomorphism is needed, we define $\tilde{C}_m := P_K \circ C_m$. While compressed creators are nilpotent, their commutator with derivatives has a boundary term and is no longer central. We rely on the ambient infinite-dimensional space for exact global algebraic properties.
 
@@ -82,7 +82,7 @@ $$
 *Note: Because compressed creators are not central, they do not inherit this scalar BCH relation. For bounded Wick identities, we strictly use direct word induction.*
 
 *Lean 4 Proof Strategy:*
-Formalize these operations in a ring of formal power series `PowerSeries (End (MvPolynomial Q ℂ))` over $t$. Define an auxiliary lemma for operators $A, B$ that commute with their commutator $[A, B]$, leading to the exact truncation of the BCH expansion.
+Define a formal exponential coefficient by `((j! : ℂ)⁻¹) • A^j` in a series carrier that supports noncommutative coefficients and a central parameter. Check the installed series API before choosing it, or prove finite coefficient identities modulo a power of t. `PowerSeries.exp` takes a coefficient type, not an operator; do not apply ambient scalar BCH to compressed creators.
 
 #### 8.4 Wick's Theorem and Exponentials
 
@@ -101,4 +101,4 @@ with formal generating function $\sum_{n=0}^\infty P_n(X) \frac{t^n}{n!} = \exp\
 *(Note on Hermite polynomials: The probabilists' Hermite polynomials $\mathrm{He}_n(X)$, with $\mathrm{He}_2(X) = X^2 - 1$ and generating function $\exp(Xt - t^2/2)$, correspond instead to the operator $(X_m - D_m)^n 1$ with a signed contraction. For $(D+X)^2 1 = X^2 + 1$, the vacuum state generates $P_n(X)$ with positive signs).*
 
 *Lean 4 Proof Strategy:*
-Define normal ordering `: :` structurally by moving all derivatives $D_m$ to the right of multiplications $X_m$. Proceed by induction on $n$. Prove the recurrence $P_{n+1} = X P_n + n P_{n-1}$ by induction on $n$ with coefficients in $\mathbb{Z}$, then cast to $\mathbb{C}$.
+Define normal symbols separately from represented words, with a fixed ordered linear evaluation. Prove the word expansion including contractions by induction, then derive the vacuum recurrence. Ignoring contractions is not a well-defined operation on the represented operator algebra.

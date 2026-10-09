@@ -1,256 +1,58 @@
-# Architectural Directives for Chapter 3: Finite Fourier Transform (`Ch03Fourier.lean`)
+# Chapter 3 Fourier draft — revised construction guide
 
-### 1. Two-Tier Fourier Implementation (Preserving Physical Unitarity)
-To preserve the canonical anticommutation relations (CAR) $\{c_x, c_y^\dagger\} = \delta_{xy}$ and number operator invariance in Chapters 4 and 5 without causing algebraic friction with square roots:
-- Implement a two-tier Fourier transform:
-  1. `unscaledDFT` and `unscaledInverseDFT`: Defined over any `[CommRing R]` with `(ζ : R)` and `(hζ : IsPrimitiveRoot ζ L)`.
-     Evaluate sums directly without prefactors:
-     `S(f)(k) = ∑ x, f(x) * ζ ^ (-k.val * x.val)`
-     `S_inv(g)(x) = ∑ k, g(k) * ζ ^ (k.val * x.val)`
-     Prove exact algebraic inversion over the ring: `S_inv (S f) = (L : R) • f`.
-  2. `dft` and `dftInverse`: Specialized to `ℂ`. Scale by `(1 / Real.sqrt L : ℂ)`.
-     Prove unitarity `U * Uᴴ = I` and `Uᴴ * U = I` as simple scalar corollaries of the unscaled inversion theorem and `Real.mul_self_sqrt`.
-- DO NOT use asymmetric scalings (such as 1/L and 1), as this breaks the *-algebra involution and fermion anticommutation relations in subsequent chapters.
+Revision: 2026-10-09. This is an architectural suggestion, not a compiled Lean module or an approved frozen interface. Read [Chapter 3](../../notes/md/ch03_fourier.md), [A01](../../notes/appendices/a01_fourier_scalars_and_characters.md), and the [proof revision guide](../../note/proof_suggestions_revision_2026-10-09.md). Reuse `Bosonize.Ch01` and `Bosonize.Ch02` from Core.
 
-### 2. Root of Unity and Exponentiation Conventions
-- Type plane wave evaluations as integer powers: `ζ ^ (k.val * (x.val : ℤ))` using Mathlib's `zpow`.
-- Establish a foundational lemma:
-  `lemma planeWave_representative_invariance (hζ : IsPrimitiveRoot ζ L) (k : Band L) (x : ℤ) :`
-  proving that shifting `x` by multiples of `L` preserves the power via `hζ.zpow_eq_one_iff_dvd`.
+The two-step construction is appropriate: prove character algebra and unscaled inversion first, then normalize once in the complex Hilbert layer. A field needs the chosen square root of L for unitary normalization; quadratic closure is unnecessary. Algebraic invertibility alone does not imply unitarity for the counting inner products.
 
-### 3. Proof Flow for Orthogonality and Inversion
-- Character sums must be proven on `ZMod L` first using Mathlib's `IsPrimitiveRoot.geom_sum_eq_zero`.
-- Transfer the sum over `Band L` to a sum over `ZMod L` via `Ch01.band_projection_bijective`.
-- Prove inversion by reordering finite sums via `Finset.sum_comm` and factoring constants with `Finset.mul_sum` / `Finset.sum_mul`.
+## Characters and carrier contracts
 
+Use `[NeZero L]` and a coefficient field K with `(L : K) ≠ 0` and `IsPrimitiveRoot ζ L`. Positivity of L supplies the modular finite-type instance through `NeZero`; nonzero scalar L separately permits inversion. A more general ring version needs explicit cancellation and scalar-invertibility assumptions and should only be added if required downstream.
 
----
+Keep `Ch01.Lattice L = ZMod L` for positions and `Ch01.Band L` for signed integer momentum labels. Define a bundled additive character on residues and expose its band evaluation. Integer powers of the nonzero root express negative integer labels. Prove representative independence, multiplication under addition, inverse under negation, and the complex conjugation identity. Transport sums through `Ch01.band_projection_bijective`; do not install a competing band group instance.
 
+Proposed helper responsibilities:
 
+- `character_representative_independent`: shifts by multiples of L leave evaluations unchanged.
+- `character_band_neg`: transported negation has the same character as integer negation, including Nyquist.
+- `sum_band_eq_sum_lattice`: transport the finite sum through the frozen equivalence.
+- `character_nontrivial`: nonzero residue frequency gives a character different from 1.
+- `character_orthogonality`: diagonal sum L, off-diagonal sum zero.
 
-Based on the specifications in `ch03_fourier.md`, the mathematical reference notes (specifically Chapters 3, 5, and 16), and the verified foundation in `Ch01LatticeBand` and `Ch02UmbralCalculus`, here is the proposed architecture for **Chapter 3: Finite Fourier Transform**.
+These are proposed project helpers, not existing Mathlib names. The installed `AddChar.sum_eq_zero_of_ne_one` is available for the nontrivial-character sum. Its hypotheses must be supplied. `IsPrimitiveRoot.geom_sum_eq_zero` concerns a root at its actual order: ζ^m can have smaller order than L when gcd(m,L)>1. A direct geometric telescoping proof with cancellation is an alternative.
 
-To maintain the project's design philosophy—avoiding transcendental approximations and topological limits in favor of exact algebraic identities—we separate the interface into:
+## Unscaled inversion
 
-1. **Generic Algebraic Layer:** Formulated over any commutative ring $K$ equipped with a primitive root of unity $\zeta$ (`IsPrimitiveRoot ζ L`).
-2. **Unitary $\ell^2$ / Complex Layer:** Formulated over $\mathbb{C}$ to support division by $\sqrt{L}$ and Hilbert space adjoints.
+Define maps with their actual source and target:
 
----
+```text
+S : (Ch01.Lattice L → K) →ₗ[K] (Ch01.Band L → K)
+T : (Ch01.Band L → K) →ₗ[K] (Ch01.Lattice L → K)
+S f k = ∑ x, f x * χ(-k,x)
+T g x = ∑ k, g k * χ(k,x)
+```
 
-### Phase 1: Roots of Unity, Pairing, and Plane Waves
+Expand finite sums, exchange their order, and apply both orthogonality identities to prove `T.comp S = (L : K) • id` and `S.comp T = (L : K) • id`. Bundle S with inverse `(L : K)⁻¹ • T` as a linear equivalence. T alone is not the inverse.
 
-**Definitions:**
+For the canonical complex root, first evaluate reuse of the installed `ZMod.dft` and its `.symm` inverse (whose evaluation lemma is `ZMod.invDFT_apply`), then transport their kernels to the band. Their forward transform is unscaled and inverse includes 1/L. Prove the character/sign bridge explicitly. This can avoid duplicating the inversion proof. If arbitrary primitive roots are needed, retain a separate generic construction; they do not all give the same trigonometric formula with unchanged frequency labels.
 
-* `planeWavePairing (L : ℕ) (ζ : K) (k : Ch01.Band L) (x : Ch01.Lattice L) : K`
-* Evaluates $\zeta^{k \cdot x}$ algebraically using integer powers: `ζ ^ (k.val * (x.val : ℤ))`.
+## Complex normalization and adjoints
 
+Define `a : ℝ := (Real.sqrt (L : ℝ))⁻¹`, prove `a>0` and `L*a^2=1`, and cast a to ℂ. This scalar package is the only square-root layer. The canonical complex primitive-root theorem checked in the installed library is `Complex.isPrimitiveRoot_exp L hL`, where `hL : L ≠ 0`.
 
+Use `EuclideanSpace ℂ (Ch01.Lattice L)` and `EuclideanSpace ℂ (Ch01.Band L)` for counting inner products. Ordinary function spaces have a different default norm. Prove the adjoint identity for the finite kernels, then set `U=a • S` and `U⁻¹=a • T` and bundle a `LinearIsometryEquiv`. Canonical position CAR requires `|a|²*L=1`; 1/L in both physical transforms would produce the wrong CAR coefficient.
 
+## Difference diagonalization
 
-* `planeWave (L : ℕ) (ζ : K) (k : Ch01.Band L) : Ch01.Lattice L → K`
-* The spatial function $x \mapsto e_k(x) = \zeta^{k \cdot x}$.
+Apply the frozen shifts on `ZMod L` to the character and derive the eigenvalues by character laws:
 
+```text
+forward difference: ζ^k − 1
+backward difference: 1 − ζ^(-k)
+laplacian: (ζ^k − 1)*(1 − ζ^(-k)) = ζ^k + ζ^(-k) − 2
+```
 
+Use integer band representatives for k. The retired fractional-power square expression was ambiguous and had the wrong sign. No additional root is needed. Only after selecting ζ=exp(2πi/L) derive the separate evaluation `−4*sin²(πk/L)`.
 
+## Phase A acceptance
 
-* `planeWaveDual (L : ℕ) (ζ : K) (x : Ch01.Lattice L) : Ch01.Band L → K`
-* The momentum-space function $k \mapsto \zeta^{k \cdot x}$.
-
-
-
-
-
-**Supporting Lemmas (Lifting & Invariance):**
-
-* `planeWave_zpow_eq (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) (x : ℤ) :`
-* Proves that evaluating at $(x : \operatorname{ZMod} L)$ yields $\zeta^{k \cdot x}$ regardless of the integer representative chosen modulo $L$ (`ZMod.val` independence).
-
-
-
-
-* `planeWave_zero_momentum (x : Ch01.Lattice L) : planeWave L ζ (zeroMomentum L hL) x = 1`
-* `planeWave_zero_position (k : Ch01.Band L) : planeWave L ζ k 0 = 1`
-* `planeWave_add_pos (k : Ch01.Band L) (x y : Ch01.Lattice L) :`
-* $e_k(x + y) = e_k(x) e_k(y)$.
-
-
-
-
-* `planeWave_bandAdd (k p : Ch01.Band L) (x : Ch01.Lattice L) :`
-* $e_{k \oplus p}(x) = e_k(x) e_p(x)$ (relies on `band_add_projection` from Chapter 1).
-
-
-
-
-* `planeWave_neg (k : Ch01.Band L) (x : Ch01.Lattice L) :`
-* $e_{\ominus k}(x) = e_k(-x) = (e_k(x))^{-1}$.
-
-
-
-
-* `planeWave_conj (k : Ch01.Band L) (x : Ch01.Lattice L) :`
-* Over $\mathbb{C}$, $\overline{e_k(x)} = e_k(-x) = e_{\ominus k}(x) = \zeta^{-kx}$.
-
-
-
----
-
-### Phase 2: Diagonalization of Discrete Difference Operators
-
-This phase directly connects the umbral endomorphisms of Chapter 2 (`forwardDiff`, `backwardDiff`, `laplacian`) with the plane waves of Chapter 3.
-
-**Lemmas:**
-
-* `shift_planeWave (k : Ch01.Band L) :`
-* $(E e_k)(x) = \zeta^{k.\text{val}} e_k(x)$.
-
-
-
-
-* `inverseShift_planeWave (k : Ch01.Band L) :`
-* $(E^{-1} e_k)(x) = \zeta^{-k.\text{val}} e_k(x)$.
-
-
-
-
-* `forwardDiff_planeWave (k : Ch01.Band L) :`
-* $\Delta e_k = (\zeta^{k.\text{val}} - 1) \cdot e_k$ (Equation 3.6).
-
-
-
-
-* `backwardDiff_planeWave (k : Ch01.Band L) :`
-* $\nabla e_k = (1 - \zeta^{-k.\text{val}}) \cdot e_k$ (Equation 3.7).
-
-
-
-
-* `laplacian_planeWave_algebraic (k : Ch01.Band L) :`
-* $\Delta\nabla e_k = (\zeta^{k.\text{val}} + \zeta^{-k.\text{val}} - 2) \cdot e_k = -(\zeta^{k.\text{val}/2} - \zeta^{-k.\text{val}/2})^2 \cdot e_k$.
-
-
-
-
-* `laplacian_planeWave_trig (k : Ch01.Band L) :`
-* Over $\mathbb{C}$, specializing $\zeta = e^{2\pi i / L}$ yields the continuous dispersion form $-4 \sin^2\left(\frac{\pi k.\text{val}}{L}\right) \cdot e_k$ (Equation 3.8).
-(Note: Stated as an auxiliary evaluation over `Complex`, keeping the algebraic form primary).
-
-
-
-
-
----
-
-### Phase 3: Orthogonality Relations
-
-**Bridge Lemmas (Reindexing via Chapter 1 Bijection):**
-
-* `sum_band_eq_sum_lattice (f : Ch01.Band L → K) :`
-* $\sum_{k : \operatorname{Band} L} f(k) = \sum_{y : \operatorname{Lattice} L} f(\operatorname{representative} L\, hL\, y)$
-* Proved using `Equiv.ofBijective` from `band_projection_bijective`.
-
-
-
-
-
-**Lemmas:**
-
-* `sum_primitiveRoot_pow_eq_zero (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) {m : ℤ} (hm : ¬ (L : ℤ) ∣ m) :`
-* $\sum_{x \in \operatorname{ZMod} L} \zeta^{m \cdot x} = 0$.
-* Standard character sum theorem in Mathlib (`IsPrimitiveRoot.geom_sum_eq_zero`).
-
-
-* `spatial_orthogonality (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) (k p : Ch01.Band L) :`
-* $\sum_{x : \operatorname{Lattice} L} \zeta^{(k.\text{val} - p.\text{val}) \cdot x.\text{val}} = \text{if } k = p \text{ then } (L : K) \text{ else } 0$ (Equation 3.9).
-
-
-
-
-* `momentum_orthogonality (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) (x y : Ch01.Lattice L) :`
-* $\sum_{k : \operatorname{Band} L} \zeta^{k.\text{val} \cdot (x.\text{val} - y.\text{val})} = \text{if } x = y \text{ then } (L : K) \text{ else } 0$ (Equation 3.10).
-
-
-* Proved by transporting the sum over `Band L` to `ZMod L` via the bridge lemma, and evaluating the character sum on `ZMod L`.
-
-
-
----
-
-### Phase 4: Discrete Fourier Transform (DFT) and Inversion
-
-**Definitions:**
-
-* `dftForward (L : ℕ) (ζ : ℂ) (f : Ch01.Lattice L → ℂ) : Ch01.Band L → ℂ`
-* $\hat{f}(k) = \frac{1}{\sqrt{L}} \sum_{x : \operatorname{Lattice} L} f(x) \zeta^{-k \cdot x}$ (Equation 3.5).
-
-
-
-
-* `dftInverse (L : ℕ) (ζ : ℂ) (g : Ch01.Band L → ℂ) : Ch01.Lattice L → ℂ`
-* $\check{g}(x) = \frac{1}{\sqrt{L}} \sum_{k : \operatorname{Band} L} g(k) \zeta^{k \cdot x}$ (Equation 3.13).
-
-
-
-
-* `dftOperator (L : ℕ) (hL : 0 < L) (hζ : IsPrimitiveRoot ζ L) : (Ch01.Lattice L → ℂ) ≃ₗ[ℂ] (Ch01.Band L → ℂ)`
-* Bundles the forward DFT and inverse DFT into a complete complex linear equivalence (`LinearEquiv`).
-
-
-
-
-
-**Lemmas:**
-
-* `dft_inversion (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) (f : Ch01.Lattice L → ℂ) :`
-* `dftInverse L ζ (dftForward L ζ f) = f`.
-
-
-
-
-* `dft_inversion_dual (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) (g : Ch01.Band L → ℂ) :`
-* `dftForward L ζ (dftInverse L ζ g) = g`.
-
-
-
-
-* `dft_adjoint_eq_inverse (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) :`
-* Proves that with respect to the canonical $\ell^2$ inner product, $U^\dagger = \text{dftInverse}$.
-
-
-
-
-* `dft_unitary_left (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) :`
-* $U^\dagger U = I$ (Equation 3.12).
-
-
-
-
-* `dft_unitary_right (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) :`
-* $U U^\dagger = I$ (Equation 3.11).
-
-
-
-
-* `plancherel_identity (hζ : IsPrimitiveRoot ζ L) (hL : 0 < L) (f : Ch01.Lattice L → ℂ) :`
-* $\sum_{x : \operatorname{Lattice} L} \vert{}f(x)\vert{}^2 = \sum_{k : \operatorname{Band} L} \vert{}\hat{f}(k)\vert{}^2$.
-
-
-
----
-
-### Potential Friction Points & Design Recommendations
-
-1. **Square Root Scalings:**
-* In generic algebra, dividing by $\sqrt{L}$ requires a quadratically closed field. Defining `unscaledDftForward` ($\sum f(x) \zeta^{-kx}$) and `unscaledDftInverse` first allows the orthogonality and inversion cancellation to be proved over general rings $K$ where $(L : K)$ is invertible, before introducing $\sqrt{L}$ in $\mathbb{C}$.
-
-
-2. **Double Sum Commutation:**
-* Proving Fourier inversion (`dftInverse (dftForward f) = f`) requires exchanging finite sums $\sum_k \sum_x \mapsto \sum_x \sum_k$. `Finset.sum_comm` will handle this smoothly since both `Lattice L` and `Band L` are verified finite types (`[Fintype]`).
-
-
-
-
-3. **Integer Powers vs Modular Exponentiation:**
-* Do not define $e_k(x)$ as taking powers in `ZMod L`. Define it as integer exponentiation (`zpow`) of $\zeta$. Use the lemma `IsPrimitiveRoot.zpow_eq_one_iff_dvd` to verify that $\zeta^{a} = \zeta^b$ whenever $a \equiv b \pmod L$.
-
-
+Before freezing, elaborate all definitions without placeholders, check the exact signatures/imports/local instances, and record source/target types in the companion notebook. Include L=1 and the even Nyquist case in the contracts, although the half-filled physical chapters later assume L=2h with h>0. Lemma stubs and all helper additions require the ordinary Phase A review; this guide does not authorize Lean edits.

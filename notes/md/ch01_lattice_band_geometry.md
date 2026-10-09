@@ -39,7 +39,7 @@ $$
 
 *Lean 4 Proof Strategy:*
 - Formalize $\pi$ as the canonical projection `\mathbb{Z} \to ZMod L`.
-- Formalize $r$ using the symmetric remainder function. Lean's `ZMod.valMinAbs` (which returns values in `(-L/2, L/2]`) is structurally identical and well-suited for this.
+- Reuse the frozen `Bosonize.Ch01` definitions and centered representative built from `ZMod.val`. Its positive Nyquist endpoint is already proved; do not substitute a different minimum-absolute-value convention or redefine the band.
 - Define band addition $k \oplus k'$ as `r (\pi k + \pi k')` and band negation $\ominus k$ as `r (-\pi k)`.
 - Physical note: The wrapping behavior of $k \oplus k'$ precisely models Umklapp scattering processes, where quasi-momentum is conserved modulo a reciprocal lattice vector.
 

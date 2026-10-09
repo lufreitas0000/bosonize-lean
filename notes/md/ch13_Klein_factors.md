@@ -75,7 +75,7 @@ $$
 holds across all four budget spaces $B(\vec{N}, K)$, $B(\vec{N}, K+m)$, $B(\vec{N}-e_\nu, K)$, and $B(\vec{N}-e_\nu, K+m)$. For lowering modes $m > 0$, the corresponding square intertwines maps into target cutoff $K$.
 
 *Lean 4 Proof Strategy:*
-Define `F_nu` as a linear map parameterized by `(ν : C) (N : C → ℤ) (K : ℕ)`. Formalize the phase `P(ν, N)` as `(-1) ^ (∑ η < ν, (h + N η) + (h + N ν - 1))`. Prove the intertwining relation by checking equality on the partition basis states: since `rho_m_ν'` adds part `m` to partition `λ_{ν'}` without altering the charge vector `N`, the phase `P(ν, N)` factors out identically on both sides of the square.
+Define the phase exponent as `(∑ η in Finset.univ.filter (· < ν), ((h : ℤ) + N η)) + ((h : ℤ) + N ν - 1)`, with integer power or a proved parity character. The same-species term occurs once, outside the preceding-species sum. Construct the map by `Module.Basis.constr` on tuples of partitions whose summed energy is at most K, prove the four-budget square on that joint basis, and extend linearly.
 
 #### 13.3 Exact Algebraic Properties and Isometry
 

@@ -42,7 +42,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize `R^S` as the `R`-module `S → R` (or `S →₀ R` for finitely supported functions). 
+Formalize `R^S` as the `R`-module `S → R` (or `S →₀ R` for finitely supported functions).
 Define the operator algebra as `Module.End R (S → R)`.
 Define `E` using `LinearMap.mk` mapping `f ↦ (fun x ↦ f (x + 1))`. Define `I` as `LinearMap.id`.
 Define `Δ` and `∇` as differences of operators: `Δ = E - I` and `∇ = I - E⁻¹` (where `E⁻¹` is defined via shift by `-1`).
@@ -60,7 +60,7 @@ $$
 
 *Lean 4 Proof Strategy:*
 Formalize pointwise multiplication making `S → R` a `Pi.algebra`.
-Proceed by expanding definitions at a generic point `x : S`. 
+Proceed by expanding definitions at a generic point `x : S`.
 For instance, evaluate `Δ(fg)(x) = f(x+1)g(x+1) - f(x)g(x)`.
 *Auxiliary Lemmas:* An algebraic trick/lemma `a * b - c * d = (a - c) * b + c * (b - d)` to rewrite the differences and factor appropriately, matching the RHS evaluations.
 
@@ -72,7 +72,7 @@ $$
 
 *Lean 4 Proof Strategy:*
 Formalize the periodic domain $\Lambda$ as a finite type (e.g., `ZMod N`) and use `Finset.sum` over `Finset.univ`.
-*Auxiliary Lemmas:* 
+*Auxiliary Lemmas:*
 1. Reindexing lemma (translation invariance of the finite sum on `ZMod N`): `∑ f(x+1) = ∑ f(x)`.
 2. Expand the definitions: `∑ f(x) (g(x+1) - g(x)) = ∑ f(x)g(x+1) - ∑ f(x)g(x)`. Reindex the first sum to `∑ f(x-1)g(x)` and recombine to form `- ∑ (f(x) - f(x-1)) g(x) = - ∑ (∇ f)(x) g(x)`.
 
@@ -84,7 +84,7 @@ $$
 
 *Lean 4 Proof Strategy:*
 Since `E`, `Δ`, and `I` live in the `R`-algebra `Module.End R (S → R)`, this is an application of the algebraic Binomial Theorem.
-Rewrite `E = Δ + I`. 
+Rewrite `E = Δ + I`.
 *Auxiliary Lemmas:* Prove `Commute Δ I` (which is trivial since `I` is the identity). Use Mathlib's `Commute.add_pow` along with `I^k = I` to conclude the proof directly without induction on `n`.
 
 **Definition 2.5 (Umbral Map and Heisenberg Pair).** Let $X^{\underline{n}} = X(X-1)\cdots(X-n+1)$ be the falling factorial polynomial. We define the umbral map $\Phi: R[X] \to R[X]$ linearly on the basis:
@@ -120,10 +120,10 @@ $$
 
 *Lean 4 Proof Strategy:*
 For `Φ ∘ D = Δ_poly ∘ Φ`: Prove equality of linear maps by checking on the monomial basis `X^n`.
-*Auxiliary Lemmas:* 
+*Auxiliary Lemmas:*
 1. `D (X^n) = n X^{n-1}`.
 2. `Δ_poly (X^{\underline{n}}) = n X^{\underline{n-1}}`.
-Extend by linearity using `LinearMap.ext_ring` or equivalent. Note that `Δ_poly` is typed as a linear map on `Polynomial R`, distinct from the function-space operator on `S → R`.
+Extend using `Module.Basis.ext` for `Polynomial.basisMonomials R`, or polynomial induction. `Polynomial.derivative` is already an R-linear map. Reuse the proved Core declarations; this sketch does not authorize changing their frozen interfaces.
 For the Heisenberg relation `Δ β - β Δ = I`: Expand both sides acting on an arbitrary function `f` at point `x`.
 `((Δ ∘ β) f)(x) - ((β ∘ Δ) f)(x) = βf(x+1) - βf(x) - x(Δf)(x-1)`.
 Substitute definitions: `(x+1)f(x) - x f(x-1) - x (f(x) - f(x-1))`. Distribute and simplify to get `f(x)`, which is `(I f)(x)`.

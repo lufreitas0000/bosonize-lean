@@ -35,7 +35,7 @@ With opposite spatial kernels for different chiralities, the self-commutator can
 
 The reversed spatial character gives opposite chiral kernels while retaining the same current convention. Alternatively reverse the left momentum/sea convention; that changes its energy and density dictionary and must be propagated. Do not simply assume an opposite sign incompatible with previously defined identical copies.
 
-With opposite kernels, the desired self-commutator cancellation and nonzero φ–θ commutator can be derived. Keep M explicit and enforce margins for all currents actually used, including intermediate vectors.
+With opposite kernels, the desired self-commutator cancellation and nonzero φ–θ commutator can be derived. Keep M explicit and enforce margins for all currents actually used, on the actual right-suffix inputs at each substitution.
 
 ## Exact gradient and zero-mode obstruction
 
@@ -89,7 +89,7 @@ A module-valued spatial shift/difference linear map that is evaluated on operato
 
 *Lean 4 Proof Strategy:*
 1. Do not use `forwardDiff` from Chapter 2 if it strictly requires a commutative ring.
-2. Define `opForwardDiff (f : ℤ → Module.End ℂ V) : ℤ → Module.End ℂ V` as `fun x => f (x + 1) - f x`.
+2. Define the periodic operator-valued difference on `ZMod L` by `fun x => f (x+1) - f x`, with `f : ZMod L → Module.End ℂ V`. An ℤ function is a periodic lift only when that periodicity is proved.
 3. Prove linearity of `opForwardDiff` and any summation by parts formula without using commutativity of the `End` algebra.
 
 > [!NOTE]

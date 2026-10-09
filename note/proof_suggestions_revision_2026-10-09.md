@@ -299,3 +299,84 @@ Following the user's subsequent cleanup instruction, visible correction comments
 Commit **79b3a2d**, `docs(notes): checkpoint auxiliary notes before issue cleanup`, preserves the previously uncommitted A02/A06 versions before deletion. The brainstorm was already committed. Removed material consists of obsolete historical criticisms about the Chapter 8 weight/normal-symbol definitions, the Chapter 15 gradient, and the Chapter 16 factor/total-Sugawara definition, plus one verified duplicate SW section and two timeout artifacts. Their replacements were checked in the current source notes. No unsolved theorem was deleted or declared proved; “issue solved” in the cleanup commit refers to these source/editorial repairs.
 
 The cleanup commit contains only the seven affected auxiliary files and this report. For A05/A07/A08/A09, only the newly added comments are staged; their existing user revisions remain unstaged, as do the chapter revisions. The earlier review notes remain audit records rather than being deleted wholesale as if every historical finding were resolved.
+
+## Execution of this guide — current revision follow-up
+
+The original findings above refer to the 15:42:50 UTC snapshot. On the later user-authorized review, incoming chapters/appendices/reviews and the updated formalizer guidance were checkpointed as **d3770c1** before applying the guide. See [current revision verification](current_revision_verification_2026-10-09.md) for the C01–C13 reconciliation, attachment corrections, exact counterexamples, task attribution, and remaining contracts.
+
+The three external suggestions are now revised: Chapters 1–2 reference frozen Core rather than redeclare it; Chapter 3 retains character algebra and unscaled inversion before complex isometry. Affected inline strategies in the chapters and A01–A10 now apply P01–P15. The original code and old review findings remain available in Git; their historical line numbers are not locations in the revised drafts.
+
+| Guide | Applied revision |
+| --- | --- |
+| P01 — Library names | Checked basis, derivative, adjoining, character-sum, primitive-root, finite-adjoint, and DFT APIs; removed guessed names from active strategies. |
+| P02 — Noncommutative algebra | Explicit CAR/CCR substitutions, fixed factor order, no unconditional symmetric swap simp set; scalar normalization separate. |
+| P03 — Carriers/coercions | Euclidean Hilbert basis, integer charges/band labels, typed Fourier directions, Derivation.toLinearMap. |
+| P04 — Grading | Positive Fin-mode weights, coordinate/support budgets, nilpotency from grading, inactive Sugawara terms zero. |
+| P05 — Normal ordering | Word/symbol carrier, fixed ordered linear evaluation, contractions and evaluation preservation; raw quartic reduction pending. |
+| P06 — Densities | Integer-label filtered pairs, retained mixed-shift indicator, direct occupation-hop first norm proof. |
+| P07 — Margins | Right-remainder Gram invariant and actual suffix inputs; no unnecessary same-budget premise on a proved commutator. |
+| P08 — Restricted products | Exact projection remainder retained, typed intermediate budgets, actual compressed adjoints. |
+| P09 — Vertex base | Full projected ground vector required; ground scalar and numerical margin alone insufficient. |
+| P10 — Exponentials | Factorial scalar action, formal coefficient carrier, no unsupported parameter evaluation or compressed scalar BCH. |
+| P11 — Bogoliubov | Algebraic real witnesses, correct plus-sign reordering, scalar inversion separate from CCR; ψ≠0 in obstruction. |
+| P12 — States | Normalized positive linear functional and existence obligation; no multiplicative scalar map. |
+| P13 — Duality/spin | Charge-compatible map still pending, integer parity inverse, compatible total-energy splits. |
+| P14 — SW | Both off-block terms, piecewise coupled-entry denominators, actual adjoint equations, exact identity-rotation special case. |
+| P15 — Leakage | Nonzero outside component, proper-box inward counterexample, useful zero-charge witness family. |
+
+### Checked Lean 4 patterns
+
+The current compiler, not a generic style claim, establishes the following APIs. All 17 references were checked together with four proof examples through `lake env lean --stdin`, without modifying project Lean files. The initial inverse-DFT name guess was corrected before the successful final run.
+
+| Purpose | Installed API / contract |
+| --- | --- |
+| Occupation basis | `EuclideanSpace.basisFun ι ℂ`, then `.toBasis` |
+| Construct a map from basis images | `b.constr ℂ images`, where b is a `Module.Basis` |
+| Equality on a basis | `Module.Basis.ext` |
+| Polynomial monomial basis | `Polynomial.basisMonomials R` |
+| Polynomial partial derivative | `MvPolynomial.pderiv i : Derivation …`; use `.toLinearMap` |
+| Creator map | `LinearMap.mulLeft ℂ (MvPolynomial.X i)` |
+| Generated algebra / monotonicity | `Algebra.adjoin`, `Algebra.adjoin_mono` |
+| Basis from independence and count | `basisOfLinearIndependentOfCardEqFinrank'`; supply finite dimension and cardinality=finrank |
+| Canonical complex primitive root | `Complex.isPrimitiveRoot_exp L hL`, hL:L≠0 |
+| Nontrivial-character sum | `AddChar.sum_eq_zero_of_ne_one`; finite additive group and domain codomain |
+| Primitive-root geometric sum | `IsPrimitiveRoot.geom_sum_eq_zero`; actual order>1, not automatically L for ζ^m |
+| Hilbert adjoint | `LinearMap.adjoint`; finite-dimensional inner-product source and target |
+| Raw word algebra | `FreeAlgebra ℂ (Mode ⊕ Mode)` |
+| Complex DFT | `ZMod.dft`; inverse is `.symm`, with `ZMod.invDFT_apply` |
+| Real-cast conjugation | `Complex.conj_ofReal` |
+
+Each helper name proposed elsewhere remains a project proposal until elaborated. These examples illustrate recommended construction and proof patterns; they are not new project declarations or chapter proofs:
+
+```lean
+import Mathlib
+
+example {V W : Type*} [AddCommGroup V] [Module ℂ V]
+    [AddCommGroup W] [Module ℂ W] {ι : Type*}
+    (b : Module.Basis ι ℂ V) (v : ι → W) (i : ι) :
+    b.constr ℂ v (b i) = v i := by
+  simp
+
+example {A : Type*} [Ring A] (X Y : A) :
+    (X + Y)^2 + (X - Y)^2 = 2 * (X^2 + Y^2) := by
+  noncomm_ring
+
+example {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (Pt A Pm B Ps : Module.End ℂ V) :
+    Pt*A*B*Ps - Pt*A*Pm*B*Ps = Pt*A*(1-Pm)*B*Ps := by
+  noncomm_ring
+
+example {V : Type*} [AddCommGroup V] [Module ℝ V]
+    (c s : ℝ) (h : c^2 - s^2 = 1) (X Y : V) :
+    c • (c • X + s • Y) - s • (s • X + c • Y) = X := by
+  rw [smul_add, smul_add, smul_smul, smul_smul, smul_smul, smul_smul]
+  have h1 : c*c - s*s = 1 := by nlinarith [h]
+  have h2 : c*s - s*c = 0 := by ring
+  calc
+    (c*c) • X + (c*s) • Y - ((s*s) • X + (s*c) • Y) =
+        (c*c - s*s) • X + (c*s - s*c) • Y := by
+          simp only [sub_smul]; abel
+    _ = X := by rw [h1, h2]; simp
+```
+
+The projection identity is exact without any range hypothesis. To replace the projected product by the ambient product, prove its right-hand side is zero. This is weaker and more useful than requiring every factor to preserve one shared cutoff.

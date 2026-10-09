@@ -59,7 +59,7 @@ $$
 For every subset $S \subseteq \iota$, the basis vector $\delta_S \in \mathrm{Fock}(\iota)$ is the indicator function. The collection $\{\delta_S\}_{S \subseteq \iota}$ forms an exact orthonormal basis.
 
 *Lean 4 Proof Strategy:*
-Define `def FockSpace (ι : Type) [Fintype ι] := EuclideanSpace ℂ (Finset ι)`. We use `Finset ι` instead of `Set ι` because $\iota$ is a finite index set. The basis vectors $\delta_S$ can be represented using the standard orthonormal basis of `EuclideanSpace`, which in Lean 4 mathlib is accessed via `PiLp.basisFun`. 
+Define `FockSpace ι := EuclideanSpace ℂ (Finset ι)`, with `[Fintype ι]` and the order/decidable equality needed by occupations. Use the checked `EuclideanSpace.basisFun (Finset ι) ℂ`; its `.toBasis` supplies the algebraic occupation basis.
 
 ---
 
@@ -84,7 +84,7 @@ $$
 These basis actions are then linearly extended to $\mathrm{End}_{\mathbb{C}}(\mathrm{Fock}(\iota))$.
 
 *Lean 4 Proof Strategy:*
-Define `def sigma (i : ι) (S : Finset ι) : ℕ := (S.filter (· < i)).card`. Construct the operators by first defining their action on `Finset ι` into `FockSpace ι` and then extending linearly using `Basis.ext` or `Finsupp.linearCombination`. The sign factor can be written as `(-1 : ℂ) ^ (sigma i S)`. We will need an auxiliary definition for the basis extension, potentially lifting `c i` and `cdag i` to maps in `Module.End ℂ (FockSpace ι)`.
+Define the preceding occupation count with `Finset.filter`. Specify the image of each occupation basis vector, then construct `c i` and `cdag i` using `Module.Basis.constr`. Prove their evaluation lemmas first. `Module.Basis.ext` proves equality of existing maps; it does not construct a map.
 
 **Definition 4.4 (Observables).**
 For all $i \in \iota$:
@@ -122,7 +122,7 @@ Consequently, the concrete occupation operators constructively instantiate the a
 Furthermore, the number operators commute pairwise, $\Gamma^2 = I$, and $\Gamma^\dagger = \Gamma$.
 
 *Lean 4 Proof Strategy:*
-1. **Adjointness**: Prove `⟪δ_S, c i δ_T⟫_ℂ = ⟪cdag i δ_S, δ_T⟫_ℂ` for all basis vectors $S, T$. Using the linearity of the inner product and `PiLp` EuclideanSpace properties, extend this via `Basis.ext` to prove `c i` and `cdag i` are adjoints.
+1. **Adjointness**: Prove `⟪δ_S, c i δ_T⟫_ℂ = ⟪cdag i δ_S, δ_T⟫_ℂ` for all basis vectors $S, T$. Using the linearity of the inner product and `PiLp` EuclideanSpace properties, extend this via `Module.Basis.ext` to prove `c i` and `cdag i` are adjoints.
 2. **CAR Identities**: Prove `{c i, c j} = 0`, `{cdag i, cdag j} = 0`, and `{c i, cdag j} = δ_ij I` directly from the atomic sign lemmas (Lemma 4.5).
 3. **CAR Instantiation**: Combine adjointness and the CAR identities into an explicit `CAR (FockSpace ι) ι` instance.
 4. **Commutativity of $n$**: Show `n i * n j = n j * n i` by applying the CAR anticommutation identities.
@@ -142,4 +142,4 @@ $$
 These exact bilinear commutators form the necessary foundation for the density algebra.
 
 *Lean 4 Proof Strategy:*
-These can be proven solely within the `CAR` typeclass algebra without relying on the concrete `FockSpace` implementation. Use the basic commutator relation $[A, BC] = \{A, B\}C - B\{A, C\}$ or generic algebraic expansion. Applying `simp` configured with the CAR anticommutation axioms `c i * c j = - (c j * c i)` and `c i * cdag j = if i = j then 1 else 0 - cdag j * c i`, the expressions will reduce. It is advisable to create an automated `simp` set (e.g., `car_simp`) to mechanically evaluate polynomials in $c$ and $c^\dagger$ to normal order.
+Prove the pure CAR bilinear identities by distributivity and the CAR equations in a fixed factor order. Symmetric swap rules are not safe unconditional simp lemmas. If a normal-order procedure is added, give it a fixed word order and a decreasing measure; use its checked evaluation-preservation theorem.

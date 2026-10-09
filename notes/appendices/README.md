@@ -1,7 +1,8 @@
 # Appendices for the Lean Formalization
 
-Status: Mathematical and architectural reference inventory, audited and synchronized on 2026-10-09 against the verification record (`note/revision_confirmation_2026-10-09.md`).
-The notes delineate verified finite-algebraic identities on energy budget spaces $\mathcal{B}_K$ from abstract operator/state formulations (e.g., abstract Weyl correlators in A08/Ch20 and dual model structures in A09/Ch20) and physical continuum motivations (e.g., KT flow and Umklapp Mott gaps in Ch21/A10). Inclusion in this inventory establishes mathematical specification and interface scoping, serving as an audit baseline prior to formal Lean proof-draft review.
+Status: Reference inventory reviewed on 2026-10-09; inclusion is not mathematical verification. See the [current revision verification](../../note/current_revision_verification_2026-10-09.md) and [proof revision guide](../../note/proof_suggestions_revision_2026-10-09.md).
+
+Only Chapters 1–2 have proved, frozen Core implementations. Later finite statements are proposed targets; the projected vertex dictionary, raw quartic contraction reduction, extended abstract vertex state, and operator duality retain explicit pending obligations. The notes keep these separate from coefficientwise formal identities and continuum motivations. Historical reviews remain dated records of their snapshots.
 
 | Appendix | Subject | Chapters |
 | --- | --- | --- |

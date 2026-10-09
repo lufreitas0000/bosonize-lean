@@ -16,7 +16,7 @@ $$
 Normal ordering applies *externally* to the squared field difference to prevent vacuum divergences.
 
 *Lean 4 Proof Strategy:*
-We will define `H_field` as a function from the lattice `Λ` to operators on the Hilbert space. The normal ordering `:\! ... \!:` will need to be formalized as an operator (`normal_order`) that reorders a polynomial in $\rho$ operators such that lowering operators ($m < 0$) are placed to the right of raising operators ($m > 0$). The definition itself will be a straightforward `Finset.sum` over $x \in \Lambda$.
+Define the normal-ordered gradient square in a separate symbol/word carrier with fixed linear evaluation. Prove the specific quadratic evaluation formula with all contraction terms before collapsing the spatial sum. Do not define normal ordering by changing equal represented operators inconsistently.
 
 #### 16.2 Chiral Separation and Spatial Collapse
 
@@ -28,7 +28,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-This is an algebraic identity. We will first need an auxiliary lemma establishing the linearity of the Umbral gradient $\Delta$, giving $\Delta \phi = \Delta \varphi_{+1} + \Delta \varphi_{-1}$ and $\Delta \theta = \Delta \varphi_{+1} - \Delta \varphi_{-1}$. After substituting these into the LHS, the proof can be completed using Lean's `ring` or `linear_combination` tactics, since the operators evaluated at the same spatial point commute.
+Expand `(X+Y)^2+(X−Y)^2` with distributivity or `noncomm_ring`. The cross terms cancel without assuming X and Y commute. Apply current reorderings explicitly and use `ring` only for scalar coefficients; a commutative ring instance on all endomorphisms is unavailable.
 
 **Lemma 16.3 (Spatial Collapse via DFT).**
 Let $M \ge 1$ satisfy the no-aliasing condition $2M < L$. Substituting the Umbral gradient expansion of the chiral field (Lemma 15.5) and applying the spatial orthogonality constraint $\sum_{x} \zeta^{(m-n)x} = L \delta_{mn}$, both mixed terms in the square contribute, yielding an exact factor of $2L$:

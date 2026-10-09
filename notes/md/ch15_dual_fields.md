@@ -92,3 +92,5 @@ Prove $\sum_{x \in \Lambda} \Delta f(x) = 0$ via telescoping. Since $\phi, \thet
    * You cannot blindly instantiate `forwardDiff` for endomorphisms. You must define a specific module-valued linear map or use explicit algebraic subtraction $A(x+1) - A(x)$ to evaluate differences without assuming operator commutativity.
 2. **Kernels as Character Sums:**
    * Define all kernels explicitly as finite `Finset` sums of characters $\zeta$. Only as a secondary evaluation (valid away from $t=0$) should you prove equivalence to quotients of sines. At $t=0$, division by zero is undefined, whereas the character sum exactly yields $(2M+1)/L$.
+
+*Proof-design contract:* Each current commutator is an action on an input satisfying its own species margin. First prove the exact finite character kernel with all cutoffs visible, then derive the field cancellation on those inputs. A periodic operator-valued difference needs additive/scalar structure only, not commutative multiplication of endomorphisms.

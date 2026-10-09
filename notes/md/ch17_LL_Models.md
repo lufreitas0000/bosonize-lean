@@ -1,6 +1,6 @@
 ### Chapter 17: Forward Scattering & The Luttinger Hamiltonian
 
-In 1+1 dimensions, the physics is famously different. Interacting fermions cannot pass each other, so individual quasi-particle excitations are strictly forbidden. All excitations must become collective waves.
+One-dimensional interacting models motivate collective low-energy descriptions. This finite program studies specified quadratic current models and their relation to fermionic interactions; it does not assert that all interacting one-dimensional systems forbid individual quasiparticles.
 We focus on forward scattering density-density interactions. The formalization strictly follows [Appendix A07](../appendices/a07_interactions_and_bogoliubov.md) and [Appendix A10](../appendices/a10_discrete_rg_and_schrieffer_wolff.md).
 
 #### 17.1 Definitions of the 4-Fermion Interactions
@@ -14,7 +14,7 @@ H_{4, \text{raw}} := \frac{g_4}{2L} \sum_{\nu \in \{R, L\}} \sum_{m=-M}^{M} \sum
 $$
 
 *Lean 4 Proof Strategy:*
-Define `H_4_raw` as a sum over the transfer domain `Finset`s using the underlying `FermionAlgebra`. Normal ordering $:\! \dots \!:$ should be implemented by an explicit subtraction of the vacuum expectation value or by structurally moving creation operators to the left. The transfer domain $-M \le m \le M$ and band limits must be strictly bounded with appropriate summation indices and `Icc` intervals.
+Define `H_4_raw` as a sum over the transfer domain `Finset`s using the underlying `FermionAlgebra`. The quartic colon in (17.1) is a pending definition: specify sea quasiparticle creation/annihilation, a fixed word order, and all contraction terms. Subtracting only one vacuum expectation is not full Wick ordering. Prove the word-evaluation identities before asserting a current reduction. The transfer domain $-M \le m \le M$ and band limits must be strictly bounded with appropriate summation indices and `Icc` intervals.
 
 **Definition 17.2 (Raw Inter-branch Interaction $g_2$).**
 Let $g_2 \in \mathbb{R}$. The momentum exchange $m$ shifts one Right-mover and one Left-mover. While fundamental fermions anticommute across species, even-degree bilinears commute:
@@ -44,24 +44,27 @@ Notice that $(C_R A_L + A_R C_L) |\vec{N}\rangle_0 = 0$ annihilates the joint se
 $$
 H_{2, \text{pair}} := \frac{g_2}{L} \left[ N_R N_L + \sum_{m=1}^{M} \left( \rho_{m, R} \rho_{m, L} + \rho_{-m, R} \rho_{-m, L} \right) \right] = \frac{g_2}{L} \left[ N_R N_L + \sum_{m=1}^M \left( C_R C_L + A_R A_L \right) \right] \tag{17.4}
 $$
-In physical fermion language, this pairing form arises from the pairing channel where the transfer on the left branch is $+m$ in computational momentum ($p \to p+m$). Because the hopping and pairing models are distinct quadratic forms with different spectra, we define the interacting Luttinger Hamiltonian $H_{\text{Lutt}}$ directly as the pairing model $H_{\text{pair}}$, retaining consistent computational creators $C_\nu = \rho_{m,\nu}$ on both branches.
+Identifying this chosen form with a physical fermionic channel requires a separate branch-orientation and momentum dictionary. Because hopping and pairing are different quadratic models, define the interacting Luttinger Hamiltonian directly as the pairing model, retaining computational creators Cν=ρm,ν on both branches.
 
-**Lemma 17.4 (Exact Factorization of Intra-branch $g_4$ and Sea Normal Ordering).**
+**Definition 17.4 (Bilinear Sea Ordering and Chosen Current Interaction).**
 Fermionic normal-ordering is defined relative to the half-filled Dirac sea $S_0 = \{k \in \Lambda^* : k \le 0\}$:
 $$
 :\! c^\dagger_k c_k \!: \;:= c^\dagger_k c_k - \langle\Omega| c^\dagger_k c_k |\Omega\rangle I = \begin{cases} c^\dagger_k c_k & (k > 0) \\ - c_k c^\dagger_k & (k \le 0) \end{cases}
 $$
 so that the total normal-ordered charge operator is $\sum_k :\! c^\dagger_{\nu,k} c_{\nu,k} \!: \;= \hat{N}_\nu$.
-For intra-branch scattering (17.1), commuting middle operators via CAR $c_k c_p^\dagger = \delta_{kp} I - c_p^\dagger c_k$ generates the diagonal density sum plus the $m=0$ charge square $\frac{g_4}{2L} \hat{N}_\nu^2$:
+Choose the quadratic current interaction used in the solvable model directly:
 $$
-H_{4, \text{raw}} = \frac{g_4}{L} \sum_{\nu \in \{R, L\}} \sum_{m=1}^{M} \rho_{m, \nu} \rho_{-m, \nu} + \frac{g_4}{2L} (N_R^2 + N_L^2) \tag{17.5}
+H_{4, \text{current}} := \frac{g_4}{L} \sum_{\nu \in \{R, L\}} \sum_{m=1}^{M} \rho_{m, \nu} \rho_{-m, \nu} + \frac{g_4}{2L} (N_R^2 + N_L^2) \tag{17.5}
 $$
 without redundant outer $m$ factors.
+
+> [!WARNING]
+> **Revision check (2026-10-09):** This is a model definition, not a proved reduction of (17.1). Under full sea-quasiparticle Wick ordering, the state with $N_R=1,N_L=0$ and zero excitation has only one quasiparticle: a fully normal-ordered quartic has zero expectation, whereas (17.5) gives $g_4/(2L)$. Any corrected raw-to-current theorem must specify and retain the missing one-body/contraction terms.
 
 #### 17.3 The Interacting Luttinger Hamiltonian
 
 **Theorem 17.5 (The Bosonized Luttinger Hamiltonian).**
-Combining the free Sugawara kinetic energy $H_0$ from Chapter 12, the intra-branch scattering $H_4$, the pairing interaction $H_{2,\text{pair}}$, and a chemical potential term $-\mu(\hat{N}_R + \hat{N}_L)$, the Hamiltonian on the budget subspace evaluates to:
+Combining the free Sugawara kinetic energy $H_0$ from Chapter 12, the chosen current interaction $H_{4,\mathrm{current}}$, the pairing interaction $H_{2,\text{pair}}$, and a chemical potential term $-\mu(\hat{N}_R + \hat{N}_L)$, the Hamiltonian on the budget subspace evaluates to:
 $$
 H_{\text{Lutt}} = \frac{2\pi}{L} \sum_{m=1}^{M} \left[ v_1 \left( \rho_{m, R} \rho_{-m, R} + \rho_{m, L} \rho_{-m, L} \right) + v_2 \left( \rho_{m, R} \rho_{m, L} + \rho_{-m, R} \rho_{-m, L} \right) \right] + E_{\text{zero}} \tag{17.6}
 $$
@@ -75,7 +78,7 @@ E_{\text{zero}} = \frac{\pi v_1}{L}(N_R^2 + N_L^2) + \frac{g_2}{L} N_R N_L.
 $$
 
 *Lean 4 Proof Strategy:*
-Combine the non-interacting bosonized Hamiltonian $H_0$ with the scattering results from Lemmas 17.3 and 17.4. Group terms by mode $m$ and match the scalar prefactors to $v_1, v_2$ and $E_{\text{zero}}$.
+Combine the restricted Sugawara identity for $H_0$ with the definitions of $H_{4,\mathrm{current}}$ and $H_{2,\mathrm{pair}}$. State the resulting operator equality on inputs satisfying the Sugawara contract; no raw-quartic reduction is needed for this chosen model. Group terms by mode $m$ and match the scalar prefactors to $v_1, v_2$ and $E_{\text{zero}}$.
 
 **Theorem 17.6 (Energy-Shell Schrieffer-Wolff Decomposition).**
 Let $\mathcal{B}_K = \mathcal{B}_{K-1} \oplus \mathcal{H}_K$ be the budget decomposition by total energy shell ($K \ge 1$), and let $P_{K-1}$ be the orthogonal projection onto $\mathcal{B}_{K-1}$.
@@ -87,7 +90,7 @@ $$
 3. *Vanishing of off-block correction:* If the perturbation satisfies $P V Q = Q V P = 0$ (where $Q = I - P$), then the first-order generator $S_1 = 0$, so the second-order correction $\frac{1}{2} P [S_1, V] P$ vanishes identically.
 
 *Lean 4 Proof Strategy:*
-Formalize the block decomposition of the budget space $\mathcal{B}_K$. Prove that when $P V Q = 0$, the generator equation $[S_1, H_0] = - P V Q$ is solved by $S_1 = 0$, implying $H_{\text{eff}} = P (H_0 + t V) P$ exactly without second-order correction. Separate the formal expansion modulo $t^3$ from any continuous Wilsonian RG flow interpretation.
+Formalize the block decomposition of the budget space $\mathcal{B}_K$. Prove that when $P V Q = Q V P = 0$, the generator equation $[S_1, H_0] = -(P V Q + Q V P)$ is solved by $S_1 = 0$, implying $H_{\text{eff}} = P (H_0 + t V) P$ exactly without second-order correction. Separate the formal expansion modulo $t^3$ from any continuous Wilsonian RG flow interpretation.
 
 #### 17.4 Technical Notes for the Lean 4 Formalization
 

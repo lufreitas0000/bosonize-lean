@@ -6,10 +6,10 @@ A bare function space `X → ℂ` is algebraically convenient but does not autom
 
 Choose either `EuclideanSpace ℂ (Finset ι)` for the finite Hilbert carrier, with a transport to the algebraic function basis, or matrices indexed by `Finset ι` for the operator proofs, with a later Euclidean interpretation. Prove the transport once. The installed `PiL2` module defines `EuclideanSpace` and its finite-sum inner product. Matrix conjugate transpose provides a particularly direct finite adjoint API.
 
-**Definition 1:** Creation operators should be constructed from the occupation basis, using `Basis.constr`, or from their matrix coefficients. Record evaluation laws and a basis-extensionality lemma before proving CAR. Do not define a general Hilbert adjoint on unbundled arbitrary linear maps in an infinite-dimensional carrier.
+**Definition 1:** Creation operators should be constructed from the occupation basis, using `Module.Basis.constr`, or from their matrix coefficients. Record evaluation laws and a basis-extensionality lemma before proving CAR. Do not define a general Hilbert adjoint on unbundled arbitrary linear maps in an infinite-dimensional carrier.
 
 *Lean 4 Proof Strategy:*
-Use `Matrix.toLin` or `Basis.constr` over `Finset ι` to bundle operators with their matrix representations. Define the adjoint via `Matrix.conjTranspose`. The occupation basis can be encoded as functions `ι → ZMod 2` or subsets `Finset ι` for fermions. Provide a `@[simp]` lemma for evaluating the creation operator on a basis vector.
+Use `Matrix.toLin` or `Module.Basis.constr` over `Finset ι` to bundle operators with their matrix representations. Define the adjoint via `Matrix.conjTranspose`. The occupation basis can be encoded as functions `ι → ZMod 2` or subsets `Finset ι` for fermions. Provide a `@[simp]` lemma for evaluating the creation operator on a basis vector.
 
 ## Required CAR lemma chain
 
@@ -31,7 +31,7 @@ Model the fermionic sign as `(-1) ^ count` inside a `Ring` or `Field`. Prove `(-
 **Lemma 4:** Prove all three CAR identities, not merely assume a representation structure for the concrete Fock operators. The abstract CAR definition must bundle the adjoint compatibility field $c_i^\dagger = \mathrm{adjoint}(c_i)$ on a finite-dimensional Euclidean carrier; purely algebraic CAR pairs can be conjugated by nonunitary maps and lose adjointness.
 
 *Lean 4 Proof Strategy:*
-The CAR identities are `{a_i, a_j} = 0`, `{a_i^\dagger, a_j^\dagger} = 0`, and `{a_i, a_j^\dagger} = \delta_{ij}`. Apply both sides to an arbitrary basis element `|s\rangle`. By Lemma 3, `a_i a_j |s\rangle = - a_j a_i |s\rangle` for `i ≠ j`. For `i = j`, `{a_i, a_i^\dagger} = a_i a_i^\dagger + a_i^\dagger a_i` evaluates to `1 |s\rangle` because any state is either occupied or empty at `i`. Conclude by `Basis.ext`.
+The CAR identities are `{a_i, a_j} = 0`, `{a_i^\dagger, a_j^\dagger} = 0`, and `{a_i, a_j^\dagger} = \delta_{ij}`. Apply both sides to an arbitrary basis element `|s\rangle`. By Lemma 3, `a_i a_j |s\rangle = - a_j a_i |s\rangle` for `i ≠ j`. For `i = j`, `{a_i, a_i^\dagger} = a_i a_i^\dagger + a_i^\dagger a_i` evaluates to `1 |s\rangle` because any state is either occupied or empty at `i`. Conclude by `Module.Basis.ext`.
 
 **Lemma 5:** Prove adjointness on basis pairs, lift by finite sums, and instantiate the abstract CAR representation.
 
@@ -41,15 +41,15 @@ Prove `\langle s | a_i^\dagger | s' \rangle = \langle a_i s | s' \rangle` for ba
 **Lemma 6:** Derive number operators as coordinate indicators, pairwise commutativity, and parity Γ² = I and Γ† = Γ.
 
 *Lean 4 Proof Strategy:*
-Define `N_i = a_i^\dagger a_i`. Show `N_i |s\rangle = (if i ∈ s then 1 else 0) |s\rangle`. Commutativity `[N_i, N_j] = 0` follows because they are diagonal operators. Define parity `Γ = \prod_i (I - 2 N_i)`. Show `Γ^2 = I` since `(1 - 2x)^2 = 1` for `x ∈ {0, 1}`. Show `Γ^\dagger = Γ` since it's a real diagonal matrix. 
+Define `N_i = a_i^\dagger a_i`. Show `N_i |s\rangle = (if i ∈ s then 1 else 0) |s\rangle`. Commutativity `[N_i, N_j] = 0` follows because they are diagonal operators. Define parity `Γ = \prod_i (I - 2 N_i)`. Show `Γ^2 = I` since `(1 - 2x)^2 = 1` for `x ∈ {0, 1}`. Show `Γ^\dagger = Γ` since it's a real diagonal matrix.
 
 **Lemma 7:** Derive bilinear commutators from CAR. Reuse them in chapter 9 rather than giving duplicate implementations.
 
 *Lean 4 Proof Strategy:*
-Use the generic identity `[AB, CD] = A{B,C}D - AC{B,D} + {A,C}BD - C{A,D}B` for operators. Write a simplification set `simp [car_simps]` leveraging the identities from Lemma 4. This automatically evaluates commutators of quadratic fermionic observables (like energy or currents) into other quadratics, verifying the Lie algebra structure.
+Prove the CAR bilinear identity `[c_p† c_k, c_q† c_l] = δ_kq c_p† c_l − δ_pl c_q† c_k` by explicit distributivity and CAR. Reuse it to show dΓ preserves Lie brackets. A symmetric collection of swaps is not a terminating normal-order procedure.
 
 > [!WARNING]
-> **Proof-review correction (2026-10-09):** The displayed four-factor formula is withdrawn as a generic identity. Setting A=C=1 gives 3[B,D] on its right, instead of [B,D]. Prove and reuse the CAR bilinear identity `[c_p† c_k, c_q† c_l] = δ_kq c_p† c_l − δ_pl c_q† c_k` directly. An automatic swap rule also needs a fixed ordering and termination argument; symmetric CAR rewrites are not an unconditional `simp` procedure.
+> **Proof-review correction (2026-10-09):** The previous four-factor formula, preserved in the checkpoint history, was withdrawn as a generic identity. Setting A=C=1 gives 3[B,D] on its right, instead of [B,D]. Prove and reuse the CAR bilinear identity `[c_p† c_k, c_q† c_l] = δ_kq c_p† c_l − δ_pl c_q† c_k` directly. An automatic swap rule also needs a fixed ordering and termination argument; symmetric CAR rewrites are not an unconditional `simp` procedure.
 
 Products of operators in `Module.End` are noncommutative. A `Finset.prod` or `Multiset.prod` is not available merely because the particular number operators commute. Use a fixed ordered product and prove order independence, or use an API that takes explicit pairwise commutativity. The same issue occurs for partition-state products.
 
@@ -75,7 +75,7 @@ For global irreducibility, construct occupation projectors and matrix units with
 Then `m D_m` is adjoint to multiplication by X_m.
 
 *Lean 4 Proof Strategy:*
-Define a bilinear form on `MvPolynomial σ ℂ` setting basis vectors orthogonal and scaling their norms by `w(r)`. For Haldane's chiral bosons (`J_m`), use the weight `m^{r_m} r_m!`. Show that `\langle X_m P, Q \rangle = \langle P, m D_m Q \rangle` by evaluating it on monomials `P = X^p, Q = X^q`. The derivative `D_m X_m^k = k X_m^{k-1}` balances the `m` and the factorial weights perfectly.
+Define the Hermitian monomial pairing by finite support sums with conjugation in the first argument, positive mode weights, and linearity in the second. Prove the weight/factorial recurrence and the creator/derivative pairing identity on monomials, then extend through the finite sums. Hilbert adjoints are applied only after restricting to an appropriate finite carrier.
 
 > [!NOTE]
 > **Proof-review correction (2026-10-09):** Here “bilinear” must be read as a Hermitian, sesquilinear pairing over ℂ. Use positive mode weights, complex conjugation in the first slot, and linearity in the second. The ambient polynomial pairing identity is algebraic; apply the finite-dimensional Hilbert-adjoint API only after restricting to the appropriate finite slices.
@@ -91,12 +91,12 @@ Mechanical reordering while ignoring contractions is not a well-defined linear o
 **Definition 2:** Use a symbol space with separate creator and annihilator labels, for example a commutative polynomial space on `Mode ⊕ Mode`, to describe normal-ordered expressions. Define a linear evaluation map sending a monomial `(r,s)` to a fixed ordered product `(a†)^r a^s`. This evaluation is not an algebra homomorphism from the commutative symbol ring into the noncommutative operator algebra.
 
 *Lean 4 Proof Strategy:*
-Define `NormalSymbol := MvPolynomial (Mode ⊕ Mode) ℂ`. Define a linear map `eval : NormalSymbol →ₗ[ℂ] Module.End ℂ FockSpace` that sends `X_{(inL i)}` to `a_i^\dagger` and `X_{(inR i)}` to `a_i`, multiplying all creators first, then all annihilators. Since `MvPolynomial` is a free commutative algebra, this map is well-defined. Emphasize that `eval (P * Q) ≠ eval P * eval Q`.
+Define `NormalSymbol := MvPolynomial (Mode ⊕ Mode) ℂ`. Specify evaluation on each monomial as a fixed ordered creator product followed by a fixed ordered annihilator product, then extend linearly using the monomial basis. This is not the universal algebra-hom evaluation into noncommuting images; `eval (P * Q)` need not equal `eval P * eval Q`.
 
 **Theorem 2:** For Wick's theorem on raw words, start with a free associative word algebra and define a rewrite/expansion into normal-ordered symbols, including contractions. Prove termination by word length/inversion count and prove evaluation preservation.
 
 *Lean 4 Proof Strategy:*
-Define `FreeAlgebra (Mode ⊕ Mode) ℂ` for raw operator words. Define a rewriting system that applies `a a^\dagger \mapsto -a^\dagger a + {a, a^\dagger}` (using anticommutators/commutators). To formalize Wick's theorem, map free words to `NormalSymbol`. Prove termination by well-founded recursion on the inversion count of the word. Prove that applying the evaluation map (`eval`) after normal ordering equals the natural representation of the raw word. 
+Use the checked `FreeAlgebra ℂ (Mode ⊕ Mode)` for raw words. Define separate fermionic and bosonic contractions, with a fixed word order and well-founded measure (word length, then inversion count). Prove evaluation preservation before deriving Wick expansions.
 
 > [!WARNING]
 > **Proof-review correction (2026-10-09):** The installed Lean argument order is `FreeAlgebra ℂ (Mode ⊕ Mode)`. Distinguish the fermionic swap above from the bosonic rule `A C = C A + m I`. Define normal-symbol evaluation on fixed ordered monomials and extend linearly; freeness as a commutative algebra does not provide an algebra homomorphism to noncommuting operator images.

@@ -37,7 +37,7 @@ If the Hamiltonian is spin-symmetric, it algebraically factorizes into $H_{\text
 *Lean 4 Proof Strategy:*
 1. **Auxiliary Lemma 1:** Prove that density operators for distinct spins commute, $[\rho_{m,\nu,\uparrow}, \rho_{n,\nu',\downarrow}] = 0$.
 2. **Auxiliary Lemma 2:** Expand the commutators $[R^c, R^s]$ using bilinearity of the commutator and apply Auxiliary Lemma 1.
-3. For the self-CCR (Eq 21.4), use the known CCR for the individual spin species $[\rho_{-m,\nu,s}, \rho_{m,\nu,s}] = m$ and bilinearity to show the cross terms cancel or sum to $2m$. The proof will rely heavily on the `ring` or `abel` tactic for simplification of commutators.
+3. For the self-CCR (Eq 21.4), use the known CCR for the individual spin species $[\rho_{-m,\nu,s}, \rho_{m,\nu,s}] = m$ and bilinearity to show the cross terms cancel or sum to $2m$. Expand products with distributivity and the proved CAR/CCR rules. Use `abel` for additive rearrangement, `noncomm_ring` for polynomial identities preserving factor order, and `ring` only for scalar coefficients.
 
 #### 21.2 The Spin-Singlet Cooper Pair
 
@@ -51,7 +51,7 @@ The first term lowers charges $(R\uparrow, L\downarrow)$, while the second lower
 $$
 K_1 := F_{R,\uparrow} F_{L,\downarrow} Z_{R,\uparrow} Z_{L,\downarrow}, \quad K_2 := F_{R,\downarrow} F_{L,\uparrow} Z_{R,\downarrow} Z_{L,\uparrow} \tag{21.6}
 $$
-Reconstructing the single-species fields via $\rho_\uparrow = \frac{1}{2}(R^c + R^s)$ and $\rho_\downarrow = \frac{1}{2}(R^c - R^s)$, both terms share the collective charge phase fields, while carrying distinct Klein and spin-phase factors:
+**Proposed factorization (typed composition pending):** Reconstructing the single-species fields via $\rho_\uparrow = \frac{1}{2}(R^c + R^s)$ and $\rho_\downarrow = \frac{1}{2}(R^c - R^s)$, both terms share the collective charge phase fields, while carrying distinct Klein and spin-phase factors:
 $$
 O_{SSC}(x) = \frac{1}{L} \operatorname{expNil}\left[\frac{1}{2}(W^-_{c,R} + W^-_{c,L})\right] \operatorname{expNil}\left[\frac{1}{2}(W^+_{c,R} + W^+_{c,L})\right] \left( K_1 \mathcal{E}_{s,1}(x) - K_2 \mathcal{E}_{s,2}(x) \right) \tag{21.7}
 $$
@@ -67,6 +67,12 @@ The Umklapp scattering operator destroys two $R$ particles and creates two $L$ p
 $$
 O_{U}(x) := c^\dagger_{(L, \uparrow, x)} c^\dagger_{(L, \downarrow, x)} c_{(R, \downarrow, x)} c_{(R, \uparrow, x)} \tag{21.8}
 $$
+
+For real coupling $g_U\in\mathbb R$, fix the Hamiltonian normalization
+$$
+H_U:=\frac{g_U}{L}\sum_{x\in\Lambda}\left(O_U(x)+O_U(x)^\dagger\right).
+$$
+The real coupling and adjoint sum make $H_U$ self-adjoint. The selected coefficients in the leakage examples use exactly this convention.
 
 *Lean 4 Proof Strategy:*
 Define $O_U(x)$ explicitly as a product of four creation/annihilation operators. It will be represented as an element in the established operator algebra.
@@ -87,20 +93,29 @@ The Umklapp operator generates non-zero charge-sector shifts $\Delta \vec{N} = (
 $$
 [\hat{N}_{\nu,s}, O_U(x)] = (\Delta \vec{N})_{\nu,s} O_U(x). \tag{21.10}
 $$
-1. *Conditional Leakage Criterion:* Let $\mathcal{B}_{K, \vec{N}_{\max}}$ be an energy-and-charge budget space. Given coupling $g_U \neq 0$, if there exists an occupation state $|\psi\rangle \in \mathcal{B}_{K, \vec{N}_{\max}}$ located at the charge boundary (e.g., $N_{L,\uparrow} = N_{\max}$) such that the spatially summed action $H_U |\psi\rangle = \frac{g_U}{L} \sum_{x \in \Lambda} (O_U(x) + O_U^\dagger(x)) |\psi\rangle \neq 0$ (i.e. not annihilated by Pauli exclusion and satisfying lattice momentum conservation), then $H_U |\psi\rangle$ carries non-zero component in target charge sector $\vec{N} + \Delta \vec{N} \not\le \vec{N}_{\max}$, proving:
+1. *Conditional Leakage Criterion:* Let $|\psi\rangle$ have definite charge $\vec N$ and lie in $\mathcal B_{K,\vec N_{\max}}$, with $g_U\ne0$. Require the **outward component** $\sum_{x\in\Lambda}O_U(x)|\psi\rangle\ne0$ and $\vec N+\Delta\vec N$ outside the specified charge box. The adjoint sum has charge $\vec N-\Delta\vec N$, a different sector, so it cannot cancel this component. Consequently:
 $$
 H_U |\psi\rangle \notin \mathcal{B}_{K, \vec{N}_{\max}}.
 $$
-2. *Non-block-diagonality:* Under this criterion, the budget projection $P_{K,\vec{N}_{\max}}$ does not commute with $H_U$; $H_U$ cannot be diagonalized within a single fixed-charge budget space.
+2. *Non-invariance:* Under this criterion, the ambient $H_U$ does not preserve the chosen budget and its projection does not commute with $H_U$. The compressed operator $P H_U P$ is a separate operator on that budget and may still be diagonalized.
+
+> [!WARNING]
+> Nonzero total $H_U\psi$ is insufficient: it may consist entirely of the inward adjoint action. For $h=2,L=4$, take both R species occupied only at $-1$ and both L species full. The charges are $(-1,-1,2,2)$ in the box with bounds $(1,1,2,2)$ and energy cutoff 16. The outward action vanishes by Pauli exclusion; the adjoint spatial sum has a nonzero coefficient $g_U/16$ into charges $(0,0,1,1)$, and its entire image remains in the budget. This is a proper charge box, not the full carrier.
 
 > [!NOTE]
 > *Physical Motivation (KT Flow and Mott Gap):* In continuous field theory, Umklapp scattering generates second-order loop corrections described by Kosterlitz-Thouless (KT) scaling equations, driving the opening of a charge Mott gap. On the finite discrete lattice, budget leakage establishes the algebraic non-invariance of the truncated budget space; deriving the thermodynamic Mott gap or KT flow equations requires a separate asymptotic scaling construction.
 
 *Lean 4 Proof Strategy:*
 1. **Auxiliary Lemma 1:** Formalize the charge commutator $[\hat{N}_{\nu,s}, O_U(x)] = (\Delta \vec{N})_{\nu,s} O_U(x)$ from CAR.
-2. **Auxiliary Lemma 2:** State the conditional leakage theorem: assuming a boundary state $|\psi\rangle$ with non-zero spatial sum $H_U |\psi\rangle \neq 0$, deduce $H_U |\psi\rangle \notin \mathcal{B}_{K, \vec{N}_{\max}}$ by evaluating the charge observable $\hat{N}_{L,\uparrow}$.
+2. **Auxiliary Lemma 2:** Use the charge projections to isolate the outward spatial sum; prove it is nonzero with one occupation coefficient outside the box. An outside-component witness also gives a general criterion when leakage is due to energy rather than charge.
 3. Separate the discrete algebraic non-invariance result from continuous Wilsonian RG flow or thermodynamic gap claims.
-4. Separate the discrete algebraic non-invariance result from continuous Wilsonian RG flow or thermodynamic gap claims.
+
+**Proposed Lemma 21.8 (Nonvacuous Zero-Charge Leakage Witness).**
+For $h\ge1$, $L=2h$, $K=0$, all charge bounds zero, and $g_U\ne0$, start with the four species seas $\{-h+1,\ldots,0\}$. Let $T$ add momentum 1 to each L species and remove momentum $1-h$ from each R species. It has charges $(+1,+1,-1,-1)$ in the order $(L\uparrow,L\downarrow,R\uparrow,R\downarrow)$ and lies outside the budget. The selected matrix coefficient has the target form
+$$
+\langle T,H_U\Omega\rangle=\sigma\frac{g_U}{L^2},\qquad \sigma\in\{+1,-1\}.
+$$
+Each local term contributes four Fourier factors, and the selected momentum exponent is $-L$, so its spatial character sums to $L$. The adjoint term has the opposite charge shift and contributes zero to this coefficient. At $L=4$ with this species order and ascending momenta, the sign is $\sigma=-1$. Prove the general sign and normalization directly from CAR; this witness needs no current-CCR margin hypothesis.
 
 #### 21.4 Technical Notes for the Lean 4 Formalization
 

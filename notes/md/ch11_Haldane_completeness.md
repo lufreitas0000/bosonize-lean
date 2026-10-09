@@ -53,8 +53,8 @@ $$
 **Lemma 11.4 (Regime R2: Bosonic Orthogonality).**
 *Lean 4 Proof Strategy:*
 Proceed by induction on the length (or total energy) of the partition `λ`. Use an auxiliary "pull-through" lemma (`commutator_through_word`) to evaluate inner products $\langle N \mid \prod \rho_{-n} \prod \rho_m \mid N \rangle_0$.
-Each part $m$ satisfies $m \le K$, and any intermediate prefix product of creation modes has excitation energy bounded by $K$. Annihilating through the word never increases energy beyond $K$. Thus the effective mode cutoff is $M = K$, and the maximum intermediate energy is bounded by $K$. The R2 condition $2K + |N| \le h$ rigorously validates every intermediate Kac-Moody commutator step via the M2 margin.
-Prove the normalization factor $z_\lambda$ by recursively applying the commutator $[\rho_m, \rho_{-m}] = m$.
+Use the right-remainder invariant: when passing a lowering mode m across a creator n in a word of total energy at most K, the remainder has energy E ≤ K−n. Hence m+n+E ≤ m+K ≤ 2K. Preserve this invariant through the induction, instead of applying a uniform cutoff bound to the whole prefix.
+Prove the normalization factor $z_\lambda$ by recursively applying the commutator $[\rho_{-m}, \rho_m] = m I$.
 
 To prove orthogonality, we compute the Gram matrix by commuting annihilation modes through the word of creation modes. For any partition $\lambda \vdash K$, every mode part satisfies $m \le K$.
 When commuting a lowering mode $\rho_{-m}$ ($m \le K$) past a creation mode $\rho_n$ ($n \le K$), the commutator $[\rho_{-m}, \rho_n]$ acts on the remainder sub-word to the right of $\rho_n$. Because the total excitation energy of the partition word is at most $K$, this remainder has energy $E \le K - n$.
@@ -68,7 +68,7 @@ $$
 2K + \vert{}N\vert{} \le h \tag{11.5}
 $$
 
-we have $m + n + E + |N| \le 2K + |N| \le h$, which rigorously satisfies the M2 margin hypothesis for every off-diagonal commutator (and the M1 margin $2m + E + |N| \le 2K + |N| \le h$ for diagonal steps). A rigorous formal induction (commutator-through-a-word lemma) reduces the inner product to the vacuum, yielding the standard Hall inner product:
+we have $m + n + E + |N| \le 2K + |N| \le h$, which rigorously satisfies the M2 margin hypothesis for every off-diagonal commutator (and the M1 margin $m + E + |N| \le 2K + |N| \le h$ for diagonal steps). A rigorous formal induction (commutator-through-a-word lemma) reduces the inner product to the vacuum, yielding the standard Hall inner product:
 
 $$
 \langle \lambda; N \mid \mu; N \rangle = \delta_{\lambda\mu} z_\lambda \tag{11.6}
@@ -78,7 +78,7 @@ where the exact normalization is $z_\lambda = \prod m^{r_m} r_m!$.
 
 **Theorem 11.5 (Haldane Completeness at Energy $K$).**
 *Lean 4 Proof Strategy:*
-Combine `Lemma 11.3` and `Lemma 11.4`. First, use `Lemma 11.4` (orthogonality with strictly positive norm $z_λ \ge 1$) to prove that the set of states `{|λ; N⟩}` is linearly independent. Then, observe that the cardinality of this set is `p(K)`. Since they belong to `ℋ^N_K` and their cardinality equals the dimension of `ℋ^N_K` (from `Lemma 11.3`), they must form a basis. Use Mathlib's linear algebra results (e.g., `basisOfLinearIndependentOfCardEqDim`) to formalize completeness over `ℂ`.
+Combine `Lemma 11.3` and `Lemma 11.4`. First, use `Lemma 11.4` (orthogonality with strictly positive norm $z_λ \ge 1$) to prove that the set of states `{|λ; N⟩}` is linearly independent. Then, observe that the cardinality of this set is `p(K)`. Since they belong to `ℋ^N_K` and their cardinality equals the dimension of `ℋ^N_K` (from `Lemma 11.3`), they must form a basis. Use Mathlib's linear algebra results (e.g., `basisOfLinearIndependentOfCardEqFinrank'` (checked in the installed Mathlib; supply linear independence and cardinality = finrank)) to formalize completeness over `ℂ`.
 
 Because $z_\lambda \ge 1$, the norm of every partition state is strictly positive over $\mathbb{C}$, proving linear independence. Combining membership in $\mathcal{H}^N_K$, linear independence, and the exact dimension count established by the rectangle bijection, the set $\{|\lambda; N\rangle \mid \lambda \vdash K \}$ forms a complete orthogonal basis for the fixed-energy subspace $\mathcal{H}^N_K = H(N,K)$.
 
@@ -98,4 +98,4 @@ $$
 (where $E=0$ is spanned by the unique ground ket $|0; N\rangle = |N\rangle_0$) forms a complete orthogonal basis for the entire budget subspace $B(N,K)$.
 
 *Lean 4 Proof Strategy:*
-Formalize as an internal direct sum of `Submodule`s: `B(N,K) = ⨁_{E ≤ K} H(N,E)`. Use `Basis.sum` or linear combination of the bases of each $H(N,E)$ to construct the basis of $B(N,K)$. Prove that each $E \le K$ inherits $2E + |N| \le h$ from `2K + |N| ≤ h`.
+Index the budget basis by a dependent pair of energy E ≤ K and a partition of E. Prove linear independence using orthogonality across energy blocks and the Gram lemma within each block; prove spanning by the coordinate energy decomposition. Construct a basis from these proved properties rather than relying on an unverified `Basis.sum` name.
