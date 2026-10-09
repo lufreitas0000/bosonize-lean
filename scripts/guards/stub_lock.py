@@ -468,7 +468,11 @@ def parse_lean(text: str) -> FileModel:
         b = bounds[bi + 1] if bi + 1 < len(bounds) else len(toks)
         ctoks = toks[a:b]
         kwi = next(
+            # Scoped `omit/include ... in` prefixes belong to the following
+            # declaration header. Standalone omit/include commands have no
+            # later command keyword and fall back to ctoks[0] below.
             (i for i, t in enumerate(ctoks) if t.kind == "id" and t.text in CMD_KW
+             and t.text not in IN_PREFIX_KW
              and not _in_list_position(toks, a + i)),
             None,
         )

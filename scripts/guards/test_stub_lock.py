@@ -98,6 +98,47 @@ class Base(unittest.TestCase):
             self.assertTrue(any(needle in x for x in e), e)
 
 
+class TestSectionVariablePrefixes(unittest.TestCase):
+    def model(self, prefix, body="by rfl"):
+        return sl.parse_lean(
+            "namespace N\nvariable {S : Type*} [AddCommGroup S] [One S]\n"
+            + prefix + "\nlemma identity_apply (x : S) : x = x := " + body
+            + "\nend N\n")
+
+    def test_scoped_prefix_keeps_proof_editable(self):
+        for prefix in ("omit [AddCommGroup S] [One S] in", "include S in"):
+            with self.subTest(prefix=prefix):
+                before = self.model(prefix)
+                after = self.model(prefix, "by exact Eq.refl _")
+                self.assertEqual(before.to_json(), after.to_json())
+                self.assertEqual(set(before.lemmas), {"N.identity_apply"})
+                self.assertTrue(before.lemmas["N.identity_apply"].text.startswith(prefix))
+                self.assertEqual(len(before.commands), 3)
+
+    def test_scoped_prefix_change_is_frozen(self):
+        before = self.model("omit [AddCommGroup S] [One S] in")
+        for prefix in ("omit [AddCommGroup S] in", "", "include S in"):
+            with self.subTest(prefix=prefix):
+                after = self.model(prefix)
+                self.assertNotEqual(before.lemmas["N.identity_apply"].hash,
+                                    after.lemmas["N.identity_apply"].hash)
+
+    def test_standalone_prefix_is_frozen_context(self):
+        before = self.model("omit [AddCommGroup S] [One S]")
+        after = self.model("omit [AddCommGroup S]")
+        self.assertEqual(before.commands[2].kind, "omit")
+        self.assertNotEqual(before.commands[2].hash, after.commands[2].hash)
+        self.assertNotEqual(before.lemmas["N.identity_apply"].ctx,
+                            after.lemmas["N.identity_apply"].ctx)
+
+    def test_scoped_definition_remains_fully_frozen(self):
+        before = sl.parse_lean("omit S in\ndef answer : Nat := 1\n")
+        after = sl.parse_lean("omit S in\ndef answer : Nat := 2\n")
+        self.assertEqual(before.lemmas, {})
+        self.assertEqual(before.commands[0].kind, "def")
+        self.assertNotEqual(before.commands[0].hash, after.commands[0].hash)
+
+
 class TestBaseline(Base):
     def test_all_lemmas_found(self):
         m = sl.parse_lean(FIXTURE)

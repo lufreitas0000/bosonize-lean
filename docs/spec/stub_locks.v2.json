@@ -269,6 +269,384 @@
           "text": "lemma zero_mem_band (L : ℕ) (hL : 0 < L) : inBandPredicate L 0"
         }
       }
+    },
+    "Bosonize/Core/Ch02UmbralCalculus.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "674d4348afeea192b24e596acabe9ca670af70242ea467a258f0b713ba6070ad",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch01LatticeBand",
+          "text": "import Bosonize.Core.Ch01LatticeBand"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "26f02859e473482349ea52db89b8811f36d08d835f89dbfdd1903ff3a942ac1a",
+          "kind": "import",
+          "label": "import Mathlib.Algebra.Polynomial.Coeff",
+          "text": "import Mathlib.Algebra.Polynomial.Coeff"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "74e2162535dac4ed156804eef685a3402fed3e23948275742c9b592033b507ba",
+          "kind": "import",
+          "label": "import Mathlib.Algebra.Polynomial.Derivative",
+          "text": "import Mathlib.Algebra.Polynomial.Derivative"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "7760477b738f786f5e7b11af6e0037284ea40a7bbff101851997cfba3373c780",
+          "kind": "import",
+          "label": "import Mathlib.Algebra.Polynomial.AlgebraMap",
+          "text": "import Mathlib.Algebra.Polynomial.AlgebraMap"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "c9ae8b6ad11d2824635214807fefd95478f0d1e4a7a32795ce72db16fde62c0c",
+          "kind": "import",
+          "label": "import Mathlib.LinearAlgebra.Matrix.Trace",
+          "text": "import Mathlib.LinearAlgebra.Matrix.Trace"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "577ece8b81edcab759514a575e233ac9ed14d68ad6bfe6c08925ad40b2897281",
+          "kind": "import",
+          "label": "import Mathlib.LinearAlgebra.Span.Defs",
+          "text": "import Mathlib.LinearAlgebra.Span.Defs"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "94f829959579915a4581badf0c814b68be50f2f454bb73fe371ae58b91ac7d34",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch02",
+          "text": "namespace Bosonize.Ch02"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "f2e948172fa15d2c12d028fd300e718dd01bb6586a49f99863f7a54f30180a9f",
+          "kind": "variable",
+          "label": "variable {S R : Type*} [AddCommGroup S] [One S] [",
+          "text": "variable {S R : Type*} [AddCommGroup S] [One S] [CommRing R]"
+        },
+        {
+          "hash": "d34ddf3b444e3370eebd4ee5bf83aa0618100e3bcd8d0ecbe617a083857f6837",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.shift",
+          "text": "def shift : Module.End R (S → R) where\n  toFun f x := f (x + 1)\n  map_add' _ _ := rfl\n  map_smul' _ _ := rfl"
+        },
+        {
+          "hash": "8b48b3d494b8d1e44d2d75b1cbe60d84e25d982f2bc2a1470fefe42a1c06446d",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.inverseShift",
+          "text": "def inverseShift : Module.End R (S → R) where\n  toFun f x := f (x - 1)\n  map_add' _ _ := rfl\n  map_smul' _ _ := rfl"
+        },
+        {
+          "hash": "9055194d01e6b92d7162b58379619668ba070f92a820e798eff6b88fc1167f7d",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.identity",
+          "text": "def identity : Module.End R (S → R) := LinearMap.id"
+        },
+        {
+          "hash": "5567626a9eef5587f621a391c403a6ec7d551afdacc220fe8cbf5d2e574ac1e2",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.forwardDiff",
+          "text": "def forwardDiff : Module.End R (S → R) := shift - identity"
+        },
+        {
+          "hash": "201515778538a54f09f273103ee3c9e192b01d151f4b18e137b18d3bdb97219b",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.backwardDiff",
+          "text": "def backwardDiff : Module.End R (S → R) := identity - inverseShift"
+        },
+        {
+          "hash": "3d907ef1bdf70ac0f96bfc0ebfc0086a3117ef0f6073c315e287afdecaba2247",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.laplacian",
+          "text": "def laplacian : Module.End R (S → R) := forwardDiff.comp backwardDiff"
+        },
+        {
+          "hash": "490309cd7fab678271ea01b05d56b1c66d6909bca7b062822ef7fcd24820ab90",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.fallingFactorial",
+          "text": "noncomputable def fallingFactorial (n : ℕ) : Polynomial R :=\n  ∏ k ∈ Finset.range n, (Polynomial.X - Polynomial.C (k : R))"
+        },
+        {
+          "hash": "46c5cf45d1d537ce52f22894ca6ad8dd14c68f02fc5eafc6ade77a59444304dd",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.umbralMap",
+          "text": "noncomputable def umbralMap : Module.End R (Polynomial R) :=\n  Polynomial.lsum fun n ↦ LinearMap.toSpanSingleton R (Polynomial R) (fallingFactorial n)"
+        },
+        {
+          "hash": "34a48d8ee55e5fa42ba51ecbd8912a6cedb98179e96d914c32f02bc76e70c350",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.polyShift",
+          "text": "noncomputable def polyShift : Module.End R (Polynomial R) :=\n  (Polynomial.aeval (Polynomial.X + 1 : Polynomial R)).toLinearMap"
+        },
+        {
+          "hash": "111afbba1e33cd799c957a684b1c6448553ac45d6838e25ec1fd28e3f211802a",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.polyForwardDiff",
+          "text": "noncomputable def polyForwardDiff : Module.End R (Polynomial R) :=\n  polyShift - LinearMap.id"
+        },
+        {
+          "hash": "713488a3e58b38dcb8e61c76aa803178d53cb9865dc3cf756934387ab12ba071",
+          "kind": "def",
+          "label": "def Bosonize.Ch02.posMultiplier",
+          "text": "def posMultiplier : Module.End R (ℤ → R) where\n  toFun f x := (x : R) * f (x - 1)\n  map_add' f g := by\n    funext x\n    exact mul_add (x : R) (f (x - 1)) (g (x - 1))\n  map_smul' r f := by\n    funext x\n    exact mul_left_comm (x : R) r (f (x - 1))"
+        },
+        {
+          "hash": "879d93605fdd5b8cce28256f3a092be29d586d6397cd7bf5c736df2ab490eae3",
+          "kind": "end",
+          "label": "end Bosonize.Ch02",
+          "text": "end Bosonize.Ch02"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch02.backward_diff_apply": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "aed6c5f83db8b632d777c8b1903f21157fff63eb7d33b2c0fa25621f7767b33a",
+          "kind": "lemma",
+          "text": "lemma backward_diff_apply (f : S → R) (x : S) : backwardDiff f x = f x - f (x - 1)"
+        },
+        "Bosonize.Ch02.discrete_leibniz_left": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "e9ae7a80615ea313fc45122bbb4271fea749738d55d1a1b30029309b71dc398f",
+          "kind": "lemma",
+          "text": "lemma discrete_leibniz_left (f g : S → R) : forwardDiff (f * g) = forwardDiff f * g + shift f * forwardDiff g"
+        },
+        "Bosonize.Ch02.discrete_leibniz_right": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "0a8eb9d7911d5bc9e43e9430345b1d1c7dcc92c374d3ba7322ee8d6c5f51628c",
+          "kind": "lemma",
+          "text": "lemma discrete_leibniz_right (f g : S → R) : forwardDiff (f * g) = f * forwardDiff g + forwardDiff f * shift g"
+        },
+        "Bosonize.Ch02.falling_factorial_monic": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "7a3edaae826831b75ee7f207a7e4c1a64f0242364df3a7ddd7e10eb789a9ac64",
+          "kind": "lemma",
+          "text": "lemma falling_factorial_monic [Nontrivial R] (n : ℕ) : (fallingFactorial (R := R) n).Monic"
+        },
+        "Bosonize.Ch02.falling_factorial_one": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "c0565ebf514958e62efe3366fb87afe2b9c4e658ea755ed637087ea134a1054a",
+          "kind": "lemma",
+          "text": "lemma falling_factorial_one : fallingFactorial (R := R) 1 = Polynomial.X"
+        },
+        "Bosonize.Ch02.falling_factorial_succ": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "d3532afb88d9c18f6b303106abdd5fd1f20e523de11cc17cc2fc01f099b211ff",
+          "kind": "lemma",
+          "text": "lemma falling_factorial_succ (n : ℕ) : fallingFactorial (R := R) (n + 1) = fallingFactorial n * (Polynomial.X - Polynomial.C (n : R))"
+        },
+        "Bosonize.Ch02.falling_factorial_zero": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "1ceea4fb92260ce7ec3fb82f821a2f9190965c30d56fd3ec7618973004e95805",
+          "kind": "lemma",
+          "text": "lemma falling_factorial_zero : fallingFactorial (R := R) 0 = 1"
+        },
+        "Bosonize.Ch02.finite_dimensional_no_go": {
+          "ctx": "d427673c5b2f9833a49709e20e6d28d5b15e3a3a0abb1644f19b94cb2548812e",
+          "hash": "920df8691adcf77be59c06c48a216f40ce09f1edfb394a946b7283a1286abb95",
+          "kind": "lemma",
+          "text": "lemma finite_dimensional_no_go {K : Type*} [Field K] [CharZero K] (n : ℕ) (hn : 0 < n) (A B : Matrix (Fin n) (Fin n) K) : A * B - B * A ≠ 1"
+        },
+        "Bosonize.Ch02.forward_diff_apply": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "af61865cd75bef9f640ccc0f53733dfde758b70446aab112aca9e2a2a3e7e87c",
+          "kind": "lemma",
+          "text": "lemma forward_diff_apply (f : S → R) (x : S) : forwardDiff f x = f (x + 1) - f x"
+        },
+        "Bosonize.Ch02.forward_diff_const": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "d1e0f68706d162fad39de6915d4b32b907e362aaab13e45bf0733dc175c937d2",
+          "kind": "lemma",
+          "text": "lemma forward_diff_const (r : R) : forwardDiff (S := S) (fun _ ↦ r) = 0"
+        },
+        "Bosonize.Ch02.forward_diff_int_cast": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "090ba2580e2998165470cd5f6da3cf2b0a987c771b80b9a695a52bc8528f332c",
+          "kind": "lemma",
+          "text": "lemma forward_diff_int_cast : forwardDiff (fun x : ℤ ↦ (x : R)) = fun _ ↦ (1 : R)"
+        },
+        "Bosonize.Ch02.forward_diff_nonzero": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "5f00907fae9710974680c451953c0ac689c727943e4a8e594c21e842ecdd4f50",
+          "kind": "lemma",
+          "text": "lemma forward_diff_nonzero [Nontrivial R] : forwardDiff (S := ℤ) (R := R) ≠ 0"
+        },
+        "Bosonize.Ch02.heisenberg_pair": {
+          "ctx": "d427673c5b2f9833a49709e20e6d28d5b15e3a3a0abb1644f19b94cb2548812e",
+          "hash": "0b7067feae87a2ddf8732eaacc3965a35dccd4a106f0f1b62fed298b6af9d0d9",
+          "kind": "lemma",
+          "text": "lemma heisenberg_pair (f : ℤ → R) : forwardDiff (posMultiplier f) - posMultiplier (forwardDiff f) = f"
+        },
+        "Bosonize.Ch02.heisenberg_pair_operator": {
+          "ctx": "d427673c5b2f9833a49709e20e6d28d5b15e3a3a0abb1644f19b94cb2548812e",
+          "hash": "4c5e200610d94658f11eae7fd83cefc8836ac31ef475c0206f7a998e813ba7b3",
+          "kind": "lemma",
+          "text": "lemma heisenberg_pair_operator : (forwardDiff (S := ℤ) (R := R)).comp posMultiplier - posMultiplier.comp forwardDiff = identity"
+        },
+        "Bosonize.Ch02.identity_apply": {
+          "kind": "lemma",
+          "hash": "c935306b8287ee5a31f5bbb0298699ef5c6605b574132d403bfc691fd70b9000",
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "text": "omit [AddCommGroup S] [One S] in lemma identity_apply (f : S → R) (x : S) : identity f x = f x"
+        },
+        "Bosonize.Ch02.inverse_shift_apply": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "12d701a714df907be80496f8e3197e88a69a61ffed183d3b3003bd95d164704d",
+          "kind": "lemma",
+          "text": "lemma inverse_shift_apply (f : S → R) (x : S) : inverseShift f x = f (x - 1)"
+        },
+        "Bosonize.Ch02.inverse_shift_shift": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "55ad306e8620318fc1da9bcf147094af5eb50c18d58e449056c3a5d41dd97562",
+          "kind": "lemma",
+          "text": "lemma inverse_shift_shift : (inverseShift (S := S) (R := R)).comp shift = identity"
+        },
+        "Bosonize.Ch02.laplacian_apply": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "653981cba92713045b80ef8cb7757d6d5918f320f09a93998785bb53dab55939",
+          "kind": "lemma",
+          "text": "lemma laplacian_apply (f : S → R) (x : S) : laplacian f x = f (x + 1) + f (x - 1) - 2 * f x"
+        },
+        "Bosonize.Ch02.laplacian_operator": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "bdad1d6bb9dcdb19a9fcdec3281316ffa5231f454c2634603460470bf11e6e95",
+          "kind": "lemma",
+          "text": "lemma laplacian_operator : laplacian (S := S) (R := R) = shift + inverseShift - (2 : ℕ) • identity"
+        },
+        "Bosonize.Ch02.newton_expansion": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "a6fd444cd940631e9a2cb9a8db6f2b4f334217fd592cd258537eceb83127d5b0",
+          "kind": "lemma",
+          "text": "lemma newton_expansion (n : ℕ) : (shift (S := S) (R := R)) ^ n = ∑ k ∈ Finset.range (n + 1), (Nat.choose n k) • (forwardDiff ^ k)"
+        },
+        "Bosonize.Ch02.newton_expansion_apply": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "d126329627cb59d62a45b482eaebe8b200e1aba912da2370201298d25ce34f33",
+          "kind": "lemma",
+          "text": "lemma newton_expansion_apply (n : ℕ) (f : S → R) : (shift ^ n) f = ∑ k ∈ Finset.range (n + 1), (Nat.choose n k) • ((forwardDiff ^ k) f)"
+        },
+        "Bosonize.Ch02.poly_forward_diff_X": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "3c9bb6b6cff018fcbdd12b61c18e199ba1995dcf5bde9fed70d1ab48fef00732",
+          "kind": "lemma",
+          "text": "lemma poly_forward_diff_X : polyForwardDiff (Polynomial.X : Polynomial R) = 1"
+        },
+        "Bosonize.Ch02.poly_forward_diff_apply": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "e8f3dbeca5fbf85c65e9046b6cc2fdb2d0f97a6894c42249b53ecafbe5864803",
+          "kind": "lemma",
+          "text": "lemma poly_forward_diff_apply (p : Polynomial R) : polyForwardDiff p = p.comp (Polynomial.X + 1) - p"
+        },
+        "Bosonize.Ch02.poly_forward_diff_nonzero": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "07c9755e09ca17f19ad19b943bac4cfe481059021da083eba2fb08c344953913",
+          "kind": "lemma",
+          "text": "lemma poly_forward_diff_nonzero [Nontrivial R] : polyForwardDiff (R := R) ≠ 0"
+        },
+        "Bosonize.Ch02.poly_shift_apply": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "8979cc6d3391b465c1b69f93d1a250f525e8acc6a6c8b45b80a99c12c89af750",
+          "kind": "lemma",
+          "text": "lemma poly_shift_apply (p : Polynomial R) : polyShift p = p.comp (Polynomial.X + 1)"
+        },
+        "Bosonize.Ch02.pos_multiplier_apply": {
+          "ctx": "d427673c5b2f9833a49709e20e6d28d5b15e3a3a0abb1644f19b94cb2548812e",
+          "hash": "784890df730cec679a5939d7907972a994caba5d9013b1100ea8c1b8bd899f8b",
+          "kind": "lemma",
+          "text": "lemma pos_multiplier_apply (f : ℤ → R) (x : ℤ) : posMultiplier f x = (x : R) * f (x - 1)"
+        },
+        "Bosonize.Ch02.shift_apply": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "cb982e5885c8ad17390658bb5f4e3c4c7f13be6a80cb7cd93a18d7b40d164107",
+          "kind": "lemma",
+          "text": "lemma shift_apply (f : S → R) (x : S) : shift f x = f (x + 1)"
+        },
+        "Bosonize.Ch02.shift_inverse": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "7ee1e101ef4d18798ddc4416f32f823dc00d387ed4f459c34f0ff0a657b958ce",
+          "kind": "lemma",
+          "text": "lemma shift_inverse : (shift (S := S) (R := R)).comp inverseShift = identity"
+        },
+        "Bosonize.Ch02.sum_by_parts": {
+          "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "a87687d9411a165db5dd496df1c7442725d6c6f44628083d79418346e6c4f354",
+          "kind": "lemma",
+          "text": "lemma sum_by_parts (L : ℕ) [NeZero L] (f g : Ch01.Lattice L → R) : ∑ x : Ch01.Lattice L, f x * forwardDiff g x = - ∑ x : Ch01.Lattice L, backwardDiff f x * g x"
+        },
+        "Bosonize.Ch02.umbral_commutation": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "e050e139bb174777347a3757fb2cea1d7f728e295b191b3f6ed03ab2283864c8",
+          "kind": "lemma",
+          "text": "lemma umbral_commutation : (umbralMap (R := R)).comp Polynomial.derivative = polyForwardDiff.comp umbralMap"
+        },
+        "Bosonize.Ch02.umbral_map_X_pow": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "f780b892f1b9780b36b8c575c6b85d45865e2a178e0cfb0db46330741c3c2304",
+          "kind": "lemma",
+          "text": "lemma umbral_map_X_pow (n : ℕ) : umbralMap (Polynomial.X ^ n : Polynomial R) = fallingFactorial n"
+        },
+        "Bosonize.Ch02.umbral_map_apply": {
+          "ctx": "3afc6d2c36a4bdf1632cff8a1bfda066ced639a4eabf216e6936cec812c63476",
+          "hash": "0e61b9921dc0f9cfab9322267a36320f186214ee07df2324230798c586689069",
+          "kind": "lemma",
+          "text": "lemma umbral_map_apply (p : Polynomial R) : umbralMap p = ∑ n ∈ p.support, p.coeff n • fallingFactorial n"
+        }
+      }
     }
   },
   "version": 2
