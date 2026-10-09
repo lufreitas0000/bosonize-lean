@@ -1,6 +1,6 @@
 # Issue review: spatial boundary twists versus graded locality
 
-Date: 2026-10-09. Status: **analysis complete; additive interface proposal awaits review**. Baseline: `9f56510` (CH01–CH06/A01/A02 frozen; A03/CH07 Phase A unlocked). This report reviews the user's pasted note and the current, locally edited CH01/A05/CH14 sections. Those source edits are preserved; this report does not approve their new claims as implemented mathematics. No frozen source, lock, or staging interface is changed.
+Date: 2026-10-09. Status: **additive Ch06Ext Phase A drafted; interface review pending**. Baseline: `9f56510` (CH01–CH06/A01/A02 frozen; A03/CH07 Phase A unlocked). This report reviews the user's pasted note and the current, locally edited CH01/A05/CH14 sections. Those source edits are preserved; this report does not approve their new claims as implemented mathematics. Frozen sources and locks are preserved. The separately authorized extension now has complete staging data and unproved review contracts; see the addendum below.
 
 ## Finding and scope
 
@@ -69,10 +69,16 @@ Thus coordinate excitation budgets, admissible charges, sorted integer-label dis
 
 A03's generic support/projection calculus is independent of the boundary phase. CH07's current draft remains a valid proposed periodic reference model; review its physical-energy interpretation before locking. Introducing β directly into all integer arithmetic is unnecessary. Recommended implementation sequence: approve source corrections; draft the additive character/field contract; add the shared-sea physical-energy bridge to the unlocked CH07 scope if desired; optionally add CH06 transport covariance; then use the reviewed contract when drafting A05/CH14. No preexisting frozen module needs rewriting.
 
-## Evidence and limits
+## Evidence and limits at the analysis checkpoint
 
 - Current Core sources inspected at `9f56510`; no twist parameter or spatial translation contract found in the field/net definitions.
 - Scratch `/tmp/bosonize_boundary_audit.lean` imports `Bosonize` and compiles with warnings treated as errors, empty output. It checks periodicity of the actual CH05 field under an integer lift shifted by L and proves that a nonzero site annihilator cannot equal its negative. This verifies the frozen field cannot simultaneously obey APBC in that lifted interpretation.
 - Exact rational finite checks cover 340 configurations for h=1..4 and offsets 0, −1/2, 1/3. They verify P_β=P_0+βN and cancellation of excitation energy using the same sea. They are counterexample screening, not Lean proofs of a future bridge.
 - Literature checked from the primary vDS PDF's native text and the cited teaching source. No OCR or source-note edits were used.
 - Existing Core hash guard and interface baseline remain intact; the two Phase A drafts remain unlocked. Proposed transport, zero-mode and twist-energy contracts have not been implemented or proved.
+
+## Authorized extension draft
+
+The user authorized a separate CH06 extension. [Ch06Ext](../BosonizeStubs/Ch06Ext.lean) and its [companion notebook](../docs/companion/BosonizeStubs/Ch06Ext.md) now contain 29 complete data declarations and 72 unproved contracts for arbitrary unit phases, integer lifts/winding, Fourier/CAR, covariant transport, holonomy, zero modes, the JW parity dictionary and the real-energy bridge. Both builds and native MCP diagnostics pass with only expected sorry warnings; definitions have no sorryAx dependencies. Eight frozen Core sources and all 271 approved statements/225 commands remain intact against `9734230`. Strict verification rejects the three unlocked Phase A drafts. The earlier implementation inventory describes frozen Core; these new staging statements are not proved yet. The earlier numerical and literature checks remain historical evidence.
+
+Review the extension before locking/Phase B. Source corrections and actual spin-sector intertwiners remain open, and the issue is not resolved by this draft. The bridge is contained in Ch06Ext so existing A03/CH07 interfaces remain available for their own review.
