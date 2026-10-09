@@ -539,9 +539,9 @@
           "text": "lemma heisenberg_pair_operator : (forwardDiff (S := ℤ) (R := R)).comp posMultiplier - posMultiplier.comp forwardDiff = identity"
         },
         "Bosonize.Ch02.identity_apply": {
-          "kind": "lemma",
-          "hash": "c935306b8287ee5a31f5bbb0298699ef5c6605b574132d403bfc691fd70b9000",
           "ctx": "87fd5a31be94a0246b7a4806072899c725f5125d1e632bcd56a68ccb1c96feaa",
+          "hash": "c935306b8287ee5a31f5bbb0298699ef5c6605b574132d403bfc691fd70b9000",
+          "kind": "lemma",
           "text": "omit [AddCommGroup S] [One S] in lemma identity_apply (f : S → R) (x : S) : identity f x = f x"
         },
         "Bosonize.Ch02.inverse_shift_apply": {
@@ -645,6 +645,672 @@
           "hash": "0e61b9921dc0f9cfab9322267a36320f186214ee07df2324230798c586689069",
           "kind": "lemma",
           "text": "lemma umbral_map_apply (p : Polynomial R) : umbralMap p = ∑ n ∈ p.support, p.coeff n • fallingFactorial n"
+        }
+      }
+    },
+    "BosonizeStubs/A01FourierCharacters.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "674d4348afeea192b24e596acabe9ca670af70242ea467a258f0b713ba6070ad",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch01LatticeBand",
+          "text": "import Bosonize.Core.Ch01LatticeBand"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "1fcfce8e4c7b9a5e45a3475aad8561d33610a7ab6222691afa0ba9345ce20d2a",
+          "kind": "import",
+          "label": "import Mathlib.Analysis.Fourier.ZMod",
+          "text": "import Mathlib.Analysis.Fourier.ZMod"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "c1f226e3721bdacd30ea3ada048d7d92252ba7cb98f3ae364c5ee5e78d9e9d42",
+          "kind": "import",
+          "label": "import Mathlib.Analysis.SpecialFunctions.Pow.Real",
+          "text": "import Mathlib.Analysis.SpecialFunctions.Pow.Real"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "a955bf4cbd61b8a9486b2591ef3a220f7860c78b52f102f05277b55866015cfe",
+          "kind": "import",
+          "label": "import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots",
+          "text": "import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "8779758bf050b019d48051dd473ac5e4119c80fd15d4794dd9547f4ff9ff34f3",
+          "kind": "namespace",
+          "label": "namespace Bosonize.A01",
+          "text": "namespace Bosonize.A01"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "c375e05e599e96dd1a1effe772bcb4eb263a07d4a40a6a13f0f9083f3bc31786",
+          "kind": "variable",
+          "label": "variable {K : Type*} [Field K]",
+          "text": "variable {K : Type*} [Field K]"
+        },
+        {
+          "hash": "26dbb46be2454fddda03e6120d0baee96722e93e39e3377b50dca0401603d2b2",
+          "kind": "def",
+          "label": "def Bosonize.A01.integerCharacter",
+          "text": "def integerCharacter (ζ : K) (k x : ℤ) : K := ζ ^ (k * x)"
+        },
+        {
+          "hash": "0bb5f667a7c76e32405e5b16704d4a6ba6554285ddf33a4d853a372834892686",
+          "kind": "def",
+          "label": "def Bosonize.A01.residueCharacter",
+          "text": "def residueCharacter (L : ℕ) (ζ : K) (k x : Ch01.Lattice L) : K :=\n  integerCharacter ζ (k.val : ℤ) (x.val : ℤ)"
+        },
+        {
+          "hash": "2221b10b64196fb932cb1d6fbda8071dadf77fba8b9c9474d567e49c7988dec8",
+          "kind": "def",
+          "label": "def Bosonize.A01.bandCharacter",
+          "text": "def bandCharacter (L : ℕ) (ζ : K) (k : Ch01.Band L) (x : Ch01.Lattice L) : K :=\n  integerCharacter ζ k.val (x.val : ℤ)"
+        },
+        {
+          "hash": "10ed193b9a4697811919934bf46cab2cdcef29aac38a7157d06b68eef5add725",
+          "kind": "def",
+          "label": "def Bosonize.A01.bandEquiv",
+          "text": "noncomputable def bandEquiv (L : ℕ) [NeZero L] : Ch01.Band L ≃ Ch01.Lattice L :=\n  Equiv.ofBijective (Ch01.bandProjection L)\n    (Ch01.band_projection_bijective L (Nat.pos_of_ne_zero (NeZero.ne L)))"
+        },
+        {
+          "hash": "9e6772f899154f877367120da8c4631a3c3428109d7b91248477df85b1bd8ff4",
+          "kind": "def",
+          "label": "def Bosonize.A01.canonicalRoot",
+          "text": "noncomputable def canonicalRoot (L : ℕ) : ℂ :=\n  Complex.exp (2 * (Real.pi : ℂ) * Complex.I / (L : ℂ))"
+        },
+        {
+          "hash": "b20f63ce8cb5865c549312e0548fc9a9d8e77e45395402577be0d4dbcc3c8fe6",
+          "kind": "def",
+          "label": "def Bosonize.A01.normalization",
+          "text": "noncomputable def normalization (L : ℕ) : ℝ := (Real.sqrt (L : ℝ))⁻¹"
+        },
+        {
+          "hash": "b08737e260d800ae5beca17ef258361e72471564a19aee8b18ca47c4a175ab77",
+          "kind": "end",
+          "label": "end Bosonize.A01",
+          "text": "end Bosonize.A01"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A01.band_character_add": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "732068823442481e51dcc2b45eca176618e1008d58da664f699d54a245e97257",
+          "kind": "lemma",
+          "text": "lemma band_character_add (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k p : Ch01.Band L) (x : Ch01.Lattice L) : bandCharacter L ζ (Ch01.bandAdd L (Nat.pos_of_ne_zero (NeZero.ne L)) k p) x = bandCharacter L ζ k x * bandCharacter L ζ p x"
+        },
+        "Bosonize.A01.band_character_neg": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "eb603fb4351832046333b742d4115e2622a1e81710dab27030712c80e8ac23a6",
+          "kind": "lemma",
+          "text": "lemma band_character_neg (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) (x : Ch01.Lattice L) : bandCharacter L ζ (Ch01.bandNeg L (Nat.pos_of_ne_zero (NeZero.ne L)) k) x = integerCharacter ζ (-k.val) (x.val : ℤ)"
+        },
+        "Bosonize.A01.band_character_projection": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "ed1e0bd6b9dba9b7a1646ce9a2860cfe71cffdaf81fce96b7ab64d3cbea42e9a",
+          "kind": "lemma",
+          "text": "lemma band_character_projection (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) (x : Ch01.Lattice L) : bandCharacter L ζ k x = residueCharacter L ζ (Ch01.bandProjection L k) x"
+        },
+        "Bosonize.A01.band_character_sub": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "d415edb5e6599e697862d3f9fee405b240e59b34e1c0f824d349b414c64001c6",
+          "kind": "lemma",
+          "text": "lemma band_character_sub (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k p : Ch01.Band L) (x : Ch01.Lattice L) : bandCharacter L ζ (Ch01.bandAdd L (Nat.pos_of_ne_zero (NeZero.ne L)) k (Ch01.bandNeg L (Nat.pos_of_ne_zero (NeZero.ne L)) p)) x = integerCharacter ζ (k.val - p.val) (x.val : ℤ)"
+        },
+        "Bosonize.A01.canonical_character_std": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "5e1fbcb2668c60ce83e8020b42a1e0a7ebbcf508c87754153389602578b3217a",
+          "kind": "lemma",
+          "text": "lemma canonical_character_std (L : ℕ) [NeZero L] (k x : Ch01.Lattice L) : residueCharacter L (canonicalRoot L) k x = ZMod.stdAddChar (k * x)"
+        },
+        "Bosonize.A01.canonical_root_primitive": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "f6ae648e3648985fa72dd5a242aeba889784e7e73d3f7514dff5e687a74bb269",
+          "kind": "lemma",
+          "text": "lemma canonical_root_primitive (L : ℕ) [NeZero L] : IsPrimitiveRoot (canonicalRoot L) L"
+        },
+        "Bosonize.A01.character_ne_zero": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "9ba7e062eafde3b6c55f44b96047ddacd3e6f5ef1d45626f2093555a38d4af08",
+          "kind": "lemma",
+          "text": "lemma character_ne_zero (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k x : ℤ) : integerCharacter ζ k x ≠ 0"
+        },
+        "Bosonize.A01.character_nontrivial": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "ae6b27afda8d92e5ebbeb311d0e39ddb1d0217089097d668169ae8139ee25abc",
+          "kind": "lemma",
+          "text": "lemma character_nontrivial (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Lattice L) (hk : k ≠ 0) : ∃ x : Ch01.Lattice L, residueCharacter L ζ k x ≠ 1"
+        },
+        "Bosonize.A01.character_orthogonality": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "7529935ba464bfadf4ebb6a737c064f3593c653e2b19501cf063e99af5374df3",
+          "kind": "lemma",
+          "text": "lemma character_orthogonality (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k p : Ch01.Band L) : (∑ x : Ch01.Lattice L, integerCharacter ζ (k.val - p.val) (x.val : ℤ)) = if k = p then (L : K) else 0"
+        },
+        "Bosonize.A01.character_representative_independent": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "145cdfc74317134345bb56373f2e3221909dd09dfc23b237f85da8ab8d6d1ce5",
+          "kind": "lemma",
+          "text": "lemma character_representative_independent (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k x s t : ℤ) : integerCharacter ζ (k + s * (L : ℤ)) (x + t * (L : ℤ)) = integerCharacter ζ k x"
+        },
+        "Bosonize.A01.character_sum": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "ba580bacbbafe8845d2f281310d9a5cc38e00a1e6818d92e69c1cc5b0acaa2c5",
+          "kind": "lemma",
+          "text": "lemma character_sum (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Lattice L) : (∑ x : Ch01.Lattice L, residueCharacter L ζ k x) = if k = 0 then (L : K) else 0"
+        },
+        "Bosonize.A01.complex_character_conj": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "32325495450b156b505063e1cf3c5c3e97d62367d8e679542318a06cdc6159d1",
+          "kind": "lemma",
+          "text": "lemma complex_character_conj (L : ℕ) [NeZero L] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ L) (k x : ℤ) : star (integerCharacter ζ k x) = integerCharacter ζ (-k) x"
+        },
+        "Bosonize.A01.complex_character_norm": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "188e7ccce1a4268a290f3e45b93f60f25e3493e8233c8d9cbaee55428e3c2fbf",
+          "kind": "lemma",
+          "text": "lemma complex_character_norm (L : ℕ) [NeZero L] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ L) (k x : ℤ) : ‖integerCharacter ζ k x‖ = 1"
+        },
+        "Bosonize.A01.dual_character_orthogonality": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "685a832d8bf06fbea799f36614a7395267043601d9ab56465338960380abf47e",
+          "kind": "lemma",
+          "text": "lemma dual_character_orthogonality (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (x y : Ch01.Lattice L) : (∑ k : Ch01.Band L, integerCharacter ζ k.val ((x.val : ℤ) - (y.val : ℤ))) = if x = y then (L : K) else 0"
+        },
+        "Bosonize.A01.normalization_car_coefficient": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "687313417ce2d0d79617a80fc00ffb1ccc60f3737a3001aa044d135333167146",
+          "kind": "lemma",
+          "text": "lemma normalization_car_coefficient (L : ℕ) [NeZero L] : ‖(normalization L : ℂ)‖ ^ 2 * (L : ℝ) = 1"
+        },
+        "Bosonize.A01.normalization_conj": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "c533aed378dda61118c68b1faec81376a9bc4ae5420f7bff804f681270aa7429",
+          "kind": "lemma",
+          "text": "lemma normalization_conj (L : ℕ) : star (normalization L : ℂ) = (normalization L : ℂ)"
+        },
+        "Bosonize.A01.normalization_pos": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "2fde06d21fd118be292c97a7a16ea599f4fb8a38f710a6c4cd90e381b897f8ad",
+          "kind": "lemma",
+          "text": "lemma normalization_pos (L : ℕ) [NeZero L] : 0 < normalization L"
+        },
+        "Bosonize.A01.normalization_square": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "c9ec3e43e085b5d18f05bec4dc3e0904f4b38d358a9e0375c80fa5cf3e1c9482",
+          "kind": "lemma",
+          "text": "lemma normalization_square (L : ℕ) [NeZero L] : (L : ℝ) * normalization L ^ 2 = 1"
+        },
+        "Bosonize.A01.normalization_square_complex": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "518e71dd00e97c6b6714d90d59836f1534c0fa65918e96aee7b27985d5d56e2a",
+          "kind": "lemma",
+          "text": "lemma normalization_square_complex (L : ℕ) [NeZero L] : (L : ℂ) * (normalization L : ℂ) ^ 2 = 1"
+        },
+        "Bosonize.A01.nyquist_character_neg": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "c80201615afa568efd559460a7623f1ee799c3e048f5c529c0780ec3ece1ca9b",
+          "kind": "lemma",
+          "text": "lemma nyquist_character_neg (L : ℕ) [NeZero L] (hEven : Even L) (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) (hk : k.val = ((L / 2 : ℕ) : ℤ)) (x : Ch01.Lattice L) : integerCharacter ζ (-k.val) (x.val : ℤ) = bandCharacter L ζ k x"
+        },
+        "Bosonize.A01.residue_character_add_left": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "6c28ba1deb97edb20102c6aaa6c9ad7ae441be5419199040bbdf57bebf2b243b",
+          "kind": "lemma",
+          "text": "lemma residue_character_add_left (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k p x : Ch01.Lattice L) : residueCharacter L ζ (k + p) x = residueCharacter L ζ k x * residueCharacter L ζ p x"
+        },
+        "Bosonize.A01.residue_character_add_right": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "9c788d36fbc3ba42214773ca713bfb5e9c35c372c95e0dda9bbaf502151f1adc",
+          "kind": "lemma",
+          "text": "lemma residue_character_add_right (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k x y : Ch01.Lattice L) : residueCharacter L ζ k (x + y) = residueCharacter L ζ k x * residueCharacter L ζ k y"
+        },
+        "Bosonize.A01.residue_character_int_cast": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "b3cd07220995884020da38be8add1bc20963333fe1ae5b7ec62ef2624f3b629b",
+          "kind": "lemma",
+          "text": "lemma residue_character_int_cast (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k x : ℤ) : residueCharacter L ζ (k : Ch01.Lattice L) (x : Ch01.Lattice L) = integerCharacter ζ k x"
+        },
+        "Bosonize.A01.residue_character_neg": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "c8c7b12f8d820723af04641fe75fd5f57bf1a2b954e0c0e3feef52288753ba96",
+          "kind": "lemma",
+          "text": "lemma residue_character_neg (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k x : Ch01.Lattice L) : residueCharacter L ζ (-k) x = (residueCharacter L ζ k x)⁻¹"
+        },
+        "Bosonize.A01.residue_character_sub": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "997c886ca380b9ccbdc0d15dca616c68d9b929023c93dd404de4a8f03bc5ad8f",
+          "kind": "lemma",
+          "text": "lemma residue_character_sub (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k p x : Ch01.Lattice L) : residueCharacter L ζ (k - p) x = residueCharacter L ζ k x * (residueCharacter L ζ p x)⁻¹"
+        },
+        "Bosonize.A01.residue_character_zero": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "81bbaeb48a6915a89eba3c416222f6ffcc68c1b6466960d3388bc71726e8f25c",
+          "kind": "lemma",
+          "text": "lemma residue_character_zero (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (x : Ch01.Lattice L) : residueCharacter L ζ 0 x = 1"
+        },
+        "Bosonize.A01.root_ne_zero": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "68664fb8e0b059ed95738086942cfaf3b28883446e9898a8f2775089aebfd1db",
+          "kind": "lemma",
+          "text": "lemma root_ne_zero (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) : ζ ≠ 0"
+        },
+        "Bosonize.A01.root_pow_size": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "d0109714f732f70c739d148fb95e8b2e2884eeef2a1c0876e6df20c511db864e",
+          "kind": "lemma",
+          "text": "lemma root_pow_size (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) : ζ ^ L = 1"
+        },
+        "Bosonize.A01.singleton_character": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "f5576812b320ccb692700c1503685c001d83ffe2fce44d280aa3683cc19b424b",
+          "kind": "lemma",
+          "text": "lemma singleton_character (ζ : K) (hζ : IsPrimitiveRoot ζ 1) (k : Ch01.Band 1) (x : Ch01.Lattice 1) : bandCharacter 1 ζ k x = 1"
+        },
+        "Bosonize.A01.sum_band_eq_sum_lattice": {
+          "ctx": "a0a0f8957c8231ae80ef1a5e8e86a0658d767c2d2c316f3a37d931c00520899b",
+          "hash": "e2c5ccdbc43c8973fc3ef4e1c5fb91d2ff6b591a86df04d69d4256a2787ea2b1",
+          "kind": "lemma",
+          "text": "lemma sum_band_eq_sum_lattice (L : ℕ) [NeZero L] (f : Ch01.Lattice L → K) : (∑ k : Ch01.Band L, f (Ch01.bandProjection L k)) = ∑ x : Ch01.Lattice L, f x"
+        }
+      }
+    },
+    "BosonizeStubs/Ch03Fourier.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "c7ad598233eed5d679425b565fe7259da8d2ea7a6100167f24a1d49f6752b63e",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch02UmbralCalculus",
+          "text": "import Bosonize.Core.Ch02UmbralCalculus"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "09f5dedf667d9725fb953be98f706604494e1d281a2f640a045a3ef7cb70e73e",
+          "kind": "import",
+          "label": "import BosonizeStubs.A01FourierCharacters",
+          "text": "import BosonizeStubs.A01FourierCharacters"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "966dbbec91d6e112a6c14568f98cf93a7781099d5c526509c0e9f95305dd9c34",
+          "kind": "import",
+          "label": "import Mathlib.Analysis.InnerProductSpace.PiL2",
+          "text": "import Mathlib.Analysis.InnerProductSpace.PiL2"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "38273e13de49a5ff5501b92e29a2108ff2238e8ed67a0f734500a6ce98443b70",
+          "kind": "import",
+          "label": "import Mathlib.Analysis.InnerProductSpace.Adjoint",
+          "text": "import Mathlib.Analysis.InnerProductSpace.Adjoint"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "7c6057dd83683aca8f25b52403ad322951acb7829f3091f32fc3bd8ecbb7d0ae",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch03",
+          "text": "namespace Bosonize.Ch03"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "c375e05e599e96dd1a1effe772bcb4eb263a07d4a40a6a13f0f9083f3bc31786",
+          "kind": "variable",
+          "label": "variable {K : Type*} [Field K]",
+          "text": "variable {K : Type*} [Field K]"
+        },
+        {
+          "hash": "7858b9dc921f9038d5dc5e28b6e0320f973263327f80834697ad378540d4fac3",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.analysis",
+          "text": "noncomputable def analysis (L : ℕ) [NeZero L] (ζ : K) :\n    (Ch01.Lattice L → K) →ₗ[K] (Ch01.Band L → K) where\n  toFun f k := ∑ x : Ch01.Lattice L, f x * A01.integerCharacter ζ (-k.val) (x.val : ℤ)\n  map_add' f g := by\n    funext k\n    simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib]\n  map_smul' c f := by\n    funext k\n    simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, mul_assoc, Finset.mul_sum]"
+        },
+        {
+          "hash": "e186417785a4274e53babdf8e1b7137e8c6da9b811904fd05bcf635768d9a7ca",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.synthesis",
+          "text": "noncomputable def synthesis (L : ℕ) [NeZero L] (ζ : K) :\n    (Ch01.Band L → K) →ₗ[K] (Ch01.Lattice L → K) where\n  toFun g x := ∑ k : Ch01.Band L, g k * A01.bandCharacter L ζ k x\n  map_add' f g := by\n    funext x\n    simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib]\n  map_smul' c f := by\n    funext x\n    simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, mul_assoc, Finset.mul_sum]"
+        },
+        {
+          "hash": "a454022ef1911c450a711b7aef47243ffbdf4f4a24249920d118f2499436ebe9",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.inverseAnalysis",
+          "text": "noncomputable def inverseAnalysis (L : ℕ) [NeZero L] (ζ : K) :\n    (Ch01.Band L → K) →ₗ[K] (Ch01.Lattice L → K) := (L : K)⁻¹ • synthesis L ζ"
+        },
+        {
+          "hash": "78fd35f342431c47521c3ed83d8cd3c0e0678dc476e6f158b8122f0853af0e39",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch03.PositionSpace",
+          "text": "abbrev PositionSpace (L : ℕ) := EuclideanSpace ℂ (Ch01.Lattice L)"
+        },
+        {
+          "hash": "d98d0664d1e61849cae03ece323628db8433e844c57fd4c39e17a2767a181f5a",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch03.MomentumSpace",
+          "text": "abbrev MomentumSpace (L : ℕ) := EuclideanSpace ℂ (Ch01.Band L)"
+        },
+        {
+          "hash": "247d4ad9925213cf6147f0c42a9c8637e5d293ad1b1ccb6d39099126ccccd78d",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.positionFunctions",
+          "text": "noncomputable def positionFunctions (L : ℕ) : PositionSpace L ≃ₗ[ℂ] (Ch01.Lattice L → ℂ) :=\n  WithLp.linearEquiv 2 ℂ (Ch01.Lattice L → ℂ)"
+        },
+        {
+          "hash": "3b3db2612861a2d410f3b0766ef884a11da52c49c73a9901922979a0e84b3ad0",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.momentumFunctions",
+          "text": "noncomputable def momentumFunctions (L : ℕ) : MomentumSpace L ≃ₗ[ℂ] (Ch01.Band L → ℂ) :=\n  WithLp.linearEquiv 2 ℂ (Ch01.Band L → ℂ)"
+        },
+        {
+          "hash": "327e7ab0d7d932a758b83ba13dc0afa03f43debac83cc8aedd17b02fd5817250",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.analysisEuclidean",
+          "text": "noncomputable def analysisEuclidean (L : ℕ) [NeZero L] : PositionSpace L →ₗ[ℂ] MomentumSpace L :=\n  (momentumFunctions L).symm.toLinearMap.comp\n    ((analysis L (A01.canonicalRoot L)).comp (positionFunctions L).toLinearMap)"
+        },
+        {
+          "hash": "8d810ab14e860ebe71bddf5ad9230247733bd7d5fc8bea320f53f7112e488b64",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.synthesisEuclidean",
+          "text": "noncomputable def synthesisEuclidean (L : ℕ) [NeZero L] : MomentumSpace L →ₗ[ℂ] PositionSpace L :=\n  (positionFunctions L).symm.toLinearMap.comp\n    ((synthesis L (A01.canonicalRoot L)).comp (momentumFunctions L).toLinearMap)"
+        },
+        {
+          "hash": "3d42b272442cd7fbe6acfce5d280cd0c34de5b0d169bd29b1ee276375555fd90",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.unitaryFourier",
+          "text": "noncomputable def unitaryFourier (L : ℕ) [NeZero L] : PositionSpace L →ₗ[ℂ] MomentumSpace L :=\n  (A01.normalization L : ℂ) • analysisEuclidean L"
+        },
+        {
+          "hash": "92a492dee86b4d827e3bc2f7a9511fefaeacf65f37ad331da6190e8766ec0bcd",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.inverseUnitaryFourier",
+          "text": "noncomputable def inverseUnitaryFourier (L : ℕ) [NeZero L] : MomentumSpace L →ₗ[ℂ] PositionSpace L :=\n  (A01.normalization L : ℂ) • synthesisEuclidean L"
+        },
+        {
+          "hash": "1182cc2f1b6b8d69a3217adac4fa19dab8c965a108bdecf92867f7045f3b3eb0",
+          "kind": "def",
+          "label": "def Bosonize.Ch03.transportPositionOperator",
+          "text": "noncomputable def transportPositionOperator (L : ℕ)\n    (A : Module.End ℂ (Ch01.Lattice L → ℂ)) : Module.End ℂ (PositionSpace L) :=\n  (positionFunctions L).symm.toLinearMap.comp (A.comp (positionFunctions L).toLinearMap)"
+        },
+        {
+          "hash": "598aaa16236017f719353e0bddecd168e1bbe3ecd46e7dc1526eb44e45dec36e",
+          "kind": "end",
+          "label": "end Bosonize.Ch03",
+          "text": "end Bosonize.Ch03"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch03.analysisEuclidean_adjoint": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "7d181c027c3896c23660c5f291fb0dc2fb62d46dbe3d180ca814af968d6c42df",
+          "kind": "lemma",
+          "text": "lemma analysisEuclidean_adjoint (L : ℕ) [NeZero L] : (analysisEuclidean L).adjoint = synthesisEuclidean L"
+        },
+        "Bosonize.Ch03.analysisEuclidean_synthesisEuclidean": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "b7ce362b0833f62daf2eb59dea17aec98fe03b9abc96f88545cfe8ed43393404",
+          "kind": "lemma",
+          "text": "lemma analysisEuclidean_synthesisEuclidean (L : ℕ) [NeZero L] : (analysisEuclidean L).comp (synthesisEuclidean L) = (L : ℂ) • LinearMap.id"
+        },
+        "Bosonize.Ch03.analysis_apply": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "db7fded1bb7ee1d0ce04ebcf90a8844ac918197858c54b4e1e9c130434dbe110",
+          "kind": "lemma",
+          "text": "lemma analysis_apply (L : ℕ) [NeZero L] (ζ : K) (f : Ch01.Lattice L → K) (k : Ch01.Band L) : analysis L ζ f k = ∑ x : Ch01.Lattice L, f x * A01.integerCharacter ζ (-k.val) (x.val : ℤ)"
+        },
+        "Bosonize.Ch03.analysis_backward_diff": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "d25711910623c6cd66674ab46c4c3464c52b848a81f86f870bafbcf890efd4c6",
+          "kind": "lemma",
+          "text": "lemma analysis_backward_diff (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (f : Ch01.Lattice L → K) (k : Ch01.Band L) : analysis L ζ (Ch02.backwardDiff f) k = (1 - ζ ^ (-k.val)) * analysis L ζ f k"
+        },
+        "Bosonize.Ch03.analysis_bijective": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "d8b0d7db6e86ff9f112fc7d39b6f47fc343897034ab944e4d7b34e8474d71e36",
+          "kind": "lemma",
+          "text": "lemma analysis_bijective (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (hLK : (L : K) ≠ 0) : Function.Bijective (analysis L ζ)"
+        },
+        "Bosonize.Ch03.analysis_delta_zero": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "f0ff62c2c8f67f94d10f5909b76f28163fa8e291f8a9b7bb1a2a1dcbe977708e",
+          "kind": "lemma",
+          "text": "lemma analysis_delta_zero (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) : analysis L ζ (Pi.single (0 : Ch01.Lattice L) 1) = fun _ ↦ 1"
+        },
+        "Bosonize.Ch03.analysis_eq_dft": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "2464ec60ca4553749829e39dbbc3a9d10ece28b70af4bf6e01f1c11f70d6df3e",
+          "kind": "lemma",
+          "text": "lemma analysis_eq_dft (L : ℕ) [NeZero L] (f : Ch01.Lattice L → ℂ) (k : Ch01.Band L) : analysis L (A01.canonicalRoot L) f k = ZMod.dft f (Ch01.bandProjection L k)"
+        },
+        "Bosonize.Ch03.analysis_forward_diff": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "e4ac023080da371a27c656960deee996e0f9417fc0208e088c38f9f1a1a482a4",
+          "kind": "lemma",
+          "text": "lemma analysis_forward_diff (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (f : Ch01.Lattice L → K) (k : Ch01.Band L) : analysis L ζ (Ch02.forwardDiff f) k = (ζ ^ k.val - 1) * analysis L ζ f k"
+        },
+        "Bosonize.Ch03.analysis_laplacian": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "83be120cde56b6fc7dae933df70d53757be97679eb3c81401c72a06aee0385c4",
+          "kind": "lemma",
+          "text": "lemma analysis_laplacian (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (f : Ch01.Lattice L → K) (k : Ch01.Band L) : analysis L ζ (Ch02.laplacian f) k = (ζ ^ k.val + ζ ^ (-k.val) - 2) * analysis L ζ f k"
+        },
+        "Bosonize.Ch03.analysis_synthesis": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "d68e0491f66bb93a91cbd7b50a96e29aab88a0f3016e11b8f30e3030d34477d3",
+          "kind": "lemma",
+          "text": "lemma analysis_synthesis (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) : (analysis L ζ).comp (synthesis L ζ) = (L : K) • LinearMap.id"
+        },
+        "Bosonize.Ch03.backward_diff_character": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "c16bc5519932101fa141bb4e719da8404226dacbb2b68b7d0ef90b52aaee27df",
+          "kind": "lemma",
+          "text": "lemma backward_diff_character (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) : Ch02.backwardDiff (A01.bandCharacter L ζ k) = (1 - ζ ^ (-k.val)) • A01.bandCharacter L ζ k"
+        },
+        "Bosonize.Ch03.canonical_laplacian_dispersion": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "c2f73d3ef859591eab0b5652090e854ac1b8b8c6889628d798496ad81372f928",
+          "kind": "lemma",
+          "text": "lemma canonical_laplacian_dispersion (L : ℕ) [NeZero L] (k : ℤ) : A01.canonicalRoot L ^ k + A01.canonicalRoot L ^ (-k) - 2 = ((-4 * Real.sin (Real.pi * (k : ℝ) / (L : ℝ)) ^ 2 : ℝ) : ℂ)"
+        },
+        "Bosonize.Ch03.forward_diff_character": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "cc7048d3fc24eadacb17db1d44419300fb1f4262c33366e862bc39c7f7377e98",
+          "kind": "lemma",
+          "text": "lemma forward_diff_character (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) : Ch02.forwardDiff (A01.bandCharacter L ζ k) = (ζ ^ k.val - 1) • A01.bandCharacter L ζ k"
+        },
+        "Bosonize.Ch03.inverse_analysis_eq_inv_dft": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "10941032eb0bfa97d327a333d2a3e766ec130647f25d07aa58240745599c026c",
+          "kind": "lemma",
+          "text": "lemma inverse_analysis_eq_inv_dft (L : ℕ) [NeZero L] (g : Ch01.Band L → ℂ) (x : Ch01.Lattice L) : inverseAnalysis L (A01.canonicalRoot L) g x = (ZMod.dft.symm (fun r ↦ g ((A01.bandEquiv L).symm r))) x"
+        },
+        "Bosonize.Ch03.inverse_analysis_left": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "a10d215dcf46149e22b973dadb9480e5aef94646bba0665f578cef931feb75ea",
+          "kind": "lemma",
+          "text": "lemma inverse_analysis_left (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (hLK : (L : K) ≠ 0) : (inverseAnalysis L ζ).comp (analysis L ζ) = LinearMap.id"
+        },
+        "Bosonize.Ch03.inverse_analysis_right": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "8aa20ad37eea96834ef107614f55add1d0624cc5ecce34ccdd61c2dff1111a1a",
+          "kind": "lemma",
+          "text": "lemma inverse_analysis_right (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (hLK : (L : K) ≠ 0) : (analysis L ζ).comp (inverseAnalysis L ζ) = LinearMap.id"
+        },
+        "Bosonize.Ch03.inverse_shift_character": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "cae4ed810fd644043558732521fb96d4d247157c7b4fbcba446c854dc44e9dcc",
+          "kind": "lemma",
+          "text": "lemma inverse_shift_character (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) : Ch02.inverseShift (A01.bandCharacter L ζ k) = (ζ ^ (-k.val)) • A01.bandCharacter L ζ k"
+        },
+        "Bosonize.Ch03.laplacian_character": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "ec98a450ada2294d8dfcc025f48da980ac813468c3d8d11dd00d0e00ca141043",
+          "kind": "lemma",
+          "text": "lemma laplacian_character (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) : Ch02.laplacian (A01.bandCharacter L ζ k) = (ζ ^ k.val + ζ ^ (-k.val) - 2) • A01.bandCharacter L ζ k"
+        },
+        "Bosonize.Ch03.laplacian_eigenvalue_factor": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "e9e04c561bba895356bd5cbbf87c439c1a82d76d4465a61c433d894ff7326c4e",
+          "kind": "lemma",
+          "text": "lemma laplacian_eigenvalue_factor (ζ : K) (hζ : ζ ≠ 0) (k : ℤ) : (ζ ^ k - 1) * (1 - ζ ^ (-k)) = ζ ^ k + ζ ^ (-k) - 2"
+        },
+        "Bosonize.Ch03.shift_character": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "8f20564d331763e561dac6f2396089b15d43f4a615aad6ad39ac8a122b0cab3d",
+          "kind": "lemma",
+          "text": "lemma shift_character (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) (k : Ch01.Band L) : Ch02.shift (A01.bandCharacter L ζ k) = (ζ ^ k.val) • A01.bandCharacter L ζ k"
+        },
+        "Bosonize.Ch03.singleton_analysis": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "2cbff0edc0f1974fbb6793c1cc1f1cd0471bbe3217ace6124a2e79765fa71317",
+          "kind": "lemma",
+          "text": "lemma singleton_analysis (f : Ch01.Lattice 1 → ℂ) (k : Ch01.Band 1) : analysis 1 (A01.canonicalRoot 1) f k = f 0"
+        },
+        "Bosonize.Ch03.synthesisEuclidean_analysisEuclidean": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "9121e1ef1530e5807dec70cc04b933a8bd07ea482b5e5729f80f38c19e43ef21",
+          "kind": "lemma",
+          "text": "lemma synthesisEuclidean_analysisEuclidean (L : ℕ) [NeZero L] : (synthesisEuclidean L).comp (analysisEuclidean L) = (L : ℂ) • LinearMap.id"
+        },
+        "Bosonize.Ch03.synthesis_analysis": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "740447faee9ed06dd38cb6940353861e8a8bc2f1c6deb6d3f481f6040b624635",
+          "kind": "lemma",
+          "text": "lemma synthesis_analysis (L : ℕ) [NeZero L] (ζ : K) (hζ : IsPrimitiveRoot ζ L) : (synthesis L ζ).comp (analysis L ζ) = (L : K) • LinearMap.id"
+        },
+        "Bosonize.Ch03.synthesis_apply": {
+          "ctx": "86c0dc219454fee34e7a0b03dc0cdd5302c5a05337b87497123ea44bfd5ed7da",
+          "hash": "d1340441bc515993ac653b17d3e4f256e0cfef7f064001f33b2c4d64289a2d85",
+          "kind": "lemma",
+          "text": "lemma synthesis_apply (L : ℕ) [NeZero L] (ζ : K) (g : Ch01.Band L → K) (x : Ch01.Lattice L) : synthesis L ζ g x = ∑ k : Ch01.Band L, g k * A01.bandCharacter L ζ k x"
+        },
+        "Bosonize.Ch03.unitary_adjoint": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "3b577307576610fffaa92b215c42aff3cfdb24636a0833049753ba9c42411248",
+          "kind": "lemma",
+          "text": "lemma unitary_adjoint (L : ℕ) [NeZero L] : (unitaryFourier L).adjoint = inverseUnitaryFourier L"
+        },
+        "Bosonize.Ch03.unitary_inner": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "b420224c6d28a1cca3283497442a295d842325c14ca18447ba73004b9221850b",
+          "kind": "lemma",
+          "text": "lemma unitary_inner (L : ℕ) [NeZero L] (f g : PositionSpace L) : inner ℂ (unitaryFourier L f) (unitaryFourier L g) = inner ℂ f g"
+        },
+        "Bosonize.Ch03.unitary_inverse_left": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "2bbd5b3fd1e119a7166f1ed859218ca892474fcca632796b5cd0ac69144ba805",
+          "kind": "lemma",
+          "text": "lemma unitary_inverse_left (L : ℕ) [NeZero L] : (inverseUnitaryFourier L).comp (unitaryFourier L) = LinearMap.id"
+        },
+        "Bosonize.Ch03.unitary_inverse_right": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "1fc2fc18f59cda86ab1d321f8c13bfbf082bfb6084604ce2ffd88750f9d7ae38",
+          "kind": "lemma",
+          "text": "lemma unitary_inverse_right (L : ℕ) [NeZero L] : (unitaryFourier L).comp (inverseUnitaryFourier L) = LinearMap.id"
+        },
+        "Bosonize.Ch03.unitary_isometry": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "a54dbf76ecec1f4a97dede98eee215181f75ebb907a380d338aa0120731f16ef",
+          "kind": "lemma",
+          "text": "lemma unitary_isometry (L : ℕ) [NeZero L] : Isometry (unitaryFourier L)"
+        },
+        "Bosonize.Ch03.unitary_laplacian": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "16c6bc4c81c393081d08076ecbf5c41fc2b748f9797a2c9884f54582461a9e9c",
+          "kind": "lemma",
+          "text": "lemma unitary_laplacian (L : ℕ) [NeZero L] (f : PositionSpace L) (k : Ch01.Band L) : momentumFunctions L (unitaryFourier L (transportPositionOperator L Ch02.laplacian f)) k = (A01.canonicalRoot L ^ k.val + A01.canonicalRoot L ^ (-k.val) - 2) * momentumFunctions L (unitaryFourier L f) k"
+        },
+        "Bosonize.Ch03.unitary_surjective": {
+          "ctx": "5e1484efca3e5189eb46251eac52caca48b9312cf75241424fdb200b5a9f3108",
+          "hash": "8967c59fda5439b3f19f39b68b2647b9a10ab99685f44c46582d58130658e84d",
+          "kind": "lemma",
+          "text": "lemma unitary_surjective (L : ℕ) [NeZero L] : Function.Surjective (unitaryFourier L)"
         }
       }
     }
