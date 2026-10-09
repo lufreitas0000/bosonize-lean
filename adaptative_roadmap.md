@@ -28,7 +28,7 @@ Current board snapshot:
 | CH01 — Lattice/band | Done | C complete | Frozen Core; direct compile and 20-lemma axiom audit passed. | Reuse positive Nyquist and existing band projection. |
 | CH02 — Umbral operators | Done | C complete | Frozen Core; direct compile and 32-lemma axiom audit passed. | Reuse bundled periodic shifts/differences. |
 | DOC — Source/suggestion reconciliation | Done | Documentation checkpoint | [Completion ledger](note/notes_review_completion_2026-10-09.md). | Reopen a specific card if compiler or proof evidence reveals an error. |
-| CH03/A01 — Fourier | Ready | A next | CH01/CH02; root/sign contracts and Euclidean transport specified. | Draft complete definitions and one-sorry statements; mirror notebook for review. |
+| CH03/A01 — Fourier | Review | A draft complete; unlocked | CH01/CH02; two compiled modules, 18 complete definitions/abbreviations and 61 one-sorry theorem stubs; [A01 notebook](docs/companion/BosonizeStubs/A01FourierCharacters.md), [CH03 notebook](docs/companion/BosonizeStubs/Ch03Fourier.md). | Human review of definitions/statements; approve the interface and lock before Phase B. |
 | CH04–CH07/A02–A03 — CAR and budgets | Backlog | A not started | CH03 normalization, occupation signs, finite Hilbert carrier, support budgets. | Refine exact interfaces after CH03 promotion. |
 | CH08–CH12/A04 — Oscillators, currents, completeness, Sugawara | Backlog | A not started | CAR/budget infrastructure and exact edge formulas. | Prove grading, direct nonzero norms and useful right-suffix margins. |
 | CH13–CH16/A05–A06 — Klein maps, conditional field criterion, fields | Backlog | A not started | Completeness and typed transitions. | Keep universal finite dictionary out of the unconditional interface. |
@@ -78,6 +78,8 @@ Next action:
 ```
 
 ## Immediate next sprint: A01 and Chapter 3
+
+Phase A was authorized and drafted on 2026-10-09. The two staging modules and exact companion notebooks are ready for review. Definitions have no placeholder dependencies; all 61 theorem statements remain unproved. Existing Core and lock manifests are unchanged. Strict CI reports the expected two unreviewed-file failures; separate builds and preservation checks pass. The next action is interface review, not proof work. The construction plan below describes this draft and its future proof order.
 
 Read A01 and the revised external Fourier guide. Derive the band/residue equivalence from frozen Chapter 1; prove representative independence and sign/character bridges. Reuse the installed complex `ZMod.dft` where it matches the kernels. Keep S/T unscaled and source/target types distinct, then transport to Euclidean carriers and isolate the single normalization scalar 1/√L. Stub the inverse, adjoint/isometry and existing Chapter 2 difference eigenvalues, including L=1 and the positive Nyquist convention. Draft U as a linear map before bundling an isometry equivalence whose proof fields are available only after Phase B.
 
