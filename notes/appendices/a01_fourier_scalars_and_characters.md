@@ -68,11 +68,13 @@ T is an unscaled synthesis map, not the inverse of S until the factor L is remov
 - **Auxiliary Lemmas:** `Real.sqrt_pos`.
 - **Strategy:** Define `a : ℝ := (Real.sqrt (L : ℝ))⁻¹`. Prove sqrt positivity/nonzero and its squared identity, then the scalar normalization. Cast the finished identities to ℂ and simplify conjugation of real casts with the installed simp lemmas. Avoid guessed names for cast/conjugation/cancellation results.
 
-**Theorem:** Then U = aS and U⁻¹ = aT. The conjugate-transpose kernel proves U† = aT, and the two unscaled composition identities give unitarity.
+**Hilbert carrier transport:** For each finite index type I, `WithLp.linearEquiv 2 ℂ (I → ℂ)` maps `EuclideanSpace ℂ I` to ordinary functions. Write these equivalences as eₓ and eₖ. Set S₂ = eₖ⁻¹ ∘ S ∘ eₓ and T₂ = eₓ⁻¹ ∘ T ∘ eₖ. Transport the frozen Chapter 2 operators in the same way. This algebraic transport is not an isometry for the default function norm; the counting inner product is on the Euclidean carrier.
+
+**Theorem:** Then U = aS₂ and U⁻¹ = aT₂. The conjugate-transpose kernel proves U† = aT, and the two unscaled composition identities give unitarity.
 
 *Lean 4 Proof Strategy:*
 - **Auxiliary Lemmas:** `LinearMap.adjoint`, inner product spaces properties.
-- **Strategy:** Define `U = a • S` and `U_inv = a • T`. Their product yields `a^2 * (T ∘ S) = a^2 * L * I = I`. To compute `U†`, first compute `S†` between `EuclideanSpace ℂ (Ch01.Band L)` and `EuclideanSpace ℂ (Ch01.Lattice L)`. Expand `⟨S f, g⟩`, swap sums, and use `conj (χ(-k, y)) = χ(k, y)` to identify it as `⟨f, T g⟩`. Hence `S† = T`. Thus `U† = conj(a) * S† = a * T = U⁻¹`. Unitarity is captured by constructing a `LinearIsometryEquiv`.
+- **Strategy:** Define `U = a • S₂` and `U_inv = a • T₂`. Their product yields `a^2 * (T ∘ S) = a^2 * L * I = I`. To compute `U†`, first compute `S₂†` between `EuclideanSpace ℂ (Ch01.Band L)` and `EuclideanSpace ℂ (Ch01.Lattice L)`. Expand `⟨S f, g⟩`, swap sums, and use `conj (χ(-k, y)) = χ(k, y)` to identify it as `⟨f, T g⟩`. Hence `S₂† = T₂`. Thus `U† = conj(a) • S₂† = a • T₂ = U⁻¹`. Unitarity is captured by constructing a `LinearIsometryEquiv`.
 
 Use a `LinearIsometryEquiv` on `EuclideanSpace ℂ _` when Hilbert APIs are needed; a `LinearEquiv` alone asserts invertibility, not preservation of the inner product. Alternatively prove matrix conjugate-transpose identities first and transport to Euclidean spaces.
 
@@ -97,14 +99,14 @@ This is a three-layer dependency order within the two-tier idea: characters → 
 \]
 
 *Lean 4 Proof Strategy:*
-- **Strategy:** Over a `CommRing K`, use algebraic expansion. Distribute the terms: `ζ^k * 1 - ζ^k * ζ^{-k} - 1 + ζ^{-k}`. Because `ζ^k * ζ^{-k} = ζ^0 = 1`, the expression simplifies directly to `ζ^k + ζ^{-k} - 2` via `mul_sub`, `sub_mul`, and integer power addition.
+- **Strategy:** Under the chosen field contract and `ζ ≠ 0`, use algebraic expansion. Distribute the terms: `ζ^k * 1 - ζ^k * ζ^{-k} - 1 + ζ^{-k}`. Because `ζ^k * ζ^{-k} = ζ^0 = 1`, the expression simplifies directly to `ζ^k + ζ^{-k} - 2` via `mul_sub`, `sub_mul`, and integer power addition.
 
 Reject the suggestion's `−(ζ^(k/2)−ζ^(−k/2))²`: fractional exponents are unspecified, and its sign is wrong. If w² = ζ^k, the correct expression is `(w−w⁻¹)²`, without the leading minus. Prefer the primary expression; no new root is needed.
 
 **Lemma:** Only after selecting ζ = exp(2πi/L) should a separate evaluation lemma identify it with `−4 sin²(πk/L)`. The root-of-unity algebra does not need trigonometric functions.
 
 *Lean 4 Proof Strategy:*
-- **Strategy:** Substitute `ζ = Complex.exp (2 * π * I / L)`. The expression `ζ^k + ζ^{-k} - 2` evaluates to `2 * Complex.cos (2 * π * k / L) - 2` via Euler's formula (`Complex.exp_add_exp_neg`). Apply the double angle identity `cos (2 * θ) = 1 - 2 * sin^2(θ)` with `θ = π * k / L`. This algebraically yields `-4 * sin^2(π * k / L)`. Use Mathlib's `Complex.cos_double`.
+- **Checked strategy:** Rewrite integer powers of the canonical exponential using `Complex.exp_int_mul`. Combine opposite exponentials with `Complex.exp_mul_I`, `Complex.cos_neg`, and `Complex.sin_neg`; then apply `Complex.cos_two_mul_eq_one_sub` (or the real counterpart), handling scalar casts and the nonzero denominator explicitly. These names were checked against the installed Mathlib with the compiler. This proves the canonical-root evaluation; arbitrary primitive roots may relabel the frequency.
 
 Handle L = 1 explicitly: all characters are trivial, sums are one-term sums, and the nontrivial-character branch is empty. Handle the even Nyquist mode through the frozen band-negation theorem. Establish finite-sum transport, kernel signs, scalar casts, and matrix index orientation before freezing chapter 3.
 

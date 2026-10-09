@@ -86,24 +86,15 @@ Furthermore $(W^+)^\dagger = -W^-$ and $(W^-)^\dagger = -W^+$. Consequently, adj
 \]
 Placing $\operatorname{expNil}(-W^+)$ before $\operatorname{expNil}(-W^-)$ is an algebraic error because the two factors do not commute.
 
-## A defensible replacement target
+## Approved conditional target and separate research candidate
 
-Before attempting a universal field identity, choose one precise target:
-
-1. **Proposed Theorem 2 (Restricted Vertex Equality; proof contract pending):** Follow the single phase convention of Chapter 14 (14.1)–(14.2), with positive-phase lowering and negative-phase raising. Construct every factor between specified charge/energy carriers. The adjoint reverses these types and uses compressed raising on the shifted input carrier. Prove all-species completeness, mode coverage, full projected ground-vector matching, and right-suffix intertwining before asserting `P_out c_x P_in = vertexMap`. The former numerical margin alone was insufficient; Chapter 14 records both the zero-phase and missing-mode counterexamples.
+Use Chapter 14's Theorem 14.5 as the precise cyclic verification criterion. Its data are V,W,v₀, a cyclic source span of creator words Gᵢ, target endomorphisms Tᵢ, and common residual maps Rᵢ:V→W. The identities A∘Gᵢ=Tᵢ∘A+Rᵢ and B∘Gᵢ=Tᵢ∘B+Rᵢ together with Av₀=Bv₀ imply A=B by induction and basis extensionality. They are useful algebraic criteria even when the residuals do not vanish.
 
 *Lean 4 Proof Strategy:*
-State the theorem as an operator equality restricted to budgets: `P_out ∘ c_x ∘ inclusion = vertexMap` (using `LinearMap.comp`).
-1. **Proof Method:** Proceed by induction on the cyclic basis of the source budget.
-2. Verify the entire projected ground vector, including every retained excited-hole coefficient, rather than only one ground-to-ground scalar.
-3. For the inductive step, use the intertwining of typed maps and actual right-suffix margins with the creation operators that generate the excited states. Show that pushing `c_x` through the creators yields the same result as pushing `vertexMap` through.
-4. **Auxiliary Lemmas:** The exact composition rules and adjoint rules from A03, and the explicit formula for `P_out` commuting/intertwining with `c_x`.
+Prove equality on words using `(A-B).comp Gᵢ=Tᵢ.comp (A-B)`, then extend over `Submodule.span`; no linear-independence assumption is needed. Use `Module.Basis.ext` only for a separately established basis formulation. For changing cutoffs use a family of typed diagrams indexed by suffix budgets and a word induction through that family. The physical specialization must establish each ground coefficient, completeness, and exact CAR edge/projection recurrences independently. Its ground expansion is the retained Fourier sum of signed occupation-hole kets displayed in Chapter 14.
 
-2. An ambient equality using a much larger target space and the full finite nilpotency order, retaining all boundary corrections and proving ground-state matching explicitly.
-3. A formal infinite-wedge/series identity in a different algebraic carrier, separately from finite-Fock realization.
+The unqualified finite-band identity `Pout c_x inclusion = vertexMap` under numerical margins remains a research candidate, excluded from freezing until those obligations are solved. The zero-phase and missing-mode counterexamples in Chapter 14 explain why matching a single scalar or adding M≥max(Kin,Kout) does not settle it. An ambient identity with all finite-band corrections, or an infinite-wedge dictionary on a different carrier, would require its own theorem.
 
-Option 1 fits the present finite program best, but it is a changed theorem requiring review and proof; it does not preserve uncompressed CAR automatically. Prove a cyclic-basis intertwining induction with typed maps and actual right-suffix margins, rather than invoking Schur irreducibility of a finite slice on which creators do not act as endomorphisms.
+Do not infer creation equality by adjoint on the same input budget, or CAR by multiplying restricted equalities without target-domain proofs. A03 supplies exact composition and adjoint rules. For abstract oscillator vertices, use the explicitly chosen coefficientwise Weyl-type model in A08/Chapter 20; it is distinct from the finite candidate (14.4).
 
-Do not infer creation equality by adjoint from annihilation equality on the same input budget; do not infer CAR by multiplying restricted equalities without target-domain proofs. A03 supplies the exact composition and adjoint rules.
-
-For context, the constructive [von Delft–Schoeller tutorial](https://arxiv.org/html/cond-mat/9805275) fixes finite spatial length while allowing an infinite momentum bandwidth. Its vertex identity therefore does not establish the stronger finite-band/input-budget identity in these notes.
+For context, the constructive [von Delft–Schoeller tutorial](https://arxiv.org/html/cond-mat/9805275) fixes finite spatial length while allowing infinite momentum bandwidth. Its vertex identity does not establish the finite-band/input-budget candidate in these notes.

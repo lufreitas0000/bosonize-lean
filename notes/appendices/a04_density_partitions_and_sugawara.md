@@ -99,6 +99,6 @@ A safe, non-circular proof order is:
 
 For example, an upward shift n>0 needs an equivalence theorem also on B(N,K+n), a cutoff M≥K+n, and a sufficient enlarged margin such as `2(K+n)+|N|≤h`. This is a sufficient repaired corollary, not a claim of optimal margins. It avoids using an overstrong commutation lemma to establish the equivalence circularly.
 
-Keep the ground-energy shift `N(N+1)/2`. Chapter 17 now explicitly subtracts chemical potential `μ=πvF/L` in physical units; this accounts for its symmetric N² form. That scalar correction does not establish the pending raw-quartic/current reduction.
+Keep the ground-energy shift `N(N+1)/2`. Chapter 17 now explicitly subtracts chemical potential `μ=πvF/L` in physical units; this accounts for its symmetric N² form. The raw-quartic/current relation is the separate exact sea-Wick correction of Chapter 17, Lemma 17.4a; it does not use Sugawara or scalar CCR.
 
 *Proof-design invariant:* Gram pull-through uses the right remainder E≤K−n, giving m+n+E≤m+K≤2K. For Sugawara, split off inactive modes m>K: their lowering action on the right is zero by grading, so no extra margin depending on those inactive modes is needed. Mixed-sign one-particle shift compositions retain the intermediate-in-band indicator.

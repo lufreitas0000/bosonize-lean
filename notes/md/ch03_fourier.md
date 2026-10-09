@@ -2,7 +2,7 @@
 
 To ensure the exact algebraic nature of the bosonization mapping, we separate the finite character algebra from the Hilbert-space unitary normalization. This follows the formal strategy defined in [Appendix A01](../appendices/a01_fourier_scalars_and_characters.md).
 
-**Definition 3.1 (Primitive Root of Unity).** Let $K$ be a field, and $\zeta \in K$ a primitive $L$-th root of unity. To avoid zero divisors obstructing orthogonality, we strictly require $(L : K) \neq 0$.
+**Definition 3.1 (Primitive Root of Unity).** Let $K$ be a field, and $\zeta \in K$ a primitive $L$-th root of unity. The field supplies cancellation and excludes zero divisors in orthogonality. Separately require $(L : K) \neq 0$ when dividing by $L$ to construct the inverse.
 
 $$
 \zeta^L = 1 \tag{3.1}

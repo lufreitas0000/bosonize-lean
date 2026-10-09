@@ -98,33 +98,33 @@ Auxiliary lemmas:
 2. `Klein_adjoint`: $F_\nu^\dagger = F_\nu^{-1}$ on the budget subspace.
 3. `Z_nu_adjoint`: $Z_\nu(x)^\dagger = Z_\nu(x)^{-1}$ (unitarity of zero-mode phase).
 
-**Proposed Theorem 14.5 (Projected Mattis-Mandelstam Equivalence; proof contract pending).**
-The unprojected equation $c_x = B_x$ fails as a global algebraic identity on finite systems (e.g., at $K=0$, the physical $c_x |\vec{N}\rangle_0$ contains deep hole states of excitation energy $>0$). Therefore, the exact bosonization theorem is strictly a **projected matrix-element equivalence**.
-Let $K_* = \max(K_{\mathrm{in}},K_{\mathrm{out}})$. To construct the Klein maps used here, require the completeness regime for every species in both charge sectors:
-$$
-\forall \eta,\quad 2K_*+\max(|N_\eta|,|N_\eta-\delta_{\nu\eta}|)\le h.
-$$
-Mode coverage must also be proved. The conservative candidate $M\ge K_*$ covers the positive energy increments visible in these budgets, but does not by itself prove the field identity. For example, with $h=6,L=12,N=0,K_{\mathrm{in}}=0,K_{\mathrm{out}}=2,M=1,x=0$, restoring (14.1)–(14.2) still gives coefficient $-1/(2\sqrt{12})$ for the hole at $-2$, whereas the physical coefficient is $-1/\sqrt{12}$. The missing mode 2 matters.
+**Theorem 14.5 (Cyclic Verification Criterion for a Projected Field Map).**
+Let V be the source budget and W the target budget. Let v₀ be the source sector ground ket, Gᵢ ∈ End(V) the compressed source creators, Tᵢ ∈ End(W) target maps, and Rᵢ : V → W the common residual maps. Assume that the span of all finite words in the Gᵢ applied to v₀ is V. Linear independence is not needed; partition completeness can supply this cyclic-span hypothesis for the chosen source budget. The criterion works over a semiring with additive commutative group modules, although this application uses ℂ.
 
-The former numerical margin remains a candidate wrapper to derive the actual right-suffix action bounds:
+For A,B : V → W, assume the complete vector equality Av₀=Bv₀ and, for every generating index i, the typed identities
 $$
-2M + \max(K_{\text{in}}, K_{\text{out}}) + \max(|N_\nu|, |N_\nu - 1|) \le h \tag{14.6}
+A\circ G_i=T_i\circ A+R_i,\qquad B\circ G_i=T_i\circ B+R_i. \tag{14.7}
 $$
-but it has not been proved sufficient. The intended equality, pending the full projected ground-state calculation and typed intertwining induction, is:
-
-$$
-P_{\text{out}} c_{(\nu, x)} P_{\text{in}} = B_\nu(x) \tag{14.7}
-$$
-
-In particular, between sector ground states ($K_{\text{in}} = K_{\text{out}} = 0$), both $\operatorname{expNil}$ operators reduce to $I$, yielding:
-$$
-{}_0\langle \vec{N}-e_\nu \mid c_{(\nu,x)} \mid \vec{N} \rangle_0 = \frac{1}{\sqrt{L}} P(\nu, \vec{N}) \zeta^{x N_\nu}
-$$
-matching the exact physical CAR ground matrix element.
+Then A=B. No global CCR, irreducibility, or arbitrary numerical margin is assumed by this criterion. For a sector-cutoff diagram with several carriers, use the analogous induction with each suffix assigned its actual carrier; do not silently replace that diagram by endomorphisms of one slice.
 
 *Lean 4 Proof Strategy:*
-Formalize the theorem as an exact equality of operators `P_{out} ∘ c_{nu, x} ∘ P_{in} = B_nu(x)` acting on `Budget(N_in, K_in)` into `Budget(N_out, K_out)`.
-Proof strategy: Proceed by induction on the basis states (or the total energy $K$). First, explicitly calculate the action on the lowest-weight state (vacuum of the sector) to show the base case. Then, show that the intertwining relation holds with the creation operators (currents) to inductively generate the equality on all higher states within the truncated budget.
-Auxiliary lemmas:
-1. `base_state_equivalence`: Prove `P_out (c_{nu, x} |N>) = B_nu(x) |N>` as a complete vector equality, including every retained hole coefficient. Matching only the ground-to-ground scalar is insufficient.
-2. `intertwining_rho`: Prove each typed commuting square with its actual right-suffix input budget. Retain projection remainders until a separate range lemma makes them zero; then extend over the joint partition basis.
+Subtract the two recurrences to obtain `(A-B).comp Gᵢ = Tᵢ.comp (A-B)`. Induct on word length to show the word orbit lies in `LinearMap.ker (A-B)`, use `Submodule.span_le.mpr`, and conclude by extensionality when the span is `⊤`. A basis version follows by `Module.Basis.ext`. The word/span criterion was compiler checked with `autoImplicit=false` and `warningAsError=true`. With varying carriers, prove equality recursively in the typed diagram instead. The common residuals may be nonzero: keep exact CAR edge and projection terms until a range/margin lemma makes them vanish. Prove the ground vector and recurrences independently, rather than installing the desired field equality as a premise.
+
+**Physical specialization and full ground-vector obligation.** Take A=Pout ∘ c_(ν,x) ∘ inclusion and B the candidate (14.4). In the fixed occupation order of A02, if S_N is the joint sector ground occupation, its physical ground image is exactly
+$$
+A\delta_{S_N}=\frac1{\sqrt L}
+ \sum_{\substack{k\in S_{N,\nu}\\ S_N\setminus\{(\nu,k)\}\text{ retained in target}}}
+ (-1)^{\#\{j\in S_N:j<(\nu,k)\}}\zeta^{kx}
+ \delta_{S_N\setminus\{(\nu,k)\}}.
+$$
+Compute the entire candidate image in the same occupation basis. Matching only the ground-to-ground scalar $L^{-1/2}P(\nu,\vec N)\zeta^{xN_\nu}$ does not satisfy the hypothesis. Before using the partition basis, require all-species completeness in both sectors:
+$$
+\forall\eta,\quad 2K_*+\max(|N_\eta|,|N_\eta-\delta_{\nu\eta}|)\le h,
+\qquad K_*=\max(K_{\mathrm{in}},K_{\mathrm{out}}).
+$$
+
+**Research candidate (excluded from an unconditional Phase A interface).** The equality `Pout ∘ c_(ν,x) ∘ inclusion = Bν(x)` under numerical margins alone is not established. Mode coverage and all the hypotheses of Theorem 14.5 remain separate physical proof obligations. The former candidate margin
+$$
+2M+K_*+\max(|N_\nu|,|N_\nu-1|)\le h \tag{14.6}
+$$
+is only a possible wrapper for actual right-suffix bounds, not a sufficient theorem hypothesis. With h=6,L=12,N=0,Kin=0,Kout=2,M=1,x=0 the candidate gives coefficient $-1/(2\sqrt{12})$ for the hole at −2, while CAR gives $-1/\sqrt{12}$; missing mode 2 matters. Do not use M≥K* as a substitute for proving the full ground expansion and recurrences. This separation supplies a valid useful conditional theorem without freezing an unsupported finite field dictionary.

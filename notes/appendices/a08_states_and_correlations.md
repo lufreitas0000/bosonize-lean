@@ -1,14 +1,45 @@
-# Appendix A08 proposal: state existence and finite correlation contracts
+# Appendix A08: constructed algebraic states and formal vertex correlations
 
-## State data and existence
+## Uncompressed oscillator carrier and a positive state
 
-**Definition (Normalized positive functional):**
-A normalized positive functional is more than a linear map with rewrite axioms. Specify a star algebra, normalization ω(I)=1, and positivity `ω(A†A)≥0` in a precise real-valued sense. Prove existence on the actual carrier before using annihilation conditions as an interface.
+Fix L>0, the canonical complex root ζ=exp(2πi/L), and a finite positive mode set 1≤m≤M. The oscillator carrier is the unital complex star-algebra quotient of words in Aνm,Cνm, ν∈{R,L}, by
+$$
+[A_{\nu m},C_{\eta n}]=\delta_{\nu\eta}\delta_{mn}mI,
+\quad[A_{\nu m},A_{\eta n}]=[C_{\nu m},C_{\eta n}]=0,
+\quad A_{\nu m}^*=C_{\nu m}.
+$$
+There is no degree or energy compression in this algebra. Finitely many generators do not make it finite dimensional.
+
+**Construction (Polynomial vacuum).** Use polynomials in variables Xνm. Represent Cνm by multiplication by Xνm and Aνm by m times partial differentiation. Give monomials the Hermitian Gram form
+$$
+\langle X^\alpha,X^\beta\rangle
+ =\delta_{\alpha\beta}\prod_{\nu,m}\alpha_{\nu m}!\,m^{\alpha_{\nu m}}.
+$$
+All weights are strictly positive. The operators A and C are adjoint on this pre-Hilbert carrier and satisfy the quotient relations. Define ω₀(a)=⟨1,π(a)1⟩. This descends through the quotient, is complex linear, is normalized, and satisfies ω₀(a* a)=‖π(a)1‖²≥0. Thus the quotient and its positive functional are nonvacuous, without a Hilbert completion or an infinite-dimensional adjoint on arbitrary endomorphisms.
+
+For the real parameter record P=(u,c,s,g,gInv), c²−s²=1, define the star-algebra automorphism β_P on generators by
+$$
+\beta_P(C_R)=cC_R+sA_L,\quad \beta_P(C_L)=cC_L+sA_R,
+\qquad\beta_P(A_\nu)=\beta_P(C_\nu)^*.
+$$
+The inverse uses −s. Define the dressed state **ω_P=ω₀∘β_P⁻¹**, so that ω_P(a β_P(Aνm))=0 and ω_P(β_P(Cνm) a)=0 for every a. Pullback by a star automorphism preserves positivity and normalization. Pullback by β_P in the wrong direction would not give this dressed vacuum.
 
 *Lean 4 Proof Strategy:*
-- Use actual ambient instances `[Ring A] [Algebra ℂ A] [StarRing A] [StarModule ℂ A]` and verify their compatibility; `StarAlgebra A` is not an installed typeclass.
-- Define a structure `NormalizedPositiveFunctional` containing a linear map `ω : A →ₗ[ℂ] ℂ`, a normalization axiom `ω 1 = 1`, and a positivity axiom `∀ a : A, 0 ≤ (ω (star a * a)).re` (with imaginary part equal to zero).
-- Separate the abstract CCR word-algebra from finite representations to explicitly construct the positive carrier.
+Construct the word quotient with a star-stable relation ideal and its polynomial representation; do not assume a nonexistent `StarAlgebra` typeclass. Use compatible algebra and star instances, and a `NormalizedPositiveFunctional` structure with complex linearity, ω1=1, vanishing imaginary part of ω(a*a), and nonnegative real part. Prove monomial Gram positivity, generator adjointness, relation descent, β inverse/star preservation, and positive pullback before deriving contractions. Names for these project constructions are proposed helpers, not claims about installed Mathlib declarations.
+
+## Charge extension and full model state
+
+Let the charge module be `ℤ² →₀ ℂ`, with orthonormal kets δ_N. Work in the **generated adjointable star-algebra** of the diagonal charges N_R,N_L, phase maps Zν(x)δ_N=ζ^(Nν x)δ_N, and signed shifts
+$$
+F_\nu\delta_N=P_\nu(N)\delta_{N-e_\nu},\qquad
+P_\nu(N)=(-1)^{\sum_{\eta<\nu}(h+N_\eta)+(h+N_\nu-1)},\quad R<L.
+$$
+Here h is a fixed integer reference phase offset. Integer parity powers allow all charges, with no natural subtraction. Each generator has an explicit adjoint on finite-support kets; the algebra consists of finite sums/products of them, not all endomorphisms of this infinite module. The δ_N expectation is a normalized positive charge functional. Tensor its representation with the polynomial oscillator representation and define ω_(P,N) as the product expectation with oscillator state ω_P. Positivity follows on finite tensor sums from the product pre-Hilbert Gram form. This is an infinite charge-lattice algebraic model; no finite-band charge bound is inherited automatically.
+
+*Lean 4 Proof Strategy:*
+Define the signed basis shifts and prove inverse/adjoint laws on kets, then generate the star-closed operator subalgebra. Construct the tensor representation on finite-support polynomial-valued charges and its positive vacuum functional. Do not use a scalar-valued multiplicative homomorphism as a state.
+
+## Finite compressed vacua are a separate question
 
 **Theorem (Common Kernel of Compressed Annihilators Can Be Zero):**
 In a finite matrix algebra, a positive state is represented by a positive density matrix of trace one. Vacuum annihilation conditions require support inside the common kernel of all proposed annihilators. That common kernel can be zero after compression. Avoid hiding an impossible vacuum in a universally quantified assumption and calling the resulting correlator nonvacuous.
@@ -36,79 +67,64 @@ Thus their common kernel is zero. There is no normalized positive vacuum satisfy
 - Use mathlib's `Matrix.PosDef` to establish strictly positive eigenvalues, proving the kernel is trivial (`{0}`).
 - Conclude the main theorem by contradiction: any valid density matrix $\rho$ supported on the intersection of the kernels of $Q_R$ and $Q_L$ must have $\text{Tr}(\rho) = 0$, violating the normalization requirement $\text{Tr}(\rho) = 1$.
 
-Two possible layers should be kept distinct:
 
-- Actual finite model: construct a normalized ground vector/density matrix and evaluate finite matrix products, retaining boundary effects.
-- Abstract untruncated CCR model: construct a Gaussian/quasi-free functional on a suitable word/Weyl algebra, prove positivity and existence, then prove any finite-model comparison separately.
+The oscillator quotient above is not a representation by the compressed finite matrices. A finite Hamiltonian's actual ground vector or density matrix must be constructed separately; comparisons with the abstract state retain boundary corrections.
 
-A formal scalar rewrite evaluator need not be positive and need not factor through the represented finite operator algebra. Do not identify it with an actual finite-Fock state without the consistency proof.
+## Bare contractions and exact density kernels
 
-## Both mode contractions are needed
-
-**Lemma (Bare Right-Branch Moments):**
-Assuming a legitimately constructed dressed vacuum and valid contractions, the bare right-branch moments are
-
-\[
- \omega(C_mA_n)=\delta_{mn}m s^2,\qquad
- \omega(A_mC_n)=\delta_{mn}m c^2.
-\]
-
-The second follows from the first and c²−s²=1. It supplies the nonzero free-vacuum fluctuation when s=0. Both are needed when expanding the Hermitian density `ρ(x)=L⁻¹Σ(ζ^−mx C_m+ζ^mx A_m)`.
+**Lemma (Both bare right-branch contractions).** In the constructed state ω_P,
+$$
+\omega_P(C_{Rm}A_{Rn})=\delta_{mn}m s^2,\qquad
+\omega_P(A_{Rm}C_{Rn})=\delta_{mn}m c^2,
+$$
+with same-branch AA and CC contractions zero. Derive these from β_P⁻¹ and the polynomial vacuum, including `[A,C]=mI`; the second term remains nonzero at s=0. Chapter 19's ordered density kernel is therefore
+$$
+\omega_P(\rho_R(x)\rho_R(y))=
+ L^{-2}\sum_{m=1}^M m\big(s^2\zeta^{-m(x-y)}+c^2\zeta^{m(x-y)}\big),
+\quad \rho_R(x)=L^{-1}\sum_m(\zeta^{-mx}C_{Rm}+\zeta^{mx}A_{Rm}).
+$$
 
 *Lean 4 Proof Strategy:*
-- Formalize the Bogoliubov transformation connecting the bare operators $(C_m, A_m)$ to the dressed (Bogoliubov) operators.
-- Introduce the dressed vacuum state $\omega$ mathematically via $\omega(P^\dagger P) = 0$.
-- Prove the first identity $\omega(C_m A_n) = \delta_{mn} m s^2$ by inverting the Bogoliubov transformation and evaluating the expectation on the dressed vacuum.
-- Auxiliary Lemma: Prove `[A_m,C_n] = δ_mn*m*I` in the abstract uncompressed carrier; `[C_m,A_n]` has the opposite sign.
-- Conclude the second identity using the auxiliary lemma and the given algebraic identity $c^2 - s^2 = 1$.
+Compute the vacuum contractions from the represented monomial basis, then expand β inverse and the finite double sum. Apply both CA and AC formulas, collapse the Kronecker sum, and retain the ordered complex kernel. A cosine-only expression describes a different symmetrized observable.
 
-> [!WARNING]
-> **Proof-review correction (2026-10-09):** Reverse the CCR order in the preceding auxiliary lemma: `[A_m,C_n] = δ_mn*m*I`; `[C_m,A_n]` has the negative sign. The vacuum assumptions must hold for the stated family of dressed annihilators in a constructed normalized positive state. A single unspecified condition `ω(P†P)=0` does not establish existence or all required contractions.
+## Formal Weyl-type vertices: precise carrier and normalization
 
-**Theorem (Ordered Two-Point Function):**
-With vanishing same-branch anomalous contractions in the specified Gaussian state, the ordered two-point function is
+Choose the series algebra A[[t]], where A is the charge/oscillator tensor algebra, t is central, and t*=t. Define `exp_formal(t a)` by coefficients aⁿ/n!; each coefficient product is a finite convolution. Extend ω_(P,N) **coefficientwise into ℂ[[t]]**. This extension is a formal evaluator, not an ordinary ℂ-valued positive state on all series, and there is no substitution t=1 without additional convergence data.
 
-\[
- \omega(\rho(x)\rho(y))=
- L^{-2}\sum_{m=1}^M m\big(s^2\zeta^{-m(x-y)}+c^2\zeta^{m(x-y)}\big).
-\]
+Write the dressed generators as C̃,Ã. Use opposite spatial chirality orientations:
+$$
+Q_R(x)=\sum_{m=1}^M\frac{\zeta^{-mx}\widetilde C_{Rm}+\zeta^{mx}\widetilde A_{Rm}}m,
+\quad Q_L(x)=\sum_{m=1}^M\frac{\zeta^{mx}\widetilde C_{Lm}+\zeta^{-mx}\widetilde A_{Lm}}m.
+$$
+Both are Hermitian. Set X_CDW=(c−s)(Q_R+Q_L), X_SC=(c+s)(Q_R−Q_L), and
+$$
+K_{CDW}(x)=F_R^\dagger F_L\zeta^{(N_L-N_R-1)x},\qquad
+K_{SC}(x)=F_R F_L\zeta^{(N_R+N_L)x}.
+$$
+The diagonal phases act on the source charge. Define
+$$
+W_J(P,t,x)=L^{-1}K_J(x)\operatorname{exp}_{formal}(itX_J(P,x)),\qquad J\in\{CDW,SC\}.
+$$
+These are **Weyl-type formal vertices**, deliberately distinct from normal-ordered exponentials and the candidate finite Mattis–Mandelstam map. Normal ordering changes normalization and cannot be added as an innocuous colon.
 
-*(Historical note: an early draft of Chapter 19 assigned $s^2$ to both terms; Chapter 19 now correctly distinguishes $s^2$ and $c^2$ mode contractions).* At $s=0$ and $x=y$, the expression reduces to the finite vacuum variance $L^{-2} \sum_{m=1}^M m > 0$. For $h=2, M=1$ it is exactly $1/16$, verified by direct CAR computation. A symmetrized correlator has another coefficient; define the observable being measured before changing to a cosine expression.
-
-*Lean 4 Proof Strategy:*
-- Define the Hermitian density operator `ρ(x)` as the finite sum `L⁻¹ ∑_m (ζ^{-mx} C_m + ζ^{mx} A_m)`.
-- Apply linearity of the state $\omega$ to expand the product $\omega(\rho(x)\rho(y))$ into a double sum.
-- Apply the *Lemma (Bare Right-Branch Moments)* to evaluate the cross terms $\omega(C_m A_n)$ and $\omega(A_m C_n)$.
-- Apply the hypothesis of vanishing same-branch anomalous contractions to set $\omega(C_m C_n) = \omega(A_m A_n) = 0$.
-- Simplify the resulting algebraic sum to obtain the stated result.
-- Auxiliary Lemma: Prove that the evaluation at $s=0$ and $x=y$ reduces to the free-vacuum variance $L^{-2} \sum_{m=1}^M m$.
-
-## Exact kernels and asymptotics
-
-**Definition (Mode Cutoff and Correlation Functions):**
-Define the mode cutoff M and the ordered/symmetrized two-point function explicitly. Prove finite character-sum formulas first. A periodic finite sum does not establish a power-law decay theorem by itself. If asymptotics are wanted, specify scaling variables, separation regime, limiting regulator sequence, and error estimates in a separate analytic layer.
-
-*Lean 4 Proof Strategy:*
-- Formalize `M : ℕ` as a strictly finite truncation parameter.
-- Define the two-point functions as precise functions into `ℂ` using `Finset.sum` over `1 ≤ m ≤ M`.
-- Avoid mixing asymptotic approximations with exact algebraic identities. When defining scaling limits, set up a proper `Filter.Tendsto` limit as $M \to \infty$ within Mathlib's `Asymptotics` framework.
-
-**Definition (Explicit Logarithmic Kernel):**
-*(Chapter 20 now defines $D_1$ explicitly via Definition 20.3)*:
-\[
- D_1(x, y) = \sum_{m=1}^M \frac{1}{m} \left( 1 - \cos\left(\frac{2\pi m (x-y)}{L}\right) \right).
-\]
-A finite polynomial exponential $\operatorname{expNil}$ of nilpotent operators on a truncated budget is a polynomial in its generator words; it does not automatically equal a scalar Gaussian exponential. The scalar Gaussian exponential $\exp[-2g D_1(x,y)]$ arises strictly when evaluating the state functional on abstract Weyl / vertex operators $\mathcal{V}(x) = : e^{i \Phi(x)} :$ within an abstract CCR/Weyl algebra equipped with a quasi-free Gaussian state, not as an exact identity of finite-Fock CAR operators.
+Let
+$$
+D_1(x,y)=\sum_{m=1}^M\frac{1-\cos(2\pi m(x-y)/L)}m.
+$$
+Opposite chirality orientations give `[X_J(x),X_J(y)]=0`; the two chiral scalar commutators cancel. Polynomial vacuum Wick moments give variance 4gD₁ for X_CDW(y)−X_CDW(x), and 4gInvD₁ for X_SC(y)−X_SC(x). Consequently, as coefficientwise identities,
+$$
+\omega_{P,N}(W_{CDW}(t,x)^*W_{CDW}(t,y))=
+ L^{-2}\zeta^{(N_L-N_R-1)(y-x)}\operatorname{Exp}_{formal}(-2gD_1(x,y)t^2),
+$$
+$$
+\omega_{P,N}(W_{SC}(t,x)^*W_{SC}(t,y))=
+ L^{-2}\zeta^{(N_R+N_L)(y-x)}\operatorname{Exp}_{formal}(-2gInvD_1(x,y)t^2).
+$$
+At x=y the normalization is L⁻²; the charge shifts are unitary, so C₀=C₀′=1 in this specified model.
 
 *Lean 4 Proof Strategy:*
-- Define `D_1 (M : ℕ) (t : ℝ) : ℝ := ∑ m in Finset.Icc 1 M, (1 - Real.cos (m * t)) / m`.
-- Construct the abstract Weyl algebra generated by unitary exponentials $W(f) = e^{i \rho(f)}$.
-- On this abstract Weyl algebra, evaluate the quasi-free Gaussian state $\omega(W(f)) = e^{-\frac{1}{2}\omega(\rho(f)^2)}$ using Wick's theorem.
+Prove charge-phase products on each δ_N and oscillator Gaussian moments by fixed-word Wick induction. Establish Hermitian phases, cancellation of spatial commutators, and both difference variances. Prove the formal exponential product identity coefficientwise for commuting X values, then evaluate the coefficients to obtain the displayed scalar formal series. Validate the chosen noncommutative series carrier before freezing definitions; do not guess that a commutative formal-exponential API applies to it. A Weyl C*-completion, analytic exponentials at t=1, and equality with finite CAR observables are separate tasks outside this algebraic theorem.
 
-**Theorem (Abstract Vertex Correlators):**
-Formulate exact equalities for abstract vertex correlators $\omega_{\tilde{\Omega}}(\mathcal{V}^\dagger(x) \mathcal{V}(y))$, explicitly tracking Klein/zero-mode expectation values $C_0, C_0'$, phase characters $\zeta^{(N_L - N_R - 1)(x-y)}$ and $\zeta^{(N_R + N_L)(x-y)}$, and normalization. Any comparison to concrete finite-lattice CAR observables $O(x) = c^\dagger_R(x) c_L(x)$ must be formulated as a separate comparison theorem with explicit budget projections and finite-size corrections.
+## Limits and physical interpretation
 
-*Lean 4 Proof Strategy:*
-- Formalize the full correlation function as an explicit equality `=` instead of proportionality `∝`.
-- Define structures for `KleinFactor` and `ZeroMode` and prove their exact algebraic commutation relations with the vertex operators.
-- Keep the abstract vertex equality on its constructed carrier/state. Any comparison with finite CAR matrices is a separate theorem with explicit error or restriction; the scalar Gaussian is not automatically a finite-Fock expectation.
+The finite D₁ sum is periodic and exact. Power-law decay, continuum duality, and physical order-parameter correlators require specified comparison maps, regulator/scaling limits, separation regimes, and error estimates. Coefficientwise formal series identities alone establish none of these analytic statements.

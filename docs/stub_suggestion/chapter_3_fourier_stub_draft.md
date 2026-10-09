@@ -39,7 +39,7 @@ For the canonical complex root, first evaluate reuse of the installed `ZMod.dft`
 
 Define `a : ℝ := (Real.sqrt (L : ℝ))⁻¹`, prove `a>0` and `L*a^2=1`, and cast a to ℂ. This scalar package is the only square-root layer. The canonical complex primitive-root theorem checked in the installed library is `Complex.isPrimitiveRoot_exp L hL`, where `hL : L ≠ 0`.
 
-Use `EuclideanSpace ℂ (Ch01.Lattice L)` and `EuclideanSpace ℂ (Ch01.Band L)` for counting inner products. Ordinary function spaces have a different default norm. Prove the adjoint identity for the finite kernels, then set `U=a • S` and `U⁻¹=a • T` and bundle a `LinearIsometryEquiv`. Canonical position CAR requires `|a|²*L=1`; 1/L in both physical transforms would produce the wrong CAR coefficient.
+Use `EuclideanSpace ℂ (Ch01.Lattice L)` and `EuclideanSpace ℂ (Ch01.Band L)` for counting inner products. Ordinary function spaces have a different default norm. Transport the function maps first: `WithLp.linearEquiv 2 ℂ (I → ℂ)` goes from `EuclideanSpace ℂ I` to functions, so set `S₂=eₖ.symm ∘ S ∘ eₓ` and `T₂=eₓ.symm ∘ T ∘ eₖ`. Transport the frozen Chapter 2 shifts by the same conjugation. Prove the kernel adjoint identity for S₂/T₂, then set `U=a • S₂` and `U⁻¹=a • T₂`. In Phase A define U as a linear map and stub its isometry statement; bundle the final `LinearIsometryEquiv` once its proof fields can be supplied without placeholders. Canonical position CAR requires `|a|²*L=1`; 1/L in both physical transforms would produce the wrong CAR coefficient.
 
 ## Difference diagonalization
 

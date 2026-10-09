@@ -66,7 +66,7 @@ $$
 *Lean 4 Proof Strategy:*
 Formalize the raw density directly via `rho m := dGamma (T m)`.
 Normal ordering can be written as `normal_rho m := rho m - (if m = 0 then h • 1 else 0)`.
-Missing physical info: the macroscopic charge $h$ must be formalized as the ground state expectation value or eigenvalue of the particle number operator on the chosen vacuum/Fermi sea state.
+The sea contains exactly h occupied momenta per species. Prove `rho 0 Ω = h • Ω` by the number-operator occupation indicator and band counting; this fixes the subtraction independently of later scalar CCR.
 
 #### 9.3 Kinematic Lemmas and Linear Independence
 

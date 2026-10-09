@@ -13,8 +13,10 @@ $$
 H_{4, \text{raw}} := \frac{g_4}{2L} \sum_{\nu \in \{R, L\}} \sum_{m=-M}^{M} \sum_{k, p \in \Lambda^*} :\! c^\dagger_{(\nu, k+m)} c_{(\nu, k)} c^\dagger_{(\nu, p-m)} c_{(\nu, p)} \!: \tag{17.1}
 $$
 
+**Sea-Wick convention for (17.1).** Write sₖ=1 for k≤0 and sₖ=0 for k>0, nₖ=cₖ†cₖ, and tₖ=nₖ−sₖI. Define sea quasiparticle annihilators qₖ=cₖ for sₖ=0 and qₖ=cₖ† for sₖ=1; qₖ† is the adjoint. Each annihilates the sea. On a raw word, replace each letter by q or q†, move all q† letters left of all q letters using a fixed stable order and the fermionic permutation sign, and omit contraction terms inside the colon. This defines a linear map on raw words, not a multiplicative map on evaluated operators. CAR/Wick expansion proves its evaluation identity, including repeated indices. Every k+m and p−m in (17.1) must be in the band; there is no modular wrap.
+
 *Lean 4 Proof Strategy:*
-Define `H_4_raw` as a sum over the transfer domain `Finset`s using the underlying `FermionAlgebra`. The quartic colon in (17.1) is a pending definition: specify sea quasiparticle creation/annihilation, a fixed word order, and all contraction terms. Subtracting only one vacuum expectation is not full Wick ordering. Prove the word-evaluation identities before asserting a current reduction. The transfer domain $-M \le m \le M$ and band limits must be strictly bounded with appropriate summation indices and `Icc` intervals.
+Define the word transformation on syntax and its evaluation into the already constructed finite CAR endomorphisms. Prove bilinear sea ordering, the quartic identity below, and then sum over `Finset.Icc (-M) M` with explicit band filters. Use CAR substitutions and fixed-order additive normalization; scalar `ring` alone cannot reorder words.
 
 **Definition 17.2 (Raw Inter-branch Interaction $g_2$).**
 Let $g_2 \in \mathbb{R}$. The momentum exchange $m$ shifts one Right-mover and one Left-mover. While fundamental fermions anticommute across species, even-degree bilinears commute:
@@ -58,8 +60,29 @@ H_{4, \text{current}} := \frac{g_4}{L} \sum_{\nu \in \{R, L\}} \sum_{m=1}^{M} \r
 $$
 without redundant outer $m$ factors.
 
-> [!WARNING]
-> **Revision check (2026-10-09):** This is a model definition, not a proved reduction of (17.1). Under full sea-quasiparticle Wick ordering, the state with $N_R=1,N_L=0$ and zero excitation has only one quasiparticle: a fully normal-ordered quartic has zero expectation, whereas (17.5) gives $g_4/(2L)$. Any corrected raw-to-current theorem must specify and retain the missing one-body/contraction terms.
+**Lemma 17.4a (Exact Finite Sea-Wick Correction).**
+For one species, with k+m and p−m in the band, full sea-Wick ordering satisfies
+$$
+:c_{k+m}^\dagger c_k c_{p-m}^\dagger c_p:
+ =:c_{k+m}^\dagger c_k:\,:c_{p-m}^\dagger c_p:
+ +\delta_{p,k+m}\big[s_p t_k-(1-s_k)t_p-s_p(1-s_k)I\big].
+$$
+Here `:c_a†c_b:=c_a†c_b−δ_ab s_a I`. The formula includes m=0 and repeated indices; for m=0,p=k its right side is $t_k^2+(2s_k-1)t_k=0$.
+Define the diagonal one-body correction
+$$
+Q_{M,\nu}:=
+ \sum_{k\le0}\big(1+2\min(M,-k)\big)(I-n_{\nu k})
+ +\sum_{k>0}\big(1+2\min(M,k-1)\big)n_{\nu k},
+$$
+with k restricted to the band. Then for every M≥0, as ambient finite CAR operators,
+$$
+H_{4,\mathrm{raw}}=H_{4,\mathrm{current}}-
+ \frac{g_4}{2L}\sum_{\nu\in\{R,L\}}Q_{M,\nu}. \tag{17.5a}
+$$
+This is an exact finite-band identity; it needs no scalar-CCR margin or Sugawara theorem. On the sea Q vanishes. A single extra particle at k=1 has Q=1, cancelling the $g_4/(2L)$ contribution of the current model, as required by quartic sea ordering. If M≥h−1, counting all accessible distances gives $Q_{M,\nu}=2\hat P_\nu-\hat N_\nu$, with $\hat P_\nu=\sum_k k(n_{\nu k}-s_kI)$ the vacuum-subtracted computational momentum.
+
+*Lean 4 Proof Strategy:*
+Prove the quartic word identity by splitting equal indices and sea indicators, including m=0. Sum the bilinear products into $\hat N^2+2\sum_{m>0}\rho_m\rho_{-m}+\sum_{m>0}[\rho_{-m},\rho_m]$. Keep the exact finite edge commutators. Pair the ±m Wick corrections and count allowed occupied/unoccupied distances to obtain the weights in Q; no replacement of the edge operator by mI is allowed here. Prove the diagonal formula on occupation kets and conclude by basis extensionality. The current Hamiltonian used below is still the chosen quadratic model; replacing it by H4,raw also subtracts Q.
 
 #### 17.3 The Interacting Luttinger Hamiltonian
 

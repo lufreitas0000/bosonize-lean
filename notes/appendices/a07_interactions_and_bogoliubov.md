@@ -13,9 +13,9 @@ Define fermionic four-operator normal ordering before proving any contraction re
 Specify sea quasiparticle creators and annihilators, then define full quartic Wick ordering on raw words with all contractions and fixed ordering. Bilinear vacuum subtraction does not define quartic ordering. Prove its evaluation lemmas before proposing any raw interaction reduction.
 **Auxiliary Lemmas:** The canonical anticommutation relations (CAR), particularly `c_i† c_j + c_j c_i† = δ_{ij} I` and `c_i c_j + c_j c_i = 0`.
 **Strategy:** Use a well-founded word expansion with explicit CAR substitutions and decreasing length/inversion count. Expand noncommutative products in fixed order, use additive rearrangement for words, and normalize scalar coefficients separately.
-**Missing Framework Info:** Explicit typeclass boundaries for the CAR algebra and states in the Fock space need to be defined to ensure `δI` properly scales as an identity operator on the state space.
+**Carrier contract:** Evaluate words into the finite CAR `Module.End ℂ` carrier of A02, with `δI` interpreted by complex scalar action on its identity. The sea occupation functional is the explicitly fixed vacuum expectation.
 
-Chapter 17 now specifies vacuum subtraction and `μ=πvF/L`, which cancels the linear free zero-mode term. Its displayed coefficient is `(πvF/L + g4/(2L))(NR²+NL²) + (g2/L)NRNL`. Define `H4,current` directly for the chosen solvable model; equivalence to a fully Wick-ordered quartic remains pending and needs one-body/contraction corrections (see the one-quasiparticle obstruction in Chapter 17).
+Chapter 17 now specifies vacuum subtraction and `μ=πvF/L`, which cancels the linear free zero-mode term. Its displayed coefficient is `(πvF/L + g4/(2L))(NR²+NL²) + (g2/L)NRNL`. Chapter 17 now defines full sea-Wick ordering on raw words and states the exact correction `H4,raw = H4,current − (g4/(2L)) Σν Q_M,ν` in Lemma 17.4a. Q counts sea holes and particles with the displayed finite-distance weights. Prove this ambient CAR identity before any physical use of the raw interaction; keep H4,current as the chosen quadratic model.
 
 ## Two different quadratic models
 
@@ -31,7 +31,7 @@ Let $C_R=\rho_{m,R}$, $A_R=\rho_{-m,R}$, and similarly for $L$, with $[A_\nu,C_\
 Formalize `H_{hop}` as an element of a non-commutative *-algebra representing the observables.
 **Auxiliary Lemmas:** Verification that `H_{hop}` is self-adjoint (`H_{hop}† = H_{hop}`).
 **Strategy:** Define `C_ν` and `A_ν` as formal symbols in an algebra modulo the relations `[A_ν, C_ν] = mI`. Represent `H_{hop}` directly as a linear combination of these bilinear generators.
-**Missing Framework Info:** A robust definition of the adjoint `†` mapping `A_ν` to `C_ν` must be formally integrated so that we can structurally prove Hamiltonian hermiticity.
+**Adjoint contract:** In the finite model use A02 adjoints and `ρ_m†=ρ_-m`; in the abstract model use the star-compatible CCR quotient of A08. Do not derive global finite CCR from this quotient.
 
 Its scalar mode matrix is `[[v1,v2],[v2,v1]]`. A sum/difference rotation diagonalizes it with coefficients $v_1+v_2$ and $v_1-v_2$. It does not yield two equal coefficients $\sqrt{v_1^2-v_2^2}$. For $v_1=5,v_2=3$, these are 8 and 2, whereas the common $u$ is 4.
 
@@ -80,7 +80,7 @@ Thus v1=u(c²+s²), v2=2ucs for this direction of the plus-sign transform, and a
 Formalize the substitution of the Bogoliubov transformed operators `\tilde C_ν` and `\tilde A_ν` into the target diagonalized Hamiltonian to recover the original `H_{pair}`.
 **Auxiliary Lemmas:** Expansion of bilinears: `(c C_R + s A_L)(c A_R + s C_L)`, and CCR application `A_L C_L = C_L A_L + m I`.
 **Strategy:** This is a direct algebraic verification. Use `simp` with a configuration that unwraps the linear combinations, distributes the multiplication over addition, and applies the commutation relation `[A_ν, C_ν] = mI` to properly align the normally-ordered cross terms. Finally, collect terms by `C_R A_R`, `C_L A_L`, etc., and equate their coefficients to `v1` and `v2`.
-**Missing Framework Info:** The zero-point energy shift `2 u s^2 m I` must be physically interpreted and formally handled either by redefining the ground state energy explicitly or via normal-ordering the transformed Hamiltonian.
+**Constant contract:** Subtract `2*u*s^2*m • 1` from the dressed number expression to match H_pair; sum it with the Chapter 18 prefactor `2π/L`. The bare finite ground vector and the constructed abstract dressed state of A08 are separate objects.
 
 **Theorem (Restricted-Action CCR Preservation):**
 The inverse two-by-two scalar transformation is global linear algebra. CCR preservation on a budget is a separate restricted-action theorem. Neither proves a unitary implementer or an algebra automorphism of all finite-Fock endomorphisms. The boundary commutator operators must still be present outside the permitted inputs.

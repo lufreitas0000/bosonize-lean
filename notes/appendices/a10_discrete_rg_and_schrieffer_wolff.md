@@ -153,4 +153,4 @@ If a non-linear band dispersion $\varepsilon(k) = v_F k + \frac{k^2}{2m^*}$ intr
 ### 2. Umklapp Scattering and Mott Transition (Physical Motivation)
 For the half-filling Umklapp perturbation $H_U \propto \sum_x (O_U(x) + O_U^\dagger(x))$:
 * In continuum bosonization, $O_U \sim \cos(\sqrt{8\pi}\phi_c)$, and second-order operator product expansions yield the Kosterlitz-Thouless (KT) flow equations, predicting the opening of a charge Mott gap.
-* On the discrete finite lattice, revised Theorem 21.7 requires a nonzero outward component outside the chosen budget. Proposed Lemma 21.8 supplies a direct occupation-coefficient witness family to prove. Charge shifts or nonzero total HU action alone do not establish leakage, KT flow, or a Mott gap.
+* On the discrete finite lattice, revised Theorem 21.7 requires a nonzero outward component outside the chosen budget. Lemma 21.8 supplies a direct occupation-coefficient witness family with exact sign and coefficient `−g_U/L²`. Charge shifts or nonzero total HU action alone do not establish leakage, KT flow, or a Mott gap.

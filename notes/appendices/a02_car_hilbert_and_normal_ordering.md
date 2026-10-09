@@ -105,3 +105,10 @@ Use the checked `FreeAlgebra ℂ (Mode ⊕ Mode)` for raw words. Define separate
 
 *Lean 4 Proof Strategy:*
 Define polynomials `H_n(X) = (D + X)^n 1` inductively: `H_0 = 1`, `H_{n+1} = (D + X) H_n = X H_n + D H_n`. Prove the recurrence relation `H_{n+1} = X H_n + n H_{n-1}` by induction on `n`. The induction step relies on the derivation rule `D(X H_n) = H_n + X D H_n`. Keep coefficients in `ℤ` during the induction, then `algebraMap ℤ ℂ` to avoid characteristic zero issues or floating-point artifacts.
+
+
+## Sea-Wick words and the raw interaction
+
+Use the sea quasiparticle convention of Chapter 17: qₖ=cₖ for empty k>0 and qₖ=cₖ† for occupied k≤0. Normal ordering is a linear operation on raw words: stably put q† before q, with the fermionic permutation sign, omitting contractions inside the colon. Word evaluation and its CAR expansion are separate maps. In particular normal ordering is not an operation on arbitrary evaluated endomorphisms independent of syntax.
+
+Prove `:c_a†c_b:=c_a†c_b−δ_ab s_a I`, then the quartic identity of Lemma 17.4a, including coincident indices. Its summation produces the exact one-body correction Q_M,ν. Bilinear vacuum subtraction alone is insufficient for quartic words. This supplies explicit syntax and reduction obligations rather than an unspecified quartic colon.
