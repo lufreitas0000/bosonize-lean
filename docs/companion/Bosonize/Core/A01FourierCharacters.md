@@ -1,6 +1,6 @@
 # Appendix A01 lab notebook: Fourier characters and normalization
 
-Status (2026-10-09): **Phase B complete in staging; Phase C promotion awaits authorization.** Six complete definitions and 30 proved lemmas. Namespace: `Bosonize.A01`. Source: [A01](../../../notes/appendices/a01_fourier_scalars_and_characters.md), supporting [Chapter 3](../../../notes/md/ch03_fourier.md). Lean module: `BosonizeStubs/A01FourierCharacters.lean`.
+Status (2026-10-09): **Phase C complete: proved, audited, promoted, and frozen in Core.** Six complete definitions and 30 proved lemmas. Namespace: `Bosonize.A01`. Source: [A01](../../../../notes/appendices/a01_fourier_scalars_and_characters.md), supporting [Chapter 3](../../../../notes/md/ch03_fourier.md). Lean module: `Bosonize/Core/A01FourierCharacters.lean`.
 
 ## Carrier and assumption decisions
 
@@ -28,13 +28,13 @@ The nontriviality, nonzero-character and singleton/Nyquist statements are now co
 
 ## Suggestions adopted, adapted and rejected
 
-Adopt the separation in the [revised Fourier guide](../../../docs/stub_suggestion/chapter_3_fourier_stub_draft.md), representative independence before character algebra, distinct carriers and one normalization scalar. Adapt its suggested bundled-character implementation to the locked raw pairing and a proof-local bundled character. Reuse the frozen band rather than introducing another centered convention.
+Adopt the separation in the [revised Fourier guide](../../../../docs/stub_suggestion/chapter_3_fourier_stub_draft.md), representative independence before character algebra, distinct carriers and one normalization scalar. Adapt its suggested bundled-character implementation to the locked raw pairing and a proof-local bundled character. Reuse the frozen band rather than introducing another centered convention.
 
 Reject primitive-order-only orthogonality over rings with zero divisors, guessed sum/root theorem names, a generic quadratic-closure requirement and fractional momentum powers. The current A01 field contract avoids the recorded counterexamples; a more general ring theory is outside this draft. A power ζ^m need not have order L, so a primitive-root geometric-sum result cannot be applied with the wrong order.
 
 Compiler/local-library evidence includes `ZMod.stdAddChar`, `ZMod.stdAddChar_coe`, `ZMod.isPrimitive_stdAddChar`, `ZMod.dft`, and `ZMod.invDFT_apply`. The canonical-root and standard-character equality statements are proved; the equality uses `Complex.exp_int_mul`, the standard character integer-cast formula and exact scalar algebra. No Chapter 3-specific file exists in `docs/proof_suggestion/`; the revised stub guide, inline source strategies and reconciled proof revision guide are advisory inputs.
 
-## Phase B validation and remaining gate
+## Phase B validation (historical checkpoint)
 
 The user approved both interfaces, supplied the updated strict lock, and authorized Phase B. Before proof edits, the supplied lock was compared structurally with the previous committed lock: it added only these two modules and preserved every existing entry. The reviewed lock was committed as `73add9042f2247fcbb1048d3b39f44f844f5e4b1`. It was not regenerated during proof development.
 
@@ -45,7 +45,7 @@ The user approved both interfaces, supplied the updated strict lock, and authori
 - The notebook source block exactly matches the current Lean file. Core, imports, namespaces, toolchain and dependency manifest are unchanged; the strict committed-baseline guard verifies all frozen definitions and statements.
 - Native Lean MCP tools are not exposed in this chat. Compiler and local-library checks supply the evidence above; native MCP/LSP transport was not tested.
 
-Phase B is complete. Phase C promotion, migration of module paths/notebooks/aggregators, and complete-source freezing require authorization. No new top-level helper, equivalence bundle or assumption was added. The module's retained Phase A doc-comments describe its original draft; the status and fresh evidence in this notebook describe its completed proofs.
+Phase B completed against `73add90`. The user subsequently authorized Phase C for both modules; the current promotion evidence follows. No new top-level helper, equivalence bundle or assumption was added.
 
 ## Theorem axiom audit
 
@@ -99,11 +99,28 @@ Source baseline before this draft: `6ec5df254fb130a1a1483ceddffdaf22ee3e0d06`. T
 | `lake-manifest.json` | `237acfc7835876d993b4025c88431d8d39f76db83cab94c9f9a640395f9c61f4` |
 
 
+## Phase C promotion and complete-source freeze
+
+The user authorized promotion of A01 and CH03 on 2026-10-09. Before migration, strict interface verification against `bfaa0e9` passed (113 statements, 102 commands), both existing Core source hashes matched, both staging modules freshly compiled without diagnostics, and all 61 Fourier lemmas passed a standard-axiom audit.
+
+A01's entire v2 entry is unchanged except its file path.
+
+Both source modules and their companion notebooks move to Core. `Bosonize.lean` imports them in dependency order; staging imports Core. Definitions, theorem statements, namespaces, and proof bodies are preserved. Only the CH03 dependency import and historical module status comments change. Existing CH01/CH02 sources and lock entries remain unchanged. The legacy v1 manifest is retained.
+
+- `make ci` passes all 69 guard tests, 113 statements, 102 commands, four complete Core source hashes, and both library builds. Core treats warnings as errors.
+- Fresh `lake env lean -DwarningAsError=true` on each promoted source returns exit 0 with empty diagnostics.
+- A fresh audit via `import Bosonize` checks all 113 Core lemmas, including all 61 promoted lemmas: only `propext`, `Classical.choice`, and `Quot.sound` occur. No placeholders or extra axioms occur. The module-specific axiom output above is unchanged from the freshly repeated audit.
+- Native Lean MCP is now attached to this chat: diagnostics on both promoted files return success with empty items, no failed dependencies, no partial result, and no timeout. Goal retrieval on A01 `root_pow_size` reports the expected context and target before `exact hζ.pow_eq_one`, and no goals afterward.
+- `make lock-check` passes. The promotion commit becomes the new path-aware baseline; both guards are checked against that committed reference after the checkpoint is created.
+- Next implementation is planned in [the roadmap](../../../../adaptative_roadmap.md): CH04 with finite-CAR A02 support. Its Phase A remains subject to authorization.
+
+Complete source SHA-256: `b6ede9e474ef2ad05b8d904061ba7250dd7e404e524e6ec09261de4a1645fd8a`. `core_locks.json` freezes every byte, including the proofs and comments.
+
 ## Exact Lean source snapshot
 
-The complete source below is byte-for-byte identical to the current module, including its final newline. All lemma bodies are proved; original definitions and signatures are preserved.
+The complete source below is byte-for-byte identical to the promoted module, including its final newline.
 
-Module SHA-256: `eb4a90141b76b7fda25269545c219b87459cc5fadbc1f9cc836d2048dee6d70c`.
+Module SHA-256: `b6ede9e474ef2ad05b8d904061ba7250dd7e404e524e6ec09261de4a1645fd8a`.
 
 ```lean
 module
@@ -116,7 +133,7 @@ public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 /-!
 # Appendix A01: Fourier characters and normalization
 
-Phase A, unlocked: definitions are complete; every lemma is an unproved review stub.
+Phase C: definitions and all lemmas are proved, audited, and frozen in Core.
 Generic orthogonality uses a field, and division by L has a separate scalar hypothesis.
 -/
 

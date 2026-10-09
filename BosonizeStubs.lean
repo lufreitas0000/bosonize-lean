@@ -1,6 +1,4 @@
 import Bosonize
-import BosonizeStubs.A01FourierCharacters
-import BosonizeStubs.Ch03Fourier
 
 /-!
 # Bosonize Staging Library

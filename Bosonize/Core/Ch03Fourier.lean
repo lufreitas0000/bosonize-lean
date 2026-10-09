@@ -1,136 +1,16 @@
-# Chapter 3 lab notebook: Finite Fourier transform
-
-Status (2026-10-09): **Phase B complete in staging; Phase C promotion awaits authorization.** Twelve complete definitions/abbreviations and 31 proved lemmas. Namespace: `Bosonize.Ch03`. Source: [Chapter 3](../../../notes/md/ch03_fourier.md), with [A01](../../../notes/appendices/a01_fourier_scalars_and_characters.md). Lean module: `BosonizeStubs/Ch03Fourier.lean`.
-
-## Complete definitions and typed directions
-
-| Object | Source → target / meaning |
-| --- | --- |
-| `analysis L ζ` (S) | `(Ch01.Lattice L → K) →ₗ[K] (Ch01.Band L → K)`; negative-sign finite-sum kernel. |
-| `synthesis L ζ` (T) | `(Ch01.Band L → K) →ₗ[K] (Ch01.Lattice L → K)`; positive-sign kernel. |
-| `inverseAnalysis L ζ` | Same direction as T, scaled by `(L:K)⁻¹`; its inverse claims require nonzero scalar L. |
-| `PositionSpace`, `MomentumSpace` | Euclidean spaces over ℂ on the frozen position and signed-band index types. |
-| `positionFunctions`, `momentumFunctions` | `WithLp.linearEquiv` from each Euclidean carrier to ordinary functions. |
-| `analysisEuclidean`, `synthesisEuclidean` | Canonical-root S/T conjugated by the two distinct function equivalences. |
-| `unitaryFourier`, `inverseUnitaryFourier` | `(normalization L : ℂ)` times the transported S/T, in their respective directions. Their inverse, adjoint and isometry contracts are now proved. |
-| `transportPositionOperator` | Conjugation of an existing Chapter 2 function operator onto the spatial Euclidean carrier. |
-
-S/T are constructed from the displayed finite sums. Structural additivity and scalar-linearity fields are complete elementary proofs; no theorem stub is used to manufacture a definition. The two inverse statements now prove that `inverseAnalysis` is the inverse under the approved hypotheses. All generic kernel claims require a primitive root, and inverse/bijectivity additionally require `(L:K) ≠ 0`.
-
-The complex transform remains the locked linear map. Its properties are proved; the isometry proof uses Mathlib's `LinearMap.isometryOfInner` locally. A new public equivalence bundle would be a separately reviewed declaration addition; none was added.
-
-## Mathlib reuse and sign orientation
-
-The installed `ZMod.dft` is an unscaled negative-sign linear equivalence and its `.symm` has a positive-sign kernel multiplied by 1/L. `analysis_eq_dft` is the exact forward bridge at `bandProjection k`; `inverse_analysis_eq_inv_dft` specifies the inverse bridge after reindexing a band function through `A01.bandEquiv.symm`. Both bridges are proved. The generic inversion proof uses finite-sum exchange and A01 orthogonality; the bridges additionally establish agreement with Mathlib's canonical DFT and inverse. The explicit generic finite-sum maps remain useful for arbitrary primitive roots; trigonometric dispersion is asserted only for the selected canonical complex root.
-
-`WithLp.linearEquiv 2 ℂ (I → ℂ)` runs from `EuclideanSpace ℂ I` to functions. Transport uses e_target.symm ∘ map ∘ e_source. No isometry assertion is made for the default ordinary-function norm. The counting inner products and finite-dimensional `LinearMap.adjoint` are applied on the Euclidean carriers.
-
-## Completed proof dependency order
-
-1. A01 supplies the proved root, representative, character, sum-transport and orthogonality contracts.
-2. The generic S/T composition proofs exchange finite sums, combine integer powers with exact exponent algebra, and apply both orthogonality identities. Nonzero scalar L permits inverse cancellation and bijectivity. The delta-at-zero transform is exactly the constant one.
-3. Shift eigenvectors follow from the residue character laws and the ±1 evaluation formulas. Linearity gives the difference and Laplacian eigenvectors. The transformed differences reindex a periodic finite sum using translation equivalences; their composition gives the transformed Laplacian.
-4. Euclidean S/T compositions are transported through the actual function equivalences. The adjoint proof expands both counting inner products, conjugates the synthesis kernel, exchanges sums and applies A01 conjugation.
-5. The normalization square law proves both normalized inverse identities. Semilinearity gives the normalized adjoint; the left inverse proves inner-product preservation and the right inverse proves surjectivity. Mathlib's proof-local isometry construction gives `Isometry` without adding a new public bundle.
-6. The normalized Laplacian is obtained by transporting the generic transformed identity. The canonical sine formula rewrites integer powers as exponentials, expands the two opposite exponential phases, and uses the double-angle cosine identity and scalar casts.
-7. The singleton transform and even-Nyquist character contracts are proved. No coprimality of every nonzero frequency is assumed.
-
-The delta-at-zero result is a proved nonzero-image witness. L=1 is handled by a subsingleton sum, without a nontrivial-frequency premise. The existing positive Nyquist representative and frozen Chapter 2 operators remain unchanged. No physical half-filling, analytic limit or budget hypothesis was added.
-
-## Review choices and future obligations
-
-Adopt the source's separate algebraic and Hilbert layers, frozen Chapter 2 operators, exact kernel signs and normalization. Adapt reuse to explicit bridge lemmas instead of silently identifying Band with ZMod. Reject T as an unscaled inverse, 1/L normalization on both physical kernels, the retired fractional-power dispersion expression and suppressed warnings.
-
-The Chapter 3-specific proof suggestions directory has no matching file; the [revised stub guide](../../../docs/stub_suggestion/chapter_3_fourier_stub_draft.md), A01 and current inline strategies are advisory. All bridge, inverse, adjoint, eigenvalue and dispersion statements in this module are now proved. If proof development discovers a shared mathematical/interface failure, checkpoint it and follow the adaptive issue-sprint procedure; do not change existing Core.
-
-The reviewed interface is locked: generic field assumptions, names, inverse scalar hypothesis and all definitions/statements are preserved. Any future public bundling or interface revision needs separate review; existing Core remains immutable.
-
-## Phase B validation and remaining gate
-
-The user approved both interfaces, supplied the updated strict lock, and authorized Phase B. Before proof edits, the supplied lock was compared structurally with the previous committed lock: it added only these two modules and preserved every existing entry. The reviewed lock was committed as `73add9042f2247fcbb1048d3b39f44f844f5e4b1`. It was not regenerated during proof development.
-
-- `STUB_LOCK_BASELINE_REF=73add90 make ci` passes: 69 guard tests, 113 frozen lemma statements, 102 frozen commands, two complete Core source hashes, and both Lean library builds.
-- Fresh `lake env lean -DwarningAsError=true BosonizeStubs/A01FourierCharacters.lean` and the corresponding Chapter 3 command exit 0 with empty diagnostics. No warning or lint suppression was introduced.
-- All 30 A01 and 31 Chapter 3 lemmas have complete proofs. Structural inspection finds zero `sorry`, `admit` or `axiom` commands in either module; all 18 definitions/abbreviations and all approved headers remain unchanged.
-- Fresh `#print axioms` over all 61 theorem names finds only subsets of `propext`, `Classical.choice`, `Quot.sound`, with no `sorryAx`. The module-specific output is recorded below.
-- The notebook source block exactly matches the current Lean file. Core, imports, namespaces, toolchain and dependency manifest are unchanged; the strict committed-baseline guard verifies all frozen definitions and statements.
-- Native Lean MCP tools are not exposed in this chat. Compiler and local-library checks supply the evidence above; native MCP/LSP transport was not tested.
-
-Phase B is complete. Phase C promotion, migration of module paths/notebooks/aggregators, and complete-source freezing require authorization. No new top-level helper, equivalence bundle or assumption was added. The module's retained Phase A doc-comments describe its original draft; the status and fresh evidence in this notebook describe its completed proofs.
-
-## Theorem axiom audit
-
-```text
-'Bosonize.Ch03.analysis_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.synthesis_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.synthesis_analysis' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysis_synthesis' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.inverse_analysis_left' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.inverse_analysis_right' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysis_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysis_delta_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.shift_character' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.inverse_shift_character' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.forward_diff_character' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.backward_diff_character' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.laplacian_eigenvalue_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.laplacian_character' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysis_forward_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysis_backward_diff' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysis_laplacian' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysis_eq_dft' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.inverse_analysis_eq_inv_dft' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.synthesisEuclidean_analysisEuclidean' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysisEuclidean_synthesisEuclidean' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.analysisEuclidean_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.unitary_inverse_left' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.unitary_inverse_right' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.unitary_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.unitary_inner' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.unitary_isometry' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.unitary_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.unitary_laplacian' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.canonical_laplacian_dispersion' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch03.singleton_analysis' depends on axioms: [propext, Classical.choice, Quot.sound]
-```
-
-## Provenance
-
-Source baseline before this draft: `6ec5df254fb130a1a1483ceddffdaf22ee3e0d06`. The following hashes identify the exact source material consulted. These are source snapshots, not mathematical certification. Existing dated reviews may describe earlier revisions; the current notes and completion ledger control this draft.
-
-| Source | SHA-256 |
-| --- | --- |
-| `notes/md/ch03_fourier.md` | `d4da4a800d18e68580fb793a3c8c9ba55d54836cf06253dd69e26ac86b89370e` |
-| `notes/appendices/a01_fourier_scalars_and_characters.md` | `0b65cf6f5ed73a59ef5d25b2b502c34c4315cb5ce1df67cb690c3defba70b165` |
-| `docs/stub_suggestion/chapter_3_fourier_stub_draft.md` | `793284489dbe77f76ca1a781fea878e2080445aba9375f72ae529c28d4dbe9a1` |
-| `note/proof_suggestions_revision_2026-10-09.md` | `1db5f28b3e392d3b400ccc219ac640778fc5ceabc5cba17dfeb44b225a1b383c` |
-| `note/notes_review_completion_2026-10-09.md` | `ee96609b0c32346be604041a99e3345c3420b71c830c88ef83ff8d93bd9c1dc1` |
-| `Bosonize/Core/Ch01LatticeBand.lean` | `a88cd251573aa8a5416afa583b0a97b1e575ab09d4742b13a5b0be0e8a16b132` |
-| `Bosonize/Core/Ch02UmbralCalculus.lean` | `d8d70d75372733aefda49e50baa033aaa5b363a57c0ec67a5a91368ac2d6f425` |
-| `lean-toolchain` | `8f89aa44fccdb1a0b6cc768c7c9f54b94cd40e47a08d582f82d1235f13075cf7` |
-| `lake-manifest.json` | `237acfc7835876d993b4025c88431d8d39f76db83cab94c9f9a640395f9c61f4` |
-
-
-## Exact Lean source snapshot
-
-The complete source below is byte-for-byte identical to the current module, including its final newline. All lemma bodies are proved; original definitions and signatures are preserved.
-
-Module SHA-256: `50a033a172107d569fdbca911c30f070b2cd67e1c2c0ccaef939f510d230ea04`.
-
-```lean
 module
 
 public import Bosonize.Core.Ch02UmbralCalculus
-public import BosonizeStubs.A01FourierCharacters
+public import Bosonize.Core.A01FourierCharacters
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Analysis.InnerProductSpace.Adjoint
 
 /-!
 # Chapter 3: finite Fourier transform
 
-Phase A, unlocked. S is negative-sign analysis; T is positive-sign synthesis.
+Phase C: proved, audited, and frozen. S is negative-sign analysis; T is positive-sign synthesis.
 The generic algebraic inverse is L⁻¹ T. Complex counting-space normalization is separate.
-No isometry equivalence is bundled until its proof fields are available in Phase B.
+The normalized map has proved inverse, adjoint, inner-product, isometry, and surjectivity laws.
 -/
 
 @[expose] public section
@@ -577,4 +457,3 @@ lemma singleton_analysis (f : Ch01.Lattice 1 → ℂ) (k : Ch01.Band 1) :
   exact Fintype.sum_subsingleton (f := f) 0
 
 end Bosonize.Ch03
-```

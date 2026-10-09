@@ -1,4 +1,6 @@
 {
+  "Bosonize/Core/A01FourierCharacters.lean": "b6ede9e474ef2ad05b8d904061ba7250dd7e404e524e6ec09261de4a1645fd8a",
   "Bosonize/Core/Ch01LatticeBand.lean": "a88cd251573aa8a5416afa583b0a97b1e575ab09d4742b13a5b0be0e8a16b132",
-  "Bosonize/Core/Ch02UmbralCalculus.lean": "d8d70d75372733aefda49e50baa033aaa5b363a57c0ec67a5a91368ac2d6f425"
+  "Bosonize/Core/Ch02UmbralCalculus.lean": "d8d70d75372733aefda49e50baa033aaa5b363a57c0ec67a5a91368ac2d6f425",
+  "Bosonize/Core/Ch03Fourier.lean": "6d0ba9cd4751c7cb321bc8cc786f355b768ee84a28ea6251628e495972160fed"
 }

@@ -1,5 +1,7 @@
 import Bosonize.Core.Ch01LatticeBand
 import Bosonize.Core.Ch02UmbralCalculus
+import Bosonize.Core.A01FourierCharacters
+import Bosonize.Core.Ch03Fourier
 
 /-!
 # Bosonize Core Library

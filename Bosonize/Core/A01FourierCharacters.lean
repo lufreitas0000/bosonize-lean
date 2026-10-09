@@ -8,7 +8,7 @@ public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 /-!
 # Appendix A01: Fourier characters and normalization
 
-Phase A, unlocked: definitions are complete; every lemma is an unproved review stub.
+Phase C: definitions and all lemmas are proved, audited, and frozen in Core.
 Generic orthogonality uses a field, and division by L has a separate scalar hypothesis.
 -/
 
