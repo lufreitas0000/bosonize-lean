@@ -1,6 +1,6 @@
 module
 
-public import BosonizeStubs.A02CARHilbert
+public import Bosonize.Core.A02CARHilbert
 
 /-!
 # CH04: concrete finite occupation CAR

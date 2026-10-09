@@ -1,12 +1,12 @@
 # Chapter 4 occupation-CAR lab notebook
 
-Status (2026-10-09): **Phase B proofs complete; Phase C not started.** Lean module: `BosonizeStubs/Ch04CARFock.lean`.
+Status (2026-10-09): **Phase C complete; proved and frozen in Core.** Lean module: `Bosonize/Core/Ch04CARFock.lean`.
 
 ## Scope, review and source reconciliation
 
-The user authorized Phase A for CH04 and the finite-CAR portion of A02 on 2026-10-09. This initial draft was unlocked and unproved; the user subsequently approved Phase B for both modules. Its reviewed interface is now locked at `7a2da78`, and all 69 proofs are complete. The historical Phase A evidence below is retained separately from the current Phase B audit. The source baseline at task start is `648c076abe7f82061c29e01f8fb5f7f561d2a70b`. Frozen CH01–CH03 and A01 are preserved. The roadmap controls current status; the dated completion ledger still records its older Fourier readiness checkpoint.
+The user authorized Phase A for CH04 and the finite-CAR portion of A02 on 2026-10-09. This initial draft was unlocked and unproved; the user subsequently approved Phase B for both modules. Its initial reviewed interface was locked at `7a2da78`; the approved count/sign cleanup was committed at `ddf9548`. All 69 proofs are complete and have now been promoted after Phase C authorization. The historical Phase A evidence below is retained separately from the current Phase B audit. The source baseline at task start is `648c076abe7f82061c29e01f8fb5f7f561d2a70b`. Frozen CH01–CH03 and A01 are preserved. The roadmap controls current status; the dated completion ledger still records its older Fourier readiness checkpoint.
 
-Read [CH04](../../../notes/md/ch04_CAR_Fock_space.md), [A02](../../../notes/appendices/a02_car_hilbert_and_normal_ordering.md), [TOC](../../../notes/md/TOC.md), [source audit](../../../docs/audit/reference_notes_lean_audit.md), [proof corrections](../../../note/proof_suggestions_revision_2026-10-09.md), and [completion ledger](../../../note/notes_review_completion_2026-10-09.md). No CH04/A02-specific file exists in `docs/stub_suggestion/` or `docs/proof_suggestion/`; inline strategies and the reviewed corrections are advisory. Three older CH01–CH03 suggestion files changed concurrently during drafting; those unrelated edits are preserved and excluded from this checkpoint.
+Read [CH04](../../../../notes/md/ch04_CAR_Fock_space.md), [A02](../../../../notes/appendices/a02_car_hilbert_and_normal_ordering.md), [TOC](../../../../notes/md/TOC.md), [source audit](../../../../docs/audit/reference_notes_lean_audit.md), [proof corrections](../../../../note/proof_suggestions_revision_2026-10-09.md), and [completion ledger](../../../../note/notes_review_completion_2026-10-09.md). No CH04/A02-specific file exists in `docs/stub_suggestion/` or `docs/proof_suggestion/`; inline strategies and the reviewed corrections are advisory. Three older CH01–CH03 suggestion files changed concurrently during drafting; those unrelated edits are preserved and excluded from this checkpoint.
 
 Adopt the Euclidean carrier and occupation basis from the notes, basis construction via `Module.Basis.constr`, additive erasure counts, actual Hilbert adjoints, and a fixed ordered parity product. Adapt the abstract CAR contract into an algebraic structure and a separate finite Hilbert structure. Reject the withdrawn generic four-factor commutator formula (A=C=1 yields the wrong coefficient); use the CAR-specific bilinear commutator. Do not install symmetric CAR swaps as simp rules or infer an algebraic CAR pair is adjoint compatible.
 
@@ -55,7 +55,7 @@ All operators act on the same `A02.FockSpace ι`. No representation structure wi
 
 The mixed CAR target uses a scalar Kronecker indicator times the identity endomorphism. The adjoint basis equation is ⟨δS,cᵢ δT⟩=⟨c†ᵢ δS,δT⟩, with actual finite Hilbert adjoints. The bilinear identity preserves the corrected signs δbc c†a cd − δad c†c cb. Parity uses an explicit ascending list, never `Finset.prod` on an arbitrary noncommutative ring.
 
-No lattice length, half filling or energy margin enters this generic chapter. Empty-mode dimension/vacuum contracts belong to A02; when a mode is supplied, singleton witnesses are available as proposed stubs. No true-for-all-modes conclusion is inferred from the finite sanity checks. All 51 proofs and their 18 A02 dependencies are now complete. The approved unused-instance cleanup is complete; the remaining step is the separately authorized Phase C audit and promotion.
+No lattice length, half filling or energy margin enters this generic chapter. Empty-mode dimension/vacuum contracts belong to A02; when a mode is supplied, singleton witnesses are available as proposed stubs. No true-for-all-modes conclusion is inferred from the finite sanity checks. All 51 proofs and their 18 A02 dependencies are now complete. The approved unused-instance cleanup is complete; Phase C audit and promotion are now complete.
 
 ## Exact theorem inventory
 
@@ -159,19 +159,27 @@ Before the approved cleanup, `lake env lean BosonizeStubs/Ch04CARFock.lean` exit
 
 Before cleanup, native MCP independently reported those same seven linter warnings, with no errors, failed dependencies, timeout, or partial result. Goal retrieval on `parity_square` shows the product of the two scalar powers becoming the power of `(-1)*(-1)`, before the final simplification closes the proof.
 
-The user approved the [exact interface cleanup](../../../note/ch04_unused_fintype_interface_proposal_2026-10-09.md). Its 14 scoped `omit [Fintype ι] in` prefixes and only the corresponding lock records are applied. Definitions, proof bodies, conclusions and the finite operator carrier are unchanged. Both modules now compile with warnings treated as errors and empty diagnostics; no linter was suppressed.
+The user approved the [exact interface cleanup](../../../../note/ch04_unused_fintype_interface_proposal_2026-10-09.md). Its 14 scoped `omit [Fintype ι] in` prefixes and only the corresponding lock records are applied. Definitions, proof bodies, conclusions and the finite operator carrier are unchanged. Both modules now compile with warnings treated as errors and empty diagnostics; no linter was suppressed.
 
 Historical pre-cleanup validation (baseline `7a2da78`):
 
 - `STUB_LOCK_BASELINE_REF=7a2da78 make ci` passes all 69 guard tests, 182 frozen statements, 152 frozen commands, four complete Core source hashes, and both library builds. The staging build allows the seven reported CH04 linter warnings; passing CI is not a warning-free promotion result.
 - Strict committed-baseline verification passes. All existing Core bytes, all manifests after the approved initial lock, the toolchain, and the dependency manifest remain unchanged throughout proof work.
 - All 69 A02/CH04 lemmas freshly audited through `import BosonizeStubs` use only subsets of `propext`, `Classical.choice`, `Quot.sound`. Zero `sorryAx`, extra axioms, or placeholder proof tokens remain. A fresh data/constructor/projection audit also uses only standard axioms.
-- The exact source snapshot below matches the current Lean file. The current checkpoint remains in staging. No Phase C promotion is authorized or performed.
+- At that historical Phase B checkpoint, the exact source snapshot matched staging and Phase C had not been authorized. The current source snapshot below records the authorized Core promotion.
 - Declaration search's previously observed missing-`rg` limitation was handled by installed-source `rg`/compiler inspection. Native diagnostic and goal tools worked; a search-tool failure is not reported as total MCP/LSP unavailability.
 
 ## Approved interface cleanup validation — 2026-10-09
 
-The user approved the 14 CH04 count/sign prefixes and their lock-record migration. Only those theorem records changed; all other records and complete Core hashes are preserved. Fresh warning-as-error compilation of both staging modules exits 0 with empty output. Native MCP diagnostics for both modules are complete, successful and empty, with no failed dependencies or timeout. Fresh axiom inspection of all 69 lemmas permits only `propext`, `Classical.choice`, `Quot.sound`. Strict guards, 69 guard tests and both library builds pass against the approved cleanup manifest. Use the cleanup commit containing this notebook as the committed baseline. Both modules remain in staging; Phase C awaits separate authorization.
+The user approved the 14 CH04 count/sign prefixes and their lock-record migration. Only those theorem records changed; all other records and complete Core hashes are preserved. Fresh warning-as-error compilation of both staging modules exits 0 with empty output. Native MCP diagnostics for both modules are complete, successful and empty, with no failed dependencies or timeout. Fresh axiom inspection of all 69 lemmas permits only `propext`, `Classical.choice`, `Quot.sound`. Strict guards, 69 guard tests and both library builds pass against the approved cleanup manifest. That cleanup baseline is `ddf9548`. Both modules were still in staging at that checkpoint; the authorized Phase C migration is recorded below.
+
+## Phase C audit, promotion and freeze — 2026-10-09
+
+The user authorized Phase C after the approved cleanup checkpoint `ddf9548`. Both modules are now exposed through `import Bosonize` in Core. A02 source and its entire interface entry move unchanged. CH04 changes only its dependency import from `BosonizeStubs.A02CARHilbert` to `Bosonize.Core.A02CARHilbert`; its theorem hashes and proof bodies are unchanged, and only the import command and dependent context hashes migrate. All four prior Core source hashes and all unrelated interface entries are unchanged. The v1 manifest remains historical.
+
+Fresh warning-as-error compilation of both promoted sources exits 0 with empty output. Native Lean MCP diagnostics are successful, complete and empty for both Core paths; goal retrieval at `parity_square` confirms the final simplification closes the proof. A fresh audit through `import Bosonize` checks all 182 Core lemmas, including these 69, using only subsets of `propext`, `Classical.choice`, `Quot.sound`. No placeholder proof tokens or additional axioms remain. CI passes all 69 guard tests, 182 statements, 152 commands, six complete-source hashes and both library builds; `make lock-check` passes both guards.
+
+Use the committed Phase C checkpoint containing these promoted paths and manifests (or a later approved checkpoint) for committed-baseline checks. `ddf9548` is retained as the historical pre-promotion interface baseline. Core now freezes the complete proof source. The scope is finite-CAR A02; its polynomial Hermitian forms, normal symbols and Wick work remain deferred.
 
 ## Fresh theorem axiom audit
 
@@ -233,12 +241,12 @@ The user approved the 14 CH04 count/sign prefixes and their lock-record migratio
 
 This block matches the current approved source byte-for-byte, including its final newline. All lemma bodies are proved; definitions and statements retain their approved freeze.
 
-Module SHA-256: `b7e3e8966cd9ebf40aa8a3b8a8f5a64ee1e8cb25814d75ced62c826a130eafee`.
+Module SHA-256: `8be8dacb9212e7535e1fa7357398bb5b6a7cae6188d6d8643be6548d0ec422e0`.
 
 ```lean
 module
 
-public import BosonizeStubs.A02CARHilbert
+public import Bosonize.Core.A02CARHilbert
 
 /-!
 # CH04: concrete finite occupation CAR

@@ -1,6 +1,6 @@
 # CH04 unused Fintype interface cleanup proposal — 2026-10-09
 
-Status: **approved by the user, applied, and revalidated**. All 69 CH04/A02 lemmas are proved against approved interface baseline `7a2da78`. CH04's original section includes `[Fintype ι]` in count/sign theorem signatures even though their occupation input is a finite set and only the total order is needed. The original compiler run reported seven unused-section-variable warnings; the approved source now has none. Phase C requires zero warnings, and the locked interface cannot be changed silently.
+Status: **approved by the user, applied, and revalidated at `ddf9548`**. This record describes the historical staging cleanup. Subsequently authorized Phase C promoted both files to Core; see the [CH04 notebook](../docs/companion/Bosonize/Core/Ch04CARFock.md) for current source and validation. All 69 CH04/A02 lemmas are proved against approved interface baseline `7a2da78`. CH04's original section includes `[Fintype ι]` in count/sign theorem signatures even though their occupation input is a finite set and only the total order is needed. The original compiler run reported seven unused-section-variable warnings; the approved source now has none. Phase C requires zero warnings, and the locked interface cannot be changed silently.
 
 ## Exact approved change
 
@@ -29,7 +29,7 @@ The first seven warning locations are direct proof implementations. Several rema
 
 All conclusions, explicit membership/distinctness hypotheses, definitions, proof bodies, imports, operators, and Core sources are unchanged. These 14 theorem APIs become more general by dropping an unused implicit instance; this is an interface change even though the mathematical conclusions are preserved. No linter is suppressed and no dummy use of the instance is introduced.
 
-## Validation of the proposal
+## Validation of the proposal (historical staging checkpoint)
 
 - A complete temporary candidate outside guarded source directories compiles with `lake env lean -DwarningAsError=true` and empty diagnostics.
 - Parsing both variants verifies identical ordered non-lemma commands and exactly 14 changed theorem headers. The other 37 CH04 theorem headers and all 18 A02 headers are unchanged.
@@ -42,4 +42,4 @@ The user approved this exact patch and its lock migration. That approval authori
 
 This is a local interface cleanup discovered by proof compilation, not a shared mathematical failure or a dedicated cross-chapter issue sprint.
 
-The review patch contains only the 14 inserted prefixes (zero context). Its pre-cleanup source SHA-256 was `b1c2959acc2935a51c1dfb9a07fcf272bb15c9632acf0f8e7090d93026103117`. Use `git apply --reverse --check --unidiff-zero note/ch04_unused_fintype_interface_proposal_2026-10-09.patch` to verify the applied patch against the current source.
+The review patch contains only the 14 inserted prefixes (zero context). Its pre-cleanup source SHA-256 was `b1c2959acc2935a51c1dfb9a07fcf272bb15c9632acf0f8e7090d93026103117`. Use `git apply --reverse --check --unidiff-zero note/ch04_unused_fintype_interface_proposal_2026-10-09.patch` to verify the applied patch against the historical cleanup source at `ddf9548`; current Core paths differ after promotion.
