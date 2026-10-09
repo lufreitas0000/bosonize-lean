@@ -17,9 +17,6 @@ For a truly nilpotent endomorphism A with A^(d+1)=0 on its actual carrier, defin
 *Lean 4 Proof Strategy:*
 Define the finite polynomial sum with scalar action `((j! : ℂ)⁻¹) • A^j`, parameterized by d. Prove power vanishing on the actual carrier before treating it as an exact nilpotent exponential. A ℚ-algebra or characteristic-zero field supplies the invertible factorials; do not divide in `Module.End`.
 
-> [!NOTE]
-> **Proof-review correction (2026-10-09):** In Lean, write each summand as `((j! : ℂ)⁻¹) • A^j` (or the corresponding ℚ-algebra scalar action), rather than dividing in `Module.End`. For the Klein Gram/isometry proof below, the complex form must be Hermitian/sesquilinear; `BilinForm` alone does not express the needed complex inner product.
-
 **Lemma 1 (Properties of Nilpotent Exponentials):**
 Prove independence of a larger cutoff, its inverse expNil(−A), and the needed finite coefficient identities. Do not name an arbitrary Taylor polynomial the exact exponential of an unprojected operator.
 

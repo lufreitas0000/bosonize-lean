@@ -1,82 +1,84 @@
-# Adaptive Roadmap: `bosonize-lean`
+# Adaptive roadmap and Kanban pipeline
 
-> **Role & Purpose:** Complements `README.md` by defining the Agile/Kanban pipeline, sprint goals, and R&D tracking for the 1D Constructive Bosonization project.
+Updated: 2026-10-09. This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures.
 
----
+## Baseline and mathematical scope
 
-## 1. Project Status & Current Baseline
+Chapters 1–2 are proved and frozen in Core. The 21 chapter notes, A01–A10, and proof suggestions have a reconciled source baseline described in [the completion ledger](note/notes_review_completion_2026-10-09.md). Source-checking completion is not a Lean proof of later chapters or a guarantee that proof development will discover no further errors.
 
-* **Notes Status (COMPLETED):** All foundational notes across Chapters 1 through 21 and Appendices A01 through A10 are formalized in `notes/md/` and `notes/appendices/`, complete with:
-  * Discrete algebraic definitions (nilpotent exponentials, budget subspaces $\mathcal{B}_{K, \vec{N}_{\mathrm{max}}}$).
-  * Exact equalities (no vague $\propto$ approximations, zero-mode Klein factor tracking).
-  * Lean 4 proof strategies and auxiliary lemmas under every definition, lemma, and theorem.
-* **Goal:** Incrementally translate these verified notes into compiled, zero-`sorry` Lean 4 code in `Bosonize/Core/`.
+Use exact finite-dimensional, polynomial, and explicitly specified algebraic constructions. Keep the finite CAR model separate from the uncompressed CCR/charge model and its coefficientwise series vertices. No analytic limit or formal substitution t=1 is implicit. Numerical-margin-only finite Mattis–Mandelstam equality remains a research candidate; the approved Chapter 14 target is the conditional cyclic-span criterion. Compactification, thermodynamic gaps, and new non-Abelian or refermionization programs belong to an optional research backlog with their own reviewed scope.
 
----
+## Kanban board and work in progress
 
-## 2. Adaptive Kanban Pipeline
+The board is a Markdown status table, maintained in this file. A card is a chapter, a supporting lemma package, or a dedicated issue sprint. Record owner, dependencies, current phase, evidence/commit, next action, and blockers. A board is coordination documentation; it does not implement an autonomous scheduler or authorize agents to create tasks or contact other threads.
 
+| Column | Entry and exit rule | Work-in-progress policy |
+| --- | --- | --- |
+| Backlog | Named goal, source references and dependencies; no promise that its original claim is true. | Ordered by dependency and impact. |
+| Ready | Dependencies available; scope, carrier, target and acceptance criteria agreed. | Keep a small queue; start only authorized work. |
+| Active A/B/C | Execute one chapter's current phase and record its exact gate. | One primary chapter at a time; independent read-only/helper subtasks may run within authorized scope. |
+| Review | Concrete signatures, correction proposal, or promotion diff ready for human review. | Approval already given in the session remains valid for that scope. |
+| Blocked / issue sprint | Explain the exact obstruction, affected files, checkpoint and resume condition. | Halt affected implementation; continue independent authorized work. |
+| Done | Completed artifact and passing evidence committed; phase completion is distinguished from chapter completion. | A chapter is Done only after Phase C. |
+
+Current board snapshot:
+
+| Card | State | Phase | Dependencies / evidence | Next action |
+| --- | --- | --- | --- | --- |
+| CH01 — Lattice/band | Done | C complete | Frozen Core; direct compile and 20-lemma axiom audit passed. | Reuse positive Nyquist and existing band projection. |
+| CH02 — Umbral operators | Done | C complete | Frozen Core; direct compile and 32-lemma axiom audit passed. | Reuse bundled periodic shifts/differences. |
+| DOC — Source/suggestion reconciliation | Done | Documentation checkpoint | [Completion ledger](note/notes_review_completion_2026-10-09.md). | Reopen a specific card if compiler or proof evidence reveals an error. |
+| CH03/A01 — Fourier | Ready | A next | CH01/CH02; root/sign contracts and Euclidean transport specified. | Draft complete definitions and one-sorry statements; mirror notebook for review. |
+| CH04–CH07/A02–A03 — CAR and budgets | Backlog | A not started | CH03 normalization, occupation signs, finite Hilbert carrier, support budgets. | Refine exact interfaces after CH03 promotion. |
+| CH08–CH12/A04 — Oscillators, currents, completeness, Sugawara | Backlog | A not started | CAR/budget infrastructure and exact edge formulas. | Prove grading, direct nonzero norms and useful right-suffix margins. |
+| CH13–CH16/A05–A06 — Klein maps, conditional field criterion, fields | Backlog | A not started | Completeness and typed transitions. | Keep universal finite dictionary out of the unconditional interface. |
+| CH17–CH19/A07–A08 — Interactions, Bogoliubov, states | Backlog | A not started | Exact sea-Wick Q correction; pairing model; weighted polynomial state. | Review finite-action and uncompressed-state interfaces separately. |
+| CH20–CH21/A09–A10 — Formal vertices, duality, spin, leakage, SW | Backlog | A not started | Constructed states, charge maps, projection residuals and coefficient calculus. | Implement exact algebraic targets; keep analytic interpretations separate. |
+
+A support appendix is read and implemented as needed alongside its dependent chapter; implementing every appendix before Fourier is unnecessary. Dates are review points, not promises about proof-search duration. Limit a sprint by an explicit goal and stopping condition; reassess at each completed chapter or issue resolution.
+
+## The chapter A–B–C cycle
+
+**Phase A — Draft and document.** Read the current source, relevant appendices, suggestions and corrections. Check actual Mathlib APIs and instances. Define data completely in staging, with exactly one `:= by sorry` per theorem stub. Record carriers, source/target maps, hypotheses, nonvacuity, dependency lemmas, adopted/rejected suggestions and the exact source snapshot in the companion notebook. Build the draft, distinguish expected sorry diagnostics from other warnings, and present the concrete interface for review. Phase A stops before proof work or freezing unless already authorized.
+
+**Gate A→B.** Human review approves definitions and statements, followed by the approved strict interface lock and a committed baseline. A passing guard certifies unchanged syntax, not truth. Never regenerate the baseline to hide drift or infer approval from a build.
+
+**Phase B — Prove.** Change only approved proof bodies, use the compiler and available Lean tools, and preserve frozen data/interfaces. Run strict guards before and after batches. Update proof evidence and remaining placeholders in the notebook. New top-level helpers, assumptions, imports or source changes receive a concrete interface proposal and the existing review procedure before extending the lock. Stop retrying the same unresolved goal after three unsuccessful tactic attempts and report the missing mathematical step; that alone does not trigger a cross-chapter sprint.
+
+**Gate B→C and Phase C — Audit, promote and freeze.** Require complete proofs, no warnings or placeholders, fresh axiom audits limited to `propext`, `Classical.choice`, `Quot.sound`, exact source/notebook coherence, and passing guards/builds. After authorized promotion, preserve declarations/namespaces while migrating paths, notebooks and aggregators; freeze the complete Core source. Commit and verify against that checkpoint. Existing Core is never silently rewritten to solve a downstream problem.
+
+## Discovery triage: local repair or dedicated issue sprint
+
+A local tactic/API mistake, small proof decomposition, or clarification confined to one unlocked chapter stays on that chapter's card. Fix it, verify it, and update its notebook. If a local correction changes a locked interface, halt the dependent proof and use the existing interface-review gate even if it does not need a sprint.
+
+Open a **dedicated issue sprint** when evidence shows a shared mathematical or interface issue affecting multiple notes/files or downstream contracts: a counterexample to a reused theorem, incompatible carrier/adjoint conventions, insufficient shared margin, missing state existence, or a main statement whose strategy fails because essential mathematics is absent. Routine tactic failures and timeouts do not demonstrate such an issue.
+
+1. **Halt affected work and checkpoint.** Preserve completed proofs, capture the failing goal/counterexample, source versions, current locks and Git status. Do not keep proving downstream statements that rely on the disputed result or repair Core by weakening it.
+2. **Create an issue card and note.** Use `note/issue_<id>_<topic>.md` with the suspected false/missing contract, exact evidence, affected chapters/appendices/suggestions/companions, dependency impact, alternative repairs, proposed lemmas and resume conditions. No issue file is created for a merely hypothetical problem.
+3. **Run the focused sprint.** Validate the smallest witness or obstruction, choose a useful correction with explicit hypotheses, and update every affected Markdown statement/proof suggestion. Complete reviewable corrections before requesting approval. Independent authorized work may continue outside the affected dependency closure.
+4. **Review interface impact.** A note correction does not authorize changing a locked Lean statement. Present the exact proposed interface migration and obtain the required approval; preserve old evidence. A correction involving immutable Core needs a separately reviewed superseding/versioned design, never an overwritten hash.
+5. **Verify and close.** Check links and source consistency, elaborate revised definitions, check nonvacuity and the relevant witnesses, run affected builds/guards, and commit the correction. Resolve any changed frozen interface through its approved baseline procedure. Mark the issue resolved with evidence and record which downstream cards are ready again.
+6. **Resume the right phase.** Resume B if statements stayed identical; return the affected chapter to A review if interfaces changed. Do not promote an incomplete chapter just to close the sprint.
+
+If no supported repair exists, retain a research/blocked card, remove the unsupported claim from the unconditional implementation queue, and propose the precise narrower result. Clearly distinguish a changed theorem/model from a proof of the original target.
+
+Issue/card template:
+
+```text
+ID / owner / status / chapter phase:
+Target and current source references:
+Dependencies and affected files:
+Evidence / counterexample / compiler goal:
+Local or cross-chapter classification and reason:
+Proposed correction and helper lemmas:
+Review or lock impact:
+Acceptance checks and resume condition:
+Checkpoint / resolution commit:
+Next action:
 ```
-+-----------------------------------------------------------------------------------------------+
-|                                     BOSONIZE-LEAN KANBAN                                      |
-+------------------------------------+--------------------------+-------------------------------+
-| SPRINT 1: DISCRETE CORE ALGEBRA    | SPRINT 2: VERTEX ALGEBRAS| BACKLOG: ADVANCED EXTENSIONS  |
-+------------------------------------+--------------------------+-------------------------------+
-| [ ] CAR Algebra on finite lattice  | [ ] Sugawara Hamiltonians| [ ] Refermionization at K=1/2 |
-| [ ] Finite Budget Subspace B_K     | [ ] Mattis-Mandelstam    |     (Luther-Emery Dirac mass) |
-| [ ] Nilpotent Polynomial expNil    |     Vertex Dictionary    | [ ] Boundary Impurity & vDS   |
-| [ ] Discrete Chiral Density Modes  | [ ] Interacting Pairing  |     Majorana zero-mode        |
-| [ ] Kac-Moody Central Extension    |     Bogoliubov Transform | [ ] Non-Abelian SU(2)_1 WZW   |
-|     commutation proof              | [ ] T-Duality AlgEquiv   |     Current Algebra           |
-+------------------------------------+--------------------------+-------------------------------+
-```
 
----
+## Immediate next sprint: A01 and Chapter 3
 
-## 3. Sprint Specifications
+Read A01 and the revised external Fourier guide. Derive the band/residue equivalence from frozen Chapter 1; prove representative independence and sign/character bridges. Reuse the installed complex `ZMod.dft` where it matches the kernels. Keep S/T unscaled and source/target types distinct, then transport to Euclidean carriers and isolate the single normalization scalar 1/√L. Stub the inverse, adjoint/isometry and existing Chapter 2 difference eigenvalues, including L=1 and the positive Nyquist convention. Draft U as a linear map before bundling an isometry equivalence whose proof fields are available only after Phase B.
 
-### Sprint 1: The Theoretical Minimum (Core Kinematics)
-* **Epic B-01: Discrete Lattice & CAR Module**
-  * Formalize periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ and reciprocal lattice $\Lambda^*$.
-  * Define the CAR algebra as a quotient of the free tensor algebra or matrix endomorphisms on the exterior algebra $\bigwedge \mathbb{C}^L$.
-  * Auxiliary lemmas: CAR canonical anticommutators $\{c_p, c_q^\dagger\} = \delta_{pq}$.
-* **Epic B-02: The Energy Budget Space**
-  * Formalize $\mathcal{B}_{K, \vec{N}_{\mathrm{max}}}$ as a finite-dimensional submodule.
-  * Prove margin stability: applying low-mode density operators $\rho_{\pm m}$ preserves the budget if the excitation energy is strictly bounded.
-* **Epic B-03: Truncated Nilpotent Exponential (`expNil`)**
-  * Define `expNil(X)` as a finite polynomial sum up to degree $N_{\mathrm{nil}}$.
-  * Prove the exact finite Baker-Campbell-Hausdorff (BCH) lemma: $\exp(A)\exp(B) = \exp(A+B + \frac{1}{2}[A,B])$ when $[A, [A,B]] = 0$.
-* **Epic B-04: The Kac-Moody Anomaly on the Budget**
-  * Formalize normal-ordered density modes $\rho_{m} = \sum :c_{k+m}^\dagger c_k:$.
-  * Prove the central extension: $[\rho_{-m}, \rho_n] \psi = m \delta_{mn} \psi$ for any state $\psi \in \mathcal{B}$ with adequate margin.
-
-### Sprint 2: Vertex Algebras, Interactions & Duality
-* **Epic B-05: The Sugawara Construction**
-  * Prove exact quadratic decomposition of the free kinetic Hamiltonian in terms of density modes: $H_0 \psi = \frac{2\pi}{L} \sum m \rho_{-m}\rho_m \psi + E_{\mathrm{zero}} \psi$.
-* **Epic B-06: Mattis-Mandelstam Formula on the Budget**
-  * Construct vertex operators using Klein factors $F_\nu$ and Umbral phase fields $W^\pm(x)$.
-  * Prove the operator equivalence on matrix elements.
-* **Epic B-07: The Bogoliubov Transformation & T-Duality**
-  * Diagonalize the density-density forward-scattering Hamiltonian algebraically ($v_1 > |v_2|$).
-  * Formalize T-Duality as an `AlgEquiv` mapping $g \leftrightarrow 1/g$ and $O_{\mathrm{CDW}} \leftrightarrow O_{\mathrm{SC}}$.
-
----
-
-## 4. Backlog: Advanced Phases (Preparing for Upstream Integration)
-
-* **Phase VII: Inverse Mattis-Mandelstam & Refermionization (Chapters on Luther-Emery & Impurities):**
-  * Construct dual CAR fermions directly from vertex operators.
-  * Map the Sine-Gordon cosine interaction at $K=1/2$ to an exact massive Dirac fermion.
-  * Formalize von Delft & Schoeller's finite-$L$ impurity decoupling and boundary Majorana zero mode.
-* **Phase VIII: Non-Abelian Bosonization ($SU(2)_1$ Current Algebra):**
-  * Non-Abelian spin currents $J^a_m$ with Lie-algebraic Kac-Moody commutators $[J^a_m, J^b_n] = i \epsilon^{abc} J^c_{m+n} + \frac{1}{2}m\delta_{m,-n}\delta^{ab}$.
-  * Non-Abelian Sugawara construction and $SU(2)$ primary fields.
-
----
-
-## 5. R&D Discovery & Failure Tracking
-
-* A dedicated file `docs/LOG_DISCOVERY_AND_PIVOTS.md` records:
-  1. Failed proof attempts (e.g., tactic timeouts with `ring` vs `simp`).
-  2. Type-class obstructions (e.g., non-unital vs unital algebra representations).
-  3. Strategic pivots (e.g., replacing irrational normalization factors $\frac{1}{\sqrt{2}}$ with integer currents $R^c, R^s$).
+Deliverable: a compiled Phase A staging draft plus its exact companion notebook and a reviewable dependency/proof plan. This roadmap establishes readiness; it does not itself start that draft, lock its statements, or authorize Phase B.

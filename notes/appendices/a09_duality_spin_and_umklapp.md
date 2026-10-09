@@ -50,9 +50,6 @@ Define the zero mode charges `Q_c` and `Q_s` as linear combinations of the speci
 Define the charge lattice `Λ_{c,s}` as the set of pairs `(Q_c, Q_s) : ℤ × ℤ` such that `Q_c ≡ Q_s [ZMOD 2]`.
 **Auxiliary lemma:** Construct the integer charge-lattice equivalence with its parity-proved inverse `(Qc+Qs)/2, (Qc−Qs)/2`. Define energy budgets by coordinate support/span of configurations with total energy ≤K, and prove the sum over compatible energy splits; there is no ordinary vector inequality `Hψ≤Kψ`.
 
-> [!WARNING]
-> **Proof-review correction (2026-10-09):** The retired predicate `{ψ | H ψ ≤ K ψ}` is not a defined energy subspace on an ordinary complex vector space. Use the span/support of configurations of excitation energy at most K, or introduce a separately justified spectral projection. The charge-lattice equivalence also needs its parity-proved integer inverse, and the total-energy decomposition must sum over compatible energy splits.
-
 **Lemma (Charge/spin block decomposition):** Spin exchange symmetry of the quadratic coupling matrix yields a charge/spin block decomposition. It does not imply unequal velocities for every parameter choice: the free spin-independent model is a counterexample. State the nondegeneracy condition needed for `u_c≠u_s` separately.
 
 *Lean 4 Proof Strategy:*

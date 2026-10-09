@@ -58,9 +58,6 @@ Formalize as a theorem in the real numbers: `∀ v1 v2 : ℝ, v1 > |v2| → ∃ 
 **Auxiliary Lemmas:** Basic inequalities for real numbers, specifically relating squares and absolute values.
 **Strategy:** Construct `u = √(v1²−v2²)`, `c = √((v1+u)/(2u))`, `s = v2/(2*u*c)`. Under `v1 > |v2|`, prove u>0 and c>0 before division, then prove the matching equations. This covers either sign of v2 and v2=0. Downstream operator lemmas use those equations without unfolding square roots.
 
-> [!WARNING]
-> **Proof-review correction (2026-10-09):** The retired `tanh(2θ) = −v2/v1` witness had the wrong sign for the displayed plus-sign transform and `v2 = 2*u*c*s`. An algebraic alternative is `u = √(v1²−v2²)`, `c = √((v1+u)/(2u))`, `s = v2/(2*u*c)`. Under `v1 > |v2|`, prove `u > 0` and `c > 0` before division. This covers negative and zero v2 without an inverse-hyperbolic construction.
-
 Squaring an identity to obtain `(c²−s²)²=1` does not select c²−s²=+1. Supply its sign or make the desired identity a structure field. If scalars are complex, c²−s²=1 alone does not give a star-preserving transform; require real/self-adjoint scalars or use the appropriate conjugate relations.
 
 **Theorem (Bogoliubov Transformation):**

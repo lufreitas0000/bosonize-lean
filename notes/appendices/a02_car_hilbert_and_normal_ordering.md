@@ -77,9 +77,6 @@ Then `m D_m` is adjoint to multiplication by X_m.
 *Lean 4 Proof Strategy:*
 Define the Hermitian monomial pairing by finite support sums with conjugation in the first argument, positive mode weights, and linearity in the second. Prove the weight/factorial recurrence and the creator/derivative pairing identity on monomials, then extend through the finite sums. Hilbert adjoints are applied only after restricting to an appropriate finite carrier.
 
-> [!NOTE]
-> **Proof-review correction (2026-10-09):** Here “bilinear” must be read as a Hermitian, sesquilinear pairing over ℂ. Use positive mode weights, complex conjugation in the first slot, and linearity in the second. The ambient polynomial pairing identity is algebraic; apply the finite-dimensional Hilbert-adjoint API only after restricting to the appropriate finite slices.
-
 This matches the Haldane Gram matrix. In this convention D_m itself is not adjoint to X_m; the dagger notation must refer to the selected form and current normalization. One cannot declare both adjoint conventions on the same carrier without changing the form.
 
 All pairings are finite sums over support. Their restrictions to finite weight slices are ordinary finite inner products. This avoids normalized monomials X^r/√w(r) and their square-root bookkeeping. No Hilbert completion is required for these finite algebraic pairings.
@@ -97,9 +94,6 @@ Define `NormalSymbol := MvPolynomial (Mode ⊕ Mode) ℂ`. Specify evaluation on
 
 *Lean 4 Proof Strategy:*
 Use the checked `FreeAlgebra ℂ (Mode ⊕ Mode)` for raw words. Define separate fermionic and bosonic contractions, with a fixed word order and well-founded measure (word length, then inversion count). Prove evaluation preservation before deriving Wick expansions.
-
-> [!WARNING]
-> **Proof-review correction (2026-10-09):** The installed Lean argument order is `FreeAlgebra ℂ (Mode ⊕ Mode)`. Distinguish the fermionic swap above from the bosonic rule `A C = C A + m I`. Define normal-symbol evaluation on fixed ordered monomials and extend linearly; freeness as a commutative algebra does not provide an algebra homomorphism to noncommuting operator images.
 
 **Theorem 3:** Use integer combinatorial contraction coefficients and cast them into ℂ afterward. Prove the Hermite recurrence for `(D+X)^n 1` directly; a generating-function exponential is unnecessary for this finite polynomial theorem.
 

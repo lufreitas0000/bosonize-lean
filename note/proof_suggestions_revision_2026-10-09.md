@@ -1,10 +1,12 @@
 # Revision guide for the Lean proof suggestions — 2026-10-09
 
+Latest closure: [notes review completion](notes_review_completion_2026-10-09.md). The operational pipeline is [the adaptive roadmap](../adaptative_roadmap.md). Earlier snapshots in this guide explain provenance; the completion ledger and current chapter contracts control implementation.
+
 ## Scope, evidence, and status
 
 This review covers the three external suggestions in `docs/proof_suggestion/` and `docs/stub_suggestion/`, the inline proof strategies in all 21 chapters and appendices A01–A10, and the historical 1D decimation/SW sketches in `notes/appendices/brainstorm.md`. The brainstorm's proposed future 2D/QED3 program is not mathematically audited here.
 
-The review uses a snapshot captured at **2026-10-09 15:42:50 UTC**. Chapter and appendix revisions continued during this review. Thus the findings below identify problems in that snapshot's suggestions, rather than asserting that every quoted issue remains in the latest mathematical statements. Reconcile the suggestions with the corrected statements before implementing them. The earlier mathematical reviews are separate records: `further_changes_review_2026-10-09.md` and `revision_confirmation_2026-10-09.md`.
+The initial review used a snapshot captured at **2026-10-09 15:42:50 UTC**. External draft failure tables below retain that historical evidence. P01–P15 and the execution/closure sections have since been reconciled with the current source. Historical quoted issues do not imply that those defects remain in today's statements. The earlier mathematical reviews are separate records: `further_changes_review_2026-10-09.md` and `revision_confirmation_2026-10-09.md`.
 
 The external chapter 1 code was compiled unchanged and failed. The chapter 2 draft first failed on an obsolete import; adapting only two import paths in a temporary copy exposed further elaboration errors and definition placeholders. Chapter 3 is an architectural sketch, not a compilable Lean module. Several useful supporting identities and a Fourier counterexample were separately checked in Lean. None of this constitutes a proof of the later chapters.
 
@@ -106,9 +108,9 @@ For a positive weight m, a power beyond `⌊K/m⌋` annihilates the lowering res
 
 Sources: chapters 8, 16–17 and A02/A07.
 
-The installed argument order is `FreeAlgebra ℂ (Mode ⊕ Mode)`, not the order written in A02. For normal symbols, specify evaluation on every monomial as a fixed ordered creator/annihilator product, then extend **linearly**. Specifying images of variables as an algebra homomorphism from a commutative polynomial algebra would force their images to commute.
+The checked argument order used by A02 is `FreeAlgebra ℂ (Mode ⊕ Mode)`. For normal symbols, specify evaluation on every monomial as a fixed ordered creator/annihilator product, then extend **linearly**. Specifying images of variables as an algebra homomorphism from a commutative polynomial algebra would force their images to commute.
 
-Separate the bosonic rewrite `A C → C A + mI` from fermionic CAR swaps. Use a terminating word recursion ordered by word length and inversion count, with an evaluation-preservation theorem. Do not identify four-operator sea normal ordering with subtraction of only the scalar vacuum expectation: partial contractions generally leave lower-degree operator terms.
+Separate the bosonic rewrite `A C → C A + mI` from fermionic CAR swaps. Use a terminating word recursion ordered by word length and inversion count, with an evaluation-preservation theorem. Use the full sea-quasiparticle word definition in Chapter 17/A02. Prove its quartic expansion with partial contractions and the exact diagonal correction `H4,raw = H4,current − (g4/(2L)) Σ Q_M,ν` in Lemma 17.4a. It is an ambient finite CAR identity, independent of scalar-CCR margins.
 
 ### P06 — Compute truncated shifts on the actual band
 
@@ -128,7 +130,7 @@ The relevant object is the vector on which a restricted scalar commutator is use
 
 Track operator application order, signed cumulative shifts, and the largest prefix energy. For a written product, the rightmost operator acts first. A sum of all positive shifts is a safe wrapper but often unnecessarily strong. When a rewrite changes word order, certify the suffixes appearing in the rewritten terms as well.
 
-For Gram induction, keep the useful R2 bound `2K+|N|≤h`. At a pull-through step with lowering m and creator n, the right remainder has E≤K−n, hence `m+n+E≤m+K≤2K`. The snapshot's main chapter 11 paragraph now records this improvement, but its earlier strategy still substitutes a whole-prefix estimate and writes `[ρ_m,ρ_-m]=+m`. Correct the sketch to `[ρ_-m,ρ_m]=+m` and use the remainder invariant throughout.
+For Gram induction, keep the useful R2 bound `2K+|N|≤h`. At a pull-through step with lowering m and creator n, the right remainder has E≤K−n, hence `m+n+E≤m+K≤2K`. The revised Chapter 11 strategy uses this remainder invariant and `[ρ_-m,ρ_m]=+m` throughout. Preserve that orientation and bound during formalization.
 
 Do not impose `2M+K` in Sugawara merely because its sum runs to M. Terms with m>K annihilate the input on their right. Commute only the retained terms that can act, using the Gram proof's local bounds.
 
@@ -153,7 +155,7 @@ Sources: chapter 14 and A05.
 
 A ground-to-ground coefficient check is necessary but not sufficient for the cyclic induction. With positive output cutoff, `P_out c_x|N⟩` contains excited hole configurations as well. Compute this entire projected vector and match it to the raising exponential on the shifted ground. Then prove the exact typed current/fermion intertwining relation, including edge/projection residuals, and induct on the source partition word.
 
-Proposed dependencies: `projected_fermion_ground_expansion`, `vertex_ground_expansion`, `current_fermion_commutator_with_edges`, and `vertex_intertwining_on_word`. Each should state its actual source/target budgets. Do not conclude uniqueness from only one matrix element, or from irreducibility of a slice on which creators are not endomorphisms.
+Proposed dependencies: `projected_fermion_ground_expansion`, `vertex_ground_expansion`, `current_fermion_commutator_with_edges`, and `vertex_intertwining_on_word`. Each should state its actual source/target budgets. Do not conclude uniqueness from only one matrix element, or from irreducibility of a slice on which creators are not endomorphisms. Theorem 14.5 now supplies the checked cyclic-span/common-residual criterion: prove equality on words, include their span in `ker (A-B)`, and conclude from span=⊤. It imposes no unnecessary independence or zero-residual premise; the physical candidate must independently meet these hypotheses.
 
 ### P10 — Prove nilpotent exponentials and formal BCH separately
 
@@ -171,7 +173,7 @@ Sources: chapter 18 and A07.
 
 The inverse linear transformation needs only real scalars with c²−s²=1; it needs no budget or CCR. CCR preservation is a separate expansion on the permitted inputs. Quadratic diagonalization reorders same-mode products and uses diagonal current CCR; do not give it the stronger all-mode hypotheses automatically.
 
-Correct the sketch's reorder to `ρ_-m ρ_m=ρ_m ρ_-m+mI`. A07's proposed `tanh(2θ)=−v₂/v₁` has the wrong sign for the plus-sign transform and matching `2ucs=v₂`. A construction avoiding inverse hyperbolic functions is
+Use `ρ_-m ρ_m=ρ_m ρ_-m+mI`. The revised A07 uses the following algebraic witness for the plus-sign transform with `2ucs=v₂`; no inverse hyperbolic functions are needed:
 
 \[
  u=\sqrt{v_1^2-v_2^2},\quad
@@ -188,19 +190,19 @@ Sources: chapter 19 and A08.
 
 The suggestion of `StarAlgHom` for the vacuum state is impossible for nonzero scalar CCR: a multiplicative map to ℂ sends every commutator to zero, but normalization sends mI to m. Use a normalized positive complex-linear functional. Its trace-like or multiplicative properties must not be assumed.
 
-A08's contraction strategy also reverses the CCR sign: use `[A_m,C_n]=δ_mn*m*I`, with the negative sign for the reverse order. State the dressed annihilation conditions for the specified family, rather than one unnamed P, and prove positivity and existence of the state separately.
+A08 now fixes `[A_m,C_n]=δ_mn*m*I` and constructs the oscillator state as `ω_P=ω₀∘β_P⁻¹` using the weighted polynomial representation. Prove positivity and quotient descent, then all dressed-family annihilation conditions; the inverse pullback direction matters.
 
 For quadratic moments, the CCR, dressed annihilation conditions, and inverse transform suffice; no extra finite-budget restrictions belong to the abstract CCR theorem. Prove a concrete existence/positivity result separately, for example using the algebraic weighted polynomial representation and its vacuum pairing, then transport the state through the abstract Bogoliubov equivalence. A structure with impossible proof fields would make all subsequent conditional theorems vacuous.
 
-Define abstract Weyl/formal vertex objects before evaluating exponential correlations. The polynomial CCR algebra does not automatically contain such exponentials. A finite expNil calculation cannot be replaced by a scalar Gaussian exponential by applying Wick's theorem without a carrier/evaluation theorem.
+A08/Chapter 20 now define formal Weyl-type vertices in the charge/CCR tensor series algebra with central self-adjoint t. Prove each formal coefficient and exact source-charge character; the evaluator takes values in ℂ[[t]]. It is not a positive scalar state on arbitrary series, and t=1 evaluation is outside the contract. These Weyl-type vertices differ from the normal-ordered finite dictionary candidate.
 
 ### P13 — Build duality and spin decompositions from generators and charges
 
 Sources: chapters 20–21 and A09.
 
-Define the proposed model map on actual generators and prove relation, star and inverse preservation before claiming an equivalence. Preserve phase and zero-mode factors; they cannot be discarded as an unspecified prefactor.
+Use the specified Chapter 20/A09 map: bare R currents change sign, L currents are fixed, charges map `(NR,NL)↦(NR,−NL)`, `F_L↦−F_L†`, and parameters s↦−s. Prove relation/star/inverse preservation and the exact formal vertex law `D W_CDW(P,t,x)=ζ^x W_SC(P*,t,x)†`. Hamiltonian transport uses the symmetric chemical adjustment; state transport changes both parameters and charge labels.
 
-Construct the charge map `(N_up,N_down)↦(Q_c,Q_s)` as an equivalence onto the parity-constrained lattice, with a proved integer inverse. A total-energy budget is a sum over compatible energy splits, not the tensor product of two independently bounded budgets. The draft predicate `Hψ≤Kψ` is not meaningful as an ordinary vector inequality; use coordinate energy support, or a separately defined operator-order statement.
+Construct the charge map `(N_up,N_down)↦(Q_c,Q_s)` as an equivalence onto the parity-constrained lattice, with a proved integer inverse. A total-energy budget is a sum over compatible energy splits, not the tensor product of two independently bounded budgets. Use coordinate energy support, as in revised A03/A09; an ordinary vector inequality `Hψ≤Kψ` does not define a complex energy subspace.
 
 Mixed spin/charge current commutators retain the difference of same-species edge terms outside the common action regime. Cross-species commutativity alone does not eliminate that difference.
 
@@ -223,7 +225,7 @@ Under the current computational site-field convention, a useful witness family i
 1. Let L=2h with h≥1, K=0 and N_max=0 for all four species. Take the joint half-filled ground configuration S, with occupied momenta −h+1,…,0 in every species.
 2. Form T by adding momentum 1 in each L species and removing momentum 1−h in each R species. These modes are admissible and Pauli-allowed. T has charges (+1,+1,−1,−1), hence is outside the charge box.
 3. The selected Fourier exponent is `2(1−h)−2=−L`, so the character is one at every site. The spatial sum therefore survives exactly.
-4. The matrix element is `σ*g_U/L²`, where σ∈{±1} is the fixed CAR ordering sign. No adjoint Umklapp term has those same target charges, so it cannot cancel this component.
+4. With species order `(L↑,L↓,R↑,R↓)` and ascending momenta, the matrix element is `−g_U/L²`: the four preceding counts `2h,3h−1,2h,h` have odd total `8h−1`. No adjoint Umklapp term has those same target charges, so it cannot cancel this component.
 
 An exact Gaussian-rational check at L=4, with species order L-up, L-down, R-up, R-down, gives **−g_U/16**. In hexadecimal occupation masks, S=0x3333 and T=0x2277. This is an independent coefficient check, not a Lean proof of the general family.
 
@@ -298,11 +300,11 @@ Following the user's subsequent cleanup instruction, visible correction comments
 
 Commit **79b3a2d**, `docs(notes): checkpoint auxiliary notes before issue cleanup`, preserves the previously uncommitted A02/A06 versions before deletion. The brainstorm was already committed. Removed material consists of obsolete historical criticisms about the Chapter 8 weight/normal-symbol definitions, the Chapter 15 gradient, and the Chapter 16 factor/total-Sugawara definition, plus one verified duplicate SW section and two timeout artifacts. Their replacements were checked in the current source notes. No unsolved theorem was deleted or declared proved; “issue solved” in the cleanup commit refers to these source/editorial repairs.
 
-The cleanup commit contains only the seven affected auxiliary files and this report. For A05/A07/A08/A09, only the newly added comments are staged; their existing user revisions remain unstaged, as do the chapter revisions. The earlier review notes remain audit records rather than being deleted wholesale as if every historical finding were resolved.
+At the earlier cleanup checkpoint, only the seven affected auxiliary files and this report were included. A05/A07/A08/A09 included only the added comments; the existing user/chapter revisions were checkpointed subsequently in d3770c1. The earlier review notes remain audit records rather than being deleted wholesale as if every historical finding were resolved.
 
 ## Execution of this guide — current revision follow-up
 
-The original findings above refer to the 15:42:50 UTC snapshot. On the later user-authorized review, incoming chapters/appendices/reviews and the updated formalizer guidance were checkpointed as **d3770c1** before applying the guide. See [current revision verification](current_revision_verification_2026-10-09.md) for the C01–C13 reconciliation, attachment corrections, exact counterexamples, task attribution, and remaining contracts.
+The external-draft failure tables retain the original 15:42:50 UTC snapshot; the recurring guidance above now reflects the reconciled contracts. On the later user-authorized review, incoming chapters/appendices/reviews and the updated formalizer guidance were checkpointed as **d3770c1** before applying the guide. See [current revision verification](current_revision_verification_2026-10-09.md) for the C01–C13 reconciliation, attachment corrections, exact counterexamples, task attribution, and remaining contracts.
 
 The three external suggestions are now revised: Chapters 1–2 reference frozen Core rather than redeclare it; Chapter 3 retains character algebra and unscaled inversion before complex isometry. Affected inline strategies in the chapters and A01–A10 now apply P01–P15. The original code and old review findings remain available in Git; their historical line numbers are not locations in the revised drafts.
 
@@ -312,17 +314,17 @@ The three external suggestions are now revised: Chapters 1–2 reference frozen 
 | P02 — Noncommutative algebra | Explicit CAR/CCR substitutions, fixed factor order, no unconditional symmetric swap simp set; scalar normalization separate. |
 | P03 — Carriers/coercions | Euclidean Hilbert basis, integer charges/band labels, typed Fourier directions, Derivation.toLinearMap. |
 | P04 — Grading | Positive Fin-mode weights, coordinate/support budgets, nilpotency from grading, inactive Sugawara terms zero. |
-| P05 — Normal ordering | Word/symbol carrier, fixed ordered linear evaluation, contractions and evaluation preservation; raw quartic reduction pending. |
+| P05 — Normal ordering | Full sea-Wick raw-word definition, coincident-index quartic expansion, and exact Q_M one-body correction (17.4a). |
 | P06 — Densities | Integer-label filtered pairs, retained mixed-shift indicator, direct occupation-hop first norm proof. |
 | P07 — Margins | Right-remainder Gram invariant and actual suffix inputs; no unnecessary same-budget premise on a proved commutator. |
 | P08 — Restricted products | Exact projection remainder retained, typed intermediate budgets, actual compressed adjoints. |
-| P09 — Vertex base | Full projected ground vector required; ground scalar and numerical margin alone insufficient. |
+| P09 — Vertex base | Compiler-checked cyclic-span/common-residual criterion; full retained Fourier-hole ground expansion. Unconditional margin-only dictionary remains a research candidate. |
 | P10 — Exponentials | Factorial scalar action, formal coefficient carrier, no unsupported parameter evaluation or compressed scalar BCH. |
 | P11 — Bogoliubov | Algebraic real witnesses, correct plus-sign reordering, scalar inversion separate from CCR; ψ≠0 in obstruction. |
-| P12 — States | Normalized positive linear functional and existence obligation; no multiplicative scalar map. |
-| P13 — Duality/spin | Charge-compatible map still pending, integer parity inverse, compatible total-energy splits. |
+| P12 — States | Weighted polynomial vacuum, star-compatible quotient and β inverse pullback; charge tensor state and coefficientwise formal evaluator. |
+| P13 — Duality/spin | Explicit generator/charge duality, Klein adjoint phase ζ^x, charge-indexed state transport; spin quadratic blocks and compatible energy splits. |
 | P14 — SW | Both off-block terms, piecewise coupled-entry denominators, actual adjoint equations, exact identity-rotation special case. |
-| P15 — Leakage | Nonzero outside component, proper-box inward counterexample, useful zero-charge witness family. |
+| P15 — Leakage | Nonzero outside component, proper-box inward counterexample, exact zero-charge coefficient −g_U/L² and general CAR sign. |
 
 ### Checked Lean 4 patterns
 
@@ -380,3 +382,12 @@ example {V : Type*} [AddCommGroup V] [Module ℝ V]
 ```
 
 The projection identity is exact without any range hypothesis. To replace the projected product by the ambient product, prove its right-hand side is zero. This is weaker and more useful than requiring every factor to preserve one shared cutoff.
+
+
+## Completion handoff — 2026-10-09
+
+The current source-checking pass is closed in [the completion ledger](notes_review_completion_2026-10-09.md). This closes the revision actions; it does not promote later chapters to proved Lean. Research candidates and analytic extensions have explicit exclusions and cannot be silently selected as unconditional Phase A stubs.
+
+Additional current compiler evidence: `WithLp.linearEquiv 2 ℂ (I → ℂ)`, `Equiv.ofBijective` for the frozen band projection, transported Chapter 2 shifts, Nyquist examples at L=4, and `Complex.exp_int_mul`, `Complex.exp_mul_I`, `Complex.cos_neg`, `Complex.sin_neg`, `Complex.cos_two_mul_eq_one_sub` all passed focused probes. The complete cyclic word/span criterion of Theorem 14.5 passed with `autoImplicit=false` and `warningAsError=true`, over a semiring and additive commutative group modules. Its three proof helpers depend only on `propext` and `Quot.sound`.
+
+Immediate work is A01/Chapter 3 Phase A, followed by review before locking/proofs. Apply [the adaptive pipeline](../adaptative_roadmap.md) when downstream proof evidence reveals a discrepancy affecting multiple chapters. Local proof/tactic failures remain chapter-level work unless their mathematics or interfaces affect the dependency graph.

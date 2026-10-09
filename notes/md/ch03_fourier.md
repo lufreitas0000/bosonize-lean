@@ -54,16 +54,16 @@ $$
 *Lean 4 Proof Strategy:*
 Bundle the nontrivial spatial character and use the checked `AddChar.sum_eq_zero_of_ne_one` after proving it is not the trivial character. The diagonal sum is L. Alternatively prove a geometric telescoping identity and cancel the nonzero factor; ζ^m need not have order L when gcd(m,L)>1. Expand both compositions with `Finset.sum_comm` and transport sums through the frozen band equivalence.
 
-**Definition 3.4 (Unitary Physical Normalization).** For the physical fermionic layers defined over $\mathbb{C}$, we isolate the normalization into a single real scalar $a = 1/\sqrt{L}$ satisfying $L a^2 = 1$. The unitary DFT operator $U$ and its exact inverse are defined as:
+**Definition 3.4 (Unitary Physical Normalization).** For the physical fermionic layers defined over $\mathbb{C}$, isolate a real scalar $a = 1/\sqrt{L}$ satisfying $L a^2 = 1$. Transport S/T from ordinary function carriers to counting-inner-product Euclidean carriers: `S₂=eₖ.symm ∘ S ∘ eₓ`, `T₂=eₓ.symm ∘ T ∘ eₖ`, where `e_I=WithLp.linearEquiv 2 ℂ (I → ℂ)` goes from Euclidean space to functions. The unitary DFT and its exact inverse are:
 
 $$
-U = a S, \qquad U^{-1} = U^\dagger = a T \tag{3.8}
+U = a S_2, \qquad U^{-1} = U^\dagger = a T_2 \tag{3.8}
 $$
 
 Applying this unitary normalization preserves the counting canonical anticommutation relations (CAR) without introducing mixed scalar scalings.
 
 *Lean 4 Proof Strategy:*
-In the complex Hilbert layer define `a : ℝ := (Real.sqrt (L : ℝ))⁻¹`, prove positivity and `L*a^2=1` once, then cast a to ℂ. Use `EuclideanSpace ℂ (Ch01.Lattice L)` and `EuclideanSpace ℂ (Ch01.Band L)` for the counting inner products. Prove the adjoint kernel identity before bundling `a • S` as a linear isometry equivalence. Keep generic unscaled inversion free of square roots.
+In the complex Hilbert layer define `a : ℝ := (Real.sqrt (L : ℝ))⁻¹`, prove positivity and `L*a^2=1` once, then cast a to ℂ. Use `EuclideanSpace ℂ (Ch01.Lattice L)` and `EuclideanSpace ℂ (Ch01.Band L)` for the counting inner products. Define `a • S₂` as a linear map in Phase A, stub the adjoint/isometry statements, and bundle the final isometry equivalence only once its proof fields are supplied. Prove the adjoint kernel identity on the actual Euclidean carriers. Keep generic unscaled inversion free of square roots.
 
 **Lemma 3.5 (Diagonalization of Difference Operators).** The umbral difference operators act strictly diagonally on the characters:
 

@@ -1,8 +1,8 @@
 # Appendices for the Lean Formalization
 
-Status: Reference inventory reviewed on 2026-10-09; inclusion is not mathematical verification. See the [current revision verification](../../note/current_revision_verification_2026-10-09.md) and [proof revision guide](../../note/proof_suggestions_revision_2026-10-09.md).
+Status: Source and proof-suggestion reconciliation completed on 2026-10-09 within the explicit algebraic scope. See the [completion ledger](../../note/notes_review_completion_2026-10-09.md), [proof revision guide](../../note/proof_suggestions_revision_2026-10-09.md), and [adaptive roadmap](../../adaptative_roadmap.md).
 
-Only Chapters 1–2 have proved, frozen Core implementations. Later finite statements are proposed targets; the projected vertex dictionary, raw quartic contraction reduction, extended abstract vertex state, and operator duality retain explicit pending obligations. The notes keep these separate from coefficientwise formal identities and continuum motivations. Historical reviews remain dated records of their snapshots.
+Only Chapters 1–2 have proved, frozen Core implementations. Later notes have explicit targets and proof obligations: the raw quartic includes its exact one-body correction; the abstract state, formal vertices and duality have specified constructions; the finite field dictionary uses a conditional cyclic criterion. A universal finite field equality under numerical margins alone remains a research candidate excluded from freezing. Analytic evaluation and finite-model comparisons are separate extensions. Historical reviews remain dated snapshots.
 
 | Appendix | Subject | Chapters |
 | --- | --- | --- |
@@ -17,4 +17,4 @@ Only Chapters 1–2 have proved, frozen Core implementations. Later finite state
 | [A09](a09_duality_spin_and_umklapp.md) | Duality domains, spin/charge constraints, and Umklapp shifts | 20–21 |
 | [A10](a10_discrete_rg_and_schrieffer_wolff.md) | Discrete energy shells, Schrieffer-Wolff perturbation theory, and RG context | 17–18, 21 |
 
-Implementation order: A01 → A02 → A03 → A04. Then resolve A05/A06 and choose the quadratic model in A07 before adopting the state and dictionary claims in A08/A09, followed by energy-shell Schrieffer-Wolff methods in A10.
+Immediate implementation: read A01 and draft Chapter 3 in Phase A. Then use A02 with Chapters 4–6, A03 with Chapter 7, A04 with Chapters 9–12, and later appendices alongside their dependent chapters. Appendices are supporting obligations, not a requirement to implement all ten before Fourier. Follow the roadmap and chapter A–B–C review gates.

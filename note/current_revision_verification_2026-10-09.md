@@ -1,5 +1,6 @@
 # Current revision verification and proof-guide execution — 2026-10-09
 
+Latest status: [notes review completion](notes_review_completion_2026-10-09.md). This document records the earlier snapshot; its remaining-action entries are superseded where the completion ledger says resolved.
 ## Decision and scope
 
 The attachment's conclusion that C01–C13 were all resolved and the notes formed a verified mathematical foundation is too strong. Several useful specification repairs were present, but the checkpoint still contained false vertex, quartic-reduction, duality, and leakage claims. Passing freeze guards establishes preservation of Lean interfaces/sources; it does not validate the mathematics in Markdown.

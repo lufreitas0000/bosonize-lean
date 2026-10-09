@@ -70,11 +70,11 @@ T is an unscaled synthesis map, not the inverse of S until the factor L is remov
 
 **Hilbert carrier transport:** For each finite index type I, `WithLp.linearEquiv 2 ℂ (I → ℂ)` maps `EuclideanSpace ℂ I` to ordinary functions. Write these equivalences as eₓ and eₖ. Set S₂ = eₖ⁻¹ ∘ S ∘ eₓ and T₂ = eₓ⁻¹ ∘ T ∘ eₖ. Transport the frozen Chapter 2 operators in the same way. This algebraic transport is not an isometry for the default function norm; the counting inner product is on the Euclidean carrier.
 
-**Theorem:** Then U = aS₂ and U⁻¹ = aT₂. The conjugate-transpose kernel proves U† = aT, and the two unscaled composition identities give unitarity.
+**Theorem:** Then U = aS₂ and U⁻¹ = aT₂. The conjugate-transpose kernel proves U† = aT₂, and the two unscaled composition identities give unitarity.
 
 *Lean 4 Proof Strategy:*
 - **Auxiliary Lemmas:** `LinearMap.adjoint`, inner product spaces properties.
-- **Strategy:** Define `U = a • S₂` and `U_inv = a • T₂`. Their product yields `a^2 * (T ∘ S) = a^2 * L * I = I`. To compute `U†`, first compute `S₂†` between `EuclideanSpace ℂ (Ch01.Band L)` and `EuclideanSpace ℂ (Ch01.Lattice L)`. Expand `⟨S f, g⟩`, swap sums, and use `conj (χ(-k, y)) = χ(k, y)` to identify it as `⟨f, T g⟩`. Hence `S₂† = T₂`. Thus `U† = conj(a) • S₂† = a • T₂ = U⁻¹`. Unitarity is captured by constructing a `LinearIsometryEquiv`.
+- **Strategy:** Define `U = a • S₂` and `U_inv = a • T₂`. Their product yields `a^2 • (T₂ ∘ S₂) = (a^2 * L) • I = I`. To compute `U†`, first compute `S₂†` between `EuclideanSpace ℂ (Ch01.Band L)` and `EuclideanSpace ℂ (Ch01.Lattice L)`. Expand the counting-inner-product finite sum for `⟨S₂ f, g⟩`, swap sums, and use `conj (χ(-k, y)) = χ(k, y)` to identify it as `⟨f, T₂ g⟩`. Hence `S₂† = T₂`. Thus `U† = conj(a) • S₂† = a • T₂ = U⁻¹`. Unitarity is captured by constructing a `LinearIsometryEquiv`.
 
 Use a `LinearIsometryEquiv` on `EuclideanSpace ℂ _` when Hilbert APIs are needed; a `LinearEquiv` alone asserts invertibility, not preservation of the inner product. Alternatively prove matrix conjugate-transpose identities first and transport to Euclidean spaces.
 
