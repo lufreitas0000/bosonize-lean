@@ -1,10 +1,10 @@
 # Chapter 4 occupation-CAR lab notebook
 
-Status (2026-10-09): **Phase A complete; awaiting interface review.** Lean module: `BosonizeStubs/Ch04CARFock.lean`.
+Status (2026-10-09): **Phase B proofs complete; Phase C not started.** Lean module: `BosonizeStubs/Ch04CARFock.lean`.
 
 ## Scope, review and source reconciliation
 
-The user authorized Phase A for CH04 and the finite-CAR portion of A02 on 2026-10-09. This draft is **unlocked and unproved**. The source baseline at task start is `648c076abe7f82061c29e01f8fb5f7f561d2a70b`. Frozen CH01–CH03 and A01 are preserved. The roadmap controls current status; the dated completion ledger still records its older Fourier readiness checkpoint.
+The user authorized Phase A for CH04 and the finite-CAR portion of A02 on 2026-10-09. This initial draft was unlocked and unproved; the user subsequently approved Phase B for both modules. Its reviewed interface is now locked at `7a2da78`, and all 69 proofs are complete. The historical Phase A evidence below is retained separately from the current Phase B audit. The source baseline at task start is `648c076abe7f82061c29e01f8fb5f7f561d2a70b`. Frozen CH01–CH03 and A01 are preserved. The roadmap controls current status; the dated completion ledger still records its older Fourier readiness checkpoint.
 
 Read [CH04](../../../notes/md/ch04_CAR_Fock_space.md), [A02](../../../notes/appendices/a02_car_hilbert_and_normal_ordering.md), [TOC](../../../notes/md/TOC.md), [source audit](../../../docs/audit/reference_notes_lean_audit.md), [proof corrections](../../../note/proof_suggestions_revision_2026-10-09.md), and [completion ledger](../../../note/notes_review_completion_2026-10-09.md). No CH04/A02-specific file exists in `docs/stub_suggestion/` or `docs/proof_suggestion/`; inline strategies and the reviewed corrections are advisory. Three older CH01–CH03 suggestion files changed concurrently during drafting; those unrelated edits are preserved and excluded from this checkpoint.
 
@@ -12,7 +12,7 @@ Adopt the Euclidean carrier and occupation basis from the notes, basis construct
 
 Deferred: A02 polynomial Hermitian forms, raw words/normal symbols, Wick reduction, sea-Wick quartic corrections, CH06 local algebras/graded words/matrix units, and CH07 budgets. No compression, energy margin, lattice-evenness, or nonempty mode assumption is needed for this generic finite occupation model. The empty mode type has one occupation configuration, the empty set; creation witnesses take a mode `i`, so they do not claim modes exist in that edge case. Species later require an explicitly chosen lexicographic total order.
 
-## Validation and approval boundary
+## Phase A validation (historical checkpoint)
 
 - `lake build Bosonize` passes with unchanged Core. `lake build BosonizeStubs` passes with exactly 69 expected declaration-uses-sorry warnings (18 A02, 51 CH04). Fresh direct `lake env lean` checks have the same expected warnings and no errors or other warnings. No diagnostic/linter suppression was added.
 - All 18 definitions/abbreviations and both structures elaborate without placeholders. A fresh definition/constructor/projection audit checks 23 names with only `propext`, `Classical.choice`, `Quot.sound`, and no `sorryAx`. This proves the definitions do not consume stub proofs, not the CAR identities themselves.
@@ -25,7 +25,7 @@ Deferred: A02 polynomial Hermitian forms, raw words/normal symbols, Wick reducti
 
 ## Concrete definitions and type choices
 
-Namespace `Bosonize.Ch04`. Eight complete definitions and 51 theorem stubs. The operator carrier uses a finite linearly ordered mode type `[Fintype ι] [LinearOrder ι]`; the order supplies decidable equality and comparisons. Count/sign helpers retain only the instances needed by their inferred signatures (finiteness is not needed for a finite occupation set). The chosen order is part of the fermionic phase convention.
+Namespace `Bosonize.Ch04`. Eight complete definitions and 51 proved lemmas. The operator carrier uses a finite linearly ordered mode type `[Fintype ι] [LinearOrder ι]`; the order supplies decidable equality and comparisons. The Phase A section declaration also automatically included `[Fintype ι]` in count/sign theorem signatures. Phase B compilation revealed that this instance is unnecessary for that layer; it remains in the approved interface pending the reviewed cleanup proposal. The chosen order is part of the fermionic phase convention.
 
 | Definition | Meaning |
 | --- | --- |
@@ -38,9 +38,9 @@ Namespace `Bosonize.Ch04`. Eight complete definitions and 51 theorem stubs. The 
 | `parity` | Ascending sorted list product of I−2nᵢ; ambient multiplication is not assumed commutative. |
 | `hopping i j` | c†ᵢ cⱼ, with annihilation on the right acting first. |
 
-All operators act on the same `A02.FockSpace ι`. No representation structure with unproved fields is hidden inside their definitions. `concrete_car_exists` is the explicitly unproved target asserting a finite Hilbert CAR representation with these exact maps. Prove CAR and adjoints before filling that witness; no concrete bundled data is introduced through a `sorry`-dependent definition.
+All operators act on the same `A02.FockSpace ι`. No representation structure with unproved fields is hidden inside the operator definitions. `concrete_car_exists` now proves existence of a finite Hilbert CAR representation with these exact maps, using the proved CAR and adjoint lemmas.
 
-## Proposed Phase B dependency order
+## Phase A proof plan (historical)
 
 1. **A02 basis bridges**, especially evaluation, inner product, nonzero kets, map extensionality and the adjoint pairing criterion.
 2. **Atomic counts/signs**: insertion with j∉S and additive erasure with j∈S; same-mode count/sign invariance; sign square and conjugation. The insert/insert, erase/erase and mixed insert/erase helper hypotheses describe exactly the nonzero branches for distinct modes. Keep the membership conditions rather than deriving a sign relation on forbidden branches.
@@ -49,17 +49,17 @@ All operators act on the same `A02.FockSpace ι`. No representation structure wi
 5. **Diagonal observables/parity**: number action and idempotency, actual adjoints, pairwise number commutativity, total-number action, and parity action on kets. Derive parity square/self-adjointness and oddness of creation/annihilation from those actions; the sorted list fixes the defining order.
 6. **Bilinears and hops**: reuse A02 pure-CAR algebra after obtaining the concrete CAR witness. Prove local/total number commutators, hopping basis action, blocked cases, diagonal identity and actual hopping adjoint.
 
-## Sign, adjoint and edge contracts for review
+## Sign, adjoint and edge contracts
 
 `preceding_count_erase` states oldCount = erasedCount + indicator(j<i), avoiding natural subtraction. The hopping coefficient is sign(j,S) * sign(i,S.erase j), exactly matching the right-to-left action. The blocked-hop condition permits j∉S, or i≠j with i already occupied; i=j is handled by `hopping_diagonal`, so occupied diagonal hops are not accidentally claimed zero.
 
 The mixed CAR target uses a scalar Kronecker indicator times the identity endomorphism. The adjoint basis equation is ⟨δS,cᵢ δT⟩=⟨c†ᵢ δS,δT⟩, with actual finite Hilbert adjoints. The bilinear identity preserves the corrected signs δbc c†a cd − δad c†c cb. Parity uses an explicit ascending list, never `Finset.prod` on an arbitrary noncommutative ring.
 
-No lattice length, half filling or energy margin enters this generic chapter. Empty-mode dimension/vacuum contracts belong to A02; when a mode is supplied, singleton witnesses are available as proposed stubs. No true-for-all-modes conclusion is inferred from the finite sanity checks. Remaining obligations are exactly the 51 proofs and their 18 A02 dependencies, followed by the normal Phase C audit.
+No lattice length, half filling or energy margin enters this generic chapter. Empty-mode dimension/vacuum contracts belong to A02; when a mode is supplied, singleton witnesses are available as proposed stubs. No true-for-all-modes conclusion is inferred from the finite sanity checks. All 51 proofs and their 18 A02 dependencies are now complete. The remaining gate is the reviewed unused-instance cleanup and the separately authorized Phase C audit.
 
 ## Exact theorem inventory
 
-Names below are review stubs; exact binder types and statements appear in the source snapshot.
+All names below now have complete proofs. Exact binder types, statements, and proofs appear in the source snapshot.
 
 - `Bosonize.Ch04.preceding_count_empty`
 - `Bosonize.Ch04.preceding_count_insert`
@@ -128,7 +128,7 @@ These hashes identify the consulted snapshots; they do not certify mathematical 
 
 ## Definition axiom evidence
 
-Fresh audit output for data in this namespace; all stubs remain unproved.
+Historical Phase A audit output for data in this namespace. Phase B freshly rechecked these declarations with only standard axioms; all theorem proofs are now complete.
 
 ```text
 'Bosonize.Ch04.precedingCount' depends on axioms: [propext, Quot.sound]
@@ -141,11 +141,95 @@ Fresh audit output for data in this namespace; all stubs remain unproved.
 'Bosonize.Ch04.hopping' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
+## Phase B proof completion and validation — 2026-10-09
+
+The user approved Phase B for CH04 and finite-CAR A02. Initial locking added only the two reviewed Phase A entries to `stub_locks.v2.json`; every prior entry stayed identical. The approved baseline is `7a2da78`. Proof work changed only lemma bodies; no public helper, definition, import, namespace, theorem header, attribute, or hypothesis was changed. Original Phase A module comments are retained as part of the frozen source context; this notebook records the current completion state.
+
+All 51 CH04 lemmas are proved. Atomic signs follow the additive count identities and the two possible orders of distinct modes. Concrete CAR is proved on occupation kets, with membership cases and exact set-operation/sign cancellation; adjoints follow the basis-pair criterion. `concrete_car_exists` now constructs the actual finite Hilbert CAR witness from these proved identities, rather than introducing an assumed representation. Number action is diagonal, and parity is proved by induction over the defining ordered list, transporting only its scalar eigenvalues to a commutative finite product. Oddness, number commutators, and hopping identities then follow from those exact actions and the reusable A02 algebra.
+
+Fresh `lake env lean BosonizeStubs/Ch04CARFock.lean` exits 0, with no errors or placeholders and exactly seven unused-section-variable warnings for the locked `[Fintype ι]` assumption:
+
+- `preceding_count_empty`
+- `preceding_count_insert`
+- `preceding_count_insert_self`
+- `preceding_count_erase_self`
+- `fermion_sign_ne_zero`
+- `fermion_sign_square`
+- `fermion_sign_conj`
+
+Native MCP independently reports those same seven linter warnings, with no errors, failed dependencies, timeout, or partial result. Goal retrieval on `parity_square` shows the product of the two scalar powers becoming the power of `(-1)*(-1)`, before the final simplification closes the proof.
+
+The [interface cleanup proposal](../../../note/ch04_unused_fintype_interface_proposal_2026-10-09.md) and its exact unapplied patch remove this redundant implicit instance from the 14-lemma count/sign layer. A full temporary candidate compiles with warnings treated as errors and empty diagnostics. The proposal changes 14 locked theorem headers and therefore needs explicit review; the approved source remains unchanged. Phase C cannot promote CH04 while these warnings remain. No warning suppression or artificial use of the instance was added.
+
+Shared validation:
+
+- `STUB_LOCK_BASELINE_REF=7a2da78 make ci` passes all 69 guard tests, 182 frozen statements, 152 frozen commands, four complete Core source hashes, and both library builds. The staging build allows the seven reported CH04 linter warnings; passing CI is not a warning-free promotion result.
+- Strict committed-baseline verification passes. All existing Core bytes, all manifests after the approved initial lock, the toolchain, and the dependency manifest remain unchanged throughout proof work.
+- All 69 A02/CH04 lemmas freshly audited through `import BosonizeStubs` use only subsets of `propext`, `Classical.choice`, `Quot.sound`. Zero `sorryAx`, extra axioms, or placeholder proof tokens remain. A fresh data/constructor/projection audit also uses only standard axioms.
+- The exact source snapshot below matches the current Lean file. The current checkpoint remains in staging. No Phase C promotion is authorized or performed.
+- Declaration search's previously observed missing-`rg` limitation was handled by installed-source `rg`/compiler inspection. Native diagnostic and goal tools worked; a search-tool failure is not reported as total MCP/LSP unavailability.
+
+## Fresh theorem axiom audit
+
+```text
+'Bosonize.Ch04.annihilation_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.annihilation_eq_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.annihilation_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.annihilation_singleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.annihilation_singleton_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.annihilation_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.annihilation_vacuum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.bilinear_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.concrete_car_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.creation_adjoint_pairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.creation_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.creation_eq_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.creation_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.creation_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.creation_vacuum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.creation_vacuum_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.fermion_sign_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.fermion_sign_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.fermion_sign_erase_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.fermion_sign_insert_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.fermion_sign_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.fermion_sign_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.hopping_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.hopping_blocked' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.hopping_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.hopping_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.mixed_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.number_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.number_annihilation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.number_commute' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.number_creation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.number_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.number_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.parity_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.parity_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.parity_creation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.parity_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.parity_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.parity_vacuum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.preceding_count_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.preceding_count_erase' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.preceding_count_erase_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.preceding_count_insert' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.preceding_count_insert_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.sign_erase_erase' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.sign_insert_erase' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.sign_insert_insert' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.total_number_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.total_number_annihilation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.total_number_creation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch04.total_number_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 ## Exact Lean source snapshot
 
-This block matches the source byte-for-byte, including its final newline.
+This block matches the current approved source byte-for-byte, including its final newline. All lemma bodies are proved; definitions and statements retain their approved freeze.
 
-Module SHA-256: `58f6e1a3e9e50e56ba4808cabeea4bed531f7e418c9990f0fdfc42bf2a03eb56`.
+Module SHA-256: `b1c2959acc2935a51c1dfb9a07fcf272bb15c9632acf0f8e7090d93026103117`.
 
 ```lean
 module
@@ -192,149 +276,369 @@ noncomputable def parity : Module.End ℂ (A02.FockSpace ι) :=
 noncomputable def hopping (i j : ι) : Module.End ℂ (A02.FockSpace ι) :=
   creation i * annihilation j
 
-lemma preceding_count_empty (i : ι) : precedingCount i ∅ = 0 := by sorry
+lemma preceding_count_empty (i : ι) : precedingCount i ∅ = 0 := by
+  simp [precedingCount]
 
 lemma preceding_count_insert (i j : ι) (S : A02.Occupation ι) (hj : j ∉ S) :
-    precedingCount i (insert j S) = precedingCount i S + if j < i then 1 else 0 := by sorry
+    precedingCount i (insert j S) = precedingCount i S + if j < i then 1 else 0 := by
+  classical
+  by_cases hji : j < i
+  · simp [precedingCount, Finset.filter_insert, hji, hj]
+  · simp [precedingCount, Finset.filter_insert, hji]
 
 lemma preceding_count_erase (i j : ι) (S : A02.Occupation ι) (hj : j ∈ S) :
-    precedingCount i S = precedingCount i (S.erase j) + if j < i then 1 else 0 := by sorry
+    precedingCount i S = precedingCount i (S.erase j) + if j < i then 1 else 0 := by
+  have h := preceding_count_insert i j (S.erase j) (Finset.notMem_erase j S)
+  simpa [Finset.insert_erase hj] using h
 
 lemma preceding_count_insert_self (i : ι) (S : A02.Occupation ι) :
-    precedingCount i (insert i S) = precedingCount i S := by sorry
+    precedingCount i (insert i S) = precedingCount i S := by
+  simp [precedingCount, Finset.filter_insert]
 
 lemma preceding_count_erase_self (i : ι) (S : A02.Occupation ι) :
-    precedingCount i (S.erase i) = precedingCount i S := by sorry
+    precedingCount i (S.erase i) = precedingCount i S := by
+  simp [precedingCount, Finset.filter_erase, Finset.erase_eq_of_notMem]
 
-lemma fermion_sign_empty (i : ι) : fermionSign i ∅ = 1 := by sorry
+lemma fermion_sign_empty (i : ι) : fermionSign i ∅ = 1 := by
+  simp [fermionSign, preceding_count_empty]
 
-lemma fermion_sign_ne_zero (i : ι) (S : A02.Occupation ι) : fermionSign i S ≠ 0 := by sorry
+lemma fermion_sign_ne_zero (i : ι) (S : A02.Occupation ι) : fermionSign i S ≠ 0 := by
+  exact pow_ne_zero _ (by norm_num)
 
 lemma fermion_sign_square (i : ι) (S : A02.Occupation ι) :
-    fermionSign i S * fermionSign i S = 1 := by sorry
+    fermionSign i S * fermionSign i S = 1 := by
+  unfold fermionSign
+  rw [← mul_pow]
+  simp
 
 lemma fermion_sign_conj (i : ι) (S : A02.Occupation ι) :
-    conj (fermionSign i S) = fermionSign i S := by sorry
+    conj (fermionSign i S) = fermionSign i S := by
+  simp [fermionSign]
 
 lemma fermion_sign_insert_self (i : ι) (S : A02.Occupation ι) :
-    fermionSign i (insert i S) = fermionSign i S := by sorry
+    fermionSign i (insert i S) = fermionSign i S := by
+  simp only [fermionSign, preceding_count_insert_self]
 
 lemma fermion_sign_erase_self (i : ι) (S : A02.Occupation ι) :
-    fermionSign i (S.erase i) = fermionSign i S := by sorry
+    fermionSign i (S.erase i) = fermionSign i S := by
+  simp only [fermionSign, preceding_count_erase_self]
 
 lemma sign_insert_insert (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∉ S) (hj : j ∉ S) :
     fermionSign j S * fermionSign i (insert j S) =
-      -(fermionSign i S * fermionSign j (insert i S)) := by sorry
+      -(fermionSign i S * fermionSign j (insert i S)) := by
+  have hci := preceding_count_insert i j S hj
+  have hcj := preceding_count_insert j i S hi
+  rcases lt_or_gt_of_ne hij with hlt | hgt
+  · simp only [fermionSign, hci, hcj, ite_eq_right (not_lt_of_gt hlt), ite_eq_left hlt, add_zero, pow_succ]
+    ring
+  · simp only [fermionSign, hci, hcj, ite_eq_left hgt, ite_eq_right (not_lt_of_gt hgt), add_zero, pow_succ]
+    ring
 
 lemma sign_erase_erase (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∈ S) (hj : j ∈ S) :
     fermionSign j S * fermionSign i (S.erase j) =
-      -(fermionSign i S * fermionSign j (S.erase i)) := by sorry
+      -(fermionSign i S * fermionSign j (S.erase i)) := by
+  have hci := preceding_count_erase i j S hj
+  have hcj := preceding_count_erase j i S hi
+  rcases lt_or_gt_of_ne hij with hlt | hgt
+  · simp only [ite_eq_right (not_lt_of_gt hlt), ite_eq_left hlt, add_zero] at hci hcj
+    simp only [fermionSign, hci, hcj, pow_succ]
+    ring
+  · simp only [ite_eq_left hgt, ite_eq_right (not_lt_of_gt hgt), add_zero] at hci hcj
+    simp only [fermionSign, hci, hcj, pow_succ]
+    ring
 
 lemma sign_insert_erase (i j : ι) (S : A02.Occupation ι)
     (hij : i ≠ j) (hi : i ∉ S) (hj : j ∈ S) :
     fermionSign j S * fermionSign i (S.erase j) =
-      -(fermionSign i S * fermionSign j (insert i S)) := by sorry
+      -(fermionSign i S * fermionSign j (insert i S)) := by
+  have hci := preceding_count_erase i j S hj
+  have hcj := preceding_count_insert j i S hi
+  rcases lt_or_gt_of_ne hij with hlt | hgt
+  · simp only [ite_eq_right (not_lt_of_gt hlt), ite_eq_left hlt, add_zero] at hci hcj
+    simp only [fermionSign, hci, hcj, pow_succ]
+    ring
+  · simp only [ite_eq_left hgt, ite_eq_right (not_lt_of_gt hgt), add_zero] at hci hcj
+    simp only [fermionSign, hci, hcj, pow_succ]
+    ring
 
 lemma creation_ket (i : ι) (S : A02.Occupation ι) :
     creation i (A02.ket S) =
-      if i ∈ S then 0 else fermionSign i S • A02.ket (insert i S) := by sorry
+      if i ∈ S then 0 else fermionSign i S • A02.ket (insert i S) := by
+  exact A02.extend_basis_ket _ S
 
 lemma annihilation_ket (i : ι) (S : A02.Occupation ι) :
     annihilation i (A02.ket S) =
-      if i ∈ S then fermionSign i S • A02.ket (S.erase i) else 0 := by sorry
+      if i ∈ S then fermionSign i S • A02.ket (S.erase i) else 0 := by
+  exact A02.extend_basis_ket _ S
 
-lemma creation_vacuum (i : ι) : creation i (A02.ket ∅) = A02.ket {i} := by sorry
+lemma creation_vacuum (i : ι) : creation i (A02.ket ∅) = A02.ket {i} := by
+  simp [creation_ket, fermion_sign_empty]
 
-lemma annihilation_vacuum (i : ι) : annihilation i (A02.ket ∅) = 0 := by sorry
+lemma annihilation_vacuum (i : ι) : annihilation i (A02.ket ∅) = 0 := by
+  simp [annihilation_ket]
 
-lemma creation_vacuum_ne_zero (i : ι) : creation i (A02.ket ∅) ≠ 0 := by sorry
+lemma creation_vacuum_ne_zero (i : ι) : creation i (A02.ket ∅) ≠ 0 := by
+  rw [creation_vacuum]; exact A02.ket_ne_zero {i}
 
-lemma annihilation_singleton (i : ι) : annihilation i (A02.ket {i}) = A02.ket ∅ := by sorry
+lemma annihilation_singleton (i : ι) : annihilation i (A02.ket {i}) = A02.ket ∅ := by
+  have hs : fermionSign i ({i} : A02.Occupation ι) = 1 := by
+    simpa [fermion_sign_empty] using fermion_sign_insert_self i (∅ : A02.Occupation ι)
+  simp [annihilation_ket, hs]
 
-lemma annihilation_singleton_ne_zero (i : ι) : annihilation i (A02.ket {i}) ≠ 0 := by sorry
+lemma annihilation_singleton_ne_zero (i : ι) : annihilation i (A02.ket {i}) ≠ 0 := by
+  rw [annihilation_singleton]; exact A02.vacuum_ne_zero
 
-lemma creation_square (i : ι) : creation i * creation i = 0 := by sorry
+lemma creation_square (i : ι) : creation i * creation i = 0 := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, LinearMap.zero_apply, creation_ket]
+  by_cases hi : i ∈ S
+  · simp [hi]
+  · simp [hi, map_smul, creation_ket]
 
-lemma annihilation_square (i : ι) : annihilation i * annihilation i = 0 := by sorry
+lemma annihilation_square (i : ι) : annihilation i * annihilation i = 0 := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, LinearMap.zero_apply, annihilation_ket]
+  by_cases hi : i ∈ S
+  · simp [hi, map_smul, annihilation_ket]
+  · simp [hi]
 
 lemma creation_adjoint_pairing (i : ι) (S T : A02.Occupation ι) :
     inner ℂ (A02.ket S) (annihilation i (A02.ket T)) =
-      inner ℂ (creation i (A02.ket S)) (A02.ket T) := by sorry
+      inner ℂ (creation i (A02.ket S)) (A02.ket T) := by
+  simp only [annihilation_ket, creation_ket]
+  by_cases hiS : i ∈ S <;> by_cases hiT : i ∈ T
+  · simp [hiS, hiT, inner_smul_right, A02.ket_inner]
+    have hne : S ≠ T.erase i := by intro h; subst S; simp at hiS
+    simp [hne]
+  · simp [hiS, hiT]
+  · simp only [hiS, hiT, ite_true, ite_false, inner_smul_right, inner_smul_left,
+      A02.ket_inner, fermion_sign_conj]
+    by_cases hST : S = T.erase i
+    · subst S
+      simp [Finset.insert_erase hiT, fermion_sign_erase_self]
+    · have hTS : insert i S ≠ T := by
+        intro h
+        have he := congrArg (fun U : A02.Occupation ι => U.erase i) h
+        exact hST (by simpa [Finset.erase_insert, hiS] using he)
+      simp [hST, hTS]
+  · simp [hiS, hiT, inner_smul_left, A02.ket_inner]
+    have hne : insert i S ≠ T := by intro h; subst T; simp at hiT
+    simp [hne]
 
-lemma creation_eq_adjoint (i : ι) : creation i = LinearMap.adjoint (annihilation i) := by sorry
+lemma creation_eq_adjoint (i : ι) : creation i = LinearMap.adjoint (annihilation i) := by
+  exact A02.adjoint_of_basis_pairing _ _ (creation_adjoint_pairing i)
 
-lemma annihilation_eq_adjoint (i : ι) : annihilation i = LinearMap.adjoint (creation i) := by sorry
+lemma annihilation_eq_adjoint (i : ι) : annihilation i = LinearMap.adjoint (creation i) := by
+  rw [creation_eq_adjoint, LinearMap.adjoint_adjoint]
 
-lemma annihilation_car (i j : ι) : A02.anticommutator (annihilation i) (annihilation j) = 0 := by sorry
+lemma annihilation_car (i j : ι) : A02.anticommutator (annihilation i) (annihilation j) = 0 := by
+  by_cases hij : i = j
+  · subst j; simp [A02.anticommutator, annihilation_square]
+  · apply A02.end_ext_basis
+    intro S
+    simp only [A02.anticommutator, LinearMap.add_apply, Module.End.mul_apply, LinearMap.zero_apply]
+    by_cases hi : i ∈ S <;> by_cases hj : j ∈ S <;>
+      simp [annihilation_ket, hi, hj, hij, Ne.symm hij, map_smul, smul_smul]
+    rw [Finset.erase_right_comm, ← add_smul, sign_erase_erase i j S hij hi hj]
+    simp
 
-lemma creation_car (i j : ι) : A02.anticommutator (creation i) (creation j) = 0 := by sorry
+lemma creation_car (i j : ι) : A02.anticommutator (creation i) (creation j) = 0 := by
+  by_cases hij : i = j
+  · subst j; simp [A02.anticommutator, creation_square]
+  · apply A02.end_ext_basis
+    intro S
+    simp only [A02.anticommutator, LinearMap.add_apply, Module.End.mul_apply, LinearMap.zero_apply]
+    by_cases hi : i ∈ S <;> by_cases hj : j ∈ S <;>
+      simp [creation_ket, hi, hj, hij, Ne.symm hij, map_smul, smul_smul]
+    rw [Finset.insert_comm, ← add_smul, sign_insert_insert i j S hij hi hj]
+    simp
 
 lemma mixed_car (i j : ι) : A02.anticommutator (annihilation i) (creation j) =
-    (if i = j then (1 : ℂ) else 0) • (1 : Module.End ℂ (A02.FockSpace ι)) := by sorry
+    (if i = j then (1 : ℂ) else 0) • (1 : Module.End ℂ (A02.FockSpace ι)) := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [A02.anticommutator, LinearMap.add_apply, Module.End.mul_apply,
+    LinearMap.smul_apply, Module.End.one_apply]
+  by_cases hij : i = j
+  · subst j
+    by_cases hi : i ∈ S
+    · simp [annihilation_ket, creation_ket, hi, map_smul, smul_smul,
+        fermion_sign_erase_self, fermion_sign_square, Finset.insert_erase hi]
+    · simp [annihilation_ket, creation_ket, hi, map_smul, smul_smul,
+        fermion_sign_insert_self, fermion_sign_square]
+  · by_cases hi : i ∈ S <;> by_cases hj : j ∈ S <;>
+      simp [annihilation_ket, creation_ket, hi, hj, hij, Ne.symm hij, map_smul, smul_smul]
+    rw [Finset.erase_insert_of_ne (Ne.symm hij), ← add_smul]
+    have hs := sign_insert_erase j i S (Ne.symm hij) hj hi
+    rw [hs]
+    simp
 
 /-- Proposed existence of the concrete representation, not an assumed CAR instance. -/
 lemma concrete_car_exists : ∃ R : A02.CAR ι (A02.FockSpace ι),
-    R.annihilation = annihilation ∧ R.creation = creation := by sorry
+    R.annihilation = annihilation ∧ R.creation = creation := by
+  exact ⟨{ annihilation := annihilation
+           creation := creation
+           annihilation_car := annihilation_car
+           creation_car := creation_car
+           mixed_car := mixed_car
+           adjoint_compat := creation_eq_adjoint }, rfl, rfl⟩
 
 lemma number_ket (i : ι) (S : A02.Occupation ι) :
-    number i (A02.ket S) = (if i ∈ S then (1 : ℂ) else 0) • A02.ket S := by sorry
+    number i (A02.ket S) = (if i ∈ S then (1 : ℂ) else 0) • A02.ket S := by
+  unfold number
+  simp only [Module.End.mul_apply, annihilation_ket]
+  by_cases hi : i ∈ S
+  · simp [hi, map_smul, creation_ket, fermion_sign_erase_self, smul_smul, fermion_sign_square, Finset.insert_erase hi]
+  · simp [hi]
 
-lemma number_idempotent (i : ι) : number i * number i = number i := by sorry
+lemma number_idempotent (i : ι) : number i * number i = number i := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, number_ket, map_smul]
+  by_cases hi : i ∈ S <;> simp [hi]
 
-lemma number_adjoint (i : ι) : LinearMap.adjoint (number i) = number i := by sorry
+lemma number_adjoint (i : ι) : LinearMap.adjoint (number i) = number i := by
+  change LinearMap.adjoint ((creation i).comp (annihilation i)) = (creation i).comp (annihilation i)
+  rw [LinearMap.adjoint_comp, ← creation_eq_adjoint, ← annihilation_eq_adjoint]
 
-lemma number_commute (i j : ι) : number i * number j = number j * number i := by sorry
+lemma number_commute (i j : ι) : number i * number j = number j * number i := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, number_ket, map_smul, smul_smul]
+  congr 1
+  exact mul_comm _ _
 
 lemma total_number_ket (S : A02.Occupation ι) :
-    totalNumber (ι := ι) (A02.ket S) = (S.card : ℂ) • A02.ket S := by sorry
+    totalNumber (ι := ι) (A02.ket S) = (S.card : ℂ) • A02.ket S := by
+  simp only [totalNumber, LinearMap.sum_apply, number_ket]
+  rw [← Finset.sum_smul]
+  congr 1
+  simp
 
 lemma total_number_adjoint :
-    LinearMap.adjoint (totalNumber (ι := ι)) = totalNumber (ι := ι) := by sorry
+    LinearMap.adjoint (totalNumber (ι := ι)) = totalNumber (ι := ι) := by
+  simp [totalNumber, number_adjoint]
 
 lemma parity_ket (S : A02.Occupation ι) :
-    parity (ι := ι) (A02.ket S) = (-1 : ℂ) ^ S.card • A02.ket S := by sorry
+    parity (ι := ι) (A02.ket S) = (-1 : ℂ) ^ S.card • A02.ket S := by
+  have hl : ∀ l : List ι,
+      (l.map (fun i => (1 : Module.End ℂ (A02.FockSpace ι)) - (2 : ℂ) • number i)).prod (A02.ket S) =
+        (l.map (fun i => if i ∈ S then (-1 : ℂ) else 1)).prod • A02.ket S := by
+    intro l
+    induction l with
+    | nil => simp
+    | cons i l ih =>
+      simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, ih, map_smul,
+        LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply, number_ket]
+      by_cases hi : i ∈ S
+      · simp [hi, smul_smul, smul_sub]; module
+      · simp [hi]
+  unfold parity
+  rw [hl, ← List.prod_toFinset _ (Finset.sort_nodup _ _)]
+  simp only [Finset.sort_toFinset]
+  rw [Finset.prod_ite]
+  simp
 
-lemma parity_square : parity (ι := ι) * parity (ι := ι) = 1 := by sorry
+lemma parity_square : parity (ι := ι) * parity (ι := ι) = 1 := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, parity_ket, map_smul, Module.End.one_apply, smul_smul]
+  rw [← mul_pow]
+  simp
 
-lemma parity_adjoint : LinearMap.adjoint (parity (ι := ι)) = parity (ι := ι) := by sorry
+lemma parity_adjoint : LinearMap.adjoint (parity (ι := ι)) = parity (ι := ι) := by
+  apply Eq.symm
+  apply A02.adjoint_of_basis_pairing
+  intro S T
+  simp only [parity_ket, inner_smul_right, inner_smul_left, A02.ket_inner]
+  by_cases h : S = T
+  · subst T; simp
+  · simp [h]
 
-lemma parity_vacuum : parity (ι := ι) (A02.ket ∅) = A02.ket ∅ := by sorry
+lemma parity_vacuum : parity (ι := ι) (A02.ket ∅) = A02.ket ∅ := by
+  simp [parity_ket]
 
-lemma parity_creation (i : ι) : parity (ι := ι) * creation i = -(creation i * parity (ι := ι)) := by sorry
+lemma parity_creation (i : ι) : parity (ι := ι) * creation i = -(creation i * parity (ι := ι)) := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, LinearMap.neg_apply, parity_ket]
+  by_cases hi : i ∈ S
+  · simp [creation_ket, hi]
+  · simp [creation_ket, hi, map_smul, parity_ket, Finset.card_insert_of_notMem hi,
+      pow_succ, smul_smul, mul_comm]
 
 lemma parity_annihilation (i : ι) :
-    parity (ι := ι) * annihilation i = -(annihilation i * parity (ι := ι)) := by sorry
+    parity (ι := ι) * annihilation i = -(annihilation i * parity (ι := ι)) := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, LinearMap.neg_apply, parity_ket]
+  by_cases hi : i ∈ S
+  · have hcard : S.card = (S.erase i).card + 1 := by
+      simpa [Finset.insert_erase hi] using Finset.card_insert_of_notMem (Finset.notMem_erase i S)
+    have hp : (-1 : ℂ) ^ S.card = -((-1 : ℂ) ^ (S.erase i).card) := by
+      rw [hcard, pow_succ]; ring
+    simp only [annihilation_ket, ite_eq_left hi, map_smul, parity_ket, hp, smul_smul]
+    module
+  · simp [annihilation_ket, hi]
 
 lemma bilinear_commutator (a b c d : ι) :
     A02.commutator (hopping a b) (hopping c d) =
       (if b = c then (1 : ℂ) else 0) • hopping a d -
-      (if a = d then (1 : ℂ) else 0) • hopping c b := by sorry
+      (if a = d then (1 : ℂ) else 0) • hopping c b := by
+  obtain ⟨R, ha, hc⟩ := concrete_car_exists (ι := ι)
+  simpa [hopping, ha, hc] using A02.car_bilinear_commutator R.toAlgebraicCAR a b c d
 
 lemma number_creation_commutator (i j : ι) : A02.commutator (number i) (creation j) =
-    (if i = j then (1 : ℂ) else 0) • creation j := by sorry
+    (if i = j then (1 : ℂ) else 0) • creation j := by
+  obtain ⟨R, ha, hc⟩ := concrete_car_exists (ι := ι)
+  simpa [A02.AlgebraicCAR.number, number, ha, hc] using
+    A02.car_number_creation_commutator R.toAlgebraicCAR i j
 
 lemma number_annihilation_commutator (i j : ι) : A02.commutator (number i) (annihilation j) =
-    -(if i = j then (1 : ℂ) else 0) • annihilation j := by sorry
+    -(if i = j then (1 : ℂ) else 0) • annihilation j := by
+  obtain ⟨R, ha, hc⟩ := concrete_car_exists (ι := ι)
+  simpa [A02.AlgebraicCAR.number, number, ha, hc] using
+    A02.car_number_annihilation_commutator R.toAlgebraicCAR i j
 
 lemma total_number_creation_commutator (i : ι) :
-    A02.commutator (totalNumber (ι := ι)) (creation i) = creation i := by sorry
+    A02.commutator (totalNumber (ι := ι)) (creation i) = creation i := by
+  simp only [totalNumber, A02.commutator, Finset.sum_mul, Finset.mul_sum, ← Finset.sum_sub_distrib]
+  change (∑ j : ι, A02.commutator (number j) (creation i)) = _
+  simp [number_creation_commutator]
 
 lemma total_number_annihilation_commutator (i : ι) :
-    A02.commutator (totalNumber (ι := ι)) (annihilation i) = -annihilation i := by sorry
+    A02.commutator (totalNumber (ι := ι)) (annihilation i) = -annihilation i := by
+  simp only [totalNumber, A02.commutator, Finset.sum_mul, Finset.mul_sum, ← Finset.sum_sub_distrib]
+  change (∑ j : ι, A02.commutator (number j) (annihilation i)) = _
+  simp [number_annihilation_commutator]
 
 lemma hopping_ket (i j : ι) (S : A02.Occupation ι) (hij : i ≠ j)
     (hi : i ∉ S) (hj : j ∈ S) :
     hopping i j (A02.ket S) = (fermionSign j S * fermionSign i (S.erase j)) •
-      A02.ket (insert i (S.erase j)) := by sorry
+      A02.ket (insert i (S.erase j)) := by
+  unfold hopping
+  simp [Module.End.mul_apply, annihilation_ket, hj, map_smul, creation_ket,
+    hi, hij, smul_smul]
 
 lemma hopping_blocked (i j : ι) (S : A02.Occupation ι)
-    (h : j ∉ S ∨ (i ≠ j ∧ i ∈ S)) : hopping i j (A02.ket S) = 0 := by sorry
+    (h : j ∉ S ∨ (i ≠ j ∧ i ∈ S)) : hopping i j (A02.ket S) = 0 := by
+  unfold hopping
+  rcases h with hj | ⟨hij, hi⟩
+  · simp [Module.End.mul_apply, annihilation_ket, hj]
+  · by_cases hj : j ∈ S
+    · simp [Module.End.mul_apply, annihilation_ket, hj, map_smul, creation_ket, hi, hij]
+    · simp [Module.End.mul_apply, annihilation_ket, hj]
 
-lemma hopping_diagonal (i : ι) : hopping i i = number i := by sorry
+lemma hopping_diagonal (i : ι) : hopping i i = number i := by
+  rfl
 
-lemma hopping_adjoint (i j : ι) : LinearMap.adjoint (hopping i j) = hopping j i := by sorry
+lemma hopping_adjoint (i j : ι) : LinearMap.adjoint (hopping i j) = hopping j i := by
+  change LinearMap.adjoint ((creation i).comp (annihilation j)) = (creation j).comp (annihilation i)
+  rw [LinearMap.adjoint_comp, ← creation_eq_adjoint, ← annihilation_eq_adjoint]
 
 end Bosonize.Ch04
 ```

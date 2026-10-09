@@ -1,10 +1,10 @@
 # Appendix A02 finite-CAR lab notebook
 
-Status (2026-10-09): **Phase A complete; awaiting interface review.** Lean module: `BosonizeStubs/A02CARHilbert.lean`.
+Status (2026-10-09): **Phase B proofs complete; Phase C not started.** Lean module: `BosonizeStubs/A02CARHilbert.lean`.
 
 ## Scope, review and source reconciliation
 
-The user authorized Phase A for CH04 and the finite-CAR portion of A02 on 2026-10-09. This draft is **unlocked and unproved**. The source baseline at task start is `648c076abe7f82061c29e01f8fb5f7f561d2a70b`. Frozen CH01–CH03 and A01 are preserved. The roadmap controls current status; the dated completion ledger still records its older Fourier readiness checkpoint.
+The user authorized Phase A for CH04 and the finite-CAR portion of A02 on 2026-10-09. This initial draft was unlocked and unproved; the user subsequently approved Phase B for both modules. Its reviewed interface is now locked at `7a2da78`, and all 69 proofs are complete. The historical Phase A evidence below is retained separately from the current Phase B audit. The source baseline at task start is `648c076abe7f82061c29e01f8fb5f7f561d2a70b`. Frozen CH01–CH03 and A01 are preserved. The roadmap controls current status; the dated completion ledger still records its older Fourier readiness checkpoint.
 
 Read [CH04](../../../notes/md/ch04_CAR_Fock_space.md), [A02](../../../notes/appendices/a02_car_hilbert_and_normal_ordering.md), [TOC](../../../notes/md/TOC.md), [source audit](../../../docs/audit/reference_notes_lean_audit.md), [proof corrections](../../../note/proof_suggestions_revision_2026-10-09.md), and [completion ledger](../../../note/notes_review_completion_2026-10-09.md). No CH04/A02-specific file exists in `docs/stub_suggestion/` or `docs/proof_suggestion/`; inline strategies and the reviewed corrections are advisory. Three older CH01–CH03 suggestion files changed concurrently during drafting; those unrelated edits are preserved and excluded from this checkpoint.
 
@@ -12,7 +12,7 @@ Adopt the Euclidean carrier and occupation basis from the notes, basis construct
 
 Deferred: A02 polynomial Hermitian forms, raw words/normal symbols, Wick reduction, sea-Wick quartic corrections, CH06 local algebras/graded words/matrix units, and CH07 budgets. No compression, energy margin, lattice-evenness, or nonempty mode assumption is needed for this generic finite occupation model. The empty mode type has one occupation configuration, the empty set; creation witnesses take a mode `i`, so they do not claim modes exist in that edge case. Species later require an explicitly chosen lexicographic total order.
 
-## Validation and approval boundary
+## Phase A validation (historical checkpoint)
 
 - `lake build Bosonize` passes with unchanged Core. `lake build BosonizeStubs` passes with exactly 69 expected declaration-uses-sorry warnings (18 A02, 51 CH04). Fresh direct `lake env lean` checks have the same expected warnings and no errors or other warnings. No diagnostic/linter suppression was added.
 - All 18 definitions/abbreviations and both structures elaborate without placeholders. A fresh definition/constructor/projection audit checks 23 names with only `propext`, `Classical.choice`, `Quot.sound`, and no `sorryAx`. This proves the definitions do not consume stub proofs, not the CAR identities themselves.
@@ -25,13 +25,13 @@ Deferred: A02 polynomial Hermitian forms, raw words/normal symbols, Wick reducti
 
 ## Carrier, contracts and type choices
 
-Namespace `Bosonize.A02`. Ten complete definitions/abbreviations, two complete structures, and 18 theorem stubs.
+Namespace `Bosonize.A02`. Ten complete definitions/abbreviations, two complete structures, and 18 proved lemmas.
 
 `Occupation ι := Finset ι`. `FockSpace ι := EuclideanSpace ℂ (Occupation ι)` needs `[Fintype ι] [DecidableEq ι]`. No order is needed in this support carrier. `occupationONB` is the canonical Euclidean orthonormal basis; `occupationBasis` is its algebraic `.toBasis`. `ket S` is that basis vector, not a vector declared orthonormal by assumption. `coordinates` is an algebraic linear equivalence to functions; no incompatible Hilbert instance is installed on that function carrier. `extendBasis images` constructs an endomorphism from basis images.
 
 `commutator A B = A*B-B*A`, `anticommutator A B = A*B+B*A`; multiplication is composition with the right factor first. `AlgebraicCAR ι V` requires decidable equality on modes and a complex module over an additive commutative group, but no finiteness or topology. Its creation/annihilation maps and three relation fields are hypotheses for generic algebraic lemmas. `CAR ι V` extends it on a finite-dimensional complex inner-product space, adding the actual equation `creation i = LinearMap.adjoint (annihilation i)`. No concrete CAR instance is assumed or constructed here.
 
-## Proposed proof order and remaining obligations
+## Phase A proof plan (historical)
 
 | Layer | Proposed obligations | How Phase B should approach them |
 | --- | --- | --- |
@@ -45,7 +45,7 @@ Every row remains a theorem obligation. The existence of the canonical basis com
 
 ## Exact theorem inventory
 
-Names below are review stubs; exact binder types and statements appear in the source snapshot.
+All names below now have complete proofs. Exact binder types, statements, and proofs appear in the source snapshot.
 
 - `Bosonize.A02.car_bilinear_commutator`
 - `Bosonize.A02.car_number_creation_commutator`
@@ -81,7 +81,7 @@ These hashes identify the consulted snapshots; they do not certify mathematical 
 
 ## Definition axiom evidence
 
-Fresh audit output for data in this namespace; all stubs remain unproved.
+Historical Phase A audit output for data in this namespace. Phase B freshly rechecked these declarations with only standard axioms; all theorem proofs are now complete.
 
 ```text
 'Bosonize.A02.Occupation' depends on axioms: [propext, Quot.sound]
@@ -101,11 +101,50 @@ Fresh audit output for data in this namespace; all stubs remain unproved.
 'Bosonize.A02.CAR.toAlgebraicCAR' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
+## Phase B proof completion and validation — 2026-10-09
+
+The user approved Phase B for CH04 and finite-CAR A02. Initial locking added only the two reviewed Phase A entries to `stub_locks.v2.json`; every prior entry stayed identical. The approved baseline is `7a2da78`. Proof work changed only lemma bodies; no public helper, definition, import, namespace, theorem header, attribute, or hypothesis was changed. Original Phase A module comments are retained as part of the frozen source context; this notebook records the current completion state.
+
+All 18 A02 lemmas are proved. The CAR bilinear and number identities use explicit noncommutative expansions and the three algebraic CAR hypotheses; scalar normalization is separate. Idempotency derives same-mode nilpotency using cancellation of the nonzero complex scalar 2, without assuming a nontrivial generic carrier. The occupation bridges reuse the canonical Euclidean basis and basis-extension APIs. The adjoint bridge lifts the basis-pair equation through finite expansions and preserves conjugation in the first slot. Dimension counts the finite subsets; empty modes give dimension one.
+
+Fresh `lake env lean -DwarningAsError=true BosonizeStubs/A02CARHilbert.lean` exits 0 with empty diagnostics. Native MCP diagnostics also have empty items, no errors, failed dependencies, timeout, or partial result.
+
+Shared validation:
+
+- `STUB_LOCK_BASELINE_REF=7a2da78 make ci` passes all 69 guard tests, 182 frozen statements, 152 frozen commands, four complete Core source hashes, and both library builds. The staging build allows the seven reported CH04 linter warnings; passing CI is not a warning-free promotion result.
+- Strict committed-baseline verification passes. All existing Core bytes, all manifests after the approved initial lock, the toolchain, and the dependency manifest remain unchanged throughout proof work.
+- All 69 A02/CH04 lemmas freshly audited through `import BosonizeStubs` use only subsets of `propext`, `Classical.choice`, `Quot.sound`. Zero `sorryAx`, extra axioms, or placeholder proof tokens remain. A fresh data/constructor/projection audit also uses only standard axioms.
+- The exact source snapshot below matches the current Lean file. The current checkpoint remains in staging. No Phase C promotion is authorized or performed.
+- Declaration search's previously observed missing-`rg` limitation was handled by installed-source `rg`/compiler inspection. Native diagnostic and goal tools worked; a search-tool failure is not reported as total MCP/LSP unavailability.
+
+## Fresh theorem axiom audit
+
+```text
+'Bosonize.A02.adjoint_of_basis_pairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.car_bilinear_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.car_number_annihilation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.car_number_commute' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.car_number_creation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.car_number_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.coordinates_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.empty_modes_finrank' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.end_ext_basis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.extend_basis_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.fock_finrank' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.fock_inner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.ket_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.ket_inner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.ket_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.ket_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.occupation_expansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A02.vacuum_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
 ## Exact Lean source snapshot
 
-This block matches the source byte-for-byte, including its final newline.
+This block matches the current approved source byte-for-byte, including its final newline. All lemma bodies are proved; definitions and statements retain their approved freeze.
 
-Module SHA-256: `bff4700bb8c04037b0f2fea4778e15bafeff63e4545cb3682fb170f712378b41`.
+Module SHA-256: `a683eaba06548c89167592302dc2e6b7f558a53e3acf50c5ff1cceffaeff16e3`.
 
 ```lean
 module
@@ -179,21 +218,77 @@ variable {ι : Type*} [DecidableEq ι]
 lemma car_bilinear_commutator (R : AlgebraicCAR ι V) (a b c d : ι) :
     commutator (R.creation a * R.annihilation b) (R.creation c * R.annihilation d) =
       (if b = c then (1 : ℂ) else 0) • (R.creation a * R.annihilation d) -
-      (if a = d then (1 : ℂ) else 0) • (R.creation c * R.annihilation b) := by sorry
+      (if a = d then (1 : ℂ) else 0) • (R.creation c * R.annihilation b) := by
+  have hbc := R.mixed_car b c
+  have hda := R.mixed_car d a
+  have hac := R.creation_car a c
+  have hbd := R.annihilation_car b d
+  simp only [anticommutator] at hbc hda hac hbd
+  unfold commutator
+  calc
+    _ = R.creation a * (R.annihilation b * R.creation c + R.creation c * R.annihilation b) * R.annihilation d -
+        R.creation c * (R.annihilation d * R.creation a + R.creation a * R.annihilation d) * R.annihilation b -
+        (R.creation a * R.creation c + R.creation c * R.creation a) * R.annihilation b * R.annihilation d +
+        R.creation c * R.creation a * (R.annihilation b * R.annihilation d + R.annihilation d * R.annihilation b) := by noncomm_ring
+    _ = _ := by rw [hbc, hda, hac, hbd]; simp [eq_comm]
 
 lemma car_number_creation_commutator (R : AlgebraicCAR ι V) (i j : ι) :
     commutator (R.number i) (R.creation j) =
-      (if i = j then (1 : ℂ) else 0) • R.creation j := by sorry
+      (if i = j then (1 : ℂ) else 0) • R.creation j := by
+  have h := R.mixed_car i j
+  have hc := R.creation_car i j
+  simp only [anticommutator] at h hc
+  unfold commutator AlgebraicCAR.number
+  calc
+    _ = R.creation i * (R.annihilation i * R.creation j + R.creation j * R.annihilation i) -
+        (R.creation i * R.creation j + R.creation j * R.creation i) * R.annihilation i := by noncomm_ring
+    _ = _ := by
+      rw [h, hc]
+      by_cases hij : i = j
+      · subst j; simp
+      · simp [hij]
 
 lemma car_number_annihilation_commutator (R : AlgebraicCAR ι V) (i j : ι) :
     commutator (R.number i) (R.annihilation j) =
-      -(if i = j then (1 : ℂ) else 0) • R.annihilation j := by sorry
+      -(if i = j then (1 : ℂ) else 0) • R.annihilation j := by
+  have h := R.mixed_car j i
+  have ha := R.annihilation_car i j
+  simp only [anticommutator] at h ha
+  unfold commutator AlgebraicCAR.number
+  calc
+    _ = R.creation i * (R.annihilation i * R.annihilation j + R.annihilation j * R.annihilation i) -
+        (R.annihilation j * R.creation i + R.creation i * R.annihilation j) * R.annihilation i := by noncomm_ring
+    _ = _ := by
+      rw [h, ha]
+      by_cases hij : i = j
+      · subst j; simp
+      · simp [hij, Ne.symm hij]
 
 lemma car_number_commute (R : AlgebraicCAR ι V) (i j : ι) :
-    R.number i * R.number j = R.number j * R.number i := by sorry
+    R.number i * R.number j = R.number j * R.number i := by
+  have h := car_bilinear_commutator R i i j j
+  simp only [AlgebraicCAR.number, commutator] at *
+  by_cases hij : i = j
+  · subst j; rfl
+  · simpa [hij, Ne.symm hij, sub_eq_zero] using h
 
 lemma car_number_idempotent (R : AlgebraicCAR ι V) (i : ι) :
-    R.number i * R.number i = R.number i := by sorry
+    R.number i * R.number i = R.number i := by
+  have hc : R.creation i * R.creation i = 0 := by
+    have h : (2 : ℂ) • (R.creation i * R.creation i) = 0 := by
+      simpa [anticommutator, two_smul] using R.creation_car i i
+    exact (smul_eq_zero.mp h).resolve_left (by norm_num)
+  have ha : R.annihilation i * R.annihilation i = 0 := by
+    have h : (2 : ℂ) • (R.annihilation i * R.annihilation i) = 0 := by
+      simpa [anticommutator, two_smul] using R.annihilation_car i i
+    exact (smul_eq_zero.mp h).resolve_left (by norm_num)
+  have hm := R.mixed_car i i
+  simp only [anticommutator, ite_true, one_smul] at hm
+  unfold AlgebraicCAR.number
+  calc
+    _ = R.creation i * (R.annihilation i * R.creation i + R.creation i * R.annihilation i) * R.annihilation i -
+        (R.creation i * R.creation i) * (R.annihilation i * R.annihilation i) := by noncomm_ring
+    _ = _ := by rw [hm, hc, ha]; simp
 
 end Algebraic
 
@@ -208,39 +303,70 @@ section Occupations
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 lemma ket_apply (S T : Occupation ι) :
-    ket S T = if T = S then (1 : ℂ) else 0 := by sorry
+    ket S T = if T = S then (1 : ℂ) else 0 := by
+  simp [ket, occupationBasis, occupationONB, EuclideanSpace.basisFun_apply, PiLp.single_apply, eq_comm]
 
 lemma coordinates_ket (S T : Occupation ι) :
-    coordinates ι (ket S) T = if T = S then (1 : ℂ) else 0 := by sorry
+    coordinates ι (ket S) T = if T = S then (1 : ℂ) else 0 := by
+  exact ket_apply S T
 
 lemma ket_inner (S T : Occupation ι) :
-    inner ℂ (ket S) (ket T) = if S = T then (1 : ℂ) else 0 := by sorry
+    inner ℂ (ket S) (ket T) = if S = T then (1 : ℂ) else 0 := by
+  change inner ℂ (EuclideanSpace.basisFun (Occupation ι) ℂ S) (ket T) = _
+  rw [EuclideanSpace.basisFun_inner, ket_apply]
 
-lemma ket_norm (S : Occupation ι) : ‖ket S‖ = 1 := by sorry
+lemma ket_norm (S : Occupation ι) : ‖ket S‖ = 1 := by
+  exact (occupationONB ι).orthonormal.norm_eq_one S
 
-lemma ket_ne_zero (S : Occupation ι) : ket S ≠ 0 := by sorry
+lemma ket_ne_zero (S : Occupation ι) : ket S ≠ 0 := by
+  intro h
+  have hn := ket_norm S
+  rw [h, norm_zero] at hn
+  norm_num at hn
 
-lemma vacuum_ne_zero : ket (∅ : Occupation ι) ≠ 0 := by sorry
+lemma vacuum_ne_zero : ket (∅ : Occupation ι) ≠ 0 := by
+  exact ket_ne_zero ∅
 
 lemma fock_inner (u v : FockSpace ι) :
-    inner ℂ u v = ∑ S : Occupation ι, conj (u S) * v S := by sorry
+    inner ℂ u v = ∑ S : Occupation ι, conj (u S) * v S := by
+  simp only [PiLp.inner_apply, RCLike.inner_apply]
+  apply Finset.sum_congr rfl
+  intro S _
+  exact mul_comm _ _
 
 lemma occupation_expansion (v : FockSpace ι) :
-    v = ∑ S : Occupation ι, v S • ket S := by sorry
+    v = ∑ S : Occupation ι, v S • ket S := by
+  simpa [ket, occupationBasis, occupationONB, EuclideanSpace.basisFun_repr] using
+    ((occupationONB ι).sum_repr v).symm
 
 lemma extend_basis_ket (images : Occupation ι → FockSpace ι) (S : Occupation ι) :
-    extendBasis images (ket S) = images S := by sorry
+    extendBasis images (ket S) = images S := by
+  exact (occupationBasis ι).constr_basis ℂ images S
 
 lemma end_ext_basis (A B : Module.End ℂ (FockSpace ι))
-    (h : ∀ S : Occupation ι, A (ket S) = B (ket S)) : A = B := by sorry
+    (h : ∀ S : Occupation ι, A (ket S) = B (ket S)) : A = B := by
+  exact (occupationBasis ι).ext h
 
 lemma adjoint_of_basis_pairing (A B : Module.End ℂ (FockSpace ι))
     (h : ∀ S T : Occupation ι, inner ℂ (ket S) (A (ket T)) =
-      inner ℂ (B (ket S)) (ket T)) : B = LinearMap.adjoint A := by sorry
+      inner ℂ (B (ket S)) (ket T)) : B = LinearMap.adjoint A := by
+  apply (LinearMap.eq_adjoint_iff B A).mpr
+  intro u v
+  rw [occupation_expansion u, occupation_expansion v]
+  simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right]
+  apply Finset.sum_congr rfl
+  intro S _
+  congr 1
+  apply Finset.sum_congr rfl
+  intro T _
+  rw [← h T S]
 
-lemma fock_finrank : Module.finrank ℂ (FockSpace ι) = 2 ^ Fintype.card ι := by sorry
+lemma fock_finrank : Module.finrank ℂ (FockSpace ι) = 2 ^ Fintype.card ι := by
+  simp [FockSpace, Occupation, Fintype.card_finset]
 
-lemma empty_modes_finrank [IsEmpty ι] : Module.finrank ℂ (FockSpace ι) = 1 := by sorry
+lemma empty_modes_finrank [IsEmpty ι] : Module.finrank ℂ (FockSpace ι) = 1 := by
+  rw [fock_finrank]
+  simp
 
 end Occupations
 
