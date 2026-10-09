@@ -45,16 +45,11 @@ The v2 guard freezes theorem headers and ordered non-lemma commands in staging a
 
 ## Compiler inspection and retrieval
 
-Use the available MCP tools in this order:
+Read the relevant sections of [Lean MCP operations](references/lean_mcp.md) when developing proofs, interpreting MCP results, validating a chapter, or investigating a Lean tool failure. This reference specializes the tool workflow for Bosonize-Lean; it does not authorize a new phase, interface change, or server reconfiguration.
 
-1. `lean_goal` and `lean_diagnostic_messages` for the exact goal/error state.
-2. `lean_local_search` for existing project definitions and lemmas.
-3. `lean_loogle` for syntactic library searches.
-4. Available semantic search (`lean_leansearch` or a finder exposed by the server) when syntactic search is insufficient.
+Prefer native Lean MCP calls when exposed: inspect goals/diagnostics, search locally, then use syntactic or semantic library search as appropriate. Confirm exact imports, signatures, implicit parameters, and instance requirements before adopting a result. A proposed helper name or search hit alone is not evidence that its contract fits the chapter.
 
-If a tool is not exposed or unavailable, report that limitation and continue with the available compiler/local sources. Inspect diagnostics with `lake env lean <path>`; use scratch `#check`/`#print` declarations and `rg` in project sources and `.lake/packages/mathlib/Mathlib`. For an unresolved goal, an isolated scratch copy ending at that goal can use `trace_state` or a failing `exact?`/`assumption` to expose its context without changing the locked module. Scratch placeholders establish only the inspected goal, never proof completion.
-
-Confirm exact imports, signatures, implicit parameters, and instance requirements before adopting a library result. A proposed project-helper name is not evidence that Mathlib already provides it. Keep scratch files outside guarded source directories and remove temporary project artifacts when done. Record direct compiler evidence separately from MCP/LSP evidence; one does not establish the other.
+If a tool fails or is not exposed, state the precise limitation and continue with the installed compiler/local sources. Keep scratch files outside guarded source directories and remove temporary project artifacts. Report tool exposure, successful calls, compiler results, proof completion, and axiom audits separately; scratch placeholders and a successful diagnostic call do not establish proof completion.
 
 ## Retry and lint handling
 
