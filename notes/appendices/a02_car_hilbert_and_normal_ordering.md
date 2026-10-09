@@ -28,15 +28,15 @@ Instead of writing `new_count = old_count - 1`, state it as `old_count = new_cou
 *Lean 4 Proof Strategy:*
 Model the fermionic sign as `(-1) ^ count` inside a `Ring` or `Field`. Prove `(-1)^2 = 1` and `(-1)^(a+b) = (-1)^a * (-1)^b`. For `i ≠ j`, show that inserting/erasing `i` and `j` in either order results in counts that differ by exactly 1, meaning the total sign gets a factor of `(-1)^1 = -1`. Use `Finset.insert_comm` for the underlying set operation.
 
-**Lemma 4:** Prove all three CAR identities, not merely assume a representation structure for the concrete Fock operators.
+**Lemma 4:** Prove all three CAR identities, not merely assume a representation structure for the concrete Fock operators. The abstract CAR definition must bundle the adjoint compatibility field $c_i^\dagger = \mathrm{adjoint}(c_i)$ on a finite-dimensional Euclidean carrier; purely algebraic CAR pairs can be conjugated by nonunitary maps and lose adjointness.
 
 *Lean 4 Proof Strategy:*
 The CAR identities are `{a_i, a_j} = 0`, `{a_i^\dagger, a_j^\dagger} = 0`, and `{a_i, a_j^\dagger} = \delta_{ij}`. Apply both sides to an arbitrary basis element `|s\rangle`. By Lemma 3, `a_i a_j |s\rangle = - a_j a_i |s\rangle` for `i ≠ j`. For `i = j`, `{a_i, a_i^\dagger} = a_i a_i^\dagger + a_i^\dagger a_i` evaluates to `1 |s\rangle` because any state is either occupied or empty at `i`. Conclude by `Basis.ext`.
 
-**Lemma 5:** Prove adjointness on basis pairs and lift by finite sums.
+**Lemma 5:** Prove adjointness on basis pairs, lift by finite sums, and instantiate the abstract CAR representation.
 
 *Lean 4 Proof Strategy:*
-Prove `\langle s | a_i^\dagger | s' \rangle = \langle a_i s | s' \rangle` for basis vectors `s, s'`. Use `EuclideanSpace.inner` from `PiL2` for the inner product. Then, use the linearity of the inner product and `LinearMap.ext` to lift this adjointness property to arbitrary states, represented as finite linear combinations of basis vectors.
+Prove `\langle s | a_i^\dagger | s' \rangle = \langle a_i s | s' \rangle` for basis vectors `s, s'`. Use `EuclideanSpace.inner` from `PiL2` for the inner product. Then, use the linearity of the inner product and `LinearMap.ext` to lift this adjointness property to arbitrary states, represented as finite linear combinations of basis vectors. Combine this with Lemma 4 to build an explicit instance of `CAR (FockSpace ι) ι`.
 
 **Lemma 6:** Derive number operators as coordinate indicators, pairwise commutativity, and parity Γ² = I and Γ† = Γ.
 
@@ -78,7 +78,7 @@ This matches the Haldane Gram matrix. In this convention D_m itself is not adjoi
 
 All pairings are finite sums over support. Their restrictions to finite weight slices are ordinary finite inner products. This avoids normalized monomials X^r/√w(r) and their square-root bookkeeping. No Hilbert completion is required for these finite algebraic pairings.
 
-The energy-current substitution in chapter 8.8 also loses a mode weight. With J_m†=X_m and J_m=mD_m, the correct weighted Hamiltonian is `H_b=Σ J_m† J_m`, not `Σ J_m† a_m` (the latter is the unweighted number operator). Check this already on X_2: the two eigenvalues are 2 and 1.
+*(Historical Note: Earlier drafts of Chapter 8 wrote the Hamiltonian as $\sum J_m^\dagger a_m$ without the mode weight. The revised Chapter 8 correctly defines $\hat{H}_b = \sum_{m \in Q} m X_m D_m = \sum_{m \in Q} C_m A_m$ in equation (8.5), distinguishing it from the unweighted number operator $\hat{N}_b = \sum X_m D_m$).
 
 ## Normal ordering needs a symbol carrier
 
@@ -89,7 +89,7 @@ Mechanical reordering while ignoring contractions is not a well-defined linear o
 *Lean 4 Proof Strategy:*
 Define `NormalSymbol := MvPolynomial (Mode ⊕ Mode) ℂ`. Define a linear map `eval : NormalSymbol →ₗ[ℂ] Module.End ℂ FockSpace` that sends `X_{(inL i)}` to `a_i^\dagger` and `X_{(inR i)}` to `a_i`, multiplying all creators first, then all annihilators. Since `MvPolynomial` is a free commutative algebra, this map is well-defined. Emphasize that `eval (P * Q) ≠ eval P * eval Q`.
 
-**Theorem 2:** For Wick's theorem on raw words, start with a free associative word algebra and define a rewrite/expansion into normal-ordered symbols, including contractions. Prove termination by word length/inversion count and prove evaluation preservation. Chapter 8's proposed `MvPolynomial Q ℂ →ₗ End …` has too few variables to encode both r and s.
+**Theorem 2:** For Wick's theorem on raw words, start with a free associative word algebra and define a rewrite/expansion into normal-ordered symbols, including contractions. Prove termination by word length/inversion count and prove evaluation preservation. *(Historical Note: An early draft of Chapter 8 suggested an evaluation map `MvPolynomial Q ℂ →ₗ End …`, which had too few variables to encode both $r$ and $s$; the symbol carrier `NormalSymbol := MvPolynomial (Mode ⊕ Mode) ℂ` or free word rewriting provides the necessary distinct creator and annihilator variables).*
 
 *Lean 4 Proof Strategy:*
 Define `FreeAlgebra (Mode ⊕ Mode) ℂ` for raw operator words. Define a rewriting system that applies `a a^\dagger \mapsto -a^\dagger a + {a, a^\dagger}` (using anticommutators/commutators). To formalize Wick's theorem, map free words to `NormalSymbol`. Prove termination by well-founded recursion on the inversion count of the word. Prove that applying the evaluation map (`eval`) after normal ordering equals the natural representation of the raw word. 

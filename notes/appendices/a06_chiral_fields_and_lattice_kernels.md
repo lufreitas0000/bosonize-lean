@@ -52,7 +52,7 @@ For the positive orientation field as originally defined, the exact forward diff
 2. Use the linearity of $\Delta$ to move it inside the `Finset.sum`.
 3. Use $\zeta^{m(x+1)} - \zeta^{mx} = (\zeta^m - 1)\zeta^{mx}$ to obtain the result algebraically.
 
-Chapter 15.10 is missing both the prefactor i and the relative minus sign. The factor `(ζ^m−1)/m` is not a constant. Forward difference does not exactly cancel 1/m. A low-momentum approximation cannot prove an exact lattice equality.
+*(Historical Note: Earlier drafts of Chapter 15 omitted the prefactor $i$ and the relative minus sign, or approximated $(\zeta^m - 1)/m \approx i \frac{2\pi}{L}$. In the revised Chapter 15 (Lemma 15.5), the exact forward difference is established with the prefactor $i$ and relative minus sign, and the exact differentiated finite kernel is retained without approximating $(\zeta^m - 1)/m$ by a constant).*
 
 **Theorem (Global Obstruction and Fluctuations):**
 An identity $[\varphi(x),\Delta\theta(y)]=i C \delta_M(x−y)$ with $C \neq 0$ is impossible for periodic fields. A fluctuation-field commutator must have zero average, and requires an explicit subtraction of the zero-mode contribution.
@@ -111,16 +111,28 @@ Define normal ordering on symbols as in A02. For one chiral field with the Hermi
 3. Exchange the spatial sum over $x$ and the momentum sums over $m, m'$.
 4. Use the orthogonality of characters $\sum_x \zeta^{(m \pm m')x} = L \delta_{m, \mp m'}$ to collapse the double momentum sum into a single sum, producing the factor $2L$ from the cross terms.
 
-The original chapter 16.3 omits this factor two. The identity for the sum of φ and θ squares supplies another factor two. With `ε(m)=L(ζ^m−1)(ζ^−m−1)/m²`, the resulting field Hamiltonian is `4 Σ_(ν,m) ε(m)ρ_mνρ_−mν` for the stated field normalization. Define the total Sugawara sum explicitly before subtracting its scaled version; the original error formula has inconsistent factors.
+*(Historical note: early drafts of Chapter 16 omitted the cross-term factor two and lacked an explicit total Sugawara definition; both are now repaired).* With the identity for the sum of $\phi$ and $\theta$ squares supplying another factor of two, and with $\varepsilon(m)=L(\zeta^m-1)(\zeta^{-m}-1)/m^2$, the resulting field Hamiltonian is $4 \sum_{\nu \in \{+1,-1\}} \sum_{m=1}^M \varepsilon(m)\rho_{m,\nu}\rho_{-m,\nu}$ under the no-aliasing condition $2M < L$.
+
+**Definition (Total Two-Branch Sugawara Hamiltonian):**
+At mode cutoff $M$, the reference total Sugawara Hamiltonian is:
+\[
+ H_{\text{sug}}^{(M)} := \sum_{\nu \in \{+1,-1\}} \sum_{m=1}^M \rho_{m,\nu}\rho_{-m,\nu}.
+\]
 
 **Theorem (Exact Finite Field Hamiltonian):**
-With the weight $\varepsilon(m) = L(\zeta^m - 1)(\zeta^{-m} - 1)/m^2$, the exact field Hamiltonian is given by $4 \sum_{\nu,m} \varepsilon(m)\rho_{m,\nu}\rho_{-m,\nu}$.
+With weight $\varepsilon(m) = L(\zeta^m - 1)(\zeta^{-m} - 1)/m^2$, the exact field Hamiltonian on budget vectors is given by $H_{\text{field}}^{(M)} = 4 \sum_{\nu,m=1}^M \varepsilon(m)\rho_{m,\nu}\rho_{-m,\nu}$.
 
 *Lean 4 Proof Strategy:*
 1. Combine the normal-ordered squares of $\Delta\varphi_\nu(x)$.
 2. Prove that $\varepsilon(m)$ algebraically simplifies to real/positive terms using properties of roots of unity.
 3. Express the Hamiltonian algebraically as this finite weighted sum of density operators.
 
-For the canonical exponential root, the product in ε is `4 sin²(πm/L)≥0`. Keep the algebraic form primary. The limiting constant `4π²/L` is transcendental and is not automatically an element of the cyclotomic number field. Work in ℂ if using this comparison constant, or use an explicitly chosen algebraic reference weight such as ε(1), which is a different comparison.
+For the canonical exponential root, the product in $\varepsilon$ is $4 \sin^2(\pi m/L) \ge 0$. Keep the algebraic form primary. The limiting constant $4\pi^2/L$ is transcendental and is not automatically an element of the cyclotomic number field. Work in $\mathbb{C}$ if using this comparison constant, or use an explicitly chosen algebraic reference weight such as $g_0 := \varepsilon(1)$.
 
-An exact error operator is a finite weighted sum. A Taylor leading term or RG irrelevance statement requires separately specified asymptotic/error estimates. It is not an exact finite algebraic proportionality. Ground states in every admissible charge sector are annihilated by the lowering modes; therefore the error does not vanish only on the single N=0 vacuum.
+**Kernel and Excited Witnesses:**
+The exact error operator $E_{\text{error}}^{(M)} := H_{\text{field}}^{(M)} - 4 g_0 H_{\text{sug}}^{(M)} = 4 \sum_{\nu,m=1}^M (\varepsilon(m) - g_0) \rho_{m,\nu} \rho_{-m,\nu}$ is a finite weighted sum.
+- Ground states $|\vec{N}\rangle_0$ in every admissible charge sector are annihilated by the lowering modes $\rho_{-m,\nu}$, so $\mathcal{H}_0 \subseteq \ker(E_{\text{error}}^{(M)})$.
+- Any excited state composed purely of excitations in modes $m$ where $\varepsilon(m) = g_0$ (such as mode $m=1$ when $g_0 = \varepsilon(1)$) also lies in $\ker(E_{\text{error}}^{(M)})$.
+- Nonzero action requires excitation in at least one mode $m \in \{1,\dots,M\}$ with $\varepsilon(m) \neq g_0$; when $M \ge 2$, single-mode state $\psi = \rho_{m,\nu}|\vec{N}\rangle_0$ for $m \ge 2$ provides an explicit nonzero witness: $E_{\text{error}}^{(M)} \psi = 4 m (\varepsilon(m) - g_0) \psi \neq 0$.
+
+A Taylor leading term or RG irrelevance statement requires separately specified asymptotic/error estimates under a defined scaling sequence $(L_n, M_n)$. It is not an exact finite algebraic identity, and should be kept as physical motivation.
