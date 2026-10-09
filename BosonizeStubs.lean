@@ -1,4 +1,6 @@
 import Bosonize
+import BosonizeStubs.Ch05Fermions
+import BosonizeStubs.Ch06LocalNet
 
 /-!
 # Bosonize Staging Library
