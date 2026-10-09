@@ -1,168 +1,75 @@
-# BOSONIZE-LEAN: Mathematical Reference Notes
-
-## Part II: Phase 2 The Density Sector
-
-### Introduction to Phase 2: Context, Regularization, and Limitations
-
-Before diving into the core of the bosonization dictionary, we must contextualize our methodology within the broader landscape of Quantum Field Theory (QFT) and Functional Analysis.
-
-In standard continuum QFT, the reality of the physics unfolds in infinite-dimensional Hilbert spaces. Operators are typically unbounded, and correlation functions suffer from ultraviolet (UV) and infrared (IR) divergences. Standard bosonization literature handles this using infinite Dirac seas, normal-ordering regularizations, analytical point-splitting limits, and path-integral Jacobians.
-
-In Phase 1, we constructed a completely finite, algebraic substitute for this machinery. However, **this does not render the functional analytic approach irrelevant.** Rather, we are performing a strict *formal regularization*.
-
-**Limitations and the Role of Regularization:**
-Not all proofs can be done in a finite-dimensional space. For example, true spontaneous symmetry breaking, strict continuous phase transitions, and exact coherence states require taking the thermodynamic and continuum limits. Our theory must ultimately be understood in a Renormalization Group (RG) sense. The true continuum QFT is defined by how the system scales as we remove our regulators while holding physical observables constant. We do not formalize these limits in Lean; we formalize the exact finite identities *before* the limits are taken.
-
-In our approach, we introduce two explicit, independent regulators:
-1. **The Finite-Volume IR Regulator ($L$):** In a fully dimensional physical system, the lattice spacing $a$ provides a short-distance (UV) cutoff, while the total length $\mathcal{L} = aL$ provides a finite-volume (IR) cutoff. By setting $a=1$ in our dimensionless formalization, the integer $L$ acts strictly as the **IR regulator**, discretizing momentum in steps of $\Delta k = 2\pi/L$. Taking $L \to \infty$ closes the IR gap.
-2. **The Many-Body UV Regulator ($K$):** Fixing $a=1$ only regulates the *single-particle* momentum. To regularize the *many-body* field theory, an infinitely deep Dirac sea would allow for excitations of arbitrarily high total energy. The energy budget $K$ acts as the **many-body UV regulator**, strictly truncating the depth of the accessible Dirac sea and the maximum energy of particle excitations.
-
-**Normal Ordering, Boundaries, and the Schwinger Anomaly:**
-In standard QFT, the chiral anomaly (Schwinger term) arises because regularizing the infinite vacuum current (point-splitting) yields a non-zero commutator $[\rho(x), \rho(y)] \propto \delta'(x-y)$.
-
-In our algebraic lattice approach, we must handle two potential divergences carefully: the macroscopic vacuum charge, and the commutator anomaly.
-* **Normal Ordering:** Normal ordering ($:\!\rho_m\!:$) subtracts the vacuum expectation value. This prevents the macroscopic background charge of the Dirac sea from producing unphysical, extensive ($O(L)$) eigenvalues.
-* **The Boundary Anomaly:** The physical anomaly emerges purely as an exact, finite boundary effect. If we allowed density modes to wrap cyclically around the band, the commutators would identically evaluate to zero, and the theory would fail. By keeping the momentum band strictly finite and truncating the shifts, the commutators in the bulk of the Dirac sea cancel out perfectly, but the *edge terms* at the top and bottom of the band fail to cancel. When the energy budget $K$ freezes these boundaries, these un-cancelled edge terms evaluate to exact scalar constants. Thus, the finite boundaries do not *prevent* the anomaly; rather, they mathematically **generate the true physical anomaly** without requiring infinite subtractions. These quantum anomalies are regular in our cutoffs, ensuring they survive the eventual thermodynamic limit.
-
 ### Chapter 9: Density Modes and Kinematics
 
-#### 9.1 The Fock Space Kinematics (Reminder)
+The formulation of density modes strictly follows the shift definitions and margin accounting set out in [Appendix A03](../appendices/a03_energy_budgets_and_filtered_maps.md) and [Appendix A04](../appendices/a04_density_partitions_and_sugawara.md).
 
-Before defining the density modes, we must recall the exact kinematic arena defined in Phase 1. At this stage of the formalization, we are studying the **Kinematics** (the algebra of observables at a fixed time). The dynamics (the Hamiltonian, interactions, filling factors, and chemical potentials) will dictate how states evolve, which we will address in the Sugawara and Luttinger chapters.
+#### 9.1 The Fock Space Kinematics and Valid Pairs
 
-**Definition 9.1 (Fock Space and Vacuum).**
-Let $\iota = \Lambda^*$ be the finite dual momentum lattice. The fermionic Fock space $\mathrm{Fock}(\Lambda^*)$ is the complex vector space of functions from the power set to the complex numbers, generated by the orthogonal basis of indicator functions (kets) $\delta_S$:
+To avoid the complexities of subtype filtering inside sums, we define valid kinematic momentum shifts precisely as sets of valid integer pairs. The shift $m$ is always typed as $m \in \mathbb{Z}$.
 
-$$
-\mathcal{F} = \mathrm{span}_\mathbb{C} \{ \delta_S \mid S \subseteq \Lambda^* \} \tag{9.1}
-$$
-
-The inner product requires these basis states to be strictly orthonormal and linearly independent:
+**Definition 9.1 (Valid Shift Pairs).**
+For any integer shift $m \in \mathbb{Z}$, the set of valid momentum bounds $D_m$ strictly avoids cyclic wrapping:
 
 $$
-\langle \delta_S \mid \delta_T \rangle = \delta_{S, T} \tag{9.2}
+D_m := \{ (p, k) \in \Lambda^* \times \Lambda^* \mid p = k + m \} \tag{9.1}
 $$
 
-The state $\vert{}\Omega\rangle$ represents the specific physical Dirac vacuum, which is the filled Fermi sea up to momentum zero:
+**Definition 9.2 (One-Particle Shift Matrix).**
+We define the one-particle partial shift matrix $T_m \in \mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*))$ exactly on the single-particle indices:
 
 $$
-\vert{}\Omega\rangle := \delta_{S_\Omega} \quad \text{where} \quad S_\Omega = \{ k \in \Lambda^* \mid k \le 0 \} \tag{9.3}
+(T_m)_{p,k} := \begin{cases} 1 & \text{if } (p,k) \in D_m \\ 0 & \text{otherwise} \end{cases} \tag{9.2}
 $$
 
-*Note:* $\vert{}\Omega\rangle$ *is not the "empty" state of the lattice; it is half-filled by definition. This fixes the baseline filling factor for our kinematics.*
-
-#### 9.2 Linearization and the Mode Index Domain
-
-In physical bosonization, one typically linearizes the energy band $\epsilon(k) \approx v_F k$ near the Fermi surface. In our formalization, we do *not* approximate. We define the bare Hamiltonian exactly as $H_0 = \sum k n_k$ over the finite band. Because we are working in dimensionless units where the scaled Fermi velocity $v_F = 1$ and lattice spacing $a=1$, the integer $m$ serves interchangeably as a quantum of momentum and a quantum of energy.
-
-We define the density modes by how they shift momentum.
-
-**Crucial Architecture Note (Integer Domain for** $m$**):**
-When a fermion is shifted from mode $k$ to mode $k+m$, the shift value $m$ represents an absolute leap in momentum. We strictly type $m$ as an ordinary integer ($m \in \mathbb{Z}$), rather than an element of the periodic dual lattice $\Lambda^*$.
+**Definition 9.3 (Second Quantization Map).**
+For any single-particle matrix $A$, its second-quantized operator $d\Gamma(A) \in \mathrm{End}_{\mathbb{C}}(\mathrm{Fock}(\Lambda^*))$ is:
 
 $$
-k+m \quad \text{is evaluated using standard integer addition.} \tag{9.4}
+d\Gamma(A) := \sum_{p,k \in \Lambda^*} A_{pk} c_p^\dagger c_k \tag{9.3}
 $$
 
-If we allowed $m$ to be in $\Lambda^*$ and wrapped the addition cyclically ($k \oplus m$), a particle at the top of the band would wrap to the bottom. As discussed in the introduction, this would identically destroy the Schwinger anomaly. The density modes must smoothly truncate when they hit the absolute edge of the finite band.
+By the CAR identities, this map exactly preserves commutators: $d\Gamma([A,B]) = [d\Gamma(A), d\Gamma(B)]$.
 
-#### 9.3 Definitions and Linear Independence
+#### 9.2 Density Modes
 
-**Definition 9.2 (Truncated Raw Density).**
-For any integer $m \in \mathbb{Z}$, the truncated raw density operator $\rho_m$ raises the momentum of fermions by exactly $m$. The sum is strictly filtered to ensure both the source mode $k$ and the target mode $k+m$ lie within the valid momentum band $\Lambda^*$:
-
-$$
-\forall m \in \mathbb{Z}, \quad \rho_m := \sum_{\substack{k \in \Lambda^* \\ k+m \in \Lambda^*}} c^\dagger_{k+m} c_k \tag{9.5}
-$$
-
-**Definition 9.3 (Normal Ordered Density).**
-To zero out the macroscopic background charge of the Dirac sea, we normal-order relative to $\vert{}\Omega\rangle$:
+**Definition 9.4 (Raw and Normal-Ordered Density).**
+The raw density mode $\rho_m$ is exactly the second-quantized shift:
 
 $$
-:\!\rho_m\!: \ := \rho_m - \delta_{m0} h I \tag{9.6}
+\forall m \in \mathbb{Z}, \quad \rho_m := d\Gamma(T_m) = \sum_{(p,k) \in D_m} c_p^\dagger c_k \tag{9.4}
 $$
 
-where $h$ is the number of particles in the vacuum.
-
-Because of the strict truncation, the number of valid density modes is finite. We can formalize this into a proposition regarding their linear independence (LI).
-
-**Proposition 9.4 (Finiteness and Linear Independence of Density Modes).**
-
-1. **Finite Support:** For $\vert{}m\vert{} \ge L$, the condition $k \in \Lambda^*$ and $k+m \in \Lambda^*$ is unsatisfiable. Therefore, $\rho_m = 0$ identically for $\vert{}m\vert{} \ge L$.
-
-2. **Adjointness:** By taking the Hermitian adjoint of the definition, the operators strictly reverse the momentum shift:
-
-   $$
-   \rho_m^\dagger = \rho_{-m} \tag{9.7}
-   $$
-
-3. **Linear Independence:** The set of positive density modes $\{ \rho_m \}_{m=1}^{h}$ forms a linearly independent family of operators in $\mathrm{End}_\mathbb{C}(\mathcal{F})$.
-   *Proof Sketch:* Suppose $\sum_{m=1}^h \alpha_m \rho_m = 0$. Apply this operator sum to the vacuum state $\vert{}\Omega\rangle$. Because each $\rho_m$ raises the exact energy of the state by a distinct amount $m$ (see Lemma 9.6), the resulting vectors $\rho_m \vert{}\Omega\rangle$ belong to distinct, orthogonal eigenspaces of $H_0$. Therefore, their linear combination can only be zero if all coefficients $\alpha_m = 0$. By adjointness, $\{ \rho_{-m} \}_{m=1}^h$ is also a linearly independent family of annihilation modes.
-
-#### 9.4 Covariance, Grading, and Physical Intuition
-
-Before demonstrating how density interacts with the Hamiltonian, we state the exact foundational commutator for fermionic bilinears.
-
-**Lemma 9.5 (Bilinear Commutator).**
-For any momentum indices $p, q, r, s \in \Lambda^*$, the pure CAR relations imply:
+Normal-ordered density zero-points the macroscopic charge $h$ at $m=0$:
 
 $$
-[c^\dagger_p c_q, c^\dagger_r c_s] = \delta_{qr} c^\dagger_p c_s - \delta_{ps} c^\dagger_r c_q \tag{9.8}
+:\!\rho_m\!: \ := \rho_m - \delta_{m,0} h I \tag{9.5}
 $$
 
-**Lemma 9.6 (Covariance with Particle Number and Energy).**
-Because $\rho_m$ destroys one fermion and creates one fermion, total particle number $\hat{N}$ is conserved. Furthermore, it shifts a particle from $k$ to $k+m$.
+#### 9.3 Kinematic Lemmas and Linear Independence
+
+**Lemma 9.5 (Finiteness and Global Commutativity).**
+1. **Vanishing bounds:** For $|m| \ge L$, $D_m$ is empty, so $T_m = 0$ and $\rho_m = 0$.
+2. **Adjointness:** $T_m^\dagger = T_{-m}$ and $\rho_m^\dagger = \rho_{-m}$.
+3. **Same-sign commutativity:** For any non-negative $m, n \ge 0$, the partial shifts strictly compose: $T_m T_n = T_{m+n}$. Because the single-particle matrices commute, $[T_m, T_n] = 0$. Thus $[\rho_m, \rho_n] = 0$ **globally** as an exact endomorphism identity over the entire Fock space (not just on a budget).
+
+**Lemma 9.6 (Covariance and Energy).**
+Using the normal-ordered Hamiltonian $\hat{P} = H_0 - E_\Omega I$ (where $E_\Omega = -h(h-1)/2$), the densities conserve particle number and rigorously shift energy:
 
 $$
-\forall m \in \mathbb{Z}, \quad [\hat{N}, \rho_m] = 0 \tag{9.9}
+[\hat{N}, \rho_m] = 0, \qquad [\hat{P}, \rho_m] = m \rho_m \tag{9.6}
 $$
 
-$$
-\forall m \in \mathbb{Z}, \quad [H_0, \rho_m] = m \rho_m \tag{9.10}
-$$
-
-**Physical Intuition (CFT and Grading):**
-In Conformal Field Theory (CFT) and infinite Lie algebras (like the Kac-Moody or Virasoro algebras), an equation of the form $[H_0, O] = q O$ identifies $O$ as an operator with "charge" or "conformal dimension" $q$. Mathematically, this is known as a *grading*. The operator $H_0$ measures the energy. Because we are working in dimensionless units, shifting the momentum by $m$ strictly shifts the energy by $m$. Equation 9.10 proves that $\rho_m$ acts mathematically as a grade-shifting operator (or root vector) on the energy eigenspaces.
-
-**Lemma 9.7 (Budget Grading and Low-State Annihilation).**
-Let $\psi \in \mathcal{B}^N_K$ be a state in the energy budget. Applying $\rho_m$ shifts the budget by exactly $m$:
+**Lemma 9.7 (Exact Vacuum Norm and Linear Independence).**
+To prove linear independence without circular assumptions about the Schwinger term, we explicitly compute the vacuum action using orthogonal single-particle hop kets. For any $1 \le m \le h$:
 
 $$
-\forall \psi \in \mathcal{B}^N_K, \quad \rho_m \psi \in \mathcal{B}^N_{K+m} \tag{9.11}
+\|\rho_m |\Omega\rangle \|^2 = m \tag{9.7}
 $$
 
-Because excitation energy is strictly non-negative ($e(S) \ge 0$), applying a lowering mode $\rho_{-m}$ (for $m > 0$) to a state near the bottom of the budget must annihilate it to prevent negative energy. Specifically, for sector ground states $\vert{}N\rangle_0$:
+Because applying $\rho_m$ to the vacuum yields a non-zero state with distinct energy eigenvalue $m$, the positive density modes $\{\rho_m\}_{m=1}^h$ are strictly linearly independent over $\mathbb{C}$.
+
+**Lemma 9.8 (Budget Action).**
+The operator $\rho_m$ maps the budget subspace $B(N,K)$ exactly into $B(N, K+m)$. A lowering mode $m > 0$ mapped onto the ground state falls below the zero-energy bound and rigidly annihilates:
 
 $$
-\forall m \ge 1, \quad \rho_{-m} \vert{}N\rangle_0 = 0 \tag{9.12}
+\forall m \ge 1, \quad \rho_{-m} |N\rangle_0 = 0 \tag{9.8}
 $$
-
-#### 9.5 Non-Degeneracy and Anti-Vacuity
-
-**Physical Intuition (Preventing "Green-Washing"):**
-In formal verification, it is alarmingly easy to prove a theorem that is mathematically true but physically vacuous. For example, if we assert an exact commutation relation $[\rho_{-m}, \rho_m] \psi = m \psi$, a theorem prover will mark this as `True` if $\psi$ is forced to be the zero vector, or if the operators are identically the zero matrix. We call this "green-washing"—the proof passes, but the physics is empty.
-To prevent this, every core operator and subset must be accompanied by an anti-vacuity lemma proving it contains non-trivial physical data.
-
-We must prove that the density operators do not universally annihilate the vacuum, ensuring that the creation of bosonic excitations is a physically realizable process on our lattice.
-
-**Lemma 9.8 (Non-vacuous Action).**
-Provided the band size $L = 2h$ is large enough to contain the shift ($1 \le m \le h$), the density mode strictly creates a non-zero orthogonal state when applied to the Dirac vacuum $\vert{}\Omega\rangle$:
-
-$$
-\rho_1 \vert{}\Omega\rangle \neq 0 \tag{9.13}
-$$
-
-$$
-\langle \Omega \vert{} \rho_{-m} \rho_m \vert{}\Omega\rangle = m \tag{9.14}
-$$
-
-#### 9.6 Technical Notes for the Lean 4 Formalization (Chapter 9)
-
-1. **Typing the Shift (`m : ℤ`):**
-   * Do not define $m$ as an element of `LambdaDual L`. Type it as a standard Lean integer `m : ℤ`. The operation $k+m$ must be evaluated by coercing $k$ to `ℤ`, adding $m$, and checking if the result satisfies the bounds of the band.
-
-2. **Filtering the Sum (`Finset.filter`):**
-   * The sum in $\rho_m$ should be formalized over `(univ : Finset (LambdaDual L))`, filtered by the condition `fun k => k.val + m ∈ LambdaDual L`.
-
-3. **Proving Linear Independence:**
-   * To prove Proposition 9.4 in Lean, rely on the eigenvectors of $H_0$. Because $[H_0, \rho_m] = m\rho_m$, applying the sum to the vacuum yields a sum of eigenvectors with distinct eigenvalues (since $H_0 \vert{}\Omega\rangle = 0$, $H_0 (\rho_m \vert{}\Omega\rangle) = m (\rho_m \vert{}\Omega\rangle)$). Linear algebra API in Mathlib dictates that eigenvectors corresponding to distinct eigenvalues are strictly linearly independent.
