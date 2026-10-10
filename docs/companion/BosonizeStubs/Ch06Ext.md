@@ -1,8 +1,10 @@
 # CH06 extension companion — boundary holonomy and ring transport
 
-Status (2026-10-09): **Phase A complete; unlocked and unproved, awaiting interface review.** Baseline: `9734230`. The extension contains 29 complete data declarations and 72 one-sorry theorem stubs. It imports frozen CH06 and is exposed by `BosonizeStubs`; no existing Core or approved interface is changed.
+Status (2026-10-09): **All 72 proofs complete; redundant-length interface cleanup awaits approval.** Approved interface baseline: `b92dd3b`; Phase A documentation checkpoint: `b55cf31`. The extension contains 29 complete data declarations and 72 theorem proofs. It imports frozen CH06 and is exposed by `BosonizeStubs`; no existing Core or approved interface is changed.
 
-## Source reconciliation and scope
+The design sections below retain the Phase A rationale; their references to proposed stubs describe that earlier design. All 72 listed contracts now have complete proofs. The Phase B validation section records the current evidence and the separate length-assumption cleanup request.
+
+## Phase A design record and source reconciliation
 
 The user's request authorizes a separate `ch06_ext` module. Adopt the corrected contracts in [the boundary issue review](../../../note/issue_twisted_boundary_conditions_2026-10-09.md), the actual frozen CH01/A01/CH05/CH06 carriers, and the repository formalizer skill. Read the current [CH06 note](../../../notes/md/ch06_lattice_AQFT_net.md), [TOC](../../../notes/md/TOC.md) and [appendix index](../../../notes/appendices/README.md). Their progress summaries can be stale; compiler sources and locks establish implemented status. The issue review reconciles the user's proposed CH01/A05/CH14 twist sections with vDS and the implemented Fourier convention. Preserve the locally edited source notes; this draft does not validate every statement in those notes.
 
@@ -32,7 +34,7 @@ The general development retains b until an explicit specialization or a proved
 cancellation removes it. Independent species will need a family of records.
 
 The Lean module now has expanded documentation before all 29 data declarations and
-72 proposed lemmas, plus field-level documentation and a notation/API guide. Comments
+72 theorem declarations, plus field-level documentation and a notation/API guide. Comments
 change no normalized declarations, theorem statements, definitions or proof bodies.
 
 ## Lifted fields, Fourier kernels and locality
@@ -63,7 +65,7 @@ Physical labels k+β and occupation energies are real-valued. With the same sea,
 
 A03 coordinate calculus can stay generic. CH07's proposed integer excitation data can stay as a reference model after this real-energy bridge is proved; its integer triangular charge term must not be called the physical APBC energy. Uniform twist does not remove finite-band edge or Umklapp obligations.
 
-Proposed Phase B order:
+Implemented Phase B dependency order:
 
 1. Unit phases, root/angle coverage, integer winding, orthogonality and inverse Fourier transform.
 2. Actual adjoints, winding, nonzero-action/descent and site/lift CAR.
@@ -74,19 +76,23 @@ Proposed Phase B order:
 
 For CH09–CH12, establish twist cancellation for the specified same-species bilinears and fixed-charge excitation budgets. For CH13–CH14/A05, retain a species-indexed family of b and explicitly typed sector transitions. Cross-species bilinears with different twists do not automatically have trivial holonomy. For CH15 onward, separate periodic oscillator data from zero-mode winding, chirality signs, physical charge-energy terms and parameter-dependent observables. Each later definition must retain the necessary parameters; phase independence is a theorem where phases actually cancel, not a global assumption.
 
-## Validation and review boundary
+## Phase B validation and review boundary
 
-Both library builds pass. Native Lean MCP diagnostics complete with success=true, partial=false, 72 sorry-category warnings, no other diagnostics and no failed dependencies. Fresh axiom output shows all 29 data declarations use only standard axioms or none; every one of the 72 proposed lemmas uses sorryAx. A native goal inspection also returned successfully on a stub; a placeholder can report complete at its endpoint, which is not proof evidence.
+All 72 theorem bodies compile with no placeholders. The fresh audit of all 29 data declarations and 72 theorems contains only propext, Classical.choice and Quot.sound, with no sorryAx. Both library builds and all 69 guard regression tests pass. Native Lean MCP diagnostics complete with success=true, partial=false and no failed dependencies; the original locked source has eight unused-section-variable warnings and no sorry diagnostics. Native goal inspection confirmed the angular holonomy proof state. The MCP local-search tool failed because rg was absent from its own PATH; shell rg and the installed library sources supplied retrieval while native goals/diagnostics worked.
 
-All 69 guard regression tests pass. Against `9734230`, non-strict verification preserves all 271 statements/225 frozen commands and all eight complete Core sources. Strict verification intentionally rejects exactly Ch06Ext and the existing unlocked A03/CH07 drafts. No freeze manifest or Core aggregator is changed. Full strict CI is not reported as passing. One primary formalizer performed this Phase A with the repository skill; no subagents were dispatched.
+The strict working-tree guard preserves 457 statements/342 commands and all eight complete Core hashes. Against the committed Ch06Ext baseline b92dd3b, the scoped Ch06Ext entry is unchanged; a whole-repository strict committed-baseline check still flags the separate A03/CH07 local lock additions. Those entries are preserved and not included in the Ch06Ext approval/commit. No full committed-baseline CI success is claimed.
 
-Review the exact source below before locking and Phase B. Source-note corrections from the issue review and the spin-sector model remain separate obligations. The boundary issue is not marked resolved by a draft with placeholders.
+A complete temporary copy with exactly the [12 proposed length-assumption omissions](../../../note/ch06ext_phase_b_interface_cleanup_2026-10-09.md) compiles with warnings treated as errors. The original source retains the approved headers pending explicit cleanup approval. No warning is suppressed, and no frozen Core or data definition is changed. Phase B acceptance is pending that interface review; Phase C is not authorized or started.
+
+The proof work uses unit-phase algebra and exact primitive-root periodicity, actual finite Hilbert adjoints and basis extension, CAR scalar cancellation, algebraic adjoin induction, and the concrete diagonal translation/zero-mode actions. The momentum basis proofs explicitly reconcile the subtype and order-derived DecidableEq choices on Finset insert/erase. The physical-energy bridge uses the actual sea cardinality and real casts; no spin-chain equivalence, universal finite vertex identity, or new dispersion model is proved.
+
+One primary formalizer used the repository skill; no subagents were dispatched. The expanded declaration comments are retained and updated to reflect proved identities. Source-note reconciliation and future multi-species/spin-sector constructions remain separate work. The proof completion does not resolve every source-prose issue in the original boundary report.
 
 ## Reviewed source provenance
 
 | Source | SHA-256 |
 | --- | --- |
-| `note/issue_twisted_boundary_conditions_2026-10-09.md` | `238aceca9228d6576e3912dca63bf72cf531869727f42f05c3f574beb0c6ffe1` |
+| `note/issue_twisted_boundary_conditions_2026-10-09.md` | `6ad2ab7f27a86457dc0e645aecb5412ea3a67cf62ce1f5db06d6a8d57fdc0eab` |
 | `notes/md/ch06_lattice_AQFT_net.md` | `4971a838dbb9255219d9e2b9e1d2039d0865111c6797ba39a86e62d966c39a91` |
 | `notes/md/TOC.md` | `5ea6b32bdecf8f9c65a345dc12356ff767b176c0b131e32acdb836778b054977` |
 | `notes/appendices/README.md` | `ce871fab4a58ecb41a2b99d4ad4b055bb55e400753249fa88edde45fd15ebcd9` |
@@ -94,7 +100,7 @@ Review the exact source below before locking and Phase B. Source-note correction
 | `Bosonize/Core/Ch05Fermions.lean` | `a19fed9d032daaa60df6bda4980b7470f10dd3e7333a63aec369a41e75c4dd81` |
 | `.agents/skills/formalizer/SKILL.md` | `b65c51851fadb8cd5469c25bfaf34414a074b59e8f89fc7a6b2097969c789aaa` |
 
-## Fresh data and stub axiom output
+## Fresh data and theorem axiom output
 
 ```text
 'Bosonize.Ch06Ext.BoundaryTwist' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -126,83 +132,83 @@ Review the exact source below before locking and Phase B. Source-note correction
 'Bosonize.Ch06Ext.physicalOccupationEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Bosonize.Ch06Ext.physicalRelativeEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Bosonize.Ch06Ext.physicalGroundEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.twist_step_ne_zero' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy_norm' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lift_phase_norm' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lift_phase_add' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lift_phase_winding' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angle_holonomy' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angle_twist_surjective' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy_surjective' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.periodic_holonomy' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.antiperiodic_holonomy' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angle_integer_holonomy' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angle_root_shift' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.winding_decomposition' depends on axioms: [propext, sorryAx, Quot.sound]
-'Bosonize.Ch06Ext.seam_phase_winding' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.twisted_character_orthogonality' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.twisted_fourier_inverse' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.annihilation_fourier' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.creation_adjoint' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.annihilation_winding' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.creation_winding' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lift_site_relation' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.periodic_field' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.antiperiodic_field' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.annihilation_ne_zero' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.quotient_descent_iff' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.site_annihilation_car' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.site_creation_car' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.site_mixed_car' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lifted_mixed_car' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.density_untwisted' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.density_periodic' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.local_algebra_eq' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.local_part_eq' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.graded_locality' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_ket' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_zero' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_add' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_adjoint' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_unitary' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_apply' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_add' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_star' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_automorphism_exists' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_annihilation' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_creation' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.site_transport' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.seam_transport' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.local_transport' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.local_part_transport' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_preserves_number' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_preserves_hamiltonian' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_preserves_parity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.full_ring_translation' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_power' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.apbc_full_ring_parity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy_acts_on_field' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy_detected_iff' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.change_trivialization_field' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.trivialization_ratio_periodic' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_ket' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_winding' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_unitary' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_creation_order' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_annihilation_order' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jw_even' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jw_odd' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jw_sector_holonomy' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jw_parity_flip' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.physical_energy_shift' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.physical_relative_shift' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.excitation_twist_cancel' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.apbc_ground_energy' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.twist_step_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.holonomy_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.lift_phase_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.lift_phase_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.lift_phase_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.angle_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.angle_twist_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.holonomy_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.periodic_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.antiperiodic_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.angle_integer_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.angle_root_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.winding_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.seam_phase_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.twisted_character_orthogonality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.twisted_fourier_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.annihilation_fourier' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.creation_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.annihilation_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.creation_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.lift_site_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.periodic_field' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.antiperiodic_field' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.annihilation_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.quotient_descent_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.site_annihilation_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.site_creation_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.site_mixed_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.lifted_mixed_car' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.density_untwisted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.density_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.local_algebra_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.local_part_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.graded_locality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_unitary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.transport_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.transport_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.transport_star' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.transport_automorphism_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.transport_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.transport_creation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.site_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.seam_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.local_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.local_part_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_preserves_number' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_preserves_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_preserves_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.full_ring_translation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.translation_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.apbc_full_ring_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.holonomy_acts_on_field' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.holonomy_detected_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.change_trivialization_field' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.trivialization_ratio_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.zero_mode_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.zero_mode_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.zero_mode_unitary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.zero_mode_creation_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.zero_mode_annihilation_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.jw_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.jw_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.jw_sector_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.jw_parity_flip' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.physical_energy_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.physical_relative_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.excitation_twist_cancel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch06Ext.apbc_ground_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 ## Exact Lean source snapshot
 
-Module SHA-256: `89fd0a834a0824459ddfbd4c29aaadd18f7e1412f7609a25a8c14e84939cae17`. The block below matches the source byte-for-byte.
+Module SHA-256: `5e30eaadf52b88254b2840b5f5f4e5e0e6b4becf5b318ec797a902e83888b1c6`. The block below matches the source byte-for-byte.
 
 ```lean
 module
@@ -212,7 +218,7 @@ public import Mathlib.Analysis.Complex.Trigonometric
 
 /-!
 # CH06 extension: scalar boundary holonomy and covariant ring transport
-Phase A: complete data and one-sorry review contracts.
+Phase B: complete proofs; redundant length assumptions await interface review.
 External scalar twists are independent of fermionic grading. Integer lifts expose the seam.
 
 ## Reading the notation and choosing downstream APIs
@@ -221,7 +227,7 @@ External scalar twists are independent of fermionic grading. Integer lifts expos
 Current definitions take it explicitly. A later section may bind `{b : BoundaryTwist L}`
 to produce implicit arguments; Lean still retains b in the resulting declaration's type.
 Quantifying a theorem over b states validity for every twist. Independence requires an
-identity removing b, such as the proposed density_untwisted or local_algebra_eq bridge.
+identity removing b, such as the proved density_untwisted or local_algebra_eq bridge.
 
 `step` means the complex phase r per lattice step; `holonomy` means r^L per complete lap.
 On complex numbers `star z` is conjugation. Actual operator adjoints use
@@ -232,11 +238,11 @@ All operators live in the existing `Ch05.Operators L`; there is no competing Foc
 Use frozen `Ch06.localAlgebra` / `Ch06.localPart` for local support and grading when
 spatial twist is irrelevant. Use `Ch06Ext.annihilation`, `creation`, `twistedCharacter`,
 `translation`, `transport` and `zeroMode`, with the same b, for boundary-sensitive work.
-The proposed local_algebra_eq and local_part_eq lemmas transfer local statements between
+The proved local_algebra_eq and local_part_eq lemmas transfer local statements between
 presentations after they are proved. A β-dependent physical-energy model must explicitly
 select b=angleTwist L β. Specialize b=periodicTwist L or antiperiodicTwist L only when
 the model calls for that sector; the general development can retain b throughout.
-All 72 lemmas below remain proposed contracts with sorry placeholders.
+All 72 theorem bodies below have complete proofs; see the companion notebook for validation.
 
 -/
 
@@ -261,7 +267,7 @@ structure BoundaryTwist (L : ℕ) where
 /--
 Construct the step phase r = exp(2πiβ/L) from a real momentum offset β, measured in integer-
 label units. Its norm certificate comes from Mathlib rather than a theorem stub. For L>0 the
-proposed angle_holonomy lemma gives exp(2πiβ) around the ring. Retain β separately when an
+proved angle_holonomy lemma gives exp(2πiβ) around the ring. Retain β separately when an
 energy or physical momentum depends on its real lift.
 -/
 noncomputable def angleTwist (L : ℕ) (β : ℝ) : BoundaryTwist L :=
@@ -298,7 +304,7 @@ noncomputable def liftPhase (L : ℕ) (b : BoundaryTwist L) (n : ℤ) : ℂ := b
 
 /--
 Say that two twist records have the same full-ring phase. This compares holonomy only, not
-record equality or the selected step root. The proposed change-of-trivialization lemmas explain
+record equality or the selected step root. The proved change-of-trivialization lemmas explain
 the position-dependent ratio between their fields.
 -/
 def sameHolonomy (L : ℕ) (b c : BoundaryTwist L) : Prop := holonomy L b = holonomy L c
@@ -317,7 +323,7 @@ noncomputable def annihilation (b : BoundaryTwist L) (n : ℤ) : Ch05.Operators 
 
 /--
 The lifted creator with conjugate scalar phase: star(r^n) • c_0†([n]). Here star acts on ℂ and
-means complex conjugation. Hilbert adjoints of operators are written LinearMap.adjoint, and creation_adjoint is the proposed proof that this definition
+means complex conjugation. Hilbert adjoints of operators are written LinearMap.adjoint, and creation_adjoint is the proved proof that this definition
 is the actual adjoint of annihilation.
 -/
 noncomputable def creation (b : BoundaryTwist L) (n : ℤ) : Ch05.Operators L :=
@@ -390,7 +396,7 @@ noncomputable def localPart (b : BoundaryTwist L) (I : Ch06.Region L) (σ : Ch06
 /--
 Construct translation by m integer steps as a diagonal map on the actual momentum-occupation
 basis. On δ_S it multiplies by r^(-m #S) ζ^(-m sum(k∈S) k). The negative exponents match the
-positive annihilation Fourier convention. Unitarity and field covariance are proposed lemmas,
+positive annihilation Fourier convention. Unitarity and field covariance are proved lemmas,
 not certificates assumed in this definition.
 -/
 noncomputable def translation (b : BoundaryTwist L) (m : ℤ) : Ch05.Operators L :=
@@ -421,7 +427,7 @@ noncomputable def transport (b : BoundaryTwist L) (m : ℤ) :
 /--
 The integer quotient n/L in Euclidean division for positive ring length L. It counts signed laps
 relative to the selected representative of [n]; negative n can have negative winding. The
-proposed winding_decomposition relates it exactly to ZMod.val, rather than relying on truncating
+proved winding_decomposition relates it exactly to ZMod.val, rather than relying on truncating
 natural subtraction.
 -/
 def windingNumber (n : ℤ) : ℤ := n / (L : ℤ)
@@ -453,94 +459,156 @@ noncomputable def zeroMode (b : BoundaryTwist L) (n : ℤ) (referenceCharge : �
     (liftPhase L b n * A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge))) • A02.ket S)
 
 /--
-Proposed consequence of norm_step: the selected step phase cannot vanish. This supplies the
+consequence of norm_step: the selected step phase cannot vanish. This supplies the
 nonzero condition needed for integer negative powers, division by step, and invertible scalar
-changes of generators. The lemma remains a Phase A placeholder.
+changes of generators. The proof uses the norm certificate and does not require positive ring length.
 -/
-lemma twist_step_ne_zero (b : BoundaryTwist L) : b.step ≠ 0 := by sorry
+lemma twist_step_ne_zero (b : BoundaryTwist L) : b.step ≠ 0 := by
+  intro h
+  have hn := b.norm_step
+  rw [h, norm_zero] at hn
+  exact zero_ne_one hn
+
 /--
-Proposed norm-one property of the full-loop phase r^L. It permits treating holonomy as scalar
+norm-one property of the full-loop phase r^L. It permits treating holonomy as scalar
 U(1) boundary data and using its conjugate as its inverse. No restriction to rational angles or
 periodic/APBC phases is imposed.
 -/
-lemma holonomy_norm (b : BoundaryTwist L) : ‖holonomy L b‖ = 1 := by sorry
+lemma holonomy_norm (b : BoundaryTwist L) : ‖holonomy L b‖ = 1 := by
+  simp [holonomy, norm_pow, b.norm_step]
+
 /--
-Proposed norm-one property of r^n for every integer n, including negative positions. This is the
+norm-one property of r^n for every integer n, including negative positions. This is the
 scalar cancellation needed for actual adjoints, densities and site mixed CAR.
 -/
-lemma lift_phase_norm (b : BoundaryTwist L) (n : ℤ) : ‖liftPhase L b n‖ = 1 := by sorry
+lemma lift_phase_norm (b : BoundaryTwist L) (n : ℤ) : ‖liftPhase L b n‖ = 1 := by
+  simp [liftPhase, norm_zpow, b.norm_step]
+
 /--
-Proposed multiplicative law r^(n+m)=r^n*r^m for integer displacement. It is the scalar transport
+multiplicative law r^(n+m)=r^n*r^m for integer displacement. It is the scalar transport
 composition law; nonzero step is essential for unrestricted integer exponents.
 -/
 lemma lift_phase_add (b : BoundaryTwist L) (n m : ℤ) :
-    liftPhase L b (n+m) = liftPhase L b n * liftPhase L b m := by sorry
+    liftPhase L b (n+m) = liftPhase L b n * liftPhase L b m := by
+  exact zpow_add₀ (twist_step_ne_zero L b) n m
+
 /--
-Proposed phase law for w signed laps: translating n by wL multiplies its phase by τ^w. This
+phase law for w signed laps: translating n by wL multiplies its phase by τ^w. This
 distinguishes step transport from full-loop holonomy and covers multiple positive or negative
 windings.
 -/
 lemma lift_phase_winding (b : BoundaryTwist L) (n w : ℤ) :
-    liftPhase L b (n+w*(L : ℤ)) = holonomy L b^w * liftPhase L b n := by sorry
+    liftPhase L b (n+w*(L : ℤ)) = holonomy L b^w * liftPhase L b n := by
+  change b.step^(n+w*(L : ℤ)) = (b.step^L)^w*b.step^n
+  rw [zpow_add₀ (twist_step_ne_zero L b), mul_comm w (L : ℤ), zpow_mul, zpow_natCast]
+  exact mul_comm _ _
+
 /--
-Proposed identification of the angular construction's full-loop phase with exp(2πiβ). Positive L
+identification of the angular construction's full-loop phase with exp(2πiβ). Positive L
 is required to cancel the division by L in the exponential. It specifies the relation between
 the real offset and scalar boundary condition.
 -/
 lemma angle_holonomy (β : ℝ) :
-    holonomy L (angleTwist L β) = Complex.exp (((2*Real.pi*β : ℝ) : ℂ)*Complex.I) := by sorry
+    holonomy L (angleTwist L β) = Complex.exp (((2*Real.pi*β : ℝ) : ℂ)*Complex.I) := by
+  unfold holonomy angleTwist
+  rw [← Complex.exp_nat_mul]
+  congr 1
+  have hL : (L : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne L
+  push_cast
+  field_simp
 /--
-Proposed coverage of every norm-one step record by some real β at positive L. The angle is not
+coverage of every norm-one step record by some real β at positive L. The angle is not
 claimed to be unique; distinct real lifts can describe the same step. This is a coverage
 theorem, not a canonical choice of physical energy offset.
 -/
-lemma angle_twist_surjective (b : BoundaryTwist L) : ∃ β : ℝ, angleTwist L β = b := by sorry
+lemma angle_twist_surjective (b : BoundaryTwist L) : ∃ β : ℝ, angleTwist L β = b := by
+  refine ⟨(L : ℝ)*b.step.arg/(2*Real.pi), ?_⟩
+  cases b with
+  | mk r hr =>
+    have hL : (L : ℝ) ≠ 0 := by exact_mod_cast NeZero.ne L
+    have hp : Real.pi ≠ 0 := Real.pi_ne_zero
+    have he : 2*Real.pi*((L : ℝ)*r.arg/(2*Real.pi))/(L : ℝ) = r.arg := by field_simp
+    simp only [angleTwist, he]
+    simpa [hr] using Complex.norm_mul_exp_arg_mul_I r
 /--
-Proposed existence of a step record realizing any prescribed unit complex full-ring phase u. It
+existence of a step record realizing any prescribed unit complex full-ring phase u. It
 requires positive L and a norm-one hypothesis on u. Thus arbitrary scalar twisted boundary
 conditions are represented, rather than only periodic and anti-periodic cases.
 -/
 lemma holonomy_surjective (u : ℂ) (hu : ‖u‖ = 1) :
-    ∃ b : BoundaryTwist L, holonomy L b = u := by sorry
+    ∃ b : BoundaryTwist L, holonomy L b = u := by
+  let c : BoundaryTwist L := ⟨u, hu⟩
+  obtain ⟨β, hβ⟩ := angle_twist_surjective L c
+  refine ⟨angleTwist L (β/(L : ℝ)), ?_⟩
+  calc
+    holonomy L (angleTwist L (β/(L : ℝ))) = (angleTwist L β).step := by
+      rw [angle_holonomy]
+      unfold angleTwist
+      congr 2
+      push_cast
+      ring
+    _ = u := congrArg BoundaryTwist.step hβ
 /--
-Proposed full-loop phase one for the selected periodic step r=1. This is the trivial external
+full-loop phase one for the selected periodic step r=1. This is the trivial external
 boundary condition and does not follow merely from fermionic grading.
 -/
-lemma periodic_holonomy : holonomy L (periodicTwist L) = 1 := by sorry
+lemma periodic_holonomy : holonomy L (periodicTwist L) = 1 := by
+  simp [holonomy, periodicTwist]
+
 /--
-Proposed full-loop phase -1 for the centered half-integer offset β=-1/2 at positive L. The per-
+full-loop phase -1 for the centered half-integer offset β=-1/2 at positive L. The per-
 step phase is generally not -1; the minus sign appears after a complete lap.
 -/
-lemma antiperiodic_holonomy : holonomy L (antiperiodicTwist L) = -1 := by sorry
+lemma antiperiodic_holonomy : holonomy L (antiperiodicTwist L) = -1 := by
+  rw [antiperiodicTwist, angle_holonomy]
+  rw [show (((2*Real.pi*(-1/2) : ℝ) : ℂ)*Complex.I) = -((Real.pi : ℂ)*Complex.I) by push_cast; norm_num; ring]
+  exact Complex.exp_neg_pi_mul_I
 /--
-Proposed invariance of full-loop phase under β ↦ β+z for integer z. Only holonomy is compared:
+invariance of full-loop phase under β ↦ β+z for integer z. Only holonomy is compared:
 physical momentum labels and chosen per-step roots can change. This does not assert equality of
 finite kinetic spectra.
 -/
 lemma angle_integer_holonomy (β : ℝ) (z : ℤ) :
-    sameHolonomy L (angleTwist L (β+(z : ℝ))) (angleTwist L β) := by sorry
+    sameHolonomy L (angleTwist L (β+(z : ℝ))) (angleTwist L β) := by
+  unfold sameHolonomy
+  rw [angle_holonomy, angle_holonomy]
+  have he : (((2*Real.pi*(β+(z : ℝ)) : ℝ) : ℂ)*Complex.I) =
+      (((2*Real.pi*β : ℝ) : ℂ)*Complex.I)+(z : ℂ)*(2*(Real.pi : ℂ)*Complex.I) := by push_cast; ring
+  rw [he, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
 /--
-Proposed change of the chosen step under β ↦ β+1: multiply it by the frozen canonical root ζ. It
+change of the chosen step under β ↦ β+1: multiply it by the frozen canonical root ζ. It
 makes the extra choice beyond holonomy explicit and fixes the positive Fourier orientation.
 -/
 lemma angle_root_shift (β : ℝ) :
-    (angleTwist L (β+1)).step = (angleTwist L β).step * A01.canonicalRoot L := by sorry
-
+    (angleTwist L (β+1)).step = (angleTwist L β).step * A01.canonicalRoot L := by
+  change Complex.exp (((2*Real.pi*(β+1)/(L : ℝ) : ℝ) : ℂ)*Complex.I) =
+      Complex.exp (((2*Real.pi*β/(L : ℝ) : ℝ) : ℂ)*Complex.I)*
+        Complex.exp (2*(Real.pi : ℂ)*Complex.I/(L : ℂ))
+  have he : (((2*Real.pi*(β+1)/(L : ℝ) : ℝ) : ℂ)*Complex.I) =
+      (((2*Real.pi*β/(L : ℝ) : ℝ) : ℂ)*Complex.I)+2*(Real.pi : ℂ)*Complex.I/(L : ℂ) := by push_cast; ring
+  rw [he, Complex.exp_add]
 /--
-Proposed integer identity n=val([n])+wL, including negative n. Positive L relates Euclidean
+integer identity n=val([n])+wL, including negative n. Positive L relates Euclidean
 division to the quotient representative. This arithmetic bridge supports lift/site and arbitrary
 seam-transport statements.
 -/
 lemma winding_decomposition (n : ℤ) :
-    n = (((n : Ch01.Lattice L).val : ℕ) : ℤ)+windingNumber L n*(L : ℤ) := by sorry
+    n = (((n : Ch01.Lattice L).val : ℕ) : ℤ)+windingNumber L n*(L : ℤ) := by
+  rw [ZMod.val_intCast]
+  simpa [windingNumber, mul_comm] using (Int.emod_add_mul_ediv n (L : ℤ)).symm
 /--
-Proposed update of the representative correction after w additional laps: multiply seamPhase by
+update of the representative correction after w additional laps: multiply seamPhase by
 τ^w. It handles negative winding using integer powers and the norm-one holonomy.
 -/
 lemma seam_phase_winding (b : BoundaryTwist L) (n w : ℤ) :
-    seamPhase L b (n+w*(L : ℤ)) = holonomy L b^w*seamPhase L b n := by sorry
+    seamPhase L b (n+w*(L : ℤ)) = holonomy L b^w*seamPhase L b n := by
+  unfold seamPhase windingNumber
+  rw [Int.add_mul_ediv_right _ _ (by exact_mod_cast NeZero.ne L)]
+  rw [zpow_add₀]
+  · exact mul_comm _ _
+  · exact pow_ne_zero _ (twist_step_ne_zero L b)
 /--
-Proposed finite orthogonality of the twisted Fourier kernels on the chosen L site
+finite orthogonality of the twisted Fourier kernels on the chosen L site
 representatives. Both kernels use the same b, so conjugate external phases cancel and the sum is
 L for equal modes and zero otherwise. Different twists require a separate mixed-kernel
 statement.
@@ -548,9 +616,21 @@ statement.
 lemma twisted_character_orthogonality (b : BoundaryTwist L) (k p : Ch01.Band L) :
     (∑ x : Ch01.Lattice L,
       star (twistedCharacter L b k (x.val : ℤ))*twistedCharacter L b p (x.val : ℤ)) =
-      if k=p then (L : ℂ) else 0 := by sorry
+      if k=p then (L : ℂ) else 0 := by
+  have he (x : Ch01.Lattice L) : star (twistedCharacter L b k (x.val : ℤ))*twistedCharacter L b p (x.val : ℤ) =
+      A01.integerCharacter (A01.canonicalRoot L) (p.val-k.val) (x.val : ℤ) := by
+    have hi : star (liftPhase L b (x.val : ℤ)) = (liftPhase L b (x.val : ℤ))⁻¹ := (Complex.inv_eq_conj (lift_phase_norm L b _)).symm
+    simp only [twistedCharacter, star_mul, hi, A01.complex_character_conj L _ (A01.canonical_root_primitive L)]
+    rw [mul_assoc, ← mul_assoc (liftPhase L b (x.val : ℤ))⁻¹, inv_mul_cancel₀ (show liftPhase L b (x.val : ℤ) ≠ 0 from zpow_ne_zero _ (twist_step_ne_zero L b)), one_mul]
+    simp only [A01.integerCharacter]
+    rw [← zpow_add₀ ((A01.canonical_root_primitive L).ne_zero (NeZero.ne L))]
+    congr 1
+    ring
+
+  simp_rw [he]
+  simpa [eq_comm] using A01.character_orthogonality L (A01.canonicalRoot L) (A01.canonical_root_primitive L) p k
 /--
-Proposed recovery of a momentum annihilator from twisted site annihilators using conjugate
+recovery of a momentum annihilator from twisted site annihilators using conjugate
 twisted kernels and the frozen normalization. The same b must occur in both factors for
 cancellation. This allows downstream momentum operators to keep their existing definition while
 using a twisted spatial presentation.
@@ -558,192 +638,351 @@ using a twisted spatial presentation.
 lemma twisted_fourier_inverse (b : BoundaryTwist L) (k : Ch01.Band L) :
     Ch05.momentumAnnihilation L k = (A01.normalization L : ℂ) •
       ∑ x : Ch01.Lattice L, star (twistedCharacter L b k (x.val : ℤ)) •
-        siteAnnihilation L b x := by sorry
-
+        siteAnnihilation L b x := by
+  rw [Ch05.inverse_annihilation]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro x _
+  simp only [twistedCharacter, siteAnnihilation, annihilation, star_mul, smul_smul, Int.cast_natCast, ZMod.natCast_zmod_val]
+  have hi : star (liftPhase L b (x.val : ℤ))=(liftPhase L b (x.val : ℤ))⁻¹ := (Complex.inv_eq_conj (lift_phase_norm L b _)).symm
+  rw [mul_assoc, hi, inv_mul_cancel₀ (show liftPhase L b (x.val : ℤ) ≠ 0 from zpow_ne_zero _ (twist_step_ne_zero L b)), mul_one, A01.complex_character_conj L _ (A01.canonical_root_primitive L)]
 /--
-Proposed positive-sign Fourier expansion of the lifted twisted annihilator, with the existing
+positive-sign Fourier expansion of the lifted twisted annihilator, with the existing
 momentum operators and normalization. The external phase is carried by twistedCharacter, so
 choosing APBC does not replace the integer mode carrier.
 -/
 lemma annihilation_fourier (b : BoundaryTwist L) (n : ℤ) :
     annihilation L b n = (A01.normalization L : ℂ) •
-      ∑ k : Ch01.Band L, twistedCharacter L b k n • Ch05.momentumAnnihilation L k := by sorry
+      ∑ k : Ch01.Band L, twistedCharacter L b k n • Ch05.momentumAnnihilation L k := by
+  have he (k : Ch01.Band L) : A01.bandCharacter L (A01.canonicalRoot L) k (n : Ch01.Lattice L) = A01.integerCharacter (A01.canonicalRoot L) k.val n := by
+    rw [A01.band_character_projection L _ (A01.canonical_root_primitive L)]
+    exact A01.residue_character_int_cast L _ (A01.canonical_root_primitive L) k.val n
+  unfold annihilation Ch05.positionAnnihilation
+  simp only [Finset.smul_sum, smul_smul]
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [he]
+  unfold twistedCharacter
+  congr 1
+  ring
 /--
-Proposed equality of the lifted creator to the actual Hilbert adjoint of the lifted annihilator.
+equality of the lifted creator to the actual Hilbert adjoint of the lifted annihilator.
 Complex scalar conjugation in creation is needed because taking an adjoint conjugates a scalar
 multiplier.
 -/
 lemma creation_adjoint (b : BoundaryTwist L) (n : ℤ) :
-    creation L b n = LinearMap.adjoint (annihilation L b n) := by sorry
+    creation L b n = LinearMap.adjoint (annihilation L b n) := by
+  simp only [creation, annihilation, map_smulₛₗ, starRingEnd_apply]
+  rw [← Ch05.position_creation_eq_adjoint]
 /--
-Proposed boundary law c_b(n+wL)=τ^w • c_b(n). The b parameter remains explicit, so later results
+boundary law c_b(n+wL)=τ^w • c_b(n). The b parameter remains explicit, so later results
 can quantify over arbitrary twist before specializing it. The equality is a proof obligation,
 not an additional definition of the field.
 -/
 lemma annihilation_winding (b : BoundaryTwist L) (n w : ℤ) :
-    annihilation L b (n+w*(L : ℤ)) = holonomy L b^w • annihilation L b n := by sorry
+    annihilation L b (n+w*(L : ℤ)) = holonomy L b^w • annihilation L b n := by
+  rw [annihilation, lift_phase_winding, mul_smul]
+  congr 1
+  congr 1
+  push_cast
+  simp
 /--
-Proposed boundary law for the creator, with conjugated holonomy star(τ^w). This reverses the
+boundary law for the creator, with conjugated holonomy star(τ^w). This reverses the
 annihilator phase as required by adjointness; using the same unconjugated phase would generally
 be wrong.
 -/
 lemma creation_winding (b : BoundaryTwist L) (n w : ℤ) :
-    creation L b (n+w*(L : ℤ)) = star (holonomy L b^w) • creation L b n := by sorry
+    creation L b (n+w*(L : ℤ)) = star (holonomy L b^w) • creation L b n := by
+  simp only [creation_adjoint, annihilation_winding, map_smulₛₗ, starRingEnd_apply]
 /--
-Proposed expression of a lifted annihilator as seamPhase times its fundamental-domain site
+expression of a lifted annihilator as seamPhase times its fundamental-domain site
 section. This exposes the exact information discarded by converting n to its quotient residue
 and applies to negative positions too.
 -/
 lemma lift_site_relation (b : BoundaryTwist L) (n : ℤ) :
-    annihilation L b n = seamPhase L b n • siteAnnihilation L b (n : Ch01.Lattice L) := by sorry
+    annihilation L b n = seamPhase L b n • siteAnnihilation L b (n : Ch01.Lattice L) := by
+  have hphase : liftPhase L b n = seamPhase L b n *
+      liftPhase L b ((n : Ch01.Lattice L).val : ℤ) := by
+    conv_lhs => rw [winding_decomposition L n]
+    rw [lift_phase_winding]
+    rfl
+  simp only [annihilation, siteAnnihilation, smul_smul]
+  rw [hphase]
+  simp
 /--
-Proposed equality between the selected r=1 extension field and frozen CH05 positionAnnihilation.
+equality between the selected r=1 extension field and frozen CH05 positionAnnihilation.
 This is the compatibility specialization for periodic calculations and does not change the
 frozen operator definition.
 -/
 lemma periodic_field (n : ℤ) :
-    annihilation L (periodicTwist L) n = Ch05.positionAnnihilation L (n : Ch01.Lattice L) := by sorry
+    annihilation L (periodicTwist L) n = Ch05.positionAnnihilation L (n : Ch01.Lattice L) := by
+  simp [annihilation, liftPhase, periodicTwist]
+
 /--
-Proposed sign change of the selected APBC annihilator after one full lap. The integer argument
+sign change of the selected APBC annihilator after one full lap. The integer argument
 distinguishes n from n+L even though their quotient residues coincide.
 -/
 lemma antiperiodic_field (n : ℤ) :
-    annihilation L (antiperiodicTwist L) (n+(L : ℤ)) = -annihilation L (antiperiodicTwist L) n := by sorry
+    annihilation L (antiperiodicTwist L) (n+(L : ℤ)) = -annihilation L (antiperiodicTwist L) n := by
+  simpa [antiperiodic_holonomy] using annihilation_winding L (antiperiodicTwist L) n 1
 /--
-Proposed nonzero-action witness for every twisted lifted annihilator. It prevents boundary
+nonzero-action witness for every twisted lifted annihilator. It prevents boundary
 detection and quotient-descent statements from being satisfied trivially by the zero operator;
 multiplication by a unit scalar preserves the frozen nonzero field.
 -/
-lemma annihilation_ne_zero (b : BoundaryTwist L) (n : ℤ) : annihilation L b n ≠ 0 := by sorry
+lemma annihilation_ne_zero (b : BoundaryTwist L) (n : ℤ) : annihilation L b n ≠ 0 := by
+  intro h
+  have hr : liftPhase L b n ≠ 0 := zpow_ne_zero _ (twist_step_ne_zero L b)
+  have hz : Ch05.positionAnnihilation L (n : Ch01.Lattice L) = 0 := (smul_eq_zero.mp h).resolve_left hr
+  have hc := Ch05.position_mixed_car L (n : Ch01.Lattice L) (n : Ch01.Lattice L)
+  simp [A02.anticommutator, hz] at hc
 /--
-Proposed criterion for the lifted field to be an ordinary function of the quotient residue:
+criterion for the lifted field to be an ordinary function of the quotient residue:
 precisely holonomy one. The existence direction retains a function on ZMod L; the converse uses
 a nonzero field to detect a nontrivial lap phase. A fundamental-domain section exists even when
 this stronger descent property fails.
 -/
 lemma quotient_descent_iff (b : BoundaryTwist L) :
     (∃ f : Ch01.Lattice L → Ch05.Operators L, ∀ n : ℤ, annihilation L b n = f (n : Ch01.Lattice L)) ↔
-      holonomy L b = 1 := by sorry
+      holonomy L b = 1 := by
+  constructor
+  · rintro ⟨f, hf⟩
+    have h : annihilation L b ((0 : ℤ)+(L : ℤ)) = annihilation L b 0 := by rw [hf, hf]; simp
+    have hw := annihilation_winding L b 0 1
+    simp only [one_mul, zpow_one] at hw
+    rw [hw] at h
+    exact smul_left_injective ℂ (annihilation_ne_zero L b 0) (h.trans (one_smul ℂ _).symm)
+  · intro ht
+    refine ⟨siteAnnihilation L b, ?_⟩
+    intro n
+    rw [lift_site_relation]
+    simp [seamPhase, ht]
 /--
-Proposed vanishing anticommutator of twisted annihilators at any two selected quotient sites.
+vanishing anticommutator of twisted annihilators at any two selected quotient sites.
 Both factors are scalar rescalings of frozen CAR generators, so the pure annihilation relation
 survives arbitrary unit twist.
 -/
 lemma site_annihilation_car (b : BoundaryTwist L) (x y : Ch01.Lattice L) :
-    A02.anticommutator (siteAnnihilation L b x) (siteAnnihilation L b y) = 0 := by sorry
+    A02.anticommutator (siteAnnihilation L b x) (siteAnnihilation L b y) = 0 := by
+  unfold siteAnnihilation annihilation A02.anticommutator
+  rw [smul_mul_smul_comm, smul_mul_smul_comm, mul_comm (liftPhase L b (y.val : ℤ)), ← smul_add]
+  change _ • A02.anticommutator (Ch05.positionAnnihilation L _) (Ch05.positionAnnihilation L _) = _
+  rw [Ch05.position_annihilation_car, smul_zero]
 /--
-Proposed vanishing anticommutator of twisted creators at any two selected quotient sites.
+vanishing anticommutator of twisted creators at any two selected quotient sites.
 Conjugate scalar rescaling preserves the pure creation CAR.
 -/
 lemma site_creation_car (b : BoundaryTwist L) (x y : Ch01.Lattice L) :
-    A02.anticommutator (siteCreation L b x) (siteCreation L b y) = 0 := by sorry
+    A02.anticommutator (siteCreation L b x) (siteCreation L b y) = 0 := by
+  unfold siteCreation creation A02.anticommutator
+  rw [smul_mul_smul_comm, smul_mul_smul_comm, mul_comm (star (liftPhase L b (y.val : ℤ))), ← smul_add]
+  change _ • A02.anticommutator (Ch05.positionCreation L _) (Ch05.positionCreation L _) = _
+  rw [Ch05.position_creation_car, smul_zero]
 /--
-Proposed canonical mixed CAR on the selected site representatives, with identity coefficient one
+canonical mixed CAR on the selected site representatives, with identity coefficient one
 only when x=y. Unit modulus cancels the two scalar phases on the coincident-site branch. The
 symbol • multiplies the identity operator by the displayed complex coefficient.
 -/
 lemma site_mixed_car (b : BoundaryTwist L) (x y : Ch01.Lattice L) :
     A02.anticommutator (siteAnnihilation L b x) (siteCreation L b y) =
-      (if x=y then (1 : ℂ) else 0) • (1 : Ch05.Operators L) := by sorry
+      (if x=y then (1 : ℂ) else 0) • (1 : Ch05.Operators L) := by
+  unfold siteAnnihilation siteCreation annihilation creation A02.anticommutator
+  rw [smul_mul_smul_comm, smul_mul_smul_comm, mul_comm (star (liftPhase L b (y.val : ℤ))), ← smul_add]
+  change _ • A02.anticommutator (Ch05.positionAnnihilation L _) (Ch05.positionCreation L _) = _
+  simp only [Int.cast_natCast, ZMod.natCast_zmod_val, Ch05.position_mixed_car]
+  by_cases hxy : x=y
+  · subst y
+    have hi : star (liftPhase L b (x.val : ℤ)) = (liftPhase L b (x.val : ℤ))⁻¹ := (Complex.inv_eq_conj (lift_phase_norm L b _)).symm
+    rw [hi, mul_inv_cancel₀ (show liftPhase L b (x.val : ℤ) ≠ 0 from zpow_ne_zero _ (twist_step_ne_zero L b))]
+    simp
+  · simp [hxy]
 /--
-Proposed mixed CAR on integer lifts: equal residues carry the relative phase r^(n-m), while
+mixed CAR on integer lifts: equal residues carry the relative phase r^(n-m), while
 unequal residues give zero. This keeps holonomy visible when two arguments represent the same
 site after different laps; replacing the coefficient by one would erase the seam.
 -/
 lemma lifted_mixed_car (b : BoundaryTwist L) (n m : ℤ) :
     A02.anticommutator (annihilation L b n) (creation L b m) =
       (if (n : Ch01.Lattice L)=(m : Ch01.Lattice L) then liftPhase L b (n-m) else 0) •
-        (1 : Ch05.Operators L) := by sorry
+        (1 : Ch05.Operators L) := by
+  unfold annihilation creation A02.anticommutator
+  rw [smul_mul_smul_comm, smul_mul_smul_comm, mul_comm (star (liftPhase L b m)), ← smul_add]
+  change _ • A02.anticommutator (Ch05.positionAnnihilation L _) (Ch05.positionCreation L _) = _
+  rw [Ch05.position_mixed_car]
+  by_cases hnm : (n : Ch01.Lattice L)=(m : Ch01.Lattice L)
+  · simp only [hnm, ite_eq_left, smul_smul]
+    congr 1
+    have hi : star (liftPhase L b m) = (liftPhase L b m)⁻¹ := (Complex.inv_eq_conj (lift_phase_norm L b m)).symm
+    rw [hi]
+    simpa only [liftPhase, div_eq_mul_inv, mul_one] using (zpow_sub₀ (twist_step_ne_zero L b) n m).symm
+  · simp [hnm]
 /--
-Proposed identification of same-twist local density with the frozen position number operator.
+identification of same-twist local density with the frozen position number operator.
 The conjugate creator phase cancels the annihilator phase exactly. This establishes twist
 independence for this observable rather than assuming it for all operators.
 -/
 lemma density_untwisted (b : BoundaryTwist L) (n : ℤ) :
-    density L b n = Ch05.positionNumber L (n : Ch01.Lattice L) := by sorry
+    density L b n = Ch05.positionNumber L (n : Ch01.Lattice L) := by
+  unfold density creation annihilation Ch05.positionNumber
+  rw [smul_mul_smul_comm]
+  have hs : star (liftPhase L b n) * liftPhase L b n = 1 := by
+    have hi : star (liftPhase L b n) = (liftPhase L b n)⁻¹ := (Complex.inv_eq_conj (lift_phase_norm L b n)).symm
+    rw [hi, inv_mul_cancel₀]
+    exact zpow_ne_zero _ (twist_step_ne_zero L b)
+  rw [hs, one_smul]
 /--
-Proposed strict periodicity of same-species density for every unit twist. Full-lap phases cancel
+strict periodicity of same-species density for every unit twist. Full-lap phases cancel
 in the ordered bilinear, even when the individual fermion fields are anti-periodic or otherwise
 twisted.
 -/
-lemma density_periodic (b : BoundaryTwist L) (n : ℤ) : density L b (n+(L : ℤ)) = density L b n := by sorry
+lemma density_periodic (b : BoundaryTwist L) (n : ℤ) : density L b (n+(L : ℤ)) = density L b n := by
+  rw [density_untwisted, density_untwisted]
+  congr 1
+  push_cast
+  simp
 /--
-Proposed equality of the twisted-generator local algebra and frozen CH06 localAlgebra on the
+equality of the twisted-generator local algebra and frozen CH06 localAlgebra on the
 same region. Nonzero scalar multipliers generate the same complex algebra. After proof, later
 chapters may use CH06 local-algebra theorems while keeping Ch06Ext fields and transport.
 -/
-lemma local_algebra_eq (b : BoundaryTwist L) (I : Ch06.Region L) : localAlgebra L b I = Ch06.localAlgebra L I := by sorry
+lemma local_algebra_eq (b : BoundaryTwist L) (I : Ch06.Region L) : localAlgebra L b I = Ch06.localAlgebra L I := by
+  apply le_antisymm
+  · apply Algebra.adjoin_le
+    rintro A ⟨x, hx, rfl | rfl⟩
+    · simpa [siteAnnihilation, annihilation] using (Ch06.localAlgebra L I).smul_mem (Ch06.annihilation_mem_local L I x hx) (liftPhase L b (x.val : ℤ))
+    · simpa [siteCreation, creation] using (Ch06.localAlgebra L I).smul_mem (Ch06.creation_mem_local L I x hx) (star (liftPhase L b (x.val : ℤ)))
+  · apply Algebra.adjoin_le
+    rintro A ⟨x, hx, rfl | rfl⟩
+    · have h : siteAnnihilation L b x ∈ localAlgebra L b I := Algebra.subset_adjoin ⟨x, hx, Or.inl rfl⟩
+      have hr : liftPhase L b (x.val : ℤ) ≠ 0 := zpow_ne_zero _ (twist_step_ne_zero L b)
+      have hmem := (localAlgebra L b I).smul_mem h (liftPhase L b (x.val : ℤ))⁻¹
+      simp only [siteAnnihilation, annihilation, smul_smul, Int.cast_natCast, ZMod.natCast_zmod_val] at hmem
+      rw [inv_mul_cancel₀ hr, one_smul] at hmem
+      exact hmem
+    · have h : siteCreation L b x ∈ localAlgebra L b I := Algebra.subset_adjoin ⟨x, hx, Or.inr rfl⟩
+      have hr : star (liftPhase L b (x.val : ℤ)) ≠ 0 := star_ne_zero.mpr (zpow_ne_zero _ (twist_step_ne_zero L b))
+      have hmem := (localAlgebra L b I).smul_mem h (star (liftPhase L b (x.val : ℤ)))⁻¹
+      simp only [siteCreation, creation, smul_smul, Int.cast_natCast, ZMod.natCast_zmod_val] at hmem
+      rw [inv_mul_cancel₀ hr, one_smul] at hmem
+      exact hmem
 /--
-Proposed equality of the twisted and frozen parity-homogeneous local subspaces. Both
+equality of the twisted and frozen parity-homogeneous local subspaces. Both
 presentations use the same parity map; the local-algebra identification therefore also transfers
 grading. This bridge does not identify their spatial transport data.
 -/
 lemma local_part_eq (b : BoundaryTwist L) (I : Ch06.Region L) (σ : Ch06.Degree) :
-    localPart L b I σ = Ch06.localPart L I σ := by sorry
+    localPart L b I σ = Ch06.localPart L I σ := by
+  rw [localPart, local_algebra_eq]
+  rfl
+
 /--
-Proposed disjoint-region exchange relation for the twisted local parts. The sign depends on the
+disjoint-region exchange relation for the twisted local parts. The sign depends on the
 parity degrees σ and τ, not on spatial holonomy. Disjoint support is necessary; this is not a
 boundary condition for going around the ring.
 -/
 lemma graded_locality (b : BoundaryTwist L) (I J : Ch06.Region L) (hIJ : Disjoint I J)
     (σ τ : Ch06.Degree) (A B : Ch05.Operators L)
     (hA : A ∈ localPart L b I σ) (hB : B ∈ localPart L b J τ) :
-    A*B = (-1 : ℂ)^(σ.val*τ.val) • (B*A) := by sorry
+    A*B = (-1 : ℂ)^(σ.val*τ.val) • (B*A) := by
+  rw [local_part_eq] at hA hB
+  exact Ch06.twisted_locality L I J hIJ σ τ A B hA hB
 
 /--
-Proposed basis-action formula for the complete diagonal translation definition. It supplies the
+basis-action formula for the complete diagonal translation definition. It supplies the
 concrete scalar to check group laws, adjoints and covariance on actual occupation kets. The •
 here multiplies a Fock vector, rather than an operator.
 -/
 lemma translation_ket (b : BoundaryTwist L) (m : ℤ) (S : Ch06.Occupation L) :
     translation L b m (A02.ket S) =
-      (b.step^(-m*(S.card : ℤ))*A01.canonicalRoot L^(-m*Ch05.occupationEnergy L S)) • A02.ket S := by sorry
+      (b.step^(-m*(S.card : ℤ))*A01.canonicalRoot L^(-m*Ch05.occupationEnergy L S)) • A02.ket S := by
+  exact A02.extend_basis_ket _ S
+
 /--
-Proposed identity action for zero displacement. Together with translation_add it supplies the
+identity action for zero displacement. Together with translation_add it supplies the
 neutral element of the integer translation representation.
 -/
-lemma translation_zero (b : BoundaryTwist L) : translation L b 0 = 1 := by sorry
+lemma translation_zero (b : BoundaryTwist L) : translation L b 0 = 1 := by
+  apply A02.end_ext_basis
+  intro S
+  simp [translation_ket]
 /--
-Proposed representation law T(m+n)=T(m)*T(n) on the same twist b. Operator multiplication means
+representation law T(m+n)=T(m)*T(n) on the same twist b. Operator multiplication means
 composition; all integer shifts are allowed, including inverses. Different twists are not
 silently combined.
 -/
 lemma translation_add (b : BoundaryTwist L) (m n : ℤ) :
-    translation L b (m+n) = translation L b m * translation L b n := by sorry
+    translation L b (m+n) = translation L b m * translation L b n := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, map_smul, translation_ket, smul_smul]
+  congr 1
+  have hr := (A01.canonical_root_primitive L).ne_zero (NeZero.ne L)
+  simp only [neg_add, add_mul, zpow_add₀ (twist_step_ne_zero L b), zpow_add₀ hr]
+  ring
 /--
-Proposed actual-adjoint identity T(m)†=T(-m). Unit phases in the diagonal basis action are the
+actual-adjoint identity T(m)†=T(-m). Unit phases in the diagonal basis action are the
 needed input; this is not assumed when defining transport.
 -/
 lemma translation_adjoint (b : BoundaryTwist L) (m : ℤ) :
-    LinearMap.adjoint (translation L b m) = translation L b (-m) := by sorry
+    LinearMap.adjoint (translation L b m) = translation L b (-m) := by
+  apply (A02.adjoint_of_basis_pairing (translation L b m) (translation L b (-m)) ?_).symm
+  intro S T
+  simp only [translation_ket, inner_smul_right, inner_smul_left, A02.ket_inner]
+  by_cases hST : S=T
+  · subst T
+    simp only [ite_true, mul_one]
+    have hr := (A01.canonical_root_primitive L).norm'_eq_one (NeZero.ne L)
+    have hn : ‖b.step^(-(-m)*(S.card : ℤ))*A01.canonicalRoot L^(-(-m)*Ch05.occupationEnergy L S)‖=1 := by simp [norm_zpow, b.norm_step, hr]
+    have hi : star (b.step^(-(-m)*(S.card : ℤ))*A01.canonicalRoot L^(-(-m)*Ch05.occupationEnergy L S)) = (b.step^(-(-m)*(S.card : ℤ))*A01.canonicalRoot L^(-(-m)*Ch05.occupationEnergy L S))⁻¹ := (Complex.inv_eq_conj hn).symm
+    change b.step^(-m*(S.card : ℤ))*A01.canonicalRoot L^(-m*Ch05.occupationEnergy L S) = star (b.step^(-(-m)*(S.card : ℤ))*A01.canonicalRoot L^(-(-m)*Ch05.occupationEnergy L S))
+    rw [hi, mul_inv_rev]
+    simp only [neg_neg, ← zpow_neg, neg_mul]
+    ring
+  · simp [hST]
 /--
-Proposed two-sided unitary identities using the actual Hilbert adjoint. Both orders are stated
+two-sided unitary identities using the actual Hilbert adjoint. Both orders are stated
 so inverse transport is certified on the complete finite Fock carrier.
 -/
 lemma translation_unitary (b : BoundaryTwist L) (m : ℤ) :
     translation L b m * LinearMap.adjoint (translation L b m) = 1 ∧
-      LinearMap.adjoint (translation L b m) * translation L b m = 1 := by sorry
+      LinearMap.adjoint (translation L b m) * translation L b m = 1 := by
+  rw [translation_adjoint]
+  constructor
+  · rw [← translation_add, add_neg_cancel, translation_zero]
+  · rw [← translation_add, neg_add_cancel, translation_zero]
 /--
-Proposed expansion of the linear transport definition as the ordered product T(m)*A*T(-m). This
+expansion of the linear transport definition as the ordered product T(m)*A*T(-m). This
 fixes which map acts on which side and avoids an accidental reversal of conjugation.
 -/
 lemma transport_apply (b : BoundaryTwist L) (m : ℤ) (A : Ch05.Operators L) :
-    transport L b m A = translation L b m*A*translation L b (-m) := by sorry
+    transport L b m A = translation L b m*A*translation L b (-m) := by
+  rfl
+
 /--
-Proposed composition law for operator transport at a fixed b. Transport by n followed by m
+composition law for operator transport at a fixed b. Transport by n followed by m
 agrees with transport by m+n; group identities must be established from translation, not from
 the region shift alone.
 -/
 lemma transport_add (b : BoundaryTwist L) (m n : ℤ) (A : Ch05.Operators L) :
-    transport L b (m+n) A = transport L b m (transport L b n A) := by sorry
+    transport L b (m+n) A = transport L b m (transport L b n A) := by
+  simp only [transport_apply]
+  have hneg : translation L b (-(m+n)) = translation L b (-n)*translation L b (-m) := by
+    rw [← translation_add]
+    congr 1
+    ring
+  rw [translation_add, hneg]
+  simp only [mul_assoc]
 /--
-Proposed compatibility of transport with the actual Hilbert adjoint of operators. It is the
+compatibility of transport with the actual Hilbert adjoint of operators. It is the
 star-preservation needed by covariance of local creator/annihilator algebras.
 -/
 lemma transport_star (b : BoundaryTwist L) (m : ℤ) (A : Ch05.Operators L) :
-    transport L b m (LinearMap.adjoint A) = LinearMap.adjoint (transport L b m A) := by sorry
+    transport L b m (LinearMap.adjoint A) = LinearMap.adjoint (transport L b m A) := by
+  have hs (k : ℤ) : star (translation L b k)=translation L b (-k) := by
+    rw [LinearMap.star_eq_adjoint, translation_adjoint]
+  simp only [transport_apply, ← LinearMap.star_eq_adjoint, star_mul, hs, neg_neg, mul_assoc]
 /--
-Proposed packaging of the complete transport map as an actual complex algebra equivalence, with
+packaging of the complete transport map as an actual complex algebra equivalence, with
 adjoint preservation explicitly included. Existence requires proving multiplication, identity
 and inverse properties. This avoids constructing certified automorphism data from unproved stub
 lemmas.
@@ -751,153 +990,418 @@ lemmas.
 lemma transport_automorphism_exists (b : BoundaryTwist L) (m : ℤ) :
     ∃ f : Ch05.Operators L ≃ₐ[ℂ] Ch05.Operators L,
       (∀ A, f A = transport L b m A) ∧
-      ∀ A, f (LinearMap.adjoint A) = LinearMap.adjoint (f A) := by sorry
+      ∀ A, f (LinearMap.adjoint A) = LinearMap.adjoint (f A) := by
+  have hzero (A : Ch05.Operators L) : transport L b 0 A=A := by simp [transport_apply, translation_zero]
+  let e : Ch05.Operators L ≃ₗ[ℂ] Ch05.Operators L :=
+    { toLinearMap := transport L b m
+      invFun := transport L b (-m)
+      left_inv := fun A => by change transport L b (-m) (transport L b m A)=A; rw [← transport_add, neg_add_cancel, hzero]
+      right_inv := fun A => by change transport L b m (transport L b (-m) A)=A; rw [← transport_add, add_neg_cancel, hzero] }
+  have hone : e 1=1 := by
+    change transport L b m 1=1
+    rw [transport_apply, mul_one, ← translation_add, add_neg_cancel, translation_zero]
+  have hmul (A B : Ch05.Operators L) : e (A*B)=e A*e B := by
+    change transport L b m (A*B)=transport L b m A*transport L b m B
+    have hi : translation L b (-m)*translation L b m=1 := by rw [← translation_add, neg_add_cancel, translation_zero]
+    simp only [transport_apply]
+    calc
+      _ = translation L b m*A*1*B*translation L b (-m) := by simp [mul_assoc]
+      _ = _ := by rw [← hi]; simp only [mul_assoc]
+  let a := AlgEquiv.ofLinearEquiv e hone hmul
+  exact ⟨a, fun _ => rfl, transport_star L b m⟩
 /--
-Proposed covariance T(m)c_b(n)T(-m)=c_b(n+m) for all integer lifts. The same b is required in
+covariance T(m)c_b(n)T(-m)=c_b(n+m) for all integer lifts. The same b is required in
 the translation and field; the negative translation exponents were selected to match this
 positive Fourier convention.
 -/
 lemma transport_annihilation (b : BoundaryTwist L) (m n : ℤ) :
-    transport L b m (annihilation L b n) = annihilation L b (n+m) := by sorry
+    transport L b m (annihilation L b n) = annihilation L b (n+m) := by
+  have hmom (k : Ch01.Band L) : translation L b m*Ch05.momentumAnnihilation L k =
+      (b.step^m*A01.canonicalRoot L^(m*k.val)) • (Ch05.momentumAnnihilation L k*translation L b m) := by
+    apply A02.end_ext_basis
+    intro S
+    have hak (U : Ch06.Occupation L) : Ch05.momentumAnnihilation L k (A02.ket U) = if k ∈ U then Ch04.fermionSign k U • A02.ket (U.erase k) else 0 := by
+      convert Ch04.annihilation_ket k U using 1
+      all_goals simp [Ch05.momentumAnnihilation, Ch05.FockSpace, A02.ket, A02.occupationBasis, A02.occupationONB]
+      all_goals split_ifs <;> congr 3
+      all_goals exact Subsingleton.elim _ _
+    simp only [Module.End.mul_apply, LinearMap.smul_apply, translation_ket, map_smul, hak]
+    by_cases hk : k ∈ S
+    · simp only [hk, ite_true, map_smul, translation_ket, smul_smul]
+      congr 1
+      have hc : ((S.erase k).card : ℤ)=(S.card : ℤ)-1 := by
+        have h := Finset.card_erase_add_one hk
+        omega
+      have he : Ch05.occupationEnergy L (S.erase k)=Ch05.occupationEnergy L S-k.val := by
+        have h := Finset.sum_erase_add S (fun p : Ch01.Band L => p.val) hk
+        change Ch05.occupationEnergy L (S.erase k)+k.val=Ch05.occupationEnergy L S at h
+        omega
+      rw [hc, he]
+      rw [show -m*((S.card : ℤ)-1)=m+(-m*(S.card : ℤ)) by ring, show -m*(Ch05.occupationEnergy L S-k.val)=m*k.val+(-m*Ch05.occupationEnergy L S) by ring]
+      rw [zpow_add₀ (twist_step_ne_zero L b), zpow_add₀ ((A01.canonical_root_primitive L).ne_zero (NeZero.ne L))]
+      ring
+    · simp [hk]
+  have hfield : translation L b m*annihilation L b n = annihilation L b (n+m)*translation L b m := by
+    rw [annihilation_fourier, annihilation_fourier]
+    simp only [mul_smul_comm, smul_mul_assoc, Finset.mul_sum, Finset.sum_mul, hmom, smul_smul]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro k _
+    congr 1
+    unfold twistedCharacter liftPhase A01.integerCharacter
+    rw [zpow_add₀ (twist_step_ne_zero L b), mul_add, zpow_add₀ ((A01.canonical_root_primitive L).ne_zero (NeZero.ne L))]
+    rw [mul_comm m k.val]
+    ring
+  rw [transport_apply, hfield, mul_assoc, ← translation_add, add_neg_cancel, translation_zero, mul_one]
 /--
-Proposed creator covariance under the same transport and integer shift. It should follow
+creator covariance under the same transport and integer shift. It should follow
 compatibly with actual adjoints, retaining conjugate field phases.
 -/
 lemma transport_creation (b : BoundaryTwist L) (m n : ℤ) :
-    transport L b m (creation L b n) = creation L b (n+m) := by sorry
+    transport L b m (creation L b n) = creation L b (n+m) := by
+  rw [creation_adjoint, transport_star, transport_annihilation, ← creation_adjoint]
 /--
-Proposed transport law on selected quotient-site representatives, with the exact seamPhase of
+transport law on selected quotient-site representatives, with the exact seamPhase of
 x.val+m. The shifted quotient site alone is insufficient when the lifted displacement crosses
 the seam; arbitrary negative and multiple-lap m are included.
 -/
 lemma site_transport (b : BoundaryTwist L) (m : ℤ) (x : Ch01.Lattice L) :
     transport L b m (siteAnnihilation L b x) =
-      seamPhase L b ((x.val : ℤ)+m) • siteAnnihilation L b (x+(m : Ch01.Lattice L)) := by sorry
+      seamPhase L b ((x.val : ℤ)+m) • siteAnnihilation L b (x+(m : Ch01.Lattice L)) := by
+  rw [siteAnnihilation, transport_annihilation, lift_site_relation]
+  simp
 /--
-Proposed one-step boundary transition from lift L-1 to lift L, expressed as τ times the field at
+one-step boundary transition from lift L-1 to lift L, expressed as τ times the field at
 zero. It displays the physical twisted boundary term in the chosen positive orientation.
 -/
 lemma seam_transport (b : BoundaryTwist L) :
-    transport L b 1 (annihilation L b ((L : ℤ)-1)) = holonomy L b • annihilation L b 0 := by sorry
+    transport L b 1 (annihilation L b ((L : ℤ)-1)) = holonomy L b • annihilation L b 0 := by
+  rw [transport_annihilation]
+  have he : (L : ℤ)-1+1 = (0 : ℤ)+1*(L : ℤ) := by ring
+  rw [he, annihilation_winding]
+  simp
 /--
-Proposed equivalence of membership in a local algebra before and after region translation.
+equivalence of membership in a local algebra before and after region translation.
 Individual generators acquire nonzero seam scalars, which preserve the generated algebra. The
 statement includes both directions through invertible transport.
 -/
 lemma local_transport (b : BoundaryTwist L) (m : ℤ) (I : Ch06.Region L) :
-    ∀ A, A ∈ localAlgebra L b I ↔ transport L b m A ∈ localAlgebra L b (shiftRegion L m I) := by sorry
+    ∀ A, A ∈ localAlgebra L b I ↔ transport L b m A ∈ localAlgebra L b (shiftRegion L m I) := by
+  have hf (k : ℤ) (J : Ch06.Region L) (A : Ch05.Operators L) (hA : A ∈ localAlgebra L b J) : transport L b k A ∈ localAlgebra L b (shiftRegion L k J) := by
+    obtain ⟨a, ha, _⟩ := transport_automorphism_exists L b k
+    rw [← ha]
+    refine Algebra.adjoin_induction ?_ ?_ ?_ ?_ hA
+    · rintro A ⟨x, hx, rfl | rfl⟩
+      · rw [ha, site_transport]
+        apply (localAlgebra L b (shiftRegion L k J)).smul_mem
+        exact Algebra.subset_adjoin ⟨x+(k : Ch01.Lattice L), ⟨x, hx, rfl⟩, Or.inl rfl⟩
+      · have hn : transport L b k (siteAnnihilation L b x) ∈ localAlgebra L b (shiftRegion L k J) := by
+          rw [site_transport]
+          apply (localAlgebra L b (shiftRegion L k J)).smul_mem
+          exact Algebra.subset_adjoin ⟨x+(k : Ch01.Lattice L), ⟨x, hx, rfl⟩, Or.inl rfl⟩
+        rw [ha]
+        simp only [siteCreation, creation_adjoint, transport_star]
+        change LinearMap.adjoint (transport L b k (siteAnnihilation L b x)) ∈ _
+        rw [local_algebra_eq] at hn ⊢
+        rw [← Ch06.operator_star_eq_adjoint]
+        exact Ch06.local_algebra_star_closed L _ _ hn
+    · intro z
+      rw [a.commutes]
+      exact (localAlgebra L b (shiftRegion L k J)).algebraMap_mem z
+    · intro A B _ _ hA hB
+      rw [map_add]
+      exact (localAlgebra L b (shiftRegion L k J)).add_mem hA hB
+    · intro A B _ _ hA hB
+      rw [map_mul]
+      exact (localAlgebra L b (shiftRegion L k J)).mul_mem hA hB
+  intro A
+  constructor
+  · exact hf m I A
+  · intro hA
+    have h := hf (-m) (shiftRegion L m I) (transport L b m A) hA
+    have hI : shiftRegion L (-m) (shiftRegion L m I)=I := by
+      unfold shiftRegion
+      rw [Set.image_image]
+      convert Set.image_id I using 1
+      funext x
+      simp
+    rw [hI, ← transport_add, neg_add_cancel, transport_apply, translation_zero] at h
+    simpa [translation_zero] using h
 /--
-Proposed local transport covariance with parity degree preserved. It combines local-algebra
+local transport covariance with parity degree preserved. It combines local-algebra
 covariance and compatibility with the fixed parity map, keeping even and odd subspaces distinct.
 -/
 lemma local_part_transport (b : BoundaryTwist L) (m : ℤ) (I : Ch06.Region L) (σ : Ch06.Degree) :
-    ∀ A, A ∈ localPart L b I σ ↔ transport L b m A ∈ localPart L b (shiftRegion L m I) σ := by sorry
+    ∀ A, A ∈ localPart L b I σ ↔ transport L b m A ∈ localPart L b (shiftRegion L m I) σ := by
+  have hp (k : ℤ) : transport L b k (Ch06.parityOperator L)=Ch06.parityOperator L := by
+    have hpar (S : Ch06.Occupation L) : (Ch06.parityOperator L) (A02.ket S) = (-1 : ℂ)^S.card • A02.ket S := by
+      convert Ch04.parity_ket S using 1
+      all_goals simp [Ch06.parityOperator, Ch05.FockSpace, A02.ket, A02.occupationBasis, A02.occupationONB]
+    have hc : translation L b k*Ch06.parityOperator L = Ch06.parityOperator L*translation L b k := by
+      apply A02.end_ext_basis
+      intro S
+      simp only [Module.End.mul_apply, translation_ket, hpar, map_smul, smul_smul]
+      congr 1
+      ring
+    rw [transport_apply, hc, mul_assoc, ← translation_add, add_neg_cancel, translation_zero, mul_one]
+  obtain ⟨a, ha, _⟩ := transport_automorphism_exists L b m
+  have he (A : Ch05.Operators L) : transport L b m (Ch06.parityMap L A) = Ch06.parityMap L (transport L b m A) := by
+    simp only [Ch06.parity_map_apply, ← ha, map_mul]
+    rw [ha (Ch06.parityOperator L), hp]
+  intro A
+  simp only [local_part_eq, Ch06.mem_local_part]
+  rw [← local_algebra_eq L b I, ← local_algebra_eq L b (shiftRegion L m I), local_transport]
+  constructor
+  · rintro ⟨hA, hgrade⟩
+    refine ⟨hA, ?_⟩
+    rw [← he, hgrade, map_smul]
+  · rintro ⟨hA, hgrade⟩
+    refine ⟨hA, ?_⟩
+    apply a.injective
+    simp only [ha, he, map_smul]
+    exact hgrade
 /--
-Proposed invariance of the frozen total-number operator under twisted spatial transport. Both
+invariance of the frozen total-number operator under twisted spatial transport. Both
 translation and number are diagonal in occupation data; this does not imply that particle-
 lowering fields preserve number.
 -/
 lemma translation_preserves_number (b : BoundaryTwist L) (m : ℤ) :
-    transport L b m (Ch05.totalNumber L) = Ch05.totalNumber L := by sorry
+    transport L b m (Ch05.totalNumber L) = Ch05.totalNumber L := by
+  have hc : translation L b m*Ch05.totalNumber L = Ch05.totalNumber L*translation L b m := by
+    apply A02.end_ext_basis
+    intro S
+    simp only [Module.End.mul_apply, translation_ket, Ch05.total_number_ket, map_smul, smul_smul]
+    congr 1
+    ring
+  rw [transport_apply, hc, mul_assoc, ← translation_add, add_neg_cancel, translation_zero, mul_one]
 /--
-Proposed invariance of the frozen periodic-reference bareHamiltonian under this diagonal
+invariance of the frozen periodic-reference bareHamiltonian under this diagonal
 translation. This Hamiltonian uses integer labels; the theorem does not identify it with a
 β-shifted physical energy or an arbitrary nonlinear dispersion.
 -/
 lemma translation_preserves_hamiltonian (b : BoundaryTwist L) (m : ℤ) :
-    transport L b m (Ch05.bareHamiltonian L) = Ch05.bareHamiltonian L := by sorry
+    transport L b m (Ch05.bareHamiltonian L) = Ch05.bareHamiltonian L := by
+  have hc : translation L b m*Ch05.bareHamiltonian L = Ch05.bareHamiltonian L*translation L b m := by
+    apply A02.end_ext_basis
+    intro S
+    simp only [Module.End.mul_apply, translation_ket, Ch05.bare_hamiltonian_ket, map_smul, smul_smul]
+    congr 1
+    ring
+  rw [transport_apply, hc, mul_assoc, ← translation_add, add_neg_cancel, translation_zero, mul_one]
 /--
-Proposed invariance of the actual occupation-parity operator under spatial transport. Parity
+invariance of the actual occupation-parity operator under spatial transport. Parity
 remains the grading structure used by CH06, separate from the arbitrary boundary holonomy.
 -/
 lemma translation_preserves_parity (b : BoundaryTwist L) (m : ℤ) :
-    transport L b m (Ch06.parityOperator L) = Ch06.parityOperator L := by sorry
+    transport L b m (Ch06.parityOperator L) = Ch06.parityOperator L := by
+  have hpar (S : Ch06.Occupation L) : (Ch06.parityOperator L) (A02.ket S) = (-1 : ℂ)^S.card • A02.ket S := by
+    convert Ch04.parity_ket S using 1
+    all_goals simp [Ch06.parityOperator, Ch05.FockSpace, A02.ket, A02.occupationBasis, A02.occupationONB]
+  have hc : translation L b m*Ch06.parityOperator L = Ch06.parityOperator L*translation L b m := by
+    apply A02.end_ext_basis
+    intro S
+    simp only [Module.End.mul_apply, translation_ket, hpar, map_smul, smul_smul]
+    congr 1
+    ring
+  rw [transport_apply, hc, mul_assoc, ← translation_add, add_neg_cancel, translation_zero, mul_one]
 /--
-Proposed equality T(L)=gauge(τ) on the full Fock space. Its basis factor is τ^(-#S), so full-lap
+equality T(L)=gauge(τ) on the full Fock space. Its basis factor is τ^(-#S), so full-lap
 translation need not be the identity even though quotient sites return to themselves.
 -/
 lemma full_ring_translation (b : BoundaryTwist L) :
-    translation L b (L : ℤ) = gauge L (holonomy L b) := by sorry
+    translation L b (L : ℤ) = gauge L (holonomy L b) := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [translation_ket, gauge, A02.extend_basis_ket]
+  congr 1
+  have hr : A01.canonicalRoot L^(-(L : ℤ)*Ch05.occupationEnergy L S) = 1 := by
+    rw [show -(L : ℤ)*Ch05.occupationEnergy L S = (L : ℤ)*(-Ch05.occupationEnergy L S) by ring, zpow_mul, zpow_natCast, (A01.canonical_root_primitive L).pow_eq_one, one_zpow]
+  rw [hr, mul_one]
+  unfold holonomy
+  rw [show -(L : ℤ)*(S.card : ℤ) = (L : ℤ)*(-(S.card : ℤ)) by ring, zpow_mul, zpow_natCast]
 /--
-Proposed agreement of translation by a natural number of steps with the corresponding power of
+agreement of translation by a natural number of steps with the corresponding power of
 one-step translation. Integer translation_add supplies the representation structure; full-ring
 powers then expose holonomy.
 -/
 lemma translation_power (b : BoundaryTwist L) (m : ℕ) :
-    translation L b (m : ℤ) = translation L b 1 ^ m := by sorry
+    translation L b (m : ℤ) = translation L b 1 ^ m := by
+  induction m with
+  | zero => simp [translation_zero]
+  | succ m ih =>
+    rw [Nat.cast_succ, translation_add, ih, pow_succ]
 /--
-Proposed identification of the selected APBC full-lap translation with actual occupation parity.
+identification of the selected APBC full-lap translation with actual occupation parity.
 This follows from τ=-1 and the charge-gauge basis factor, not from graded locality alone.
 -/
 lemma apbc_full_ring_parity :
-    translation L (antiperiodicTwist L) (L : ℤ) = Ch06.parityOperator L := by sorry
+    translation L (antiperiodicTwist L) (L : ℤ) = Ch06.parityOperator L := by
+  rw [full_ring_translation, antiperiodic_holonomy]
+  apply A02.end_ext_basis
+  intro S
+  have hpar : (Ch06.parityOperator L) (A02.ket S) = (-1 : ℂ)^S.card • A02.ket S := by
+    convert Ch04.parity_ket S using 1
+    all_goals simp [Ch06.parityOperator, Ch05.FockSpace, A02.ket, A02.occupationBasis, A02.occupationONB]
+  simp only [gauge, A02.extend_basis_ket, hpar]
+  congr 1
+  rw [zpow_neg, zpow_natCast]
+  have hs : (-1 : ℂ)^S.card * (-1 : ℂ)^S.card = 1 := by
+    rw [← pow_add, ← two_mul, pow_mul]
+    norm_num
+  exact inv_eq_of_mul_eq_one_left hs
 /--
-Proposed full-lap transport action on an annihilator: multiply it by the boundary phase τ. It
+full-lap transport action on an annihilator: multiply it by the boundary phase τ. It
 makes loop transport observable at the operator level even though the underlying local algebra
 is unchanged.
 -/
 lemma holonomy_acts_on_field (b : BoundaryTwist L) (n : ℤ) :
-    transport L b (L : ℤ) (annihilation L b n) = holonomy L b • annihilation L b n := by sorry
+    transport L b (L : ℤ) (annihilation L b n) = holonomy L b • annihilation L b n := by
+  rw [transport_annihilation]
+  convert annihilation_winding L b n 1 using 1 <;> simp
 /--
-Proposed detection of equality of two holonomies by the full-lap action on the nonzero b-fields.
+detection of equality of two holonomies by the full-lap action on the nonzero b-fields.
 Only the scalar phase from c is compared; the statement does not equate the two field families
 or their chosen step roots.
 -/
 lemma holonomy_detected_iff (b c : BoundaryTwist L) :
     (∀ n : ℤ, transport L b (L : ℤ) (annihilation L b n) =
-      holonomy L c • annihilation L b n) ↔ sameHolonomy L b c := by sorry
+      holonomy L c • annihilation L b n) ↔ sameHolonomy L b c := by
+  simp only [holonomy_acts_on_field, sameHolonomy]
+  constructor
+  · intro h
+    exact smul_left_injective ℂ (annihilation_ne_zero L b 0) (h 0)
+  · intro h n
+    rw [h]
 /--
-Proposed relation between fields defined by any two step choices: multiply the b-field by
+relation between fields defined by any two step choices: multiply the b-field by
 (c.step/b.step)^n. The denominator is nonzero by its norm certificate. This is a position-
 dependent scalar identity, not an assertion of a Fock-space gauge equivalence of kinetic
 Hamiltonians.
 -/
 lemma change_trivialization_field (b c : BoundaryTwist L) (n : ℤ) :
-    annihilation L c n = (c.step/b.step)^n • annihilation L b n := by sorry
+    annihilation L c n = (c.step/b.step)^n • annihilation L b n := by
+  unfold annihilation liftPhase
+  rw [div_zpow, smul_smul]
+  congr 1
+  field_simp [zpow_ne_zero n (twist_step_ne_zero L b)]
 /--
-Proposed periodicity of the step-ratio phase when the two records have equal holonomy. It is the
+periodicity of the step-ratio phase when the two records have equal holonomy. It is the
 compatibility needed for an alternative fundamental-domain convention on the same scalar
 boundary sector.
 -/
 lemma trivialization_ratio_periodic (b c : BoundaryTwist L) (hbc : sameHolonomy L b c) (n : ℤ) :
-    (c.step/b.step)^(n+(L : ℤ)) = (c.step/b.step)^n := by sorry
+    (c.step/b.step)^(n+(L : ℤ)) = (c.step/b.step)^n := by
+  have hr : c.step/b.step ≠ 0 := div_ne_zero (twist_step_ne_zero L c) (twist_step_ne_zero L b)
+  have hp : (c.step/b.step)^L=1 := by
+    rw [div_pow]
+    have he : c.step^L=b.step^L := hbc.symm
+    rw [he, div_self (pow_ne_zero L (twist_step_ne_zero L b))]
+  rw [zpow_add₀ hr, zpow_natCast, hp, mul_one]
 /--
-Proposed actual basis action of the complete source-sector zeroMode map. The charge is
+actual basis action of the complete source-sector zeroMode map. The charge is
 #S-referenceCharge before any creator or annihilator acts; this order matters in a later Klein
 factor product.
 -/
 lemma zero_mode_ket (b : BoundaryTwist L) (n referenceCharge : ℤ) (S : Ch06.Occupation L) :
     zeroMode L b n referenceCharge (A02.ket S) =
-      (liftPhase L b n*A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge))) • A02.ket S := by sorry
+      (liftPhase L b n*A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge))) • A02.ket S := by
+  exact A02.extend_basis_ket _ S
+
 /--
-Proposed full-winding law of zeroMode with the same τ as the comparison fermion field. Integer
+full-winding law of zeroMode with the same τ as the comparison fermion field. Integer
 source charge contributes a trivial full-period ζ factor, so fixed external holonomy is not
 dynamically changed by lowering that charge.
 -/
 lemma zero_mode_winding (b : BoundaryTwist L) (n referenceCharge w : ℤ) :
-    zeroMode L b (n+w*(L : ℤ)) referenceCharge = holonomy L b^w • zeroMode L b n referenceCharge := by sorry
+    zeroMode L b (n+w*(L : ℤ)) referenceCharge = holonomy L b^w • zeroMode L b n referenceCharge := by
+  apply A02.end_ext_basis
+  intro S
+  simp only [zero_mode_ket, LinearMap.smul_apply]
+  rw [lift_phase_winding, smul_smul]
+  congr 1
+  have hr : A01.canonicalRoot L^((n+w*(L : ℤ))*((S.card : ℤ)-referenceCharge)) = A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge)) := by
+    rw [add_mul, zpow_add₀ ((A01.canonical_root_primitive L).ne_zero (NeZero.ne L))]
+    have hz : A01.canonicalRoot L^(w*(L : ℤ)*((S.card : ℤ)-referenceCharge)) = 1 := by
+      rw [show w*(L : ℤ)*((S.card : ℤ)-referenceCharge) = (L : ℤ)*(w*((S.card : ℤ)-referenceCharge)) by ring, zpow_mul, zpow_natCast, (A01.canonical_root_primitive L).pow_eq_one, one_zpow]
+    rw [hz, mul_one]
+  rw [hr]
+  ring
 /--
-Proposed unitary norm identity Z†Z=1 for the actual diagonal zeroMode map. All its basis phases
+unitary norm identity Z†Z=1 for the actual diagonal zeroMode map. All its basis phases
 have unit modulus; no analytic exponential of an unbounded operator is being introduced.
 -/
 lemma zero_mode_unitary (b : BoundaryTwist L) (n referenceCharge : ℤ) :
-    LinearMap.adjoint (zeroMode L b n referenceCharge)*zeroMode L b n referenceCharge = 1 := by sorry
+    LinearMap.adjoint (zeroMode L b n referenceCharge)*zeroMode L b n referenceCharge = 1 := by
+  let f (S : Ch06.Occupation L) : ℂ := liftPhase L b n*A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge))
+  let B : Ch05.Operators L := A02.extendBasis (fun S => star (f S) • A02.ket S)
+  have hB : B = LinearMap.adjoint (zeroMode L b n referenceCharge) := by
+    apply A02.adjoint_of_basis_pairing
+    intro S T
+    simp only [B, A02.extend_basis_ket, zero_mode_ket, inner_smul_right, inner_smul_left, A02.ket_inner, ← Complex.star_def, star_star]
+    by_cases hST : S=T
+    · subst T
+      rfl
+    · simp [hST]
+  rw [← hB]
+  apply A02.end_ext_basis
+  intro S
+  simp only [Module.End.mul_apply, zero_mode_ket, map_smul, B, A02.extend_basis_ket, smul_smul, Module.End.one_apply]
+  change (f S*star (f S)) • A02.ket S = A02.ket S
+  have hn : ‖f S‖=1 := by
+    simp only [f, norm_mul, lift_phase_norm, norm_zpow, (A01.canonical_root_primitive L).norm'_eq_one (NeZero.ne L), one_zpow, mul_one]
+  have hz : f S ≠ 0 := norm_ne_zero_iff.mp (by rw [hn]; exact one_ne_zero)
+  have hi : star (f S)=(f S)⁻¹ := (Complex.inv_eq_conj hn).symm
+  rw [hi, mul_inv_cancel₀ hz, one_smul]
 /--
-Proposed ordered relation Z*c_k†=ζ^n • (c_k†*Z). Creation raises source occupation by one,
+ordered relation Z*c_k†=ζ^n • (c_k†*Z). Creation raises source occupation by one,
 changing the charge phase by ζ^n. The external r^n factor stays the same on both sides.
 -/
 lemma zero_mode_creation_order (b : BoundaryTwist L) (n referenceCharge : ℤ) (k : Ch01.Band L) :
     zeroMode L b n referenceCharge*Ch05.momentumCreation L k =
-      A01.canonicalRoot L^n • (Ch05.momentumCreation L k*zeroMode L b n referenceCharge) := by sorry
+      A01.canonicalRoot L^n • (Ch05.momentumCreation L k*zeroMode L b n referenceCharge) := by
+  apply A02.end_ext_basis
+  intro S
+  have hck : Ch05.momentumCreation L k (A02.ket S) = if k ∈ S then 0 else Ch04.fermionSign k S • A02.ket (insert k S) := by
+    convert Ch04.creation_ket k S using 1
+    all_goals simp [Ch05.momentumCreation, Ch05.FockSpace, A02.ket, A02.occupationBasis, A02.occupationONB]
+    all_goals split_ifs <;> first | rfl | (congr 2; ext i; simp only [Finset.mem_insert])
+  simp only [Module.End.mul_apply, LinearMap.smul_apply, zero_mode_ket, map_smul, hck]
+  by_cases hk : k ∈ S
+  · simp [hk]
+  · simp only [hk, ite_false, map_smul, zero_mode_ket, smul_smul]
+    congr 1
+    rw [Finset.card_insert_of_notMem hk]
+    push_cast
+    have he : n*((S.card : ℤ)+1-referenceCharge)=n+n*((S.card : ℤ)-referenceCharge) := by ring
+    rw [he, zpow_add₀ ((A01.canonical_root_primitive L).ne_zero (NeZero.ne L))]
+    ring
 /--
-Proposed ordered relation Z*c_k=ζ^(-n) • (c_k*Z). Annihilation lowers occupation by one; the
+ordered relation Z*c_k=ζ^(-n) • (c_k*Z). Annihilation lowers occupation by one; the
 position-dependent charge factor changes while fixed full-loop external holonomy remains
 unchanged.
 -/
 lemma zero_mode_annihilation_order (b : BoundaryTwist L) (n referenceCharge : ℤ) (k : Ch01.Band L) :
     zeroMode L b n referenceCharge*Ch05.momentumAnnihilation L k =
-      A01.canonicalRoot L^(-n) • (Ch05.momentumAnnihilation L k*zeroMode L b n referenceCharge) := by sorry
-
+      A01.canonicalRoot L^(-n) • (Ch05.momentumAnnihilation L k*zeroMode L b n referenceCharge) := by
+  apply A02.end_ext_basis
+  intro S
+  have hak : Ch05.momentumAnnihilation L k (A02.ket S) = if k ∈ S then Ch04.fermionSign k S • A02.ket (S.erase k) else 0 := by
+    convert Ch04.annihilation_ket k S using 1
+    all_goals simp [Ch05.momentumAnnihilation, Ch05.FockSpace, A02.ket, A02.occupationBasis, A02.occupationONB]
+    all_goals split_ifs <;> congr 3
+    all_goals exact Subsingleton.elim _ _
+  simp only [Module.End.mul_apply, LinearMap.smul_apply, zero_mode_ket, map_smul, hak]
+  by_cases hk : k ∈ S
+  · simp only [hk, ite_true, map_smul, zero_mode_ket, smul_smul]
+    congr 1
+    have hc : ((S.erase k).card : ℤ)=(S.card : ℤ)-1 := by
+      have h := Finset.card_erase_add_one hk
+      omega
+    rw [hc]
+    have he : n*((S.card : ℤ)-1-referenceCharge)= -n+n*((S.card : ℤ)-referenceCharge) := by ring
+    rw [he, zpow_add₀ ((A01.canonical_root_primitive L).ne_zero (NeZero.ne L))]
+    ring
+  · simp [hk]
 end Fields
 
 /--
@@ -918,30 +1422,44 @@ noncomputable def jwSectorTwist (L : ℕ) (particles : ℤ) : BoundaryTwist L :=
   if Even particles then antiperiodicTwist L else periodicTwist L
 
 /--
-Proposed APBC value -1 of the JW dictionary in an even-particle sector. The explicit parity
+APBC value -1 of the JW dictionary in an even-particle sector. The explicit parity
 hypothesis states which sector is being selected; no spin-chain equivalence is asserted here.
 -/
-lemma jw_even (particles : ℤ) (hp : Even particles) : jwHolonomy particles = -1 := by sorry
+lemma jw_even (particles : ℤ) (hp : Even particles) : jwHolonomy particles = -1 := by
+  rcases hp with ⟨k, hk⟩
+  subst particles
+  unfold jwHolonomy
+  rw [show k+k=2*k by ring, zpow_mul]
+  norm_num
 /--
-Proposed periodic value one of the JW dictionary in an odd-particle sector. This follows the
+periodic value one of the JW dictionary in an odd-particle sector. This follows the
 recorded string convention and should not be generalized to an unspecified spin boundary
 convention.
 -/
-lemma jw_odd (particles : ℤ) (hp : Odd particles) : jwHolonomy particles = 1 := by sorry
+lemma jw_odd (particles : ℤ) (hp : Odd particles) : jwHolonomy particles = 1 := by
+  rcases hp with ⟨k, hk⟩
+  subst particles
+  simp [jwHolonomy, zpow_add₀, zpow_mul]
 /--
-Proposed agreement between the selected sector's step record and its JW full-loop phase at
+agreement between the selected sector's step record and its JW full-loop phase at
 positive L. This connects two definitions of the sector dictionary, rather than proving a
 physical Jordan–Wigner operator identity.
 -/
 lemma jw_sector_holonomy (L : ℕ) [NeZero L] (particles : ℤ) :
-    holonomy L (jwSectorTwist L particles) = jwHolonomy particles := by sorry
+    holonomy L (jwSectorTwist L particles) = jwHolonomy particles := by
+  unfold jwSectorTwist
+  split_ifs with hp
+  · rw [antiperiodic_holonomy, jw_even particles hp]
+  · rw [periodic_holonomy, jw_odd particles (Int.not_even_iff_odd.mp hp)]
 /--
-Proposed reversal of JW holonomy when the total particle count decreases by one. It exposes why
+reversal of JW holonomy when the total particle count decreases by one. It exposes why
 an odd particle-changing map in a spin model cannot be treated as staying inside a single fixed-
 JW-twist sector.
 -/
-lemma jw_parity_flip (particles : ℤ) : jwHolonomy (particles-1) = -jwHolonomy particles := by sorry
-
+lemma jw_parity_flip (particles : ℤ) : jwHolonomy (particles-1) = -jwHolonomy particles := by
+  unfold jwHolonomy
+  rw [zpow_sub₀ (by norm_num : (-1 : ℂ) ≠ 0)]
+  simp only [zpow_one, div_neg, div_one, neg_neg]
 /--
 The real linear-dispersion label k+β, in dimensionless momentum units before an optional 2π/L
 prefactor. This retains β explicitly because equal boundary phases can have different real
@@ -974,23 +1492,34 @@ replace an integer excitation label indiscriminately.
 noncomputable def physicalGroundEnergy (β : ℝ) (N : ℤ) : ℝ := (N : ℝ)*((N : ℝ)+1)/2+β*(N : ℝ)
 
 /--
-Proposed decomposition of shifted occupation energy into the frozen integer sum plus β times
+decomposition of shifted occupation energy into the frozen integer sum plus β times
 total particle count. This states its parameter dependency explicitly and fixes the distinction
 between total and relative charge.
 -/
 lemma physical_energy_shift (L : ℕ) (β : ℝ) (S : Ch06.Occupation L) :
-    physicalOccupationEnergy L β S = (Ch05.occupationEnergy L S : ℝ)+β*(S.card : ℝ) := by sorry
+    physicalOccupationEnergy L β S = (Ch05.occupationEnergy L S : ℝ)+β*(S.card : ℝ) := by
+  classical
+  unfold physicalOccupationEnergy physicalMomentum Ch05.occupationEnergy
+  rw [Finset.sum_add_distrib]
+  simp only [Finset.sum_const, nsmul_eq_mul, Int.cast_sum]
+  ring
+
 /--
-Proposed same-sea subtraction formula: frozen relative integer energy plus β times S.card minus
+same-sea subtraction formula: frozen relative integer energy plus β times S.card minus
 the sea cardinality. A uniform shift and identical reference sea are built into the definitions;
 this is not a result for arbitrary dispersion.
 -/
 lemma physical_relative_shift (L : ℕ) (β : ℝ) (S : Ch06.Occupation L) :
     physicalRelativeEnergy L β S =
       ((Ch05.occupationEnergy L S-Ch05.seaEnergy L : ℤ) : ℝ)+
-      β*((S.card : ℝ)-((Ch05.seaConfiguration L).card : ℝ)) := by sorry
+      β*((S.card : ℝ)-((Ch05.seaConfiguration L).card : ℝ)) := by
+  rw [physicalRelativeEnergy, physical_energy_shift, physical_energy_shift]
+  unfold Ch05.seaEnergy
+  push_cast
+  ring
+
 /--
-Proposed β independence after subtracting the matching charge polynomial from the physical
+β independence after subtracting the matching charge polynomial from the physical
 relative energy. Positive even length supplies the half-filled reference charge S.card-h. This
 algebraic bridge does not itself prove excitation nonnegativity or ground minimality, and it
 must not be applied with a different sea or unmatched β.
@@ -998,13 +1527,20 @@ must not be applied with a different sea or unmatched β.
 lemma excitation_twist_cancel (h : ℕ) (hh : 0 < h) (β : ℝ) (S : Ch06.Occupation (2*h)) :
     physicalRelativeEnergy (2*h) β S-physicalGroundEnergy β ((S.card : ℤ)-(h : ℤ)) =
       ((Ch05.occupationEnergy (2*h) S-Ch05.seaEnergy (2*h) : ℤ) : ℝ)-
-        physicalGroundEnergy 0 ((S.card : ℤ)-(h : ℤ)) := by sorry
+        physicalGroundEnergy 0 ((S.card : ℤ)-(h : ℤ)) := by
+  rw [physical_relative_shift, Ch05.sea_card_even h hh]
+  unfold physicalGroundEnergy
+  push_cast
+  ring
+
 /--
-Proposed specialization of the charge polynomial at β=-1/2 to N²/2. This makes the physical APBC
+specialization of the charge polynomial at β=-1/2 to N²/2. This makes the physical APBC
 energy convention explicit, including half-integral values for odd N, while leaving the existing
 integer reference energy unchanged.
 -/
-lemma apbc_ground_energy (N : ℤ) : physicalGroundEnergy (-1/2) N = (N : ℝ)^2/2 := by sorry
+lemma apbc_ground_energy (N : ℤ) : physicalGroundEnergy (-1/2) N = (N : ℝ)^2/2 := by
+  unfold physicalGroundEnergy
+  ring
 
 end Bosonize.Ch06Ext
 ```
