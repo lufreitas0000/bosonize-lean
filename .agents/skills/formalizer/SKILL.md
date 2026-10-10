@@ -25,25 +25,49 @@ Essential checks:
 - Establish existence/nonzero-action evidence where the claim requires it. A nonempty subspace does not establish a positive vacuum state, a surjective isometry, or a nonzero leakage coefficient.
 - Distinguish algebraic polynomial, finite compressed, formal-series, and analytic constructions. Finite dimension does not imply nilpotency.
 
+## Multi-Agent Orchestration & Model Hierarchy (Phases A–B–C)
+
+To maximize formalization throughput, maintain strict mathematical scrutiny, and prevent context saturation, chapter development follows an orchestrated multi-agent protocol with explicit model tiers:
+
+1. **Model Tier Hierarchy:**
+   - **Primary Workhorse (`flash`):** Default to Gemini 3.8 Flash (medium or high effort) for all subagents. Flash is the primary workhorse for initial file generation, drafting definitions, one-sorry theorem stubs, companion notebooks, routine tactic searches, and sectional proof construction.
+   - **Troubleshooting Escalation (`pro`):** Escalate to Gemini 3.1 Pro **strictly as a second option** when Flash fails, encounters persistent elaboration errors, or remains blocked after 3 tactic attempts at an unchanged goal. `pro` is reserved for deep mathematical diagnosis, subtle semantic debugging, and auxiliary lemma decomposition.
+
+2. **Phase A (Drafting & Interface Verification):**
+   - The orchestrator spawns a subagent (`Model: "flash"`) to author the staging Lean file in `BosonizeStubs/` and the companion notebook in `docs/companion/BosonizeStubs/`. (Escalate to `pro` only if Flash fails on complex structural modeling).
+   - The orchestrator independently proof-reads and verifies all statement claims, hypotheses, types, carriers, and non-vacuity witnesses against the natural language notes.
+   - Once approved, the orchestrator freezes the stub interface via `stub_lock.py`, commits the baseline atomically, and advances to Phase B.
+
+3. **Phase B (Sectional Proving & Integration):**
+   - The orchestrator decomposes the chapter by section or theorem cluster and spawns multiple sectional subagents (`Model: "flash"`), typically one per section.
+   - If a sectional subagent gets stuck on an unchanged goal after 3 attempts, escalate that specific goal to a troubleshooting subagent (`Model: "pro"`).
+   - The orchestrator collects and integrates all sectional proofs, verifies strict locks, zero `sorry`, clean build, and valid axioms, and decides whether Phase B is complete.
+
+4. **Phase C (Audit, Promotion & Pedagogical Sync):**
+   - The orchestrator promotes the module to Core, updates locks, and spawns a subagent running `pedagogical-sync` (`Model: "flash"`) to update the markdown notes.
+   - The orchestrator reviews the pedagogical diff, confirms `make lock-check`, and commits atomically.
+
 ## Phase A — Draft and document
 
-Write complete definitions, abbreviations, and instances in `BosonizeStubs/`; each theorem/lemma stub ends with exactly one `:= by sorry`. Definitions and instances must elaborate without placeholders. Check adopted imports, library signatures, and required local instances against the installed Lean/Mathlib before freezing the interface.
-
-Create the mirrored notebook in `docs/companion/BosonizeStubs/`. Include type choices, exact signatures, source/suggestion paths, unresolved mathematical obligations, proposed helper dependencies, and the reason for each margin. Useful witness lemmas can be Phase A stubs; do not describe their statements or a build with placeholders as proved evidence. If the chapter is already locked, preserve its approved interface rather than redrafting it. Obtain an independent agent review of the exact final draft under [the pipeline policy](references/pipeline.md). Resolve deterministic findings and have affected changes re-reviewed. After a recorded pass and Phase A validation, lock the reviewed interface and proceed automatically to Phase B. Ask the user only when a substantive ambiguity requires their mathematical or scope decision.
+1. **Subagent Delegation (`flash`):** Do not hand-author large stubs monolithicly in the main conversation. Spawn a dedicated subagent (`invoke_subagent` with `TypeName: "self"` or specialized agent, `Model: "flash"`) to draft the file. The subagent writes complete definitions, abbreviations, and instances in `BosonizeStubs/`; each theorem/lemma stub ends with exactly one `:= by sorry`. Definitions and instances must elaborate without placeholders. Check adopted imports, library signatures, and required local instances against the installed Lean/Mathlib. If the Flash subagent encounters intractable elaboration bugs or type-theoretic modeling hurdles, escalate to a `pro` subagent as a second option.
+2. **Companion Notebook:** The drafting subagent creates the mirrored notebook in `docs/companion/BosonizeStubs/`. Include type choices, exact signatures, source paths, unresolved mathematical obligations, proposed helper dependencies, and the reason for each margin. Useful witness lemmas can be Phase A stubs; do not describe their statements or a build with placeholders as proved evidence.
+3. **Orchestrator Proofreading & Audit:** The orchestrator (or an independent adversarial review subagent) proof-reads and strictly verifies the draft against the natural language notes:
+   - Check source fidelity, carrier types, explicit hypotheses and their necessity, non-vacuity/witnesses, operator order/signs, grading/margins, and actual adjoints.
+   - Verify that definitions and instances elaborate cleanly with `lake build`.
+4. **Interface Lock & Transition:** Resolve deterministic findings. Once approved, establish the reviewed lock in `docs/spec/stub_locks.v2.json` using `python3 scripts/guards/stub_lock.py`, commit the baseline atomically, and proceed automatically to Phase B. Ask the user only when a substantive ambiguity requires their mathematical or scope decision.
 
 ## Phase B — Prove the approved statements
 
-Before editing, run `python3 scripts/guards/stub_lock.py --check --strict` from the repository root and identify the chapter in `docs/spec/stub_locks.v2.json`. Use `--baseline-ref <approved-ref>` when verifying against a committed baseline, or `STUB_LOCK_BASELINE_REF` for CI. Investigate a failed check; never regenerate the baseline to conceal drift.
-
-Edit only approved lemma/theorem proof bodies. Preserve names, hypotheses, conclusions, definitions, instances, imports, namespaces, options, and attributes. Local `have` proofs can provide supporting steps inside those bodies. New top-level declarations/files or changes to the active staging interface require a concrete diff, evidence and independent agent review before a scoped lock amendment. Routine, unambiguous corrections are covered by the automatic policy; substantive ambiguity goes to the user. Existing promoted Core is outside this correction path. Never rewrite existing Core to solve a downstream problem.
-
-Revisiting unusual or redundant assumptions is an expected, healthy part of proof development. Check whether each assumption is necessary, satisfiable, and appropriate for downstream use. When compiler or mathematical evidence supports a cleaner frozen interface, record the exact correction and its justification, obtain independent review, then update only the affected active-chapter lock records and repeat validation. A changed hypothesis/conclusion is not routine unless its equivalence or source-mandated correction is established; alternative physical conventions, weakened goals or changed scope require the user. Proof completion does not by itself authorize an interface change.
-
-Plan a dependency order from verified basis action, grading, and exact edge identities to restricted consequences. Check that proposed helper hypotheses are satisfiable and do not strengthen the locked target unnoticed. A suggested tactic failure is a reason to revise the proof strategy, not the frozen mathematics.
-
-After a proof batch, rerun the strict guard, inspect the source/dependency diff, build the affected staging module, and update the notebook with compiler results and remaining placeholders. Separate passed compilation, proof completion, axiom auditing, and mathematical witness evidence in the report.
-
-The v2 guard freezes theorem headers and ordered non-lemma commands in staging and Core; it does not elaborate Lean or freeze imported dependencies/toolchain state. `docs/spec/stub_locks.v2.json` is active; preserve the legacy manifest as history. See [the freeze audit](../../../docs/spec/freeze_audit.md) for guard details. Use `--accept-changes` only for the exact independently reviewed staging correction covered by the pipeline authorization, never to overwrite unexplained drift. Review the manifest diff and preserve every unrelated record; `--update` is disabled in CI.
+1. **Pre-flight Lock Check:** Before editing, run `python3 scripts/guards/stub_lock.py --check --strict` from the repository root and identify the chapter in `docs/spec/stub_locks.v2.json`. Never regenerate the baseline to conceal drift.
+2. **Sectional Subagent Partitioning (`flash`):** Decompose the chapter into modular sections or theorem clusters. Spawn multiple sectional subagents (typically one per section/cluster) using `Model: "flash"` as the workhorse to construct proofs in parallel or dependency order.
+3. **Strict Boundary Compliance:** Subagents edit only approved lemma/theorem proof bodies. Preserve names, hypotheses, conclusions, definitions, instances, imports, namespaces, options, and attributes. Local `have` proofs provide supporting steps inside those bodies. New top-level declarations or interface changes require a concrete diff, evidence, and independent review before a scoped lock amendment.
+4. **Troubleshooting Escalation (`pro`):** After three unsuccessful tactic attempts at the exact same goal state, stop retrying that goal with Flash. Escalate the goal, attempted tactics, and compiler diagnostics to a troubleshooting subagent running `Model: "pro"` to isolate the missing Mathlib lemma or formulate an auxiliary decomposition.
+5. **Verification, Integration & Completion Decision:** The orchestrator collects the sectional proofs, merges them into the staging file, and runs:
+   - Strict lock verification: `python3 scripts/guards/stub_lock.py --check --strict`
+   - Build: `lake build <StagingTarget>`
+   - Axiom audit: `#print axioms` (verifying only standard axioms `Classical.choice`, `propext`, `Quot.sound`)
+   - Completeness audit: confirm zero remaining `sorry` placeholders and zero warnings.
+   The orchestrator updates the companion notebook with compiler results and proof evidence, commits atomically, and decides whether Phase B is fully satisfied to proceed to Phase C.
 
 ## Compiler inspection and retrieval
 
@@ -55,7 +79,7 @@ If a tool fails or is not exposed, state the precise limitation and continue wit
 
 ## Retry and lint handling
 
-After three unsuccessful tactic attempts at the exact same goal state, stop retrying that goal. Preserve completed proofs, record the goal, attempted approaches, and missing mathematical step, and obtain an independent troubleshooting/decomposition pass. Resume on a materially different supported approach. Ask the user only for unresolved mathematical or scope ambiguity; a tactic failure alone is not a human approval gate. An existing unproved staging stub may remain; do not introduce new placeholders into completed proofs or Core. Continue independent authorized work where possible.
+After three unsuccessful tactic attempts at the exact same goal state, stop retrying that goal. Preserve completed proofs, record the goal, attempted approaches, and missing mathematical step, and obtain an independent troubleshooting pass (escalating from `flash` to `pro`). Resume on a materially different supported approach. Ask the user only for unresolved mathematical or scope ambiguity; a tactic failure alone is not a human approval gate. An existing unproved staging stub may remain; do not introduce new placeholders into completed proofs or Core. Continue independent authorized work where possible.
 
 Resolve warnings at their cause. Use `omit` for unused section assumptions when appropriate, or explicit binders with the intended mathematical hypotheses. Do not disable a linter, suppress a diagnostic, or change the warning threshold to obtain Core promotion. If a fix changes a locked signature/context, treat it as an interface correction requiring the existing review procedure; never patch frozen Core silently.
 
@@ -63,4 +87,4 @@ Resolve warnings at their cause. Use `omit` for unused section assumptions when 
 
 After Phase B passes all audit criteria, proceed automatically within the authorized chapter scope using [the promotion workflow](../../workflows/freeze_chapter.md). Require zero placeholders, zero warnings, and only the permitted standard axioms (`propext`, `Classical.choice`, `Quot.sound`) in freshly built theorem dependencies. Preserve definitions, statements, and namespaces during promotion; move the v2 entry by path, preserving hashes except the narrowly reviewed promotion import/context substitutions described in that workflow, and add the complete-source hash to `docs/spec/core_locks.json`.
 
-Move the companion notebook and update the aggregators as the workflow specifies. Apply the repository [pedagogical-sync skill](../pedagogical-sync/SKILL.md) to update the corresponding chapter note in `notes/md/` (or appendix section in `notes/appendices/`), preserving reference information and explaining the verified constructive mathematics in natural language. Require independent review of that pedagogical diff and record its evidence in the companion before declaring Phase C complete. CI and `make lock-check` must pass both guards. `core_lock.py` freezes every byte of existing Core sources, including proofs. Commit the authorized migration before using a reference containing it as the next baseline; retain historical manifests. Do not infer proof completion from a guard or a build with `sorry`.
+Move the companion notebook and update the aggregators as the workflow specifies. Spawn a subagent running the repository [pedagogical-sync skill](../pedagogical-sync/SKILL.md) (`Model: "flash"`) to update the corresponding chapter note in `notes/md/` (or appendix section in `notes/appendices/`), preserving reference information and explaining the verified constructive mathematics in natural language. Require orchestrator review of that pedagogical diff and record its evidence in the companion before declaring Phase C complete. CI and `make lock-check` must pass both guards. `core_lock.py` freezes every byte of existing Core sources, including proofs. Commit the authorized migration before using a reference containing it as the next baseline; retain historical manifests. Do not infer proof completion from a guard or a build with `sorry`.
