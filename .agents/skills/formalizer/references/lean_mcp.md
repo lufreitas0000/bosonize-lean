@@ -1,6 +1,6 @@
 # Lean MCP operations for Bosonize-Lean
 
-Use this reference with the repository's formalizer skill. The installed Lean/Mathlib and compiler determine what elaborates. The chapter's authorized phase and approved locks determine what may be edited. MCP supplies feedback; it does not grant phase approval or change mathematical contracts.
+Use this reference with the repository's formalizer skill. The installed Lean/Mathlib and compiler determine what elaborates. The chapter scope, automatic pipeline review gates and approved locks determine what may be edited. MCP supplies feedback; it does not replace independent review or change mathematical contracts.
 
 | Task | Read |
 | --- | --- |
@@ -14,7 +14,7 @@ Use this reference with the repository's formalizer skill. The installed Lean/Ma
 1. Inspect `lean_goal` at the relevant tactic and `lean_diagnostic_messages` for the affected file/range. Use current source positions: lines and columns are 1-based, and edits can move them. Omit the goal column for before/after feedback; use an exact column when a line contains several proof steps.
 2. Use `lean_local_search` to find project helpers and installed declarations. For a known type pattern, use `lean_loogle`; for a mathematical description or uncertain terminology, use an available semantic tool such as `lean_leansearch` or `lean_leanfinder`. Read the actual exposed schema and respect rate limits. Do not cycle through searches after the required declaration is already identified.
 3. Inspect the candidate with `lean_hover_info`, `lean_declaration_file`, or a scratch `#check`. Hover columns should point to the start of the identifier. Check imports, namespaces, implicit binders, typeclass instances, carriers, conjugation, operator order, and any hypotheses against the locked goal before using it.
-4. Try a small proof step. Where exposed and useful, `lean_multi_attempt` can compare a few tactics at the exact goal position without committing a source edit. It does not authorize theorem work during Phase A. Persist only authorized proof-body changes; do not add public helpers, imports, attributes, or assumptions to a locked chapter.
+4. Try a small proof step. Where exposed and useful, `lean_multi_attempt` can compare a few tactics at the exact goal position without committing a source edit. It does not authorize theorem work during Phase A. Persist only authorized proof-body changes; public helpers/imports or other interface changes follow the independent review and scoped lock-amendment procedure before proof work resumes.
 5. Reinspect the resulting goals and diagnostics. An empty goal list at one tactic position is local feedback; verify the whole declaration/file before reporting completion. Apply the formalizer's three-attempt stopping rule to the same unresolved goal, and continue independent authorized goals when possible.
 
 Use MCP selectively during Phase A to check definitions, library APIs and expected stub diagnostics. Keep every proposed theorem as one `:= by sorry`; elaborate definitions without consuming stub proofs. During Phase B, replace only approved proof bodies. Preserve immutable Core in every phase.
@@ -43,7 +43,7 @@ Keep these claims distinct in the companion notebook and final report:
 
 Run commands from the repository root. Select staging or Core paths for the actual current phase, rather than copying a historical module path.
 
-- **Phase A:** build the affected staging modules/aggregator and Core; verify exact notebook snapshots and one-sorry theorem bodies. Audit definitions and relevant generated data declarations separately from theorem stubs. Preserve the manifests. Non-strict verification can confirm existing locks while naming new files; strict verification must still reject unreviewed additions. Report this boundary rather than claiming full CI passes.
+- **Phase A:** build the affected staging modules/aggregator and Core; verify exact notebook snapshots and one-sorry theorem bodies. Audit definitions and relevant generated data declarations separately from theorem stubs. Preserve existing manifest entries during drafting. Non-strict verification can confirm existing locks while naming new files; strict verification must still reject unreviewed additions. After the independent review passes, establish only the reviewed scoped lock and proceed automatically. Report any pre-lock boundary rather than claiming full CI passes.
 - **Phase B:** use the committed approved baseline with the strict interface guard before/after batches. Compile the changed modules and update notebook evidence. An MCP `lean_verify` call can assist declaration inspection, but does not replace the repository guards or the final fresh audit.
 - **Phase C:** follow the existing promotion workflow. Require zero warnings/placeholders and fresh theorem axiom output containing only `propext`, `Classical.choice`, `Quot.sound`. Import the freshly built Core aggregator for the final audit. Run CI and both guards against the committed promotion baseline; pre-migration references retain historical paths and are not the new baseline.
 

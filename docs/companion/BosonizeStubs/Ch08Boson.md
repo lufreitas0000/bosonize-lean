@@ -1,6 +1,6 @@
 # CH08 companion notebook — algebraic boson Fock layer
 
-Status (2026-10-09): **Phase A complete; proposed interface awaiting human review.** There are 43 complete data declarations and 62 theorem stubs, each with exactly one `:= by sorry`. No interface has been locked, no theorem has been proved, and nothing has been promoted. Core retains 457 proved theorems across eleven frozen modules. The baseline for this draft's preservation checks is `aa047eb`.
+Status (2026-10-09): **Phase A complete; independent interface review passed.** There are 43 complete data declarations and 62 theorem stubs, each with exactly one `:= by sorry`. No reviewed lock baseline has been committed, no theorem has been proved, and nothing has been promoted. Core retains 457 proved theorems across eleven frozen modules. The baseline for this draft's preservation checks is `aa047eb`.
 
 ## Source reconciliation and scope
 
@@ -63,7 +63,17 @@ All of these are obligations, not completed evidence. New top-level helpers or a
 - All 69 guard regression tests pass. Non-strict verification against `aa047eb` preserves 457 approved statements and 342 commands; all eleven complete Core hashes pass. Strict verification rejects exactly the new unlocked CH08 source (62 statements/61 commands). Full CI is therefore not claimed as passing at this review boundary.
 - Active and historical lock manifests, Core sources/aggregator, toolchain and dependency manifests are unchanged. The initial unrelated note edits and three suggestion deletions are preserved byte-for-byte.
 
-Review the weighted pairing, normalized finite carrier, projection residuals and the two exponential meanings before locking or starting Phase B. A04 will be drafted with its actual density/current dependencies after CH08's completion.
+The independent review below covers the weighted pairing, normalized finite carrier, projection residuals and the two exponential meanings. Under the new automatic pipeline, chapter-development execution can establish the reviewed lock and proceed through B/C without another human phase confirmation. This workflow-update/review pass changes no theorem proofs or locks. A04 will be drafted with its actual density/current dependencies after CH08's completion.
+
+## Independent Phase A review — 2026-10-09
+
+Reviewer: separate agent `/root/ch08_interface_review`, dispatched by the primary formalizer at the user's request for automatic A–B–C with independent review. Verdict: **PASS** for source SHA-256 `78d1dea1fc2e10f5146a066695a573b3d4f3d579200322eda3f16d466c20a76a`. The reviewer was read-only and checked all 43 data declarations/62 signatures, source reconciliation, exact notebook mirror, weighted pairing/finite adjoints, positive-mode envelope/nonvacuity, lowering at small budgets, compression signs, BCH/Wick conventions and future twist dependencies. It found no required correction or genuine human ambiguity.
+
+Independent exact rational checks passed: weighted BCH (weight 2, alpha 2, beta 3) through coefficient degree 6 on polynomial inputs of degree 0–4; Wick operator expansion through degree 8 on inputs of degree 0–4; projection remainders at weight 2/cutoff 5; compressed power vanishing and commutator trace zero in that example. These calculations are counterexample screening, not universal Lean proofs and not proof-body changes.
+
+Nonblocking observations: the normal-symbol word theorem deliberately covers a single mode, while the source's opening sentence about arbitrary products is broader; this limitation is documented above. Energy increment, factorial norm recurrence, bounded-index coverage and ordered-power helpers would ease Phase B, but are optional interface extensions requiring the new independent review procedure. The current snapshot can be locked without them.
+
+The [automatic pipeline](../../../.agents/skills/formalizer/references/pipeline.md) supersedes the former routine human phase gates. This record supplies the independent review evidence; no lock or proof transition is claimed in this workflow-update task.
 
 ## Exact Phase A source snapshot
 
