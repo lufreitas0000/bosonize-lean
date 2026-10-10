@@ -1,8 +1,121 @@
 # Ch09DensityModes: formal companion
 
+**Phase C complete, 2026-10-10.** All 38 theorem proofs and 14 data
+constructions are promoted and completely frozen in
+[Core source](../../../../Bosonize/Core/Ch09DensityModes.lean). Source SHA-256:
+`085d890f8c56b7dc8b9bf9ea15fc36a92f7f6ddd81ae6125343c6e567323097e`. The exact snapshot below is the promoted source. Historical A/B
+records retain their original status at their respective checkpoints.
+
+## Verified realization, promotion and lecture mapping
+
+The reviewed interface was locked at `e78c2d9`; all proofs were committed at
+`918d145`. The independent integrated proof and migration reviews from
+`/root/ch09_hop_probe` pass. A04's lock moves unchanged. CH09 changes only its
+A04 import from staging to Core and the dependent context hashes. Every
+mathematical declaration, theorem header and proof body is preserved. The
+module comments now identify proved scope. All twelve prior Core file hashes
+are unchanged; the two new full-source hashes extend the Core freeze.
+
+Fresh `import Bosonize` audit: **579 Core theorems plus all 21 new data
+constructions**, 600 reports, only `propext`, `Classical.choice`, `Quot.sound`,
+or no axioms. Both promoted files compile directly with warnings treated as
+errors and empty diagnostic logs. Native Lean MCP diagnostics are complete,
+successful and empty, with no failed dependencies; final sea-norm and CAR
+Lie-proof goal inspections have empty goals after their closing tactics.
+`make ci` passes all 69 guard tests, 579 statement/456 command checks, fourteen
+full-source Core hashes, the Core build (3399 jobs) and staging build (3400 jobs).
+No theorem placeholders or compiler warnings remain.
+
+The complementary [pedagogical lecture](../../../../notes/md/ch09_density_modes.md) was
+updated using the repository pedagogical-sync skill. Author
+`/root/ch09_a04_draft`; independent reviewer `/root/ch09_hop_probe`: **PASS**,
+no findings. The captured current worktree reference is preserved byte for byte
+as a prefix, including formulas, physical interpretation, citations and earlier
+proof proposals. The additions explain actual constructive mathematics rather
+than tactic transcripts. Source fidelity, hypotheses, twist dependence,
+normalizations, signs, relative links and deferred scope were checked.
+
+Declaration mapping: A04's shift/product/edge declarations realize the appendix's
+finite kinematics; `dGamma_*` realizes its linear Lie/adjoint lift. CH09's
+`rho_*` and `normal_rho_*` realize chapter §§9.1–9.3; sea hop/cardinality/norm
+and independence give its first non-circular excitation witness. Exact-shift,
+budget and lowering lemmas supply the sector action. Reconstructed fields,
+site Fourier dictionary and transport retain CH06Ext's explicit boundary data,
+with the exact cyclic wrap remainder. The added lecture sections explain these
+families and their actual carriers, while the companion records declarations,
+source and evidence. The appendix index's earlier proof-status remarks are
+historical navigation information; actual promotion status comes from these
+sources and audits. Restricted scalar CCR, partitions, Gram/completeness and
+Sugawara remain unformalized by this sprint.
+
+Final read-only artifact reviewer `/root/ch09_source_review`: **PASS**.
+The reviewer rechecked both exact mirrors and hashes, relative links, all fourteen
+Core hashes, preservation of twelve prior Core files, the exact scoped lock delta,
+both baseline note prefixes, final CI/audit evidence and roadmap counts. No
+findings remain.
+
+## Fresh axiom output for this module
+
+```text
+'Bosonize.Ch09.reconstructed_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.reconstructed_creation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.reconstructed_density' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.site_fourier_dictionary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.site_fourier_twist_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_valid_pairs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.normal_rho_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.normal_rho_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_vanish' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.normal_rho_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_positive_commute' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_negative_commute' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_commutator_edge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_number_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_bare_energy_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_shifted_energy_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_physical_energy_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.physical_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_exact_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_excitation_commutator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_budget_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_lowering_budget_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_lowering_ground' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_zero_sea' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.normal_rho_sea_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_sea_hop_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.active_sea_pairs_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.hop_configuration_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.hop_sign_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_sea_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_sea_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_sea_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_sea_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_sea_linear_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_linear_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.FockSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.Operators' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.rho' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.normalRho' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.activeSeaPairs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.hopConfiguration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.hopSign' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.PositiveMode' does not depend on any axioms
+'Bosonize.Ch09.physicalHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.reconstructedAnnihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.reconstructedCreation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.reconstructedDensity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.siteFourierDensity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch09.wrapRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+## Historical Phase A and B evidence
+
 Historical Phase A draft record, 2026-10-10. All **38** theorem targets remain one-sorry review stubs. The **14** data declarations contain no placeholders. Compilation establishes elaboration only; it does not establish the mathematical conclusions or standard-axiom completeness of theorem dependencies.
 
-Source: [`notes/md/ch09_density_modes.md`](../../../notes/md/ch09_density_modes.md), [chapter TOC](../../../notes/md/TOC.md), [appendix index](../../../notes/appendices/README.md), [proof revision P06/P07](../../../note/proof_suggestions_revision_2026-10-09.md), and the frozen Core source modules imported below. Source SHA-256: `bf37b761d0551fdf4b1ea671f6725a7f72e07ef38a2a475d6d4e12d483e962f7`. The model tiers named in the skill were unavailable; drafting used the inherited available Codex model. Independent review passes; the reviewed interface lock is being committed for Phase B.
+Source: [`notes/md/ch09_density_modes.md`](../../../../notes/md/ch09_density_modes.md), [chapter TOC](../../../../notes/md/TOC.md), [appendix index](../../../../notes/appendices/README.md), [proof revision P06/P07](../../../../note/proof_suggestions_revision_2026-10-09.md), and the frozen Core source modules imported below. Source SHA-256: `bf37b761d0551fdf4b1ea671f6725a7f72e07ef38a2a475d6d4e12d483e962f7`. The model tiers named in the skill were unavailable; drafting used the inherited available Codex model. Independent review passes; the reviewed interface lock is being committed for Phase B.
 
 This chapter constructs actual fermionic density operators independently of CH08's bosonic target. `rho h m` is `dGamma(T_m)` on the existing Fock space for L=2h; `normalRho` subtracts h only at transfer zero. `normal_rho_zero` must bridge this normalization to CH07's actual relative-charge observable.
 
@@ -81,13 +194,13 @@ Promotion and independently reviewed pedagogical synchronization are next.
 ```lean
 module
 
-public import BosonizeStubs.A04DensityKinematics
+public import Bosonize.Core.A04DensityKinematics
 public import Bosonize.Core.Ch07VacuumBudget
 public import Bosonize.Core.Ch06Ext
 
 /-!
 # CH09 actual finite fermionic density modes
-Phase A: complete data and one-sorry review targets.
+Proved actual finite CAR densities, twisted dictionary and non-circular witnesses.
 The oscillator representation of CH08 is not used to define these fermionic operators.
 Twisted Fourier reconstruction is retained explicitly; site density Fourier coefficients
 are cyclic, whereas the partial currents below retain nonwrapping integer transfer.

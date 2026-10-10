@@ -1,6 +1,4 @@
 import Bosonize
-import BosonizeStubs.A04DensityKinematics
-import BosonizeStubs.Ch09DensityModes
 
 /-!
 # Bosonize Staging Library

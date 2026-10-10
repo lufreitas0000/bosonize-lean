@@ -11,6 +11,9 @@ import Bosonize.Core.A03EnergyBudgets
 import Bosonize.Core.Ch07VacuumBudget
 import Bosonize.Core.Ch08Boson
 
+import Bosonize.Core.A04DensityKinematics
+import Bosonize.Core.Ch09DensityModes
+
 /-!
 # Bosonize Core Library
 Aggregator for the verified Core library. Every verified module must be imported here.

@@ -1,12 +1,12 @@
 module
 
-public import BosonizeStubs.A04DensityKinematics
+public import Bosonize.Core.A04DensityKinematics
 public import Bosonize.Core.Ch07VacuumBudget
 public import Bosonize.Core.Ch06Ext
 
 /-!
 # CH09 actual finite fermionic density modes
-Phase A: complete data and one-sorry review targets.
+Proved actual finite CAR densities, twisted dictionary and non-circular witnesses.
 The oscillator representation of CH08 is not used to define these fermionic operators.
 Twisted Fourier reconstruction is retained explicitly; site density Fourier coefficients
 are cyclic, whereas the partial currents below retain nonwrapping integer transfer.

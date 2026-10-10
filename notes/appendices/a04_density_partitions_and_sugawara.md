@@ -102,3 +102,58 @@ For example, an upward shift n>0 needs an equivalence theorem also on B(N,K+n), 
 Keep the ground-energy shift `N(N+1)/2`. Chapter 17 now explicitly subtracts chemical potential `μ=πvF/L` in physical units; this accounts for its symmetric N² form. The raw-quartic/current relation is the separate exact sea-Wick correction of Chapter 17, Lemma 17.4a; it does not use Sugawara or scalar CCR.
 
 *Proof-design invariant:* Gram pull-through uses the right remainder E≤K−n, giving m+n+E≤m+K≤2K. For Sugawara, split off inactive modes m>K: their lowering action on the right is zero by grading, so no extra margin depending on those inactive modes is needed. Mixed-sign one-particle shift compositions retain the intermediate-in-band indicator.
+
+## Constructive realization of the finite density-kinematics portion
+
+The implemented portion of this appendix isolates the finite one-particle calculation and its lift to the concrete CAR representation. The partition bijection, Gram theorem, completeness, restricted scalar CCR and Sugawara arguments above remain reference theory and later formalization obligations. The [A04 Lean source](../../Bosonize/Core/A04DensityKinematics.lean) and [formal companion](../../docs/companion/Bosonize/Core/A04DensityKinematics.md) describe this completed kinematic portion; Chapter 9 separately develops its density grading and first sea norm.
+
+For any finite ring length $L$, let $B$ be the frozen signed integer band defined by $-L<2k\le L$. At even length $L=2h$ this is $\{-h+1,\ldots,h\}$, retaining the positive Nyquist representative. Matrices are indexed directly by $B$ on both axes. The partial shift has coefficient
+
+$$
+(T_m)_{p,k}=\mathbf 1_{p=k+m},\qquad m\in\mathbb Z.
+$$
+
+There is no residue addition in this definition. Expanding a matrix product reveals the unique possible intermediate label $k+n$, and gives the exact entry formula
+
+$$
+(T_mT_n)_{p,k}
+=\mathbf 1_{p=k+m+n}\,\mathbf 1_{k+n\in B}.
+$$
+
+This intermediate indicator is the essential finite-boundary information. For transfers with the same sign, the intermediate lies between source and target. The product then equals $T_{m+n}$ globally. The construction proves this for both nonnegative and nonpositive transfers. For mixed signs the indicator remains, and the commutator has coefficient
+
+$$
+[T_m,T_n]_{p,k}
+=\mathbf 1_{p=k+m+n}
+ \bigl(\mathbf 1_{k+n\in B}-\mathbf 1_{k+m\in B}\bigr).
+$$
+
+Thus a nonzero edge coefficient requires the expected transfer and exactly one admissible intermediate. This expression explains why a globally scalar finite-dimensional current CCR would discard real boundary data.
+
+The boundary support is particularly transparent for $L=2h$, with endpoints $a=-h+1$ and $b=h$. For nonnegative $m,n$,
+
+$$
+[T_{-m},T_n]_{p,k}
+=\mathbf 1_{p=k+n-m}
+ \bigl(\mathbf 1_{k<a+m}-\mathbf 1_{b-n<k}\bigr).
+$$
+
+For a nonzero entry, either both source and target lie near the bottom, with $k<a+m$ and $p<a+n$, or both lie near the top, with $b-n<k$ and $b-m<p$. Recording both endpoints is necessary for later Pauli-blocking arguments: knowing only the source location does not prove that an off-diagonal hop vanishes on a frozen occupation margin. When $m=n$, the edge matrix is diagonal and gives bottom occupation minus top occupation. Reversing commutator order reverses this sign.
+
+The other one-particle results follow from the same entries. The zero shift is the identity matrix. Conjugate transpose gives $T_m^\dagger=T_{-m}$ because transposition exchanges source and target. Since the signed band has diameter at most $L-1$, $T_m=0$ and the valid-pair set is empty for $|m|\ge L$. Conversely, any concrete allowed source-target pair witnesses that its shift matrix is nonzero. These generic statements include odd lengths and the empty band at $L=0$; even length is needed only when using the explicit $h$-endpoint formulas.
+
+Second quantization is defined on any ordered finite mode set by the actual finite sum
+
+$$
+d\Gamma(A)=\sum_{p,k} A_{p,k}\,c_p^\dagger c_k.
+$$
+
+The CAR bilinear identity contracts the four-index commutator sum to the two matrix products, proving
+
+$$
+[d\Gamma(A),d\Gamma(B)]=d\Gamma(AB-BA).
+$$
+
+The construction is complex linear and respects actual Hilbert adjoints: $d\Gamma(A)^\dagger=d\Gamma(A^\dagger)$. A diagonal matrix lifts to the corresponding weighted occupation observable. In particular, $d\Gamma(I)=\hat N$, so the Lie identity must not be mistaken for an associative, unital algebra homomorphism. The finite edge formulas lift as commutator identities even though products do not lift multiplicatively.
+
+These exact matrix and CAR results supply the boundary calculations for later chapters. Obtaining a scalar commutator on a budget still requires proving that the explicit edge occupations are fixed, and that the unequal-shift edge hops vanish on every input in the prescribed span. The numerical margins and suffix-energy accounting discussed above remain part of that later proof. No partition counting, bosonic Gram formula or Sugawara equivalence follows merely from the current kinematic implementation.

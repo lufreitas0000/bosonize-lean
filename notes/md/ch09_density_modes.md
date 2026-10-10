@@ -116,3 +116,48 @@ $$
 Formalize using the admissible sector subtype `-h ≤ N ∧ N ≤ h`.
 Using the commutation relations $[\hat{N}, \rho_m] = 0$ and $[\hat{P}, \rho_m] = m \rho_m$ from Lemma 9.6, show that $\rho_m$ maps elements between the budget subspaces correctly.
 For the annihilation condition, assume by contradiction that $\rho_{-m} |N\rangle_0 \neq 0$. This resulting state would have excitation energy $-m < 0$, which contradicts the exact positivity of excitation energy $e(S) \ge 0$ proved in Lemma 7.4. Thus, the state must be identically 0.
+
+#### 9.4 Constructive realization in Lean
+
+The constructive realization uses the same finite fermionic Hilbert space as Chapters 4–7. For a ring of length $L=2h$, its orthonormal basis consists of occupation configurations $S\subseteq\{-h+1,\ldots,h\}$. A creation or annihilation operator inserts or removes one mode with the sign determined by the number of occupied modes preceding it. Consequently, the density modes here are actual finite fermionic operators. The polynomial oscillator space of Chapter 8 is a separate target representation; it is not used to define these densities.
+
+The transfer $m$ remains an integer. The one-particle matrix $T_m$ moves $k$ to $k+m$ only when both labels lie inside the signed band. The density is its second quantization,
+
+$$
+\rho_m=d\Gamma(T_m)=\sum_{p=k+m}c_p^\dagger c_k.
+$$
+
+This equality identifies the matrix construction with the filtered CAR sum of §9.2. The second-quantization map is complex linear and preserves commutators and actual adjoints. It does not preserve associative products: for example, the one-particle identity lifts to total particle number. In particular, $\rho_0=\hat N$, and subtracting $hI$ at zero transfer gives the relative-charge observable already constructed in Chapter 7. Nonzero transfers have no normal-ordering subtraction. The sea contains exactly $h$ particles when $h>0$, so the normal-ordered zero mode annihilates it.
+
+The partial shifts vanish for $|m|\ge 2h$. Their adjoints reverse the transfer. When two transfers have the same sign, every admissible intermediate label lies between their source and target, and hence remains in the interval. Thus $T_mT_n=T_{m+n}$ holds for both nonnegative transfers and nonpositive transfers. The Lie identity for $d\Gamma$ gives global commutativity of the corresponding same-sign densities on the entire Fock space. Opposite-sign transfers retain finite edge terms; no scalar commutation relation on all finite Fock states is claimed here.
+
+The grading argument examines each occupation hop rather than relying only on a formal commutator. A nonzero hop removes an occupied $k$ and inserts an empty $p=k+m$. Particle number is unchanged, while bare energy increases by $p-k=m$. Because the sector charge is unchanged, its ground-energy subtraction is also unchanged. Every output configuration therefore has exactly the input excitation energy plus $m$. Linearity extends this support statement to
+
+$$
+\rho_m B(N,K)\subseteq B(N,K+m),\qquad m,N,K\in\mathbb Z.
+$$
+
+This signed statement includes lowering modes and requires no additional numerical margin. For $h>0$, Chapter 7's nonnegative excitation energy implies that $\rho_{-m}$ annihilates every vector in $B(N,K)$ whenever $K-m<0$. In particular, it annihilates the ground ket of every admissible sector $-h\le N\le h$ for $m>0$. The empty and full sectors remain included. The same grading proves covariance with the excitation observable; the bare and sea-shifted Hamiltonians also satisfy $[H,\rho_m]=m\rho_m$.
+
+The first sea norm is computed before any restricted Schwinger relation. For $1\le m\le h$, the only active source labels are
+
+$$
+k=1-m,\ldots,0,\qquad p=k+m=1,\ldots,m.
+$$
+
+There are exactly $m$ allowed hops. Each produces the occupation ket obtained by removing its source from the sea and adding its target, multiplied by its actual CAR sign. Each sign has modulus one. Distinct hops have distinct configurations, because the missing occupied mode and the added positive mode recover the original pair. Orthogonality of the occupation basis therefore gives $\|\rho_m\Omega\|^2=m$ directly. This replaces the earlier proposed four-fermion expectation calculation with an explicit finite basis argument. Different positive transfers give orthogonal excitations; the implemented proof uses self-adjoint relative energy and their different eigenvalues. Their positive norms establish linear independence, and evaluating an operator relation on the sea proves independence of the density operators themselves. At $h=0$ the positive-mode family is empty; no nonzero excitation is asserted there.
+
+Boundary data is retained explicitly when reconstructing the momentum operators from position fields. Write $r$ for the selected unit phase per step and $\zeta$ for the canonical $L$th root. The twisted annihilation kernel is $r^x\zeta^{kx}$. Its matching inverse transform uses the conjugate kernel and the same boundary parameter, so the external factors cancel and recover the concrete momentum annihilator. Taking its actual adjoint recovers the creator. Filtering these reconstructed momentum pairs by the integer condition $p=k+m$ gives the density $\rho_m$ for every such twist.
+
+The full discrete Fourier coefficient of the local density has a different transfer condition. With the positive annihilator convention used in Chapter 5,
+
+$$
+\sum_{x\in\mathbb Z/L\mathbb Z}\zeta^{mx}\,\psi_b^\dagger(x)\psi_b(x)
+=\rho_m+R_m,
+$$
+
+where $R_m$ is the sum of the bilinears with $p-k\equiv m\pmod L$ but $p-k\ne m$ as integers. The local twist phases cancel, but cyclic aliasing does not. The constructive dictionary retains this exact wrap remainder rather than identifying a cyclic spatial coefficient with a nonwrapping partial current.
+
+For a real momentum offset $\beta$, the physical linear-dispersion Hamiltonian is $H_\beta=H_0+\beta\hat N$. It depends on $\beta$, while $[H_\beta,\rho_m]=m\rho_m$ because the current preserves number. To connect this energy convention to a field, select the boundary step $r=\exp(2\pi i\beta/L)$; a holonomy alone does not choose the real lift $\beta$. Covariant translation by $n$ similarly cancels the external step phase in the number-conserving current and leaves the transfer phase $\zeta^{-mn}$. These cancellation statements concern the specified current and linear dispersion, not arbitrary boundary-sensitive observables.
+
+The [Lean realization](../../Bosonize/Core/Ch09DensityModes.lean) and [formal companion](../../docs/companion/Bosonize/Core/Ch09DensityModes.md) record the exact declarations and validation. Restricted scalar CCR, partition-state completeness and Sugawara equivalence remain subsequent developments.

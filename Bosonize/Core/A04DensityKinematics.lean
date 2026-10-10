@@ -1,82 +1,3 @@
-# A04DensityKinematics: formal companion
-
-Historical Phase A draft record, 2026-10-10. All **22** theorem targets remain one-sorry review stubs. The **7** data declarations contain no placeholders. Compilation establishes elaboration only; it does not establish the mathematical conclusions or standard-axiom completeness of theorem dependencies.
-
-Source: [`notes/appendices/a04_density_partitions_and_sugawara.md`](../../../notes/appendices/a04_density_partitions_and_sugawara.md), [chapter TOC](../../../notes/md/TOC.md), [appendix index](../../../notes/appendices/README.md), [proof revision P06/P07](../../../note/proof_suggestions_revision_2026-10-09.md), and the frozen Core source modules imported below. Source SHA-256: `816d55d8032642f74003593bb75154a4d1752182d2d2c6ea79c344454810ede3`. The model tiers named in the skill were unavailable; drafting used the inherited available Codex model. Independent review passes; the reviewed interface lock is being committed for Phase B.
-
-The first A04 slice isolates finite density kinematics. Partition bijections, Gram/completeness, restricted scalar CCR and Sugawara are deliberately deferred to their dependent chapters. The existing source theory is preserved rather than silently recast as a proved result.
-
-`ShiftMatrix L` uses the frozen signed band `−L<2k≤L`, with the positive Nyquist representative at even length. `validPairs` compares integer values. Neither residue addition nor a zero-based enumeration defines the physical transfer. Generic matrix statements accommodate the empty band at L=0 and odd lengths; no unnecessary even-length hypothesis is introduced.
-
-`compositionCoefficient` retains the intermediate-in-band condition. Same-sign compositions simplify because an interval contains every intermediate between two endpoints. Mixed compositions cannot simplify this way. `edgeMatrix` explicitly stores the two indicator difference. For `[T_{−m},T_n]`, the even-band formula is bottom minus top, and the support theorem records both source and target near the corresponding boundary. Subsequent budget proofs need both endpoints to establish Pauli blocking.
-
-`dGamma` uses the concrete CH04 hopping operators on A02's occupation Hilbert space, and `dGammaLinear` constructs actual complex linearity without using theorem stubs. The Lie identity follows from CH04's CAR bilinear commutator. It is not an associative algebra morphism: the one-particle identity lifts to particle number, not the ambient Fock identity.
-
-Adopted from P06: integer labels, exact intermediate indicators, CAR Lie lift, independent first-norm evidence. Adapted: use `Matrix.conjTranspose` for one-particle adjoints and `LinearMap.adjoint` on actual Fock operators. Rejected: unrestricted mixed-sign composition, any global finite scalar CCR, and a multiplicative/unital second-quantization claim.
-
-Planned proofs: entrywise interval arithmetic and unique intermediate mode for matrix products; expand finite sums and use `Ch04.bilinear_commutator` for the Lie lift; reindex sums and use actual hopping adjoints for the star bridge. The concrete `shift_nonzero` pair is an explicit proposed witness, not yet proved evidence.
-
-Validation: `lake build BosonizeStubs.A04DensityKinematics BosonizeStubs.Ch09DensityModes` completed successfully (3392 jobs). The two modules emit exactly 60 expected one-sorry warnings, with no other warnings or errors. A fresh `#print axioms` audit of all 21 data declarations returned only `propext`, `Classical.choice`, and `Quot.sound` (or no axioms); no data construction depends on `sorryAx`. This is data/elaboration evidence, not proof completion. Phase A review must check signs, intermediate indicators, both edge endpoints, Fourier normalization, cyclic remainder, nonzero witnesses, and proof feasibility. Phase B completion and Phase C promotion remain outstanding.
-
-The exact source snapshot follows. Lemma bodies are intentionally unproved; data are fully elaborated constructions.
-
-## Independent Phase A gate and Phase B baseline — 2026-10-10
-
-Reviewer `/root/ch09_source_review`: **PASS**, with no blocking findings.
-The reviewed source SHA-256 is the exact hash stated above. The independent reviewer
-checked all 60 theorem targets and all 21 data declarations across the two modules;
-compiler checks show exactly 22/38 expected stub warnings and no other diagnostics.
-Fresh independent data axiom inspection excludes `sorryAx` and any nonstandard axiom.
-Native Lean diagnostics report success, no failed dependencies and only the same
-22/38 placeholder warnings. Companions mirror the source byte-for-byte.
-
-The review checks nonwrapping integer transfers, mixed composition indicators,
-both endpoints of edge support, bottom-minus-top sign, cyclic Fourier aliases,
-transport phase, positive sea norm, arbitrary-charge grading, ground admissibility,
-and h=0 behavior. The h=1 band {0,1} screens the alias distinction explicitly:
-the full Fourier density at transfer 1 is rho_1 + rho_-1, rather than rho_1 alone.
-This finite screen is evidence against the false identification, not a Lean proof.
-Existing twelve Core files and unrelated user edits remain untouched.
-
-The initial lock adds only these two independently reviewed module records.
-Proof bodies are the Phase B edit boundary. Source and theorem claims remain
-unproved until their individual proofs and fresh transitive audits are complete.
-
-## Phase B complete — 2026-10-10
-
-All **22 theorem proofs and 7 data declarations** are complete. The
-current source snapshot below supersedes the historical unproved Phase A status.
-Reviewed interface baseline: `e78c2d9`. Proof synthesis was partitioned across
-`/root`, `/root/ch09_a04_draft`, `/root/ch09_source_review`, and
-`/root/ch09_hop_probe`; unavailable Flash/Pro tiers were explicitly reported and
-the inherited available Codex model was used. Concrete DecidableEq conversion
-issues were independently troubleshot without changing any reviewed interface.
-
-The integrated two-target build and both library builds pass (3401 jobs).
-Direct compilation of each module with `-DwarningAsError=true` produces empty
-logs. Fresh native Lean MCP diagnostics have success=true, partial=false, zero
-items and no failed dependencies. All 60 theorem and 21 data axiom outputs have
-only `propext`, `Classical.choice`, `Quot.sound`, or no axioms; there is no
-`sorryAx` or custom axiom. Strict guard against `e78c2d9` passes 579 statements
-and 456 commands, and all twelve existing Core source hashes are unchanged.
-
-Matrix proofs use entrywise integer interval arithmetic and the unique allowed
-intermediate mode. The CAR Lie lift expands actual bilinear commutators and
-reindexes finite sums; adjoint compatibility uses actual Hilbert adjoints.
-The CH09 dictionary uses twisted Fourier inversion and a character-sum proof
-retaining the cyclic wrap remainder. Concrete CAR hops establish exact charge
-and excitation shifts; nonnegative excitation gives lowering annihilation.
-The sea norm is a count of distinct orthogonal signed occupation hops, followed
-by self-adjoint energy orthogonality and evaluation at the sea for independence.
-No later scalar CCR, partition theorem or Sugawara identity enters these proofs.
-
-Phase B source SHA-256: `743595319b26ba93b593c5ea34c93c87b1a8cc6c88dac7e5a95b7aba6f389fd5`.
-Phase C migration has an independent scoped PASS from `/root/ch09_hop_probe`:
-only CH09's A04 import changes semantically, with the matching lock contexts;
-all namespaces, theorem headers, proof bodies and prior Core hashes are retained.
-Promotion and independently reviewed pedagogical synchronization are next.
-
-```lean
 module
 
 public import Bosonize.Core.Ch05Fermions
@@ -84,7 +5,7 @@ public import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 
 /-!
 # A04 finite density kinematics
-Phase A: complete concrete data and unproved one-sorry targets.
+Proved finite density kinematics: exact partial shifts, edge terms and CAR Lie lift.
 Integer partial shifts do not wrap. Second quantization preserves Lie brackets,
 not products. Partitions, scalar budget CCR and Sugawara remain later work.
 -/
@@ -397,4 +318,3 @@ lemma dGamma_diagonal (a : ι → ℂ) :
 
 end SecondQuantization
 end Bosonize.A04
-```
