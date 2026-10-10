@@ -2,6 +2,10 @@
 
 The user adopted this repository-specific policy on 2026-10-09. A request to develop a named chapter or supporting appendix authorizes its A–B–C cycle, including independent review, troubleshooting, initial locking, justified staging-interface corrections, proof work and validated promotion. Routine phase confirmations are unnecessary. Explicit phase-only/stop instructions override the default. A workflow-update or review-only request is not itself a request to prove a chapter. Do not start other chapters or silently rewrite previously promoted Core. This policy is executed by agents during authorized work; it is not a background scheduler or a recurring automation.
 
+## Usage gate before automatic progression
+
+Apply [Usage allowance and resumable checkpoints](usage_budget.md) before starting a chapter, changing phase or dispatching a parallel proof group, and approximately every 5–10 minutes during sustained work. Below 10% remaining in the five-hour window or 5% in the weekly window, save the current phase accurately and yield with a recommendation to pause. Automatic A–B–C progression resumes only under the reference's resumption policy; low allowance does not authorize incomplete promotion, weakened proofs or altered locks.
+
 ## Phase A and the independent gate
 
 1. **Subagent Drafting Delegation (`flash`):** The orchestrator delegates drafting to a dedicated subagent running `Model: "flash"` (medium or high effort) as the primary workhorse. The drafting subagent constructs the staging Lean file (`BosonizeStubs/`) with complete definitions and one-sorry theorem stubs, along with the companion notebook (`docs/companion/BosonizeStubs/`). If the Flash model encounters persistent elaboration failures or severe structural modeling hurdles, the orchestrator escalates to a `pro` model (`Model: "pro"`) subagent as a secondary troubleshooting option.

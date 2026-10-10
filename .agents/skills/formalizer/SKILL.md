@@ -9,6 +9,10 @@ Translate the project's 1+1D lattice field-theory notes into rigorous Lean 4. Fo
 
 For authorized chapter development, follow the repository's automatic A–B–C policy: independently review Phase A, establish the reviewed lock, prove in Phase B, then audit/promote/freeze in Phase C without routine human confirmation. Read [Pipeline and independent review](references/pipeline.md) for transition criteria, reviewer duties, interface corrections and escalation. Honor an explicit instruction to stop at a particular phase or only review/update the workflow. Do not select further chapters beyond the authorized scope. Preserve unrelated worktree edits and upstream locked Core sources.
 
+## Usage allowance and checkpoints
+
+Check live Codex usage before chapters, phase transitions and parallel proof groups, and approximately every 5–10 minutes during sustained work. If less than 10% of the five-hour allowance or less than 5% of the weekly allowance remains, warn, stop new proof work, save a resumable checkpoint and yield with a recommendation to pause. Follow [Usage allowance and resumable checkpoints](references/usage_budget.md) for tool availability, shared-account limits, delegated work and resumption. This guard can defer an otherwise automatic A–B–C transition; it never relaxes proof or freeze requirements.
+
 ## Source reconciliation and proof design
 
 Read the chapter, `notes/md/TOC.md`, and chapter-relevant appendices in `notes/appendices/`. Consult `docs/stub_suggestion/` for interfaces and `docs/proof_suggestion/` for proofs. Follow cross-references to applicable review corrections; dated reviews describe snapshots, so check whether each finding still applies to the current source.
