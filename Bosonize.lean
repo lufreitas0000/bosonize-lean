@@ -13,6 +13,8 @@ import Bosonize.Core.Ch08Boson
 
 import Bosonize.Core.A04DensityKinematics
 import Bosonize.Core.Ch09DensityModes
+import Bosonize.Core.A04CurrentMargins
+import Bosonize.Core.Ch10Heisenberg
 
 /-!
 # Bosonize Core Library

@@ -1128,6 +1128,174 @@
         }
       }
     },
+    "Bosonize/Core/A04CurrentMargins.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "562ff9528bacf9bb407c415961ca941a9fbf2a252374adaf38fed3dcd4a0e4f8",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch09DensityModes",
+          "text": "import Bosonize.Core.Ch09DensityModes"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "c0931e3b1bdc4dba1dded7e3de3b5911d6378403ee8cf4919daf6d47cf2be0b6",
+          "kind": "namespace",
+          "label": "namespace Bosonize.A04",
+          "text": "namespace Bosonize.A04"
+        },
+        {
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "hash": "7266c78889fe7ea7d6020ba9fbba4caaade5ac12c74647c12bdeeb103ec78452",
+          "kind": "def",
+          "label": "def Bosonize.A04.bottomEdge",
+          "text": "def bottomEdge (h m : ℕ) : Finset (Ch01.Band (2*h)) :=\n  Finset.univ.filter (fun k => k.val ≤ -(h : ℤ)+(m : ℤ))"
+        },
+        {
+          "hash": "3fafe8f3aa4d4867958b6e9cc4058a7166efc6af009cc70b0474292d94f5c382",
+          "kind": "def",
+          "label": "def Bosonize.A04.topEdge",
+          "text": "def topEdge (h m : ℕ) : Finset (Ch01.Band (2*h)) :=\n  Finset.univ.filter (fun k => (h : ℤ)-(m : ℤ) < k.val)"
+        },
+        {
+          "hash": "a4e9d65e24e5071fea997240c1c37f75e783099c55142b50acf04846a153106d",
+          "kind": "def",
+          "label": "def Bosonize.A04.diagonalEdge",
+          "text": "noncomputable def diagonalEdge (h m : ℕ) : Ch09.Operators h :=\n  (∑ k ∈ bottomEdge h m, Ch04.number k) - (∑ k ∈ topEdge h m, Ch04.number k)"
+        },
+        {
+          "hash": "b48f6c34cc65c610bf380e5f227f2812a3d0df17360712ffac2f9ac9cadd8684",
+          "kind": "end",
+          "label": "end Bosonize.A04",
+          "text": "end Bosonize.A04"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A04.action_on_budget": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "a5795e4c5389b695d2482033d16935444dd2b17492e418f998d04d88e78608c5",
+          "kind": "lemma",
+          "text": "lemma action_on_budget (h : ℕ) (N K : ℤ) (A B : Ch09.Operators h) (hab : ∀ S : Ch07.Occupation h, Ch07.relativeCharge h S = N → Ch07.excitationEnergy h S ≤ K → A (A02.ket S) = B (A02.ket S)) : ∀ v ∈ Ch07.fixedBudget h N K, A v = B v"
+        },
+        "Bosonize.A04.bottom_edge_card": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "ff253dc683113a08b4a127f08aae485d350a1a37f54b6fd8b0b13dfeacb29c32",
+          "kind": "lemma",
+          "text": "lemma bottom_edge_card (h m : ℕ) (hm : m ≤ h) : (bottomEdge h m).card = m"
+        },
+        "Bosonize.A04.bottom_edge_full": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "a05821dcce001cec93792d85a5901eaf1481ccd7012a4c991aa194bae2e006ca",
+          "kind": "lemma",
+          "text": "lemma bottom_edge_full (h m K : ℕ) (hh : 0 < h) (N : ℤ) (hm : (m : ℤ)+(K : ℤ)+|N| ≤ (h : ℤ)) (k : Ch01.Band (2*h)) (hk : k ∈ bottomEdge h m) : ∀ v ∈ Ch07.fixedBudget h N (K : ℤ), Ch04.number k v = v"
+        },
+        "Bosonize.A04.dGamma_opposite_edge": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "ee05b8a4f0bea20bff74cf7b19d359dc4645f97ebda1e71cbd79b4c4559344be",
+          "kind": "lemma",
+          "text": "lemma dGamma_opposite_edge (h m : ℕ) (hm : m ≤ h) : dGamma (edgeMatrix (2*h) (-(m : ℤ)) (m : ℤ)) = diagonalEdge h m"
+        },
+        "Bosonize.A04.diagonal_edge_budget": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "e916d2f90c33797bd30c8fffe646e88cb7559a70bc4b3ddcd143e165688032c5",
+          "kind": "lemma",
+          "text": "lemma diagonal_edge_budget (h m K : ℕ) (hh : 0 < h) (N : ℤ) (hm : (m : ℤ)+(K : ℤ)+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N (K : ℤ), diagonalEdge h m v = (m : ℂ) • v"
+        },
+        "Bosonize.A04.hopping_empty_source": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "6e11ee6441ce28e3a531dce1b45e70620565f3b25f3565965c8b3e01b152178e",
+          "kind": "lemma",
+          "text": "lemma hopping_empty_source (h : ℕ) (hh : 0 < h) (N K : ℤ) (p k : Ch01.Band (2*h)) (hk : N+K < k.val) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.hopping p k v = 0"
+        },
+        "Bosonize.A04.hopping_full_target": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "ca7606addf4bb1d6aaa92411a19c3eb3bf272982edbeba62f6e0341008c6e9e8",
+          "kind": "lemma",
+          "text": "lemma hopping_full_target (h : ℕ) (hh : 0 < h) (N K : ℤ) (p k : Ch01.Band (2*h)) (hpk : p ≠ k) (hp : p.val ≤ N-K) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.hopping p k v = 0"
+        },
+        "Bosonize.A04.mem_bottom_edge": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "30244167f4810c4a9b5c9476574efc64d8f65ef378dec5370d43a0e2bd9ad144",
+          "kind": "lemma",
+          "text": "lemma mem_bottom_edge (h m : ℕ) (k : Ch01.Band (2*h)) : k ∈ bottomEdge h m ↔ k.val ≤ -(h : ℤ)+(m : ℤ)"
+        },
+        "Bosonize.A04.mem_top_edge": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "a962034fd21f49803220460c3423439663931a96b97eb5f01cb9aea923bab9bd",
+          "kind": "lemma",
+          "text": "lemma mem_top_edge (h m : ℕ) (k : Ch01.Band (2*h)) : k ∈ topEdge h m ↔ (h : ℤ)-(m : ℤ) < k.val"
+        },
+        "Bosonize.A04.mixed_edge_budget_zero": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "5f29a360fe49ce9fd031c968b8382ce431b976f6be2b3311f1a6e6277dafce5e",
+          "kind": "lemma",
+          "text": "lemma mixed_edge_budget_zero (h : ℕ) (hh : 0 < h) (m n N K : ℤ) (hm : 0 ≤ m) (hn : 0 ≤ n) (hmn : m ≠ n) (hmargin : m+n+K+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, dGamma (edgeMatrix (2*h) (-m) n) v = 0"
+        },
+        "Bosonize.A04.mixed_edge_hopping_zero": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "10827be917f5197930ba4b907fc81d959a71069b6b4952379ef4855988cc9a0b",
+          "kind": "lemma",
+          "text": "lemma mixed_edge_hopping_zero (h : ℕ) (hh : 0 < h) (m n N K : ℤ) (hm : 0 ≤ m) (hn : 0 ≤ n) (hmn : m ≠ n) (hmargin : m+n+K+|N| ≤ (h : ℤ)) (p k : Ch01.Band (2*h)) (he : edgeMatrix (2*h) (-m) n p k ≠ 0) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.hopping p k v = 0"
+        },
+        "Bosonize.A04.number_frozen_empty": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "d68c9ef6c7f414cb86f61f77fd500a72b6e06c847ba7f6cadf983c1ed4e70102",
+          "kind": "lemma",
+          "text": "lemma number_frozen_empty (h : ℕ) (hh : 0 < h) (N K : ℤ) (k : Ch01.Band (2*h)) (hk : N+K < k.val) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.number k v = 0"
+        },
+        "Bosonize.A04.number_frozen_full": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "c4328d993e176043e2f4360470df7f66bf8ffcf85662aebf972601aefddb23d8",
+          "kind": "lemma",
+          "text": "lemma number_frozen_full (h : ℕ) (hh : 0 < h) (N K : ℤ) (k : Ch01.Band (2*h)) (hk : k.val ≤ N-K) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.number k v = v"
+        },
+        "Bosonize.A04.opposite_edge_diagonal": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "bfbe97d2ad805eb447d901cdc5e15b99475d75d8c6101a56e11e7a7ada7a2dae",
+          "kind": "lemma",
+          "text": "lemma opposite_edge_diagonal (h m : ℕ) (hm : m ≤ h) : edgeMatrix (2*h) (-(m : ℤ)) (m : ℤ) = Matrix.diagonal (fun k => (if k ∈ bottomEdge h m then (1 : ℂ) else 0) - (if k ∈ topEdge h m then (1 : ℂ) else 0))"
+        },
+        "Bosonize.A04.top_edge_card": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "71206b9d3e2c08ea114c176fddf28a30e14e02af6598c7da42eac64d1d79f9a5",
+          "kind": "lemma",
+          "text": "lemma top_edge_card (h m : ℕ) (hm : m ≤ h) : (topEdge h m).card = m"
+        },
+        "Bosonize.A04.top_edge_empty": {
+          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
+          "hash": "e724af1e93fdda4b66f5239ae031f83d4af6475a8c3e5bf4677f3ff45e369227",
+          "kind": "lemma",
+          "text": "lemma top_edge_empty (h m K : ℕ) (hh : 0 < h) (N : ℤ) (hm : (m : ℤ)+(K : ℤ)+|N| ≤ (h : ℤ)) (k : Ch01.Band (2*h)) (hk : k ∈ topEdge h m) : ∀ v ∈ Ch07.fixedBudget h N (K : ℤ), Ch04.number k v = 0"
+        }
+      }
+    },
     "Bosonize/Core/A04DensityKinematics.lean": {
       "commands": [
         {
@@ -6294,7 +6462,7 @@
         }
       }
     },
-    "BosonizeStubs/A04CurrentMargins.lean": {
+    "Bosonize/Core/Ch10Heisenberg.lean": {
       "commands": [
         {
           "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
@@ -6309,178 +6477,10 @@
           "text": "public"
         },
         {
-          "hash": "562ff9528bacf9bb407c415961ca941a9fbf2a252374adaf38fed3dcd4a0e4f8",
+          "hash": "992c0c060514a94d0df12d88cbfe7e3b6f2b8bbf99c8b443aaec9fbd7947f491",
           "kind": "import",
-          "label": "import Bosonize.Core.Ch09DensityModes",
-          "text": "import Bosonize.Core.Ch09DensityModes"
-        },
-        {
-          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
-          "kind": "@",
-          "label": "@ [expose] public",
-          "text": "@[expose] public"
-        },
-        {
-          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
-          "kind": "section",
-          "label": "section",
-          "text": "section"
-        },
-        {
-          "hash": "c0931e3b1bdc4dba1dded7e3de3b5911d6378403ee8cf4919daf6d47cf2be0b6",
-          "kind": "namespace",
-          "label": "namespace Bosonize.A04",
-          "text": "namespace Bosonize.A04"
-        },
-        {
-          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
-          "kind": "open",
-          "label": "open scoped BigOperators Classical",
-          "text": "open scoped BigOperators Classical"
-        },
-        {
-          "hash": "7266c78889fe7ea7d6020ba9fbba4caaade5ac12c74647c12bdeeb103ec78452",
-          "kind": "def",
-          "label": "def Bosonize.A04.bottomEdge",
-          "text": "def bottomEdge (h m : ℕ) : Finset (Ch01.Band (2*h)) :=\n  Finset.univ.filter (fun k => k.val ≤ -(h : ℤ)+(m : ℤ))"
-        },
-        {
-          "hash": "3fafe8f3aa4d4867958b6e9cc4058a7166efc6af009cc70b0474292d94f5c382",
-          "kind": "def",
-          "label": "def Bosonize.A04.topEdge",
-          "text": "def topEdge (h m : ℕ) : Finset (Ch01.Band (2*h)) :=\n  Finset.univ.filter (fun k => (h : ℤ)-(m : ℤ) < k.val)"
-        },
-        {
-          "hash": "a4e9d65e24e5071fea997240c1c37f75e783099c55142b50acf04846a153106d",
-          "kind": "def",
-          "label": "def Bosonize.A04.diagonalEdge",
-          "text": "noncomputable def diagonalEdge (h m : ℕ) : Ch09.Operators h :=\n  (∑ k ∈ bottomEdge h m, Ch04.number k) - (∑ k ∈ topEdge h m, Ch04.number k)"
-        },
-        {
-          "hash": "b48f6c34cc65c610bf380e5f227f2812a3d0df17360712ffac2f9ac9cadd8684",
-          "kind": "end",
-          "label": "end Bosonize.A04",
-          "text": "end Bosonize.A04"
-        }
-      ],
-      "lemmas": {
-        "Bosonize.A04.action_on_budget": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "a5795e4c5389b695d2482033d16935444dd2b17492e418f998d04d88e78608c5",
-          "kind": "lemma",
-          "text": "lemma action_on_budget (h : ℕ) (N K : ℤ) (A B : Ch09.Operators h) (hab : ∀ S : Ch07.Occupation h, Ch07.relativeCharge h S = N → Ch07.excitationEnergy h S ≤ K → A (A02.ket S) = B (A02.ket S)) : ∀ v ∈ Ch07.fixedBudget h N K, A v = B v"
-        },
-        "Bosonize.A04.bottom_edge_card": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "ff253dc683113a08b4a127f08aae485d350a1a37f54b6fd8b0b13dfeacb29c32",
-          "kind": "lemma",
-          "text": "lemma bottom_edge_card (h m : ℕ) (hm : m ≤ h) : (bottomEdge h m).card = m"
-        },
-        "Bosonize.A04.bottom_edge_full": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "a05821dcce001cec93792d85a5901eaf1481ccd7012a4c991aa194bae2e006ca",
-          "kind": "lemma",
-          "text": "lemma bottom_edge_full (h m K : ℕ) (hh : 0 < h) (N : ℤ) (hm : (m : ℤ)+(K : ℤ)+|N| ≤ (h : ℤ)) (k : Ch01.Band (2*h)) (hk : k ∈ bottomEdge h m) : ∀ v ∈ Ch07.fixedBudget h N (K : ℤ), Ch04.number k v = v"
-        },
-        "Bosonize.A04.dGamma_opposite_edge": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "ee05b8a4f0bea20bff74cf7b19d359dc4645f97ebda1e71cbd79b4c4559344be",
-          "kind": "lemma",
-          "text": "lemma dGamma_opposite_edge (h m : ℕ) (hm : m ≤ h) : dGamma (edgeMatrix (2*h) (-(m : ℤ)) (m : ℤ)) = diagonalEdge h m"
-        },
-        "Bosonize.A04.diagonal_edge_budget": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "e916d2f90c33797bd30c8fffe646e88cb7559a70bc4b3ddcd143e165688032c5",
-          "kind": "lemma",
-          "text": "lemma diagonal_edge_budget (h m K : ℕ) (hh : 0 < h) (N : ℤ) (hm : (m : ℤ)+(K : ℤ)+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N (K : ℤ), diagonalEdge h m v = (m : ℂ) • v"
-        },
-        "Bosonize.A04.hopping_empty_source": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "6e11ee6441ce28e3a531dce1b45e70620565f3b25f3565965c8b3e01b152178e",
-          "kind": "lemma",
-          "text": "lemma hopping_empty_source (h : ℕ) (hh : 0 < h) (N K : ℤ) (p k : Ch01.Band (2*h)) (hk : N+K < k.val) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.hopping p k v = 0"
-        },
-        "Bosonize.A04.hopping_full_target": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "ca7606addf4bb1d6aaa92411a19c3eb3bf272982edbeba62f6e0341008c6e9e8",
-          "kind": "lemma",
-          "text": "lemma hopping_full_target (h : ℕ) (hh : 0 < h) (N K : ℤ) (p k : Ch01.Band (2*h)) (hpk : p ≠ k) (hp : p.val ≤ N-K) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.hopping p k v = 0"
-        },
-        "Bosonize.A04.mem_bottom_edge": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "30244167f4810c4a9b5c9476574efc64d8f65ef378dec5370d43a0e2bd9ad144",
-          "kind": "lemma",
-          "text": "lemma mem_bottom_edge (h m : ℕ) (k : Ch01.Band (2*h)) : k ∈ bottomEdge h m ↔ k.val ≤ -(h : ℤ)+(m : ℤ)"
-        },
-        "Bosonize.A04.mem_top_edge": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "a962034fd21f49803220460c3423439663931a96b97eb5f01cb9aea923bab9bd",
-          "kind": "lemma",
-          "text": "lemma mem_top_edge (h m : ℕ) (k : Ch01.Band (2*h)) : k ∈ topEdge h m ↔ (h : ℤ)-(m : ℤ) < k.val"
-        },
-        "Bosonize.A04.mixed_edge_budget_zero": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "5f29a360fe49ce9fd031c968b8382ce431b976f6be2b3311f1a6e6277dafce5e",
-          "kind": "lemma",
-          "text": "lemma mixed_edge_budget_zero (h : ℕ) (hh : 0 < h) (m n N K : ℤ) (hm : 0 ≤ m) (hn : 0 ≤ n) (hmn : m ≠ n) (hmargin : m+n+K+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, dGamma (edgeMatrix (2*h) (-m) n) v = 0"
-        },
-        "Bosonize.A04.mixed_edge_hopping_zero": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "10827be917f5197930ba4b907fc81d959a71069b6b4952379ef4855988cc9a0b",
-          "kind": "lemma",
-          "text": "lemma mixed_edge_hopping_zero (h : ℕ) (hh : 0 < h) (m n N K : ℤ) (hm : 0 ≤ m) (hn : 0 ≤ n) (hmn : m ≠ n) (hmargin : m+n+K+|N| ≤ (h : ℤ)) (p k : Ch01.Band (2*h)) (he : edgeMatrix (2*h) (-m) n p k ≠ 0) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.hopping p k v = 0"
-        },
-        "Bosonize.A04.number_frozen_empty": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "d68c9ef6c7f414cb86f61f77fd500a72b6e06c847ba7f6cadf983c1ed4e70102",
-          "kind": "lemma",
-          "text": "lemma number_frozen_empty (h : ℕ) (hh : 0 < h) (N K : ℤ) (k : Ch01.Band (2*h)) (hk : N+K < k.val) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.number k v = 0"
-        },
-        "Bosonize.A04.number_frozen_full": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "c4328d993e176043e2f4360470df7f66bf8ffcf85662aebf972601aefddb23d8",
-          "kind": "lemma",
-          "text": "lemma number_frozen_full (h : ℕ) (hh : 0 < h) (N K : ℤ) (k : Ch01.Band (2*h)) (hk : k.val ≤ N-K) : ∀ v ∈ Ch07.fixedBudget h N K, Ch04.number k v = v"
-        },
-        "Bosonize.A04.opposite_edge_diagonal": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "bfbe97d2ad805eb447d901cdc5e15b99475d75d8c6101a56e11e7a7ada7a2dae",
-          "kind": "lemma",
-          "text": "lemma opposite_edge_diagonal (h m : ℕ) (hm : m ≤ h) : edgeMatrix (2*h) (-(m : ℤ)) (m : ℤ) = Matrix.diagonal (fun k => (if k ∈ bottomEdge h m then (1 : ℂ) else 0) - (if k ∈ topEdge h m then (1 : ℂ) else 0))"
-        },
-        "Bosonize.A04.top_edge_card": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "71206b9d3e2c08ea114c176fddf28a30e14e02af6598c7da42eac64d1d79f9a5",
-          "kind": "lemma",
-          "text": "lemma top_edge_card (h m : ℕ) (hm : m ≤ h) : (topEdge h m).card = m"
-        },
-        "Bosonize.A04.top_edge_empty": {
-          "ctx": "563a2491df65bfbacc406f333c174fb52060117b9d0fdc36b8e336d472a5569c",
-          "hash": "e724af1e93fdda4b66f5239ae031f83d4af6475a8c3e5bf4677f3ff45e369227",
-          "kind": "lemma",
-          "text": "lemma top_edge_empty (h m K : ℕ) (hh : 0 < h) (N : ℤ) (hm : (m : ℤ)+(K : ℤ)+|N| ≤ (h : ℤ)) (k : Ch01.Band (2*h)) (hk : k ∈ topEdge h m) : ∀ v ∈ Ch07.fixedBudget h N (K : ℤ), Ch04.number k v = 0"
-        }
-      }
-    },
-    "BosonizeStubs/Ch10Heisenberg.lean": {
-      "commands": [
-        {
-          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
-          "kind": "module",
-          "label": "module",
-          "text": "module"
-        },
-        {
-          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
-          "kind": "public",
-          "label": "public",
-          "text": "public"
-        },
-        {
-          "hash": "972447212dc0a491a4b43c8c4e362110d0b9adeecab08085c343adbcb64926fd",
-          "kind": "import",
-          "label": "import BosonizeStubs.A04CurrentMargins",
-          "text": "import BosonizeStubs.A04CurrentMargins"
+          "label": "import Bosonize.Core.A04CurrentMargins",
+          "text": "import Bosonize.Core.A04CurrentMargins"
         },
         {
           "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
@@ -6533,127 +6533,127 @@
       ],
       "lemmas": {
         "Bosonize.Ch10.density_word_budget": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "2ca09c08b87c3f508c7e41faa1ab4f69bbffb9af0a57dbc91ca56914a06c10dc",
           "kind": "lemma",
           "text": "lemma density_word_budget (h : ℕ) (ds : List ℤ) (N K : ℤ) : ∀ v ∈ Ch07.fixedBudget h N K, densityWord h ds v ∈ Ch07.fixedBudget h N (K+ds.sum)"
         },
         "Bosonize.Ch10.density_word_cons": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "5990fbdb4e61a9000667675f19117726a202bffe326890847d661954e3aaf906",
           "kind": "lemma",
           "text": "lemma density_word_cons (h : ℕ) (d : ℤ) (ds : List ℤ) : densityWord h (d::ds) = densityWord h ds * Ch09.rho h d"
         },
         "Bosonize.Ch10.density_word_filtered": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "2ff4260c378f61e77c95c0cac6500900aeed06114f7d48321ff172934f9c2bc7",
           "kind": "lemma",
           "text": "lemma density_word_filtered (h : ℕ) (ds : List ℤ) : A03.Filtered (Ch07.relativeCharge h) (Ch07.excitationEnergy h) (densityWord h ds) 0 ds.sum"
         },
         "Bosonize.Ch10.density_word_nil": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "bf1fd41e2e402d625a136ff5bb43532132900bf46a644b693ee5251a77c423f7",
           "kind": "lemma",
           "text": "lemma density_word_nil (h : ℕ) : densityWord h [] = 1"
         },
         "Bosonize.Ch10.density_word_prefix_budget": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "2c6fa634ae790181047c53160f7d95478c6d226b09bcc99040b866ef92694eb7",
           "kind": "lemma",
           "text": "lemma density_word_prefix_budget (h : ℕ) (ds : List ℤ) (r : ℕ) (N K : ℤ) : ∀ v ∈ Ch07.fixedBudget h N K, densityWord h (ds.take r) v ∈ Ch07.fixedBudget h N (K+A03.upwardExcursion ds)"
         },
         "Bosonize.Ch10.density_word_prefix_exact_budget": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "3559f44dd8717f87045631985aab3068af27c6581cddefbd926d660a0aa628e0",
           "kind": "lemma",
           "text": "lemma density_word_prefix_exact_budget (h : ℕ) (ds : List ℤ) (r : ℕ) (N K : ℤ) : ∀ v ∈ Ch07.fixedBudget h N K, densityWord h (ds.take r) v ∈ Ch07.fixedBudget h N (K+(ds.take r).sum)"
         },
         "Bosonize.Ch10.ground_budget_witness": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "bccd695eeaa9c0b38b991e478ee09b61c70b9000a66a5be962d2c2514f05921d",
           "kind": "lemma",
           "text": "lemma ground_budget_witness (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) : ∃ v ∈ Ch07.fixedBudget h N (K : ℤ), v ≠ 0"
         },
         "Bosonize.Ch10.normal_ccr_after_prefix": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "09850c1a05a90713c9aa51dba5a3f23f1bcc30f09e8a889caf546d75c2b0996b",
           "kind": "lemma",
           "text": "lemma normal_ccr_after_prefix (h M : ℕ) (hh : 0 < h) (ds : List ℤ) (r : ℕ) (m n N K : ℤ) (hm : |m| ≤ (M : ℤ)) (hn : |n| ≤ (M : ℤ)) (hmargin : 2*(M : ℤ)+K+A03.upwardExcursion ds+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, A02.commutator (Ch09.normalRho h m) (Ch09.normalRho h n) (densityWord h (ds.take r) v) = schwingerCoefficient m n • densityWord h (ds.take r) v"
         },
         "Bosonize.Ch10.normal_commutator_eq": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "3097b6c4c362596f093abe18bcefc7a2ebd9955bc0329dce8c37b9fb0c11dc17",
           "kind": "lemma",
           "text": "lemma normal_commutator_eq (h : ℕ) (m n : ℤ) : A02.commutator (Ch09.normalRho h m) (Ch09.normalRho h n) = A02.commutator (Ch09.rho h m) (Ch09.rho h n)"
         },
         "Bosonize.Ch10.normal_signed_ccr": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "abb6ebaa4ab553c19886bc5f71e2b97e26487fbc314a81e2b659d24f0dd767dc",
           "kind": "lemma",
           "text": "lemma normal_signed_ccr (h : ℕ) (hh : 0 < h) (m n N K : ℤ) (hmargin : |m|+|n|+K+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, A02.commutator (Ch09.normalRho h m) (Ch09.normalRho h n) v = schwingerCoefficient m n • v"
         },
         "Bosonize.Ch10.normal_uniform_ccr": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "75284d001ec27c8f9c1f483cbf80c9493cec93c7782020a8f8bb7edc85d195b8",
           "kind": "lemma",
           "text": "lemma normal_uniform_ccr (h M : ℕ) (hh : 0 < h) (m n N K : ℤ) (hm : |m| ≤ (M : ℤ)) (hn : |n| ≤ (M : ℤ)) (hmargin : 2*(M : ℤ)+K+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, A02.commutator (Ch09.normalRho h m) (Ch09.normalRho h n) v = schwingerCoefficient m n • v"
         },
         "Bosonize.Ch10.reconstructed_density_ccr": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "8be205a4824e66e5e68960d791e9587f93a5b1bee899705bd281d3914e4791bc",
           "kind": "lemma",
           "text": "lemma reconstructed_density_ccr (h : ℕ) [NeZero (2*h)] (hh : 0 < h) (b : Ch06Ext.BoundaryTwist (2*h)) (m n N K : ℤ) (hmargin : |m|+|n|+K+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, A02.commutator (Ch09.reconstructedDensity (2*h) b m) (Ch09.reconstructedDensity (2*h) b n) v = schwingerCoefficient m n • v"
         },
         "Bosonize.Ch10.rho_empty_commutator": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "644f4c3a204519583667182a18eee36f94f496fd56e21c9bc2830a271616d6af",
           "kind": "lemma",
           "text": "lemma rho_empty_commutator (h m : ℕ) : A02.commutator (Ch09.rho h (-(m : ℤ))) (Ch09.rho h (m : ℤ)) (A02.ket (∅ : Ch07.Occupation h)) = 0"
         },
         "Bosonize.Ch10.rho_global_scalar_impossible": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "f455ef8de7e728f21c72821cf5652d55b04b4819da5696da8051b0a5df83bfcd",
           "kind": "lemma",
           "text": "lemma rho_global_scalar_impossible (h m : ℕ) (hm : 0 < m) : A02.commutator (Ch09.rho h (-(m : ℤ))) (Ch09.rho h (m : ℤ)) ≠ (m : ℂ) • (1 : Ch09.Operators h)"
         },
         "Bosonize.Ch10.rho_offdiagonal_m2": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "c78e0324e0ebbfd4f3cc27b98231592f91cc7ca70894a812f4107b2eac855034",
           "kind": "lemma",
           "text": "lemma rho_offdiagonal_m2 (h : ℕ) (hh : 0 < h) (m n N K : ℤ) (hmn : m+n ≠ 0) (hmargin : |m|+|n|+K+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, A02.commutator (Ch09.rho h m) (Ch09.rho h n) v = 0"
         },
         "Bosonize.Ch10.rho_opposite_edge": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "77edf3475e3651dc7e2730765f95a63ea225ce32bd2623a71362a48dbcbf5f36",
           "kind": "lemma",
           "text": "lemma rho_opposite_edge (h m : ℕ) (hm : m ≤ h) : A02.commutator (Ch09.rho h (-(m : ℤ))) (Ch09.rho h (m : ℤ)) = A04.diagonalEdge h m"
         },
         "Bosonize.Ch10.rho_schwinger_m1": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "14e3e07afd309be7c4ecd80aa73a4189312fda41ab19da7997315b987d57feab",
           "kind": "lemma",
           "text": "lemma rho_schwinger_m1 (h m K : ℕ) (hh : 0 < h) (N : ℤ) (hmargin : (m : ℤ)+(K : ℤ)+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N (K : ℤ), A02.commutator (Ch09.rho h (-(m : ℤ))) (Ch09.rho h (m : ℤ)) v = (m : ℂ) • v"
         },
         "Bosonize.Ch10.rho_schwinger_signed": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "f5fd5fcf30679ba63f8486cb664f07a7733d6ea32b228f2d99e4b4f791fb957b",
           "kind": "lemma",
           "text": "lemma rho_schwinger_signed (h : ℕ) (hh : 0 < h) (m : ℕ) (N K : ℤ) (hmargin : (m : ℤ)+K+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, A02.commutator (Ch09.rho h (-(m : ℤ))) (Ch09.rho h (m : ℤ)) v = (m : ℂ) • v"
         },
         "Bosonize.Ch10.rho_signed_ccr": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "f3b497c844c3fdefcd8e8f9f06d0a63a4acf25050379958b131b71ecca6763dd",
           "kind": "lemma",
           "text": "lemma rho_signed_ccr (h : ℕ) (hh : 0 < h) (m n N K : ℤ) (hmargin : |m|+|n|+K+|N| ≤ (h : ℤ)) : ∀ v ∈ Ch07.fixedBudget h N K, A02.commutator (Ch09.rho h m) (Ch09.rho h n) v = schwingerCoefficient m n • v"
         },
         "Bosonize.Ch10.written_suffix_budget": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "e7fdd5aa4f4ede29c2cab6719b2139b7208ede9b9a8fb6ecd3e03dfa9c4b6fc9",
           "kind": "lemma",
           "text": "lemma written_suffix_budget (h : ℕ) (ds : List ℤ) (r : ℕ) (N K : ℤ) : ∀ v ∈ Ch07.fixedBudget h N K, densityWord h (ds.reverse.take r) v ∈ Ch07.fixedBudget h N (K+writtenExcursion ds)"
         },
         "Bosonize.Ch10.written_word_eq": {
-          "ctx": "85dddc16b4254ae87052fe2bf3be4a184b31685938bd384ad72d583bc2600cb9",
+          "ctx": "45f8d17e56ea824815a7c7d6309b48d2742e65a86aaef63561361ea8329fde86",
           "hash": "2c8efcc3e1d57f4a2754a034e26f7f924a9a14b0df9b9ee697be6b8f83c3cbd1",
           "kind": "lemma",
           "text": "lemma written_word_eq (h : ℕ) (ds : List ℤ) : (ds.map (Ch09.rho h)).prod = densityWord h ds.reverse"

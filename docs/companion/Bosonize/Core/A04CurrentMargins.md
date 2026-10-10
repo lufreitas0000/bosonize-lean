@@ -1,15 +1,17 @@
 # A04CurrentMargins: formal companion
 
-Phase A draft, 2026-10-10. Independent Phase A review passed; the reviewed interface is now locked.
+**Current status: Phase C complete, proved and frozen in Core.**
+
+Historical Phase A draft, 2026-10-10. Independent Phase A review passed; the reviewed interface is now locked.
 Phase B proofs are pending. **16 theorem stubs, each exactly one `by sorry`**, three fully elaborated
 data constructions. Source SHA-256: `fd9f539abd4e4026531e007ee79f7c9f88e3a13f6b67c522bda26563f19356d2`. The exact snapshot below records all
 signatures and definitions. A successful build establishes elaboration, not proofs.
 
 ## Sources and reconciliation
 
-Read [Chapter 10](../../../notes/md/ch10_Heisenberg_algebra.md),
-[A04 reference and constructive lecture](../../../notes/appendices/a04_density_partitions_and_sugawara.md),
-[A03 budget lecture](../../../notes/appendices/a03_energy_budgets_and_filtered_maps.md)
+Read [Chapter 10](../../../../notes/md/ch10_Heisenberg_algebra.md),
+[A04 reference and constructive lecture](../../../../notes/appendices/a04_density_partitions_and_sugawara.md),
+[A03 budget lecture](../../../../notes/appendices/a03_energy_budgets_and_filtered_maps.md)
 and existing Core A04DensityKinematics, CH07VacuumBudget, CH09DensityModes,
 A03EnergyBudgets. Chapter 10 §§10.1–10.5 supplies exact finite edges, M1/M2
 restricted action, signed normal current CCR and word input-margin accounting.
@@ -399,7 +401,7 @@ end Bosonize.A04
 
 ## Reviewed Phase A gate
 
-Independent reviewer `/root/ch10_interface_review`: PASS; see [review](../../../note/ch10_phase_a_review_2026-10-10.md). Root independently verified exact source mirrors, six standard-axiom data constructions, 37 expected one-sorry targets, successful Core and two-target staging build, and unchanged prior Core hashes. Only these two reviewed interface records were added. No theorem proof completion is asserted.
+Independent reviewer `/root/ch10_interface_review`: PASS; see [review](../../../../note/ch10_phase_a_review_2026-10-10.md). Root independently verified exact source mirrors, six standard-axiom data constructions, 37 expected one-sorry targets, successful Core and two-target staging build, and unchanged prior Core hashes. Only these two reviewed interface records were added. No theorem proof completion is asserted.
 
 ## Phase B complete — 2026-10-10
 
@@ -410,3 +412,13 @@ A04 uses explicit finite edge bijections, interval coefficient arithmetic, concr
 Proof groups: `/root/ch10_phase_a` (edge arithmetic), `/root/ch10_edge_probe` (span and Pauli blocking), `/root/ch10_interface_review` (signed CCR and witnesses), and `/root` (word/suffix maps and final troubleshooting/integration). Requested Flash/Pro tiers were unavailable; available inherited Codex models were used.
 
 Phase B source SHA-256: `48119166b886ffd0a92c79111570142d931467d089aa1e777c1bab9b466ffd16`. The exact current source snapshot supersedes historical unproved Phase A descriptions above. Phase C promotion and pedagogical synchronization remain next.
+
+## Phase C complete — 2026-10-10
+
+Promoted to Core with independently reviewed import/path migration (`/root/ch10_edge_probe`: PASS). All 37 theorem proofs and six data constructions have fresh standard-axiom audits through the built Core aggregator. Both warning-as-error module compilations pass. CI passes 69 guard tests, 616 locked statements, 478 commands, 16 Core hashes and both builds. Native promoted CH10 diagnostics are complete and empty. Fourteen existing Core source hashes remain unchanged.
+
+The exact source snapshot above is the promoted source. Current Core SHA-256: `48119166b886ffd0a92c79111570142d931467d089aa1e777c1bab9b466ffd16`.
+
+Complementary lectures: [CH10](../../../../notes/md/ch10_Heisenberg_algebra.md) and [A04](../../../../notes/appendices/a04_density_partitions_and_sugawara.md). Author `/root/ch10_pedagogical_sync`; independent reviewer `/root`: PASS against task-start baselines and final sources. Reference information is preserved, current restricted results are accurately described, and partitions/Gram/completeness/Sugawara remain pending. A precision fix describes the proved word map as a signed shifted budget bound. KaTeX validation passes all 3,067 math fragments with no errors or unmatched delimiters.
+
+[Full Phase C verification](../../../../note/ch10_phase_c_validation_2026-10-10.md). Next chapter is CH11 with the partition/Gram/completeness portion of A04; it was not started. The usage checkpoint records 64% five-hour and 4% weekly remaining, so further development is paused under the adopted safeguard.

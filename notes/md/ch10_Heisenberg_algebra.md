@@ -96,3 +96,48 @@ $$
 Formalize `K_excursion` by defining an upper bound on the cumulative energy increase caused by sequential applications of density operators up to mode `M`. State a helper lemma `energy_bound_rho`: $\rho_m$ changes the energy of a state by at most `m` and the charge by `0`. We formalize the condition as a predicate `ValidMarginSeq` for a list of operators. The proof proceeds by induction on the length of the operator word. For each step, we show that applying $\rho_m$ yields a new state in $B(N,K')$ where $K' \le K + K_{\mathrm{excursion}}$. As long as the maximal `K'` still satisfies the margin $2M + K' + |N| \le h$, the individual commutator evaluations remain valid.
 
 Every restricted scalar identity remains a theorem about its strictly typed action on input vectors, and must not be blindly substituted as a global endomorphism equality over the entire finite carrier.
+
+
+#### 10.6 Constructive realization in Lean
+
+The [promoted Chapter 10 source](../../Bosonize/Core/Ch10Heisenberg.lean) and its [formal companion](../../docs/companion/Bosonize/Core/Ch10Heisenberg.md) now prove the finite edge identity, the restricted signed current algebra and the word-budget statements above. The supporting [A04 current-margin source](../../Bosonize/Core/A04CurrentMargins.lean) and [companion](../../docs/companion/Bosonize/Core/A04CurrentMargins.md) supply the occupation and Pauli-blocking arguments. The earlier “Lean 4 Proof Strategy” passages remain as reference proof designs; the construction below describes the actual proofs. Partition completeness, the bosonic Gram formula and Sugawara equivalence remain future obligations.
+
+**The carrier and the boundary count.** Let $h>0$. The actual carrier is the finite fermionic occupation Hilbert space over the signed band $B=\{-h+1,\ldots,h\}$, with an orthonormal ket for each subset $S\subseteq B$. Its budget $B(N,K)$ is the complex linear span of the kets whose relative charge is $N$ and whose charge-sector excitation energy is at most $K$. Operators act on the ambient Fock space; their restricted identities specify which input vectors satisfy them.
+
+The two edge sets are constructed by filtering the band with $k\le-h+m$ and $h-m<k$. For $0\le m\le h$, their cardinalities are both exactly $m$: indexing the bottom by $k+h-1$ and the top by $h-k$ gives bijections with $\{0,\ldots,m-1\}$. Thus the retained positive Nyquist mode causes no off-by-one change. The one-particle commutator is the diagonal difference of these two indicator functions. Applying the concrete CAR Lie map $d\Gamma$ proves (10.2) on the entire carrier, including $m=0$, before any scalar claim is made.
+
+**From frozen configurations to arbitrary vectors.** Chapter 7 proves that a budget configuration has every $k\le N-K$ occupied and every $k>N+K$ empty. The number operator therefore acts as identity in the first region and as zero in the second. Equality of two linear actions on all generating kets extends to their full complex span by closure under addition and scalar multiplication. This is the bridge that makes the result apply to superpositions, rather than only to occupation configurations.
+
+The same bridge lifts the two Pauli-blocking laws. An empty source makes $c_p^\dagger c_k^{\phantom{\dagger}}$ vanish. A full destination also blocks the hop when $p\ne k$; this qualification matters because the diagonal hop is a number operator, which acts as identity on an occupied mode. For unequal mixed shifts, the edge matrix records both endpoints. Its bottom contribution has a full destination, while its top contribution has an empty source. The transfer relation ensures $p\ne k$ when the mixed modes are unequal. Summing these blocked terms proves the off-diagonal zero action.
+
+**The two margins and the sign.** Under M1, $m+K+|N|\le h$, the bottom edge lies in the full region and the top edge in the empty region. Its exact count gives $[\rho_{-m},\rho_m]\psi=m\psi$. This sharper same-mode result does not require $2m+K+|N|\le h$. For example, $h=2,m=1,K=1,N=0$ satisfies M1 while failing that doubled bound. Under M2, $|m|+|n|+K+|N|\le h$, unequal mixed modes are blocked; modes of the same sign already commute globally by the partial-shift calculation.
+
+Combining these cases with commutator antisymmetry gives, for arbitrary integer modes under M2,
+
+$$
+[\rho_m,\rho_n]\psi=-m\,\delta_{m+n,0}\psi.
+$$
+
+Here a positive density mode raises excitation energy, so the negative coefficient agrees with (10.4). Normal ordering subtracts $hI$ only at mode zero. This scalar is central, leaving every commutator unchanged. The uniform condition $2M+K+|N|\le h$ then implies every local pair bound with $|m|,|n|\le M$.
+
+Signed budgets are essential for intermediate outputs. If $K<0$, excitation nonnegativity implies $B(N,K)=\{0\}$. The signed same-mode theorem handles this case first, with both actions zero; it does not infer $m\le h$ from a margin with negative $K$. For $K\ge0$, it reduces to the natural-budget argument and the actual edge counts.
+
+**Actual right-suffix excursions.** A density word preserves charge and maps its input budget into the budget shifted by the sum of its signed transfers. For transfers $d_1,\ldots,d_s$ listed in application order, after the first $r$ applications its output lies in
+
+$$
+B\left(N,K+\sum_{j=1}^{r}d_j\right).
+$$
+
+The proved common enlargement uses the actual cumulative upward excursion
+
+$$
+X=\max\left(0,\max_{0\le r\le s}\sum_{j=1}^{r}d_j\right).
+$$
+
+It bounds every intermediate budget by $B(N,K+X)$, while retaining the exact signed target first. For a written product $\rho_{a_1}\cdots\rho_{a_s}$, the application list is $(a_s,\ldots,a_1)$: its prefixes are the written right suffixes. Thus $\rho_{-2}\rho_2$ has $X=2$, whereas $\rho_2\rho_{-2}$ has $X=0$. The total transfer is zero in both cases, but their intermediate excursions differ. If an exact target budget becomes negative, that intermediate vector is zero.
+
+Under $2M+K+X+|N|\le h$, the proved normal-current CCR can be inserted at every such suffix input for modes bounded by $M$. No extra requirement that each of the two commutator factors preserve that input budget is imposed. A newly reordered word must have its own suffixes checked; the theorem does not automatically validate every subsequent rearrangement.
+
+**Twist and the scope of the scalar identity.** For any boundary twist, Chapter 9's matching twisted inverse-Fourier reconstruction identifies the integer-truncated partial current with $\rho_m$. Chapter 10 transports the restricted CCR through that equality with the twist retained as a parameter. This statement concerns the reconstructed partial current. The cyclic site Fourier density has an additional wrap remainder, so its CCR cannot be inferred by discarding that term. The budget uses the integer charge-sector excitation convention; no claim about twist-independent absolute energies or a changed physical sea is needed.
+
+These results have nonzero inputs: for $-h\le N\le h$ and $K\ge0$, the sector ground ket is nonzero and belongs to the budget. In particular, $h=m=1,N=K=0$ satisfies M1 and gives scalar action $\psi$ on its nonzero ground. Conversely, every current annihilates the empty occupation ket, so its commutator does too. That ket is nonzero; for $m>0$ it therefore disproves the global equality $[\rho_{-m},\rho_m]=mI$. The exact bosonic action is a consequence of frozen occupations on specified inputs, fully compatible with the finite-dimensional obstruction to an unrestricted scalar CCR.

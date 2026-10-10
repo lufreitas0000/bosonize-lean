@@ -18,7 +18,7 @@ Introduce a one-particle partial shift matrix T_m, and the second-quantization m
 **Definition (Partial shift matrix and dΓ):** Index both matrix axes by `Ch01.Band L`, define entries using integer-label equality, and define dΓ by scalar-weighted CAR bilinears. It is a linear Lie map, not an associative algebra homomorphism.
 **Lemma (dΓ Lie algebra homomorphism):** Expand the commutator $[d\Gamma(A),d\Gamma(B)]$ into a quadruple sum. Use the CAR bilinear identity $[c_p^\dagger c_k^{\phantom{\dagger}}, c_q^\dagger c_l^{\phantom{\dagger}}] = \delta_{kq} c_p^\dagger c_l^{\phantom{\dagger}} - \delta_{pl} c_q^\dagger c_k^{\phantom{\dagger}}$ to reduce the expression. Collect terms to show it equals $d\Gamma(AB-BA)=d\Gamma([A,B])$.
 
-The next lemma chain should establish:
+The density-kinematics and current-margin constructions now establish the following chain; the proof strategies below retain the reference design:
 
 1. T_m and ρ_m vanish for |m|≥L.
 2. T_m†=T_−m and ρ_m†=ρ_−m by reindexing valid pairs.
@@ -50,7 +50,7 @@ The bare Hamiltonian is H₀=Σ k n_k. Its vacuum eigenvalue is $-h(h-1)/2$, not
 First prove the explicit vacuum norm $\|\rho_m\Omega\|^2=m$ for 1≤m≤h using orthogonal hop kets. Then distinct energy eigenvalues give linear independence. Using the Schwinger term to prove the first nonzero action would risk a circular dependency if the Schwinger proof itself uses nondegeneracy.
 
 *Lean 4 Proof Strategy:*
-**Lemma (Vacuum norm of density modes):** Compute ρmΩ as the sum of the m allowed occupation-hop kets, using CAR signs. Distinct hops are orthogonal and each sign has squared norm 1, so the norm squared is m. This establishes first nonzero action without depending on the later restricted scalar CCR.
+**Lemma (Vacuum norm of density modes):** Compute ρmΩ as the sum of the m allowed occupation-hop kets, using CAR signs. Distinct hops are orthogonal and each sign has squared norm 1, so the norm squared is m. This establishes first nonzero action independently of the restricted scalar CCR now proved in Chapter 10.
 **Theorem (Linear independence of density excitations):** Since $\rho_m \Omega$ has eigenvalue $E_\Omega + m$ under `H_0`, and $||\rho_m \Omega|| > 0$ for $1 \le m \le h$, the states for different `m` belong to distinct eigenspaces of a Hermitian operator, and thus are linearly independent.
 
 ## Partitions and completeness
@@ -107,7 +107,7 @@ Keep the ground-energy shift $N(N+1)/2$. Chapter 17 now explicitly subtracts che
 
 ## Constructive realization of the finite density-kinematics portion
 
-The implemented portion of this appendix isolates the finite one-particle calculation and its lift to the concrete CAR representation. The partition bijection, Gram theorem, completeness, restricted scalar CCR and Sugawara arguments above remain reference theory and later formalization obligations. The [A04 Lean source](../../Bosonize/Core/A04DensityKinematics.lean) and [formal companion](../../docs/companion/Bosonize/Core/A04DensityKinematics.md) describe this completed kinematic portion; Chapter 9 separately develops its density grading and first sea norm.
+The implemented portion of this appendix isolates the finite one-particle calculation and its lift to the concrete CAR representation. The restricted scalar CCR is now proved in Chapter 10 using the current-margin construction described below. The partition bijection, Gram theorem, completeness and Sugawara arguments above remain reference theory and future formalization obligations. The [A04 Lean source](../../Bosonize/Core/A04DensityKinematics.lean) and [formal companion](../../docs/companion/Bosonize/Core/A04DensityKinematics.md) describe this completed kinematic portion; Chapter 9 separately develops its density grading and first sea norm.
 
 For any finite ring length $L$, let $B$ be the frozen signed integer band defined by $-L<2k\le L$. At even length $L=2h$ this is $\{-h+1,\ldots,h\}$, retaining the positive Nyquist representative. Matrices are indexed directly by $B$ on both axes. The partial shift has coefficient
 
@@ -140,7 +140,7 @@ $$
  \bigl(\mathbf 1_{k<a+m}-\mathbf 1_{b-n<k}\bigr).
 $$
 
-For a nonzero entry, either both source and target lie near the bottom, with $k<a+m$ and $p<a+n$, or both lie near the top, with $b-n<k$ and $b-m<p$. Recording both endpoints is necessary for later Pauli-blocking arguments: knowing only the source location does not prove that an off-diagonal hop vanishes on a frozen occupation margin. When $m=n$, the edge matrix is diagonal and gives bottom occupation minus top occupation. Reversing commutator order reverses this sign.
+For a nonzero entry, either both source and target lie near the bottom, with $k<a+m$ and $p<a+n$, or both lie near the top, with $b-n<k$ and $b-m<p$. Recording both endpoints is necessary for the current-margin Pauli-blocking arguments: knowing only the source location does not prove that an off-diagonal hop vanishes on a frozen occupation margin. When $m=n$, the edge matrix is diagonal and gives bottom occupation minus top occupation. Reversing commutator order reverses this sign.
 
 The other one-particle results follow from the same entries. The zero shift is the identity matrix. Conjugate transpose gives $T_m^\dagger=T_{-m}$ because transposition exchanges source and target. Since the signed band has diameter at most $L-1$, $T_m=0$ and the valid-pair set is empty for $|m|\ge L$. Conversely, any concrete allowed source-target pair witnesses that its shift matrix is nonzero. These generic statements include odd lengths and the empty band at $L=0$; even length is needed only when using the explicit $h$-endpoint formulas.
 
@@ -158,4 +158,25 @@ $$
 
 The construction is complex linear and respects actual Hilbert adjoints: $d\Gamma(A)^\dagger=d\Gamma(A^\dagger)$. A diagonal matrix lifts to the corresponding weighted occupation observable. In particular, $d\Gamma(I)=\hat N$, so the Lie identity must not be mistaken for an associative, unital algebra homomorphism. The finite edge formulas lift as commutator identities even though products do not lift multiplicatively.
 
-These exact matrix and CAR results supply the boundary calculations for later chapters. Obtaining a scalar commutator on a budget still requires proving that the explicit edge occupations are fixed, and that the unequal-shift edge hops vanish on every input in the prescribed span. The numerical margins and suffix-energy accounting discussed above remain part of that later proof. No partition counting, bosonic Gram formula or Sugawara equivalence follows merely from the current kinematic implementation.
+These exact matrix and CAR results supply the boundary calculations used by the completed current-margin and Chapter 10 proofs. Frozen edge occupations, unequal-shift hop annihilation and signed suffix-energy accounting are now proved on the prescribed budget spans. No partition counting, bosonic Gram formula or Sugawara equivalence follows merely from these current-algebra results.
+
+
+## Constructive realization of the current-margin portion
+
+The [A04 current-margin source](../../Bosonize/Core/A04CurrentMargins.lean) and [formal companion](../../docs/companion/Bosonize/Core/A04CurrentMargins.md) complete the passage from finite edge matrices to restricted action. [Chapter 10's constructive lecture](../md/ch10_Heisenberg_algebra.md#106-constructive-realization-in-lean), [source](../../Bosonize/Core/Ch10Heisenberg.lean) and [companion](../../docs/companion/Bosonize/Core/Ch10Heisenberg.md) then combine this support into the signed current algebra and word-margin theorems. This extends the completed kinematic portion above while leaving the partition and Sugawara program visible as future work.
+
+For $h>0$, the budget is the span of actual occupation kets of relative charge $N$ and excitation at most the signed bound $K$. Equality of linear actions on those generators extends to the entire span. The frozen-occupation inequalities become concrete operator laws:
+
+$$
+k\le N-K\ \Longrightarrow\ n_k\psi=\psi,
+\qquad N+K<k\ \Longrightarrow\ n_k\psi=0,
+\qquad \psi\in B(N,K).
+$$
+
+An empty source blocks $c_p^\dagger c_k^{\phantom{\dagger}}$; a full destination blocks it only for $p\ne k$. The unequal mixed-shift support calculation supplies both endpoints and the nonzero transfer, permitting precisely these two laws to eliminate all residual hops under $|m|+|n|+K+|N|\le h$.
+
+The diagonal calculation is separate and sharper. Filtering the signed band gives bottom $\{-h+1,\ldots,-h+m\}$ and top $\{h-m+1,\ldots,h\}$, each of cardinality $m$ for $0\le m\le h$. The CAR lift of their diagonal difference is the full-space edge observable. Under $m+K+|N|\le h$ with $K\ge0$, every bottom number operator contributes $\psi$ and every top one contributes zero, yielding $m\psi$. Chapter 10 handles negative budgets by proving their only vector is zero before using natural edge cardinalities. It derives the coefficient $-m\delta_{m+n,0}$ by reversing the commutator where needed, and proves that subtracting the central normal-ordering scalar preserves it.
+
+The word construction independently proves exact signed target budgets and then bounds each applied prefix by its maximum cumulative upward excursion. A written product is reversed to obtain application order, so these prefixes are its actual right suffixes. The resulting uniform bound permits a CCR at the suffix input; it does not establish the partition Gram induction or completeness automatically. Each future pull-through argument must verify its own remainder and margin.
+
+The reconstructed partial-current theorem retains an arbitrary boundary twist through the matching twisted Fourier dictionary. It does not identify the cyclic site Fourier density with a partial current: that density retains its wrap remainder. Nonzero admissible sector grounds witness inhabited nonnegative budgets, while the nonzero empty occupation ket gives a concrete obstruction to any global nonzero scalar current CCR. The completed portion is therefore an exact finite, restricted current realization. The partition bijection, ordering and Gram arguments for partition-state products, completeness and Sugawara equivalence above still require their own proofs.
