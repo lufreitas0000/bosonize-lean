@@ -12,7 +12,7 @@ Bosonize-Lean develops exact algebraic statements for 1+1-dimensional lattice bo
 
 1. **Phase A — Draft and document:** Complete definitions, one-sorry theorem stubs, checked imports/APIs and an exact companion notebook. Have another agent independently review the exact interface, resolve deterministic findings and record a passing verdict.
 2. **Phase B — Prove the approved interface:** Automatically lock and commit the independently reviewed baseline, then change proof bodies while preserving definitions, names and signatures. Run guards and compiler checks; critically evaluate suggestions.
-3. **Phase C — Audit, promote and freeze:** Automatically after successful Phase B, require zero warnings/placeholders and only standard axioms, migrate to Core, freeze its complete source and commit the verified checkpoint.
+3. **Phase C — Audit, promote and freeze:** Require complete proofs, zero warnings/placeholders, fresh axiom audits and passing guards/builds, then promote and freeze in Core. Update the formal companion and the corresponding pedagogical lecture note explaining the Lean file in natural mathematical language. Preserve the reference theory, distinguish actual proved scope, independently review the lecture-note update, and commit the verified checkpoint.
 
 **Automatic pipeline:** A chapter-development request authorizes A–B–C within that chapter's scope. Independent agent review gates Phase A and staging-interface corrections; routine locking, troubleshooting and validated promotion proceed without additional confirmation. Ask the human only for substantive mathematical/scope ambiguity. Explicit phase-only or stop requests take precedence; a workflow-update request does not itself launch chapter proofs. See the [pipeline policy](.agents/skills/formalizer/references/pipeline.md). Guards establish interface preservation; they do not establish proof completion. Solve lint causes without suppressing linters, and never weaken a frozen theorem to make a suggested tactic succeed.
 
@@ -26,6 +26,7 @@ Bosonize-Lean develops exact algebraic statements for 1+1-dimensional lattice bo
 | `docs/stub_suggestion/`, `docs/proof_suggestion/` | Advisory interfaces/proof ideas; adopted, adapted or rejected with reasons. |
 | `note/` | Dated audits, completion records and future issue-sprint notes. |
 | [Formalizer skill](.agents/skills/formalizer/SKILL.md) | Detailed A–B–C and proof-design instructions. |
+| [Pedagogical synchronization skill](.agents/skills/pedagogical-sync/SKILL.md) | Preserve reference exposition and explain the verified constructive mathematics in chapter/appendix notes during Phase C. |
 
 Validation: run `make ci` for guard tests, strict definition/statement freeze, complete Core freeze and both Lean library builds. Use `STUB_LOCK_BASELINE_REF=<approved-commit>` to compare against a committed baseline. Axiom auditing and fresh warning-free chapter compilation supply separate evidence; a build with staging placeholders is not proof completion. If Lean MCP tools are not exposed to the chat, use the installed compiler/local library and report that fallback explicitly. See the [Lean MCP launch repair and live checks](note/lean_mcp_connection_repair_2026-10-09.md) for the desktop PATH fix, verified diagnostics/goals and current-chat reload boundary.
 
