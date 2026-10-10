@@ -245,6 +245,7 @@ noncomputable def zeroMode (b : BoundaryTwist L) (n : ℤ) (referenceCharge : �
   A02.extendBasis (fun S =>
     (liftPhase L b n * A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge))) • A02.ket S)
 
+omit [NeZero L] in
 /--
 consequence of norm_step: the selected step phase cannot vanish. This supplies the
 nonzero condition needed for integer negative powers, division by step, and invertible scalar
@@ -256,6 +257,7 @@ lemma twist_step_ne_zero (b : BoundaryTwist L) : b.step ≠ 0 := by
   rw [h, norm_zero] at hn
   exact zero_ne_one hn
 
+omit [NeZero L] in
 /--
 norm-one property of the full-loop phase r^L. It permits treating holonomy as scalar
 U(1) boundary data and using its conjugate as its inverse. No restriction to rational angles or
@@ -264,6 +266,7 @@ periodic/APBC phases is imposed.
 lemma holonomy_norm (b : BoundaryTwist L) : ‖holonomy L b‖ = 1 := by
   simp [holonomy, norm_pow, b.norm_step]
 
+omit [NeZero L] in
 /--
 norm-one property of r^n for every integer n, including negative positions. This is the
 scalar cancellation needed for actual adjoints, densities and site mixed CAR.
@@ -271,6 +274,7 @@ scalar cancellation needed for actual adjoints, densities and site mixed CAR.
 lemma lift_phase_norm (b : BoundaryTwist L) (n : ℤ) : ‖liftPhase L b n‖ = 1 := by
   simp [liftPhase, norm_zpow, b.norm_step]
 
+omit [NeZero L] in
 /--
 multiplicative law r^(n+m)=r^n*r^m for integer displacement. It is the scalar transport
 composition law; nonzero step is essential for unrestricted integer exponents.
@@ -279,6 +283,7 @@ lemma lift_phase_add (b : BoundaryTwist L) (n m : ℤ) :
     liftPhase L b (n+m) = liftPhase L b n * liftPhase L b m := by
   exact zpow_add₀ (twist_step_ne_zero L b) n m
 
+omit [NeZero L] in
 /--
 phase law for w signed laps: translating n by wL multiplies its phase by τ^w. This
 distinguishes step transport from full-loop holonomy and covers multiple positive or negative
@@ -335,6 +340,7 @@ lemma holonomy_surjective (u : ℂ) (hu : ‖u‖ = 1) :
       push_cast
       ring
     _ = u := congrArg BoundaryTwist.step hβ
+omit [NeZero L] in
 /--
 full-loop phase one for the selected periodic step r=1. This is the trivial external
 boundary condition and does not follow merely from fermionic grading.
@@ -362,6 +368,7 @@ lemma angle_integer_holonomy (β : ℝ) (z : ℤ) :
   have he : (((2*Real.pi*(β+(z : ℝ)) : ℝ) : ℂ)*Complex.I) =
       (((2*Real.pi*β : ℝ) : ℂ)*Complex.I)+(z : ℂ)*(2*(Real.pi : ℂ)*Complex.I) := by push_cast; ring
   rw [he, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+omit [NeZero L] in
 /--
 change of the chosen step under β ↦ β+1: multiply it by the frozen canonical root ζ. It
 makes the extra choice beyond holonomy explicit and fixes the positive Fourier orientation.
@@ -674,6 +681,7 @@ lemma graded_locality (b : BoundaryTwist L) (I J : Ch06.Region L) (hIJ : Disjoin
   rw [local_part_eq] at hA hB
   exact Ch06.twisted_locality L I J hIJ σ τ A B hA hB
 
+omit [NeZero L] in
 /--
 basis-action formula for the complete diagonal translation definition. It supplies the
 concrete scalar to check group laws, adjoints and covariance on actual occupation kets. The •
@@ -684,6 +692,7 @@ lemma translation_ket (b : BoundaryTwist L) (m : ℤ) (S : Ch06.Occupation L) :
       (b.step^(-m*(S.card : ℤ))*A01.canonicalRoot L^(-m*Ch05.occupationEnergy L S)) • A02.ket S := by
   exact A02.extend_basis_ket _ S
 
+omit [NeZero L] in
 /--
 identity action for zero displacement. Together with translation_add it supplies the
 neutral element of the integer translation representation.
@@ -737,6 +746,7 @@ lemma translation_unitary (b : BoundaryTwist L) (m : ℤ) :
   constructor
   · rw [← translation_add, add_neg_cancel, translation_zero]
   · rw [← translation_add, neg_add_cancel, translation_zero]
+omit [NeZero L] in
 /--
 expansion of the linear transport definition as the ordered product T(m)*A*T(-m). This
 fixes which map acts on which side and avoids an accidental reversal of conjugation.
@@ -1071,6 +1081,7 @@ lemma change_trivialization_field (b c : BoundaryTwist L) (n : ℤ) :
   rw [div_zpow, smul_smul]
   congr 1
   field_simp [zpow_ne_zero n (twist_step_ne_zero L b)]
+omit [NeZero L] in
 /--
 periodicity of the step-ratio phase when the two records have equal holonomy. It is the
 compatibility needed for an alternative fundamental-domain convention on the same scalar
@@ -1084,6 +1095,7 @@ lemma trivialization_ratio_periodic (b c : BoundaryTwist L) (hbc : sameHolonomy 
     have he : c.step^L=b.step^L := hbc.symm
     rw [he, div_self (pow_ne_zero L (twist_step_ne_zero L b))]
   rw [zpow_add₀ hr, zpow_natCast, hp, mul_one]
+omit [NeZero L] in
 /--
 actual basis action of the complete source-sector zeroMode map. The charge is
 #S-referenceCharge before any creator or annihilator acts; this order matters in a later Klein

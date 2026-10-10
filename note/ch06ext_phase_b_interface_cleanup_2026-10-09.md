@@ -1,6 +1,6 @@
 # Ch06Ext Phase B: reviewed length-assumption cleanup proposal
 
-Status: **proof bodies complete; this interface change awaits approval**. Approved baseline: `b92dd3b`. All 72 theorem bodies compile without placeholders. Frozen definitions, namespaces, imports and mathematical conclusions are unchanged. The current source retains its approved length assumptions; the compiler reports eight unused-section-variable warnings. Four further unnecessary dependencies become visible when those primitive assumptions are removed.
+Status: **approved and applied by the user’s instruction to proceed to Phase C**. Approved baseline: `b92dd3b`. All 72 theorem bodies compile without placeholders. Frozen definitions, namespaces, imports and mathematical conclusions are unchanged. The current source retains its approved length assumptions; the compiler reports eight unused-section-variable warnings. Four further unnecessary dependencies become visible when those primitive assumptions are removed.
 
 ## Exact requested change
 
@@ -49,3 +49,7 @@ Only the Ch06Ext v2 entry would be refreshed after approval, including its scope
 A full temporary copy with exactly these 12 omissions and the completed 72 proofs compiled with `lake env lean -DwarningAsError=true /tmp/ch06ext-cleanup-proposal.lean`, exit 0. The final tested copy emits no diagnostics. The original locked source and proof bodies remain reviewable in Ch06Ext. The original strict working-tree guard and eight Core hashes pass; the committed baseline has only Ch06Ext newly locked, while A03/CH07 lock additions remain separate local work.
 
 The repository [formalizer skill](../.agents/skills/formalizer/SKILL.md) requires: “New top-level declarations/files or changes to a frozen interface require explicit review and baseline approval.” That requirement applies to removing the implicit length hypothesis, even though the compiler confirms it is unnecessary. Approval authorizes these 12 omissions and only the affected Ch06Ext lock entry, followed by repeated validation.
+
+## Approved cleanup checkpoint
+
+Applied exactly the twelve scoped omissions above, preserving every proof body and explicit theorem header. Fresh warning-as-error compilation emitted no diagnostics. The working-tree strict interface guard verified 457 statements/342 commands; all eight existing Core hashes passed. Only the Ch06Ext manifest entry is committed here; local A03/CH07 additions remain preserved separately.
