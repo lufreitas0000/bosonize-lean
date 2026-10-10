@@ -5627,6 +5627,672 @@
           "text": "theorem word_normal_form (M : \u2115) (i : Mode M) (letters : List Bool) : \u2203 s : NormalSymbols, normalEvaluation M i s = wordEvaluation M i letters"
         }
       }
+    },
+    "BosonizeStubs/A04DensityKinematics.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "52405ba5ad44991e9da501b44511908fab02649f9d8d18e7d5f53d134c5c2cb7",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch05Fermions",
+          "text": "import Bosonize.Core.Ch05Fermions"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "6a4cb44f952ea2a231c2119cb6805bfa5b0c6e1fbc49954b756dd35ce6b5c037",
+          "kind": "import",
+          "label": "import Mathlib.LinearAlgebra.Matrix.ConjTranspose",
+          "text": "import Mathlib.LinearAlgebra.Matrix.ConjTranspose"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "c0931e3b1bdc4dba1dded7e3de3b5911d6378403ee8cf4919daf6d47cf2be0b6",
+          "kind": "namespace",
+          "label": "namespace Bosonize.A04",
+          "text": "namespace Bosonize.A04"
+        },
+        {
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "hash": "439ef99610d2147493b9f834c60cc80040225afb2394c800cbdfc8cbfe1a4049",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.A04.ShiftMatrix",
+          "text": "abbrev ShiftMatrix (L : \u2115) := Matrix (Ch01.Band L) (Ch01.Band L) \u2102"
+        },
+        {
+          "hash": "5b5a963c6e319bd6f82fa313e745733ff99e563d99e1c9674ea2d904ffac369e",
+          "kind": "def",
+          "label": "def Bosonize.A04.validPairs",
+          "text": "def validPairs (L : \u2115) (m : \u2124) : Finset (Ch01.Band L \u00d7 Ch01.Band L) :=\n  Finset.univ.filter (fun z => z.1.val = z.2.val + m)"
+        },
+        {
+          "hash": "f4375f98c874a0aa3b1ef355c7ac978d06e4ba42b21370d08c8e39878749d7dd",
+          "kind": "def",
+          "label": "def Bosonize.A04.shift",
+          "text": "def shift (L : \u2115) (m : \u2124) : ShiftMatrix L :=\n  fun p k => if p.val = k.val + m then 1 else 0"
+        },
+        {
+          "hash": "f7b6a7772b5c66d9d3411dcae54b83bcd479d829a6717ae239c334afdb110e0f",
+          "kind": "def",
+          "label": "def Bosonize.A04.compositionCoefficient",
+          "text": "def compositionCoefficient (L : \u2115) (m n : \u2124) (p k : Ch01.Band L) : \u2102 :=\n  if p.val = k.val + (m+n) \u2227 Ch01.inBandPredicate L (k.val+n) then 1 else 0"
+        },
+        {
+          "hash": "b7d375954f01729795b8b33432ba0e4854367d77674abefa3d8292b4000ad180",
+          "kind": "def",
+          "label": "def Bosonize.A04.edgeMatrix",
+          "text": "def edgeMatrix (L : \u2115) (m n : \u2124) : ShiftMatrix L :=\n  fun p k => compositionCoefficient L m n p k - compositionCoefficient L n m p k"
+        },
+        {
+          "hash": "018d28f8fcaa50e84533ebc56686409c5e8566f7085677a1128a73725722a71b",
+          "kind": "def",
+          "label": "def Bosonize.A04.dGamma",
+          "text": "noncomputable def dGamma {\u03b9 : Type*} [Fintype \u03b9] [LinearOrder \u03b9]\n    (A : Matrix \u03b9 \u03b9 \u2102) : Module.End \u2102 (A02.FockSpace \u03b9) :=\n  \u2211 p, \u2211 k, A p k \u2022 Ch04.hopping p k"
+        },
+        {
+          "hash": "133c10e8450789c6f72d1e5cfba964a7cd86e4c6fb9b78276e8be182b21a007d",
+          "kind": "def",
+          "label": "def Bosonize.A04.dGammaLinear",
+          "text": "noncomputable def dGammaLinear (\u03b9 : Type*) [Fintype \u03b9] [LinearOrder \u03b9] :\n    Matrix \u03b9 \u03b9 \u2102 \u2192\u2097[\u2102] Module.End \u2102 (A02.FockSpace \u03b9) where\n  toFun := dGamma\n  map_add' A B := by\n    classical\n    simp only [dGamma, Matrix.add_apply, add_smul, Finset.sum_add_distrib]\n  map_smul' a A := by\n    classical\n    simp only [dGamma, Matrix.smul_apply, smul_eq_mul, mul_smul, Finset.smul_sum,\n      RingHom.id_apply]"
+        },
+        {
+          "hash": "4ee8c9841347d7600ea25f3874c2a2aecb977cb8fa72218455d2b4d5659969f3",
+          "kind": "section",
+          "label": "section SecondQuantization",
+          "text": "section SecondQuantization"
+        },
+        {
+          "hash": "0602e02f88d4d4070ecc1a069baf5327b5e326996c8ac06ef942cd14da7103ef",
+          "kind": "variable",
+          "label": "variable {\u03b9 : Type*} [Fintype \u03b9] [LinearOrder \u03b9]",
+          "text": "variable {\u03b9 : Type*} [Fintype \u03b9] [LinearOrder \u03b9]"
+        },
+        {
+          "hash": "17e4325332002aab83b5e5dcfb839f6c65f806f22495a6bc3cc76bb6ee083037",
+          "kind": "end",
+          "label": "end SecondQuantization",
+          "text": "end SecondQuantization"
+        },
+        {
+          "hash": "b48f6c34cc65c610bf380e5f227f2812a3d0df17360712ffac2f9ac9cadd8684",
+          "kind": "end",
+          "label": "end Bosonize.A04",
+          "text": "end Bosonize.A04"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A04.dGamma_add": {
+          "ctx": "ad211f14154fb256af2c7b7a59d81892f5532c4812917767abdda03dc3aa73ca",
+          "hash": "8540ff51d7480e61ffdb7001ae2c21c97b2d87e3f9259d92b14b1c5ae35d4ddd",
+          "kind": "lemma",
+          "text": "lemma dGamma_add (A B : Matrix \u03b9 \u03b9 \u2102) : dGamma (A+B) = dGamma A+dGamma B"
+        },
+        "Bosonize.A04.dGamma_adjoint": {
+          "ctx": "ad211f14154fb256af2c7b7a59d81892f5532c4812917767abdda03dc3aa73ca",
+          "hash": "0d3d4f1e66f831eea5fc2ab602624117f45d0c70764a5d06ddee3d00e037ca25",
+          "kind": "lemma",
+          "text": "lemma dGamma_adjoint (A : Matrix \u03b9 \u03b9 \u2102) : LinearMap.adjoint (dGamma A) = dGamma A.conjTranspose"
+        },
+        "Bosonize.A04.dGamma_commutator": {
+          "ctx": "ad211f14154fb256af2c7b7a59d81892f5532c4812917767abdda03dc3aa73ca",
+          "hash": "6f453e8a9b3e8b4f4d3b6ebeee3b1dd9a8cb4c8ae262510cbe57b080fd47a14b",
+          "kind": "lemma",
+          "text": "lemma dGamma_commutator (A B : Matrix \u03b9 \u03b9 \u2102) : A02.commutator (dGamma A) (dGamma B) = dGamma (A*B-B*A)"
+        },
+        "Bosonize.A04.dGamma_diagonal": {
+          "ctx": "ad211f14154fb256af2c7b7a59d81892f5532c4812917767abdda03dc3aa73ca",
+          "hash": "9ccf2ea4fbaa9fc6855089051aa9296df7ce600a05b371b959c73336ccd9ad6f",
+          "kind": "lemma",
+          "text": "lemma dGamma_diagonal (a : \u03b9 \u2192 \u2102) : dGamma (Matrix.diagonal a) = \u2211 k, a k \u2022 Ch04.number k"
+        },
+        "Bosonize.A04.dGamma_identity": {
+          "ctx": "ad211f14154fb256af2c7b7a59d81892f5532c4812917767abdda03dc3aa73ca",
+          "hash": "6f60aab1369671ab20047d466d0d86ac861d4f26f6323869d2b580b6ddb48ce1",
+          "kind": "lemma",
+          "text": "lemma dGamma_identity : dGamma (1 : Matrix \u03b9 \u03b9 \u2102) = Ch04.totalNumber"
+        },
+        "Bosonize.A04.dGamma_smul": {
+          "ctx": "ad211f14154fb256af2c7b7a59d81892f5532c4812917767abdda03dc3aa73ca",
+          "hash": "0a49bc0f7ee6f2726414180033991cacf477f3b81736e48b50176e0d1a2ca2f0",
+          "kind": "lemma",
+          "text": "lemma dGamma_smul (a : \u2102) (A : Matrix \u03b9 \u03b9 \u2102) : dGamma (a \u2022 A) = a \u2022 dGamma A"
+        },
+        "Bosonize.A04.dGamma_sub": {
+          "ctx": "ad211f14154fb256af2c7b7a59d81892f5532c4812917767abdda03dc3aa73ca",
+          "hash": "e0bc11e8fec5908873dafde36de38808292c6e45cda3c3cd44b69082858b0482",
+          "kind": "lemma",
+          "text": "lemma dGamma_sub (A B : Matrix \u03b9 \u03b9 \u2102) : dGamma (A-B) = dGamma A-dGamma B"
+        },
+        "Bosonize.A04.dGamma_zero": {
+          "ctx": "ad211f14154fb256af2c7b7a59d81892f5532c4812917767abdda03dc3aa73ca",
+          "hash": "1a1aed400d6b8419a6124ffd34857e75886222cca64f387be2c709891eb9e6e4",
+          "kind": "lemma",
+          "text": "lemma dGamma_zero : dGamma (0 : Matrix \u03b9 \u03b9 \u2102) = 0"
+        },
+        "Bosonize.A04.edge_support": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "47dc47374953ff66a0d1a6c2e711a699bf54b74d8181b651c97c5f9fa3849141",
+          "kind": "lemma",
+          "text": "lemma edge_support (L : \u2115) (m n : \u2124) (p k : Ch01.Band L) (he : edgeMatrix L m n p k \u2260 0) : p.val = k.val+(m+n) \u2227 (Ch01.inBandPredicate L (k.val+n) \u2194 \u00ac Ch01.inBandPredicate L (k.val+m))"
+        },
+        "Bosonize.A04.mem_valid_pairs": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "93cd918c7b530308ff33e99afc2ef944cbc15f372fd5fe781807f920688625b8",
+          "kind": "lemma",
+          "text": "lemma mem_valid_pairs (L : \u2115) (m : \u2124) (p k : Ch01.Band L) : (p,k) \u2208 validPairs L m \u2194 p.val = k.val+m"
+        },
+        "Bosonize.A04.mixed_edge_even": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "97bd447607ec943fcc96fa59bb4764e61a3a5d8819da519afe790b017889cfee",
+          "kind": "lemma",
+          "text": "lemma mixed_edge_even (h : \u2115) (m n : \u2124) (hm : 0 \u2264 m) (hn : 0 \u2264 n) (p k : Ch01.Band (2*h)) : edgeMatrix (2*h) (-m) n p k = if p.val = k.val+n-m then (if k.val < -(h : \u2124)+1+m then (1 : \u2102) else 0) - (if (h : \u2124)-n < k.val then (1 : \u2102) else 0) else 0"
+        },
+        "Bosonize.A04.mixed_edge_support_even": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "b297137947c57fa1e4d7234ea4c9f0f11fa7664c0a6563dca745b724276b4eb7",
+          "kind": "lemma",
+          "text": "lemma mixed_edge_support_even (h : \u2115) (m n : \u2124) (hm : 0 \u2264 m) (hn : 0 \u2264 n) (p k : Ch01.Band (2*h)) (he : edgeMatrix (2*h) (-m) n p k \u2260 0) : p.val = k.val+n-m \u2227 ((k.val < -(h : \u2124)+1+m \u2227 p.val < -(h : \u2124)+1+n) \u2228 ((h : \u2124)-n < k.val \u2227 (h : \u2124)-m < p.val))"
+        },
+        "Bosonize.A04.opposite_shift_entry": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "7d5fad0ce628f5787bbe8a5927fd3f07cfde819ff35b3f4ac452c3b28a6e31b0",
+          "kind": "lemma",
+          "text": "lemma opposite_shift_entry (L : \u2115) (m : \u2124) (p k : Ch01.Band L) : edgeMatrix L (-m) m p k = if p = k then (if Ch01.inBandPredicate L (k.val+m) then (1:\u2102) else 0) - (if Ch01.inBandPredicate L (k.val-m) then (1:\u2102) else 0) else 0"
+        },
+        "Bosonize.A04.shift_adjoint": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "c1589122424603cb5baf5da8519ea4ac7abf85b55ccb0daaefa0f0c06ef69b55",
+          "kind": "lemma",
+          "text": "lemma shift_adjoint (L : \u2115) (m : \u2124) : (shift L m).conjTranspose = shift L (-m)"
+        },
+        "Bosonize.A04.shift_commutator_edge": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "c6efe92411fcb2eeb5346492bf6e7e60a11275555a8774531535586b1848864d",
+          "kind": "lemma",
+          "text": "lemma shift_commutator_edge (L : \u2115) (m n : \u2124) : shift L m * shift L n - shift L n * shift L m = edgeMatrix L m n"
+        },
+        "Bosonize.A04.shift_mul_entry": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "21d766542d0ea9530a43a86caa2fbfc97e8d28be57681e625bf1bb70e437f0d5",
+          "kind": "lemma",
+          "text": "lemma shift_mul_entry (L : \u2115) (m n : \u2124) (p k : Ch01.Band L) : (shift L m * shift L n) p k = compositionCoefficient L m n p k"
+        },
+        "Bosonize.A04.shift_mul_nonnegative": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "4bf02771c85e16a0e1d232864506dcdc8d6981ab8e04f739c23d1afa81b34240",
+          "kind": "lemma",
+          "text": "lemma shift_mul_nonnegative (L : \u2115) (m n : \u2124) (hm : 0 \u2264 m) (hn : 0 \u2264 n) : shift L m * shift L n = shift L (m+n)"
+        },
+        "Bosonize.A04.shift_mul_nonpositive": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "ed23f0070184e8c470f47d267192710a053376e0845e4f1b8c12f089ab34dedc",
+          "kind": "lemma",
+          "text": "lemma shift_mul_nonpositive (L : \u2115) (m n : \u2124) (hm : m \u2264 0) (hn : n \u2264 0) : shift L m * shift L n = shift L (m+n)"
+        },
+        "Bosonize.A04.shift_nonzero": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "89485f1c577457bcd1d15fdf3296741c3cac8087849066046b48a6f22431eabc",
+          "kind": "lemma",
+          "text": "lemma shift_nonzero (L : \u2115) (m : \u2124) (p k : Ch01.Band L) (hp : p.val = k.val+m) : shift L m \u2260 0"
+        },
+        "Bosonize.A04.shift_vanish": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "2200026eb36703e51d8e699aa17f0c99e5095bc6ed054c24c855343687c72039",
+          "kind": "lemma",
+          "text": "lemma shift_vanish (L : \u2115) (m : \u2124) (hm : (L : \u2124) \u2264 |m|) : shift L m = 0"
+        },
+        "Bosonize.A04.shift_zero": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "0e5f6af89148fc30e9ace189593df8bd8a957a9efca8260cc7d6f103897f788d",
+          "kind": "lemma",
+          "text": "lemma shift_zero (L : \u2115) : shift L 0 = 1"
+        },
+        "Bosonize.A04.valid_pairs_empty": {
+          "ctx": "defe4e5cf522016b8633131b03244b92f5ed2d58f1d0681ad8ed032b5085140d",
+          "hash": "f72412e036ec79d4511b41d8129d563b446eeb07d33e84449705f8b240e58b68",
+          "kind": "lemma",
+          "text": "lemma valid_pairs_empty (L : \u2115) (m : \u2124) (hm : (L : \u2124) \u2264 |m|) : validPairs L m = \u2205"
+        }
+      }
+    },
+    "BosonizeStubs/Ch09DensityModes.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "06a3741458b4d67b77c4a782a37ad3fc67245d963408e890666d4a2fe8c05f58",
+          "kind": "import",
+          "label": "import BosonizeStubs.A04DensityKinematics",
+          "text": "import BosonizeStubs.A04DensityKinematics"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "8c651675780351509e1ae21a972e5b9c42b26e6656ac3725eab2736353ce8b2b",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch07VacuumBudget",
+          "text": "import Bosonize.Core.Ch07VacuumBudget"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "cac07e51fae0835795ed450f9fab4a6c5b1da214e153870ca18ebc018ed369f3",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch06Ext",
+          "text": "import Bosonize.Core.Ch06Ext"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "4d15e3240aee9591514f9843be3dc4c0781191d3f1b1ec866d0e36a620eaf274",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch09",
+          "text": "namespace Bosonize.Ch09"
+        },
+        {
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "hash": "69842c88fadac2030427b4a40c244e3b83be1ba94c15cfe7e3d5238f3f6b205e",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch09.FockSpace",
+          "text": "abbrev FockSpace (h : \u2115) := Ch07.FockSpace h"
+        },
+        {
+          "hash": "9c4df41a5f98c7dc19a16efadeffccf0a46cbe745026c035bdce60882a9faff9",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch09.Operators",
+          "text": "abbrev Operators (h : \u2115) := Module.End \u2102 (FockSpace h)"
+        },
+        {
+          "hash": "7fde08735ae991fde71431c686c1071a632561e303ee7ec0248589c21eb14e66",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.rho",
+          "text": "noncomputable def rho (h : \u2115) (m : \u2124) : Operators h :=\n  A04.dGamma (A04.shift (2*h) m)"
+        },
+        {
+          "hash": "7c36b922a42886a7d392db60b98afde665a785c4f71280e541953210b9952004",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.normalRho",
+          "text": "noncomputable def normalRho (h : \u2115) (m : \u2124) : Operators h :=\n  rho h m - (if m = 0 then (h : \u2102) \u2022 1 else 0)"
+        },
+        {
+          "hash": "557e90295ef4b0566422dc727d2f20fa3239b43631705d0e1e77303ff51077a4",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.activeSeaPairs",
+          "text": "def activeSeaPairs (h : \u2115) (m : \u2124) : Finset (Ch01.Band (2*h) \u00d7 Ch01.Band (2*h)) :=\n  (A04.validPairs (2*h) m).filter (fun z => z.2.val \u2264 0 \u2227 0 < z.1.val)"
+        },
+        {
+          "hash": "0052f97e2fef4f2be9e166bb1398c72a605bc4af09d17f308f7ba0a3d65acc6e",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.hopConfiguration",
+          "text": "def hopConfiguration (h : \u2115) (z : Ch01.Band (2*h) \u00d7 Ch01.Band (2*h)) : Ch07.Occupation h :=\n  insert z.1 ((Ch05.seaConfiguration (2*h)).erase z.2)"
+        },
+        {
+          "hash": "f5ce15b008ae208ab7c5735824f897291a5557856ffeb3d95a956ea552c0743b",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.hopSign",
+          "text": "def hopSign (h : \u2115) (z : Ch01.Band (2*h) \u00d7 Ch01.Band (2*h)) : \u2102 :=\n  Ch04.fermionSign z.2 (Ch05.seaConfiguration (2*h)) *\n    Ch04.fermionSign z.1 ((Ch05.seaConfiguration (2*h)).erase z.2)"
+        },
+        {
+          "hash": "c31d332f6866ebf906bdf28d1c9d9faccf739b933ee9e7e1477e0db8fb0a73bf",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch09.PositiveMode",
+          "text": "abbrev PositiveMode (h : \u2115) := {m : \u2115 // 1 \u2264 m \u2227 m \u2264 h}"
+        },
+        {
+          "hash": "0d1ae65c31d16f5a390e484dd6f6b6b127706c588983ef8353433aa066950074",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.physicalHamiltonian",
+          "text": "noncomputable def physicalHamiltonian (h : \u2115) (\u03b2 : \u211d) : Operators h :=\n  Ch05.bareHamiltonian (2*h) + (\u03b2 : \u2102) \u2022 Ch05.totalNumber (2*h)"
+        },
+        {
+          "hash": "cf6dadb39ef7388083cbf10c92cccf202befd1e80f0de070c14c1b19c09c0754",
+          "kind": "section",
+          "label": "section TwistDictionary",
+          "text": "section TwistDictionary"
+        },
+        {
+          "hash": "f45314ce4fc085e6c9cf8ef925bc51dd5613a960b1ab760dc654665b8ce4ef0c",
+          "kind": "variable",
+          "label": "variable (L : \u2115) [NeZero L]",
+          "text": "variable (L : \u2115) [NeZero L]"
+        },
+        {
+          "hash": "5d2532d50024c2e1cd433bd7df02669c16986bf43f2e3a1ce6f80e5c8ba4a3bd",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.reconstructedAnnihilation",
+          "text": "noncomputable def reconstructedAnnihilation (b : Ch06Ext.BoundaryTwist L)\n    (k : Ch01.Band L) : Ch05.Operators L :=\n  (A01.normalization L : \u2102) \u2022 \u2211 x : Ch01.Lattice L,\n    star (Ch06Ext.twistedCharacter L b k (x.val : \u2124)) \u2022\n      Ch06Ext.siteAnnihilation L b x"
+        },
+        {
+          "hash": "b497e9ce036457b2209b0a2046c8c7a771871ede7eb5b8ab55eec140783e5d28",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.reconstructedCreation",
+          "text": "noncomputable def reconstructedCreation (b : Ch06Ext.BoundaryTwist L)\n    (k : Ch01.Band L) : Ch05.Operators L :=\n  LinearMap.adjoint (reconstructedAnnihilation L b k)"
+        },
+        {
+          "hash": "c217110f7dd1c328c8c8cc18e970bed8c16d5a65e13eb4bbd7cb225781347695",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.reconstructedDensity",
+          "text": "noncomputable def reconstructedDensity (b : Ch06Ext.BoundaryTwist L) (m : \u2124) : Ch05.Operators L :=\n  \u2211 z \u2208 A04.validPairs L m,\n    reconstructedCreation L b z.1 * reconstructedAnnihilation L b z.2"
+        },
+        {
+          "hash": "551a51d6e569517813f2d6b6a525e27c1efd909ce3ed0db6743f2fb64f468e61",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.siteFourierDensity",
+          "text": "noncomputable def siteFourierDensity (b : Ch06Ext.BoundaryTwist L) (m : \u2124) : Ch05.Operators L :=\n  \u2211 x : Ch01.Lattice L,\n    A01.integerCharacter (A01.canonicalRoot L) m (x.val : \u2124) \u2022\n      Ch06Ext.density L b (x.val : \u2124)"
+        },
+        {
+          "hash": "d9dffd1ca0067c8f3668fc4bd0fb8d84a405bb306762b43e25b7642ac85f5c5b",
+          "kind": "def",
+          "label": "def Bosonize.Ch09.wrapRemainder",
+          "text": "noncomputable def wrapRemainder (m : \u2124) : Ch05.Operators L :=\n  \u2211 p : Ch01.Band L, \u2211 k : Ch01.Band L,\n    (if (p.val-k.val : Ch01.Lattice L) = (m : Ch01.Lattice L) \u2227 p.val \u2260 k.val+m\n      then (1 : \u2102) else 0) \u2022 Ch04.hopping p k"
+        },
+        {
+          "hash": "cf67c54801d40bff5aaa66c0cb17f024fa8082284a918a1e01fe8600b8e45337",
+          "kind": "end",
+          "label": "end TwistDictionary",
+          "text": "end TwistDictionary"
+        },
+        {
+          "hash": "fa1aed9fce36510cd6a4ab77bcf99c272a584feb335804745fb24b39452eb6f4",
+          "kind": "end",
+          "label": "end Bosonize.Ch09",
+          "text": "end Bosonize.Ch09"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch09.active_sea_pairs_card": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "d73fa4fcc86e260e319dc9cee2c7a99742d9ec876bfad59a51ebd5bdd08d9782",
+          "kind": "lemma",
+          "text": "lemma active_sea_pairs_card (h m : \u2115) (hm : 1 \u2264 m) (hmh : m \u2264 h) : (activeSeaPairs h (m : \u2124)).card = m"
+        },
+        "Bosonize.Ch09.hop_configuration_injective": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "b790fdc2364d5ff472d621bf3be4ec6b778aa98c5841f4cb1ded7068909975c4",
+          "kind": "lemma",
+          "text": "lemma hop_configuration_injective (h : \u2115) (m : \u2124) (z w : Ch01.Band (2*h) \u00d7 Ch01.Band (2*h)) (hz : z \u2208 activeSeaPairs h m) (hw : w \u2208 activeSeaPairs h m) (he : hopConfiguration h z = hopConfiguration h w) : z = w"
+        },
+        "Bosonize.Ch09.hop_sign_norm": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "2641f5d49e81907d01107f3bd269a0baab7dde5470e2c77ff172faf2a2699217",
+          "kind": "lemma",
+          "text": "lemma hop_sign_norm (h : \u2115) (z : Ch01.Band (2*h) \u00d7 Ch01.Band (2*h)) : \u2016hopSign h z\u2016 = 1"
+        },
+        "Bosonize.Ch09.normal_rho_adjoint": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "19dcc89b40065b0bccfac48c259fc4aa93e3774950b3ab88ecdef18763135e60",
+          "kind": "lemma",
+          "text": "lemma normal_rho_adjoint (h : \u2115) (m : \u2124) : LinearMap.adjoint (normalRho h m) = normalRho h (-m)"
+        },
+        "Bosonize.Ch09.normal_rho_nonzero": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "8d50fadf73700dd20effce439af14b472786d4f26df52624259dac2c58768c29",
+          "kind": "lemma",
+          "text": "lemma normal_rho_nonzero (h : \u2115) (m : \u2124) (hm : m \u2260 0) : normalRho h m = rho h m"
+        },
+        "Bosonize.Ch09.normal_rho_sea_zero": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "07dfd83364cfdb42d64d995e10dc1c14d69076f8de5737bd1a7c060a52322fd8",
+          "kind": "lemma",
+          "text": "lemma normal_rho_sea_zero (h : \u2115) (hh : 0 < h) : normalRho h 0 (Ch07.vacuumKet h) = 0"
+        },
+        "Bosonize.Ch09.normal_rho_zero": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "5a0345b294b7d4473150e4be6b81730a8164b165cef22a60f275d94a4b24ae79",
+          "kind": "lemma",
+          "text": "lemma normal_rho_zero (h : \u2115) : normalRho h 0 = Ch07.chargeObservable h"
+        },
+        "Bosonize.Ch09.physical_transfer": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "e5e7c93a7ad86e0624eec5d10d6dc125be51426d7a7bcea632dcd5a3a5a9a476",
+          "kind": "lemma",
+          "text": "lemma physical_transfer (L : \u2115) (\u03b2 : \u211d) (p k : Ch01.Band L) (m : \u2124) (hp : p.val = k.val+m) : Ch06Ext.physicalMomentum L \u03b2 p - Ch06Ext.physicalMomentum L \u03b2 k = (m : \u211d)"
+        },
+        "Bosonize.Ch09.reconstructed_annihilation": {
+          "ctx": "b74d1b5ec533538a94db58116b9df58d0bb0ad7777a0cbdfb4dbeb61395f9619",
+          "hash": "7ca03ceebe07e96ff06869dfaefe83a691ba3db8e902be9a379479566b953d6c",
+          "kind": "lemma",
+          "text": "lemma reconstructed_annihilation (b : Ch06Ext.BoundaryTwist L) (k : Ch01.Band L) : reconstructedAnnihilation L b k = Ch05.momentumAnnihilation L k"
+        },
+        "Bosonize.Ch09.reconstructed_creation": {
+          "ctx": "b74d1b5ec533538a94db58116b9df58d0bb0ad7777a0cbdfb4dbeb61395f9619",
+          "hash": "1c381c8f3160fcf40ffd1138e53f97271b9bfafb2a1ad29a1f06091dbd3d2bdc",
+          "kind": "lemma",
+          "text": "lemma reconstructed_creation (b : Ch06Ext.BoundaryTwist L) (k : Ch01.Band L) : reconstructedCreation L b k = Ch05.momentumCreation L k"
+        },
+        "Bosonize.Ch09.reconstructed_density": {
+          "ctx": "b74d1b5ec533538a94db58116b9df58d0bb0ad7777a0cbdfb4dbeb61395f9619",
+          "hash": "b907d82ccf0053e45c8743008fb20627751b4701ac871bc276163be579a15f8d",
+          "kind": "lemma",
+          "text": "lemma reconstructed_density (b : Ch06Ext.BoundaryTwist L) (m : \u2124) : reconstructedDensity L b m = A04.dGamma (A04.shift L m)"
+        },
+        "Bosonize.Ch09.rho_adjoint": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "12fb6d3b44c00989fbc951f61bb4ed3f7504bc0a6a1ede3187d557e07e2da013",
+          "kind": "lemma",
+          "text": "lemma rho_adjoint (h : \u2115) (m : \u2124) : LinearMap.adjoint (rho h m) = rho h (-m)"
+        },
+        "Bosonize.Ch09.rho_bare_energy_commutator": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "9929ad3090f064e516a0ecba5c0f04bf871707ac8f93590cceb9b3a91bf5afce",
+          "kind": "lemma",
+          "text": "lemma rho_bare_energy_commutator (h : \u2115) (m : \u2124) : A02.commutator (Ch05.bareHamiltonian (2*h)) (rho h m) = (m : \u2102) \u2022 rho h m"
+        },
+        "Bosonize.Ch09.rho_budget_map": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "443a4f8f30aad83a943e9a1339daa6924f7e5f9ac2c5e7a21cea9e89f26b7e98",
+          "kind": "lemma",
+          "text": "lemma rho_budget_map (h : \u2115) (m N K : \u2124) : \u2200 v \u2208 Ch07.fixedBudget h N K, rho h m v \u2208 Ch07.fixedBudget h N (K+m)"
+        },
+        "Bosonize.Ch09.rho_commutator_edge": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "d1a7759645a0fcd04c7f7fa5fe2c077362c2e5f670dbc0846912e0f60288e01c",
+          "kind": "lemma",
+          "text": "lemma rho_commutator_edge (h : \u2115) (m n : \u2124) : A02.commutator (rho h m) (rho h n) = A04.dGamma (A04.edgeMatrix (2*h) m n)"
+        },
+        "Bosonize.Ch09.rho_exact_shift": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "ce24058fa5ccad4a2fd76ee0425caaecbba7bf63c403c5742392c9c23cd9228d",
+          "kind": "lemma",
+          "text": "lemma rho_exact_shift (h : \u2115) (m : \u2124) : A03.ExactShift (Ch07.relativeCharge h) (Ch07.excitationEnergy h) (rho h m) 0 m"
+        },
+        "Bosonize.Ch09.rho_excitation_commutator": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "81c94dcd693c0411cd3f7648d848c425b9f7527c7475417def9b949f603cb774",
+          "kind": "lemma",
+          "text": "lemma rho_excitation_commutator (h : \u2115) (m : \u2124) : A02.commutator (Ch07.excitationObservable h) (rho h m) = (m : \u2102) \u2022 rho h m"
+        },
+        "Bosonize.Ch09.rho_linear_independent": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "7572062c987e5a575b73919200389b00466d39200262432057053d2395a36d10",
+          "kind": "lemma",
+          "text": "lemma rho_linear_independent (h : \u2115) : LinearIndependent \u2102 (fun m : PositiveMode h => rho h (m.val : \u2124))"
+        },
+        "Bosonize.Ch09.rho_lowering_budget_zero": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "33f8df90686d5505416fc5f03a012183859dfbc8c45abbe5c2565f5d24596e4d",
+          "kind": "lemma",
+          "text": "lemma rho_lowering_budget_zero (h : \u2115) (hh : 0 < h) (m N K : \u2124) (hKm : K-m < 0) : \u2200 v \u2208 Ch07.fixedBudget h N K, rho h (-m) v = 0"
+        },
+        "Bosonize.Ch09.rho_lowering_ground": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "f8dea794b551eabd2f16e61768d15bcc5812965ff4605445fce0cdd3dda203e0",
+          "kind": "lemma",
+          "text": "lemma rho_lowering_ground (h : \u2115) (hh : 0 < h) (N : \u2124) (hN : Ch07.admissible h N) (m : \u2124) (hm : 0 < m) : rho h (-m) (Ch07.groundKet h N hN) = 0"
+        },
+        "Bosonize.Ch09.rho_negative_commute": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "c81a41c8affe84c1415182927adafd5368f0007e3c62f2695a126e03d60e24fb",
+          "kind": "lemma",
+          "text": "lemma rho_negative_commute (h : \u2115) (m n : \u2124) (hm : m \u2264 0) (hn : n \u2264 0) : A02.commutator (rho h m) (rho h n) = 0"
+        },
+        "Bosonize.Ch09.rho_number_commutator": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "4669e0863e7a3c0b0abd0165312d6266efcb3aa72c1e9e859bfb5aa8f73aaeb4",
+          "kind": "lemma",
+          "text": "lemma rho_number_commutator (h : \u2115) (m : \u2124) : A02.commutator (Ch05.totalNumber (2*h)) (rho h m) = 0"
+        },
+        "Bosonize.Ch09.rho_physical_energy_commutator": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "d803ad42285bb63b4a9512e2d65b21a12224000216e098bf8b43c05512e74647",
+          "kind": "lemma",
+          "text": "lemma rho_physical_energy_commutator (h : \u2115) (\u03b2 : \u211d) (m : \u2124) : A02.commutator (physicalHamiltonian h \u03b2) (rho h m) = (m : \u2102) \u2022 rho h m"
+        },
+        "Bosonize.Ch09.rho_positive_commute": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "5acb6aa96ad4254fe318219742630063b21307d230f07914cbec3f43f0047ce5",
+          "kind": "lemma",
+          "text": "lemma rho_positive_commute (h : \u2115) (m n : \u2124) (hm : 0 \u2264 m) (hn : 0 \u2264 n) : A02.commutator (rho h m) (rho h n) = 0"
+        },
+        "Bosonize.Ch09.rho_sea_energy": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "79c5dfcbd79c064c9742e5bb44530092cea0dbf28d54fa92fc891a0050935e40",
+          "kind": "lemma",
+          "text": "lemma rho_sea_energy (h : \u2115) (m : \u2124) : Ch05.shiftedHamiltonian (2*h) (rho h m (Ch07.vacuumKet h)) = (m : \u2102) \u2022 rho h m (Ch07.vacuumKet h)"
+        },
+        "Bosonize.Ch09.rho_sea_hop_sum": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "3ca6f8a0592ab3237a93ab3653825bf34b227fec7553426f89a5b76f6d38c1f6",
+          "kind": "lemma",
+          "text": "lemma rho_sea_hop_sum (h : \u2115) (m : \u2124) (hm : 0 < m) : rho h m (Ch07.vacuumKet h) = \u2211 z \u2208 activeSeaPairs h m, hopSign h z \u2022 A02.ket (hopConfiguration h z)"
+        },
+        "Bosonize.Ch09.rho_sea_linear_independent": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "185589f5e98ba82eff8d65c66f9e28d1d9df29825fe2878eb8ee78b36f23c0ed",
+          "kind": "lemma",
+          "text": "lemma rho_sea_linear_independent (h : \u2115) : LinearIndependent \u2102 (fun m : PositiveMode h => rho h (m.val : \u2124) (Ch07.vacuumKet h))"
+        },
+        "Bosonize.Ch09.rho_sea_ne_zero": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "c482a6591994ba50092eb163c87694a4644e4c4dfb0cc1ca8f418f9433cc6519",
+          "kind": "lemma",
+          "text": "lemma rho_sea_ne_zero (h m : \u2115) (hm : 1 \u2264 m) (hmh : m \u2264 h) : rho h (m : \u2124) (Ch07.vacuumKet h) \u2260 0"
+        },
+        "Bosonize.Ch09.rho_sea_norm_sq": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "e6069d51cc87d6d0991583c52a92b1c1f69eb343a22a8e65a9808c2e184235d4",
+          "kind": "lemma",
+          "text": "lemma rho_sea_norm_sq (h m : \u2115) (hm : 1 \u2264 m) (hmh : m \u2264 h) : \u2016rho h (m : \u2124) (Ch07.vacuumKet h)\u2016^2 = (m : \u211d)"
+        },
+        "Bosonize.Ch09.rho_sea_orthogonal": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "71cbf86d51dde2a1bf3c1acfa0bc48607119040fdfce6223edfbe8ada4c0ad1f",
+          "kind": "lemma",
+          "text": "lemma rho_sea_orthogonal (h : \u2115) (m n : PositiveMode h) (hmn : m \u2260 n) : inner \u2102 (rho h (m.val : \u2124) (Ch07.vacuumKet h)) (rho h (n.val : \u2124) (Ch07.vacuumKet h)) = 0"
+        },
+        "Bosonize.Ch09.rho_shifted_energy_commutator": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "020520af6347c8313ee1e950e629c7964982c48e7c950b6e86ac3e942ba4882c",
+          "kind": "lemma",
+          "text": "lemma rho_shifted_energy_commutator (h : \u2115) (m : \u2124) : A02.commutator (Ch05.shiftedHamiltonian (2*h)) (rho h m) = (m : \u2102) \u2022 rho h m"
+        },
+        "Bosonize.Ch09.rho_transport": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "1b021fdd24489cf0f6924010cd669cd779356b88a43d64f4b4b95fbaa4d61178",
+          "kind": "lemma",
+          "text": "lemma rho_transport (h : \u2115) [NeZero (2*h)] (b : Ch06Ext.BoundaryTwist (2*h)) (m n : \u2124) : Ch06Ext.transport (2*h) b n (rho h m) = A01.integerCharacter (A01.canonicalRoot (2*h)) (-m) n \u2022 rho h m"
+        },
+        "Bosonize.Ch09.rho_valid_pairs": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "125b3749bce1f499133adee8dae02804d0f969f701d1e85dc193c20496351ae2",
+          "kind": "lemma",
+          "text": "lemma rho_valid_pairs (h : \u2115) (m : \u2124) : rho h m = \u2211 z \u2208 A04.validPairs (2*h) m, Ch04.hopping z.1 z.2"
+        },
+        "Bosonize.Ch09.rho_vanish": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "88211958c5b681f8a3d4fad465d7aaf38a6ac168fd80b04a16eeaf1b0d37ce20",
+          "kind": "lemma",
+          "text": "lemma rho_vanish (h : \u2115) (m : \u2124) (hm : (2*h : \u2115) \u2264 m.natAbs) : rho h m = 0"
+        },
+        "Bosonize.Ch09.rho_zero": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "6e0aeec6ceac0fc93586bee4e27ad372e88b91f946c087d015f4acde5a94b85e",
+          "kind": "lemma",
+          "text": "lemma rho_zero (h : \u2115) : rho h 0 = Ch05.totalNumber (2*h)"
+        },
+        "Bosonize.Ch09.rho_zero_sea": {
+          "ctx": "b9ffd7e8513fce0f67ce2ff4e12b3ae4ae2fd3db83aa33043de305eb3191e12e",
+          "hash": "801c6cd9ff2a2c5ca9349957c292dbb64468a4aefd1f9b40a8b0492aead54cc9",
+          "kind": "lemma",
+          "text": "lemma rho_zero_sea (h : \u2115) (hh : 0 < h) : rho h 0 (Ch07.vacuumKet h) = (h : \u2102) \u2022 Ch07.vacuumKet h"
+        },
+        "Bosonize.Ch09.site_fourier_dictionary": {
+          "ctx": "b74d1b5ec533538a94db58116b9df58d0bb0ad7777a0cbdfb4dbeb61395f9619",
+          "hash": "31bc73fd584645e02c86f79412301659bf99fb94c999fde0d88b301ab1a1a911",
+          "kind": "lemma",
+          "text": "lemma site_fourier_dictionary (b : Ch06Ext.BoundaryTwist L) (m : \u2124) : siteFourierDensity L b m = A04.dGamma (A04.shift L m) + wrapRemainder L m"
+        },
+        "Bosonize.Ch09.site_fourier_twist_independent": {
+          "ctx": "b74d1b5ec533538a94db58116b9df58d0bb0ad7777a0cbdfb4dbeb61395f9619",
+          "hash": "164a9c90658199924dc93ab1bfd3f6e97f64789979ab74576042f2cd3df17955",
+          "kind": "lemma",
+          "text": "lemma site_fourier_twist_independent (b c : Ch06Ext.BoundaryTwist L) (m : \u2124) : siteFourierDensity L b m = siteFourierDensity L c m"
+        }
+      }
     }
   },
   "version": 2
