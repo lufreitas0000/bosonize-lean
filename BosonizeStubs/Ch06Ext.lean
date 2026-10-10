@@ -7,6 +7,30 @@ public import Mathlib.Analysis.Complex.Trigonometric
 # CH06 extension: scalar boundary holonomy and covariant ring transport
 Phase A: complete data and one-sorry review contracts.
 External scalar twists are independent of fermionic grading. Integer lifts expose the seam.
+
+## Reading the notation and choosing downstream APIs
+
+`b : BoundaryTwist L` is an ordinary parameter, not a global inferred physical choice.
+Current definitions take it explicitly. A later section may bind `{b : BoundaryTwist L}`
+to produce implicit arguments; Lean still retains b in the resulting declaration's type.
+Quantifying a theorem over b states validity for every twist. Independence requires an
+identity removing b, such as the proposed density_untwisted or local_algebra_eq bridge.
+
+`step` means the complex phase r per lattice step; `holonomy` means r^L per complete lap.
+On complex numbers `star z` is conjugation. Actual operator adjoints use
+`LinearMap.adjoint A`. `a • A` is scalar multiplication, whereas `A * B` is composition
+with B acting first. The same • notation scales Fock vectors when its right operand is a ket.
+
+All operators live in the existing `Ch05.Operators L`; there is no competing Fock carrier.
+Use frozen `Ch06.localAlgebra` / `Ch06.localPart` for local support and grading when
+spatial twist is irrelevant. Use `Ch06Ext.annihilation`, `creation`, `twistedCharacter`,
+`translation`, `transport` and `zeroMode`, with the same b, for boundary-sensitive work.
+The proposed local_algebra_eq and local_part_eq lemmas transfer local statements between
+presentations after they are proved. A β-dependent physical-energy model must explicitly
+select b=angleTwist L β. Specialize b=periodicTwist L or antiperiodicTwist L only when
+the model calls for that sector; the general development can retain b throughout.
+All 72 lemmas below remain proposed contracts with sorry placeholders.
+
 -/
 
 @[expose] public section
@@ -15,266 +39,764 @@ namespace Bosonize.Ch06Ext
 
 open scoped BigOperators Classical
 
-/-- A chosen unit per-site phase, including a choice of root/trivialization at length L. -/
+/--
+Boundary data for a ring of length L: a chosen uniform complex phase r per lattice step,
+together with its norm-one certificate. The full-ring phase is derived as r^L. Different choices
+of r can have the same full-ring phase, so this record retains the chosen transport/Fourier
+trivialization. L indexes that choice; positive-length hypotheses enter the ring theorems.
+-/
 structure BoundaryTwist (L : ℕ) where
+  /-- Uniform phase r per lattice step, not the complete-loop phase r^L. -/
   step : ℂ
+  /-- Actual unit-modulus certificate; in particular step is nonzero and invertible. -/
   norm_step : ‖step‖ = 1
 
-/-- All external offset angles are allowed; β is measured in momentum-label units. -/
+/--
+Construct the step phase r = exp(2πiβ/L) from a real momentum offset β, measured in integer-
+label units. Its norm certificate comes from Mathlib rather than a theorem stub. For L>0 the
+proposed angle_holonomy lemma gives exp(2πiβ) around the ring. Retain β separately when an
+energy or physical momentum depends on its real lift.
+-/
 noncomputable def angleTwist (L : ℕ) (β : ℝ) : BoundaryTwist L :=
   ⟨Complex.exp (((2*Real.pi*β/(L : ℝ) : ℝ) : ℂ)*Complex.I),
     Complex.norm_exp_ofReal_mul_I _⟩
 
+/--
+Choose r=1, so the external phase is trivial at every lattice step and around the ring. This
+selects the existing periodic convention exactly; a different root with holonomy one can still
+give different position-dependent phases.
+-/
 def periodicTwist (L : ℕ) : BoundaryTwist L := ⟨1, norm_one⟩
 
-/-- Centered half-integer momenta use β=-1/2 in the existing positive-Nyquist labels. -/
+/--
+Choose β=-1/2 and hence r=exp(-πi/L). At positive L its full-ring phase is -1. For L=2h this
+shifts the retained integer band [-h+1,h] to the centered physical half-integers [-h+1/2,h-1/2];
+integer mode indices themselves stay unchanged.
+-/
 noncomputable def antiperiodicTwist (L : ℕ) : BoundaryTwist L := angleTwist L (-1/2)
 
+/--
+The scalar phase τ=r^L acquired by the annihilation field after one positive lap of the ring.
+Holonomy records full-loop transport, whereas step records the chosen phase per site. This is
+spatial boundary data, distinct from the sign of exchanging two odd operators.
+-/
 def holonomy (L : ℕ) (b : BoundaryTwist L) : ℂ := b.step^L
 
+/--
+The chosen phase r^n at an integer position n. The integer power permits negative positions
+without fractional complex powers; norm one makes r nonzero. Positions remain in ℤ here because
+a field with nontrivial holonomy cannot descend to an ordinary periodic function on ZMod L.
+-/
 noncomputable def liftPhase (L : ℕ) (b : BoundaryTwist L) (n : ℤ) : ℂ := b.step^n
 
-/-- A full-period phase does not specify the selected per-site root. -/
+/--
+Say that two twist records have the same full-ring phase. This compares holonomy only, not
+record equality or the selected step root. The proposed change-of-trivialization lemmas explain
+the position-dependent ratio between their fields.
+-/
 def sameHolonomy (L : ℕ) (b c : BoundaryTwist L) : Prop := holonomy L b = holonomy L c
 
 section Fields
 variable (L : ℕ) [NeZero L]
 
-/-- Lift to ℤ; this is not asserted to descend to a periodic scalar-valued quotient field. -/
+/--
+The lifted twisted annihilator c_b(n)=r^n • c_0([n]) on the existing finite Fock space. The
+argument b explicitly records its twist dependency, and [n] is the residue in ZMod L. The symbol
+• denotes complex scalar multiplication of a linear operator: (a • A)(v)=a • A(v). It is
+distinct from operator composition A*B.
+-/
 noncomputable def annihilation (b : BoundaryTwist L) (n : ℤ) : Ch05.Operators L :=
   liftPhase L b n • Ch05.positionAnnihilation L (n : Ch01.Lattice L)
 
+/--
+The lifted creator with conjugate scalar phase: star(r^n) • c_0†([n]). Here star acts on ℂ and
+means complex conjugation. Hilbert adjoints of operators are written LinearMap.adjoint, and creation_adjoint is the proposed proof that this definition
+is the actual adjoint of annihilation.
+-/
 noncomputable def creation (b : BoundaryTwist L) (n : ℤ) : Ch05.Operators L :=
   star (liftPhase L b n) • Ch05.positionCreation L (n : Ch01.Lattice L)
 
+/--
+Evaluate the lifted annihilator on the chosen representative x.val in {0,...,L-1}. This is a
+fundamental-domain section on the quotient lattice, not a claim that all integer lifts of x give
+the same operator. Winding and seam phases must be retained when transporting beyond the
+representatives.
+-/
 noncomputable def siteAnnihilation (b : BoundaryTwist L) (x : Ch01.Lattice L) : Ch05.Operators L :=
   annihilation L b (x.val : ℤ)
 
+/--
+Evaluate the lifted creator on x.val using the same twist and representative convention as
+siteAnnihilation. Its scalar is conjugated, so the site mixed-CAR and adjoint contracts have the
+correct phase cancellation.
+-/
 noncomputable def siteCreation (b : BoundaryTwist L) (x : Ch01.Lattice L) : Ch05.Operators L :=
   creation L b (x.val : ℤ)
 
+/--
+The ordered same-species product c_b†(n)*c_b(n). Multiplication in the operator algebra is
+composition, with the right factor acting first. Both factors use the same b, so the proposed
+density_untwisted lemma cancels their conjugate phases; cross-species products with different
+twists require separate accounting.
+-/
 noncomputable def density (b : BoundaryTwist L) (n : ℤ) : Ch05.Operators L :=
   creation L b n * annihilation L b n
 
-/-- The actual kernel, with integer powers and the chosen external per-site phase. -/
+/--
+The positive-sign Fourier kernel r^n ζ^(k n), with ζ the frozen canonical L-th root and k the
+retained integer band label. Its b dependency supplies the external offset; integer powers and
+an explicit step root avoid a fractional-power branch. star of this complex kernel is its
+conjugate in the inverse transform.
+-/
 noncomputable def twistedCharacter (b : BoundaryTwist L) (k : Ch01.Band L) (n : ℤ) : ℂ :=
   liftPhase L b n * A01.integerCharacter (A01.canonicalRoot L) k.val n
 
+/--
+The twisted site annihilators and creators supported in region I, inside the shared algebra
+Ch05.Operators L. Both types of generator are included to support adjoint closure. Region I is a
+set of quotient sites; seam information belongs to their transport, not to a second spatial
+carrier.
+-/
 noncomputable def localGenerators (b : BoundaryTwist L) (I : Ch06.Region L) : Set (Ch05.Operators L) :=
   {A | ∃ x ∈ I, A = siteAnnihilation L b x ∨ A = siteCreation L b x}
 
+/--
+The unital complex subalgebra generated by the twisted site fields in I. Its definition retains
+b even though local_algebra_eq proposes equality to the frozen CH06 algebra for every unit
+twist. Later spatial-covariance statements use this presentation; purely local algebra
+statements can be transferred through that equality after it is proved.
+-/
 noncomputable def localAlgebra (b : BoundaryTwist L) (I : Ch06.Region L) : Subalgebra ℂ (Ch05.Operators L) :=
   Algebra.adjoin ℂ (localGenerators L b I)
 
+/--
+The parity-σ subspace of the twisted local algebra, using the existing CH06 parity map and
+degree sign. The intersection and linear-map kernel keep the odd part a submodule rather than
+incorrectly making it a subalgebra. The scalar • on LinearMap.id rescales that map; the grading
+sign is separate from spatial holonomy.
+-/
 noncomputable def localPart (b : BoundaryTwist L) (I : Ch06.Region L) (σ : Ch06.Degree) :
     Submodule ℂ (Ch05.Operators L) :=
   (localAlgebra L b I).toSubmodule ⊓
     LinearMap.ker (Ch06.parityMap L - Ch06.degreeSign σ • LinearMap.id)
 
-/-- Translation by m sites. The minus signs ensure positive-kernel annihilator covariance. -/
+/--
+Construct translation by m integer steps as a diagonal map on the actual momentum-occupation
+basis. On δ_S it multiplies by r^(-m #S) ζ^(-m sum(k∈S) k). The negative exponents match the
+positive annihilation Fourier convention. Unitarity and field covariance are proposed lemmas,
+not certificates assumed in this definition.
+-/
 noncomputable def translation (b : BoundaryTwist L) (m : ℤ) : Ch05.Operators L :=
   A02.extendBasis (fun S =>
     (b.step^(-m*(S.card : ℤ)) *
       A01.canonicalRoot L^(-m*Ch05.occupationEnergy L S)) • A02.ket S)
 
+/--
+Construct the diagonal charge-gauge map δ_S ↦ u^(-#S) • δ_S for a complex scalar u. When u is
+unit modulus this is the full-lap candidate for holonomy u; the definition itself accepts
+arbitrary u and does not assert unitarity at u=0. Its negative exponent follows the annihilator
+transport convention.
+-/
 noncomputable def gauge (u : ℂ) : Ch05.Operators L :=
   A02.extendBasis (fun S => u^(-(S.card : ℤ)) • A02.ket S)
 
+/--
+The linear map on operators A ↦ T_b(m)*A*T_b(-m), constructed using left and right
+multiplication. The carrier remains Ch05.Operators L and composition acts rightmost first.
+Translation inverse/unitarity and star-preserving algebra-automorphism properties must be proved
+before using this as certified conjugation by a unitary.
+-/
 noncomputable def transport (b : BoundaryTwist L) (m : ℤ) :
     Ch05.Operators L →ₗ[ℂ] Ch05.Operators L :=
   (LinearMap.mulRight ℂ (translation L b (-m))).comp
     (LinearMap.mulLeft ℂ (translation L b m))
 
+/--
+The integer quotient n/L in Euclidean division for positive ring length L. It counts signed laps
+relative to the selected representative of [n]; negative n can have negative winding. The
+proposed winding_decomposition relates it exactly to ZMod.val, rather than relying on truncating
+natural subtraction.
+-/
 def windingNumber (n : ℤ) : ℤ := n / (L : ℤ)
 
+/--
+The phase τ^w for w=windingNumber(n). It restores the holonomy lost when an integer position is
+replaced by its selected quotient representative. With b fixed, it records any number of seam
+crossings in either direction.
+-/
 noncomputable def seamPhase (b : BoundaryTwist L) (n : ℤ) : ℂ :=
   holonomy L b ^ windingNumber L n
 
+/--
+Translate each quotient site of I by the residue of integer m. The result wraps on the finite
+ring and is independent of b as a set. The operators transported between these regions still
+depend on b and can acquire seam phases.
+-/
 def shiftRegion (m : ℤ) (I : Ch06.Region L) : Ch06.Region L :=
   (fun x : Ch01.Lattice L => x+(m : Ch01.Lattice L)) '' I
 
-/-- Source-sector phase for later Klein/vertex constructions; no field equality is assumed. -/
+/--
+Construct the source-sector phase r^n ζ^(n(#S-referenceCharge)) on δ_S. The offset
+referenceCharge converts total occupation to the intended relative charge, and the same b as the
+comparison field supplies its external holonomy. Later Klein/vertex constructions must preserve
+source-before-lowering order; this definition does not establish a vertex equality.
+-/
 noncomputable def zeroMode (b : BoundaryTwist L) (n : ℤ) (referenceCharge : ℤ) : Ch05.Operators L :=
   A02.extendBasis (fun S =>
     (liftPhase L b n * A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge))) • A02.ket S)
 
+/--
+Proposed consequence of norm_step: the selected step phase cannot vanish. This supplies the
+nonzero condition needed for integer negative powers, division by step, and invertible scalar
+changes of generators. The lemma remains a Phase A placeholder.
+-/
 lemma twist_step_ne_zero (b : BoundaryTwist L) : b.step ≠ 0 := by sorry
+/--
+Proposed norm-one property of the full-loop phase r^L. It permits treating holonomy as scalar
+U(1) boundary data and using its conjugate as its inverse. No restriction to rational angles or
+periodic/APBC phases is imposed.
+-/
 lemma holonomy_norm (b : BoundaryTwist L) : ‖holonomy L b‖ = 1 := by sorry
+/--
+Proposed norm-one property of r^n for every integer n, including negative positions. This is the
+scalar cancellation needed for actual adjoints, densities and site mixed CAR.
+-/
 lemma lift_phase_norm (b : BoundaryTwist L) (n : ℤ) : ‖liftPhase L b n‖ = 1 := by sorry
+/--
+Proposed multiplicative law r^(n+m)=r^n*r^m for integer displacement. It is the scalar transport
+composition law; nonzero step is essential for unrestricted integer exponents.
+-/
 lemma lift_phase_add (b : BoundaryTwist L) (n m : ℤ) :
     liftPhase L b (n+m) = liftPhase L b n * liftPhase L b m := by sorry
+/--
+Proposed phase law for w signed laps: translating n by wL multiplies its phase by τ^w. This
+distinguishes step transport from full-loop holonomy and covers multiple positive or negative
+windings.
+-/
 lemma lift_phase_winding (b : BoundaryTwist L) (n w : ℤ) :
     liftPhase L b (n+w*(L : ℤ)) = holonomy L b^w * liftPhase L b n := by sorry
+/--
+Proposed identification of the angular construction's full-loop phase with exp(2πiβ). Positive L
+is required to cancel the division by L in the exponential. It specifies the relation between
+the real offset and scalar boundary condition.
+-/
 lemma angle_holonomy (β : ℝ) :
     holonomy L (angleTwist L β) = Complex.exp (((2*Real.pi*β : ℝ) : ℂ)*Complex.I) := by sorry
+/--
+Proposed coverage of every norm-one step record by some real β at positive L. The angle is not
+claimed to be unique; distinct real lifts can describe the same step. This is a coverage
+theorem, not a canonical choice of physical energy offset.
+-/
 lemma angle_twist_surjective (b : BoundaryTwist L) : ∃ β : ℝ, angleTwist L β = b := by sorry
+/--
+Proposed existence of a step record realizing any prescribed unit complex full-ring phase u. It
+requires positive L and a norm-one hypothesis on u. Thus arbitrary scalar twisted boundary
+conditions are represented, rather than only periodic and anti-periodic cases.
+-/
 lemma holonomy_surjective (u : ℂ) (hu : ‖u‖ = 1) :
     ∃ b : BoundaryTwist L, holonomy L b = u := by sorry
+/--
+Proposed full-loop phase one for the selected periodic step r=1. This is the trivial external
+boundary condition and does not follow merely from fermionic grading.
+-/
 lemma periodic_holonomy : holonomy L (periodicTwist L) = 1 := by sorry
+/--
+Proposed full-loop phase -1 for the centered half-integer offset β=-1/2 at positive L. The per-
+step phase is generally not -1; the minus sign appears after a complete lap.
+-/
 lemma antiperiodic_holonomy : holonomy L (antiperiodicTwist L) = -1 := by sorry
+/--
+Proposed invariance of full-loop phase under β ↦ β+z for integer z. Only holonomy is compared:
+physical momentum labels and chosen per-step roots can change. This does not assert equality of
+finite kinetic spectra.
+-/
 lemma angle_integer_holonomy (β : ℝ) (z : ℤ) :
     sameHolonomy L (angleTwist L (β+(z : ℝ))) (angleTwist L β) := by sorry
+/--
+Proposed change of the chosen step under β ↦ β+1: multiply it by the frozen canonical root ζ. It
+makes the extra choice beyond holonomy explicit and fixes the positive Fourier orientation.
+-/
 lemma angle_root_shift (β : ℝ) :
     (angleTwist L (β+1)).step = (angleTwist L β).step * A01.canonicalRoot L := by sorry
 
+/--
+Proposed integer identity n=val([n])+wL, including negative n. Positive L relates Euclidean
+division to the quotient representative. This arithmetic bridge supports lift/site and arbitrary
+seam-transport statements.
+-/
 lemma winding_decomposition (n : ℤ) :
     n = (((n : Ch01.Lattice L).val : ℕ) : ℤ)+windingNumber L n*(L : ℤ) := by sorry
+/--
+Proposed update of the representative correction after w additional laps: multiply seamPhase by
+τ^w. It handles negative winding using integer powers and the norm-one holonomy.
+-/
 lemma seam_phase_winding (b : BoundaryTwist L) (n w : ℤ) :
     seamPhase L b (n+w*(L : ℤ)) = holonomy L b^w*seamPhase L b n := by sorry
+/--
+Proposed finite orthogonality of the twisted Fourier kernels on the chosen L site
+representatives. Both kernels use the same b, so conjugate external phases cancel and the sum is
+L for equal modes and zero otherwise. Different twists require a separate mixed-kernel
+statement.
+-/
 lemma twisted_character_orthogonality (b : BoundaryTwist L) (k p : Ch01.Band L) :
     (∑ x : Ch01.Lattice L,
       star (twistedCharacter L b k (x.val : ℤ))*twistedCharacter L b p (x.val : ℤ)) =
       if k=p then (L : ℂ) else 0 := by sorry
+/--
+Proposed recovery of a momentum annihilator from twisted site annihilators using conjugate
+twisted kernels and the frozen normalization. The same b must occur in both factors for
+cancellation. This allows downstream momentum operators to keep their existing definition while
+using a twisted spatial presentation.
+-/
 lemma twisted_fourier_inverse (b : BoundaryTwist L) (k : Ch01.Band L) :
     Ch05.momentumAnnihilation L k = (A01.normalization L : ℂ) •
       ∑ x : Ch01.Lattice L, star (twistedCharacter L b k (x.val : ℤ)) •
         siteAnnihilation L b x := by sorry
 
+/--
+Proposed positive-sign Fourier expansion of the lifted twisted annihilator, with the existing
+momentum operators and normalization. The external phase is carried by twistedCharacter, so
+choosing APBC does not replace the integer mode carrier.
+-/
 lemma annihilation_fourier (b : BoundaryTwist L) (n : ℤ) :
     annihilation L b n = (A01.normalization L : ℂ) •
       ∑ k : Ch01.Band L, twistedCharacter L b k n • Ch05.momentumAnnihilation L k := by sorry
+/--
+Proposed equality of the lifted creator to the actual Hilbert adjoint of the lifted annihilator.
+Complex scalar conjugation in creation is needed because taking an adjoint conjugates a scalar
+multiplier.
+-/
 lemma creation_adjoint (b : BoundaryTwist L) (n : ℤ) :
     creation L b n = LinearMap.adjoint (annihilation L b n) := by sorry
+/--
+Proposed boundary law c_b(n+wL)=τ^w • c_b(n). The b parameter remains explicit, so later results
+can quantify over arbitrary twist before specializing it. The equality is a proof obligation,
+not an additional definition of the field.
+-/
 lemma annihilation_winding (b : BoundaryTwist L) (n w : ℤ) :
     annihilation L b (n+w*(L : ℤ)) = holonomy L b^w • annihilation L b n := by sorry
+/--
+Proposed boundary law for the creator, with conjugated holonomy star(τ^w). This reverses the
+annihilator phase as required by adjointness; using the same unconjugated phase would generally
+be wrong.
+-/
 lemma creation_winding (b : BoundaryTwist L) (n w : ℤ) :
     creation L b (n+w*(L : ℤ)) = star (holonomy L b^w) • creation L b n := by sorry
+/--
+Proposed expression of a lifted annihilator as seamPhase times its fundamental-domain site
+section. This exposes the exact information discarded by converting n to its quotient residue
+and applies to negative positions too.
+-/
 lemma lift_site_relation (b : BoundaryTwist L) (n : ℤ) :
     annihilation L b n = seamPhase L b n • siteAnnihilation L b (n : Ch01.Lattice L) := by sorry
+/--
+Proposed equality between the selected r=1 extension field and frozen CH05 positionAnnihilation.
+This is the compatibility specialization for periodic calculations and does not change the
+frozen operator definition.
+-/
 lemma periodic_field (n : ℤ) :
     annihilation L (periodicTwist L) n = Ch05.positionAnnihilation L (n : Ch01.Lattice L) := by sorry
+/--
+Proposed sign change of the selected APBC annihilator after one full lap. The integer argument
+distinguishes n from n+L even though their quotient residues coincide.
+-/
 lemma antiperiodic_field (n : ℤ) :
     annihilation L (antiperiodicTwist L) (n+(L : ℤ)) = -annihilation L (antiperiodicTwist L) n := by sorry
+/--
+Proposed nonzero-action witness for every twisted lifted annihilator. It prevents boundary
+detection and quotient-descent statements from being satisfied trivially by the zero operator;
+multiplication by a unit scalar preserves the frozen nonzero field.
+-/
 lemma annihilation_ne_zero (b : BoundaryTwist L) (n : ℤ) : annihilation L b n ≠ 0 := by sorry
+/--
+Proposed criterion for the lifted field to be an ordinary function of the quotient residue:
+precisely holonomy one. The existence direction retains a function on ZMod L; the converse uses
+a nonzero field to detect a nontrivial lap phase. A fundamental-domain section exists even when
+this stronger descent property fails.
+-/
 lemma quotient_descent_iff (b : BoundaryTwist L) :
     (∃ f : Ch01.Lattice L → Ch05.Operators L, ∀ n : ℤ, annihilation L b n = f (n : Ch01.Lattice L)) ↔
       holonomy L b = 1 := by sorry
+/--
+Proposed vanishing anticommutator of twisted annihilators at any two selected quotient sites.
+Both factors are scalar rescalings of frozen CAR generators, so the pure annihilation relation
+survives arbitrary unit twist.
+-/
 lemma site_annihilation_car (b : BoundaryTwist L) (x y : Ch01.Lattice L) :
     A02.anticommutator (siteAnnihilation L b x) (siteAnnihilation L b y) = 0 := by sorry
+/--
+Proposed vanishing anticommutator of twisted creators at any two selected quotient sites.
+Conjugate scalar rescaling preserves the pure creation CAR.
+-/
 lemma site_creation_car (b : BoundaryTwist L) (x y : Ch01.Lattice L) :
     A02.anticommutator (siteCreation L b x) (siteCreation L b y) = 0 := by sorry
+/--
+Proposed canonical mixed CAR on the selected site representatives, with identity coefficient one
+only when x=y. Unit modulus cancels the two scalar phases on the coincident-site branch. The
+symbol • multiplies the identity operator by the displayed complex coefficient.
+-/
 lemma site_mixed_car (b : BoundaryTwist L) (x y : Ch01.Lattice L) :
     A02.anticommutator (siteAnnihilation L b x) (siteCreation L b y) =
       (if x=y then (1 : ℂ) else 0) • (1 : Ch05.Operators L) := by sorry
+/--
+Proposed mixed CAR on integer lifts: equal residues carry the relative phase r^(n-m), while
+unequal residues give zero. This keeps holonomy visible when two arguments represent the same
+site after different laps; replacing the coefficient by one would erase the seam.
+-/
 lemma lifted_mixed_car (b : BoundaryTwist L) (n m : ℤ) :
     A02.anticommutator (annihilation L b n) (creation L b m) =
       (if (n : Ch01.Lattice L)=(m : Ch01.Lattice L) then liftPhase L b (n-m) else 0) •
         (1 : Ch05.Operators L) := by sorry
+/--
+Proposed identification of same-twist local density with the frozen position number operator.
+The conjugate creator phase cancels the annihilator phase exactly. This establishes twist
+independence for this observable rather than assuming it for all operators.
+-/
 lemma density_untwisted (b : BoundaryTwist L) (n : ℤ) :
     density L b n = Ch05.positionNumber L (n : Ch01.Lattice L) := by sorry
+/--
+Proposed strict periodicity of same-species density for every unit twist. Full-lap phases cancel
+in the ordered bilinear, even when the individual fermion fields are anti-periodic or otherwise
+twisted.
+-/
 lemma density_periodic (b : BoundaryTwist L) (n : ℤ) : density L b (n+(L : ℤ)) = density L b n := by sorry
+/--
+Proposed equality of the twisted-generator local algebra and frozen CH06 localAlgebra on the
+same region. Nonzero scalar multipliers generate the same complex algebra. After proof, later
+chapters may use CH06 local-algebra theorems while keeping Ch06Ext fields and transport.
+-/
 lemma local_algebra_eq (b : BoundaryTwist L) (I : Ch06.Region L) : localAlgebra L b I = Ch06.localAlgebra L I := by sorry
+/--
+Proposed equality of the twisted and frozen parity-homogeneous local subspaces. Both
+presentations use the same parity map; the local-algebra identification therefore also transfers
+grading. This bridge does not identify their spatial transport data.
+-/
 lemma local_part_eq (b : BoundaryTwist L) (I : Ch06.Region L) (σ : Ch06.Degree) :
     localPart L b I σ = Ch06.localPart L I σ := by sorry
+/--
+Proposed disjoint-region exchange relation for the twisted local parts. The sign depends on the
+parity degrees σ and τ, not on spatial holonomy. Disjoint support is necessary; this is not a
+boundary condition for going around the ring.
+-/
 lemma graded_locality (b : BoundaryTwist L) (I J : Ch06.Region L) (hIJ : Disjoint I J)
     (σ τ : Ch06.Degree) (A B : Ch05.Operators L)
     (hA : A ∈ localPart L b I σ) (hB : B ∈ localPart L b J τ) :
     A*B = (-1 : ℂ)^(σ.val*τ.val) • (B*A) := by sorry
 
+/--
+Proposed basis-action formula for the complete diagonal translation definition. It supplies the
+concrete scalar to check group laws, adjoints and covariance on actual occupation kets. The •
+here multiplies a Fock vector, rather than an operator.
+-/
 lemma translation_ket (b : BoundaryTwist L) (m : ℤ) (S : Ch06.Occupation L) :
     translation L b m (A02.ket S) =
       (b.step^(-m*(S.card : ℤ))*A01.canonicalRoot L^(-m*Ch05.occupationEnergy L S)) • A02.ket S := by sorry
+/--
+Proposed identity action for zero displacement. Together with translation_add it supplies the
+neutral element of the integer translation representation.
+-/
 lemma translation_zero (b : BoundaryTwist L) : translation L b 0 = 1 := by sorry
+/--
+Proposed representation law T(m+n)=T(m)*T(n) on the same twist b. Operator multiplication means
+composition; all integer shifts are allowed, including inverses. Different twists are not
+silently combined.
+-/
 lemma translation_add (b : BoundaryTwist L) (m n : ℤ) :
     translation L b (m+n) = translation L b m * translation L b n := by sorry
+/--
+Proposed actual-adjoint identity T(m)†=T(-m). Unit phases in the diagonal basis action are the
+needed input; this is not assumed when defining transport.
+-/
 lemma translation_adjoint (b : BoundaryTwist L) (m : ℤ) :
     LinearMap.adjoint (translation L b m) = translation L b (-m) := by sorry
+/--
+Proposed two-sided unitary identities using the actual Hilbert adjoint. Both orders are stated
+so inverse transport is certified on the complete finite Fock carrier.
+-/
 lemma translation_unitary (b : BoundaryTwist L) (m : ℤ) :
     translation L b m * LinearMap.adjoint (translation L b m) = 1 ∧
       LinearMap.adjoint (translation L b m) * translation L b m = 1 := by sorry
+/--
+Proposed expansion of the linear transport definition as the ordered product T(m)*A*T(-m). This
+fixes which map acts on which side and avoids an accidental reversal of conjugation.
+-/
 lemma transport_apply (b : BoundaryTwist L) (m : ℤ) (A : Ch05.Operators L) :
     transport L b m A = translation L b m*A*translation L b (-m) := by sorry
+/--
+Proposed composition law for operator transport at a fixed b. Transport by n followed by m
+agrees with transport by m+n; group identities must be established from translation, not from
+the region shift alone.
+-/
 lemma transport_add (b : BoundaryTwist L) (m n : ℤ) (A : Ch05.Operators L) :
     transport L b (m+n) A = transport L b m (transport L b n A) := by sorry
+/--
+Proposed compatibility of transport with the actual Hilbert adjoint of operators. It is the
+star-preservation needed by covariance of local creator/annihilator algebras.
+-/
 lemma transport_star (b : BoundaryTwist L) (m : ℤ) (A : Ch05.Operators L) :
     transport L b m (LinearMap.adjoint A) = LinearMap.adjoint (transport L b m A) := by sorry
+/--
+Proposed packaging of the complete transport map as an actual complex algebra equivalence, with
+adjoint preservation explicitly included. Existence requires proving multiplication, identity
+and inverse properties. This avoids constructing certified automorphism data from unproved stub
+lemmas.
+-/
 lemma transport_automorphism_exists (b : BoundaryTwist L) (m : ℤ) :
     ∃ f : Ch05.Operators L ≃ₐ[ℂ] Ch05.Operators L,
       (∀ A, f A = transport L b m A) ∧
       ∀ A, f (LinearMap.adjoint A) = LinearMap.adjoint (f A) := by sorry
+/--
+Proposed covariance T(m)c_b(n)T(-m)=c_b(n+m) for all integer lifts. The same b is required in
+the translation and field; the negative translation exponents were selected to match this
+positive Fourier convention.
+-/
 lemma transport_annihilation (b : BoundaryTwist L) (m n : ℤ) :
     transport L b m (annihilation L b n) = annihilation L b (n+m) := by sorry
+/--
+Proposed creator covariance under the same transport and integer shift. It should follow
+compatibly with actual adjoints, retaining conjugate field phases.
+-/
 lemma transport_creation (b : BoundaryTwist L) (m n : ℤ) :
     transport L b m (creation L b n) = creation L b (n+m) := by sorry
+/--
+Proposed transport law on selected quotient-site representatives, with the exact seamPhase of
+x.val+m. The shifted quotient site alone is insufficient when the lifted displacement crosses
+the seam; arbitrary negative and multiple-lap m are included.
+-/
 lemma site_transport (b : BoundaryTwist L) (m : ℤ) (x : Ch01.Lattice L) :
     transport L b m (siteAnnihilation L b x) =
       seamPhase L b ((x.val : ℤ)+m) • siteAnnihilation L b (x+(m : Ch01.Lattice L)) := by sorry
+/--
+Proposed one-step boundary transition from lift L-1 to lift L, expressed as τ times the field at
+zero. It displays the physical twisted boundary term in the chosen positive orientation.
+-/
 lemma seam_transport (b : BoundaryTwist L) :
     transport L b 1 (annihilation L b ((L : ℤ)-1)) = holonomy L b • annihilation L b 0 := by sorry
+/--
+Proposed equivalence of membership in a local algebra before and after region translation.
+Individual generators acquire nonzero seam scalars, which preserve the generated algebra. The
+statement includes both directions through invertible transport.
+-/
 lemma local_transport (b : BoundaryTwist L) (m : ℤ) (I : Ch06.Region L) :
     ∀ A, A ∈ localAlgebra L b I ↔ transport L b m A ∈ localAlgebra L b (shiftRegion L m I) := by sorry
+/--
+Proposed local transport covariance with parity degree preserved. It combines local-algebra
+covariance and compatibility with the fixed parity map, keeping even and odd subspaces distinct.
+-/
 lemma local_part_transport (b : BoundaryTwist L) (m : ℤ) (I : Ch06.Region L) (σ : Ch06.Degree) :
     ∀ A, A ∈ localPart L b I σ ↔ transport L b m A ∈ localPart L b (shiftRegion L m I) σ := by sorry
+/--
+Proposed invariance of the frozen total-number operator under twisted spatial transport. Both
+translation and number are diagonal in occupation data; this does not imply that particle-
+lowering fields preserve number.
+-/
 lemma translation_preserves_number (b : BoundaryTwist L) (m : ℤ) :
     transport L b m (Ch05.totalNumber L) = Ch05.totalNumber L := by sorry
+/--
+Proposed invariance of the frozen periodic-reference bareHamiltonian under this diagonal
+translation. This Hamiltonian uses integer labels; the theorem does not identify it with a
+β-shifted physical energy or an arbitrary nonlinear dispersion.
+-/
 lemma translation_preserves_hamiltonian (b : BoundaryTwist L) (m : ℤ) :
     transport L b m (Ch05.bareHamiltonian L) = Ch05.bareHamiltonian L := by sorry
+/--
+Proposed invariance of the actual occupation-parity operator under spatial transport. Parity
+remains the grading structure used by CH06, separate from the arbitrary boundary holonomy.
+-/
 lemma translation_preserves_parity (b : BoundaryTwist L) (m : ℤ) :
     transport L b m (Ch06.parityOperator L) = Ch06.parityOperator L := by sorry
+/--
+Proposed equality T(L)=gauge(τ) on the full Fock space. Its basis factor is τ^(-#S), so full-lap
+translation need not be the identity even though quotient sites return to themselves.
+-/
 lemma full_ring_translation (b : BoundaryTwist L) :
     translation L b (L : ℤ) = gauge L (holonomy L b) := by sorry
+/--
+Proposed agreement of translation by a natural number of steps with the corresponding power of
+one-step translation. Integer translation_add supplies the representation structure; full-ring
+powers then expose holonomy.
+-/
 lemma translation_power (b : BoundaryTwist L) (m : ℕ) :
     translation L b (m : ℤ) = translation L b 1 ^ m := by sorry
+/--
+Proposed identification of the selected APBC full-lap translation with actual occupation parity.
+This follows from τ=-1 and the charge-gauge basis factor, not from graded locality alone.
+-/
 lemma apbc_full_ring_parity :
     translation L (antiperiodicTwist L) (L : ℤ) = Ch06.parityOperator L := by sorry
+/--
+Proposed full-lap transport action on an annihilator: multiply it by the boundary phase τ. It
+makes loop transport observable at the operator level even though the underlying local algebra
+is unchanged.
+-/
 lemma holonomy_acts_on_field (b : BoundaryTwist L) (n : ℤ) :
     transport L b (L : ℤ) (annihilation L b n) = holonomy L b • annihilation L b n := by sorry
+/--
+Proposed detection of equality of two holonomies by the full-lap action on the nonzero b-fields.
+Only the scalar phase from c is compared; the statement does not equate the two field families
+or their chosen step roots.
+-/
 lemma holonomy_detected_iff (b c : BoundaryTwist L) :
     (∀ n : ℤ, transport L b (L : ℤ) (annihilation L b n) =
       holonomy L c • annihilation L b n) ↔ sameHolonomy L b c := by sorry
+/--
+Proposed relation between fields defined by any two step choices: multiply the b-field by
+(c.step/b.step)^n. The denominator is nonzero by its norm certificate. This is a position-
+dependent scalar identity, not an assertion of a Fock-space gauge equivalence of kinetic
+Hamiltonians.
+-/
 lemma change_trivialization_field (b c : BoundaryTwist L) (n : ℤ) :
     annihilation L c n = (c.step/b.step)^n • annihilation L b n := by sorry
+/--
+Proposed periodicity of the step-ratio phase when the two records have equal holonomy. It is the
+compatibility needed for an alternative fundamental-domain convention on the same scalar
+boundary sector.
+-/
 lemma trivialization_ratio_periodic (b c : BoundaryTwist L) (hbc : sameHolonomy L b c) (n : ℤ) :
     (c.step/b.step)^(n+(L : ℤ)) = (c.step/b.step)^n := by sorry
+/--
+Proposed actual basis action of the complete source-sector zeroMode map. The charge is
+#S-referenceCharge before any creator or annihilator acts; this order matters in a later Klein
+factor product.
+-/
 lemma zero_mode_ket (b : BoundaryTwist L) (n referenceCharge : ℤ) (S : Ch06.Occupation L) :
     zeroMode L b n referenceCharge (A02.ket S) =
       (liftPhase L b n*A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge))) • A02.ket S := by sorry
+/--
+Proposed full-winding law of zeroMode with the same τ as the comparison fermion field. Integer
+source charge contributes a trivial full-period ζ factor, so fixed external holonomy is not
+dynamically changed by lowering that charge.
+-/
 lemma zero_mode_winding (b : BoundaryTwist L) (n referenceCharge w : ℤ) :
     zeroMode L b (n+w*(L : ℤ)) referenceCharge = holonomy L b^w • zeroMode L b n referenceCharge := by sorry
+/--
+Proposed unitary norm identity Z†Z=1 for the actual diagonal zeroMode map. All its basis phases
+have unit modulus; no analytic exponential of an unbounded operator is being introduced.
+-/
 lemma zero_mode_unitary (b : BoundaryTwist L) (n referenceCharge : ℤ) :
     LinearMap.adjoint (zeroMode L b n referenceCharge)*zeroMode L b n referenceCharge = 1 := by sorry
+/--
+Proposed ordered relation Z*c_k†=ζ^n • (c_k†*Z). Creation raises source occupation by one,
+changing the charge phase by ζ^n. The external r^n factor stays the same on both sides.
+-/
 lemma zero_mode_creation_order (b : BoundaryTwist L) (n referenceCharge : ℤ) (k : Ch01.Band L) :
     zeroMode L b n referenceCharge*Ch05.momentumCreation L k =
       A01.canonicalRoot L^n • (Ch05.momentumCreation L k*zeroMode L b n referenceCharge) := by sorry
+/--
+Proposed ordered relation Z*c_k=ζ^(-n) • (c_k*Z). Annihilation lowers occupation by one; the
+position-dependent charge factor changes while fixed full-loop external holonomy remains
+unchanged.
+-/
 lemma zero_mode_annihilation_order (b : BoundaryTwist L) (n referenceCharge : ℤ) (k : Ch01.Band L) :
     zeroMode L b n referenceCharge*Ch05.momentumAnnihilation L k =
       A01.canonicalRoot L^(-n) • (Ch05.momentumAnnihilation L k*zeroMode L b n referenceCharge) := by sorry
 
 end Fields
 
-/-- A separate source-sector boundary dictionary; not a fixed-flux field identity. -/
+/--
+The separate Jordan–Wigner sector convention τ_JW(p)=-(-1)^p for integer total particle count p.
+Even occupation selects APBC and odd occupation selects periodicity. This is a scalar dictionary
+awaiting a separately specified spin Hamiltonian/string correspondence, not a replacement for a
+fixed external twist.
+-/
 noncomputable def jwHolonomy (particles : ℤ) : ℂ := -((-1 : ℂ)^particles)
 
+/--
+Choose the centered APBC record in an even-particle source sector and the periodic record
+otherwise. This is sector-indexed boundary data. Odd particle-changing operators map between
+different such records, so later spin-model intertwiners must state both source and target
+sectors.
+-/
 noncomputable def jwSectorTwist (L : ℕ) (particles : ℤ) : BoundaryTwist L :=
   if Even particles then antiperiodicTwist L else periodicTwist L
 
+/--
+Proposed APBC value -1 of the JW dictionary in an even-particle sector. The explicit parity
+hypothesis states which sector is being selected; no spin-chain equivalence is asserted here.
+-/
 lemma jw_even (particles : ℤ) (hp : Even particles) : jwHolonomy particles = -1 := by sorry
+/--
+Proposed periodic value one of the JW dictionary in an odd-particle sector. This follows the
+recorded string convention and should not be generalized to an unspecified spin boundary
+convention.
+-/
 lemma jw_odd (particles : ℤ) (hp : Odd particles) : jwHolonomy particles = 1 := by sorry
+/--
+Proposed agreement between the selected sector's step record and its JW full-loop phase at
+positive L. This connects two definitions of the sector dictionary, rather than proving a
+physical Jordan–Wigner operator identity.
+-/
 lemma jw_sector_holonomy (L : ℕ) [NeZero L] (particles : ℤ) :
     holonomy L (jwSectorTwist L particles) = jwHolonomy particles := by sorry
+/--
+Proposed reversal of JW holonomy when the total particle count decreases by one. It exposes why
+an odd particle-changing map in a spin model cannot be treated as staying inside a single fixed-
+JW-twist sector.
+-/
 lemma jw_parity_flip (particles : ℤ) : jwHolonomy (particles-1) = -jwHolonomy particles := by sorry
 
-/-- Physical linear-dispersion labels require an offset, not merely its boundary phase. -/
+/--
+The real linear-dispersion label k+β, in dimensionless momentum units before an optional 2π/L
+prefactor. This retains β explicitly because equal boundary phases can have different real
+lifts. Connect it to fields by choosing b=angleTwist L β in the downstream model.
+-/
 def physicalMomentum (L : ℕ) (β : ℝ) (k : Ch01.Band L) : ℝ := (k.val : ℝ)+β
 
+/--
+Sum the real shifted momentum labels over the occupied finite set S. This implements uniform
+linear dispersion only; β contributes once per occupied mode. Its connection to a twisted field
+requires the same angular choice b=angleTwist L β.
+-/
 def physicalOccupationEnergy (L : ℕ) (β : ℝ) (S : Ch06.Occupation L) : ℝ :=
   ∑ k ∈ S, physicalMomentum L β k
 
+/--
+Subtract the energy of the existing CH05 sea from the shifted occupation energy. Both terms use
+the same β and reference occupations, so the shift is β times relative charge. Choosing another
+physical sea requires a separate definition and bridge.
+-/
 def physicalRelativeEnergy (L : ℕ) (β : ℝ) (S : Ch06.Occupation L) : ℝ :=
   physicalOccupationEnergy L β S - physicalOccupationEnergy L β (Ch05.seaConfiguration L)
 
+/--
+The real charge-energy polynomial N(N+1)/2+βN associated with the same-sea linear convention.
+Its definition alone does not prove that it is a minimum or that the charge sector is
+admissible; those obligations belong to CH07. At APBC it can be half-integral, so it must not
+replace an integer excitation label indiscriminately.
+-/
 noncomputable def physicalGroundEnergy (β : ℝ) (N : ℤ) : ℝ := (N : ℝ)*((N : ℝ)+1)/2+β*(N : ℝ)
 
+/--
+Proposed decomposition of shifted occupation energy into the frozen integer sum plus β times
+total particle count. This states its parameter dependency explicitly and fixes the distinction
+between total and relative charge.
+-/
 lemma physical_energy_shift (L : ℕ) (β : ℝ) (S : Ch06.Occupation L) :
     physicalOccupationEnergy L β S = (Ch05.occupationEnergy L S : ℝ)+β*(S.card : ℝ) := by sorry
+/--
+Proposed same-sea subtraction formula: frozen relative integer energy plus β times S.card minus
+the sea cardinality. A uniform shift and identical reference sea are built into the definitions;
+this is not a result for arbitrary dispersion.
+-/
 lemma physical_relative_shift (L : ℕ) (β : ℝ) (S : Ch06.Occupation L) :
     physicalRelativeEnergy L β S =
       ((Ch05.occupationEnergy L S-Ch05.seaEnergy L : ℤ) : ℝ)+
       β*((S.card : ℝ)-((Ch05.seaConfiguration L).card : ℝ)) := by sorry
+/--
+Proposed β independence after subtracting the matching charge polynomial from the physical
+relative energy. Positive even length supplies the half-filled reference charge S.card-h. This
+algebraic bridge does not itself prove excitation nonnegativity or ground minimality, and it
+must not be applied with a different sea or unmatched β.
+-/
 lemma excitation_twist_cancel (h : ℕ) (hh : 0 < h) (β : ℝ) (S : Ch06.Occupation (2*h)) :
     physicalRelativeEnergy (2*h) β S-physicalGroundEnergy β ((S.card : ℤ)-(h : ℤ)) =
       ((Ch05.occupationEnergy (2*h) S-Ch05.seaEnergy (2*h) : ℤ) : ℝ)-
         physicalGroundEnergy 0 ((S.card : ℤ)-(h : ℤ)) := by sorry
+/--
+Proposed specialization of the charge polynomial at β=-1/2 to N²/2. This makes the physical APBC
+energy convention explicit, including half-integral values for odd N, while leaving the existing
+integer reference energy unchanged.
+-/
 lemma apbc_ground_energy (N : ℤ) : physicalGroundEnergy (-1/2) N = (N : ℝ)^2/2 := by sorry
 
 end Bosonize.Ch06Ext
