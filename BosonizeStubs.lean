@@ -1,4 +1,5 @@
 import Bosonize
+import BosonizeStubs.Ch08Boson
 
 /-!
 # Bosonize Staging Library
