@@ -6,5 +6,6 @@
   "Bosonize/Core/Ch03Fourier.lean": "6d0ba9cd4751c7cb321bc8cc786f355b768ee84a28ea6251628e495972160fed",
   "Bosonize/Core/Ch04CARFock.lean": "8be8dacb9212e7535e1fa7357398bb5b6a7cae6188d6d8643be6548d0ec422e0",
   "Bosonize/Core/Ch05Fermions.lean": "a19fed9d032daaa60df6bda4980b7470f10dd3e7333a63aec369a41e75c4dd81",
+  "Bosonize/Core/Ch06Ext.lean": "d6a7963719d97b7efb61b82a13e723551a6a82affa69a8494e27d8368896a997",
   "Bosonize/Core/Ch06LocalNet.lean": "a60c83172eb262f26c73de11e681dd0da373713328edfa789ad7f0486427094f"
 }

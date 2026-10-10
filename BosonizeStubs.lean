@@ -1,5 +1,4 @@
 import Bosonize
-import BosonizeStubs.Ch06Ext
 import BosonizeStubs.A03EnergyBudgets
 import BosonizeStubs.Ch07VacuumBudget
 

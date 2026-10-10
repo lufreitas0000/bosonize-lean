@@ -6,6 +6,7 @@ import Bosonize.Core.A02CARHilbert
 import Bosonize.Core.Ch04CARFock
 import Bosonize.Core.Ch05Fermions
 import Bosonize.Core.Ch06LocalNet
+import Bosonize.Core.Ch06Ext
 
 /-!
 # Bosonize Core Library

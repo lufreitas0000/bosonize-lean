@@ -1,216 +1,3 @@
-# CH06 extension companion — boundary holonomy and ring transport
-
-Status (2026-10-09): **All 72 proofs complete; redundant-length interface cleanup awaits approval.** Approved interface baseline: `b92dd3b`; Phase A documentation checkpoint: `b55cf31`. The extension contains 29 complete data declarations and 72 theorem proofs. It imports frozen CH06 and is exposed by `BosonizeStubs`; no existing Core or approved interface is changed.
-
-The design sections below retain the Phase A rationale; their references to proposed stubs describe that earlier design. All 72 listed contracts now have complete proofs. The Phase B validation section records the current evidence and the separate length-assumption cleanup request.
-
-## Phase A design record and source reconciliation
-
-The user's request authorizes a separate `ch06_ext` module. Adopt the corrected contracts in [the boundary issue review](../../../note/issue_twisted_boundary_conditions_2026-10-09.md), the actual frozen CH01/A01/CH05/CH06 carriers, and the repository formalizer skill. Read the current [CH06 note](../../../notes/md/ch06_lattice_AQFT_net.md), [TOC](../../../notes/md/TOC.md) and [appendix index](../../../notes/appendices/README.md). Their progress summaries can be stale; compiler sources and locks establish implemented status. The issue review reconciles the user's proposed CH01/A05/CH14 twist sections with vDS and the implemented Fourier convention. Preserve the locally edited source notes; this draft does not validate every statement in those notes.
-
-Graded exchange is distinct from spatial holonomy. The extension covers every external scalar U(1) boundary phase on a positive-length ring through a chosen uniform per-site phase. General non-Abelian transport, arbitrary link gauges and a Jordan–Wigner spin-model equivalence are outside this interface. Arbitrary real offsets are allowed, including irrational ones; ℂ is the implemented scalar carrier. No fractional power of a primitive root or unspecified complex-power branch is introduced.
-
-## Parameters, carriers and implicit dependencies
-
-`BoundaryTwist L` stores a complex `step` r and an actual norm-one certificate. `holonomy L b=r^L` is derived. `angleTwist L β` constructs r=exp(2πiβ/L) with a library-proved certificate; no theorem stub is consumed by data. `angle_twist_surjective` and `holonomy_surjective` are proposed coverage obligations for L>0. Real β records a physical momentum offset; holonomy alone does not select its lift. The periodic object has r=1; centered APBC uses β=-1/2 so the existing band (-h,h] becomes physical half-integers (-h-1/2,h-1/2].
-
-The integer mode index, quotient lattice and finite Fock carrier are reused. The twist is explicit in fields, characters, translations, transport and zero modes. Downstream code can bind `variable {b : Ch06Ext.BoundaryTwist L}` and make b an implicit function argument; Lean still records that dependency. No global typeclass chooses an invisible twist. Equal holonomy does not mean equal step or equal definitions. Root ratios have a proposed periodicity lemma; no unsupported unitary equivalence of finite kinetic spectra is asserted.
-
-Most scalar/operator review contracts are drafted in the common positive-ring context `(L : ℕ) [NeZero L]`. Data also elaborate for L=0 where their underlying carriers exist, but no ring or holonomy coverage interpretation is assigned there. The excitation-energy cancellation explicitly uses L=2*h, h>0, and the same reference sea.
-
-## How later chapters select the algebra and operators
-
-The shared carrier stays `Ch05.Operators L`. Retain frozen `Ch06.localAlgebra` and
-`Ch06.localPart` for support/grading calculations; use the extension's fields, kernels,
-transport and zero modes whenever boundary data matter. After proof, `local_algebra_eq`
-and `local_part_eq` transfer between the twisted-generator and frozen presentations.
-Using the CH06 algebra does not select periodic transport or erase an operator's twist.
-
-For a uniform angular model choose `b = angleTwist L β` and use the same β in physical
-momentum/energy and the same b in every comparison field, transport and zero mode.
-A theorem with `(b : BoundaryTwist L)` is universal in b; an implicit `{b : BoundaryTwist L}`
-argument hides only its spelling at a call site, not its mathematical dependency.
-The general development retains b until an explicit specialization or a proved
-cancellation removes it. Independent species will need a family of records.
-
-The Lean module now has expanded documentation before all 29 data declarations and
-72 theorem declarations, plus field-level documentation and a notation/API guide. Comments
-change no normalized declarations, theorem statements, definitions or proof bodies.
-
-## Lifted fields, Fourier kernels and locality
-
-Define c_b(n)=r^n c_0([n]) on ℤ. Creation uses the conjugate phase; its equality to the actual Hilbert adjoint is a stub. Site fields use x.val as a selected fundamental-domain section. A nontrivial holonomy field cannot be a representative-independent scalar-valued function on ZMod L; `quotient_descent_iff` includes a genuine nonzero annihilator witness to detect this obstruction.
-
-`windingNumber n=n/L` uses integer Euclidean division, including negative n. `seamPhase` is τ to that winding power. The decomposition and lifted-to-site relation explain every wrap, and `site_transport` retains the seam factor for arbitrary integer shifts. Winding laws cover multiple laps in either direction.
-
-The Fourier kernel is r^n ζ^(kn), using the frozen positive Fourier convention. Orthogonality and inverse-transform statements are exact finite sums. Site CAR is canonical; lifted mixed CAR retains r^(n-m) when the residues coincide. Same-species density is the actual untwisted position number. Local algebras and parity subspaces are constructed from the twisted site fields, with equality to frozen CH06 as proof obligations. Scalar cancellation explains reuse of graded locality; locality itself does not encode transport.
-
-## Transport, holonomy and zero modes
-
-On the actual momentum occupation ket δ_S, translation by m is defined as
-
-    T_b(m) δ_S = r^(-m #S) ζ^(-m Σk∈S k) δ_S.
-
-The sign is fixed by positive-kernel annihilator covariance. Define operator transport as T_b(m) A T_b(-m) by complete linear-map data, then propose composition, actual-adjoint, unitarity, star-preserving algebra-automorphism existence and field covariance contracts. This order avoids defining an automorphism using an unproved certificate. Region covariance includes the graded subspaces; number, periodic reference Hamiltonian and parity are preserved.
-
-A full lap is the charge gauge τ^(-#S), so its conjugation acts on an annihilator by τ. At APBC the full-lap operator is occupation parity. Holonomy detection compares this action on nonzero fields. The record stores a transport trivialization rather than merely the unchanged local algebra.
-
-`zeroMode` is a concrete diagonal source-sector phase r^n ζ^(n(#S-referenceCharge)). Basis action, monodromy, unitarity and creator/annihilator ordering factors are stubs. Later Klein maps must use the same b, orientation and source charge. This is neither an implemented Klein map nor a proof of a finite vertex equality. Matching holonomy remains necessary but insufficient for the conditional CH14 criterion.
-
-`jwHolonomy particles=-(-1)^particles` and `jwSectorTwist` provide the separate parity-sector dictionary: even occupations choose APBC, odd occupations periodic. The parity-flip stub makes sector changes visible. They do not assert that a fixed-flux field is already a Jordan–Wigner spin-chain field; odd operators connecting source/target sectors need separately typed intertwiners and a spin Hamiltonian/string convention.
-
-## Physical energy and downstream plan
-
-Physical labels k+β and occupation energies are real-valued. With the same sea, relative energy shifts by β times relative charge. The candidate charge polynomial is t_β(N)=N(N+1)/2+βN. Subtracting it cancels β from excitation energy, with APBC t=N²/2. No nonnegative/minimal-ground claim is built into these definitions; proving those interpretations uses the reviewed CH07 ground and admissibility contracts. Arbitrary dispersion, an alternative sea, or different species twists need their own bridge.
-
-A03 coordinate calculus can stay generic. CH07's proposed integer excitation data can stay as a reference model after this real-energy bridge is proved; its integer triangular charge term must not be called the physical APBC energy. Uniform twist does not remove finite-band edge or Umklapp obligations.
-
-Implemented Phase B dependency order:
-
-1. Unit phases, root/angle coverage, integer winding, orthogonality and inverse Fourier transform.
-2. Actual adjoints, winding, nonzero-action/descent and site/lift CAR.
-3. Density cancellation, local algebra/grade identification and inherited graded locality.
-4. Translation basis action, group law/unitarity, transport automorphism and seam/region covariance; full-lap gauge and APBC parity.
-5. Zero-mode ordering and monodromy; the standalone JW parity dictionary.
-6. Real physical-energy bridge, then reuse it when proving the already drafted A03/CH07 budgets.
-
-For CH09–CH12, establish twist cancellation for the specified same-species bilinears and fixed-charge excitation budgets. For CH13–CH14/A05, retain a species-indexed family of b and explicitly typed sector transitions. Cross-species bilinears with different twists do not automatically have trivial holonomy. For CH15 onward, separate periodic oscillator data from zero-mode winding, chirality signs, physical charge-energy terms and parameter-dependent observables. Each later definition must retain the necessary parameters; phase independence is a theorem where phases actually cancel, not a global assumption.
-
-## Phase B validation and review boundary
-
-All 72 theorem bodies compile with no placeholders. The fresh audit of all 29 data declarations and 72 theorems contains only propext, Classical.choice and Quot.sound, with no sorryAx. Both library builds and all 69 guard regression tests pass. Native Lean MCP diagnostics complete with success=true, partial=false and no failed dependencies; the original locked source has eight unused-section-variable warnings and no sorry diagnostics. Native goal inspection confirmed the angular holonomy proof state. The MCP local-search tool failed because rg was absent from its own PATH; shell rg and the installed library sources supplied retrieval while native goals/diagnostics worked.
-
-The strict working-tree guard preserves 457 statements/342 commands and all eight complete Core hashes. Against the committed Ch06Ext baseline b92dd3b, the scoped Ch06Ext entry is unchanged; a whole-repository strict committed-baseline check still flags the separate A03/CH07 local lock additions. Those entries are preserved and not included in the Ch06Ext approval/commit. No full committed-baseline CI success is claimed.
-
-A complete temporary copy with exactly the [12 proposed length-assumption omissions](../../../note/ch06ext_phase_b_interface_cleanup_2026-10-09.md) compiles with warnings treated as errors. The original source retains the approved headers pending explicit cleanup approval. No warning is suppressed, and no frozen Core or data definition is changed. Phase B acceptance is pending that interface review; Phase C is not authorized or started.
-
-The proof work uses unit-phase algebra and exact primitive-root periodicity, actual finite Hilbert adjoints and basis extension, CAR scalar cancellation, algebraic adjoin induction, and the concrete diagonal translation/zero-mode actions. The momentum basis proofs explicitly reconcile the subtype and order-derived DecidableEq choices on Finset insert/erase. The physical-energy bridge uses the actual sea cardinality and real casts; no spin-chain equivalence, universal finite vertex identity, or new dispersion model is proved.
-
-One primary formalizer used the repository skill; no subagents were dispatched. The expanded declaration comments are retained and updated to reflect proved identities. Source-note reconciliation and future multi-species/spin-sector constructions remain separate work. The proof completion does not resolve every source-prose issue in the original boundary report.
-
-## Reviewed source provenance
-
-| Source | SHA-256 |
-| --- | --- |
-| `note/issue_twisted_boundary_conditions_2026-10-09.md` | `6ad2ab7f27a86457dc0e645aecb5412ea3a67cf62ce1f5db06d6a8d57fdc0eab` |
-| `notes/md/ch06_lattice_AQFT_net.md` | `4971a838dbb9255219d9e2b9e1d2039d0865111c6797ba39a86e62d966c39a91` |
-| `notes/md/TOC.md` | `5ea6b32bdecf8f9c65a345dc12356ff767b176c0b131e32acdb836778b054977` |
-| `notes/appendices/README.md` | `ce871fab4a58ecb41a2b99d4ad4b055bb55e400753249fa88edde45fd15ebcd9` |
-| `Bosonize/Core/Ch06LocalNet.lean` | `a60c83172eb262f26c73de11e681dd0da373713328edfa789ad7f0486427094f` |
-| `Bosonize/Core/Ch05Fermions.lean` | `a19fed9d032daaa60df6bda4980b7470f10dd3e7333a63aec369a41e75c4dd81` |
-| `.agents/skills/formalizer/SKILL.md` | `b65c51851fadb8cd5469c25bfaf34414a074b59e8f89fc7a6b2097969c789aaa` |
-
-## Fresh data and theorem axiom output
-
-```text
-'Bosonize.Ch06Ext.BoundaryTwist' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angleTwist' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.periodicTwist' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.antiperiodicTwist' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.liftPhase' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.sameHolonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.creation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.siteAnnihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.siteCreation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.density' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.twistedCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.localGenerators' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.localAlgebra' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.localPart' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.gauge' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.windingNumber' does not depend on any axioms
-'Bosonize.Ch06Ext.seamPhase' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.shiftRegion' depends on axioms: [propext, Quot.sound]
-'Bosonize.Ch06Ext.zeroMode' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jwHolonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jwSectorTwist' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.physicalMomentum' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.physicalOccupationEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.physicalRelativeEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.physicalGroundEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.twist_step_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lift_phase_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lift_phase_add' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lift_phase_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angle_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angle_twist_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.periodic_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.antiperiodic_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angle_integer_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.angle_root_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.winding_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.seam_phase_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.twisted_character_orthogonality' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.twisted_fourier_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.annihilation_fourier' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.creation_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.annihilation_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.creation_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lift_site_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.periodic_field' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.antiperiodic_field' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.annihilation_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.quotient_descent_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.site_annihilation_car' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.site_creation_car' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.site_mixed_car' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.lifted_mixed_car' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.density_untwisted' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.density_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.local_algebra_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.local_part_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.graded_locality' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_add' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_unitary' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_add' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_star' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_automorphism_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_annihilation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.transport_creation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.site_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.seam_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.local_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.local_part_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_preserves_number' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_preserves_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_preserves_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.full_ring_translation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.translation_power' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.apbc_full_ring_parity' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy_acts_on_field' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.holonomy_detected_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.change_trivialization_field' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.trivialization_ratio_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_winding' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_unitary' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_creation_order' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.zero_mode_annihilation_order' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jw_even' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jw_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jw_sector_holonomy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.jw_parity_flip' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.physical_energy_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.physical_relative_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.excitation_twist_cancel' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch06Ext.apbc_ground_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
-```
-
-## Exact Lean source snapshot
-
-Module SHA-256: `5e30eaadf52b88254b2840b5f5f4e5e0e6b4becf5b318ec797a902e83888b1c6`. The block below matches the source byte-for-byte.
-
-```lean
 module
 
 public import Bosonize.Core.Ch06LocalNet
@@ -218,7 +5,7 @@ public import Mathlib.Analysis.Complex.Trigonometric
 
 /-!
 # CH06 extension: scalar boundary holonomy and covariant ring transport
-Phase B: complete proofs; redundant length assumptions await interface review.
+Phase C: audited, promoted and frozen after approved length-assumption cleanup.
 External scalar twists are independent of fermionic grading. Integer lifts expose the seam.
 
 ## Reading the notation and choosing downstream APIs
@@ -458,6 +245,7 @@ noncomputable def zeroMode (b : BoundaryTwist L) (n : ℤ) (referenceCharge : �
   A02.extendBasis (fun S =>
     (liftPhase L b n * A01.canonicalRoot L^(n*((S.card : ℤ)-referenceCharge))) • A02.ket S)
 
+omit [NeZero L] in
 /--
 consequence of norm_step: the selected step phase cannot vanish. This supplies the
 nonzero condition needed for integer negative powers, division by step, and invertible scalar
@@ -469,6 +257,7 @@ lemma twist_step_ne_zero (b : BoundaryTwist L) : b.step ≠ 0 := by
   rw [h, norm_zero] at hn
   exact zero_ne_one hn
 
+omit [NeZero L] in
 /--
 norm-one property of the full-loop phase r^L. It permits treating holonomy as scalar
 U(1) boundary data and using its conjugate as its inverse. No restriction to rational angles or
@@ -477,6 +266,7 @@ periodic/APBC phases is imposed.
 lemma holonomy_norm (b : BoundaryTwist L) : ‖holonomy L b‖ = 1 := by
   simp [holonomy, norm_pow, b.norm_step]
 
+omit [NeZero L] in
 /--
 norm-one property of r^n for every integer n, including negative positions. This is the
 scalar cancellation needed for actual adjoints, densities and site mixed CAR.
@@ -484,6 +274,7 @@ scalar cancellation needed for actual adjoints, densities and site mixed CAR.
 lemma lift_phase_norm (b : BoundaryTwist L) (n : ℤ) : ‖liftPhase L b n‖ = 1 := by
   simp [liftPhase, norm_zpow, b.norm_step]
 
+omit [NeZero L] in
 /--
 multiplicative law r^(n+m)=r^n*r^m for integer displacement. It is the scalar transport
 composition law; nonzero step is essential for unrestricted integer exponents.
@@ -492,6 +283,7 @@ lemma lift_phase_add (b : BoundaryTwist L) (n m : ℤ) :
     liftPhase L b (n+m) = liftPhase L b n * liftPhase L b m := by
   exact zpow_add₀ (twist_step_ne_zero L b) n m
 
+omit [NeZero L] in
 /--
 phase law for w signed laps: translating n by wL multiplies its phase by τ^w. This
 distinguishes step transport from full-loop holonomy and covers multiple positive or negative
@@ -548,6 +340,7 @@ lemma holonomy_surjective (u : ℂ) (hu : ‖u‖ = 1) :
       push_cast
       ring
     _ = u := congrArg BoundaryTwist.step hβ
+omit [NeZero L] in
 /--
 full-loop phase one for the selected periodic step r=1. This is the trivial external
 boundary condition and does not follow merely from fermionic grading.
@@ -575,6 +368,7 @@ lemma angle_integer_holonomy (β : ℝ) (z : ℤ) :
   have he : (((2*Real.pi*(β+(z : ℝ)) : ℝ) : ℂ)*Complex.I) =
       (((2*Real.pi*β : ℝ) : ℂ)*Complex.I)+(z : ℂ)*(2*(Real.pi : ℂ)*Complex.I) := by push_cast; ring
   rw [he, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+omit [NeZero L] in
 /--
 change of the chosen step under β ↦ β+1: multiply it by the frozen canonical root ζ. It
 makes the extra choice beyond holonomy explicit and fixes the positive Fourier orientation.
@@ -887,6 +681,7 @@ lemma graded_locality (b : BoundaryTwist L) (I J : Ch06.Region L) (hIJ : Disjoin
   rw [local_part_eq] at hA hB
   exact Ch06.twisted_locality L I J hIJ σ τ A B hA hB
 
+omit [NeZero L] in
 /--
 basis-action formula for the complete diagonal translation definition. It supplies the
 concrete scalar to check group laws, adjoints and covariance on actual occupation kets. The •
@@ -897,6 +692,7 @@ lemma translation_ket (b : BoundaryTwist L) (m : ℤ) (S : Ch06.Occupation L) :
       (b.step^(-m*(S.card : ℤ))*A01.canonicalRoot L^(-m*Ch05.occupationEnergy L S)) • A02.ket S := by
   exact A02.extend_basis_ket _ S
 
+omit [NeZero L] in
 /--
 identity action for zero displacement. Together with translation_add it supplies the
 neutral element of the integer translation representation.
@@ -950,6 +746,7 @@ lemma translation_unitary (b : BoundaryTwist L) (m : ℤ) :
   constructor
   · rw [← translation_add, add_neg_cancel, translation_zero]
   · rw [← translation_add, neg_add_cancel, translation_zero]
+omit [NeZero L] in
 /--
 expansion of the linear transport definition as the ordered product T(m)*A*T(-m). This
 fixes which map acts on which side and avoids an accidental reversal of conjugation.
@@ -1284,6 +1081,7 @@ lemma change_trivialization_field (b c : BoundaryTwist L) (n : ℤ) :
   rw [div_zpow, smul_smul]
   congr 1
   field_simp [zpow_ne_zero n (twist_step_ne_zero L b)]
+omit [NeZero L] in
 /--
 periodicity of the step-ratio phase when the two records have equal holonomy. It is the
 compatibility needed for an alternative fundamental-domain convention on the same scalar
@@ -1297,6 +1095,7 @@ lemma trivialization_ratio_periodic (b c : BoundaryTwist L) (hbc : sameHolonomy 
     have he : c.step^L=b.step^L := hbc.symm
     rw [he, div_self (pow_ne_zero L (twist_step_ne_zero L b))]
   rw [zpow_add₀ hr, zpow_natCast, hp, mul_one]
+omit [NeZero L] in
 /--
 actual basis action of the complete source-sector zeroMode map. The charge is
 #S-referenceCharge before any creator or annihilator acts; this order matters in a later Klein
@@ -1543,4 +1342,3 @@ lemma apbc_ground_energy (N : ℤ) : physicalGroundEnergy (-1/2) N = (N : ℝ)^2
   ring
 
 end Bosonize.Ch06Ext
-```

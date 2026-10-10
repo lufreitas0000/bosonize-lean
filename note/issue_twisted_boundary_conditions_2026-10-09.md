@@ -1,6 +1,6 @@
 # Issue review: spatial boundary twists versus graded locality
 
-Date: 2026-10-09. Status: **Ch06Ext proofs complete; length cleanup and source reconciliation pending**. Baseline: `9f56510` (CH01–CH06/A01/A02 frozen; A03/CH07 Phase A unlocked). This report reviews the user's pasted note and the current, locally edited CH01/A05/CH14 sections. Those source edits are preserved; this report does not approve their new claims as implemented mathematics. Frozen sources and locks are preserved. The separately authorized extension now has complete staging data and unproved review contracts; see the addendum below.
+Date: 2026-10-09. Status: **Ch06Ext frozen in Core; source reconciliation and model obligations pending**. Baseline: `9f56510` (CH01–CH06/A01/A02 frozen; A03/CH07 Phase A unlocked). This report reviews the user's pasted note and the current, locally edited CH01/A05/CH14 sections. Those source edits are preserved; this report does not approve their new claims as implemented mathematics. Frozen sources and locks are preserved. The separately authorized extension now has 72 proved contracts in Core; see the Phase C addendum below.
 
 ## Finding and scope
 
@@ -77,12 +77,16 @@ A03's generic support/projection calculus is independent of the boundary phase. 
 - Literature checked from the primary vDS PDF's native text and the cited teaching source. No OCR or source-note edits were used.
 - Existing Core hash guard and interface baseline remain intact; the two Phase A drafts remain unlocked. Proposed transport, zero-mode and twist-energy contracts have not been implemented or proved.
 
-## Authorized extension draft
+## Historical Phase A draft checkpoint
 
-The user authorized a separate CH06 extension. [Ch06Ext](../BosonizeStubs/Ch06Ext.lean) and its [companion notebook](../docs/companion/BosonizeStubs/Ch06Ext.md) now contain 29 complete data declarations and 72 unproved contracts for arbitrary unit phases, integer lifts/winding, Fourier/CAR, covariant transport, holonomy, zero modes, the JW parity dictionary and the real-energy bridge. Both builds and native MCP diagnostics pass with only expected sorry warnings; definitions have no sorryAx dependencies. Eight frozen Core sources and all 271 approved statements/225 commands remain intact against `9734230`. Strict verification rejects the three unlocked Phase A drafts. The earlier implementation inventory describes frozen Core; these new staging statements are not proved yet. The earlier numerical and literature checks remain historical evidence.
+The user authorized a separate CH06 extension. [Ch06Ext](../Bosonize/Core/Ch06Ext.lean) and its [companion notebook](../docs/companion/Bosonize/Core/Ch06Ext.md) now contain 29 complete data declarations and 72 unproved contracts for arbitrary unit phases, integer lifts/winding, Fourier/CAR, covariant transport, holonomy, zero modes, the JW parity dictionary and the real-energy bridge. Both builds and native MCP diagnostics pass with only expected sorry warnings; definitions have no sorryAx dependencies. Eight frozen Core sources and all 271 approved statements/225 commands remain intact against `9734230`. Strict verification rejects the three unlocked Phase A drafts. The earlier implementation inventory describes frozen Core; these new staging statements are not proved yet. The earlier numerical and literature checks remain historical evidence.
 
 Review the extension before locking/Phase B. Source corrections and actual spin-sector intertwiners remain open, and the issue is not resolved by this draft. The bridge is contained in Ch06Ext so existing A03/CH07 interfaces remain available for their own review.
 
-## Phase B proof checkpoint
+## Historical Phase B proof checkpoint
 
 After explicit authorization, all 72 Ch06Ext contracts now have compiler-checked proofs, and the fresh data/theorem audit excludes sorryAx. The proof/interface baseline is b92dd3b. The existing fields, characters, local algebras, transport, full-ring holonomy, zero modes and same-sea real-energy bridge are established in staging. The twelve redundant length assumptions await their [exact cleanup review](ch06ext_phase_b_interface_cleanup_2026-10-09.md); no Core promotion is started. The JW results prove the scalar parity-sector dictionary, not a spin-chain equivalence. The earlier source-note corrections, multi-species comparisons and conditional vertex criterion remain separate obligations, so this issue is not marked fully resolved.
+
+## Phase C addendum
+
+The user authorized promotion after the reviewed twelve-lemma cleanup (`1a562b7`). All 72 contracts are proved and Ch06Ext is frozen in Core. The extension supplies scalar U(1) holonomy, transport, zero modes and the same-sea linear-energy bridge; earlier findings about the original periodic operators remain historical comparisons. Source-note reconciliation, actual spin-chain intertwiners and a finite vertex identity remain separate obligations.
