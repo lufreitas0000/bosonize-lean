@@ -20,6 +20,6 @@ The strict stub guard verified 579 statements and 456 frozen commands. The Core 
 
 ## Checkpoint and usage
 
-Task-start copies and validation/review evidence are retained in `/tmp/bosonize-markdown-review/`. Formatting on previously clean notes is committed separately. Notes with pre-existing user edits retain their complete working copies, including the formatting corrections, without absorbing those earlier edits into this commit.
+Task-start copies and validation/review evidence are retained in `/tmp/bosonize-markdown-review/`. Formatting on previously clean notes was committed separately as `fb0c1ea`. The user subsequently authorized committing and pushing the remaining working changes before the pause. This follow-up includes the ten previously edited notes and their formatting corrections, three existing suggestion-file deletions, and the existing lock-file Unicode serialization change. Parsed lock JSON content is unchanged.
 
 The usage guard reported 8% remaining in the five-hour window and 10% remaining weekly. The five-hour threshold has been reached; finish this validation checkpoint and recommend pausing before further development.

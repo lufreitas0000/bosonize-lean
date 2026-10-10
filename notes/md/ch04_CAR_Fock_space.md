@@ -5,141 +5,215 @@
 
 ### Chapter 4: CAR Representation and Fock Space
 
-In algebraic quantum field theory, prior to mapping fermionic modes to spatial or momentum coordinates, we construct the algebra over a generic, abstract set of single-particle states. The algebraic formalization strictly follows [Appendix A02](../appendices/a02_car_hilbert_and_normal_ordering.md).
+In algebraic quantum field theory, prior to mapping fermionic modes to spatial or momentum coordinates, we construct the algebra over a generic, abstract set of single-particle states. The algebraic formalization strictly follows [Appendix A02](../appendices/a02_car_hilbert_and_normal_ordering.md) and is implemented in `Bosonize.A02` and `Bosonize.Ch04`.
 
-Let $\iota$ be a finite, linearly ordered index set. The linear ordering is strictly necessary to unambiguously fix the phases acquired during fermionic anticommutation.
+Let $\iota$ be a finite, linearly ordered index set (`[Fintype ι] [LinearOrder ι]`). The linear ordering is strictly necessary to unambiguously fix the phases acquired during fermionic anticommutation.
 
-**Examples of $\iota$:**
+**Canonical Examples of $\iota$:**
+
 1. A finite set of abstract modes $\iota = \{1, \dots, N\}$.
-2. The discrete Brillouin zone $\Lambda^*$.
-3. A product space introducing internal degrees of freedom: $\iota = \{R, L\} \times \Lambda^*$ (lexicographically ordered to avoid silent phase ambiguity).
+
+2. The discrete Brillouin zone $\Lambda^*$ ordered as $\{-h+1, \dots, h\}$.
+
+3. Spinful chiral fermions: $\iota = \{R, L\} \times \{\uparrow, \downarrow\} \times \Lambda^*$ endowed with lexicographic order to eliminate silent sign ambiguities.
 
 ---
 
-#### 4.1 Algebraic and Functional Setting
+#### 4.1 The Two-Tiered CAR Hierarchy: Algebraic vs. Hilbert Setting
 
-To bridge abstract algebra to quantum states without resorting to unbounded topological spaces, we work in a finite-dimensional complex Euclidean space.
+To cleanly delineate between pure algebraic consequences and inner-product geometric properties, we establish a two-tiered definition:
 
-**Mathematical Background (Euclidean Space):**
-For any finite set $X$, the space $\ell^2(X)$ is the complex vector space equipped with the standard canonical inner product. To avoid conflating the standard product norm with the Euclidean norm, we explicitly use `EuclideanSpace ℂ X` (or equivalent matrix conjugate-transpose algebra) to formally define adjoints.
-
+**Definition 4.1a (Abstract Algebraic CAR — Tier 1).**
+Let $V$ be any complex vector space (`[AddCommGroup V] [Module ℂ V]`). An Algebraic CAR representation over $\iota$ on $V$ (`Bosonize.A02.AlgebraicCAR`) consists of two families of linear operators $c, c^\dagger : \iota \to \mathrm{End}_{\mathbb{C}}(V)$ such that for all $i, j \in \iota$:
 $$
-\forall f, g \in \ell^2(X), \quad \langle f \mid g \rangle := \sum_{x \in X} \overline{f(x)} \, g(x) \tag{4.1}
+\{c_i^{\phantom{\dagger}}, c_j^{\phantom{\dagger}}\} = 0, \quad \{c_i^\dagger, c_j^\dagger\} = 0, \quad \{c_i^{\phantom{\dagger}}, c_j^\dagger\} = \delta_{ij} I_V \tag{4.3}
 $$
+where $\{A, B\} := AB + BA$.
 
-For any linear operator $A \in \mathrm{End}_{\mathbb{C}}(\ell^2(X))$, its adjoint $A^\dagger$ is the unique operator satisfying:
+*Purely Algebraic Theorems (`A02.AlgebraicCAR`):*
+Without requiring any inner product, Hilbert adjoints, or topological convergence, the algebraic anticommutators alone prove:
 
+1. **Bilinear Commutator Identity (`car_bilinear_commutator`):**
+   $$
+   [c_a^\dagger c_b^{\phantom{\dagger}}, c_c^\dagger c_d^{\phantom{\dagger}}] = \delta_{bc} c_a^\dagger c_d^{\phantom{\dagger}} - \delta_{ad} c_c^\dagger c_b^{\phantom{\dagger}} \tag{4.3a}
+   $$
+
+2. **Number Commutators with Generators (`car_number_creation_commutator`, `car_number_annihilation_commutator`):**
+   $$
+   [n_i, c_j^\dagger] = \delta_{ij} c_j^\dagger, \qquad [n_i, c_j^{\phantom{\dagger}}] = -\delta_{ij} c_j^{\phantom{\dagger}} \tag{4.3b}
+   $$
+   where $n_i := c_i^\dagger c_i$.
+
+3. **Number Idempotence & Commutativity (`car_number_idempotent`, `car_number_commute`):**
+   $$
+   n_i^2 = n_i, \qquad [n_i, n_j] = 0 \tag{4.3c}
+   $$
+
+**Definition 4.1b (Hilbert Space CAR Representation — Tier 2).**
+Let $V$ be a finite-dimensional complex Euclidean space (`[NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V]`). A full CAR representation (`Bosonize.A02.CAR`) is an `AlgebraicCAR` that additionally satisfies **Hilbert Adjoint Compatibility**:
 $$
-\forall f, g \in \ell^2(X), \quad \langle f \mid A g \rangle = \langle A^\dagger f \mid g \rangle \tag{4.2}
+\forall i \in \iota, \quad c_i^\dagger = (c_i)^\dagger \tag{4.3d}
 $$
+where $(A)^\dagger$ is the unique operator satisfying $\langle f \mid A g \rangle = \langle A^\dagger f \mid g \rangle$.
 
-**Definition 4.1 (CAR Representation).**
-Let $V$ be a finite-dimensional complex Euclidean space. A Canonical Anticommutation Relations (CAR) representation over a finite index set $\iota$ on $V$ is a pair of maps $c, c^\dagger : \iota \to \mathrm{End}_{\mathbb{C}}(V)$ such that:
-1. **Adjoint Compatibility:** For all $i \in \iota$, $c_i^\dagger = (c_i)^\dagger$ is the actual Hilbert adjoint of $c_i$.
-2. **Anticommutation Relations:** For all $i, j \in \iota$:
-
-$$
-\{c_i, c_j\} = 0, \quad \{c_i^\dagger, c_j^\dagger\} = 0, \quad \{c_i, c_j^\dagger\} = \delta_{ij} I \tag{4.3}
-$$
-
-where $\{A, B\} := AB + BA$ and $I$ is the identity endomorphism.
-
-*(Note: The three anticommutation relations alone are purely algebraic; conjugating an algebraic CAR pair by a non-unitary invertible operator preserves the anticommutators while destroying Hilbert adjointness. Adjoint compatibility is therefore an essential, independent requirement).*
-
-*Lean 4 Proof Strategy:*
-Define this as a structure `CAR (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V] (ι : Type) [Fintype ι]`. The fields are `c, cdag : ι → Module.End ℂ V`, an adjoint field `adj_compat : ∀ i, cdag i = LinearMap.adjoint (c i)`, and three anticommutator equations: `c i * c j + c j * c i = 0`, `cdag i * cdag j + cdag j * cdag i = 0`, and `c i * cdag j + cdag j * c i = (if i = j then 1 else 0) • 1`. Restricting to finite-dimensional Euclidean $V$ ensures every linear map admits a well-defined Hilbert adjoint.
-
-**Definition 4.2 (Fock Space and Basis).**
-We define the concrete Fock space as the Euclidean space over the power set of $\iota$:
-
-$$
-\mathrm{Fock}(\iota) := \ell^2(\mathcal{P}(\iota)) \tag{4.4}
-$$
-
-For every subset $S \subseteq \iota$, the basis vector $\delta_S \in \mathrm{Fock}(\iota)$ is the indicator function. The collection $\{\delta_S\}_{S \subseteq \iota}$ forms an exact orthonormal basis.
-
-*Lean 4 Proof Strategy:*
-Define `FockSpace ι := EuclideanSpace ℂ (Finset ι)`, with `[Fintype ι]` and the order/decidable equality needed by occupations. Use the checked `EuclideanSpace.basisFun (Finset ι) ℂ`; its `.toBasis` supplies the algebraic occupation basis.
+*(Pedagogical Note on Conjugation: If $c, c^\dagger$ is an algebraic CAR pair and $S \in \mathrm{GL}(V)$ is an invertible operator, the similarity transform $\tilde{c}_i = S c_i S^{-1}, \tilde{c}_i^\dagger = S c_i^\dagger S^{-1}$ preserves all anticommutators $\{ \tilde{c}_i, \tilde{c}_j^\dagger \} = \delta_{ij} I$, but $\tilde{c}_i^\dagger \ne (\tilde{c}_i)^\dagger$ unless $S$ is unitary. Thus, adjointness is an essential, independent geometric requirement).*
 
 ---
 
-#### 4.2 Operators and Sign Mechanics
+#### 4.2 The Concrete Occupation Fock Space
 
-**Definition 4.3 (Fermionic Sign Function).**
-For any mode $i \in \iota$ and subset $S \subseteq \iota$, the sign exponent $\sigma(i, S) \in \mathbb{N}$ counts the occupied modes strictly preceding $i$:
-
+**Definition 4.2 (Occupation Basis and State Carrier).**
+For a finite index set $\iota$, the concrete Fock space is the Euclidean space indexed by the power set $\mathcal{P}(\iota) \equiv \mathrm{Finset} \ \iota$:
 $$
-\sigma(i, S) := \#\{j \in S \mid j < i\} \tag{4.5}
-$$
-
-The creation and annihilation operators act on the orthonormal basis vectors exactly as:
-
-$$
-c_i^\dagger \delta_S := \begin{cases} (-1)^{\sigma(i, S)} \delta_{S \cup \{i\}} & \text{if } i \notin S \\ 0 & \text{if } i \in S \end{cases} \tag{4.6}
+\mathrm{FockSpace}(\iota) := \ell^2(\mathrm{Finset} \ \iota) \equiv \mathrm{EuclideanSpace} \ \mathbb{C} \ (\mathrm{Finset} \ \iota) \tag{4.4}
 $$
 
+- Dimension: $\dim_{\mathbb{C}}(\mathrm{FockSpace}(\iota)) = 2^{|\iota|}$ (`fock_finrank`).
+
+- For every subset $S \subseteq \iota$, the indicator vector is denoted $\mathrm{ket}(S) \equiv |S\rangle = \delta_S$.
+
+- Inner product: $\langle u \mid v \rangle = \sum_{S \subseteq \iota} \overline{u(S)} v(S)$ (`fock_inner`).
+
+- Basis Orthonormality: $\langle \mathrm{ket}(S) \mid \mathrm{ket}(T) \rangle = \delta_{S, T}$ (`ket_inner`).
+
+**Constructing Operators via Basis Extension (`A02.extendBasis`):**
+Any endomorphism on $\mathrm{FockSpace}(\iota)$ can be constructed from its action on basis states using Lean's `Module.Basis.constr`:
 $$
-c_i \delta_S := \begin{cases} (-1)^{\sigma(i, S)} \delta_{S \setminus \{i\}} & \text{if } i \in S \\ 0 & \text{if } i \notin S \end{cases} \tag{4.7}
+\mathrm{extendBasis}(F)\left(\sum_S v_S |S\rangle\right) := \sum_S v_S F(S) \tag{4.4a}
 $$
-These basis actions are then linearly extended to $\mathrm{End}_{\mathbb{C}}(\mathrm{Fock}(\iota))$.
-
-*Lean 4 Proof Strategy:*
-Define the preceding occupation count with `Finset.filter`. Specify the image of each occupation basis vector, then construct `c i` and `cdag i` using `Module.Basis.constr`. Prove their evaluation lemmas first. `Module.Basis.ext` proves equality of existing maps; it does not construct a map.
-
-**Definition 4.4 (Observables).**
-For all $i \in \iota$:
-1. **Local Mode Density Operator:** $n_i := c_i^\dagger c_i$.
-2. **Total Particle Number Operator:** $\hat{N}_{\mathrm{tot}} := \sum_{i \in \iota} n_i$.
-3. **Global Parity Operator:** $\Gamma := \overrightarrow{\prod}_{i \in \iota} (I - 2n_i)$. (An explicit ordered product is required because generic endomorphisms are noncommutative).
-
-*Lean 4 Proof Strategy:*
-Define `def n (i : ι) : Module.End ℂ (FockSpace ι) := cdag i * c i`. The total particle number is simply `def N_tot := ∑ i : ι, n i` using `Finset.sum`. For the global parity operator $\Gamma$, since endomorphisms generally do not commute, we need an ordered product. We can map `Finset.univ` to a sorted list `List.prod` using the `LinearOrder ι`: `def Gamma := (Finset.sort (· ≤ ·) Finset.univ).map (fun i => 1 - 2 * n i) |>.prod`. We will need an auxiliary lemma showing that $n_i$ and $n_j$ actually commute, meaning the ordering is technically arbitrary, but defining it with a fixed order is safer.
+satisfying $\mathrm{extendBasis}(F)(|S\rangle) = F(S)$ identically (`extend_basis_ket`).
 
 ---
 
-#### 4.3 Fundamental Lemmas of the CAR Representation
+#### 4.3 Operator Construction & Exact Sign Mechanics
 
-**Lemma 4.5 (Atomic Sign Lemma).**
-To avoid natural number truncated subtraction (which is problematic to invert algebraically), we state the erasure count strictly in additive form.
-For any $i, j \in \iota$ and subset $S \subseteq \iota$:
-1. If $j \notin S$:
+**Definition 4.3 (Preceding Counts and Fermionic Signs).**
+For any mode $i \in \iota$ and occupation subset $S \subseteq \iota$:
+
+1. **Preceding Count (`precedingCount`):**
+   $$
+   \sigma(i, S) := \#\{j \in S \mid j < i\} = (S.\mathrm{filter}(\cdot < i)).\mathrm{card} \tag{4.5}
+   $$
+
+2. **Fermionic Phase Sign (`fermionSign`):**
+   $$
+   \epsilon(i, S) := (-1)^{\sigma(i, S)} \in \mathbb{C} \tag{4.5a}
+   $$
+   satisfying $\epsilon(i, S)^2 = 1$ and $\overline{\epsilon(i, S)} = \epsilon(i, S)$.
+
+**Definition 4.3b (Concrete Annihilation & Creation Operators).**
+Using `extendBasis`, we define `annihilation i` and `creation i` by:
+$$
+c_i |S\rangle := \begin{cases} \epsilon(i, S) |S \setminus \{i\}\rangle & \text{if } i \in S \\ 0 & \text{if } i \notin S \end{cases} \tag{4.6}
+$$
+$$
+c_i^\dagger |S\rangle := \begin{cases} \epsilon(i, S) |S \cup \{i\}\rangle & \text{if } i \notin S \\ 0 & \text{if } i \in S \end{cases} \tag{4.7}
+$$
+*Special Cases:* Vacuum annihilation $c_i |\emptyset\rangle = 0$, single-particle creation $c_i^\dagger |\emptyset\rangle = |\{i\}\rangle$, and nilpotency $c_i^2 = (c_i^\dagger)^2 = 0$.
+
+---
+
+#### 4.4 Fundamental Lemmas: Atomic Counts and Sign Algebra
+
+**Lemma 4.5 (Atomic Additive Counts, Avoiding Nat Underflow).**
+To prevent truncation errors in natural number subtraction (`0 - 1 = 0`), all count updates are expressed strictly additively:
+
+1. For $j \notin S$:
    $$
    \sigma(i, S \cup \{j\}) = \sigma(i, S) + \begin{cases} 1 & \text{if } j < i \\ 0 & \text{otherwise} \end{cases} \tag{4.8}
    $$
-2. If $j \in S$:
+
+2. For $j \in S$:
    $$
    \sigma(i, S) = \sigma(i, S \setminus \{j\}) + \begin{cases} 1 & \text{if } j < i \\ 0 & \text{otherwise} \end{cases} \tag{4.9}
    $$
 
-*Lean 4 Proof Strategy:*
-Prove these lemmas using `Finset.filter_insert` and `Finset.card_insert_of_not_mem`. For the first part ($j \notin S$), substituting $S \cup \{j\}$ translates to `insert j S`. Filtering by `< i` distributes over `insert`. If `j < i`, it adds `1` to the cardinality, otherwise `0`. The second part is symmetrical; we can apply the first part with $S \setminus \{j\}$ in place of $S$, noting that `insert j (S \ {j}) = S` since $j \in S$. These will be very clean, `simp`-friendly integer math lemmas.
+3. Self-invariance: $\sigma(i, S \cup \{i\}) = \sigma(i, S)$ and $\sigma(i, S \setminus \{i\}) = \sigma(i, S)$.
 
-**Lemma 4.6 (Adjointness, CAR Instantiation, and Parity).**
-The operations at distinct modes commute as set operations but flip the combined sign exactly according to the CAR. Evaluated on the basis pairs and lifted by finite sums:
-1. $c_i^\dagger$ and $c_i$ are exact Hilbert adjoints: $c_i^\dagger = (c_i)^\dagger$.
-2. The concrete operators satisfy all three CAR anticommutation identities (4.3).
-Consequently, the concrete occupation operators constructively instantiate the abstract CAR representation of Definition 4.1.
-Furthermore, the number operators commute pairwise, $\Gamma^2 = I$, and $\Gamma^\dagger = \Gamma$.
+**Lemma 4.5b (Fermionic Sign Exchange Identities).**
+For any distinct modes $i \ne j$:
 
-*Lean 4 Proof Strategy:*
-1. **Adjointness**: Prove `⟪δ_S, c i δ_T⟫_ℂ = ⟪cdag i δ_S, δ_T⟫_ℂ` for all basis vectors $S, T$. Using the linearity of the inner product and `PiLp` EuclideanSpace properties, extend this via `Module.Basis.ext` to prove `c i` and `cdag i` are adjoints.
-2. **CAR Identities**: Prove `{c i, c j} = 0`, `{cdag i, cdag j} = 0`, and `{c i, cdag j} = δ_ij I` directly from the atomic sign lemmas (Lemma 4.5).
-3. **CAR Instantiation**: Combine adjointness and the CAR identities into an explicit `CAR (FockSpace ι) ι` instance.
-4. **Commutativity of $n$**: Show `n i * n j = n j * n i` by applying the CAR anticommutation identities.
-5. **Parity**: For $\Gamma^2 = I$, use `lemma n_sq_eq_n (i : ι) : n i * n i = n i`. Then `(1 - 2 * n i)^2 = 1 - 4 * n i + 4 * n i^2 = 1`. Since the $n_i$ commute, the product squared is the product of squares, giving $I$. The self-adjointness $\Gamma^\dagger = \Gamma$ follows from $n_i^\dagger = n_i$.
+1. **Creation Pair (`sign_insert_insert`):** For $i, j \notin S$:
+   $$
+   \epsilon(j, S) \epsilon(i, S \cup \{j\}) = - \epsilon(i, S) \epsilon(j, S \cup \{i\}) \tag{4.9a}
+   $$
 
-**Lemma 4.7 (Pure-CAR Commutator Identities).**
-Derived directly and algebraically from the CAR representation without assuming topology:
+2. **Annihilation Pair (`sign_erase_erase`):** For $i, j \in S$:
+   $$
+   \epsilon(j, S) \epsilon(i, S \setminus \{j\}) = - \epsilon(i, S) \epsilon(j, S \setminus \{i\}) \tag{4.9b}
+   $$
 
-$$
-[c_a^\dagger c_b, c_c^\dagger c_d] = \delta_{bc} c_a^\dagger c_d - \delta_{ad} c_c^\dagger c_b \tag{4.10}
-$$
+3. **Mixed Pair (`sign_insert_erase`):** For $i \notin S, j \in S$:
+   $$
+   \epsilon(j, S) \epsilon(i, S \setminus \{j\}) = - \epsilon(i, S) \epsilon(j, S \cup \{i\}) \tag{4.9c}
+   $$
+*Proof:* In each case, if $j < i$, inserting/erasing mode $j$ changes the number of elements preceding $i$ by exactly 1, multiplying the sign by $(-1)^1 = -1$. If $i < j$, the same logic applies symmetrically to $j$.
 
-$$
-[n_k, c_a^\dagger] = \delta_{ka} c_a^\dagger, \quad [n_k, c_a] = -\delta_{ka} c_a \tag{4.11}
-$$
+---
 
-These exact bilinear commutators form the necessary foundation for the density algebra.
+#### 4.5 Verification of the CAR Instantiation
 
-*Lean 4 Proof Strategy:*
-Prove the pure CAR bilinear identities by distributivity and the CAR equations in a fixed factor order. Symmetric swap rules are not safe unconditional simp lemmas. If a normal-order procedure is added, give it a fixed word order and a decreasing measure; use its checked evaluation-preservation theorem.
+**Lemma 4.6 (Adjointness and Concrete CAR Instantiation).**
+
+1. **Basis Pairing Adjointness (`creation_adjoint_pairing`, `creation_eq_adjoint`):**
+   For all basis states $|S\rangle, |T\rangle$:
+   $$
+   \langle |S\rangle \mid c_i^{\phantom{\dagger}} |T\rangle \rangle = \langle c_i^\dagger |S\rangle \mid |T\rangle \rangle \tag{4.10}
+   $$
+   Lifting via `A02.adjoint_of_basis_pairing` proves $c_i^\dagger = (c_i)^\dagger$ and $c_i = (c_i^\dagger)^\dagger$.
+
+2. **Concrete Anticommutators (`annihilation_car`, `creation_car`, `mixed_car`):**
+   Evaluating on any basis state $|S\rangle$ using the sign exchange lemmas yields:
+   $$
+   \{c_i^{\phantom{\dagger}}, c_j^{\phantom{\dagger}}\} = 0, \qquad \{c_i^\dagger, c_j^\dagger\} = 0, \qquad \{c_i^{\phantom{\dagger}}, c_j^\dagger\} = \delta_{ij} I
+   $$
+
+3. **Constructive Witness (`concrete_car_exists`):**
+   Combining adjointness and anticommutators yields a constructive instance of `Bosonize.A02.CAR ι (FockSpace ι)`.
+
+---
+
+#### 4.6 Physical Observables, Parity, and Hopping
+
+**Definition 4.7 (Observables and Parity Operator).**
+
+1. **Local Number Operator:** $n_i := c_i^\dagger c_i$. On basis states:
+   $$
+   n_i |S\rangle = \begin{cases} 1 |S\rangle & \text{if } i \in S \\ 0 & \text{if } i \notin S \end{cases} \tag{4.11}
+   $$
+   satisfying $n_i^\dagger = n_i$, $n_i^2 = n_i$, and $[n_i, n_j] = 0$.
+
+2. **Total Particle Number Operator:** $\hat{N}_{\mathrm{tot}} := \sum_{i \in \iota} n_i$. On basis states:
+   $$
+   \hat{N}_{\mathrm{tot}} |S\rangle = |S| \cdot |S\rangle \tag{4.12}
+   $$
+   satisfying $[\hat{N}_{\mathrm{tot}}, c_i^\dagger] = c_i^\dagger$ and $[\hat{N}_{\mathrm{tot}}, c_i] = -c_i$.
+
+3. **Global Parity Operator $\Gamma$ (`Ch04.parity`):**
+   Because operator multiplication in $\mathrm{End}_{\mathbb{C}}(V)$ is non-commutative, $\Gamma$ is defined by sorting the modes ascendingly (`Finset.sort (· ≤ ·) Finset.univ`):
+   $$
+   \Gamma := \prod_{i \in \mathrm{sort}(\le, \iota)} (I - 2 n_i) \tag{4.13}
+   $$
+   **Properties Proved in Lean:**
+   - Action on states (`parity_ket`): $\Gamma |S\rangle = (-1)^{|S|} |S\rangle$.
+   - Involution & Hermiticity (`parity_square`, `parity_adjoint`): $\Gamma^2 = I$ and $\Gamma^\dagger = \Gamma$.
+   - Fermionic Grading Inversion (`parity_creation`, `parity_annihilation`):
+     $$
+     \Gamma c_i^{\phantom{\dagger}} = - c_i^{\phantom{\dagger}} \Gamma, \qquad \Gamma c_i^\dagger = - c_i^\dagger \Gamma \tag{4.14}
+     $$
+
+4. **Hopping Operator $T_{ij}$ (`Ch04.hopping`):**
+   $$
+   T_{ij} := c_i^\dagger c_j^{\phantom{\dagger}} \tag{4.15}
+   $$
+   - Diagonal action: $T_{ii} = n_i$.
+   - Off-diagonal action on basis states ($i \ne j$):
+     $$
+     T_{ij} |S\rangle = \begin{cases} \epsilon(j, S) \epsilon(i, S \setminus \{j\}) |(S \setminus \{j\}) \cup \{i\}\rangle & \text{if } j \in S \text{ and } i \notin S \\ 0 & \text{otherwise} \end{cases} \tag{4.16}
+     $$
+   - Adjoint identity: $T_{ij}^\dagger = (c_i^\dagger c_j)^\dagger = c_j^\dagger c_i = T_{ji}$ (`hopping_adjoint`).
+   - Commutator algebra: derived from Lemma 4.1a (`bilinear_commutator`):
+     $$
+     [T_{ab}, T_{cd}] = \delta_{bc} T_{ad} - \delta_{ad} T_{cb} \tag{4.17}
+     $$
+     which forms the exact Lie algebra of $\mathfrak{u}(|\iota|)$, providing the foundation for the upcoming density mode algebra.
