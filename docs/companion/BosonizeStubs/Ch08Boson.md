@@ -79,6 +79,24 @@ The [automatic pipeline](../../../.agents/skills/formalizer/references/pipeline.
 
 The user resumed chapter development under the automatic pipeline. The unchanged source matches the independent passing review hash. The local CH08 candidate lock passes strict verification (519 total statements/403 commands); all eleven Core hashes pass. Only the CH08 entry is added to the committed manifest. Prior Unicode serialization changes in the working manifest remain outside this scoped commit. Proof work starts only after this baseline is committed and checked.
 
+## Independently reviewed Phase B import amendment — 2026-10-10
+
+Only two public Mathlib imports are added to the active staging interface:
+`Mathlib.RingTheory.Nilpotent.Exp` and `Mathlib.LinearAlgebra.Trace`.
+No definitions, instances, theorem signatures, physical conventions or Core files change.
+The nilpotent exponential API supplies finite rational factorial sums under an explicit
+power-zero certificate. The trace API proves the finite scalar-CCR obstruction using
+trace cyclicity, positive weight, and the nonzero finite vacuum; it does not infer
+nilpotency from finite dimension.
+
+Independent reviewer `/root/ch08_budget_proofs` approved both imports after reviewing
+the proposed proofs and library contracts. Fresh axiom inspections of
+`IsNilpotent.exp_eq_sum`, `IsNilpotent.exp_mul_exp_neg_self`,
+`LinearMap.trace_mul_comm` and `LinearMap.trace_one` contain only the permitted
+standard axioms. Compiler evidence was checked in external scratch files.
+This amendment changes only CH08's ordered command lock. The initial Phase A
+snapshot below remains historical evidence of the reviewed original draft.
+
 ## Exact Phase A source snapshot
 
 Source SHA-256: `78d1dea1fc2e10f5146a066695a573b3d4f3d579200322eda3f16d466c20a76a`.

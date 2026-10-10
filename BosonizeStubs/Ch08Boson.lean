@@ -6,6 +6,8 @@ public import Mathlib.RingTheory.MvPolynomial.Basic
 public import Mathlib.Algebra.MvPolynomial.PDeriv
 public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.RingTheory.Nilpotent.Exp
+public import Mathlib.LinearAlgebra.Trace
 
 /-!
 # CH08 — Algebraic boson Fock space
