@@ -9,6 +9,7 @@ import Bosonize.Core.Ch06LocalNet
 import Bosonize.Core.Ch06Ext
 import Bosonize.Core.A03EnergyBudgets
 import Bosonize.Core.Ch07VacuumBudget
+import Bosonize.Core.Ch08Boson
 
 /-!
 # Bosonize Core Library

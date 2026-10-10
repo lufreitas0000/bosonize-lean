@@ -102,3 +102,54 @@ with formal generating function $\sum_{n=0}^\infty P_n(X) \frac{t^n}{n!} = \exp\
 
 *Lean 4 Proof Strategy:*
 Define normal symbols separately from represented words, with a fixed ordered linear evaluation. Prove the word expansion including contractions by induction, then derive the vacuum recurrence. Ignoring contractions is not a well-defined operation on the represented operator algebra.
+
+#### 8.5 Constructive realization in Lean
+
+The construction in [the Lean chapter](../../Bosonize/Core/Ch08Boson.lean) realizes the algebraic oscillator theory above on finitely supported polynomials. Its [companion notebook](../../docs/companion/Bosonize/Core/Ch08Boson.md) records the exact declarations and verification evidence. The mathematical discussion here explains how the realization works and where its scope differs from the broader reference theory.
+
+**Positive modes and the weighted form.** The variables are indexed by a finite set of size $M$, with the positive weight of index $i$ equal to $i+1$. Thus the variable labels start at zero in the implementation, while the physical oscillator weights remain $1,\ldots,M$. An occupation vector $r$ determines the monomial $X^r$, particle number $\sum_i r_i$, and energy $E(r)=\sum_i(i+1)r_i$. The vacuum is the constant polynomial $1$. Constants remain a legitimate carrier when $M=0$; assertions about a selected mode require that such a mode actually exists.
+
+For polynomials $p=\sum_r p_rX^r$ and $q=\sum_r q_rX^r$, the chosen form is
+$$
+\langle p,q\rangle_H=\sum_r\overline{p_r}\,w(r)q_r,
+\qquad w(r)=\prod_i(i+1)^{r_i}r_i!.
+$$
+Only finitely many coefficients contribute. Positive mode weights make every $w(r)$ positive, so the form is Hermitian, positive, and definite. Its positivity follows directly from $\langle p,p\rangle_H=\sum_r w(r)|p_r|^2$; equality to zero forces every coefficient to vanish. No infinite sum or Hilbert-space completion is needed for this argument.
+
+Multiplication by $X_i$ raises an occupation, while differentiation lowers it and multiplies by $r_i$. The identity
+$$
+w(r+e_i)=(i+1)(r_i+1)w(r)
+$$
+therefore gives $\langle C_i p,q\rangle_H=\langle p,A_iq\rangle_H$, where $A_i=(i+1)D_i$. This is the precise algebraic realization of the adjoint language in §8.1. The ambient carrier has a verified pairing identity; genuine Hilbert adjoints are constructed on the finite carriers below. On monomials, the number and Hamiltonian operators have eigenvalues $\sum_i r_i$ and $E(r)$ respectively.
+
+**A finite carrier constructed from an energy budget.** Positivity of the weights implies $r_i\le K$ whenever $E(r)\le K$. The finite box $\{0,\ldots,K\}^M$ therefore contains every admissible occupation. Filtering this box by the energy inequality gives an explicit finite indexing set $I_K$. The budget is exactly the span of its monomials, and a polynomial lies in it precisely when every nonzero coefficient has energy at most $K$.
+
+The genuine finite Hilbert space is $\mathbb C^{I_K}$ with its usual inner product. Its coordinate ket $e_r$ is embedded as
+$$
+U_Ke_r=\frac{X^r}{\sqrt{w(r)}}.
+$$
+The reverse coordinate map reads each coefficient and multiplies it by $\sqrt{w(r)}$. These maps satisfy $V_KU_K=I$, while $U_KV_K=P_K$ is the monomial projection that discards occupations of energy greater than $K$. The embedding preserves the inner product and has exactly the budget as its range. This supplies finite dimension through an actual finite basis. It also proves that the finite vacuum is nonzero, including at budget zero.
+
+Creation raises energy by $i+1$. Annihilation lowers it by that weight and kills the whole budget when $K<i+1$. Repeated annihilation eventually vanishes because no occupation can be lowered indefinitely. The compressed creator likewise eventually vanishes because every surviving creation raises energy until it leaves the budget. Both compressed maps have the conservative power cutoff $K+1$. Ambient creation has a different behavior: its $n$th power sends the vacuum to the nonzero monomial $X_i^n$ for every $n$.
+
+Transporting an ambient operator by $V_KAU_K$ defines its finite realization. The pairing identity yields the actual finite creator–annihilator adjoint relation. Number and energy become self-adjoint maps; the normalized kets are energy eigenvectors with eigenvalues $E(r)$.
+
+**Why the projection remainder is part of the mathematics.** On the ambient polynomial carrier, the Leibniz rule gives $[A_i,C_j]=(i+1)\delta_{ij}I$, and creators commute with creators and annihilators with annihilators. For a projection $P$, the exact compressed identity is
+$$
+[PAP,PBP]=P[A,B]P-PA(I-P)BP+PB(I-P)AP.
+$$
+The additional terms measure excursions through the discarded part of the carrier. They cannot generally be omitted. Indeed, the trace of a commutator on the nonzero finite Hilbert space is zero, whereas the trace of $(i+1)I$ is positive. Thus the finite creator and annihilator cannot satisfy the ambient nonzero scalar CCR. Nilpotency and this obstruction are compatible consequences of the finite truncation.
+
+**Finite exponentials and formal identities.** A Taylor sum is defined for every finite operator. Calling it the exact nilpotent exponential requires the explicit certificate $A^{d+1}=0$. Under that certificate, enlarging the Taylor cutoff does not change the sum, and the sum for $-A$ is its inverse. Taking the finite Hilbert adjoint commutes with the Taylor construction because its factorial coefficients are real.
+
+Ambient exponentials use a formal parameter: an operator sequence has a finite convolution sum at each degree. Associativity is proved by reindexing those finite sums while preserving operator order. The BCH identity in §8.3 is an equality of these coefficients, with the central correction present at even degrees. It makes no assertion about analytic convergence or evaluation of the parameter, and it applies to ambient scalar-CCR operators rather than arbitrary compressed maps.
+
+**Normal ordering and the positive contraction.** For one selected mode, a normal symbol is a finite linear combination of pairs $(a,b)$, evaluated as $C_i^aD_i^b$. The evaluation is linear; multiplying represented operators can produce contractions. Every Boolean word in that mode's creator and derivative has such a normal expansion. This verifies the single-mode word statement; a general multivariate normal-symbol dictionary remains a further extension of the opening reference claim in §8.4.
+
+Writing $N_n=\sum_{j=0}^n\binom nj C_i^jD_i^{n-j}$, the basic commutator $[D_i,C_i]=I$ gives
+$$
+(D_i+C_i)N_{n+1}=N_{n+2}+(n+1)N_n.
+$$
+This recurrence, together with the factorial coefficient recurrence, proves the full operator Wick expansion (8.9). On the vacuum, all terms containing a positive derivative power vanish, so $N_n1=X_i^n$. The operator expansion then yields the coefficientwise generating identity for $P_n$. Independently, the Appell derivative and the vacuum recurrence give $P_{n+1}=X_iP_n+nP_{n-1}$. The positive sign is essential: $P_2=X_i^2+1$, while the separately defined Hermite convention gives $X_i^2-1$.
+
+**The later fermion comparison retains its parameters.** This chapter constructs the abstract oscillator target without a fermionic twist parameter. That choice does not prove that a later physical observable is independent of the twist. The actual twisted fermion operators, transport and holonomy remain supplied by Chapter 6's extension. Subsequent density and current constructions must prove cancellation on their own bilinears and on their stated budgets before identifying them with these oscillator operators. Sector-dependent zero modes remain explicit in the later vertex construction.

@@ -1,141 +1,3 @@
-# CH08 companion notebook — algebraic boson Fock layer
-
-Status (2026-10-10): **Phase B active: 61 of 62 theorem targets fully proved.** All 43 data declarations and the 61 completed theorem targets have fresh transitive axiom audits using only standard axioms or none. `formal_bch` is the sole remaining placeholder. Core still contains 457 proved theorems in eleven frozen modules; CH08 has not been promoted. The independently reviewed Phase B import baseline is `b229bbf`.
-
-## Source reconciliation and scope
-
-Read [CH08](../../../notes/md/ch08_boson.md), [TOC](../../../notes/md/TOC.md), [A02](../../../notes/appendices/a02_car_hilbert_and_normal_ordering.md), [A03](../../../notes/appendices/a03_energy_budgets_and_filtered_maps.md), [A05](../../../notes/appendices/a05_exponentials_klein_and_vertex_scope.md), the [appendix index](../../../notes/appendices/README.md), and [revision guide P10](../../../note/proof_suggestions_revision_2026-10-09.md). Compare A04's scope: density shifts, partitions, Gram completeness and Sugawara support CH09–CH12 rather than being prerequisites for this independent oscillator target. A04 implementation is deferred to those chapters. No chapter-specific suggestion file is available in `docs/stub_suggestion/` or `docs/proof_suggestion/`; existing deletions there are preserved.
-
-Adopt the positive weights, Haldane norm, ambient CCR, explicit compression remainders, and positive-contraction Wick convention in the current notes. Adapt the word “Hilbert” to a weighted Hermitian pairing on the ambient algebraic polynomial space and actual finite Euclidean Hilbert spaces on budgets. The ambient polynomial space is not equipped with an asserted complete normed Hilbert structure. Reject unprojected creator nilpotency, finite-dimensional scalar CCR, an unconditional scalar BCH for compressed maps, `PowerSeries.exp operator`, convergence or parameter evaluation at t=1, and normal-ordering as an algebra homomorphism on represented words. These are scope corrections already required by the source/revision contracts; the notes are preserved.
-
-## Type choices and explicit carriers
-
-`Mode M = Fin M`, but `weight M i = i.val+1`. Every weight is positive, including the mode with zero-based index zero. M=0 is allowed: its polynomial carrier consists of constants, its vacuum is nonzero, and mode-indexed statements have no modes to quantify. K=0 remains a one-vacuum finite slice. No hypotheses asserting M>0 or K>0 are imposed globally.
-
-Exponent vectors use `Fin M →₀ ℕ`. The installed `MvPolynomial.basisMonomials` supplies the actual algebraic basis, and `MvPolynomial.lcoeff ℂ r` supplies bundled coefficient maps. `MvPolynomial.coeff` is not an available namespace-qualified declaration in this installation; the inherited coefficient API has polynomial-first arguments. Creation uses `LinearMap.mulLeft`; differentiation uses `(MvPolynomial.pderiv i).toLinearMap`; annihilation is weight times differentiation. Number and energy are distinct sums.
-
-The Haldane pairing is a finite support sum with weights `∏ i, weight i ^ r i * (r i)!`, conjugate-linear in the first argument. Its positivity, definiteness, Hermitian symmetry and adjoint pairing identities are proposed obligations. `creation_pairing_adjoint` concerns this pairing; it does not use a fictional ambient Hilbert adjoint. Under this form it is weighted annihilation, rather than the unweighted derivative at mode weight greater than one, that is the creator's adjoint.
-
-`budget M K` is the span of bounded-energy monomials. `projection` is algebraic basis truncation. A finite envelope `Fin M → Fin (K+1)` and an energy-filtered subtype construct `BudgetIndex` without using an unproved theorem as an instance. The subtype is an abbreviation so its actual finite instances remain visible. Its coverage of all bounded-energy exponent vectors must be proved using positivity of weights. `FiniteFock` is a genuine `EuclideanSpace ℂ (BudgetIndex M K)`.
-
-`embedding` maps orthonormal coordinate kets to monomials divided by the positive square root of their Haldane norm. `coordinates` multiplies polynomial coefficients by that same square root. Their inverse, range and pairing claims are theorem stubs. `finiteOperator A = coordinates ∘ A ∘ embedding`; for creators this includes boundary truncation, while annihilators preserve the budget. Actual finite adjoints use `LinearMap.adjoint` on this carrier.
-
-## Grading, witnesses and boundary terms
-
-Creation raises energy by its positive mode weight. Annihilation lowers it; the natural-subtraction inclusion is accompanied by `annihilation_below_weight`, which states that a slice smaller than that weight is killed. This is a concrete reason why the truncated subtraction is safe here. A conservative K+1 power cutoff is used for both compressed creators and annihilators; no nilpotency follows merely from finite dimension.
-
-Vacuum normalization, `finiteVacuum_ne_zero`, positive monomial norms, and `creation_power_vacuum_ne_zero` are explicit proposed witnesses. They remain unproved. In particular, the scalar-CCR obstruction quantifies an actual mode and uses a nonzero carrier, rather than a hidden nontriviality assumption. A proof can use trace or an explicit edge action after the finite carrier witness is proved.
-
-The exact identity for P squared=P is
-
-`[PAP,PBP] = P[A,B]P - PA(1-P)BP + PB(1-P)AP`.
-
-The signs and product order are preserved in `compressed_commutator`. No right-suffix numerical margins or leakage cancellation are assumed at this chapter: these are ambient oscillator constructions and exact finite compressions. Later restricted current identities will need their own input margins. The inclusion `creation_budget` does not incorrectly claim that the creator is an endomorphism of the original budget.
-
-## Exponentials and normal symbols
-
-`taylor` is only a finite Taylor sum. `expNil` requires the explicit certificate A^(d+1)=0 and retains it in the interface. Its cutoff independence and inverse are stubs. Adjoint compatibility is stated for the Taylor sum on actual finite Hilbert carriers and can specialize to a certified nilpotent exponential.
-
-Formal exponentials are sequences `ℕ → Operators M` with a finite Cauchy product. This makes the central formal parameter and coefficientwise interpretation explicit without adopting an unverified noncommutative series API. The BCH correction has only even degrees: the coefficient of t^(2k) is gamma^k/k! times identity. The proposed identity swaps exp(t alpha A) and exp(t beta C) with the positive correction gamma=weight*alpha*beta on equal modes. No convergence, evaluation or compressed scalar-CCR premise is asserted.
-
-Normal symbols are an independent finitely supported vector space on pairs (creator power, derivative power). Their evaluation is linear and ordered, not multiplicative. Single-mode Boolean words use the frozen A03 application-order convention; true means creator and false means derivative. This single-mode word statement does not claim a full multivariate normal-symbol dictionary. The explicit Wick powers and vacuum coefficients cover CH08's displayed single-mode formula. They use unweighted D, with contraction one; the Haldane annihilator A=weight D is kept distinct. The positive-contraction sequence has P2=X^2+1, and the Hermite convention has He2=X^2-1.
-
-## Twist dependency and later selection of operators
-
-This file constructs the abstract bosonic target, whose positive integer oscillator labels and algebraic operations do not take a fermion twist parameter. This fact alone proves no physical twist independence. CH09/A04 must construct their actual density operators from the selected CH06Ext twisted fermion family and prove any phase cancellation, grading or edge formula on those operators. CH10–CH12 must compare that family with the CH08 target on admissible budgets. Fermion transport, holonomy and twist-dependent zero modes continue to come from frozen CH06Ext; local CAR and locality infrastructure remain in CH06. CH13/CH14/A05 will retain species twist labels and source/target sectors explicitly. No arbitrary-twist isometry, density dictionary or analytic bosonization identity is smuggled into CH08's definitions.
-
-## Proposed Phase B proof order and helper obligations
-
-1. Establish positive weights/norms, actual monomial actions and number/energy eigenvalues. Local helpers can give energy increment/decrement, factorial norm recurrence and the square-root normalization identity.
-2. Extend basis pairing identities by finite support sums; prove sesquilinearity, positivity/definiteness, creator/annihilator adjoint pairing, and ambient CCR by Leibniz.
-3. Prove supportwise budget characterization and envelope coverage, then grading, below-weight vanishing, projection action/idempotence/range and bounded power vanishing.
-4. Prove normalized coordinate transport, the genuine nonzero finite vacuum, finite adjoints/spectrum and nilpotency. Derive exact projection remainders and the finite scalar-CCR obstruction.
-5. Prove finite exponential identities by factorial/binomial sums under the nilpotency certificate. Prove formal Cauchy associativity and coefficient BCH from ambient ordered word expansions.
-6. Prove normal-word existence and Wick contraction induction, then vacuum recurrence, Appell derivative and coefficient generating identity. Check the first two nontrivial signs directly.
-
-This ordered plan records the original Phase A obligations. The current Phase B evidence below supersedes its unproved status. New top-level helpers or a correction to reviewed interfaces will require the repository's review procedure in Phase B; local proof-body decompositions remain available. The primary formalizer used the repository [skill](../../../.agents/skills/formalizer/SKILL.md) and its proof-design/MCP references. No additional agents were dispatched for this draft.
-
-## Phase A validation
-
-- Installed compiler elaborates the draft with exactly 62 expected `sorry` warnings and no other diagnostics. Both `lake build Bosonize BosonizeStubs` targets pass.
-- Native Lean MCP diagnostics return success=true, partial=false, no failed dependencies, and exactly 62 sorry-category warnings. `lean_goal` at the `formal_bch` placeholder (line 356, column 89) returns the actual proposed equality. A goal status after a sorry is not proof evidence. Local search was attempted for basis APIs and failed because the MCP child could not resolve `rg`; shell source retrieval and compiler API checks supplied the fallback. No MCP configuration was changed.
-- Fresh `import BosonizeStubs` axiom inspection of all 43 named data declarations uses only the permitted standard axioms, or none, and never `sorryAx`. All 62 theorem stubs expose `sorryAx`, as required for an unproved Phase A interface.
-- All 69 guard regression tests pass. Non-strict verification against `aa047eb` preserves 457 approved statements and 342 commands; all eleven complete Core hashes pass. Strict verification rejects exactly the new unlocked CH08 source (62 statements/61 commands). Full CI is therefore not claimed as passing at this review boundary.
-- Active and historical lock manifests, Core sources/aggregator, toolchain and dependency manifests are unchanged. The initial unrelated note edits and three suggestion deletions are preserved byte-for-byte.
-
-The independent review below covers the weighted pairing, normalized finite carrier, projection residuals and the two exponential meanings. Under the new automatic pipeline, chapter-development execution can establish the reviewed lock and proceed through B/C without another human phase confirmation. This workflow-update/review pass changes no theorem proofs or locks. A04 will be drafted with its actual density/current dependencies after CH08's completion.
-
-## Independent Phase A review — 2026-10-09
-
-Reviewer: separate agent `/root/ch08_interface_review`, dispatched by the primary formalizer at the user's request for automatic A–B–C with independent review. Verdict: **PASS** for source SHA-256 `78d1dea1fc2e10f5146a066695a573b3d4f3d579200322eda3f16d466c20a76a`. The reviewer was read-only and checked all 43 data declarations/62 signatures, source reconciliation, exact notebook mirror, weighted pairing/finite adjoints, positive-mode envelope/nonvacuity, lowering at small budgets, compression signs, BCH/Wick conventions and future twist dependencies. It found no required correction or genuine human ambiguity.
-
-Independent exact rational checks passed: weighted BCH (weight 2, alpha 2, beta 3) through coefficient degree 6 on polynomial inputs of degree 0–4; Wick operator expansion through degree 8 on inputs of degree 0–4; projection remainders at weight 2/cutoff 5; compressed power vanishing and commutator trace zero in that example. These calculations are counterexample screening, not universal Lean proofs and not proof-body changes.
-
-Nonblocking observations: the normal-symbol word theorem deliberately covers a single mode, while the source's opening sentence about arbitrary products is broader; this limitation is documented above. Energy increment, factorial norm recurrence, bounded-index coverage and ordered-power helpers would ease Phase B, but are optional interface extensions requiring the new independent review procedure. The current snapshot can be locked without them.
-
-The [automatic pipeline](../../../.agents/skills/formalizer/references/pipeline.md) supersedes the former routine human phase gates. This record supplies the independent review evidence; no lock or proof transition is claimed in this workflow-update task.
-
-## Phase B interface baseline — 2026-10-10
-
-The user resumed chapter development under the automatic pipeline. The unchanged source matches the independent passing review hash. The local CH08 candidate lock passes strict verification (519 total statements/403 commands); all eleven Core hashes pass. Only the CH08 entry is added to the committed manifest. Prior Unicode serialization changes in the working manifest remain outside this scoped commit. Proof work starts only after this baseline is committed and checked.
-
-## Independently reviewed Phase B import amendment — 2026-10-10
-
-Only two public Mathlib imports are added to the active staging interface:
-`Mathlib.RingTheory.Nilpotent.Exp` and `Mathlib.LinearAlgebra.Trace`.
-No definitions, instances, theorem signatures, physical conventions or Core files change.
-The nilpotent exponential API supplies finite rational factorial sums under an explicit
-power-zero certificate. The trace API proves the finite scalar-CCR obstruction using
-trace cyclicity, positive weight, and the nonzero finite vacuum; it does not infer
-nilpotency from finite dimension.
-
-Independent reviewer `/root/ch08_budget_proofs` approved both imports after reviewing
-the proposed proofs and library contracts. Fresh axiom inspections of
-`IsNilpotent.exp_eq_sum`, `IsNilpotent.exp_mul_exp_neg_self`,
-`LinearMap.trace_mul_comm` and `LinearMap.trace_one` contain only the permitted
-standard axioms. Compiler evidence was checked in external scratch files.
-This amendment changes only CH08's ordered command lock. The initial Phase A
-snapshot below remains historical evidence of the reviewed original draft.
-
-## Phase B proof checkpoint — 2026-10-10
-
-All 61 implemented proofs compile together. The sole remaining theorem stub is
-`formal_bch`; it alone exposes `sorryAx` in the fresh 105-declaration audit.
-The other 61 theorem targets and all 43 data declarations use only `propext`,
-`Classical.choice`, and `Quot.sound`, or no axioms. In particular, the completed
-`wick_coefficients` now depends on the proved `wick_operator`, not a placeholder.
-
-Proof batches cover basis actions and ambient CCR, weighted pairing and
-creator adjoint, energy budgets/projections, finite normalized transport and
-actual adjoints, nilpotency/trace obstruction, certified exponentials,
-formal product associativity, single-mode word normalization and Wick/Appell
-identities. Wick's operator proof uses a locally proved normal-power recurrence,
-a factorial coefficient recurrence with zero extension, and finite-sum induction.
-No new top-level declarations or modified conclusions were needed.
-
-Independent review by `/root/ch08_budget_proofs` checked the integrated frozen
-preamble, proof scope, and fresh transitive axiom dependencies. Separate agents
-`/root/ch08_finite_proofs` and `/root/ch08_exponential_proofs` contributed finite
-transport, exponential, word and contraction proofs. Root integrated and compiled
-the exact bodies; compiler success was confirmed after process completion.
-The reviewer found no integration or mathematical scope defect.
-
-Strict verification against `b229bbf` passes 519 statements and 407 commands;
-all eleven existing Core hashes pass. `make ci` passes 69 guard regression tests
-and both builds, with exactly one permitted staging placeholder warning.
-This is a Phase B checkpoint, not Phase C completion. Native MCP diagnostics
-worked on the integrated source; native declaration search still cannot resolve
-`rg`, so shell retrieval supplied the fallback. Unrelated note edits and
-suggestion deletions remain byte-for-byte unchanged.
-
-## Current Phase B source snapshot
-
-Source SHA-256: `6742cacb85c813329d8a21c88d25e368b61321250195099369547710e825dd1d`.
-The module's introductory Phase A label is historical; the current proof status
-is stated above. The original independently reviewed draft hash is recorded in
-the Phase A review section.
-
-```lean
 module
 
 public import Bosonize.Core.A03EnergyBudgets
@@ -149,7 +11,7 @@ public import Mathlib.LinearAlgebra.Trace
 
 /-!
 # CH08 — Algebraic boson Fock space
-Phase A: complete data and proposed theorem signatures; every theorem is unproved.
+Complete algebraic oscillator constructions and proofs, with explicit finite budgets.
 The polynomial carrier has a weighted Hermitian pairing, not an asserted Hilbert
 completion. Actual adjoints below belong to finite Euclidean carriers. Composition
 in `Module.End` applies the right factor first. No twist-dependent fermion/current
@@ -1114,7 +976,214 @@ theorem formal_bch (M : ℕ) (i j : Mode M) (α β : ℂ) (n : ℕ) :
     formalProduct M (expCoefficient M (α • annihilation M i)) (expCoefficient M (β • creation M j)) n =
       formalProduct M
         (formalProduct M (expCoefficient M (β • creation M j)) (expCoefficient M (α • annihilation M i)))
-        (gaussianCoefficient M (if i = j then (weight M i : ℂ) * α * β else 0)) n := by sorry
+        (gaussianCoefficient M (if i = j then (weight M i : ℂ) * α * β else 0)) n := by
+  let A := α • annihilation M i
+  let B := β • creation M j
+  let γ : ℂ := if i = j then (weight M i : ℂ) * α * β else 0
+  let H : ℕ → ℕ → ℕ → Operators M := fun a b k =>
+    ((((a.factorial : ℂ) * (b.factorial : ℂ) * (k.factorial : ℂ))⁻¹) * γ ^ k) • (B ^ b * A ^ a)
+  have hAB : A * B = B * A + γ • (1 : Operators M) := by
+    dsimp only [A, B, γ]
+    let δ : ℂ := if i = j then (weight M i : ℂ) else 0
+    have hc : annihilation M i * creation M j = creation M j * annihilation M i + δ • (1 : Operators M) := by
+      have hh : annihilation M i * creation M j - creation M j * annihilation M i = δ • (1 : Operators M) := by
+        simpa [commutator, δ, ite_smul] using ccr M i j
+      exact (sub_eq_iff_eq_add.mp hh).trans (add_comm _ _)
+    simp only [smul_mul_assoc, mul_smul_comm, smul_smul]
+    rw [hc, smul_add, smul_smul]
+    have hs : α * β * δ = if i = j then (weight M i : ℂ) * α * β else 0 := by
+      dsimp [δ]
+      split_ifs <;> ring
+    rw [mul_comm β α, hs]
+  have contract (A B : Operators M) (γ : ℂ) (hAB : A * B = B * A + γ • (1 : Operators M)) (a b : ℕ) :
+    A ^ a * B ^ b = ∑ k ∈ Finset.range (a + 1),
+      (((Nat.choose a k * b.descFactorial k : ℕ) : ℂ) * γ ^ k) • (B ^ (b - k) * A ^ (a - k)) := by
+    have hp (n : ℕ) : A * B ^ (n + 1) = B ^ (n + 1) * A + ((n + 1 : ℂ) * γ) • B ^ n := by
+      induction n with
+      | zero => simpa using hAB
+      | succ n ih =>
+        simp only [Nat.cast_add, Nat.cast_one] at *
+        calc
+          A * B ^ (n + 1 + 1) = (A * B ^ (n + 1)) * B := by rw [pow_succ, mul_assoc]
+          _ = (B ^ (n + 1) * A + ((n + 1 : ℂ) * γ) • B ^ n) * B := by rw [ih]
+          _ = B ^ (n + 1 + 1) * A + ((n + 1 + 1 : ℂ) * γ) • B ^ (n + 1) := by
+            rw [add_mul, smul_mul_assoc, mul_assoc, hAB, mul_add, mul_smul_comm, mul_one,
+              ← mul_assoc, ← pow_succ, ← pow_succ, add_assoc]
+            rw [← add_smul]
+            congr 2
+            ring
+    have hp0 (n : ℕ) : A * B ^ n = B ^ n * A + ((n : ℂ) * γ) • B ^ (n - 1) := by
+      cases n with
+      | zero => simp
+      | succ n => simpa [Nat.cast_add, Nat.cast_one] using hp n
+    induction a with
+    | zero => simp
+    | succ a ih =>
+      have expand : A ^ (a + 1) * B ^ b =
+          (∑ k ∈ Finset.range (a + 1), (((Nat.choose a k * b.descFactorial k : ℕ) : ℂ) * γ ^ k) • (B ^ (b - k) * A ^ (a + 1 - k))) +
+          ∑ k ∈ Finset.range (a + 1), (((Nat.choose a k * b.descFactorial (k + 1) : ℕ) : ℂ) * γ ^ (k + 1)) • (B ^ (b - (k + 1)) * A ^ (a - k)) := by
+        rw [pow_succ', mul_assoc, ih, Finset.mul_sum]
+        rw [← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl
+        intro k hk
+        have hka : k ≤ a := Nat.le_of_lt_succ (Finset.mem_range.mp hk)
+        rw [mul_smul_comm, ← mul_assoc, hp0, add_mul, smul_mul_assoc, smul_add]
+        apply congrArg₂ (· + ·)
+        · apply congrArg (fun z => (((Nat.choose a k * b.descFactorial k : ℕ) : ℂ) * γ ^ k) • z)
+          rw [mul_assoc, ← pow_succ']
+          rw [show a - k + 1 = a + 1 - k by omega]
+        · rw [smul_smul, Nat.descFactorial_succ, Nat.cast_mul, Nat.cast_mul, Nat.cast_mul, pow_succ]
+          rw [Nat.sub_sub]
+          apply congrArg (fun z : ℂ => z • (B ^ (b - (k + 1)) * A ^ (a - k)))
+          ring
+      rw [expand]
+      nth_rw 3 [Finset.sum_range_succ']
+      simp only [Nat.choose_zero_right, Nat.descFactorial_zero, Nat.cast_one,
+        pow_zero, mul_one, one_smul, Nat.sub_zero]
+      simp_rw [Nat.choose_succ_succ', Nat.add_mul, Nat.cast_add, add_mul, add_smul]
+      rw [Finset.sum_add_distrib]
+      have original :
+          (∑ j ∈ Finset.range (a + 1), (((Nat.choose a (j + 1) * b.descFactorial (j + 1) : ℕ) : ℂ) * γ ^ (j + 1)) • (B ^ (b - (j + 1)) * A ^ (a + 1 - (j + 1)))) + B ^ b * A ^ (a + 1) =
+          ∑ j ∈ Finset.range (a + 1), (((Nat.choose a j * b.descFactorial j : ℕ) : ℂ) * γ ^ j) • (B ^ (b - j) * A ^ (a + 1 - j)) := by
+        rw [Finset.sum_range_succ]
+        simp only [Nat.choose_succ_self, Nat.cast_zero, zero_mul, zero_smul, add_zero]
+        rw [Finset.sum_range_succ']
+        simp only [Nat.choose_zero_right, Nat.descFactorial_zero, Nat.cast_one,
+          pow_zero, mul_one, one_smul, Nat.sub_zero]
+      rw [add_assoc, original]
+      simp only [Nat.add_sub_add_right]
+      exact add_comm _ _
+  have scalar (a b k : ℕ) (hka : k ≤ a) (hkb : k ≤ b) :
+    ((a.factorial : ℂ)⁻¹ * (b.factorial : ℂ)⁻¹) * ((a.choose k * b.descFactorial k : ℕ) : ℂ) =
+      (((a - k).factorial : ℂ) * ((b - k).factorial : ℂ) * (k.factorial : ℂ))⁻¹ := by
+    have hc : (a.choose k : ℂ) * (k.factorial : ℂ) * ((a - k).factorial : ℂ) = (a.factorial : ℂ) := by
+      exact_mod_cast Nat.choose_mul_factorial_mul_factorial hka
+    have hb : ((b - k).factorial : ℂ) * (b.descFactorial k : ℂ) = (b.factorial : ℂ) := by
+      exact_mod_cast Nat.factorial_mul_descFactorial hkb
+    have hprod : (a.choose k : ℂ) * (b.descFactorial k : ℂ) * ((a - k).factorial : ℂ) * ((b - k).factorial : ℂ) * (k.factorial : ℂ) = (a.factorial : ℂ) * (b.factorial : ℂ) := by
+      calc
+        _ = ((a.choose k : ℂ) * (k.factorial : ℂ) * ((a - k).factorial : ℂ)) * (((b - k).factorial : ℂ) * (b.descFactorial k : ℂ)) := by ring
+        _ = _ := by rw [hc, hb]
+    have fa : (a.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero a
+    have fb : (b.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero b
+    have fak : ((a - k).factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (a-k)
+    have fbk : ((b - k).factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (b-k)
+    have fk : (k.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
+    push_cast
+    field_simp
+    linear_combination hprod
+  have reindex :
+ (∑ r ∈ Finset.range (n+1), ∑ k ∈ Finset.range (r+1),
+    if k≤n-r then H (r-k) (n-r-k) k else 0) =
+ (∑ j ∈ Finset.range (n+1), if (n-j)%2=0 then
+    ∑ b ∈ Finset.range (j+1), H (j-b) b ((n-j)/2) else 0) := by
+   classical
+   let S := ((Finset.range (n+1)) ×ˢ (Finset.range (n+1))).filter
+     (fun p : ℕ×ℕ => p.2≤p.1 ∧ p.2≤n-p.1)
+   let T := ((Finset.range (n+1)) ×ˢ (Finset.range (n+1))).filter
+     (fun p : ℕ×ℕ => p.2≤p.1 ∧ (n-p.1)%2=0)
+   have hS : (∑ r ∈ Finset.range (n+1), ∑ k ∈ Finset.range (r+1),
+      if k≤n-r then H (r-k) (n-r-k) k else 0) =
+      ∑ p ∈ S, H (p.1-p.2) (n-p.1-p.2) p.2 := by
+     simp only [S,Finset.sum_filter,Finset.sum_product]
+     apply Finset.sum_congr rfl
+     intro r hr
+     have hsub : Finset.range (r+1) ⊆ Finset.range (n+1) := by
+       apply Finset.range_mono
+       have := Finset.mem_range.mp hr
+       omega
+     calc
+      _ = ∑ k ∈ Finset.range (r+1), if k≤r ∧ k≤n-r then H (r-k) (n-r-k) k else 0 := by
+        apply Finset.sum_congr rfl
+        intro k hk
+        have hkr : k≤r := by have := Finset.mem_range.mp hk; omega
+        simp [hkr]
+      _ = _ := Finset.sum_subset hsub (by
+        intro k _ hk
+        have hkr : ¬k≤r := by have := Finset.mem_range.not.mp hk; omega
+        simp [hkr])
+   have hT : (∑ j ∈ Finset.range (n+1), if (n-j)%2=0 then
+      ∑ b ∈ Finset.range (j+1), H (j-b) b ((n-j)/2) else 0) =
+      ∑ p ∈ T, H (p.1-p.2) p.2 ((n-p.1)/2) := by
+     simp only [T,Finset.sum_filter,Finset.sum_product]
+     apply Finset.sum_congr rfl
+     intro j hj
+     by_cases hp : (n-j)%2=0
+     · simp only [hp,ite_true,and_true]
+       have hsub : Finset.range (j+1) ⊆ Finset.range (n+1) := by
+         apply Finset.range_mono
+         have := Finset.mem_range.mp hj
+         omega
+       calc
+        _ = ∑ b ∈ Finset.range (j+1), if b≤j then H (j-b) b ((n-j)/2) else 0 := by
+          apply Finset.sum_congr rfl
+          intro b hb
+          have hbj : b≤j := by have := Finset.mem_range.mp hb; omega
+          simp [hbj]
+        _ = _ := Finset.sum_subset hsub (by
+          intro b _ hb
+          have hbj : ¬b≤j := by have := Finset.mem_range.not.mp hb; omega
+          simp [hbj])
+     · simp [hp]
+   rw [hS,hT]
+   apply Finset.sum_bij (fun p _ => (n-2*p.2,n-p.1-p.2))
+   · intro p hp
+     simp only [S,Finset.mem_filter,Finset.mem_product,Finset.mem_range] at hp
+     simp only [T,Finset.mem_filter,Finset.mem_product,Finset.mem_range]
+     omega
+   · intro p hp q hq he
+     simp only [S,Finset.mem_filter,Finset.mem_product,Finset.mem_range] at hp hq
+     have he1 := congrArg Prod.fst he
+     have he2 := congrArg Prod.snd he
+     dsimp at he1 he2
+     apply Prod.ext <;> omega
+   · intro q hq
+     simp only [T,Finset.mem_filter,Finset.mem_product,Finset.mem_range] at hq
+     refine ⟨(q.1-q.2+(n-q.1)/2,(n-q.1)/2), ?_, ?_⟩
+     · simp only [S,Finset.mem_filter,Finset.mem_product,Finset.mem_range]
+       omega
+     · apply Prod.ext <;> dsimp <;> omega
+   · intro p hp
+     simp only [S,Finset.mem_filter,Finset.mem_product,Finset.mem_range] at hp
+     congr 1 <;> dsimp <;> omega
+  have left : formalProduct M (expCoefficient M A) (expCoefficient M B) n =
+      ∑ r ∈ Finset.range (n + 1), ∑ k ∈ Finset.range (r + 1),
+        if k ≤ n-r then H (r-k) (n-r-k) k else 0 := by
+    unfold formalProduct expCoefficient
+    apply Finset.sum_congr rfl
+    intro r hr
+    simp only [smul_mul_assoc, mul_smul_comm, smul_smul]
+    rw [contract A B γ hAB, Finset.smul_sum]
+    apply Finset.sum_congr rfl
+    intro k hk
+    have hkr : k ≤ r := Nat.le_of_lt_succ (Finset.mem_range.mp hk)
+    by_cases hks : k ≤ n-r
+    · rw [ite_eq_left hks, smul_smul]
+      dsimp [H]
+      apply congrArg (fun z : ℂ => z • (B ^ (n-r-k) * A ^ (r-k)))
+      rw [show ((↑(n-r).factorial)⁻¹ * (↑r.factorial)⁻¹ : ℂ) = (↑r.factorial)⁻¹ * (↑(n-r).factorial)⁻¹ by ring]
+      rw [← mul_assoc, scalar r (n-r) k hkr hks]
+    · rw [ite_eq_right hks]
+      simp [Nat.descFactorial_eq_zero_iff_lt.mpr (Nat.lt_of_not_ge hks)]
+  have right : formalProduct M
+      (formalProduct M (expCoefficient M B) (expCoefficient M A)) (gaussianCoefficient M γ) n =
+      ∑ j ∈ Finset.range (n+1), if (n-j)%2=0 then
+        ∑ b ∈ Finset.range (j+1), H (j-b) b ((n-j)/2) else 0 := by
+    unfold formalProduct expCoefficient gaussianCoefficient
+    apply Finset.sum_congr rfl
+    intro j hj
+    split_ifs with he
+    · rw [Finset.sum_mul]
+      apply Finset.sum_congr rfl
+      intro b hb
+      simp only [smul_mul_assoc, mul_smul_comm, smul_smul, mul_one]
+      dsimp [H]
+      apply congrArg (fun z : ℂ => z • (B ^ b * A ^ (j-b)))
+      field_simp
+    · simp
+  change formalProduct M (expCoefficient M A) (expCoefficient M B) n =
+    formalProduct M (formalProduct M (expCoefficient M B) (expCoefficient M A)) (gaussianCoefficient M γ) n
+  exact left.trans (reindex.trans right.symm)
 
 /-- Single-mode words admit an independent normal-symbol expansion including contractions. -/
 theorem word_normal_form (M : ℕ) (i : Mode M) (letters : List Bool) : ∃ s : NormalSymbols, normalEvaluation M i s = wordEvaluation M i letters := by
@@ -1403,4 +1472,3 @@ theorem wick_coefficients (M : ℕ) (i : Mode M) (n : ℕ) :
   field_simp
 
 end Bosonize.Ch08
-```

@@ -34,7 +34,7 @@ Current board snapshot:
 | CH06 — Local CAR net | Done | C complete | 54 proved lemmas promoted and completely frozen; only CH05 dependency import/context changed; locality and ordered matrix-unit/fullness proofs, native MCP checks and 271-lemma Core audit passed; [CH06 notebook](docs/companion/Bosonize/Core/Ch06LocalNet.md). | Reuse finite graded local net and global endomorphism algebra; review the new CH07/A03 Phase A interface. |
 | CH06Ext — Boundary holonomy and transport | Done | C complete; frozen | 72 theorem proofs and 29 data declarations; corrected interface at `1a562b7`, Core source hash and [notebook](docs/companion/Bosonize/Core/Ch06Ext.md). | Reuse twisted fields/transport and the same-sea energy bridge in later chapters; review A03/CH07 next. |
 | CH07/A03 — Sea and budgets | Done | C complete; frozen | 114 theorem proofs and 45 data declarations promoted to Core; interface `20ed09b`, Phase B `2b3186f`, imported through Bosonize. [A03 notebook](docs/companion/Bosonize/Core/A03EnergyBudgets.md), [CH07 notebook](docs/companion/Bosonize/Core/Ch07VacuumBudget.md). | Review CH08 Phase A: weighted oscillator constructions, grading and explicit finite-slice projection remainders; defer A04 to CH09–CH12. |
-| CH08 — Algebraic boson Fock layer | Active | B: 61/62 targets proved | Reviewed import baseline `b229bbf`; all 43 data and 61 completed theorem targets have clean fresh axiom audits. Guards, 69 tests and both builds pass; only `formal_bch` remains a staging placeholder. [CH08 notebook](docs/companion/BosonizeStubs/Ch08Boson.md). | Finish coefficientwise BCH, then fresh zero-warning audits, Core promotion and complementary lecture-note synchronization. |
+| CH08 — Algebraic boson Fock layer | Done | C complete; frozen | 62 proved theorem targets/43 data declarations; fresh standard-axiom audits, zero warnings/placeholders, 69 guard tests and both builds passed. Core now has 519 proved theorems in twelve modules. [Formal notebook](docs/companion/Bosonize/Core/Ch08Boson.md), [constructive lecture](notes/md/ch08_boson.md); independent pedagogical review passes. | Next scoped sprint: CH09 and the relevant A04 density support; prove the actual twisted-fermion density dictionary and admissible current margins before comparison with CH08. |
 | CH09–CH12/A04 — Currents, completeness, Sugawara | Backlog | A not started | CH08 oscillator target plus frozen CAR/budget/holonomy infrastructure. | Draft CH09 with A04 density support next; prove twist cancellation for actual bilinears and useful right-suffix margins. |
 | CH13–CH16/A05–A06 — Klein maps, conditional field criterion, fields | Backlog | A not started | Completeness and typed transitions. | Keep universal finite dictionary out of the unconditional interface. |
 | CH17–CH19/A07–A08 — Interactions, Bogoliubov, states | Backlog | A not started | Exact sea-Wick Q correction; pairing model; weighted polynomial state. | Review finite-action and uncompressed-state interfaces separately. |
@@ -131,7 +131,7 @@ A03/CH07 Phase C is complete, including signed coordinate budgets, rank/ground w
 
 ## Current review: CH08 Phase A
 
-The abstract weighted polynomial oscillator target is drafted in [Ch08Boson.lean](BosonizeStubs/Ch08Boson.lean), with expanded comments and an [exact companion notebook](docs/companion/BosonizeStubs/Ch08Boson.md). Native MCP diagnostics/goals work; all data exclude sorryAx and every theorem remains a single sorry. Both libraries and all 69 guard tests pass. Existing locks/Core are unchanged; strict verification intentionally rejects the new unlocked draft. The independent agent review gate precedes locking or proof work; subsequent transitions are automatic for authorized chapter development. See the notebook for carriers, proof order, witnesses, source reconciliation and the later twist-dependent current dictionary.
+The abstract weighted polynomial oscillator target is drafted in [Ch08Boson.lean](Bosonize/Core/Ch08Boson.lean), with expanded comments and an [exact companion notebook](docs/companion/Bosonize/Core/Ch08Boson.md). Native MCP diagnostics/goals work; all data exclude sorryAx and every theorem remains a single sorry. Both libraries and all 69 guard tests pass. Existing locks/Core are unchanged; strict verification intentionally rejects the new unlocked draft. The independent agent review gate precedes locking or proof work; subsequent transitions are automatic for authorized chapter development. See the notebook for carriers, proof order, witnesses, source reconciliation and the later twist-dependent current dictionary.
 
 ## Automatic pipeline adoption — 2026-10-09
 
@@ -144,3 +144,21 @@ Validation of this policy update: the skill-creator validator passed. Agent `/ro
 The user extended Phase C to update the pedagogical chapter note as well as its companion. The repository-local `pedagogical-sync` skill preserves the original reference material, explains the actual verified mathematical construction and its relation to the abstract theory, retains exact assumptions/parameters and accurately labels unformalized scope. Appendix implementation updates its corresponding appendix section. The companion focuses on the formal Lean document and its evidence; the pedagogical Markdown is a complementary lecture note explaining the Lean file and the mathematics of its constructive approach. A separate agent reviews the pedagogical diff before Phase C is complete. This policy update does not retrospectively rewrite earlier notes or mark CH08 proofs complete.
 
 Validation (2026-10-10): both skill validators pass. Agent `/root/pedagogical_skill_check` forward-tested the new skill on an isolated CH07 copy and returned PASS for skill behavior/integration. The test retained all 8,756 original worktree bytes as an exact prefix, added one mathematical lecture section, kept technical mappings in a companion packet, and checked source/snapshot and links. It covered ambiguous corrections, partial appendices, unproved staging, prior edits and stale indexes. Its candidate pedagogical diff remains a temporary review artifact, not an applied note update or fresh Phase C audit; historical compiler/axiom evidence is labeled accordingly. The primary also verified preservation and links; all eleven existing Core hashes pass. Original note and lock-manifest edits are preserved outside this workflow change.
+
+## CH08 completion — 2026-10-10
+
+The automatic A–B–C sprint is complete. Reviewed interface `8d38c21` and scoped
+Mathlib import amendment `b229bbf` preceded proof batches; `0a2cb2a` saved the
+61-proof intermediate checkpoint. All 62 theorem targets are now proved and
+promoted to Core without changed mathematical interfaces. Fresh audits through
+`import Bosonize` cover all 519 Core theorem targets and 43 CH08 data declarations,
+using only permitted standard axioms or none. Both guards, 69 regression tests
+and both builds pass with zero warnings/placeholders. The exact formal companion
+and appended constructive lecture are complementary; independent pedagogical
+review confirms original reference preservation and accurate proof scope.
+
+CH09 with the relevant A04 density portion is next. It must define the actual
+fermionic density/current operators, retain the chosen twist family, and prove
+any cancellation and budget margins used by the comparison. CH08 alone proves no
+physical twist independence, analytic completion, or unrestricted bosonization
+identity. This sprint does not begin that subsequent chapter.

@@ -9,5 +9,6 @@
   "Bosonize/Core/Ch05Fermions.lean": "a19fed9d032daaa60df6bda4980b7470f10dd3e7333a63aec369a41e75c4dd81",
   "Bosonize/Core/Ch06Ext.lean": "d6a7963719d97b7efb61b82a13e723551a6a82affa69a8494e27d8368896a997",
   "Bosonize/Core/Ch06LocalNet.lean": "a60c83172eb262f26c73de11e681dd0da373713328edfa789ad7f0486427094f",
-  "Bosonize/Core/Ch07VacuumBudget.lean": "a33ced1009ba31a3823dfe3e1a922a346e62591d7b5d5c1803f6382fe14944da"
+  "Bosonize/Core/Ch07VacuumBudget.lean": "a33ced1009ba31a3823dfe3e1a922a346e62591d7b5d5c1803f6382fe14944da",
+  "Bosonize/Core/Ch08Boson.lean": "b03b12aae00f11129cc48cdb9f07c7159063db880b8459517aa0ffd23879d60d"
 }

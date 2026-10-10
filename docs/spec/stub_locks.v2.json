@@ -4860,7 +4860,7 @@
         }
       }
     },
-    "BosonizeStubs/Ch08Boson.lean": {
+    "Bosonize/Core/Ch08Boson.lean": {
       "commands": [
         {
           "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
