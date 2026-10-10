@@ -1,6 +1,6 @@
 # CH08 companion notebook — algebraic boson Fock layer
 
-Status (2026-10-09): **Phase A complete; independent interface review passed.** There are 43 complete data declarations and 62 theorem stubs, each with exactly one `:= by sorry`. No reviewed lock baseline has been committed, no theorem has been proved, and nothing has been promoted. Core retains 457 proved theorems across eleven frozen modules. The baseline for this draft's preservation checks is `aa047eb`.
+Status (2026-10-09): **Phase B active; independently reviewed interface locked.** There are 43 complete data declarations and 62 theorem stubs, each with exactly one `:= by sorry`. The reviewed lock baseline is now being established; proof work follows its committed strict verification. Nothing has been promoted. Core retains 457 proved theorems across eleven frozen modules. The baseline for this draft's preservation checks is `aa047eb`.
 
 ## Source reconciliation and scope
 
@@ -74,6 +74,10 @@ Independent exact rational checks passed: weighted BCH (weight 2, alpha 2, beta 
 Nonblocking observations: the normal-symbol word theorem deliberately covers a single mode, while the source's opening sentence about arbitrary products is broader; this limitation is documented above. Energy increment, factorial norm recurrence, bounded-index coverage and ordered-power helpers would ease Phase B, but are optional interface extensions requiring the new independent review procedure. The current snapshot can be locked without them.
 
 The [automatic pipeline](../../../.agents/skills/formalizer/references/pipeline.md) supersedes the former routine human phase gates. This record supplies the independent review evidence; no lock or proof transition is claimed in this workflow-update task.
+
+## Phase B interface baseline — 2026-10-10
+
+The user resumed chapter development under the automatic pipeline. The unchanged source matches the independent passing review hash. The local CH08 candidate lock passes strict verification (519 total statements/403 commands); all eleven Core hashes pass. Only the CH08 entry is added to the committed manifest. Prior Unicode serialization changes in the working manifest remain outside this scoped commit. Proof work starts only after this baseline is committed and checked.
 
 ## Exact Phase A source snapshot
 

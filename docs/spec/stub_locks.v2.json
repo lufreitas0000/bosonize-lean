@@ -4859,6 +4859,750 @@
           "text": "lemma zero_energy_ground_span (h : \u2115) (hh : 0 < h) (N : \u2124) (hN : admissible h N) : energySpace h N 0 = Submodule.span \u2102 {groundKet h N hN}"
         }
       }
+    },
+    "BosonizeStubs/Ch08Boson.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "2ffe147e93464de6e602325b20a6f7db55acb28f11873fc16ea8febee06b9385",
+          "kind": "import",
+          "label": "import Bosonize.Core.A03EnergyBudgets",
+          "text": "import Bosonize.Core.A03EnergyBudgets"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "c7ad598233eed5d679425b565fe7259da8d2ea7a6100167f24a1d49f6752b63e",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch02UmbralCalculus",
+          "text": "import Bosonize.Core.Ch02UmbralCalculus"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "a0755188c8d6d74eb831ffb5f42061aa432233e3bfc92c5dd5d80ecb1289a598",
+          "kind": "import",
+          "label": "import Mathlib.RingTheory.MvPolynomial.Basic",
+          "text": "import Mathlib.RingTheory.MvPolynomial.Basic"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "bca4748b762255a81e523fbd2bd368f827abbb116237a0b849361fd8c884e408",
+          "kind": "import",
+          "label": "import Mathlib.Algebra.MvPolynomial.PDeriv",
+          "text": "import Mathlib.Algebra.MvPolynomial.PDeriv"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "b12d2be390f41ba0b3dae7088bc93d48b9b7be0670aae746c2f2374191daa456",
+          "kind": "import",
+          "label": "import Mathlib.LinearAlgebra.Finsupp.LinearCombination",
+          "text": "import Mathlib.LinearAlgebra.Finsupp.LinearCombination"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "c1f226e3721bdacd30ea3ada048d7d92252ba7cb98f3ae364c5ee5e78d9e9d42",
+          "kind": "import",
+          "label": "import Mathlib.Analysis.SpecialFunctions.Pow.Real",
+          "text": "import Mathlib.Analysis.SpecialFunctions.Pow.Real"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "f3e03c5bceaa472679c2b8dfffa5f906a552969c092f889d6ce0370dbcf0a3fc",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch08",
+          "text": "namespace Bosonize.Ch08"
+        },
+        {
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "hash": "05e8ffabb3684f0ae8f9b2a04341109a06f39ba07442bcff4ccfb797341e6030",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.Mode",
+          "text": "abbrev Mode (M : \u2115) := Fin M"
+        },
+        {
+          "hash": "30aa019d29331acc9783c95fdddf77c66447e96d2d60e30b72b2eb2ed0f245dd",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.Exponents",
+          "text": "abbrev Exponents (M : \u2115) := Mode M \u2192\u2080 \u2115"
+        },
+        {
+          "hash": "12ba2e578fc1d8ae52ce3f1de50ef73c22ac3277ae74354c99e6d354df6243db",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.Polynomial",
+          "text": "abbrev Polynomial (M : \u2115) := MvPolynomial (Mode M) \u2102"
+        },
+        {
+          "hash": "1700ec38c0dc41e963aaf8717f54c49cea018a6483db4cdf4ca9bc886017e897",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.Operators",
+          "text": "abbrev Operators (M : \u2115) := Module.End \u2102 (Polynomial M)"
+        },
+        {
+          "hash": "448bc6240de1532b67b8848b94b14024bd104a524f0f458daa7c2db7020b2a09",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.weight",
+          "text": "def weight (M : \u2115) (i : Mode M) : \u2115 :=\n  i.val + 1"
+        },
+        {
+          "hash": "fb25a95ad832aa20d77e6a84c472d74f62ef3b935a2fc2f811873e6b343f394a",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.monomial",
+          "text": "noncomputable def monomial (M : \u2115) (r : Exponents M) : Polynomial M :=\n  MvPolynomial.monomial r 1"
+        },
+        {
+          "hash": "cc95bc5bfd5b25f5115de84612069a0174ecc5fc31caa1759b6eeb6dd8e2b3a9",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.vacuum",
+          "text": "noncomputable def vacuum (M : \u2115) : Polynomial M :=\n  1"
+        },
+        {
+          "hash": "bb2727b33ac6439a4939fef12948dfcd23d150c49af5aed4c6e364abb8adb1ba",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.particleCount",
+          "text": "def particleCount (M : \u2115) (r : Exponents M) : \u2115 :=\n  \u2211 i : Mode M, r i"
+        },
+        {
+          "hash": "322477d80f9c238e4025b0be25acacda390a0d87da9fbf4de468bb44cca95a83",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.energy",
+          "text": "def energy (M : \u2115) (r : Exponents M) : \u2115 :=\n  \u2211 i : Mode M, weight M i * r i"
+        },
+        {
+          "hash": "be715adb50b53188da5d70272e05988a551d92977977f76e4a9a2b39ad205ee6",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.monomialNorm",
+          "text": "def monomialNorm (M : \u2115) (r : Exponents M) : \u2115 :=\n  \u220f i : Mode M, weight M i ^ r i * (r i).factorial"
+        },
+        {
+          "hash": "f4b8ca7203d321885eb2f7d094f54f8d9d72b27a2e7e6935dce0bd933d979e64",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.normalization",
+          "text": "noncomputable def normalization (M : \u2115) (r : Exponents M) : \u2102 :=\n  (Real.sqrt (monomialNorm M r : \u211d) : \u2102)"
+        },
+        {
+          "hash": "3b92428c6acc7dcedfa7b0bbaa247ad75fa8f5d6cce1deea6bbba69ad06795f4",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.creation",
+          "text": "noncomputable def creation (M : \u2115) (i : Mode M) : Operators M :=\n  LinearMap.mulLeft \u2102 (MvPolynomial.X i)"
+        },
+        {
+          "hash": "0338f21bbb9101f2de6e692c6f05c5c93a29ab6242fd5c3d29e7ef414b892b2e",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.derivative",
+          "text": "noncomputable def derivative (M : \u2115) (i : Mode M) : Operators M :=\n  (MvPolynomial.pderiv i).toLinearMap"
+        },
+        {
+          "hash": "73cadfb069af383926adfbe4f15f36e843f11145266beb6af2e1147ead23a587",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.annihilation",
+          "text": "noncomputable def annihilation (M : \u2115) (i : Mode M) : Operators M :=\n  (weight M i : \u2102) \u2022 derivative M i"
+        },
+        {
+          "hash": "f7552aaa7fba94eee7435eed6f04eacd7897f3c3630643bc983e4d62283de6d0",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.numberOperator",
+          "text": "noncomputable def numberOperator (M : \u2115) : Operators M :=\n  \u2211 i : Mode M, creation M i * derivative M i"
+        },
+        {
+          "hash": "8d6d5b8943b40da6e26aa16a010db948e6bbd9db721d765d802c60b4cdd1e79e",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.hamiltonian",
+          "text": "noncomputable def hamiltonian (M : \u2115) : Operators M :=\n  \u2211 i : Mode M, creation M i * annihilation M i"
+        },
+        {
+          "hash": "821b90ac13c21f5f4e079a2ec5e03f773ab193f3135722ba28717aa3641bbb48",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.pairing",
+          "text": "noncomputable def pairing (M : \u2115) (p q : Polynomial M) : \u2102 :=\n  \u2211 r \u2208 p.support, star (MvPolynomial.lcoeff \u2102 r p) * (monomialNorm M r : \u2102) * MvPolynomial.lcoeff \u2102 r q"
+        },
+        {
+          "hash": "ce7729f81b80b8c58c2bfa18d1477e4c93fc8ea9ef5890f620d160d25a760817",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.commutator",
+          "text": "noncomputable def commutator (M : \u2115) (A B : Operators M) : Operators M :=\n  A * B - B * A"
+        },
+        {
+          "hash": "d71dc07c077cd1b251bec1aa82a28bc627608d06525d3e8cf2aa2a83ac632374",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.budget",
+          "text": "noncomputable def budget (M K : \u2115) : Submodule \u2102 (Polynomial M) :=\n  Submodule.span \u2102 (monomial M '' {r | energy M r \u2264 K})"
+        },
+        {
+          "hash": "35712ec5a61c80eb184b97e6936070cd9a37638ea944ee8d76243ff17247ab3e",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.projection",
+          "text": "noncomputable def projection (M K : \u2115) : Operators M :=\n  (MvPolynomial.basisMonomials (Mode M) \u2102).constr \u2102 (fun r => if energy M r \u2264 K then monomial M r else 0)"
+        },
+        {
+          "hash": "2824e1ec55ff72d9e398a8634a5c6409c5031c4fa7cb617e7ff350d72558bb6b",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.compressed",
+          "text": "noncomputable def compressed (M K : \u2115) (A : Operators M) : Operators M :=\n  projection M K * A * projection M K"
+        },
+        {
+          "hash": "14cf48dc5568d1896bbe3747ff2c3e7d691a721bf010ac0db29ec5edd211fee7",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.ExponentBox",
+          "text": "abbrev ExponentBox (M K : \u2115) := Mode M \u2192 Fin (K + 1)"
+        },
+        {
+          "hash": "07f762a901dd569a3470b210a0c67c67406a241d92fe5e57a89fb1db925b960e",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.boxExponent",
+          "text": "noncomputable def boxExponent (M K : \u2115) (a : ExponentBox M K) : Exponents M :=\n  Finsupp.equivFunOnFinite.symm (fun i => (a i).val)"
+        },
+        {
+          "hash": "48cef1d85e2ae93afe8a0f398e9dd07011a963a117f78f6d1787b1996b2838d2",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.BudgetIndex",
+          "text": "abbrev BudgetIndex (M K : \u2115) :=\n  {a : ExponentBox M K // energy M (boxExponent M K a) \u2264 K}"
+        },
+        {
+          "hash": "9441d29ba057ce03eb6da04c8c74a06d11093689310d57c79884e21967288db3",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.indexExponent",
+          "text": "noncomputable def indexExponent (M K : \u2115) (s : BudgetIndex M K) : Exponents M :=\n  boxExponent M K s.val"
+        },
+        {
+          "hash": "ae437504a349771aab8f597792b5a7f9c0dfdbbcf5eb4e42dde814cdda9e8bda",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.FiniteFock",
+          "text": "abbrev FiniteFock (M K : \u2115) := EuclideanSpace \u2102 (BudgetIndex M K)"
+        },
+        {
+          "hash": "a642ed5633dd778698de1a350a403aa170a1d03f69d1ffa4a56a9645a5a7c843",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.finiteKet",
+          "text": "noncomputable def finiteKet (M K : \u2115) (s : BudgetIndex M K) : FiniteFock M K :=\n  EuclideanSpace.basisFun (BudgetIndex M K) \u2102 s"
+        },
+        {
+          "hash": "07f4ce7cba5ef92e1971c5175ba8a0977e0ca3d58ea15fd4f5346d2919089df0",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.embedding",
+          "text": "noncomputable def embedding (M K : \u2115) : FiniteFock M K \u2192\u2097[\u2102] Polynomial M :=\n  (EuclideanSpace.basisFun (BudgetIndex M K) \u2102).toBasis.constr \u2102 (fun s => (normalization M (indexExponent M K s))\u207b\u00b9 \u2022 monomial M (indexExponent M K s))"
+        },
+        {
+          "hash": "b1043ecade28df741391c1c8380f1fa4d9b51934ac491f48caf7f24ef2f987e2",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.coordinates",
+          "text": "noncomputable def coordinates (M K : \u2115) : Polynomial M \u2192\u2097[\u2102] FiniteFock M K :=\n  (WithLp.linearEquiv 2 \u2102 (BudgetIndex M K \u2192 \u2102)).symm.toLinearMap.comp (LinearMap.pi (fun s => normalization M (indexExponent M K s) \u2022 MvPolynomial.lcoeff \u2102 (indexExponent M K s)))"
+        },
+        {
+          "hash": "dc9e52b3b138c5110e815375a28b7c66e416ce25209f4733b4d6d276dda20801",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.finiteOperator",
+          "text": "noncomputable def finiteOperator (M K : \u2115) (A : Operators M) : Module.End \u2102 (FiniteFock M K) :=\n  (coordinates M K).comp (A.comp (embedding M K))"
+        },
+        {
+          "hash": "60c4e050c9d62c2951c2d3172f29300fe4baf19044d618cb2b36d35c7114adbb",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.finiteVacuum",
+          "text": "noncomputable def finiteVacuum (M K : \u2115) : FiniteFock M K :=\n  coordinates M K (vacuum M)"
+        },
+        {
+          "hash": "917c98fd69bb7f4eec8fc2c082cd84155d6a332ffdf1c5d2aadd56cbdfe063a7",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.taylor",
+          "text": "noncomputable def taylor (M K : \u2115) (A : Module.End \u2102 (FiniteFock M K)) (d : \u2115) : Module.End \u2102 (FiniteFock M K) :=\n  \u2211 j \u2208 Finset.range (d + 1), ((j.factorial : \u2102)\u207b\u00b9) \u2022 A ^ j"
+        },
+        {
+          "hash": "8bfc133cd5a7e8f4b3b393c16789badc48c4d1bd502dbf36cd3e4e076a9709ac",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.expNil",
+          "text": "noncomputable def expNil (M K : \u2115) (A : Module.End \u2102 (FiniteFock M K)) (d : \u2115) (_hnil : A ^ (d + 1) = 0) : Module.End \u2102 (FiniteFock M K) :=\n  taylor M K A d"
+        },
+        {
+          "hash": "d96de779d233acbb2dd76e4c25c3081e2c47211d68c3cd225a28f69a1a5c6e43",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.FormalOperators",
+          "text": "abbrev FormalOperators (M : \u2115) := \u2115 \u2192 Operators M"
+        },
+        {
+          "hash": "e3fd872e31e0969e0b99c19d63c9e411cc510128f6eec5b1cbff1d87c5aa7d75",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.expCoefficient",
+          "text": "noncomputable def expCoefficient (M : \u2115) (A : Operators M) : FormalOperators M :=\n  fun n => ((n.factorial : \u2102)\u207b\u00b9) \u2022 A ^ n"
+        },
+        {
+          "hash": "0d308a482f4d849133385787ecfb11c434329bc8a206b1a0336cccbbdbd87677",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.formalProduct",
+          "text": "noncomputable def formalProduct (M : \u2115) (f g : FormalOperators M) : FormalOperators M :=\n  fun n => \u2211 j \u2208 Finset.range (n + 1), f j * g (n - j)"
+        },
+        {
+          "hash": "96d3baf10fb36ee80203619d72d861a3c12436bfe91ecf5992eb0ae4b0e61fbf",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.gaussianCoefficient",
+          "text": "noncomputable def gaussianCoefficient (M : \u2115) (\u03b3 : \u2102) : FormalOperators M :=\n  fun n => if n % 2 = 0 then (\u03b3 ^ (n / 2) / ((n / 2).factorial : \u2102)) \u2022 (1 : Operators M) else 0"
+        },
+        {
+          "hash": "b0407768318bbd5c29353916129e35a19750e8d363dc764361aa179d8602c0f0",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch08.NormalSymbols",
+          "text": "abbrev NormalSymbols := (\u2115 \u00d7 \u2115) \u2192\u2080 \u2102"
+        },
+        {
+          "hash": "9e30d68ed5155dc71ce093af1908bdf56124cc921cdbd56a0915e712f99af158",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.normalEvaluation",
+          "text": "noncomputable def normalEvaluation (M : \u2115) (i : Mode M) : NormalSymbols \u2192\u2097[\u2102] Operators M :=\n  Finsupp.linearCombination \u2102 (fun ab : \u2115 \u00d7 \u2115 => creation M i ^ ab.1 * derivative M i ^ ab.2)"
+        },
+        {
+          "hash": "28bd2a535d4167a74eaed71638d9bccb34f58e85f96342494eff72990c9046d5",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.wordEvaluation",
+          "text": "noncomputable def wordEvaluation (M : \u2115) (i : Mode M) (letters : List Bool) : Operators M :=\n  A03.applicationWord (letters.map (fun b => if b then creation M i else derivative M i))"
+        },
+        {
+          "hash": "8bd5f5be7c9ebb1c6618b1acc1e3d10fa2c2bd7de2b43378b8f1fd084ebef36c",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.normalPower",
+          "text": "noncomputable def normalPower (M : \u2115) (i : Mode M) (n : \u2115) : Operators M :=\n  \u2211 j \u2208 Finset.range (n + 1), (Nat.choose n j : \u2102) \u2022 (creation M i ^ j * derivative M i ^ (n - j))"
+        },
+        {
+          "hash": "437091551472e865abc042ba0cac931e9fb3095067bcbcac02fff201c42d4378",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.wickPolynomial",
+          "text": "noncomputable def wickPolynomial (M : \u2115) (i : Mode M) (n : \u2115) : Polynomial M :=\n  ((derivative M i + creation M i) ^ n) (vacuum M)"
+        },
+        {
+          "hash": "078d1e84f5e9305ce01a01666bfc673588070c8a4c5879944fc5a7a359582bf4",
+          "kind": "def",
+          "label": "def Bosonize.Ch08.hermitePolynomial",
+          "text": "noncomputable def hermitePolynomial (M : \u2115) (i : Mode M) (n : \u2115) : Polynomial M :=\n  ((creation M i - derivative M i) ^ n) (vacuum M)"
+        },
+        {
+          "hash": "1313d11dc76f9d2b5a7c82ce0f42a5934f723d6704f5d3ca523df77758a0bc24",
+          "kind": "end",
+          "label": "end Bosonize.Ch08",
+          "text": "end Bosonize.Ch08"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch08.annihilation_below_weight": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "c7b05f129a414567eefbb93931334f1df6c699de34c52a5f07c1d676dbfd63bb",
+          "kind": "theorem",
+          "text": "theorem annihilation_below_weight (M K : \u2115) (i : Mode M) (hK : K < weight M i) (p : Polynomial M) (hp : p \u2208 budget M K) : annihilation M i p = 0"
+        },
+        "Bosonize.Ch08.annihilation_budget": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "dba203405d565d73fa35c0b2e41d1741033a8e3468af38966b780149235c781f",
+          "kind": "theorem",
+          "text": "theorem annihilation_budget (M K : \u2115) (i : Mode M) (p : Polynomial M) (h : p \u2208 budget M K) : annihilation M i p \u2208 budget M (K - weight M i)"
+        },
+        "Bosonize.Ch08.annihilation_monomial": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "61ebd2a7e6505607c39be7eb87058ac402bcb3e0ba5200b0a51a6c681a65fcc5",
+          "kind": "theorem",
+          "text": "theorem annihilation_monomial (M : \u2115) (i : Mode M) (r : Exponents M) : annihilation M i (monomial M r) = ((weight M i * r i : \u2115) : \u2102) \u2022 monomial M (r - Finsupp.single i 1)"
+        },
+        "Bosonize.Ch08.annihilation_power_budget": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "d9b3c7e22eab05bd568b375b3f33259b809c5d5b2c6efb7a420095996ebd4b77",
+          "kind": "theorem",
+          "text": "theorem annihilation_power_budget (M K : \u2115) (i : Mode M) (p : Polynomial M) (h : p \u2208 budget M K) : (annihilation M i ^ (K + 1)) p = 0"
+        },
+        "Bosonize.Ch08.annihilation_vacuum": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "210dde567695544964f86e93856676a5bc167ebf7288927bdf486f25a0c199ed",
+          "kind": "theorem",
+          "text": "theorem annihilation_vacuum (M : \u2115) (i : Mode M) : annihilation M i (vacuum M) = 0"
+        },
+        "Bosonize.Ch08.annihilators_commute": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "440d987ec94c28ca0c0ec7e85d84dff6ec6c35bf0b5d8d28ed73fcd1ac658420",
+          "kind": "theorem",
+          "text": "theorem annihilators_commute (M : \u2115) (i j : Mode M) : commutator M (annihilation M i) (annihilation M j) = 0"
+        },
+        "Bosonize.Ch08.budget_finiteDimensional": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "6d65907a183553e81acac65856cb052edc3c82e2e6513c56aa0d38b6ba1a9e9e",
+          "kind": "theorem",
+          "text": "theorem budget_finiteDimensional (M K : \u2115) : FiniteDimensional \u2102 (budget M K)"
+        },
+        "Bosonize.Ch08.budget_mono": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "21fcf5bef4b9bc47292b48f7999a672c5d893dd8bd3e9a1f2a962a358e11d3ac",
+          "kind": "theorem",
+          "text": "theorem budget_mono (M K K' : \u2115) (h : K \u2264 K') : budget M K \u2264 budget M K'"
+        },
+        "Bosonize.Ch08.ccr": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "c9ff2ca95dc15880257c978c17e57085e6a6214de1d4f3494b72299f51a2a420",
+          "kind": "theorem",
+          "text": "theorem ccr (M : \u2115) (i j : Mode M) : commutator M (annihilation M i) (creation M j) = if i = j then (weight M i : \u2102) \u2022 (1 : Operators M) else 0"
+        },
+        "Bosonize.Ch08.compressed_commutator": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "63b1d7fbac8ab8d0acbcf80d3958b02b7a5d1f09ee4a5a0305c3bbc1209c6e41",
+          "kind": "theorem",
+          "text": "theorem compressed_commutator (M K : \u2115) (A B : Operators M) : commutator M (compressed M K A) (compressed M K B) = projection M K * commutator M A B * projection M K - projection M K * A * (1 - projection M K) * B * projection M K + projection M K * B * (1 - projection M K) * A * projection M K"
+        },
+        "Bosonize.Ch08.coordinates_embedding": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "284ab08bcbd49845b4889de2092b1c52518e84e6664027372c3773b3edb2d9c8",
+          "kind": "theorem",
+          "text": "theorem coordinates_embedding (M K : \u2115) : (coordinates M K).comp (embedding M K) = LinearMap.id"
+        },
+        "Bosonize.Ch08.creation_budget": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "09ba6d83bf94823203c61f68f80c8cf108314694113bf13cc072131a6697aae3",
+          "kind": "theorem",
+          "text": "theorem creation_budget (M K : \u2115) (i : Mode M) (p : Polynomial M) (h : p \u2208 budget M K) : creation M i p \u2208 budget M (K + weight M i)"
+        },
+        "Bosonize.Ch08.creation_monomial": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "ef79bd29505eeeee7bcedd0bd709d39a94c113a673540e07028ff560a43fa577",
+          "kind": "theorem",
+          "text": "theorem creation_monomial (M : \u2115) (i : Mode M) (r : Exponents M) : creation M i (monomial M r) = monomial M (r + Finsupp.single i 1)"
+        },
+        "Bosonize.Ch08.creation_pairing_adjoint": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "38960bcfdfac5f8528333a429491b804e3e75bd27a6e07589a0929731315d5ae",
+          "kind": "theorem",
+          "text": "theorem creation_pairing_adjoint (M : \u2115) (i : Mode M) (p q : Polynomial M) : pairing M (creation M i p) q = pairing M p (annihilation M i q)"
+        },
+        "Bosonize.Ch08.creation_power_vacuum_ne_zero": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "9236d51280e1a6bfb7c0bcd107b69d7d4130d0f957e271d311e355a578de9f50",
+          "kind": "theorem",
+          "text": "theorem creation_power_vacuum_ne_zero (M : \u2115) (i : Mode M) (n : \u2115) : (creation M i ^ n) (vacuum M) \u2260 0"
+        },
+        "Bosonize.Ch08.creators_commute": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "425a4a5bc1c6ca4550898daac150b954ccb2d07f5b83b091a30bdf4bf36e3e08",
+          "kind": "theorem",
+          "text": "theorem creators_commute (M : \u2115) (i j : Mode M) : commutator M (creation M i) (creation M j) = 0"
+        },
+        "Bosonize.Ch08.derivative_monomial": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "b3e169377a1550080f6e1ce03a15baa1561228b008cb5358ea2fe933c9191f8b",
+          "kind": "theorem",
+          "text": "theorem derivative_monomial (M : \u2115) (i : Mode M) (r : Exponents M) : derivative M i (monomial M r) = (r i : \u2102) \u2022 monomial M (r - Finsupp.single i 1)"
+        },
+        "Bosonize.Ch08.embedding_coordinates": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "c3c9adbe24019514924c95dd6123cd4c40b39f88e17ebb56f214814acbdd8bfc",
+          "kind": "theorem",
+          "text": "theorem embedding_coordinates (M K : \u2115) : (embedding M K).comp (coordinates M K) = projection M K"
+        },
+        "Bosonize.Ch08.embedding_pairing": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "ee34c824afdc758993f2f91eea4682a2c225832a2863d8ecd33412ba60f98e92",
+          "kind": "theorem",
+          "text": "theorem embedding_pairing (M K : \u2115) (v w : FiniteFock M K) : pairing M (embedding M K v) (embedding M K w) = inner \u2102 v w"
+        },
+        "Bosonize.Ch08.embedding_range": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "906b2a323cf8998e0e84cd0868eb95723d043fc0a8c5896fdc8416e8514ebcbc",
+          "kind": "theorem",
+          "text": "theorem embedding_range (M K : \u2115) : LinearMap.range (embedding M K) = budget M K"
+        },
+        "Bosonize.Ch08.expNil_cutoff": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "11c9c4cb193e444f157d31ce3a9bfba0d28ea8dbc024f12dc286a0445f1b2d8d",
+          "kind": "theorem",
+          "text": "theorem expNil_cutoff (M K d e : \u2115) (A : Module.End \u2102 (FiniteFock M K)) (hd : A ^ (d + 1) = 0) (hde : d \u2264 e) : taylor M K A e = expNil M K A d hd"
+        },
+        "Bosonize.Ch08.expNil_inverse": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "f65358c2e8e531d71221b80c8a31ff58a5e4df03db98e9021f054f896ada08d5",
+          "kind": "theorem",
+          "text": "theorem expNil_inverse (M K d : \u2115) (A : Module.End \u2102 (FiniteFock M K)) (hd : A ^ (d + 1) = 0) : expNil M K A d hd * taylor M K (-A) d = 1"
+        },
+        "Bosonize.Ch08.finiteVacuum_ne_zero": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "79f3017a6141edd5d73b65b5bc106c7e76f8342f5f94d421ba296504889507bc",
+          "kind": "theorem",
+          "text": "theorem finiteVacuum_ne_zero (M K : \u2115) : finiteVacuum M K \u2260 0"
+        },
+        "Bosonize.Ch08.finite_annihilation_nilpotent": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "a6a517993db2878055433bb3a7f5ad3c86e6161c6fdf11f6dcafe5ea9aaef04e",
+          "kind": "theorem",
+          "text": "theorem finite_annihilation_nilpotent (M K : \u2115) (i : Mode M) : finiteOperator M K (annihilation M i) ^ (K + 1) = 0"
+        },
+        "Bosonize.Ch08.finite_ccr_obstruction": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "3c537607cc26663c730b3a043e11ce960870cebda5e21265a53acfd70d303445",
+          "kind": "theorem",
+          "text": "theorem finite_ccr_obstruction (M K : \u2115) (i : Mode M) : finiteOperator M K (annihilation M i) * finiteOperator M K (creation M i) - finiteOperator M K (creation M i) * finiteOperator M K (annihilation M i) \u2260 (weight M i : \u2102) \u2022 (1 : Module.End \u2102 (FiniteFock M K))"
+        },
+        "Bosonize.Ch08.finite_creation_adjoint": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "73e464b85e516e987f8316a3059efc90dc9d909280167154056fa048d3a5f85f",
+          "kind": "theorem",
+          "text": "theorem finite_creation_adjoint (M K : \u2115) (i : Mode M) : LinearMap.adjoint (finiteOperator M K (creation M i)) = finiteOperator M K (annihilation M i)"
+        },
+        "Bosonize.Ch08.finite_creation_nilpotent": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "12fdab57a2599b7c817dc65bf0b80cb2a7b82d0cbbf22c0ae99d0d468494c0a5",
+          "kind": "theorem",
+          "text": "theorem finite_creation_nilpotent (M K : \u2115) (i : Mode M) : finiteOperator M K (creation M i) ^ (K + 1) = 0"
+        },
+        "Bosonize.Ch08.finite_hamiltonian_ket": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "4e3b84f61efc2cd37e0d6ac0cb72dd9b329c8ca83ba0af651931ff0b8a69bf06",
+          "kind": "theorem",
+          "text": "theorem finite_hamiltonian_ket (M K : \u2115) (s : BudgetIndex M K) : finiteOperator M K (hamiltonian M) (finiteKet M K s) = (energy M (indexExponent M K s) : \u2102) \u2022 finiteKet M K s"
+        },
+        "Bosonize.Ch08.finite_hamiltonian_selfAdjoint": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "a53301fa0d8674076fab33e6f769b4a78c02c10a32275d13c101eeaff270f88f",
+          "kind": "theorem",
+          "text": "theorem finite_hamiltonian_selfAdjoint (M K : \u2115) : LinearMap.adjoint (finiteOperator M K (hamiltonian M)) = finiteOperator M K (hamiltonian M)"
+        },
+        "Bosonize.Ch08.finite_number_selfAdjoint": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "f14335fb0cbbb2a0488e6b5c5978f5b741b97c71c07b34da6f8b3191d0864c85",
+          "kind": "theorem",
+          "text": "theorem finite_number_selfAdjoint (M K : \u2115) : LinearMap.adjoint (finiteOperator M K (numberOperator M)) = finiteOperator M K (numberOperator M)"
+        },
+        "Bosonize.Ch08.formalProduct_assoc": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "2b41e7d4cc174eee297503b82838061ff26b56e2b76ffb8c3db7409ff0ffe8ec",
+          "kind": "theorem",
+          "text": "theorem formalProduct_assoc (M : \u2115) (f g h : FormalOperators M) : formalProduct M (formalProduct M f g) h = formalProduct M f (formalProduct M g h)"
+        },
+        "Bosonize.Ch08.formal_bch": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "0fcaf9149b964430e7696a668bca0455a3297d3ed554a93e1eff0e091a06a86f",
+          "kind": "theorem",
+          "text": "theorem formal_bch (M : \u2115) (i j : Mode M) (\u03b1 \u03b2 : \u2102) (n : \u2115) : formalProduct M (expCoefficient M (\u03b1 \u2022 annihilation M i)) (expCoefficient M (\u03b2 \u2022 creation M j)) n = formalProduct M (formalProduct M (expCoefficient M (\u03b2 \u2022 creation M j)) (expCoefficient M (\u03b1 \u2022 annihilation M i))) (gaussianCoefficient M (if i = j then (weight M i : \u2102) * \u03b1 * \u03b2 else 0)) n"
+        },
+        "Bosonize.Ch08.hamiltonian_monomial": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "2cb9bd2ef80a1092532941d6a7d099184447305b1fe92017af335140c0407012",
+          "kind": "theorem",
+          "text": "theorem hamiltonian_monomial (M : \u2115) (r : Exponents M) : hamiltonian M (monomial M r) = (energy M r : \u2102) \u2022 monomial M r"
+        },
+        "Bosonize.Ch08.hermite_two": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "143d5630e35b4344536c25e3cb0b91a2b085c55520b25995b7936fa21729b0c2",
+          "kind": "theorem",
+          "text": "theorem hermite_two (M : \u2115) (i : Mode M) : hermitePolynomial M i 2 = MvPolynomial.X i ^ 2 - 1"
+        },
+        "Bosonize.Ch08.mem_budget_iff": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "b1ebcf400bbea15e070467332e94a24ad3cf5bca999d8389093b01bca870f864",
+          "kind": "theorem",
+          "text": "theorem mem_budget_iff (M K : \u2115) (p : Polynomial M) : p \u2208 budget M K \u2194 \u2200 r \u2208 p.support, energy M r \u2264 K"
+        },
+        "Bosonize.Ch08.monomialNorm_pos": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "5e139f4420f19d0df9a7b23a331495d814bf89601794d2b7a50187d2bb05d667",
+          "kind": "theorem",
+          "text": "theorem monomialNorm_pos (M : \u2115) (r : Exponents M) : 0 < monomialNorm M r"
+        },
+        "Bosonize.Ch08.normalPower_vacuum": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "dc38c1d961042fc41418c1ec18966f11a76d4a4c23ce1f98f8a9e427cd5c8976",
+          "kind": "theorem",
+          "text": "theorem normalPower_vacuum (M : \u2115) (i : Mode M) (n : \u2115) : normalPower M i n (vacuum M) = MvPolynomial.X i ^ n"
+        },
+        "Bosonize.Ch08.normalization_ne_zero": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "606bbfc1b1119f7c2a8d7d72b723d4056c6a2e5abb26a1caa22cb179e0e81adf",
+          "kind": "theorem",
+          "text": "theorem normalization_ne_zero (M : \u2115) (r : Exponents M) : normalization M r \u2260 0"
+        },
+        "Bosonize.Ch08.number_monomial": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "7204421a1c790df7f9595df6b03d526820d02cb8511083f6f947bdb9765dbcfd",
+          "kind": "theorem",
+          "text": "theorem number_monomial (M : \u2115) (r : Exponents M) : numberOperator M (monomial M r) = (particleCount M r : \u2102) \u2022 monomial M r"
+        },
+        "Bosonize.Ch08.pairing_add_left": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "6a89fac46bab91773f8abe4e365ff2a31dc5c6274ceb716c99dc26297d694e2a",
+          "kind": "theorem",
+          "text": "theorem pairing_add_left (M : \u2115) (p q r : Polynomial M) : pairing M (p + q) r = pairing M p r + pairing M q r"
+        },
+        "Bosonize.Ch08.pairing_add_right": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "0ad63c33ca22abfb77d14496e8bccf4ad5100c9fe6c68407e46dcc81ebdc186a",
+          "kind": "theorem",
+          "text": "theorem pairing_add_right (M : \u2115) (p q r : Polynomial M) : pairing M p (q + r) = pairing M p q + pairing M p r"
+        },
+        "Bosonize.Ch08.pairing_conjugate": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "ef915d6b28a481eb868b411d1defd2f84a0b75f7ba3978eb1131c43412ae9d57",
+          "kind": "theorem",
+          "text": "theorem pairing_conjugate (M : \u2115) (p q : Polynomial M) : star (pairing M p q) = pairing M q p"
+        },
+        "Bosonize.Ch08.pairing_monomials": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "140b08ba6737de3cc0c0a0f47b1e4952c834d1f66097ea13def064d35b493dfe",
+          "kind": "theorem",
+          "text": "theorem pairing_monomials (M : \u2115) (r s : Exponents M) : pairing M (monomial M r) (monomial M s) = if r = s then (monomialNorm M r : \u2102) else 0"
+        },
+        "Bosonize.Ch08.pairing_self_eq_zero": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "72004b4e2336f72e7e571d88c2c864ae1d70de0542622b0881d89e01da86370c",
+          "kind": "theorem",
+          "text": "theorem pairing_self_eq_zero (M : \u2115) (p : Polynomial M) : pairing M p p = 0 \u2194 p = 0"
+        },
+        "Bosonize.Ch08.pairing_self_nonnegative": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "6c855d5379d2f2dc33fbbb1139b28427b54ef632ce605ec21be1390f1cc91719",
+          "kind": "theorem",
+          "text": "theorem pairing_self_nonnegative (M : \u2115) (p : Polynomial M) : 0 \u2264 (pairing M p p).re"
+        },
+        "Bosonize.Ch08.pairing_smul_left": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "bfd8743c702bae21e5f6b1aa1021f1e53a96e165b981c44a6ab825f68b3874c8",
+          "kind": "theorem",
+          "text": "theorem pairing_smul_left (M : \u2115) (a : \u2102) (p q : Polynomial M) : pairing M (a \u2022 p) q = star a * pairing M p q"
+        },
+        "Bosonize.Ch08.pairing_smul_right": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "a060fc87d46963181a57763e90ab7325e6b03bbe780978f405aefa6d9be142ba",
+          "kind": "theorem",
+          "text": "theorem pairing_smul_right (M : \u2115) (a : \u2102) (p q : Polynomial M) : pairing M p (a \u2022 q) = a * pairing M p q"
+        },
+        "Bosonize.Ch08.pairing_vacuum": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "134ddfdb74fabe28b2153af035d429e2f580a0e7b91f513c869ed27256050be1",
+          "kind": "theorem",
+          "text": "theorem pairing_vacuum (M : \u2115) : pairing M (vacuum M) (vacuum M) = 1"
+        },
+        "Bosonize.Ch08.projection_idempotent": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "9deb9ac5c9c1b4bf18b08b0e91db89f52971e32089f1ee40966baba2afb3bea0",
+          "kind": "theorem",
+          "text": "theorem projection_idempotent (M K : \u2115) : projection M K * projection M K = projection M K"
+        },
+        "Bosonize.Ch08.projection_monomial": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "3a8446f28d35f7208c5cc756b7d69e05743854a8448cbbf2e8aef7a42c0d9957",
+          "kind": "theorem",
+          "text": "theorem projection_monomial (M K : \u2115) (r : Exponents M) : projection M K (monomial M r) = if energy M r \u2264 K then monomial M r else 0"
+        },
+        "Bosonize.Ch08.projection_pairing": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "a1f4cb86638ce63501ddf9b9d3bd24606dfe7eb7830a55636751adac4fa4d369",
+          "kind": "theorem",
+          "text": "theorem projection_pairing (M K : \u2115) (p q : Polynomial M) : pairing M (projection M K p) q = pairing M p (projection M K q)"
+        },
+        "Bosonize.Ch08.projection_range": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "de9bc8d5afd625c01e8375161de60c7a43924004592733a37fd791337433a15a",
+          "kind": "theorem",
+          "text": "theorem projection_range (M K : \u2115) : LinearMap.range (projection M K) = budget M K"
+        },
+        "Bosonize.Ch08.taylor_adjoint": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "3814a99d3c6aa8f19ce4dcf04ee705cd2c714e6271e683540db836dc76e41424",
+          "kind": "theorem",
+          "text": "theorem taylor_adjoint (M K d : \u2115) (A : Module.End \u2102 (FiniteFock M K)) : LinearMap.adjoint (taylor M K A d) = taylor M K (LinearMap.adjoint A) d"
+        },
+        "Bosonize.Ch08.vacuum_mem_budget": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "96ae1826487ba88f5cc268da1bee23ee6585c7fcfbc8243ed78797c3fdfaff20",
+          "kind": "theorem",
+          "text": "theorem vacuum_mem_budget (M K : \u2115) : vacuum M \u2208 budget M K"
+        },
+        "Bosonize.Ch08.weight_pos": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "68e79fd60f210fa78c9114d16342480eed7b6a92da2be285bf1236e9772cca31",
+          "kind": "theorem",
+          "text": "theorem weight_pos (M : \u2115) (i : Mode M) : 0 < weight M i"
+        },
+        "Bosonize.Ch08.wick_coefficients": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "8ad2e6b11c2c7c8d2d99f922936b076c529df60afeb7e8b3ac9ee079c472a52a",
+          "kind": "theorem",
+          "text": "theorem wick_coefficients (M : \u2115) (i : Mode M) (n : \u2115) : ((n.factorial : \u2102)\u207b\u00b9) \u2022 wickPolynomial M i n = \u2211 k \u2208 Finset.range (n / 2 + 1), (((n - 2 * k).factorial : \u2102) * (k.factorial : \u2102) * (2 : \u2102) ^ k)\u207b\u00b9 \u2022 (MvPolynomial.X i ^ (n - 2 * k))"
+        },
+        "Bosonize.Ch08.wick_derivative": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "e4c8a0a35a3d2746f57514d3756e7515fdc0e22cb181bc01d6bb7bda17d651f6",
+          "kind": "theorem",
+          "text": "theorem wick_derivative (M : \u2115) (i : Mode M) (n : \u2115) : derivative M i (wickPolynomial M i n) = (n : \u2102) \u2022 wickPolynomial M i (n - 1)"
+        },
+        "Bosonize.Ch08.wick_operator": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "874c5589140158bdd26bafd53eceb101bd2258eaf7f7ba4b90bbcad55b605f1a",
+          "kind": "theorem",
+          "text": "theorem wick_operator (M : \u2115) (i : Mode M) (n : \u2115) : (derivative M i + creation M i) ^ n = \u2211 k \u2208 Finset.range (n / 2 + 1), ((n.factorial : \u2102) / ((k.factorial : \u2102) * ((n - 2 * k).factorial : \u2102) * (2 : \u2102) ^ k)) \u2022 normalPower M i (n - 2 * k)"
+        },
+        "Bosonize.Ch08.wick_recurrence": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "4981a9aaf7f1b882e20f69ff9306374cdff878792553333232e7b8325146efa6",
+          "kind": "theorem",
+          "text": "theorem wick_recurrence (M : \u2115) (i : Mode M) (n : \u2115) : wickPolynomial M i (n + 1) = creation M i (wickPolynomial M i n) + (n : \u2102) \u2022 wickPolynomial M i (n - 1)"
+        },
+        "Bosonize.Ch08.wick_two": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "0e60433472663a0133e3db4293912ba251fcc0a41e207105a1298cf187f35de8",
+          "kind": "theorem",
+          "text": "theorem wick_two (M : \u2115) (i : Mode M) : wickPolynomial M i 2 = MvPolynomial.X i ^ 2 + 1"
+        },
+        "Bosonize.Ch08.wick_zero": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "957517af7c4f3e6d639b5fc3f576ccc38807f4513a7f676de3d1100deb957d10",
+          "kind": "theorem",
+          "text": "theorem wick_zero (M : \u2115) (i : Mode M) : wickPolynomial M i 0 = vacuum M"
+        },
+        "Bosonize.Ch08.word_normal_form": {
+          "ctx": "06f8a026c98ce8e63983ee1636f50638937616ffc80406b3cc76fa6ea51d6370",
+          "hash": "2eb0693196bd2d6247ec19b1bf55fa4d0c9873a354c36905030e3ecafd37158f",
+          "kind": "theorem",
+          "text": "theorem word_normal_form (M : \u2115) (i : Mode M) (letters : List Bool) : \u2203 s : NormalSymbols, normalEvaluation M i s = wordEvaluation M i letters"
+        }
+      }
     }
   },
   "version": 2
