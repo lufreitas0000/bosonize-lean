@@ -1,6 +1,6 @@
 module
 
-public import BosonizeStubs.A03EnergyBudgets
+public import Bosonize.Core.A03EnergyBudgets
 public import Bosonize.Core.Ch05Fermions
 
 /-!

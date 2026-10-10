@@ -1,6 +1,4 @@
 import Bosonize
-import BosonizeStubs.A03EnergyBudgets
-import BosonizeStubs.Ch07VacuumBudget
 
 /-!
 # Bosonize Staging Library

@@ -1,12 +1,12 @@
 # CH07 companion notebook — sectors, excitation energy and budgets
 
-Status (2026-10-09): **Phase B complete: all 67 theorem proofs and 26 data declarations are verified.** The user authorized the existing interfaces, committed at `20ed09b`. Both modules remain in staging, awaiting separate Phase C authorization. All nine Core sources and the approved interfaces remain unchanged.
+Status (2026-10-09): **Phase C: promoted and frozen in Core following the user's authorization.** Initial interface baseline: `20ed09b`; Phase B proof completion: `2b3186f`. A03 has 47 theorem proofs/19 data declarations; CH07 has 67 proofs/26 data declarations. Both are exposed through `import Bosonize`. All nine previously frozen Core sources remain unchanged.
 
 The design/review sections below retain the historical Phase A rationale. References to proposed stubs in those sections describe the earlier design; all theorem bodies now have complete proofs.
 
 ## Source reconciliation and scope
 
-Read [CH07](../../../notes/md/ch07_vacuum_budget_space.md), [A03](../../../notes/appendices/a03_energy_budgets_and_filtered_maps.md), [TOC](../../../notes/md/TOC.md), [appendix index](../../../notes/appendices/README.md), [revision guide](../../../note/proof_suggestions_revision_2026-10-09.md) P07/P08, and the relevant [proof-design contracts](../../../.agents/skills/formalizer/references/proof_design.md). No chapter-specific suggestion file is available. Adopt the finite occupation model and actual positive-Nyquist band from frozen CH01/CH04/CH05. Source snippets remain advisory; no bare natural subtraction or reflection-symmetric band is introduced.
+Read [CH07](../../../../notes/md/ch07_vacuum_budget_space.md), [A03](../../../../notes/appendices/a03_energy_budgets_and_filtered_maps.md), [TOC](../../../../notes/md/TOC.md), [appendix index](../../../../notes/appendices/README.md), [revision guide](../../../../note/proof_suggestions_revision_2026-10-09.md) P07/P08, and the relevant [proof-design contracts](../../../../.agents/skills/formalizer/references/proof_design.md). No chapter-specific suggestion file is available. Adopt the finite occupation model and actual positive-Nyquist band from frozen CH01/CH04/CH05. Source snippets remain advisory; no bare natural subtraction or reflection-symmetric band is introduced.
 
 The physical lemmas explicitly take h>0 and use L=2*h. Algebraic data also elaborate at h=0; no positive-sea interpretation is assigned there. Admissibility is inclusive `-h ≤ N ≤ h`, including empty and full sectors. A03's opening word “strictly” is interpreted according to its written inclusive inequalities and the chapter's explicit endpoint discussion; excited witness statements require the separate strict interior condition. The source files are preserved.
 
@@ -49,7 +49,7 @@ Direct compilation and staging build pass with exactly 67 expected sorry warning
 
 A separate finite Python sanity check covers 340 configurations for h=1..4: rank/displacement identity, ground uniqueness, full/empty margins, creation/annihilation excitation shifts, and an interior-sector one-step witness. It supplies counterexample screening only, not Lean proof evidence. The primary formalizer used the repository skill without subagents. Review integer-energy conventions, admissible endpoints, signed budgets, nonvacuous interior witnesses and the proposed A03 contracts together before locking or Phase B.
 
-## Phase B proof strategy and validation
+## Historical Phase B proof strategy and validation
 
 The user's Phase B instruction approved locking the two existing interfaces. The local A03/CH07 manifest entries were checked against their actual sources and committed at `20ed09b`; every pre-existing lock record remains unchanged. No new public declarations, imports, hypotheses or definitions were introduced. Only theorem bodies and module documentation changed.
 
@@ -65,20 +65,20 @@ Validation on the final sources:
 - Native MCP diagnostics for each file: success=true, partial=false, timed_out=false, no items or failed dependencies. Native goal retrieval inspected ground uniqueness. Local MCP search failed because its child PATH lacks `rg`; shell search supplied installed source/signature retrieval. This does not affect the successful goal/diagnostic tools.
 - Exact notebook/source snapshots and module SHA-256 values checked. Existing Core files, toolchain and dependency manifest remain unchanged.
 
-One primary agent used the repository formalizer skill; no subagents were dispatched. Unrelated source-note edits and suggestion deletions remain preserved. Phase C promotion and new chapters are not started.
+One primary agent used the repository formalizer skill; no subagents were dispatched. Unrelated source-note edits and suggestion deletions remain preserved. This section records the pre-promotion Phase B snapshot; Phase C is recorded separately below.
 
 ## Twist-angle dictionary
 
 A03 is generic coordinate calculus. CH07 uses integer reference energies on the existing sea. Choose the same real offset β and `b = Ch06Ext.angleTwist (2*h) β` for the physical fields and transport. `Ch06Ext.physical_relative_shift` adds β times relative charge; subtract the matching physical polynomial `N(N+1)/2 + β*N`. The proved `excitation_twist_cancel`, together with CH07's doubled ground-energy identity, identifies the resulting real excitation with the cast of `Ch07.excitationEnergy`. Thus these excitation budgets have the same labels for this sea and linear dispersion, while relative/ground physical energies and field transport retain their parameters. Centered APBC uses β = -1/2 and physical ground polynomial N²/2. Another sea, dispersion or species model requires its own bridge.
 
-A standalone Lean example importing both chapters checks this exact bridge under warnings-as-errors. It is documented here and does not add a public declaration or alter the approved imports. See the [Ch06Ext notebook](../Bosonize/Core/Ch06Ext.md) for the proved transport/holonomy contracts.
+A standalone Lean example importing both chapters checks this exact bridge under warnings-as-errors. It is documented here and does not add a public declaration or alter the approved imports. See the [Ch06Ext notebook](Ch06Ext.md) for the proved transport/holonomy contracts.
 
 ### Checked standalone twist bridge
 
 The following scratch example compiled with `lake env lean -DwarningAsError=true`, exit 0 and no diagnostics. It is separate from the locked module interface.
 
 ```lean
-import BosonizeStubs.Ch07VacuumBudget
+import Bosonize.Core.Ch07VacuumBudget
 import Bosonize.Core.Ch06Ext
 
 example (h : ℕ) (hh : 0 < h) (β : ℝ) (S : Bosonize.Ch07.Occupation h) :
@@ -98,6 +98,21 @@ example (h : ℕ) (hh : 0 < h) (β : ℝ) (S : Bosonize.Ch07.Occupation h) :
   nlinarith
 ```
 
+## Phase C promotion and verification
+
+The user authorized Phase C after proof completion at `2b3186f`. A03 moves byte-for-byte to Core. CH07 changes only `public import BosonizeStubs.A03EnergyBudgets` to `public import Bosonize.Core.A03EnergyBudgets`; every definition, explicit statement and proof body is preserved. Its single import-command record and 67 dependent theorem context hashes follow that authorized migration; theorem header hashes remain unchanged. All other existing interface entries and all nine earlier complete Core hashes are unchanged. The two whole-source hashes now freeze their proofs as well as interfaces. Both modules are exposed through `import Bosonize`, and direct staging imports are removed. The legacy manifest is retained.
+
+Final verification on freshly built Core:
+
+- `make ci`: all 69 guard tests, strict interface guard (457 statements/342 commands), eleven complete Core hashes and both library builds passed, with no warnings or placeholders (`CI OK`). `make lock-check` also passed.
+- Each promoted source passes `lake env lean -DwarningAsError=true`, exit 0 and empty diagnostic output.
+- Fresh `import Bosonize` audit covers all 457 Core theorems and all 45 newly promoted data declarations: 502 reports with only `propext`, `Classical.choice`, `Quot.sound`, or no axioms; no `sorryAx`. This module's data/theorem output is reproduced below.
+- Native Lean MCP diagnostics on each Core file: success=true, partial=false, timed_out=false, zero items and zero failed dependencies. Native goal retrieval inspected the promoted CH07 ground-uniqueness proof.
+- The standalone twist bridge above was recompiled with Core imports under warnings-as-errors, exit 0. It remains a documented checked example, not a new public theorem.
+- Source snapshots, SHA values, migration-only source diffs and preserved earlier Core hashes were checked. No frozen proof is modified.
+
+Use the committed Phase C promotion checkpoint as the current committed baseline. The historical `20ed09b` and `2b3186f` staging references precede the path/import migration. One primary formalizer used the repository skill; no subagents were dispatched. Unrelated note edits and suggestion deletions remain outside the commit. CH08/A04 Phase A is the planned next step and is not started.
+
 ## Reviewed source provenance
 
 | Reviewed source | SHA-256 |
@@ -109,35 +124,9 @@ example (h : ℕ) (hh : 0 < h) (β : ℝ) (S : Bosonize.Ch07.Occupation h) :
 | `note/proof_suggestions_revision_2026-10-09.md` | `1db5f28b3e392d3b400ccc219ac640778fc5ceabc5cba17dfeb44b225a1b383c` |
 | `.agents/skills/formalizer/references/proof_design.md` | `4d4391b355f701cee468d726a4c165010a4aa82c67449ec00e8a221759db585b` |
 
-## Fresh Phase B data and theorem axiom output
+## Fresh Phase C data and theorem axiom output
 
 ```text
-'Bosonize.Ch07.Occupation' depends on axioms: [propext, Quot.sound]
-'Bosonize.Ch07.FockSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.Operators' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.admissible' does not depend on any axioms
-'Bosonize.Ch07.relativeCharge' depends on axioms: [propext, Quot.sound]
-'Bosonize.Ch07.relativeEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.groundEnergy' does not depend on any axioms
-'Bosonize.Ch07.excitationEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.excitationNat' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.groundConfiguration' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.groundKet' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.vacuumKet' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.sortedMode' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.referenceMode' depends on axioms: [propext, Quot.sound]
-'Bosonize.Ch07.displacement' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.chargeObservable' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.excitationObservable' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.energySpace' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.fixedBudget' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.boxBudget' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.fixedProjection' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.boxProjection' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.compressed' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.speciesConfiguration' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.totalExcitation' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Bosonize.Ch07.speciesBudget' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Bosonize.Ch07.ground_energy_even' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Bosonize.Ch07.ground_energy_double' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Bosonize.Ch07.ground_energy_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -205,16 +194,42 @@ example (h : ℕ) (hh : 0 < h) (β : ℝ) (S : Bosonize.Ch07.Occupation h) :
 'Bosonize.Ch07.total_excitation_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Bosonize.Ch07.species_budget_ket' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Bosonize.Ch07.species_budget_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.Occupation' depends on axioms: [propext, Quot.sound]
+'Bosonize.Ch07.FockSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.Operators' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.admissible' does not depend on any axioms
+'Bosonize.Ch07.relativeCharge' depends on axioms: [propext, Quot.sound]
+'Bosonize.Ch07.relativeEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.groundEnergy' does not depend on any axioms
+'Bosonize.Ch07.excitationEnergy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.excitationNat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.groundConfiguration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.groundKet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.vacuumKet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.sortedMode' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.referenceMode' depends on axioms: [propext, Quot.sound]
+'Bosonize.Ch07.displacement' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.chargeObservable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.excitationObservable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.energySpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.fixedBudget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.boxBudget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.fixedProjection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.boxProjection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.compressed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.speciesConfiguration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.totalExcitation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.Ch07.speciesBudget' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 ## Exact Lean source snapshot
 
-Module SHA-256: `d74e11cbd42378e85b052024036b24670ad740cbb9e78403636f12b63aab2564`. The block below matches the completed staging module byte-for-byte and contains all exact signatures.
+Module SHA-256: `a33ced1009ba31a3823dfe3e1a922a346e62591d7b5d5c1803f6382fe14944da`. The block below matches the frozen Core module byte-for-byte and contains all exact signatures.
 
 ```lean
 module
 
-public import BosonizeStubs.A03EnergyBudgets
+public import Bosonize.Core.A03EnergyBudgets
 public import Bosonize.Core.Ch05Fermions
 
 /-!

@@ -7,6 +7,8 @@ import Bosonize.Core.Ch04CARFock
 import Bosonize.Core.Ch05Fermions
 import Bosonize.Core.Ch06LocalNet
 import Bosonize.Core.Ch06Ext
+import Bosonize.Core.A03EnergyBudgets
+import Bosonize.Core.Ch07VacuumBudget
 
 /-!
 # Bosonize Core Library
