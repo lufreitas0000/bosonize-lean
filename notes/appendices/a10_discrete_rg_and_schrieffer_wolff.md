@@ -22,6 +22,7 @@ The energy budget space $\mathcal{B}_K$ splits into an orthogonal direct sum of 
 $$
 \mathcal{B}_K = \mathcal{P} \oplus \mathcal{Q}
 $$
+
 * $\mathcal{P} := \mathcal{B}_{K-1}$ is the low-energy target subspace (retained states of total energy $\le K-1$).
 * $\mathcal{Q} := \mathcal{H}_K$ is the maximal-energy boundary shell (states with excitation energy exactly equal to $K$).
 
@@ -36,6 +37,7 @@ Formalize $\mathcal{B}_K$ as an orthogonal direct sum of submodules using `Direc
 
 **Definition (Solvable Baseline and Block Decomposition):**
 Consider a self-adjoint Hamiltonian $H = H_0 + t V$ on $\mathcal{B}_K$, where:
+
 1. $H_0$ is a solvable baseline that commutes with the projectors:
 $$
 [P, H_0] = 0, \quad [Q, H_0] = 0.
@@ -45,6 +47,7 @@ $$
 $$
 V_{\text{diag}} := PVP + QVQ, \quad V_{\text{off}} := PVQ + QVP.
 $$
+
 3. *Non-resonance hypothesis:* For all pairs $|\lambda\rangle \in \mathcal{P}$ and $|\mu\rangle \in \mathcal{Q}$, if the coupling is non-zero ($\langle \lambda | V_{\text{off}} | \mu \rangle \neq 0$), the spectral gap is non-zero:
 $$
 E_\lambda \neq E_\mu.
@@ -147,10 +150,12 @@ The following applications provide physical motivation and context from condense
 
 ### 1. Non-Linear Dispersion Curvature (Physical Motivation)
 If a non-linear band dispersion $\varepsilon(k) = v_F k + \frac{k^2}{2m^*}$ introduces cubic mode couplings $V_{\text{cubic}} \propto \sum \rho_p \rho_q \rho_{-(p+q)}$:
+
 * The second-order term $\frac{1}{2} P [S_1, V_{\text{cubic}}] P$ generates effective 4-mode interactions in the continuum limit.
 * In physical scaling theory, this leads to mode-dependent sound velocities and finite plasmon lifetimes. On a finite lattice, Hermitian Hamiltonians have purely real spectra; defining an actual decay lifetime requires an operational or thermodynamic continuum formulation.
 
 ### 2. Umklapp Scattering and Mott Transition (Physical Motivation)
 For the half-filling Umklapp perturbation $H_U \propto \sum_x (O_U(x) + O_U^\dagger(x))$:
+
 * In continuum bosonization, $O_U \sim \cos(\sqrt{8\pi}\phi_c)$, and second-order operator product expansions yield the Kosterlitz-Thouless (KT) flow equations, predicting the opening of a charge Mott gap.
-* On the discrete finite lattice, revised Theorem 21.7 requires a nonzero outward component outside the chosen budget. Lemma 21.8 supplies a direct occupation-coefficient witness family with exact sign and coefficient `−g_U/L²`. Charge shifts or nonzero total HU action alone do not establish leakage, KT flow, or a Mott gap.
+* On the discrete finite lattice, revised Theorem 21.7 requires a nonzero outward component outside the chosen budget. Lemma 21.8 supplies a direct occupation-coefficient witness family with exact sign and coefficient $-g_U/L^2$. Charge shifts or nonzero total HU action alone do not establish leakage, KT flow, or a Mott gap.

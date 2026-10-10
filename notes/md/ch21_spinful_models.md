@@ -32,7 +32,7 @@ $$
 [R_{-m, \nu}^c, R_{m, \nu}^c] = [R_{-m, \nu}^s, R_{m, \nu}^s] = 2m \tag{21.4}
 $$
 
-For a quadratic current Hamiltonian whose spin-index coupling matrices have the exchange-symmetric form `[[a,b],[b,a]]`, substitution `ρ_up=(R^c+R^s)/2` and `ρ_down=(R^c−R^s)/2` gives charge/spin blocks with coefficients `(a+b)/2` and `(a−b)/2` in the raw-current convention. This is a block decomposition, not a claim about every spin-symmetric interacting Hamiltonian or a tensor product of independent truncated budgets. In a stable pairing model, unequal positive velocities require the explicit condition `v1_c²−v2_c² ≠ v1_s²−v2_s²`; the free spin-independent case can have equal velocities.
+For a quadratic current Hamiltonian whose spin-index coupling matrices have the exchange-symmetric form $\begin{pmatrix}a&b\\b&a\end{pmatrix}$, substitution $\rho_\uparrow=(R^c+R^s)/2$ and $\rho_\downarrow=(R^c-R^s)/2$ gives charge/spin blocks with coefficients $(a+b)/2$ and $(a-b)/2$ in the raw-current convention. This is a block decomposition, not a claim about every spin-symmetric interacting Hamiltonian or a tensor product of independent truncated budgets. In a stable pairing model, unequal positive velocities require the explicit condition $v_{1,c}^2-v_{2,c}^2\ne v_{1,s}^2-v_{2,s}^2$; the free spin-independent case can have equal velocities.
 
 *Lean 4 Proof Strategy:*
 1. **Auxiliary Lemma 1:** Prove that density operators for distinct spins commute, $[\rho_{m,\nu,\uparrow}, \rho_{n,\nu',\downarrow}] = 0$.
@@ -51,18 +51,18 @@ The first term lowers charges $(R\uparrow, L\downarrow)$, while the second lower
 $$
 K_1 := F_{R,\uparrow} F_{L,\downarrow} Z_{R,\uparrow} Z_{L,\downarrow}, \quad K_2 := F_{R,\downarrow} F_{L,\uparrow} Z_{R,\downarrow} Z_{L,\uparrow} \tag{21.6}
 $$
-**Lemma 21.4a (Two Typed Singlet Channels with Residuals).** Let Vs have charge N. For channel j=1 use (a,b)=(R↑,L↓) and for j=2 use (R↓,L↑). Let Vm,j have charge N−e_b and Vt,j have charge N−e_a−e_b, with separately specified cutoffs. Put
+**Lemma 21.4a (Two Typed Singlet Channels with Residuals).** Let $V_s$ have charge $N$. For channel $j=1$ use $(a,b)=(R\uparrow,L\downarrow)$ and for $j=2$ use $(R\downarrow,L\uparrow)$. Let $V_{m,j}$ have charge $N-e_b$ and $V_{t,j}$ have charge $N-e_a-e_b$, with separately specified cutoffs. Put
 $$
 B_{b,j}=p_{m,j}c_b i_s,\quad B_{a,j}=p_{t,j}c_a i_{m,j},\quad
 \mathcal R_j=p_{t,j}c_a(I-P_{m,j})c_b i_s.
 $$
-Choose a common target W containing the orthogonal sum of the two target budgets, with inclusions j₁,j₂ and projection p_W. Then the exact projected singlet is
+Choose a common target $W$ containing the orthogonal sum of the two target budgets, with inclusions $j_1,j_2$ and projection $p_W$. Then the exact projected singlet is
 $$
 p_W O_{SSC}(x)i_s=
  j_1(B_{a,1}\circ B_{b,1}+\mathcal R_1)
  -j_2(B_{a,2}\circ B_{b,2}+\mathcal R_2). \tag{21.7}
 $$
-Here W is exactly that target sum for the displayed equality; a larger W requires retaining its extra projected components as well. When using Chapter 14 candidate maps for B, verify each single-field criterion first. Distinct Klein products K₁,K₂ preserve the distinct target charge shifts. Reconstructing phases by `ρ_up/down=(R^c±R^s)/2` is algebraic; combining compressed exponentials into a common charge factor requires an additional commutation/cutoff theorem and is not part of (21.7).
+Here $W$ is exactly that target sum for the displayed equality; a larger $W$ requires retaining its extra projected components as well. When using Chapter 14 candidate maps for $B$, verify each single-field criterion first. Distinct Klein products $K_1,K_2$ preserve the distinct target charge shifts. Reconstructing phases by $\rho_{\uparrow/\downarrow}=(R^c\pm R^s)/2$ is algebraic; combining compressed exponentials into a common charge factor requires an additional commutation/cutoff theorem and is not part of (21.7).
 
 *Lean 4 Proof Strategy:*
 Define O_SSC directly by CAR words. Prove each channel by the Chapter 20/A03 intermediate-projection insertion, then include the results into the common orthogonal target. Prove target charge orthogonality and the explicit Klein phases. No unidentified spin exponentials or subtraction of maps with distinct codomains is used.
@@ -72,7 +72,7 @@ Define O_SSC directly by CAR words. Prove each channel by the Chapter 20/A03 int
 **Definition 21.5 (The Exact Umklapp Operator).**
 The Umklapp scattering operator destroys two $R$ particles and creates two $L$ particles of opposite spins:
 $$
-O_{U}(x) := c^\dagger_{(L, \uparrow, x)} c^\dagger_{(L, \downarrow, x)} c_{(R, \downarrow, x)} c_{(R, \uparrow, x)} \tag{21.8}
+O_{U}(x) := c^\dagger_{(L, \uparrow, x)} c^\dagger_{(L, \downarrow, x)} c_{(R, \downarrow, x)}^{\phantom{\dagger}} c_{(R, \uparrow, x)}^{\phantom{\dagger}} \tag{21.8}
 $$
 
 For real coupling $g_U\in\mathbb R$, fix the Hamiltonian normalization
@@ -118,14 +118,14 @@ $$
 3. Separate the discrete algebraic non-invariance result from continuous Wilsonian RG flow or thermodynamic gap claims.
 
 **Lemma 21.8 (Explicit Zero-Charge Leakage Witness).**
-Fix the occupation order `(L↑,L↓,R↑,R↓)`, with ascending integer momenta inside each species. For h≥1,L=2h,K=0, all charge bounds zero, and g_U≠0, let Ω be the four seas `{1−h,…,0}`. Let T add momentum 1 to each L species and remove momentum 1−h from each R species. Its charges are (+1,+1,−1,−1), so it lies outside the budget. With Definition 21.5's normalization,
+Fix the occupation order $(L\uparrow,L\downarrow,R\uparrow,R\downarrow)$, with ascending integer momenta inside each species. For $h\ge1,L=2h,K=0$, all charge bounds zero, and $g_U\ne0$, let $\Omega$ be the four seas $\{1-h,\ldots,0\}$. Let $T$ add momentum $1$ to each $L$ species and remove momentum $1-h$ from each $R$ species. Its charges are $(+1,+1,-1,-1)$, so it lies outside the budget. With Definition 21.5's normalization,
 $$
 \langle\delta_T,H_U\Omega\rangle=-\frac{g_U}{L^2}\ne0.
 $$
-In right-to-left operator order the preceding occupation counts are 2h for R↑ removal, 3h−1 for R↓ removal, 2h for L↓ insertion, and h for L↑ insertion. Their total 8h−1 is odd, giving sign −1 for every h. The selected four Fourier factors contribute L⁻²ζ^(−Lx)=L⁻² at each site; summing L sites and multiplying g_U/L gives the displayed coefficient. Each removed/added occupation fixes its momentum index uniquely, and the adjoint term has opposite charge, so no other word cancels this coefficient. This proof uses only CAR and Fourier character laws; no current-CCR margin is required.
+In right-to-left operator order the preceding occupation counts are $2h$ for $R\uparrow$ removal, $3h-1$ for $R\downarrow$ removal, $2h$ for $L\downarrow$ insertion, and $h$ for $L\uparrow$ insertion. Their total $8h-1$ is odd, giving sign $-1$ for every $h$. The selected four Fourier factors contribute $L^{-2}\zeta^{-Lx}=L^{-2}$ at each site; summing $L$ sites and multiplying $g_U/L$ gives the displayed coefficient. Each removed/added occupation fixes its momentum index uniquely, and the adjoint term has opposite charge, so no other word cancels this coefficient. This proof uses only CAR and Fourier character laws; no current-CCR margin is required.
 
 *Lean 4 Proof Strategy:*
-Prove membership/nonmembership of the four distinguished momenta, the four preceding-count formulas with prior insertions/erasures, and odd parity of their sum. Evaluate the selected occupation coefficient, use ζ^L=1 to sum the constant character, and isolate its charge projection. Conclude budget non-invariance from the nonzero outside coefficient.
+Prove membership/nonmembership of the four distinguished momenta, the four preceding-count formulas with prior insertions/erasures, and odd parity of their sum. Evaluate the selected occupation coefficient, use $\zeta^L=1$ to sum the constant character, and isolate its charge projection. Conclude budget non-invariance from the nonzero outside coefficient.
 
 #### 21.4 Technical Notes for the Lean 4 Formalization
 

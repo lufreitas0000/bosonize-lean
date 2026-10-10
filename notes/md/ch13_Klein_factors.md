@@ -2,6 +2,7 @@
 
 To achieve the full bosonization dictionary, we must reconstruct the physical fermionic field operator $\psi(x)$ entirely out of bosonic components.
 Because bosonic density modes $\rho_{m, \nu}$ strictly conserve the total particle number of a species, they cannot change the charge sector. The true operator $\psi(x)$ removes one particle. We factorize the fermionic field into:
+
 1. A **bosonic exponential** that handles density fluctuations.
 2. A **Klein map** $F_\nu$ that explicitly shifts the system from one charge sector to another while correctly tracking cross-species fermionic statistics.
 
@@ -17,7 +18,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Define the index set as `Prod C Λ*`. Since `C` and `Λ*` are ordered types, derive `LinearOrder` using `Prod.Lex` to provide the lexicographic ordering required by the CAR algebra.
+Define the index set as `Prod C (Ch01.Band L)`. Since `C` and $\Lambda^*$ are ordered types, derive `LinearOrder` using `Prod.Lex` to provide the lexicographic ordering required by the CAR algebra.
 
 **Definition 13.2 (Joint Sector Ground States).**
 Let $\vec{N} \in \mathbb{Z}^M$ be a vector of relative charges for each species. The joint vacuum state is the tensor product of independent species ground states:
@@ -27,19 +28,19 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize `N` as a function `C → ℤ`. Define the joint ground state as a finite tensor product over the `Fintype` `C` of the single-species ground states `|N_nu⟩`. Use `PiTensorProduct` or construct a joint Hilbert space recursively for finite index sets.
+Formalize `N` as a function `C → ℤ`. Define the joint ground state as a finite tensor product over the `Fintype` `C` of the single-species ground states $|N_\nu\rangle$. Use `PiTensorProduct` or construct a joint Hilbert space recursively for finite index sets.
 
 **Definition 13.3 (Species Density Modes).**
 Density operators are partitioned by species:
 
 $$
-\rho_{m, \nu} := \sum_{\substack{k \in \Lambda^* \\ k+m \in \Lambda^*}} c^\dagger_{(\nu, k+m)} c_{(\nu, k)} \tag{13.3}
+\rho_{m, \nu} := \sum_{\substack{k \in \Lambda^* \\ k+m \in \Lambda^*}} c^\dagger_{(\nu, k+m)} c_{(\nu, k)}^{\phantom{\dagger}} \tag{13.3}
 $$
 
 Because they act on disjoint indices, $[\rho_{m, \nu}, \rho_{n, \nu'}] = 0$ for $\nu \neq \nu'$.
 
 *Lean 4 Proof Strategy:*
-Define density operators parameterized by species `ν : C` and momentum `m : ℤ`. The sum over `k` is constrained within the bounds `Λ*` for `k` and `k+m`. Provide an auxiliary lemma proving `[rho_m_ν, rho_n_ν'] = 0` for `ν ≠ ν'` by showing that the creation and annihilation operators act on disjoint indices, relying on `Prod.Lex` and `Fermion.CAR`.
+Define density operators parameterized by species `ν : C` and momentum `m : ℤ`. The sum over `k` is constrained within the bounds $\Lambda^*$ for `k` and `k+m`. Provide an auxiliary lemma proving $[\rho_{m,\nu},\rho_{n,\nu'}]=0$ for `ν ≠ ν'` by showing that the creation and annihilation operators act on disjoint indices, relying on `Prod.Lex` and `Fermion.CAR`.
 
 #### 13.2 Klein Maps Between Admissible Sectors
 
@@ -87,7 +88,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Use the `LinearIsometry` class in Mathlib to bundle `F_nu`. To prove `∥F_nu v∥ = ∥v∥`, use the fact that `F_nu` maps standard orthogonal basis vectors `|λ; N⟩` to `±|λ; N - e_nu⟩`, and their inner products depend only on `λ` (via `z_λ`), independent of the charge sector `N`. State an auxiliary lemma `inner_product_charge_independent`.
+Use the `LinearIsometry` class in Mathlib to bundle `F_nu`. To prove `∥F_nu v∥ = ∥v∥`, use the fact that `F_nu` maps standard orthogonal basis vectors $|\lambda;N\rangle$ to $\pm|\lambda;N-e_\nu\rangle$, and their inner products depend only on `λ` (via $z_\lambda$), independent of the charge sector `N`. State an auxiliary lemma `inner_product_charge_independent`.
 
 **Lemma 13.6 (Cross-Species Anti-Commutation).**
 Let $\nu \neq \nu'$ be distinct species. Assume the source sector $\vec{N}$, intermediate sectors $\vec{N}-e_\nu$, $\vec{N}-e_{\nu'}$, and final sector $\vec{N}-e_\nu-e_{\nu'}$ are all admissible ($-h \le N_\gamma - \delta_{\nu\gamma} - \delta_{\nu'\gamma} \le h$), and that cutoff $K$ satisfies the completeness margin on all four sectors:
@@ -104,7 +105,7 @@ $$
 Klein shifts generally have $F^2 \neq 0$ and do *not* generate a finite-dimensional Clifford algebra merely from cross-species anti-commutation. We reserve Clifford terminology strictly for Majorana combinations with exact square relations.
 
 *Lean 4 Proof Strategy:*
-Prove the relation `F_nu ∘ F_nu' + F_nu' ∘ F_nu = 0`. Evaluate the action of both composite maps on a generic basis state `|λ; N⟩`. Compute the parity sign product `P(ν, N - e_nu') * P(ν', N)` versus `P(ν', N - e_nu) * P(ν, N)`. By calculating the change in the occupation sum `∑ (h + N_γ)` when the sector charge changes, demonstrate that a relative minus sign appears, thus establishing the anti-commutation.
+Prove the relation `F_nu ∘ F_nu' + F_nu' ∘ F_nu = 0`. Evaluate the action of both composite maps on a generic basis state $|\lambda;N\rangle$. Compute the parity sign product $P(\nu,N-e_{\nu'})P(\nu',N)$ versus $P(\nu',N-e_\nu)P(\nu,N)$. By calculating the change in the occupation sum $\sum(h+N_\gamma)$ when the sector charge changes, demonstrate that a relative minus sign appears, thus establishing the anti-commutation.
 
 **Lemma 13.7 (Number Shifting).**
 Because $F_\nu$ explicitly targets the $\vec{N}-e_\nu$ sector, it structurally satisfies the fundamental intertwining equations for number operators:
@@ -114,4 +115,4 @@ F_\nu \hat{N}_{\nu'} = (\hat{N}_{\nu'} + \delta_{\nu, \nu'} I) F_\nu \tag{13.8}
 $$
 
 *Lean 4 Proof Strategy:*
-Express the number operator `N_hat` acting on a specific charge sector as a scalar multiplication by `N_nu'`. Apply both sides to a basis vector `|λ; N⟩`. The operator `N_hat_nu'` yields eigenvalue `N_nu'`, while on the RHS, mapping to `N - e_nu` reduces the species charge by `δ_nu_nu'`, which perfectly offsets the added `δ_nu_nu' I` term, proving `F_nu ∘ N_hat_nu' = (N_hat_nu' + δ_nu_nu' • id) ∘ F_nu`.
+Express the number operator `N_hat` acting on a specific charge sector as a scalar multiplication by `N_nu'`. Apply both sides to a basis vector $|\lambda;N\rangle$. The operator `N_hat_nu'` yields eigenvalue `N_nu'`, while on the RHS, mapping to $N-e_\nu$ reduces the species charge by `δ_nu_nu'`, which perfectly offsets the added `δ_nu_nu' I` term, proving `F_nu ∘ N_hat_nu' = (N_hat_nu' + δ_nu_nu' • id) ∘ F_nu`.

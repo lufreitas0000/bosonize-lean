@@ -29,7 +29,7 @@ Construct the word quotient with a star-stable relation ideal and its polynomial
 
 ## Charge extension and full model state
 
-Let the charge module be `ℤ² →₀ ℂ`, with orthonormal kets δ_N. Work in the **generated adjointable star-algebra** of the diagonal charges N_R,N_L, phase maps Zν(x)δ_N=ζ^(Nν x)δ_N, and signed shifts
+Let the charge module be `(ℤ × ℤ) →₀ ℂ`, with orthonormal kets δ_N. Work in the **generated adjointable star-algebra** of the diagonal charges N_R,N_L, phase maps Zν(x)δ_N=ζ^(Nν x)δ_N, and signed shifts
 $$
 F_\nu\delta_N=P_\nu(N)\delta_{N-e_\nu},\qquad
 P_\nu(N)=(-1)^{\sum_{\eta<\nu}(h+N_\eta)+(h+N_\nu-1)},\quad R<L.
@@ -44,27 +44,28 @@ Define the signed basis shifts and prove inverse/adjoint laws on kets, then gene
 **Theorem (Common Kernel of Compressed Annihilators Can Be Zero):**
 In a finite matrix algebra, a positive state is represented by a positive density matrix of trace one. Vacuum annihilation conditions require support inside the common kernel of all proposed annihilators. That common kernel can be zero after compression. Avoid hiding an impossible vacuum in a universally quantified assumption and calling the resulting correlator nonvacuous.
 
-A finite witness: on the two-mode total-degree ≤1 slice with basis `{1,X_R,X_L}`, compressed annihilators and creators give
+A finite witness: on the two-mode total-degree ≤1 slice with basis $\{1,X_R,X_L\}$, compressed annihilators and creators give
 
-\[
+$$
  Q_R=cD_R+s\widetilde X_L,\qquad
  Q_L=cD_L+s\widetilde X_R.
-\]
+$$
 
 For c=5/3,s=4/3 (so c²−s²=1),
 
-\[
+$$
  Q_R^\dagger Q_R+Q_L^\dagger Q_L
  =\operatorname{diag}(32/9,25/9,25/9)>0.
-\]
+$$
 
 Thus their common kernel is zero. There is no normalized positive vacuum satisfying both annihilation conditions on this slice. This is a counterexample to an automatic-existence strategy, not a claim that every finite interacting model lacks a ground state. The actual finite Hamiltonian always needs its own ground-state construction; it need not be annihilated exactly by the compressed continuum-style modes.
 
 *Lean 4 Proof Strategy:*
+
 - Define the two-mode finite slice as a finite-dimensional Hilbert space isomorphic to `Fin 3 → ℂ` with the specified basis.
 - Define explicit matrix representations for $Q_R$ and $Q_L$ with parameters $c=5/3, s=4/3$.
 - State an auxiliary lemma evaluating the sum $Q_R^\dagger Q_R + Q_L^\dagger Q_L$ as the matrix $\operatorname{diag}(32/9, 25/9, 25/9)$.
-- Use mathlib's `Matrix.PosDef` to establish strictly positive eigenvalues, proving the kernel is trivial (`{0}`).
+- Use mathlib's `Matrix.PosDef` to establish strictly positive eigenvalues, proving the kernel is trivial ($\{0\}$).
 - Conclude the main theorem by contradiction: any valid density matrix $\rho$ supported on the intersection of the kernels of $Q_R$ and $Q_L$ must have $\text{Tr}(\rho) = 0$, violating the normalization requirement $\text{Tr}(\rho) = 1$.
 
 
@@ -77,7 +78,7 @@ $$
 \omega_P(C_{Rm}A_{Rn})=\delta_{mn}m s^2,\qquad
 \omega_P(A_{Rm}C_{Rn})=\delta_{mn}m c^2,
 $$
-with same-branch AA and CC contractions zero. Derive these from β_P⁻¹ and the polynomial vacuum, including `[A,C]=mI`; the second term remains nonzero at s=0. Chapter 19's ordered density kernel is therefore
+with same-branch AA and CC contractions zero. Derive these from β_P⁻¹ and the polynomial vacuum, including $[A,C]=mI$; the second term remains nonzero at s=0. Chapter 19's ordered density kernel is therefore
 $$
 \omega_P(\rho_R(x)\rho_R(y))=
  L^{-2}\sum_{m=1}^M m\big(s^2\zeta^{-m(x-y)}+c^2\zeta^{m(x-y)}\big),
@@ -111,7 +112,7 @@ Let
 $$
 D_1(x,y)=\sum_{m=1}^M\frac{1-\cos(2\pi m(x-y)/L)}m.
 $$
-Opposite chirality orientations give `[X_J(x),X_J(y)]=0`; the two chiral scalar commutators cancel. Polynomial vacuum Wick moments give variance 4gD₁ for X_CDW(y)−X_CDW(x), and 4gInvD₁ for X_SC(y)−X_SC(x). Consequently, as coefficientwise identities,
+Opposite chirality orientations give $[X_J(x),X_J(y)]=0$; the two chiral scalar commutators cancel. Polynomial vacuum Wick moments give variance 4gD₁ for X_CDW(y)−X_CDW(x), and 4gInvD₁ for X_SC(y)−X_SC(x). Consequently, as coefficientwise identities,
 $$
 \omega_{P,N}(W_{CDW}(t,x)^*W_{CDW}(t,y))=
  L^{-2}\zeta^{(N_L-N_R-1)(y-x)}\operatorname{Exp}_{formal}(-2gD_1(x,y)t^2),

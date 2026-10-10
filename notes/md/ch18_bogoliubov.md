@@ -10,7 +10,7 @@ $$
 c^2 - s^2 = 1 \tag{18.1}
 $$
 
-*Lean 4 Proof Strategy:* Define a structure `HyperbolicPair` containing `c s : ℝ` and a proof field `h : c^2 - s^2 = 1`. This structure bundles the scalars and their invariant, which can then be passed to the transformation functions. No auxiliary lemmas needed for the definition itself, but typical algebraic facts like `(c - s)(c + s) = 1` could be useful auxiliary lemmas.
+*Lean 4 Proof Strategy:* Define a structure `HyperbolicPair` containing `c s : ℝ` and a proof field `h : c^2 - s^2 = 1`. This structure bundles the scalars and their invariant, which can then be passed to the transformation functions. No auxiliary lemmas needed for the definition itself, but typical algebraic facts like $(c-s)(c+s)=1$ could be useful auxiliary lemmas.
 
 **Definition 18.2 (The Bogoliubov Transformation).**
 For every mode $m \ge 1$, we define the new dressed creation/annihilation operators in $\mathrm{End}_{\mathbb{C}}(\mathrm{Fock})$:
@@ -46,7 +46,7 @@ $$
 [\tilde{\rho}_{-m, R}, \tilde{\rho}_{m, R}] \psi = m(c^2 - s^2) \psi = m \psi \tag{18.7}
 $$
 
-*Lean 4 Proof Strategy:* Formalize by expanding the commutator `[A + B, C + D]` using bilinearity, then applying the base Kac-Moody commutation relations for the raw $\rho$ operators. The cross terms like `[\rho_{-m,R}, \rho_{-m,L}]` vanish by commutativity of independent branches. Finally, factor out $m \psi$ to leave $c^2 - s^2$, which simplifies to $1$ via `hp.h`. Requires the M2 margin condition on $\psi$ to ensure the bare commutators are exact.
+*Lean 4 Proof Strategy:* Formalize by expanding the commutator $[A+B,C+D]$ using bilinearity, then applying the base Kac-Moody commutation relations for the raw $\rho$ operators. The cross terms like $[\rho_{-m,R},\rho_{-m,L}]$ vanish by commutativity of independent branches. Finally, factor out $m \psi$ to leave $c^2 - s^2$, which simplifies to $1$ via `hp.h`. Requires the M2 margin condition on $\psi$ to ensure the bare commutators are exact.
 
 #### 18.3 Exact Diagonalization and the Luttinger Parameters
 
@@ -97,7 +97,7 @@ Consequently:
 1. The finite Hamiltonian must be evaluated on its own constructed finite ground vector (or density matrix) with boundary corrections.
 2. Abstract quasi-free Gaussian CCR states (where an untruncated state $\omega_{\tilde{\Omega}}$ satisfies the lowering mode annihilation condition $\omega_{\tilde{\Omega}}(\tilde{\rho}_{-m,\nu}^\dagger \tilde{\rho}_{-m,\nu}) = 0$) are representations of an infinite CCR algebra, not finite-Fock vectors. The two frameworks must be kept conceptually distinct.
 
-*Lean 4 Proof Strategy:* Require ψ≠0 explicitly. Use the two-branch transform `tildeA_R=c • A_R+s • C_L`, bare annihilation by A_R and A_L, and scalar CCR `[A_L,C_L]ψ=m • ψ` for one positive retained mode. Dressed right annihilation and s≠0 force C_Lψ=0, contradicting mψ≠0. Do not replace the actual cross-branch transform by a same-branch shorthand.
+*Lean 4 Proof Strategy:* Require $\psi\ne0$ explicitly. Use the two-branch transform $\widetilde A_R=cA_R+sC_L$, bare annihilation by $A_R$ and $A_L$, and scalar CCR $[A_L,C_L]\psi=m\psi$ for one positive retained mode. Dressed right annihilation and $s\ne0$ force $C_L\psi=0$, contradicting $m\psi\ne0$. Do not replace the actual cross-branch transform by a same-branch shorthand.
 
 **Theorem 18.9 (Energy-Shell Schrieffer-Wolff Decomposition).**
 Let $\mathcal{B}_K = \mathcal{B}_{K-1} \oplus \mathcal{H}_K$ be the budget decomposition by energy shells.
@@ -105,4 +105,4 @@ Let $\mathcal{B}_K = \mathcal{B}_{K-1} \oplus \mathcal{H}_K$ be the budget decom
 2. *Block-diagonal SW transformation:* If an unperturbed baseline $H_0$ is block diagonal with respect to the energy-shell projection $P$, and a perturbation $V$ satisfies $P V Q = Q V P = 0$, then the Schrieffer-Wolff generator $S_1 = 0$, and the effective Hamiltonian on $\mathcal{B}_{K-1}$ has zero second-order correction ($H_{\text{eff}} = P (H_0 + V) P$).
 3. *Physical RG context:* The statement that the Luttinger Liquid is an RG fixed line is a physical continuum scaling interpretation requiring a defined parameter map and rescaling rule, distinct from this finite discrete energy-shell projection.
 
-*Minimal vacuum-obstruction proof:* Assume one retained positive mode, bare annihilation on both branches, and the dressed right annihilator kills a nonzero ψ. With s≠0 these imply the left creator kills ψ too; the left scalar CCR on ψ then gives mψ=0, a contradiction. A normalized or explicitly nonzero candidate is essential. Same-mode CCR suffices for this obstruction and each diagonalization summand; an all-pair margin is a convenient stronger wrapper only when needed.
+*Minimal vacuum-obstruction proof:* Assume one retained positive mode, bare annihilation on both branches, and the dressed right annihilator kills a nonzero $\psi$. With $s\ne0$ these imply the left creator kills $\psi$ too; the left scalar CCR on $\psi$ then gives $m\psi=0$, a contradiction. A normalized or explicitly nonzero candidate is essential. Same-mode CCR suffices for this obstruction and each diagonalization summand; an all-pair margin is a convenient stronger wrapper only when needed.

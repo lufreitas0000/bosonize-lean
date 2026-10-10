@@ -10,10 +10,10 @@ We specify a transfer domain, e.g. $-M \le m \le M$, with every pair filtered by
 **Definition 17.1 (Raw Intra-branch Interaction $g_4$).**
 Let $g_4 \in \mathbb{R}$. The intra-branch interaction involves two particles of the same species:
 $$
-H_{4, \text{raw}} := \frac{g_4}{2L} \sum_{\nu \in \{R, L\}} \sum_{m=-M}^{M} \sum_{k, p \in \Lambda^*} :\! c^\dagger_{(\nu, k+m)} c_{(\nu, k)} c^\dagger_{(\nu, p-m)} c_{(\nu, p)} \!: \tag{17.1}
+H_{4, \text{raw}} := \frac{g_4}{2L} \sum_{\nu \in \{R, L\}} \sum_{m=-M}^{M} \sum_{k, p \in \Lambda^*} :\! c^\dagger_{(\nu, k+m)} c_{(\nu, k)}^{\phantom{\dagger}} c^\dagger_{(\nu, p-m)} c_{(\nu, p)}^{\phantom{\dagger}} \!: \tag{17.1}
 $$
 
-**Sea-Wick convention for (17.1).** Write sₖ=1 for k≤0 and sₖ=0 for k>0, nₖ=cₖ†cₖ, and tₖ=nₖ−sₖI. Define sea quasiparticle annihilators qₖ=cₖ for sₖ=0 and qₖ=cₖ† for sₖ=1; qₖ† is the adjoint. Each annihilates the sea. On a raw word, replace each letter by q or q†, move all q† letters left of all q letters using a fixed stable order and the fermionic permutation sign, and omit contraction terms inside the colon. This defines a linear map on raw words, not a multiplicative map on evaluated operators. CAR/Wick expansion proves its evaluation identity, including repeated indices. Every k+m and p−m in (17.1) must be in the band; there is no modular wrap.
+**Sea-Wick convention for (17.1).** Write $s_k=1$ for $k\le0$ and $s_k=0$ for $k>0$, $n_k=c_k^\dagger c_k^{\phantom{\dagger}}$, and $t_k=n_k-s_kI$. Define sea quasiparticle annihilators $q_k=c_k$ for $s_k=0$ and $q_k=c_k^\dagger$ for $s_k=1$; $q_k^\dagger$ is the adjoint. Each annihilates the sea. On a raw word, replace each letter by $q$ or $q^\dagger$, move all $q^\dagger$ letters left of all $q$ letters using a fixed stable order and the fermionic permutation sign, and omit contraction terms inside the colon. This defines a linear map on raw words, not a multiplicative map on evaluated operators. CAR/Wick expansion proves its evaluation identity, including repeated indices. Every $k+m$ and $p-m$ in (17.1) must be in the band; there is no modular wrap.
 
 *Lean 4 Proof Strategy:*
 Define the word transformation on syntax and its evaluation into the already constructed finite CAR endomorphisms. Prove bilinear sea ordering, the quartic identity below, and then sum over `Finset.Icc (-M) M` with explicit band filters. Use CAR substitutions and fixed-order additive normalization; scalar `ring` alone cannot reorder words.
@@ -21,7 +21,7 @@ Define the word transformation on syntax and its evaluation into the already con
 **Definition 17.2 (Raw Inter-branch Interaction $g_2$).**
 Let $g_2 \in \mathbb{R}$. The momentum exchange $m$ shifts one Right-mover and one Left-mover. While fundamental fermions anticommute across species, even-degree bilinears commute:
 $$
-H_{2, \text{raw}} := \frac{g_2}{L} \sum_{m=-M}^{M} \left( \sum_{k \in \Lambda^*} :\!c^\dagger_{(R, k+m)} c_{(R, k)}\!: \right) \left( \sum_{p \in \Lambda^*} :\!c^\dagger_{(L, p-m)} c_{(L, p)}\!: \right) \tag{17.2}
+H_{2, \text{raw}} := \frac{g_2}{L} \sum_{m=-M}^{M} \left( \sum_{k \in \Lambda^*} :\!c^\dagger_{(R, k+m)} c_{(R, k)}^{\phantom{\dagger}}\!: \right) \left( \sum_{p \in \Lambda^*} :\!c^\dagger_{(L, p-m)} c_{(L, p)}^{\phantom{\dagger}}\!: \right) \tag{17.2}
 $$
 
 *Lean 4 Proof Strategy:*
@@ -46,14 +46,14 @@ Notice that $(C_R A_L + A_R C_L) |\vec{N}\rangle_0 = 0$ annihilates the joint se
 $$
 H_{2, \text{pair}} := \frac{g_2}{L} \left[ N_R N_L + \sum_{m=1}^{M} \left( \rho_{m, R} \rho_{m, L} + \rho_{-m, R} \rho_{-m, L} \right) \right] = \frac{g_2}{L} \left[ N_R N_L + \sum_{m=1}^M \left( C_R C_L + A_R A_L \right) \right] \tag{17.4}
 $$
-Identifying this chosen form with a physical fermionic channel requires a separate branch-orientation and momentum dictionary. Because hopping and pairing are different quadratic models, define the interacting Luttinger Hamiltonian directly as the pairing model, retaining computational creators Cν=ρm,ν on both branches.
+Identifying this chosen form with a physical fermionic channel requires a separate branch-orientation and momentum dictionary. Because hopping and pairing are different quadratic models, define the interacting Luttinger Hamiltonian directly as the pairing model, retaining computational creators $C_\nu=\rho_{m,\nu}$ on both branches.
 
 **Definition 17.4 (Bilinear Sea Ordering and Chosen Current Interaction).**
 Fermionic normal-ordering is defined relative to the half-filled Dirac sea $S_0 = \{k \in \Lambda^* : k \le 0\}$:
 $$
-:\! c^\dagger_k c_k \!: \;:= c^\dagger_k c_k - \langle\Omega| c^\dagger_k c_k |\Omega\rangle I = \begin{cases} c^\dagger_k c_k & (k > 0) \\ - c_k c^\dagger_k & (k \le 0) \end{cases}
+:\! c^\dagger_k c_k^{\phantom{\dagger}} \!: \;:= c^\dagger_k c_k^{\phantom{\dagger}} - \langle\Omega| c^\dagger_k c_k^{\phantom{\dagger}} |\Omega\rangle I = \begin{cases} c^\dagger_k c_k^{\phantom{\dagger}} & (k > 0) \\ - c_k^{\phantom{\dagger}} c^\dagger_k & (k \le 0) \end{cases}
 $$
-so that the total normal-ordered charge operator is $\sum_k :\! c^\dagger_{\nu,k} c_{\nu,k} \!: \;= \hat{N}_\nu$.
+so that the total normal-ordered charge operator is $\sum_k :\! c^\dagger_{\nu,k} c_{\nu,k}^{\phantom{\dagger}} \!: \;= \hat{N}_\nu$.
 Choose the quadratic current interaction used in the solvable model directly:
 $$
 H_{4, \text{current}} := \frac{g_4}{L} \sum_{\nu \in \{R, L\}} \sum_{m=1}^{M} \rho_{m, \nu} \rho_{-m, \nu} + \frac{g_4}{2L} (N_R^2 + N_L^2) \tag{17.5}
@@ -61,28 +61,28 @@ $$
 without redundant outer $m$ factors.
 
 **Lemma 17.4a (Exact Finite Sea-Wick Correction).**
-For one species, with k+m and p−m in the band, full sea-Wick ordering satisfies
+For one species, with $k+m$ and $p-m$ in the band, full sea-Wick ordering satisfies
 $$
-:c_{k+m}^\dagger c_k c_{p-m}^\dagger c_p:
- =:c_{k+m}^\dagger c_k:\,:c_{p-m}^\dagger c_p:
+:c_{k+m}^\dagger c_k^{\phantom{\dagger}} c_{p-m}^\dagger c_p^{\phantom{\dagger}}:
+ =:c_{k+m}^\dagger c_k^{\phantom{\dagger}}:\,:c_{p-m}^\dagger c_p^{\phantom{\dagger}}:
  +\delta_{p,k+m}\big[s_p t_k-(1-s_k)t_p-s_p(1-s_k)I\big].
 $$
-Here `:c_a†c_b:=c_a†c_b−δ_ab s_a I`. The formula includes m=0 and repeated indices; for m=0,p=k its right side is $t_k^2+(2s_k-1)t_k=0$.
+Here $:c_a^\dagger c_b^{\phantom{\dagger}}:=c_a^\dagger c_b^{\phantom{\dagger}}-\delta_{ab}s_aI$. The formula includes $m=0$ and repeated indices; for $m=0,p=k$ its right side is $t_k^2+(2s_k-1)t_k=0$.
 Define the diagonal one-body correction
 $$
 Q_{M,\nu}:=
  \sum_{k\le0}\big(1+2\min(M,-k)\big)(I-n_{\nu k})
  +\sum_{k>0}\big(1+2\min(M,k-1)\big)n_{\nu k},
 $$
-with k restricted to the band. Then for every M≥0, as ambient finite CAR operators,
+with $k$ restricted to the band. Then for every $M\ge0$, as ambient finite CAR operators,
 $$
 H_{4,\mathrm{raw}}=H_{4,\mathrm{current}}-
  \frac{g_4}{2L}\sum_{\nu\in\{R,L\}}Q_{M,\nu}. \tag{17.5a}
 $$
-This is an exact finite-band identity; it needs no scalar-CCR margin or Sugawara theorem. On the sea Q vanishes. A single extra particle at k=1 has Q=1, cancelling the $g_4/(2L)$ contribution of the current model, as required by quartic sea ordering. If M≥h−1, counting all accessible distances gives $Q_{M,\nu}=2\hat P_\nu-\hat N_\nu$, with $\hat P_\nu=\sum_k k(n_{\nu k}-s_kI)$ the vacuum-subtracted computational momentum.
+This is an exact finite-band identity; it needs no scalar-CCR margin or Sugawara theorem. On the sea $Q$ vanishes. A single extra particle at $k=1$ has $Q=1$, cancelling the $g_4/(2L)$ contribution of the current model, as required by quartic sea ordering. If $M\ge h-1$, counting all accessible distances gives $Q_{M,\nu}=2\hat P_\nu-\hat N_\nu$, with $\hat P_\nu=\sum_k k(n_{\nu k}-s_kI)$ the vacuum-subtracted computational momentum.
 
 *Lean 4 Proof Strategy:*
-Prove the quartic word identity by splitting equal indices and sea indicators, including m=0. Sum the bilinear products into $\hat N^2+2\sum_{m>0}\rho_m\rho_{-m}+\sum_{m>0}[\rho_{-m},\rho_m]$. Keep the exact finite edge commutators. Pair the ±m Wick corrections and count allowed occupied/unoccupied distances to obtain the weights in Q; no replacement of the edge operator by mI is allowed here. Prove the diagonal formula on occupation kets and conclude by basis extensionality. The current Hamiltonian used below is still the chosen quadratic model; replacing it by H4,raw also subtracts Q.
+Prove the quartic word identity by splitting equal indices and sea indicators, including $m=0$. Sum the bilinear products into $\hat N^2+2\sum_{m>0}\rho_m\rho_{-m}+\sum_{m>0}[\rho_{-m},\rho_m]$. Keep the exact finite edge commutators. Pair the $\pm m$ Wick corrections and count allowed occupied/unoccupied distances to obtain the weights in $Q$; no replacement of the edge operator by $mI$ is allowed here. Prove the diagonal formula on occupation kets and conclude by basis extensionality. The current Hamiltonian used below is still the chosen quadratic model; replacing it by $H_{4,\mathrm{raw}}$ also subtracts $Q$.
 
 #### 17.3 The Interacting Luttinger Hamiltonian
 
@@ -117,7 +117,7 @@ Formalize the block decomposition of the budget space $\mathcal{B}_K$. Prove tha
 
 #### 17.4 Technical Notes for the Lean 4 Formalization
 
-1. **Reordering via CAR (`c† c = δ - c c†`):**
+1. **Reordering via CAR ($c^\dagger c^{\phantom{\dagger}} = \delta - c^{\phantom{\dagger}} c^\dagger$):**
    * Do not use commutators for fermionic reordering. Expand with distributivity and the CAR rules, then normalize scalar coefficients.
 2. **Transfer Domain Filtering:**
    * Enforce the boundaries of the discrete lattice explicitly in the sums. Do not allow modes to wrap non-physically via modulo arithmetic unless using an explicitly defined modular scattering theory.

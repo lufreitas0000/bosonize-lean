@@ -14,7 +14,7 @@ D_m := \{ (p, k) \in \Lambda^* \times \Lambda^* \mid p = k + m \} \tag{9.1}
 $$
 
 *Lean 4 Proof Strategy:*
-Use `Finset.univ.filter` on `Ch01.Band L × Ch01.Band L` with the integer predicate `p.val = k.val + m`. Reuse the positive-Nyquist band `{-h+1,...,h}` from Core. The periodic position lattice and integer band labels must not be interchanged.
+Use `Finset.univ.filter` on `Ch01.Band L × Ch01.Band L` with the integer predicate `p.val = k.val + m`. Reuse the positive-Nyquist band $\{-h+1,\ldots,h\}$ from Core. The periodic position lattice and integer band labels must not be interchanged.
 
 **Definition 9.2 (One-Particle Shift Matrix).**
 We define the one-particle partial shift matrix $T_m \in \mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*))$ exactly on the single-particle indices:
@@ -35,7 +35,7 @@ Auxiliary lemmas needed: proving that $T_m T_n$ corresponds to $T_{m+n}$ under t
 For any single-particle matrix $A$, its second-quantized operator $d\Gamma(A) \in \mathrm{End}_{\mathbb{C}}(\mathrm{Fock}(\Lambda^*))$ is:
 
 $$
-d\Gamma(A) := \sum_{p,k \in \Lambda^*} A_{pk} c_p^\dagger c_k \tag{9.3}
+d\Gamma(A) := \sum_{p,k \in \Lambda^*} A_{pk} c_p^\dagger c_k^{\phantom{\dagger}} \tag{9.3}
 $$
 
 *Lean 4 Proof Strategy:*
@@ -54,7 +54,7 @@ By the CAR identities, this map exactly preserves commutators: $d\Gamma([A,B]) =
 The raw density mode $\rho_m$ is exactly the second-quantized shift:
 
 $$
-\forall m \in \mathbb{Z}, \quad \rho_m := d\Gamma(T_m) = \sum_{(p,k) \in D_m} c_p^\dagger c_k \tag{9.4}
+\forall m \in \mathbb{Z}, \quad \rho_m := d\Gamma(T_m) = \sum_{(p,k) \in D_m} c_p^\dagger c_k^{\phantom{\dagger}} \tag{9.4}
 $$
 
 Normal-ordered density zero-points the macroscopic charge $h$ at $m=0$:
@@ -71,13 +71,15 @@ The sea contains exactly h occupied momenta per species. Prove `rho 0 Ω = h •
 #### 9.3 Kinematic Lemmas and Linear Independence
 
 **Lemma 9.5 (Finiteness and Global Commutativity).**
+
 1. **Vanishing bounds:** For $|m| \ge L$, $D_m$ is empty, so $T_m = 0$ and $\rho_m = 0$.
 2. **Adjointness:** $T_m^\dagger = T_{-m}$ and $\rho_m^\dagger = \rho_{-m}$.
 3. **Same-sign commutativity:** For any non-negative $m, n \ge 0$, the partial shifts strictly compose: $T_m T_n = T_{m+n}$. Because the single-particle matrices commute, $[T_m, T_n] = 0$. Thus $[\rho_m, \rho_n] = 0$ **globally** as an exact endomorphism identity over the entire Fock space (not just on a budget).
 
 *Lean 4 Proof Strategy:*
+
 1. **Vanishing bounds**: Proved using `linarith` on the momentum indices bounded by $\Lambda^*$.
-2. **Adjointness**: Follows from `Matrix.conjTranspose` properties and `(cDag p * c k)† = cDag k * c p`.
+2. **Adjointness**: Follows from `Matrix.conjTranspose` properties and $(c_p^\dagger c_k^{\phantom{\dagger}})^\dagger=c_k^\dagger c_p^{\phantom{\dagger}}$.
 3. **Same-sign commutativity**: First prove `T_comp : m ≥ 0 → n ≥ 0 → T m * T n = T (m + n)` by expanding matrix multiplication. Deduce `⁅T m, T n⁆ = 0`. Then, apply `dGamma_comm` to elevate this to the $\rho_m$ operators.
 
 **Lemma 9.6 (Covariance and Energy).**
@@ -89,7 +91,7 @@ $$
 
 *Lean 4 Proof Strategy:*
 Formalize $\hat{N} = \rho_0$. The particle number conservation is simply $[\rho_0, \rho_m] = 0$, derived from `dGamma_comm` and $[T_0, T_m] = 0$.
-For the Hamiltonian shift, define $H_0 = \sum_{p} p c_p^\dagger c_p$. The proof relies on computing the fundamental commutator $[H_0, c_p^\dagger c_k] = (p - k) c_p^\dagger c_k$. Summing this over $D_m$, where $p - k = m$, neatly extracts the factor $m$, yielding $m \rho_m$.
+For the Hamiltonian shift, define $H_0 = \sum_{p} p c_p^\dagger c_p^{\phantom{\dagger}}$. The proof relies on computing the fundamental commutator $[H_0, c_p^\dagger c_k^{\phantom{\dagger}}] = (p - k) c_p^\dagger c_k^{\phantom{\dagger}}$. Summing this over $D_m$, where $p - k = m$, neatly extracts the factor $m$, yielding $m \rho_m$.
 
 **Lemma 9.7 (Exact Vacuum Norm and Linear Independence).**
 To prove linear independence without circular assumptions about the Schwinger term, we explicitly compute the vacuum action using orthogonal single-particle hop kets. For any $1 \le m \le h$:
@@ -124,7 +126,7 @@ The constructive realization uses the same finite fermionic Hilbert space as Cha
 The transfer $m$ remains an integer. The one-particle matrix $T_m$ moves $k$ to $k+m$ only when both labels lie inside the signed band. The density is its second quantization,
 
 $$
-\rho_m=d\Gamma(T_m)=\sum_{p=k+m}c_p^\dagger c_k.
+\rho_m=d\Gamma(T_m)=\sum_{p=k+m}c_p^\dagger c_k^{\phantom{\dagger}}.
 $$
 
 This equality identifies the matrix construction with the filtered CAR sum of §9.2. The second-quantization map is complex linear and preserves commutators and actual adjoints. It does not preserve associative products: for example, the one-particle identity lifts to total particle number. In particular, $\rho_0=\hat N$, and subtracting $hI$ at zero transfer gives the relative-charge observable already constructed in Chapter 7. Nonzero transfers have no normal-ordering subtraction. The sea contains exactly $h$ particles when $h>0$, so the normal-ordered zero mode annihilates it.
@@ -152,7 +154,7 @@ Boundary data is retained explicitly when reconstructing the momentum operators 
 The full discrete Fourier coefficient of the local density has a different transfer condition. With the positive annihilator convention used in Chapter 5,
 
 $$
-\sum_{x\in\mathbb Z/L\mathbb Z}\zeta^{mx}\,\psi_b^\dagger(x)\psi_b(x)
+\sum_{x\in\mathbb Z/L\mathbb Z}\zeta^{mx}\,\psi_b^\dagger(x)\psi_b^{\phantom{\dagger}}(x)
 =\rho_m+R_m,
 $$
 

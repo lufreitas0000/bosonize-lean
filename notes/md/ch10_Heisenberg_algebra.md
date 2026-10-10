@@ -21,7 +21,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize `[\rho_{-m}, \rho_m]` as `Commutator (rho (-m)) (rho m)`. The proof strategy relies on an auxiliary lemma `dGamma_commutator` establishing `[dGamma A, dGamma B] = dGamma [A, B]`. We then define the single-particle shift matrices `T_m` and evaluate their commutator `[T_{-m}, T_m]`. By matrix arithmetic on the finite basis `q \in [-h+1, h]`, the non-zero entries of this matrix are exactly the diagonal elements at the bottom `m` and top `m` modes. We then use another auxiliary lemma `dGamma_diagonal` which maps a diagonal single-particle operator to a sum of occupation number operators `n_q`.
+Formalize $[\rho_{-m}, \rho_m]$ as `Commutator (rho (-m)) (rho m)`. The proof strategy relies on an auxiliary lemma `dGamma_commutator` establishing $[d\Gamma(A), d\Gamma(B)] = d\Gamma([A,B])$. We then define the single-particle shift matrices $T_m$ and evaluate their commutator $[T_{-m}, T_m]$. By matrix arithmetic on the finite basis $q \in [-h+1, h]$, the non-zero entries of this matrix are exactly the diagonal elements at the bottom `m` and top `m` modes. We then use another auxiliary lemma `dGamma_diagonal` which maps a diagonal single-particle operator to a sum of occupation number operators $n_q$.
 
 *Physical Note:* This operator identity is exact on the entire Fock space. It is a dynamical operator, not a scalar. The algebra only becomes bosonic (scalar) when evaluated on vectors restricted by the energy budget.
 
@@ -41,11 +41,11 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-We apply `Lemma 10.1` to rewrite the commutator as a difference of occupation number sums. Then, introduce an auxiliary lemma `frozen_margins_eval` which states that for any `psi \in B(N,K)`, if `q \le -h + m` (which is in the bottom frozen margin due to `m + K + |N| \le h`), `n_q psi = psi`. Similarly, if `q > h - m`, `n_q psi = 0`. Summing over the `m` terms in the bottom edge yields `m * psi`, and summing over the top edge yields `0 * psi`. The proof requires `simp` with `frozen_margins_eval` and `Finset.sum_const`.
+We apply Lemma 10.1 to rewrite the commutator as a difference of occupation number sums. Then, introduce an auxiliary lemma `frozen_margins_eval` which states that for any $\psi \in B(N,K)$, if $q \le -h + m$ (which is in the bottom frozen margin due to $m + K + |N| \le h$), $n_q\psi = \psi$. Similarly, if $q > h - m$, $n_q\psi = 0$. Summing over the `m` terms in the bottom edge yields $m\psi$, and summing over the top edge yields $0\psi$. The proof requires `simp` with `frozen_margins_eval` and `Finset.sum_const`.
 
 #### 10.3 The General Kac-Moody Algebra and Excursion Tracking
 
-For off-diagonal commutators $[\rho_m, \rho_n]$ where $m+n \neq 0$, the edge formula yields hopping operators $c^\dagger_{q+m+n} c_q$. To ensure these exactly annihilate the state, we require a broader margin.
+For off-diagonal commutators $[\rho_m, \rho_n]$ where $m+n \neq 0$, the edge formula yields hopping operators $c^\dagger_{q+m+n} c_q^{\phantom{\dagger}}$. To ensure these exactly annihilate the state, we require a broader margin.
 
 **Lemma 10.3 (Regime M2: Off-Diagonal Suppression).**
 If the parameters $m, n \in \mathbb{Z}$ satisfy the **M2 Margin Condition**:
@@ -61,7 +61,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Similar to Lemma 10.1, we evaluate the single-particle commutator `[T_m, T_n]`, which results in off-diagonal hopping terms `c^\dagger_{q+m+n} c_q` located only at the edges of the spectrum. We then state an auxiliary lemma `frozen_margins_hopping_annihilation`: for `psi \in B(N,K)`, any hopping operator originating from the top frozen margin or landing in the bottom frozen margin will annihilate `psi`. Under the `M2 Margin Condition`, all residual edge hoppings satisfy this criteria. `simp` using this auxiliary lemma yields `0`.
+Similar to Lemma 10.1, we evaluate the single-particle commutator $[T_m, T_n]$, which results in off-diagonal hopping terms $c^\dagger_{q+m+n} c_q^{\phantom{\dagger}}$ located only at the edges of the spectrum. We then state an auxiliary lemma `frozen_margins_hopping_annihilation`: for $\psi \in B(N,K)$, any hopping operator originating from the top frozen margin or landing in the bottom frozen margin will annihilate `psi`. Under the M2 Margin Condition, all residual edge hoppings satisfy this criteria. `simp` using this auxiliary lemma yields `0`.
 
 **Theorem 10.4 (The U(1) Kac-Moody Algebra on the Budget).**
 Let $M \ge 1$ be a mode cutoff. Under the uniform margin condition:
@@ -93,6 +93,6 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize `K_excursion` by defining an upper bound on the cumulative energy increase caused by sequential applications of density operators up to mode `M`. State a helper lemma `energy_bound_rho`: `rho_m` changes the energy of a state by at most `m` and the charge by `0`. We formalize the condition as a predicate `ValidMarginSeq` for a list of operators. The proof proceeds by induction on the length of the operator word. For each step, we show that applying `rho_m` yields a new state in `B(N, K')` where `K' \le K + K_excursion`. As long as the maximal `K'` still satisfies the margin `2M + K' + |N| \le h`, the individual commutator evaluations remain valid.
+Formalize `K_excursion` by defining an upper bound on the cumulative energy increase caused by sequential applications of density operators up to mode `M`. State a helper lemma `energy_bound_rho`: $\rho_m$ changes the energy of a state by at most `m` and the charge by `0`. We formalize the condition as a predicate `ValidMarginSeq` for a list of operators. The proof proceeds by induction on the length of the operator word. For each step, we show that applying $\rho_m$ yields a new state in $B(N,K')$ where $K' \le K + K_{\mathrm{excursion}}$. As long as the maximal `K'` still satisfies the margin $2M + K' + |N| \le h$, the individual commutator evaluations remain valid.
 
 Every restricted scalar identity remains a theorem about its strictly typed action on input vectors, and must not be blindly substituted as a global endomorphism equality over the entire finite carrier.

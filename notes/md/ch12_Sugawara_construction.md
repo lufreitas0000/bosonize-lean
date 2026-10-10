@@ -20,7 +20,7 @@ Formalize $H_{\text{sug}}^{(M)}$ as a linear operator on the fermionic Fock spac
 def sugawara_hamiltonian (M : ℕ) : Operator FockSpace :=
   ∑ m in Finset.Icc 1 M, ρ m * ρ (-m)
 ```
-Ensure that `ρ_m` and `ρ_{-m}` are properly defined as linear operators. The action of $\rho_{-m}$ should explicitly annihilate states when $m > K$, reflecting the physical intuition. Mathematical details of the normal ordering are captured simply by placing the positive index mode to the left.
+Ensure that $\rho_m$ and $\rho_{-m}$ are properly defined as linear operators. The action of $\rho_{-m}$ should explicitly annihilate states when $m > K$, reflecting the physical intuition. Mathematical details of the normal ordering are captured simply by placing the positive index mode to the left.
 
 #### 12.2 The Equivalence Theorem
 
@@ -38,6 +38,7 @@ where $E = \sum m \cdot r_m$ is the excitation energy of partition $\lambda$. (F
 
 *Lean 4 Proof Strategy:*
 Proven by induction on the creation word of partition state $|\lambda; N\rangle$.
+
 - **Auxiliary Lemma 1 (Density Mode Commutation):** $[\rho_{-m}, \rho_{n}] = m \delta_{m, n}$ on the relevant subspace.
 - **Auxiliary Lemma 2 (Vacuum Annihilation):** $\rho_{-m} |N\rangle_0 = 0$ for all $m \ge 1$.
 Commuting $\rho_{-m}$ through the word until it hits $|N\rangle_0$ evaluates the eigenvalue to the total partition energy $E$.
@@ -76,6 +77,7 @@ $$
 
 *Lean 4 Proof Strategy:*
 Algebraic deduction from Theorem 12.3 applied twice:
+
 - **Auxiliary Lemma 1 (Raising Mode Action):** If $\psi \in B(N, K)$, then $\rho_n \psi \in B(N, K+n)$.
 - **Auxiliary Lemma 2 (Fermionic Energy Commutation):** $[\hat{E}, \rho_n] \psi = n \rho_n \psi$ for $\psi \in B(N, K)$, since $\hat{E}(\rho_n \delta_S) = (e(S)+n)\rho_n \delta_S$.
 Since $2(K+n) + |N| \le h$ and $M \ge K+n$, Theorem 12.3 applies to both $\psi \in B(N, K)$ and $\rho_n \psi \in B(N, K+n)$, giving $H_{\text{sug}}^{(M)}(\rho_n \psi) = \hat{E}(\rho_n \psi)$ and $\rho_n(H_{\text{sug}}^{(M)} \psi) = \rho_n(\hat{E}\psi)$.

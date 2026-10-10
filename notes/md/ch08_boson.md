@@ -18,10 +18,12 @@ Use `Fin M` with positive weight `weight i := i.val + 1`, or the subtype of posi
 
 **Definition 8.2 (Operators, Currents, and Adjoint Form).**
 For each mode $m \in Q$, the algebraic operators on $\mathcal{F}_b$ are defined as:
+
 1. **Creation and Annihilation Derivatives:**
 $$
 X_m \cdot p, \qquad D_m p := \frac{\partial}{\partial X_m} p \tag{8.2}
 $$
+
 2. **Inner Product and Adjoint Selection:**
 On monomials $X^r = \prod X_m^{r_m}$, the standard factorial form $w_{\mathrm{std}}(r) = \prod_m r_m!$ makes $D_m$ adjoint to $X_m$.
 For the chiral density current theory, we select the **Haldane inner product** with weight:
@@ -72,7 +74,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Formalize commutators of linear maps as `[A, B] = A ∘ B - B ∘ A`. The relation $[A_m, C_{m'}] = m \delta_{mm'} I$ translates to `m • pderiv m ∘ (X m' *) - (X m' *) ∘ (m • pderiv m) = if m = m' then m • id else 0`. Prove this using the Leibniz rule `MvPolynomial.pderiv_mul`.
+Formalize commutators of linear maps as $[A,B]=A\circ B-B\circ A$. The relation $[A_m, C_{m'}] = m \delta_{mm'} I$ translates to `m • pderiv m ∘ (X m' *) - (X m' *) ∘ (m • pderiv m) = if m = m' then m • id else 0`. Prove this using the Leibniz rule `MvPolynomial.pderiv_mul`.
 
 **Lemma 8.5 (Baker-Campbell-Hausdorff and Exponentials).**
 Because the uncompressed commutator is a scalar identity, BCH truncates exactly. We formalize exponentials over a formal parameter $t$. For scalars $\alpha, \beta$:
@@ -86,7 +88,7 @@ Define a formal exponential coefficient by `((j! : ℂ)⁻¹) • A^j` in a seri
 
 #### 8.4 Wick's Theorem and Exponentials
 
-For a truly nilpotent endomorphism $A$ with $A^{d+1}=0$ on its carrier, we define `expNil(A) = \sum_{j=0}^d A^j / j!`. We do not name an arbitrary Taylor polynomial the exact exponential of an unprojected operator.
+For a truly nilpotent endomorphism $A$ with $A^{d+1}=0$ on its carrier, we define $\operatorname{expNil}(A) = \sum_{j=0}^d A^j / j!$. We do not name an arbitrary Taylor polynomial the exact exponential of an unprojected operator.
 
 **Theorem 8.6 (Wick's Theorem and Polynomials).**
 Any product of linear bosonic operators can be written as a sum of normal-ordered products. For the symmetric combination $\hat{x}_m := D_m + X_m$:

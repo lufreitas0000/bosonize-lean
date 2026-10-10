@@ -15,7 +15,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Define `chiralFluctuationField (M : ℕ) (η : Int) (x : Int)` as a `Finset` sum over `m ∈ Icc 1 M`. The character $\zeta$ is a primitive $L$-th root of unity. Opposite orientation branches commute: `[rho m 1, rho n (-1)] = 0`. By choosing an explicit cutoff $M$ distinct from $h-1$, the uniform margin condition $2M + K + N_{\max} \le h$ remains non-vacuous on non-trivial budgets.
+Define `chiralFluctuationField (M : ℕ) (η : Int) (x : Int)` as a `Finset` sum over `m ∈ Icc 1 M`. The character $\zeta$ is a primitive $L$-th root of unity. Opposite orientation branches commute: $[\rho_{m,+1},\rho_{n,-1}]=0$. By choosing an explicit cutoff $M$ distinct from $h-1$, the uniform margin condition $2M + K + N_{\max} \le h$ remains non-vacuous on non-trivial budgets.
 
 By reversing the spatial character, opposite orientations yield opposite chiral kernels while retaining the same standard current modes.
 

@@ -28,7 +28,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-Expand `(X+Y)^2+(X−Y)^2` with distributivity or `noncomm_ring`. The cross terms cancel without assuming X and Y commute. Apply current reorderings explicitly and use `ring` only for scalar coefficients; a commutative ring instance on all endomorphisms is unavailable.
+Expand $(X+Y)^2+(X-Y)^2$ with distributivity or `noncomm_ring`. The cross terms cancel without assuming X and Y commute. Apply current reorderings explicitly and use `ring` only for scalar coefficients; a commutative ring instance on all endomorphisms is unavailable.
 
 **Lemma 16.3 (Spatial Collapse via DFT).**
 Let $M \ge 1$ satisfy the no-aliasing condition $2M < L$. Substituting the Umbral gradient expansion of the chiral field (Lemma 15.5) and applying the spatial orthogonality constraint $\sum_{x} \zeta^{(m-n)x} = L \delta_{mn}$, both mixed terms in the square contribute, yielding an exact factor of $2L$:
@@ -52,7 +52,7 @@ $$
 The algebraic form $(\zeta^m - 1)(\zeta^{-m} - 1)$ strictly avoids transcendental functions within the cyclotomic field.
 
 *Lean 4 Proof Strategy:*
-The dispersion weight $\varepsilon(m)$ will be defined as an element of the cyclotomic field `K`. We will define `ε (m : ℕ) : K := (L / m^2) * (ζ^m - 1) * (ζ⁻ᵐ - 1)`. We must ensure $m \neq 0$ to avoid division by zero, which is guaranteed by the domain $1 \le m \le M$. The equality involving $\sin^2$ is purely descriptive in the algebraic cyclotomic setup and won't be part of the algebraic definition, but can be formalized as a separate equivalence lemma over `ℂ` if needed.
+The dispersion weight $\varepsilon(m)$ will be defined as an element of the cyclotomic field `K`. We will define `ε` by $\varepsilon(m) := (L/m^2)(\zeta^m-1)(\zeta^{-m}-1)$. We must ensure $m \neq 0$ to avoid division by zero, which is guaranteed by the domain $1 \le m \le M$. The equality involving $\sin^2$ is purely descriptive in the algebraic cyclotomic setup and won't be part of the algebraic definition, but can be formalized as a separate equivalence lemma over `ℂ` if needed.
 
 **Theorem 16.5 (The Exact Weighted Lattice Energy).**
 Combining the factors of 2 from the decomposition and the DFT collapse, with mode cutoff $M$ satisfying $2M < L$ and budget margins ($2M + K + K_{\text{excursion}} + N_{\max} \le h$), $H_{\text{field}}^{(M)}$ evaluates on budget vectors to:
@@ -62,7 +62,7 @@ $$
 $$
 
 *Lean 4 Proof Strategy:*
-This theorem chains Definition 16.1, Lemma 16.2, and Lemma 16.3. The proof strategy will start by applying `Lemma 16.2` to `H_field` inside the sum, then distributing the sum over the two chiral sectors, and applying `Lemma 16.3` to each. Finally, we rewrite using `Definition 16.4` to collect the algebraic terms into $\varepsilon(m)$ and factor out the constant 4.
+This theorem chains Definition 16.1, Lemma 16.2, and Lemma 16.3. The proof strategy will start by applying Lemma 16.2 to `H_field` inside the sum, then distributing the sum over the two chiral sectors, and applying Lemma 16.3 to each. Finally, we rewrite using Definition 16.4 to collect the algebraic terms into $\varepsilon(m)$ and factor out the constant 4.
 
 #### 16.4 The Total Sugawara Hamiltonian and Error Operator
 

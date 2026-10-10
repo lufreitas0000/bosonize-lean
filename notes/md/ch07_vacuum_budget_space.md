@@ -48,28 +48,38 @@ $$
 distinguishing these operator observables from the scalar functions $N(S), e(S)$.
 
 *Lean 4 Proof Strategy:*
-Define `N(S)` and `P(S)` as computable functions returning `Int`.
+Define $N(S)$ and $P(S)$ as computable functions returning `Int`.
+
 - `N (S : Finset Int) : Int := S.card - h`
+
 - `P (S : Finset Int) : Int := (∑ k in S, k) - (∑ k in S_Omega, k)`
-`t(N) := (N * (N + 1)) / 2`, proving `Even (N * (N + 1))`. Define `E_hat` and `N_hat` as diagonal linear maps on `FockSpace`.
+$t(N) := N(N+1)/2$, proving `Even (N * (N + 1))`. Define `E_hat` and `N_hat` as diagonal linear maps on `FockSpace`.
 **Auxiliary Lemmas:**
+
 - `t_N_is_integer`: Proof that `N * (N + 1)` is always even.
-- `P_Omega_zero`: `P(S_Omega) = 0`.
-- `e_Omega_zero`: `e(S_Omega) = 0`.
+
+- `P_Omega_zero`: $P(S_\Omega) = 0$.
+
+- `e_Omega_zero`: $e(S_\Omega) = 0$.
 
 **Definition 7.3 (Budget Subspaces and Projections).**
 We distinguish the nested coordinate spans of the occupation basis:
+
 1. **Fixed-Energy Space:** $H(N,E) := \mathrm{span}_{\mathbb{C}} \{ \delta_S \mid N(S) = N \land e(S) = E \}$.
+
 2. **Fixed-Charge Budget:** $B(N,K) := \mathrm{span}_{\mathbb{C}} \{ \delta_S \mid N(S) = N \land e(S) \le K \} = \bigoplus_{E=0}^K H(N,E)$.
+
 3. **Charge-Box Budget:** $\mathcal{B}_{K,N_{\max}} := \mathrm{span}_{\mathbb{C}} \{ \delta_S \mid e(S) \le K \land |N(S)| \le N_{\max} \} = \bigoplus_{|N| \le N_{\max}} B(N,K)$.
 
 For multi-species systems $\vec{N} = (N_\nu)$, the excitation budget convention is explicitly the total excitation energy $\sum_\nu e_\nu(S_\nu) \le K$ (distinguished from independent per-species cutoffs).
 The orthogonal coordinate projections are labeled by their full retained data:
+
 - $P_{N,K}$ projects onto $B(N,K)$.
+
 - $P_{K,N_{\max}}$ projects onto $\mathcal{B}_{K,N_{\max}}$.
 
 *Lean 4 Proof Strategy:*
-Budget subspaces are formalized as `Submodule ℂ FockSpace`. Fixed-energy spaces with distinct $E$ or $N$ are mutually orthogonal. $B(N,K)$ is the internal direct sum of $H(N,E)$ for $0 \le E \le K$. Coordinate projections `P_{N,K}` and `P_{K,N_max}` are idempotent and self-adjoint.
+Budget subspaces are formalized as `Submodule ℂ FockSpace`. Fixed-energy spaces with distinct $E$ or $N$ are mutually orthogonal. $B(N,K)$ is the internal direct sum of $H(N,E)$ for $0 \le E \le K$. Coordinate projections $P_{N,K}$ and $P_{K,N_{\max}}$ are idempotent and self-adjoint.
 
 ---
 
@@ -86,25 +96,33 @@ This guarantees algebraically that $e(S) \ge 0$. In each admissible sector $-h \
 
 *Lean 4 Proof Strategy:*
 Map configuration `S` to a sorted sequence using `Finset.sort`.
-Let `s` be the `Fin` indexed array of size `h + N`. Ground reference `g i := -h + 1 + i`.
+Let `s` be the `Fin` indexed array of size $h+N$. Ground reference `g i := -h + 1 + i`.
 Displacement `d i := s i - g i`.
 To prove $d_i \ge 0$, proceed by induction on $i$.
 **Auxiliary Lemmas:**
-- `g_is_minimal`: Proof that any strictly increasing sequence `s` in $\Lambda^*$ satisfies `s i \ge g i`.
+
+- `g_is_minimal`: Proof that any strictly increasing sequence `s` in $\Lambda^*$ satisfies $s_i \ge g_i$.
+
 - `e_eq_sum_d`: Proof that $e(S) = \sum_i d_i$.
+
 - `e_nonneg`: Proof that $e(S) \ge 0$ for all $S$.
+
 - `e_zero_iff_ground`: Proof that $e(S) = 0 \iff S = S_N$, ensuring the zero-energy subspace has dimension 1.
 
 **Lemma 7.5 (Frozen Margins).**
 Because the sequence $d_i$ is non-decreasing and non-negative, the sum $e(S) \le K$ tightly binds the configuration:
+
 1. For all $k \le N-K$, the mode is rigidly full.
+
 2. For all $k > N+K$, the mode is rigidly empty.
 
 *Lean 4 Proof Strategy:*
 Given $\sum d_i = e(S) \le K$ and $d_i \ge 0$, we have $d_i \le K$ for all $i$.
 If a mode at $k \le N-K$ were empty, or $k > N+K$ were occupied, $\sum d_i$ would exceed $K$.
 **Auxiliary Lemmas:**
+
 - `empty_deep_implies_large_e`: If missing a particle at $k \le N-K$, $e(S) > K$.
+
 - `occupied_high_implies_large_e`: If a particle is at $k > N+K$, $e(S) > K$.
 
 **Lemma 7.6 (Filtered Operator Action).**
@@ -114,7 +132,9 @@ If a compressed endomorphism on $B(N,K)$ is required, it must be explicitly defi
 *Lean 4 Proof Strategy:*
 Formalize bounded energy and charge shifts: $A$ has shift $(q, d)$ if for all basis states $\delta_S$, $A(\delta_S)$ is supported on states with $N(S') = N(S) + q$ and $e(S') \le e(S) + d$.
 **Auxiliary Lemmas:**
+
 - `map_budget_le`: Proof that $\forall x \in B(N,K), A x \in B(N+q, K+d)$.
+
 - Definition of compressed operator $A_{N,K} := P_{N,K} \circ A \circ P_{N,K}$.
 
 **Lemma 7.7 (Composition Margin Accounting).**
@@ -129,5 +149,7 @@ $$
 Formalize `K_excursion` as the maximum intermediate energy increase during word evaluation.
 The condition $2M + K + K_{\text{excursion}} + N_{\max} \le h$ guarantees that the active window of intermediate states stays strictly within $[-h+1, h]$.
 **Auxiliary Lemmas:**
+
 - `comp_eq_on_submodule`: General lemma for equality of composed maps on restricted domains.
+
 - `no_band_collision`: Under $2M + K + K_{\text{excursion}} + N_{\max} \le h$, the frozen margins prevent band-edge saturation for all intermediate steps.

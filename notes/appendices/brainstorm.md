@@ -42,8 +42,10 @@ Addressing dynamics and imaginary time ($\tau$) on a strict lattice introduces s
 
 * **The Holomorphic Mismatch:**
 In continuum CFT, $z = \tau + ix$ relies on the symmetric scaling of space and time. If $x \in \mathbb{Z}/L\mathbb{Z}$ and $\tau \in \mathbb{R}$, defining $\partial_z = \frac{1}{2}(\partial_\tau - i\Delta_x)$ creates an operator that does not satisfy the continuous Cauchy-Riemann equations nor the exact chain rule. The functional analysis overhead (`MeasureTheory`, continuous semigroups) destroys the purely algebraic solvability.
+
 * **Strategy 1: Fully Discrete Spacetime (Transfer Matrices)**
 Treat time on equal footing with space. Discretize $\tau \to \tau_n \in \mathbb{Z}$. The Hamiltonian $H$ is replaced by the Transfer Matrix $T = \exp(-\Delta \tau H)$. Time evolution is defined algebraically as repeated application of $T$.
+
 * **Strategy 2: The Suzuki-Trotter Limit**
 If continuous time is strictly required, define the time evolution operator as formal power series (truncated on an energy budget) and evaluate equal-time commutators. For non-equal times, the Heisenberg equations of motion $i\partial_t O = [O, H]$ can be formalized as algebraic differential equations, but evaluating their integrated solutions requires leaving algebraic domains.
 
@@ -53,16 +55,19 @@ Standard bosonization literature relies heavily on Renormalization Group (RG) fl
 
 * **Difficulty 1: Virasoro on the Lattice**
 The Virasoro algebra does not exist exactly on a finite lattice. The Koo-Saleur formula defines discrete generators $L_n = \frac{L}{2\pi} \sum_x e^{inx} (H_x + i P_x)$, but their commutator contains error terms: $[L_n, L_m] = (n-m)L_{n+m} + \frac{c}{12}n^3 \delta_{n,-m} + O(1/L)$.
+
 * **Strategy:** Do not attempt to prove exact CFT symmetries. Instead, state the Koo-Saleur commutators as exact equalities *including* the explicit error operators. The algebraic focus must remain on the Kac-Moody currents ($\rho_m$), which *are* exact on the lattice budget space, rather than the stress-energy tensor.
 
 
 * **Difficulty 2: Formalizing RG Flow**
 Continuous RG flow equations like $dg/dl \propto g^2$ rely on integrating out infinitesimal momentum shells, which is mathematically ill-defined on a rigid integer lattice $\Lambda^*$.
+
 * **Strategy:** Replace continuous RG with discrete **Block Decimation** or **Entanglement Renormalization** (e.g., MERA). Define an exact algebraic map that traces out the highest-energy modes in the budget space $\mathcal{B}_K \to \mathcal{B}_{K-1}$ and maps the operators to effective operators.
 
 
 * **Useful Exact Lattice Symmetries:**
 To compute without thermodynamic limits, the focus must shift to exact discrete symmetries.
+
 1. **Topological T-Duality:** As seen in the 1+1D project, $g \leftrightarrow 1/g$ can be proven as an exact `AlgEquiv` for the entire Hamiltonian matrix.
 2. **Kramers-Wannier Duality:** Translates directly to the 2+1D lattice gauge theory as a mapping between the link variables $A_\mu$ and plaquette fluxes.
 3. **Particle-Hole Symmetry (C):** For the half-filled Landau level mapping, $\mathcal{C}$ acts locally on the dual Dirac fermions ($\mathcal{C}\tilde{\Psi}\mathcal{C}^{-1} = i\sigma^y \tilde{\Psi}$). This can be formalized as an exact involution on the finite lattice operators.
