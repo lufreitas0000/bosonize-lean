@@ -1,6 +1,8 @@
-# Chapter 12 Sugawara: Phase A companion
+# Chapter 12 Sugawara: formal companion
 
-Status: drafted, elaborated, and ready for independent mathematical/interface review. No statement below is proved in this staging file. There are 26 theorem contracts, each with exactly one `sorry`, and three complete noncomputable definitions plus two abbreviations. No separate A04 support module was needed. Existing Core and lock manifests were not edited.
+Current status: all 26 proofs complete, warning-free targeted builds and fresh 31-declaration standard-axiom audit pass; independent review and Phase C validation are in progress. The Phase A records below are historical snapshots.
+
+Historical Phase A status: drafted, elaborated, and ready for independent mathematical/interface review. No statement below is proved in this staging file. There are 26 theorem contracts, each with exactly one `sorry`, and three complete noncomputable definitions plus two abbreviations. No separate A04 support module was needed. Existing Core and lock manifests were not edited.
 
 ## Sources and conventions
 
@@ -246,3 +248,13 @@ The [independent final-source review](../../../note/ch12_phase_a_review_2026-10-
 On October 11, after 18:14 UTC, the five-hour allowance recovered to 98% remaining and weekly to 85%. The consumed wakeup was deleted; no reset or paid credits were used. The exact reviewed Lean SHA remains `948bd05acb85135c72a120ee4bd12daa3e3ebffaaf67715b27f8487002ca46e9`. Fresh targeted Lake build passed 3397 jobs with exactly the 26 expected theorem-placeholder warnings. Native Lean MCP diagnostics completed with those same 26 warnings, zero errors and no failed dependencies. Fresh axiom inspection of all five complete data declarations, including both abbreviations, reports only `propext`, `Classical.choice`, `Quot.sound`. The eighteen existing complete-source Core hashes and 677 existing theorem interfaces passed their guards. New upstream LaTeX/workflow commits do not alter this reviewed source, its reference Markdown or Core.
 
 Only this reviewed CH12 interface is added to the current manifest and staging aggregator. Its mathematical review is recorded in [the independent report](../../../note/ch12_phase_a_review_2026-10-11.md). Phase B now supplies all 26 obligations; placeholders still represent unproved targets. Sectional proving uses available inherited Codex agents because Flash/Pro tools are not exposed in this session.
+
+## Complete Phase B proof evidence
+
+All 26 reviewed targets now have complete proof bodies; the five data declarations remain unchanged. Source SHA-256: `24bd8be1167243715b3c4b50d55917581599facdfabf3b53111669b32619bcab`. The complete source passes direct warning-as-error elaboration and the 3397-job targeted build without warnings. Native MCP returns complete empty diagnostics and no failed dependencies. Fresh inspection of all 31 declarations confirms only the three permitted standard axioms; see [audit](../../../note/ch12_phase_b_axiom_audit_2026-10-11.json).
+
+The local natural-list pull-through handles zero entries with the actual signed current relation on each right suffix; it does not weaken or modify the frozen CH11 positive-list helper. Inactive modes vanish by grading before any current relation is invoked. Multiplicity-weight action and the partition spanning theorem establish whole-budget equivalence before its commutator corollary. Separate source and target margins are retained. The physical dictionary keeps the same-sea βN shift and exact charge-dependent ground polynomial, with global excitation cancellation after subtracting that polynomial. Both witnesses use independently proved nonzero sea-density action. Sectional scratch dependency placeholders were eliminated by integration and the fresh complete transitive audit. No mathematical interface correction or Core edit was needed.
+
+Sectional proof authors: `/root/ch11_phase_a` (finite identities), `/root/ch11_gram_probe` (word action), `/root/ch12_phase_a` (physical energy), `/root` (budget equivalence, commutators and witnesses). Proof-suggestion directories are absent in the current checkout; prior companion source reconciliation and actual installed Core APIs guide the proofs. Independent proof/promotion review and full CI evidence follow before promotion.
+
+Independent integrated review: [PASS report](../../../note/ch12_phase_b_review_2026-10-11.md), exact final SHA above. Reviewer disclosure records the six energy proofs it authored; the root independently inspected those bodies, while the reviewer scrutinized the other twenty. Full Phase B CI passes 69 guard tests, strict 703-statement/526-command interface verification, eighteen unchanged Core hashes and both library builds (Core 3403 jobs, staging 3405 jobs). An initial aggregator import-position error was journaled and corrected before this passing run.
