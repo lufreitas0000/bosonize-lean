@@ -1,5 +1,10 @@
 # Bosonize-Lean: Exact Lattice AQFT Bosonization in Lean 4
 
+[![Build LaTeX Monograph](https://github.com/lufreitas0000/bosonize-lean/actions/workflows/latex.yml/badge.svg)](https://github.com/lufreitas0000/bosonize-lean/actions/workflows/latex.yml)
+[![Download Monograph PDF](https://img.shields.io/badge/PDF-Download%20Monograph-blue?logo=adobe-acrobat-reader)](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf)
+
+> **Pedagogical Monograph Available**: A complete 99-page mathematical monograph translating the findings of Chapters 1–11 and Appendices A01–A04 into plain LaTeX is continuously built. Download the latest uncompressed PDF directly: [**`bosonize-monograph.pdf`**](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf).
+
 Bosonize-Lean develops exact algebraic statements for 1+1-dimensional lattice bosonization. The program uses finite-dimensional CAR/budget spaces and polynomial or explicitly specified algebraic carriers. Formal series, where selected, are interpreted coefficientwise; analytic limits, Hilbert completions and topological interpretations require separate constructions.
 
 **Current status:** Chapters 1–11, the CH06 boundary extension, Appendices A01/A03, the finite-CAR portion of A02, and the density/current-margin/partition portions of A04 are proved and frozen in Core (677 proved theorems across eighteen modules). The 21 chapter notes, ten supporting appendices and proof suggestions have a reconciled source baseline; later chapter statements remain implementation targets. See [the completion ledger](note/notes_review_completion_2026-10-09.md) for source review evidence and exclusions. Source notes and suggested proofs require scrutiny; the Lean kernel checks completed Lean proofs.
