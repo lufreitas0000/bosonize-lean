@@ -16,6 +16,9 @@ import Bosonize.Core.Ch09DensityModes
 import Bosonize.Core.A04CurrentMargins
 import Bosonize.Core.Ch10Heisenberg
 
+import Bosonize.Core.A04PartitionCombinatorics
+import Bosonize.Core.Ch11HaldaneCompleteness
+
 /-!
 # Bosonize Core Library
 Aggregator for the verified Core library. Every verified module must be imported here.

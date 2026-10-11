@@ -1,0 +1,19 @@
+[
+  {
+    "old": "BosonizeStubs/A04PartitionCombinatorics.lean",
+    "new": "Bosonize/Core/A04PartitionCombinatorics.lean",
+    "import_changes": [],
+    "sha256": "7ca50bf6373bef397268ebfe2117df9cf9f9e67eddd4b53ec73e0473deaba399"
+  },
+  {
+    "old": "BosonizeStubs/Ch11HaldaneCompleteness.lean",
+    "new": "Bosonize/Core/Ch11HaldaneCompleteness.lean",
+    "import_changes": [
+      [
+        "import BosonizeStubs.A04PartitionCombinatorics",
+        "import Bosonize.Core.A04PartitionCombinatorics"
+      ]
+    ],
+    "sha256": "1d3b1f289ddb0f4dfd43abbe8767c031d30abf3aa17355cb657f4a877b295616"
+  }
+]

@@ -1,0 +1,365 @@
+{
+  "Bosonize.A04Partitions.EnergyConfigurations": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacementParts": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacementWeight": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacementPartition": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.FitsRectangle": [
+    "propext"
+  ],
+  "Bosonize.A04Partitions.paddedRows": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.inverseConfiguration": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacement_parts_pos": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacement_weight_energy": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacement_partition_parts": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacement_upper_bound": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacement_partition_rectangle": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.padded_rows_length": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.padded_rows_monotone": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.padded_rows_sum": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.partition_card_le": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.padded_rows_filter": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.padded_rows_get_le": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.inverse_labels_in_band": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.inverse_labels_strict_mono": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.inverse_configuration_card": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.inverse_configuration_charge": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.inverse_configuration_sorted_label": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.inverse_configuration_energy": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.inverse_displacement_parts": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.padded_displacement_recovery": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.displacement_inverse_configuration": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.partition_fits_r1": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.rectangle_equiv": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.unrestricted_equiv_r1": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.energy_space_finrank_coordinates": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.A04Partitions.energy_space_finrank_r1": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.creatorWord": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.wordState": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partitionList": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partitionState": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.hallFactor": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partitionNormalization": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.BudgetPartitions": [
+    "propext"
+  ],
+  "Bosonize.Ch11.budgetPartitionState": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partition_list_multiset": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partition_list_sum": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partition_list_positive": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.creator_word_nil": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.creator_word_cons": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.word_state_nil": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.word_state_cons": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.creator_word_perm": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partition_state_order_independent": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.word_state_cons_erase": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.creator_word_exact_shift": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.word_state_mem_energy": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.word_state_mem_budget": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partition_state_mem_energy": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.remainder_ccr": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.right_remainder_margin": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.lowering_cons": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.lowering_through_word": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.lowering_through_word_erase": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.word_inner_cons": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.ground_inner_word_zero": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.ground_inner_ground": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.hall_factor_positive": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.hall_factor_cons": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.word_gram": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partition_gram": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partition_state_ne_zero": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.partition_states_linear_independent": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.r2_implies_r1": [
+    "propext",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.fixed_energy_spanning": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.fixed_energy_basis": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.budget_partition_gram": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.budget_partition_mem": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.budget_partition_linear_independent": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.budget_partition_spanning": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch11.budget_partition_basis": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

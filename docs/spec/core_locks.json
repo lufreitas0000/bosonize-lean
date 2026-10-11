@@ -4,6 +4,7 @@
   "Bosonize/Core/A03EnergyBudgets.lean": "6b1815b12c365614333ef59fc0e71dfcbea8955c5bb2e64b081f1b9317477291",
   "Bosonize/Core/A04CurrentMargins.lean": "48119166b886ffd0a92c79111570142d931467d089aa1e777c1bab9b466ffd16",
   "Bosonize/Core/A04DensityKinematics.lean": "aa43c291dc33f5eca3e32f24ae416d52f72e7e36d52de8eae524e670a70d9742",
+  "Bosonize/Core/A04PartitionCombinatorics.lean": "7ca50bf6373bef397268ebfe2117df9cf9f9e67eddd4b53ec73e0473deaba399",
   "Bosonize/Core/Ch01LatticeBand.lean": "a88cd251573aa8a5416afa583b0a97b1e575ab09d4742b13a5b0be0e8a16b132",
   "Bosonize/Core/Ch02UmbralCalculus.lean": "d8d70d75372733aefda49e50baa033aaa5b363a57c0ec67a5a91368ac2d6f425",
   "Bosonize/Core/Ch03Fourier.lean": "6d0ba9cd4751c7cb321bc8cc786f355b768ee84a28ea6251628e495972160fed",
@@ -14,5 +15,6 @@
   "Bosonize/Core/Ch07VacuumBudget.lean": "a33ced1009ba31a3823dfe3e1a922a346e62591d7b5d5c1803f6382fe14944da",
   "Bosonize/Core/Ch08Boson.lean": "b03b12aae00f11129cc48cdb9f07c7159063db880b8459517aa0ffd23879d60d",
   "Bosonize/Core/Ch09DensityModes.lean": "085d890f8c56b7dc8b9bf9ea15fc36a92f7f6ddd81ae6125343c6e567323097e",
-  "Bosonize/Core/Ch10Heisenberg.lean": "b60b521055ca01363a033e227f473e9bb51a21abc58d92fc668d1ab5c49af735"
+  "Bosonize/Core/Ch10Heisenberg.lean": "b60b521055ca01363a033e227f473e9bb51a21abc58d92fc668d1ab5c49af735",
+  "Bosonize/Core/Ch11HaldaneCompleteness.lean": "1d3b1f289ddb0f4dfd43abbe8767c031d30abf3aa17355cb657f4a877b295616"
 }

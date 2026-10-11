@@ -51,3 +51,7 @@ A full concatenated actual A04+CH11 source audit, `/tmp/Ch11CrossAuditResolved.l
 After the upstream helper rebuild, a fresh normal imported full-source audit ran as `lake env lean /tmp/Ch11FullProofCrossAudit.lean`, exit 0. `/tmp/Ch11FullProofCrossAuditFinal.log` contains all 36 individual axiom reports, each a subset of `propext`, `Classical.choice`, `Quot.sound`; there is no `sorryAx`, no compiler error, and no warning. The inspected source has zero placeholders. This review does not substitute for the orchestrator's guard/build/CI and promotion checks.
 
 No Lean source or lock manifest was edited during this cross-review. This report is the only repository file written by this reviewer for this task.
+
+## Resolution and promoted checkpoint
+
+The independent Hall-cleanup review in [the proof review](ch11_phase_b_review_2026-10-11.md) passed. The exact amendment was applied and committed at `ed3ad48`; no redundant positivity argument remains in the recurrence. Both modules are now promoted with the previously reviewed import substitution. Fresh Core-aggregator audits of all 76 new declarations report only permitted standard axioms, and warning-free builds and CI pass. This resolves the pending amendment recorded in the earlier review snapshot.

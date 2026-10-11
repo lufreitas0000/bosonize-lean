@@ -49,3 +49,11 @@ The recurrence `hallFactor (m ::ₘ parts) = m*(parts.count m+1)*hallFactor part
 The exact `/tmp/Ch11HallFactorCleanup.lean` diff removes only `(hm : 0 < m)` and `(hpos : ∀ n ∈ parts, 0 < n)` from this one header, deletes the detour in its proof, and removes these arguments from the sole `word_gram` caller. Other headers, definitions, imports and proof bodies are unchanged. Its zero-mode/zero-part cases remain valid as product identities; this does not broaden the positive-part hypotheses of actual-current Gram or remove the separate positivity assumptions of `hall_factor_positive`.
 
 Candidate SHA-256: `32f6a628739a0d965300a357116fd059b094082da7d189baeb63b30a3f195014`. The inverse agent's warning-as-error compilation exited 0 with an empty log. Independent `lake env lean -DwarningAsError=true /tmp/Ch11HallFactorCleanup.lean` compilation also exited 0 with no output or warnings. Approval is limited to this exact declaration/caller cleanup and the corresponding one-header v2 lock amendment; mathematical conclusions and existing Core sources remain unchanged.
+
+The cleanup candidate's all36-target fresh axiom audit log was inspected independently: every declaration uses a subset of `propext`, `Classical.choice`, and `Quot.sound`; no `sorryAx` or warning appears.
+
+## Actual Phase C source migration verification — PASS
+
+The promoted `Bosonize/Core/A04PartitionCombinatorics.lean` is byte-identical to the approved A04 cleanup candidate, SHA-256 `7ca50bf6373bef397268ebfe2117df9cf9f9e67eddd4b53ec73e0473deaba399`. The promoted `Bosonize/Core/Ch11HaldaneCompleteness.lean` equals the approved Hall-cleanup candidate after exactly the reviewed appendix import substitution, SHA-256 `1d3b1f289ddb0f4dfd43abbe8767c031d30abf3aa17355cb657f4a877b295616`. This exact content comparison preserves every mathematical header, definition and proof body after the two separately reviewed interface cleanups.
+
+All sixteen preexisting Core hashes from checkpoint `0ae13df` are unchanged in the final eighteen-entry Core lock manifest; both new hashes match the actual promoted source bytes. The fresh Core audit contains all 76 declarations with only permitted standard axioms. The final Core and staging builds succeed and the CI log ends `CI OK`.

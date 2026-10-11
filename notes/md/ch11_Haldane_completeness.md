@@ -99,3 +99,71 @@ $$
 
 *Lean 4 Proof Strategy:*
 Index the budget basis by a dependent pair of energy E ≤ K and a partition of E. Prove linear independence using orthogonality across energy blocks and the Gram lemma within each block; prove spanning by the coordinate energy decomposition. Construct a basis from these proved properties rather than relying on an unverified `Basis.sum` name.
+
+#### 11.4 Constructive realization in Lean
+
+The construction described here is proved and promoted to Core. Its declarations have complete proofs and use only the permitted standard axioms; the formal companions record validation evidence.
+
+The [partition construction](../../Bosonize/Core/A04PartitionCombinatorics.lean) and [CH11 construction](../../Bosonize/Core/Ch11HaldaneCompleteness.lean), with their [A04 companion](../../docs/companion/Bosonize/Core/A04PartitionCombinatorics.md) and [CH11 companion](../../docs/companion/Bosonize/Core/Ch11HaldaneCompleteness.md), give the finite realization of the theory above. The proof-strategy paragraphs remain reference guidance; the construction uses the actual occupation coordinates and density operators already introduced in Chapters 7 and 9.
+
+The ambient Hilbert space is the finite complex space with orthonormal basis $\delta_S$, where $S$ ranges over subsets of the signed momentum band
+
+$$
+B=\{-h+1,\ldots,h\},\qquad h>0.
+$$
+
+The sector charge is $N=|S|-h$, with $-h\le N\le h$. Excitation is measured relative to the ground configuration of that same charge, using the existing sea subtraction and ground-energy shift $N(N+1)/2$. Thus the energies in this chapter are integer excitations. The previously proved cancellation of a uniform physical momentum offset in a fixed-charge excitation, and the matching twisted Fourier dictionary for the density bilinears, continue to apply. These cancellations do not change the sea or assert cancellation of the absolute sector energy.
+
+**From occupations to partitions, with an explicit inverse.** Order the occupied labels as $s_0<\cdots<s_{n-1}$, where $n=h+N$, and compare them with the consecutive ground labels $g_i=-h+1+i$. Their displacements satisfy
+
+$$
+0\le d_0\le\cdots\le d_{n-1}\le 2h-n,
+\qquad d_i=s_i-g_i,
+\qquad e(S)=\sum_{i=0}^{n-1}d_i.
+$$
+
+Discarding the zero displacements gives the positive parts of a partition of $e(S)$. It fits the rectangle with $n$ rows and $2h-n$ columns. Conversely, given such a partition, sort its parts in ascending order, prepend enough zeros to obtain exactly $n$ entries, and set
+
+$$
+s_i=-h+1+i+d_i.
+$$
+
+The rectangle bound puts every reconstructed label in $B$; monotonicity of the displacements makes these labels strictly increasing. Their occupation set has exactly $n$ elements. Its sorted labels recover the formula above, so its charge, energy and displacement partition are the prescribed ones. In the other direction, restoring the discarded zeros recovers the entire original displacement list and hence the original occupation set. Both inverse identities are established, including the empty and full sectors.
+
+Every positive part of a partition of $K$ is at most $K$, and the number of its parts is at most $K$. Consequently R1 ensures that every partition of $K$ fits the rectangle, and the actual occupation configurations at energy $K$ are in bijection with all partitions of $K$. Restricting the orthonormal occupation basis to these coordinates yields $\dim H(N,K)=p(K)$. Equality is allowed in R1: a partition may reach a rectangle boundary. The intended meaning of the earlier phrase “never to be saturated” is that the rectangle excludes no partition of $K$, not that every bound is strict.
+
+**The physical density states and their Gram matrix.** The construction takes a descending list $[m_1,\ldots,m_r]$ of a partition's positive parts and forms
+
+$$
+W([m_1,\ldots,m_r])
+=\rho_{m_1}\cdots\rho_{m_r}|N\rangle_0.
+$$
+
+This is a written product, so its rightmost current acts first. Positive currents commute on the whole ambient carrier, giving independence of the chosen ordering. Exact grading places the resulting vector in $H(N,\sum_i m_i)$; an upper budget bound alone would not establish this equality of energy.
+
+For the Gram calculation, move a lowering current through the written product. At a step involving the creator $\rho_n$, its input is the remaining word to the right, of energy $E$. If the whole creator word has energy at most $K$, then $n+E\le K$. For $m\le K$, R2 gives
+
+$$
+m+n+E+|N|\le m+K+|N|\le 2K+|N|\le h.
+$$
+
+The restricted commutator therefore applies to precisely this remainder. Its diagonal coefficient is $+m$ and its off-diagonal coefficient is zero. Repeating the step and using $\rho_{-m}|N\rangle_0=0$ gives a contraction for each occurrence of $m$. Since the creators commute, removing any matching occurrence gives the same state, so the contraction becomes
+
+$$
+\rho_{-m}W(w)=m\,r_m(w)\,W(w\setminus\{m\}).
+$$
+
+Here $w$ has positive parts and total energy at most $K$, $0<m\le K$, and R2 holds at $K$. The formula includes the zero result when $m$ does not occur. Actual Hilbert adjoints move creators from the left side of an inner product to lowering currents on the right. Induction then gives the diagonal Gram formula, with
+
+$$
+\|\,|\lambda;N\rangle\,\|^2
+=z_\lambda=\prod_{m\ge1}m^{r_m}r_m!>0.
+$$
+
+Thus $z_\lambda$ is the squared norm. Its factorial counts successive matching contractions; positivity follows from positive mode weights. The argument also treats creator words of different total energies, yielding orthogonality across the energy blocks.
+
+**Completeness and assembly of the budget.** R2 implies R1. The Gram formula proves that the actual density states are nonzero and linearly independent; their exact-energy membership and the independently established dimension count then give spanning and a basis of $H(N,K)$. The basis vectors are precisely the density products defined above.
+
+For the whole budget, label a vector by a pair $(E,\lambda)$ with $0\le E\le K$ and $\lambda\vdash E$. R2 at $K$ implies the corresponding condition at every such $E$. The Gram formula gives independence of the entire family. Each coordinate ket in $B(N,K)$ has a nonnegative excitation $E\le K$, so fixed-energy spanning puts it in the span of the family. This proves spanning of the budget and constructs its orthogonal basis, including the ground at $E=0$.
+
+R1 is the combinatorial counting regime; R2 is the stronger regime used for the density Gram formula and completeness. These statements concern finite occupation spaces and the action of actual currents on their specified vectors. Sugawara energy equivalence remains the separate Chapter 12 task.
