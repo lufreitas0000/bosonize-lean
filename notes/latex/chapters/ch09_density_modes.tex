@@ -1,34 +1,291 @@
 \chapter{Density Modes and Kinematics}
 \label{ch:density_modes}
 
-\section{Introduction and the Bridge to Bosons}
-The bridge between fermionic Fock space and bosonic current algebra is formed by the fermionic density modes $\rho_m$. In the continuum, $\rho(x) = \psi^\dagger(x) \psi(x)$ is singular and requires subtractive renormalization. On the discrete band $\Lambda^*$, density modes are defined as exact truncated momentum-shift operators.
+\section{Introduction and the Bridge to Bosonic Currents}
 
-\section{Truncated and Normal-Ordered Densities}
-For mode integer $m \in \mathbb{Z} \setminus \{0\}$, the raw density operator on the momentum CAR algebra is:
-\begin{equation}
-\rho_m^{\mathrm{raw}} \coloneqq \sum_{k \in \Lambda^*} c_{k \ominus m}^\dagger c_k.
-\end{equation}
-The normal-ordered density mode with respect to the Dirac sea $S_N$ is defined by:
-\begin{equation}
-:\!\rho_m\!: \coloneqq \sum_{k \in \Lambda^*} : \! c_{k \ominus m}^\dagger c_k \!:_{S_N},
-\end{equation}
-where $: \! c_p^\dagger c_k \!:_{S_N} = c_p^\dagger c_k - \langle N|_0 c_p^\dagger c_k |N\rangle_0 I$.
+The central mechanism of bosonization in $1+1$ dimensions is the construction of bosonic current operators out of bilinear products of fermionic fields. In continuous quantum field theory, the chiral current is formally written as $\rho(x) = :\! \psi^\dagger(x) \psi(x) \!:$. Because the product of two quantum fields at the same spacetime point is singular, the continuum definition requires point-splitting regularization, subtracting infinite vacuum expectation values and introducing ambiguous anomalous Schwinger terms.
 
-\section{Key Results and Formal Discoveries}
-\begin{itemize}
-    \item \textbf{Energy Grading:} For $m > 0$, the normal-ordered density $:\!\rho_m\!:$ acts as an annihilation-type operator that lowers excitation energy by $m$, while $:\!\rho_{-m}\!:$ raises excitation energy by $m$ within the admissible margin.
-    \item \textbf{Charge Conservation:} The density modes commute with the total fermion number:
-    \[
-    [\hat{N}, :\!\rho_m\!:] = 0.
-    \]
-    Density excitations conserve net fermion charge.
-    \item \textbf{Action on the Vacuum:} The ground state $|N\rangle_0$ is annihilated by positive density modes:
-    \[
-    :\!\rho_m\!: |N\rangle_0 = 0 \quad \text{for all } m > 0.
-    \]
-\end{itemize}
+In our constructive lattice AQFT framework, all singularities and heuristic subtractions disappear. Density modes are defined as exact, non-wrapping momentum-shift operators on the finite-dimensional fermionic Fock space $\mathcal{F}(L)$ ($L = 2h$, $h \ge 1$). 
+
+In this chapter, we develop the exact kinematics of these density operators. We prove that:
+\begin{enumerate}
+    \item Density modes strictly conserve net fermion charge and grade excitation energy by the mode integer $m$.
+    \item Same-sign density modes commute globally on the entire Fock space without any budget restriction.
+    \item Negative density modes strictly annihilate every sector ground state $|N\rangle_0$.
+    \item The state $\rho_m |\Omega\rangle$ has exact norm squared $\|\rho_m |\Omega\rangle\|^2 = m$ for $1 \le m \le h$, establishing the linear independence of density modes prior to any CCR evaluation.
+\end{enumerate}
+
+\section{Non-Wrapping Momentum Kinematics and Valid Pairs}
+
+In Chapter~\ref{ch:lattice_band}, we established that the centered momentum band $\Lambda^* = \{-h+1, \dots, h\}$ has an intrinsically asymmetric boundary. When defining transfer modes, we must carefully distinguish between \emph{integer transfers} $p = k + m$ and \emph{modular cyclic transfers} $p \equiv k + m \pmod L$. A modular transfer wraps around the Brillouin zone via Umklapp scattering, whereas a physical chiral current requires a genuine forward momentum translation without boundary aliasing.
+
+\begin{definition}[Valid Integer Shift Pairs]
+For any mode transfer integer $m \in \mathbb{Z}$, the set of valid non-wrapping momentum pairs $D_m$ is defined by:
+\begin{equation}
+D_m \coloneqq \left\{ (p, k) \in \Lambda^* \times \Lambda^* \;\middle|\; p = k + m \right\}.
+\end{equation}
+\end{definition}
+
+If $|m| \ge 2h = L$, the distance between $p$ and $k$ exceeds the total diameter of the band, so $D_m = \emptyset$.
+
+\begin{definition}[One-Particle Partial Shift Matrix]
+The one-particle partial shift matrix $T_m \in \mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*))$ is the $L \times L$ matrix defined by:
+\begin{equation}
+(T_m)_{p, k} \coloneqq \begin{cases}
+1, & \text{if } (p, k) \in D_m \iff p = k + m, \\
+0, & \text{otherwise}.
+\end{cases}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Second Quantization Map]
+For any single-particle matrix $A \in \mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*))$, its second-quantized operator $d\Gamma(A) \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ on Fock space is defined by:
+\begin{equation}
+d\Gamma(A) \coloneqq \sum_{p, k \in \Lambda^*} A_{p, k}\, c_p^\dagger c_k.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Lie Algebra Preservation of Second Quantization]
+\label{lem:dgamma_comm}
+The second quantization map $d\Gamma : \mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*)) \to \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ is a complex Lie algebra homomorphism and preserves adjoints:
+\begin{align}
+d\Gamma([A, B]) &= [d\Gamma(A), d\Gamma(B)], \label{eq:dgamma_lie} \\
+d\Gamma(A^\dagger) &= (d\Gamma(A))^\dagger. \label{eq:dgamma_adj}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Let $A, B$ be single-particle matrices. Expanding the commutator:
+\[
+[d\Gamma(A), d\Gamma(B)] = \sum_{p, k} \sum_{q, \ell} A_{p, k} B_{q, \ell} [c_p^\dagger c_k, c_q^\dagger c_\ell].
+\]
+Using the fundamental hopping commutator $[c_p^\dagger c_k, c_q^\dagger c_\ell] = \delta_{k, q} c_p^\dagger c_\ell - \delta_{p, \ell} c_q^\dagger c_k$ from Theorem~\ref{thm:algebraic_car}(1):
+\begin{align*}
+[d\Gamma(A), d\Gamma(B)] &= \sum_{p, k, \ell} A_{p, k} B_{k, \ell}\, c_p^\dagger c_\ell - \sum_{q, k, \ell} A_{\ell, k} B_{q, \ell}\, c_q^\dagger c_k \\
+&= \sum_{p, \ell} (A B)_{p, \ell}\, c_p^\dagger c_\ell - \sum_{q, k} (B A)_{q, k}\, c_q^\dagger c_k \\
+&= d\Gamma(A B - B A) = d\Gamma([A, B]).
+\end{align*}
+For adjoints: $(d\Gamma(A))^\dagger = \sum_{p, k} \overline{A_{p, k}} (c_p^\dagger c_k)^\dagger = \sum_{p, k} (A^\dagger)_{k, p} c_k^\dagger c_p = d\Gamma(A^\dagger)$.
+\end{proof}
+
+\section{Raw and Normal-Ordered Density Operators}
+
+\begin{definition}[Raw and Normal-Ordered Densities]
+\begin{enumerate}
+    \item For any mode transfer integer $m \in \mathbb{Z}$, the \emph{raw density operator} $\rho_m$ is the second quantization of the partial shift matrix $T_m$:
+    \begin{equation}
+    \rho_m \coloneqq d\Gamma(T_m) = \sum_{(p, k) \in D_m} c_p^\dagger c_k = \sum_{\substack{k \in \Lambda^* \\ k+m \in \Lambda^*}} c_{k+m}^\dagger c_k.
+    \end{equation}
+    \item The \emph{normal-ordered density operator} $:\!\rho_m\!:$ is defined by subtracting the vacuum charge $h$ at zero mode:
+    \begin{equation}
+    :\!\rho_m\!: \coloneqq \rho_m - \delta_{m, 0}\, h I.
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Properties of the Zero Mode]
+The zero-mode density operator satisfies:
+\begin{equation}
+\rho_0 = \sum_{k \in \Lambda^*} c_k^\dagger c_k = \hat{N}_{\mathrm{tot}}, \qquad :\!\rho_0\!: = \hat{N}_{\mathrm{tot}} - h I = \hat{N},
+\end{equation}
+where $\hat{N}$ is the relative charge observable defined in Chapter~\ref{ch:vacuum_budget}.
+In particular, on the half-filled Dirac sea $|\Omega\rangle$:
+\begin{equation}
+\rho_0 |\Omega\rangle = h |\Omega\rangle, \qquad :\!\rho_0\!: |\Omega\rangle = 0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For $m = 0$, $D_0 = \{(k, k) \mid k \in \Lambda^*\}$. Thus $\rho_0 = \sum_k c_k^\dagger c_k = \hat{N}_{\mathrm{tot}}$. Since $\#S_\Omega = h$, $\hat{N}_{\mathrm{tot}} |\Omega\rangle = h |\Omega\rangle$, so $:\!\rho_0\!: |\Omega\rangle = (h - h)|\Omega\rangle = 0$.
+\end{proof}
+
+\section{Exact Kinematic Lemmas and Global Commutativity}
+
+\begin{lemma}[Vanishing and Adjoint Inversion]
+\label{lem:density_vanishing_adj}
+\begin{enumerate}
+    \item For any integer $|m| \ge 2h$, $D_m = \emptyset$, so $T_m = 0$ and $\rho_m = 0$.
+    \item For all $m \in \mathbb{Z}$, $T_m^\dagger = T_{-m}$, and consequently:
+    \begin{equation}
+    \rho_m^\dagger = \rho_{-m}, \qquad :\!\rho_m\!:^\dagger = :\!\rho_{-m}\!:.
+    \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If $|m| \ge 2h$, the difference between any two elements in $\Lambda^*$ cannot equal $m$ because the diameter of $\Lambda^*$ is $2h - 1$. Hence $D_m = \emptyset$.
+For adjoints: $(T_m)_{p, k} = 1 \iff p = k + m \iff k = p - m \iff (T_{-m})_{k, p} = 1$. Thus $T_m^\dagger = T_{-m}$. By Lemma~\ref{lem:dgamma_comm}, $\rho_m^\dagger = d\Gamma(T_m^\dagger) = d\Gamma(T_{-m}) = \rho_{-m}$.
+\end{proof}
+
+\begin{theorem}[Global Same-Sign Commutativity]
+\label{thm:same_sign_comm}
+For all non-negative integers $m, n \ge 0$:
+\begin{equation}
+[\rho_m, \rho_n] = 0 \quad \text{globally on all of } \mathcal{F}(L).
+\end{equation}
+Symmetrically, for all non-positive integers $m, n \le 0$, $[\rho_m, \rho_n] = 0$ globally on $\mathcal{F}(L)$.
+\end{theorem}
+
+\begin{proof}
+We evaluate the product of the one-particle shift matrices $T_m T_n$ for $m, n \ge 0$:
+\[
+(T_m T_n)_{p, k} = \sum_{j \in \Lambda^*} (T_m)_{p, j} (T_n)_{j, k}.
+\]
+The summand is non-zero (and equals $1$) if and only if $p = j + m$ and $j = k + n$. 
+This uniquely determines $j = k + n$. Since $k \in \Lambda^*$ and $p = k + m + n \in \Lambda^*$, and since $m, n \ge 0$, the intermediate coordinate $j = k + n$ satisfies $k \le j \le p$.
+Because the band $\Lambda^*$ is an integer interval, any integer between two elements of $\Lambda^*$ also belongs to $\Lambda^*$. Therefore, the intermediate index $j = k + n$ automatically belongs to $\Lambda^*$.
+Consequently:
+\[
+(T_m T_n)_{p, k} = \begin{cases} 1, & \text{if } p = k + (m + n) \text{ and } p, k \in \Lambda^*, \\ 0, & \text{otherwise}, \end{cases}
+\]
+which proves the matrix product identity $T_m T_n = T_{m+n}$.
+By symmetry, $T_n T_m = T_{n+m} = T_{m+n}$. Therefore $[T_m, T_n] = 0$.
+Applying the second-quantization Lie homomorphism (Lemma~\ref{lem:dgamma_comm}):
+\[
+[\rho_m, \rho_n] = [d\Gamma(T_m), d\Gamma(T_n)] = d\Gamma([T_m, T_n]) = d\Gamma(0) = 0.
+\]
+The statement for non-positive transfers follows immediately by taking Hilbert adjoints using Lemma~\ref{lem:density_vanishing_adj}(2).
+\end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 core (Chapter 9 and Appendix A04), the non-wrapping kinematics and margin inequalities are formalized constructively, ensuring that density shifts do not cause boundary wraps when applied to states within the budget.
+In the verified Lean~4 core (\texttt{Bosonize.Ch09}), Theorem~\ref{thm:same_sign_comm} is proved globally without assuming an energy budget. Same-sign density modes commute everywhere on the $2^L$-dimensional Fock space. The non-trivial Schwinger anomaly occurs strictly for opposite-sign pairs $[\rho_m, \rho_{-n}]$ ($m, n > 0$), which we analyze in Chapter~\ref{ch:heisenberg_algebra}.
 \end{remark}
+
+\section{Charge Conservation and Energy Grading}
+
+\begin{theorem}[Charge and Energy Covariance]
+\label{thm:charge_energy_covariance}
+For every mode integer $m \in \mathbb{Z}$:
+\begin{enumerate}
+    \item \textbf{Charge Conservation:}
+    \begin{equation}
+    [\hat{N}, \rho_m] = 0, \qquad [\hat{N}_{\mathrm{tot}}, \rho_m] = 0.
+    \end{equation}
+    \item \textbf{Excitation Energy Shift:}
+    \begin{equation}
+    [\hat{P}, \rho_m] = m \rho_m, \qquad [\hat{E}, \rho_m] = m \rho_m.
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}
+    \item Since $\rho_0 = \hat{N}_{\mathrm{tot}}$, $[\hat{N}_{\mathrm{tot}}, \rho_m] = d\Gamma([T_0, T_m])$. Since $T_0 = I$, $[I, T_m] = 0$, so $[\hat{N}_{\mathrm{tot}}, \rho_m] = 0$. Since $\hat{N} = \hat{N}_{\mathrm{tot}} - h I$ differs by a central scalar, $[\hat{N}, \rho_m] = 0$.
+    \item Recall the bare Hamiltonian $H_0 = \sum_{k} k n_k$. For any single-particle hop $c_p^\dagger c_k$, by Theorem~\ref{thm:h0_commutators}:
+    \[
+    [H_0, c_p^\dagger c_k] = [H_0, c_p^\dagger] c_k + c_p^\dagger [H_0, c_k] = (p c_p^\dagger) c_k + c_p^\dagger (-k c_k) = (p - k) c_p^\dagger c_k.
+    \]
+    Summing over $(p, k) \in D_m$, where $p - k = m$:
+    \[
+    [H_0, \rho_m] = \sum_{(p, k) \in D_m} [H_0, c_p^\dagger c_k] = \sum_{(p, k) \in D_m} m\, c_p^\dagger c_k = m \rho_m.
+    \]
+    Since $\hat{P} = H_0 - E_\Omega I$, $[\hat{P}, \rho_m] = [H_0, \rho_m] = m \rho_m$.
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}[Budget Action and Ground State Annihilation]
+\label{thm:budget_action_annihilation}
+For any admissible charge sector $N \in \{-h, \dots, h\}$ and energy cutoff $K \ge 0$:
+\begin{enumerate}
+    \item The density mode $\rho_m$ maps budget subspaces according to:
+    \begin{equation}
+    \rho_m\big( B(N, K) \big) \subseteq B(N, K + m) \quad \text{for all } m, N, K \in \mathbb{Z}.
+    \end{equation}
+    \item For any lowering mode $m \ge 1$, $\rho_{-m}$ strictly annihilates the ground state $|N\rangle_0$:
+    \begin{equation}
+    \rho_{-m} |N\rangle_0 = 0 \quad \text{for all } m \ge 1.
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}
+    \item By Theorem~\ref{thm:charge_energy_covariance}, $\rho_m$ preserves charge ($\Delta N = 0$) and shifts excitation energy by exactly $m$. Therefore, if $|\psi\rangle \in B(N, K)$ has energy at most $K$, $\rho_m |\psi\rangle$ has charge $N$ and energy at most $K + m$, placing it in $B(N, K+m)$.
+    \item Suppose for contradiction that $\rho_{-m} |N\rangle_0 \neq 0$ for some $m \ge 1$.
+    Then the state $|\phi\rangle \coloneqq \rho_{-m} |N\rangle_0$ would have excitation energy:
+    \[
+    \hat{E} |\phi\rangle = \hat{E} \rho_{-m} |N\rangle_0 = (\rho_{-m} \hat{E} - m \rho_{-m}) |N\rangle_0 = (0 - m) |\phi\rangle = -m |\phi\rangle.
+    \]
+    This would imply the existence of a non-zero state with strictly negative excitation energy $-m < 0$. However, by Theorem~\ref{thm:rank_formula}(3) (the Rank Formula), every state in Fock space has strictly non-negative excitation energy $e(S) \ge 0$. This contradiction establishes $\rho_{-m} |N\rangle_0 = 0$.
+\end{enumerate}
+\end{proof}
+
+\section{Exact Vacuum Norm and Linear Independence}
+
+To demonstrate that the density modes $\{\rho_m\}$ create non-trivial physical excitations, we compute the exact norm of the vacuum excitation $\rho_m |\Omega\rangle$ without relying on unproved commutation relations.
+
+\begin{theorem}[Exact Vacuum Excitation Norm]
+\label{thm:vacuum_norm}
+Let $L = 2h$ with $h \ge 1$. For any positive mode $1 \le m \le h$:
+\begin{equation}
+\| \rho_m |\Omega\rangle \|^2 = m.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Recall that the Dirac vacuum is the occupation state $|\Omega\rangle = |S_\Omega\rangle$ with $S_\Omega = \{-h+1, \dots, 0\}$.
+We evaluate the action of $\rho_m = \sum_{k \in \Lambda^*, k+m \in \Lambda^*} c_{k+m}^\dagger c_k$ on $|\Omega\rangle$:
+\begin{itemize}
+    \item The annihilation operator $c_k$ annihilates $|\Omega\rangle$ unless $k \in S_\Omega$, which requires $k \le 0$.
+    \item The creation operator $c_{k+m}^\dagger$ annihilates the resulting state unless $k+m \notin S_\Omega$, which requires $k+m > 0$, or equivalently $k \ge 1-m$.
+\end{itemize}
+Combining both conditions, the only modes that contribute non-trivially to the sum are:
+\begin{equation}
+k \in \{1 - m, 2 - m, \dots, -1, 0\}.
+\end{equation}
+This set contains exactly $0 - (1 - m) + 1 = m$ distinct momentum labels!
+For each such $k$, the target mode $p = k + m$ satisfies $1 \le p \le m$. Since $m \le h$, both $k \ge 1-m \ge 1-h$ and $p \le h$ lie strictly within the band $\Lambda^*$.
+
+Applying $c_{k+m}^\dagger c_k$ to $|\Omega\rangle$ produces an occupation state:
+\[
+|S_k^{(m)}\rangle \coloneqq c_{k+m}^\dagger c_k |\Omega\rangle = \pm |(S_\Omega \setminus \{k\}) \cup \{k+m\}\rangle.
+\]
+Each $|S_k^{(m)}\rangle$ is a normalized basis state with norm $\| |S_k^{(m)}\rangle \| = 1$.
+Moreover, for distinct $k \neq k'$, the resulting configurations $(S_\Omega \setminus \{k\}) \cup \{k+m\}$ and $(S_\Omega \setminus \{k'\}) \cup \{k'+m\}$ are distinct because they have different holes and different particles.
+By the orthonormality of the occupation basis:
+\[
+\langle S_k^{(m)} | S_{k'}^{(m)} \rangle = \delta_{k, k'}.
+\]
+Therefore:
+\[
+\rho_m |\Omega\rangle = \sum_{k=1-m}^0 |S_k^{(m)}\rangle
+\]
+is a sum of $m$ mutually orthogonal unit vectors. Its norm squared is:
+\[
+\| \rho_m |\Omega\rangle \|^2 = \sum_{k=1-m}^0 \| |S_k^{(m)}\rangle \|^2 = \sum_{k=1-m}^0 1 = m.
+\]
+\end{proof}
+
+\begin{corollary}[Linear Independence of Positive Density Modes]
+The positive density modes $\{\rho_1, \rho_2, \dots, \rho_h\}$ are strictly linearly independent over $\mathbb{C}$ as operators in $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$.
+\end{corollary}
+
+\begin{proof}
+Suppose $\sum_{m=1}^h \alpha_m \rho_m = 0$ for coefficients $\alpha_m \in \mathbb{C}$. Applying this operator relation to the vacuum state $|\Omega\rangle$:
+\[
+\sum_{m=1}^h \alpha_m (\rho_m |\Omega\rangle) = 0.
+\]
+By Theorem~\ref{thm:charge_energy_covariance}, each state $\rho_m |\Omega\rangle$ is an energy eigenstate with excitation energy $\hat{E}(\rho_m |\Omega\rangle) = m (\rho_m |\Omega\rangle)$.
+Since eigenstates corresponding to distinct eigenvalues $m \in \{1, \dots, h\}$ are mutually orthogonal, and since each vector is non-zero because $\|\rho_m |\Omega\rangle\|^2 = m > 0$, we conclude that $\alpha_m = 0$ for all $m \in \{1, \dots, h\}$.
+\end{proof}
+
+\section{Spatial Density Fourier Expansion and Wrap Remainders}
+
+To connect the momentum density modes to spatial local observables, consider the spatial density operator $\rho(x) \coloneqq \psi^\dagger(x) \psi(x) = c_x^\dagger c_x$.
+Taking the discrete Fourier transform of the spatial density:
+\begin{align*}
+\sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}} c_x^\dagger c_x &= \sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}} \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \zeta^{-p x_{\mathrm{val}}} c_p^\dagger \right) \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}} c_k \right) \\
+&= \frac{1}{L} \sum_{p, k \in \Lambda^*} c_p^\dagger c_k \left( \sum_{x \in \Lambda} \zeta^{(k - p + m) x_{\mathrm{val}}} \right).
+\end{align*}
+By spatial character orthogonality (Theorem~\ref{thm:fourier_orthogonality}), the spatial sum forces the modular congruence $k - p + m \equiv 0 \pmod L \iff p \equiv k + m \pmod L$.
+This decomposes the sum into two distinct components:
+\begin{equation}
+\sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}}\, c_x^\dagger c_x = \rho_m + R_m,
+\end{equation}
+where:
+\begin{itemize}
+    \item $\rho_m = \sum_{p = k + m} c_p^\dagger c_k$ is the genuine non-wrapping density mode.
+    \item $R_m = \sum_{p \equiv k + m \pmod L, \; p \neq k + m} c_p^\dagger c_k$ is the \emph{cyclic wrap remainder} consisting of Umklapp scattering terms with wrapping integers $w = \pm 1$.
+\end{itemize}
+
+On the budget subspace under the unified margin conditions of Theorem~\ref{thm:unified_margin}, the wrap remainder $R_m$ annihilates all states. Thus, the physical spatial current coincides with the non-wrapping chiral current $\rho_m$.
