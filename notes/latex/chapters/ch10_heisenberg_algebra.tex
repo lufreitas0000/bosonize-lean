@@ -1,29 +1,261 @@
 \chapter{Heisenberg Algebra and the Exact Schwinger Term}
 \label{ch:heisenberg_algebra}
 
-\section{Introduction and the Schwinger Anomaly}
-The central miracle of bosonization is that bilinear products of fermionic operators satisfy bosonic commutation relations. In continuum field theory, this is the $U(1)$ Kac--Moody current algebra with a central Schwinger term:
-\begin{equation}
-[\rho_m, \rho_{-n}] = m\, \delta_{m, n}\, I.
-\end{equation}
-In continuous theory, this central term arises from point-splitting or Dirac sea regularization. In lattice AQFT, it is proved as an exact finite-dimensional operator identity under explicit budget margin bounds.
+\section{Introduction and the Algebraic Origin of the Schwinger Anomaly}
 
-\section{Edge Domains and the Commutator Evaluation}
-Evaluating the commutator $[:\!\rho_m\!:, :\!\rho_{-n}\!:]$ on a state in $B(N, K)$ expands into a double sum over momentum modes. By CAR bilinearity, the terms cancel everywhere in the interior of the Fermi sea and far above the Fermi surface, leaving non-vanishing contributions strictly at the Fermi edge:
+The central mathematical miracle of quantum bosonization is that bilinear products of fermionic field operators satisfy bosonic canonical commutation relations. In continuous quantum field theory, this phenomenon is expressed by the affine Lie algebra $\widehat{\mathfrak{u}}(1)$ (the $U(1)$ Kac--Moody current algebra):
 \begin{equation}
-k \in S_N \quad \text{and} \quad k + m \notin S_N.
+[J_m, J_n] = m\, \delta_{m+n, 0}\, I.
+\end{equation}
+The central term $m\, \delta_{m+n, 0}$, known as the \emph{Schwinger term} or the chiral anomaly, is traditionally derived via heuristic point-splitting, formal normal ordering, or infinite Dirac sea subtractions.
+
+On our discrete lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$), the situation is fundamentally clarified. 
+As proven by the No-Go Theorem~\ref{thm:no_go}, no finite-dimensional matrix algebra can admit operators satisfying $[A, B] = I$ because the trace of any commutator must vanish identically. How, then, can fermionic density operators on the finite Fock space $\mathcal{F}(L)$ satisfy bosonic commutation relations?
+
+The answer lies in the \emph{Energy Budget regularization}:
+\begin{enumerate}
+    \item On the full Fock space $\mathcal{F}(L)$, the commutator $[\rho_{-m}, \rho_m]$ is not a scalar, but a non-trivial dynamical operator given by the difference between the fermion occupations at the bottom and top edges of the band.
+    \item When evaluated on vectors in the energy budget subspace $B(N, K)$ satisfying explicit \emph{margin inequalities}, the deep Fermi sea is frozen full and the high momentum band is frozen empty.
+    \item Consequently, the edge operators evaluate to the exact positive integer $m$ on budget states, realizing the exact Kac--Moody algebra without any infinite-dimensional or topological approximations.
+\end{enumerate}
+
+\section{The Exact Diagonal Edge Formula on Fock Space}
+
+We first evaluate the commutator of opposing density modes on the entire Fock space $\mathcal{F}(L)$ without any subspace restriction.
+
+Recall that $\rho_m = d\Gamma(T_m)$ is the second quantization of the one-particle partial shift matrix $T_m$ on $\ell^2(\Lambda^*)$ (Chapter~\ref{ch:density_modes}). By Lemma~\ref{lem:dgamma_comm}, second quantization preserves Lie brackets:
+\begin{equation}
+[\rho_{-m}, \rho_m] = d\Gamma([T_{-m}, T_m]).
 \end{equation}
 
-\section{Key Results and Formal Discoveries}
-\begin{itemize}
-    \item \textbf{Exact Diagonal Edge Formula:} When $m = n > 0$, the edge sum counts exactly the number of integers in $\{N-m+1, \dots, N\}$, which is identically $m$.
-    \item \textbf{Off-Diagonal Suppression (Regime M2):} When $m \neq n$, the commutator vanishes identically on the budget subspace under the unified margin hypothesis:
+\begin{theorem}[Exact Diagonal Edge Formula]
+\label{thm:diagonal_edge_formula}
+Let $L = 2h$ with $h \ge 1$. For any integer $1 \le m \le h$, the algebraic commutator $[\rho_{-m}, \rho_m]$ on the entire Fock space $\mathcal{F}(L)$ satisfies the exact operator identity:
+\begin{equation}
+[\rho_{-m}, \rho_m] = \sum_{q = -h+1}^{-h+m} n_q - \sum_{q = h-m+1}^{h} n_q,
+\end{equation}
+where $n_q \coloneqq c_q^\dagger c_q$ is the momentum occupation number operator at mode $q$.
+\end{theorem}
+
+\begin{proof}
+We evaluate the commutator of the one-particle shift matrices $[T_{-m}, T_m] = T_{-m} T_m - T_m T_{-m}$ in $\mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*))$:
+\begin{enumerate}
+    \item The matrix elements of $T_m$ and $T_{-m}$ are:
     \[
-    2M + K + |N| \le h.
+    (T_m)_{p, k} = \begin{cases} 1, & \text{if } p = k + m, \\ 0, & \text{otherwise}, \end{cases} \qquad
+    (T_{-m})_{p, k} = \begin{cases} 1, & \text{if } p = k - m, \\ 0, & \text{otherwise}. \end{cases}
     \]
-    \item \textbf{Exact Central Extension:} Under the margin condition, the fermionic density modes realize the exact Heisenberg Kac--Moody Lie algebra on $B(N, K)$.
-\end{itemize}
+    \item Compute the diagonal elements of the product $T_{-m} T_m$:
+    \[
+    (T_{-m} T_m)_{q, q} = \sum_{k \in \Lambda^*} (T_{-m})_{q, k} (T_m)_{k, q}.
+    \]
+    The term is non-zero if and only if $q = k - m$ and $k = q + m$. This requires that both $q \in \Lambda^*$ and $q + m \in \Lambda^*$.
+    Since $\Lambda^* = \{-h+1, \dots, h\}$, $q + m \in \Lambda^*$ requires $q + m \le h \iff q \le h - m$.
+    Therefore:
+    \[
+    (T_{-m} T_m)_{q, q} = \begin{cases} 1, & \text{if } -h+1 \le q \le h - m, \\ 0, & \text{if } h - m < q \le h. \end{cases}
+    \]
+    \item Similarly, compute the diagonal elements of $T_m T_{-m}$:
+    \[
+    (T_m T_{-m})_{q, q} = \sum_{k \in \Lambda^*} (T_m)_{q, k} (T_{-m})_{k, q}.
+    \]
+    This is non-zero if and only if $q = k + m$ and $k = q - m$, which requires $q - m \in \Lambda^* \iff q - m \ge -h+1 \iff q \ge -h+1+m$.
+    Therefore:
+    \[
+    (T_m T_{-m})_{q, q} = \begin{cases} 1, & \text{if } -h+1+m \le q \le h, \\ 0, & \text{if } -h+1 \le q < -h+1+m. \end{cases}
+    \]
+    \item Off-diagonal elements $(T_{-m} T_m)_{p, q}$ with $p \neq q$ require $p = k - m$ and $k = q + m \implies p = q$, so all off-diagonal elements vanish identically.
+    \item Subtracting the two diagonal matrices:
+    \[
+    [T_{-m}, T_m]_{q, q} = (T_{-m} T_m)_{q, q} - (T_m T_{-m})_{q, q}.
+    \]
+    For bulk modes in the interior $-h+1+m \le q \le h-m$, both terms equal $1$, so their difference vanishes: $1 - 1 = 0$.
+    The only non-zero entries occur at the boundaries:
+    \begin{itemize}
+        \item For bottom edge modes $-h+1 \le q \le -h+m$: $(T_{-m} T_m)_{q, q} = 1$ and $(T_m T_{-m})_{q, q} = 0$, giving $+1$.
+        \item For top edge modes $h-m < q \le h$: $(T_{-m} T_m)_{q, q} = 0$ and $(T_m T_{-m})_{q, q} = 1$, giving $-1$.
+    \end{itemize}
+    Therefore, the matrix commutator is diagonal:
+    \[
+    [T_{-m}, T_m] = \sum_{q=-h+1}^{-h+m} E_{q, q} - \sum_{q=h-m+1}^h E_{q, q},
+    \]
+    where $E_{q, q}$ is the elementary diagonal projection matrix.
+    \item Applying second quantization $d\Gamma(E_{q, q}) = c_q^\dagger c_q = n_q$ yields the theorem.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[Edge Domains]
+For any mode $1 \le m \le h$, the \emph{Bottom Edge Domain} $\mathcal{E}_{\mathrm{bot}}(m)$ and \emph{Top Edge Domain} $\mathcal{E}_{\mathrm{top}}(m)$ are the subsets of $\Lambda^*$:
+\begin{align}
+\mathcal{E}_{\mathrm{bot}}(m) &\coloneqq \{ q \in \Lambda^* \mid q \le -h + m \} = \{-h+1, -h+2, \dots, -h+m\}, \\
+\mathcal{E}_{\mathrm{top}}(m) &\coloneqq \{ q \in \Lambda^* \mid q > h - m \} = \{h - m + 1, \dots, h\}.
+\end{align}
+Both sets contain exactly $m$ momentum modes: $\#\mathcal{E}_{\mathrm{bot}}(m) = \#\mathcal{E}_{\mathrm{top}}(m) = m$.
+\end{definition}
+
+\section{Regime M1: The Diagonal Buffer Zone and the Schwinger Term}
+
+We now evaluate the edge formula on states belonging to the energy budget subspace $B(N, K)$.
+
+\begin{theorem}[Regime M1: Exact Diagonal Schwinger Term]
+\label{thm:regime_m1}
+Let $\psi \in B(N, K)$ be any state in the energy budget with charge $N \in \{-h, \dots, h\}$ and excitation energy at most $K \ge 0$.
+If the mode $m \ge 1$ satisfies the \textbf{M1 Margin Condition}:
+\begin{equation}
+m + K + |N| \le h,
+\end{equation}
+then the commutator $[\rho_{-m}, \rho_m]$ evaluates on $\psi$ to the exact scalar Schwinger term:
+\begin{equation}
+[\rho_{-m}, \rho_m] \psi = m \psi.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Every vector $\psi \in B(N, K)$ is a linear combination of basis vectors $|S\rangle$ satisfying $N(S) = N$ and $e(S) \le K$. By linearity, it suffices to prove the identity on an arbitrary such basis state $|S\rangle$.
+By Theorem~\ref{thm:diagonal_edge_formula}:
+\[
+[\rho_{-m}, \rho_m] |S\rangle = \left( \sum_{q \in \mathcal{E}_{\mathrm{bot}}(m)} n_q - \sum_{q \in \mathcal{E}_{\mathrm{top}}(m)} n_q \right) |S\rangle.
+\]
+We evaluate the action of the number operators on $|S\rangle$ using the Frozen Margins Theorem~\ref{thm:frozen_margins}:
+\begin{enumerate}
+    \item For any mode $q \in \mathcal{E}_{\mathrm{bot}}(m)$, $q \le -h + m$.
+    Using the M1 condition $m \le h - K - |N|$, we have:
+    \[
+    q \le -h + m \le -h + (h - K - |N|) = - K - |N| \le N - K,
+    \]
+    since $-|N| \le N$.
+    By Theorem~\ref{thm:frozen_margins}(1) (Deep Sea Rigidity), every mode $q \le N - K$ is rigidly occupied in $S$, so $q \in S$.
+    Therefore, $n_q |S\rangle = |S\rangle$ for every $q \in \mathcal{E}_{\mathrm{bot}}(m)$.
+    Summing over the $m$ modes of $\mathcal{E}_{\mathrm{bot}}(m)$:
+    \[
+    \sum_{q \in \mathcal{E}_{\mathrm{bot}}(m)} n_q |S\rangle = \sum_{q \in \mathcal{E}_{\mathrm{bot}}(m)} |S\rangle = m |S\rangle.
+    \]
+
+    \item For any mode $q \in \mathcal{E}_{\mathrm{top}}(m)$, $q \ge h - m + 1 > h - m$.
+    Using the M1 condition $m \le h - K - |N|$, we have:
+    \[
+    q > h - m \ge h - (h - K - |N|) = K + |N| \ge N + K,
+    \]
+    since $|N| \ge N$.
+    By Theorem~\ref{thm:frozen_margins}(2) (High Momentum Rigidity), every mode $q > N + K$ is rigidly empty in $S$, so $q \notin S$.
+    Therefore, $n_q |S\rangle = 0$ for every $q \in \mathcal{E}_{\mathrm{top}}(m)$.
+    Summing over the $m$ modes of $\mathcal{E}_{\mathrm{top}}(m)$:
+    \[
+    \sum_{q \in \mathcal{E}_{\mathrm{top}}(m)} n_q |S\rangle = 0.
+    \]
+\end{enumerate}
+Subtracting the two sums yields:
+\[
+[\rho_{-m}, \rho_m] |S\rangle = (m - 0) |S\rangle = m |S\rangle.
+\]
+Extending by linearity to all $\psi \in B(N, K)$ completes the proof.
+\end{proof}
+
+\section{Regime M2: Off-Diagonal Suppression and Pauli Blocking}
+
+We now examine off-diagonal commutators $[\rho_m, \rho_n]$ where $m + n \neq 0$.
+
+\begin{theorem}[Regime M2: Off-Diagonal Suppression]
+\label{thm:regime_m2}
+Let $\psi \in B(N, K)$. For any mode transfers $m, n \in \mathbb{Z}$ with $m + n \neq 0$, if the parameters satisfy the \textbf{M2 Margin Condition}:
+\begin{equation}
+|m| + |n| + K + |N| \le h,
+\end{equation}
+then the density modes commute identically on $\psi$:
+\begin{equation}
+[\rho_m, \rho_n] \psi = 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+We divide into two cases:
+\begin{enumerate}
+    \item \textbf{Same-Sign Modes:} If $m$ and $n$ have the same sign (both non-negative or both non-positive), then by Theorem~\ref{thm:same_sign_comm}, $[\rho_m, \rho_n] = 0$ globally on the entire Fock space, so $[\rho_m, \rho_n] \psi = 0$ holds without any margin condition.
+    \item \textbf{Opposite-Sign Modes:} Assume without loss of generality that $m > 0$ and $n = -k < 0$ with $m \neq k$.
+    Evaluating the single-particle commutator $[T_m, T_{-k}]$ yields non-zero matrix elements only at single-particle hops $c_p^\dagger c_q$ where $|p - q| = |m - k| > 0$ with either $q$ lying in the top edge or $p$ lying in the bottom edge.
+    Under the M2 margin condition $|m| + |k| + K + |N| \le h$, any hopping operator originating from the top edge has an empty source ($q > N + K$, so $c_q |S\rangle = 0$), and any hopping operator landing in the bottom edge has a full destination ($p \le N - K$, so $c_p^\dagger |S\rangle = 0$ due to Pauli blocking $p \in S$).
+    Therefore, every off-diagonal hopping operator annihilates $|S\rangle$.
+    Summing all terms yields $[\rho_m, \rho_n] \psi = 0$.
+\end{enumerate}
+\end{proof}
+
+\section[The Exact U(1) Kac--Moody Algebra on the Budget Subspace]{The Exact $U(1)$ Kac--Moody Algebra on the Budget Subspace}
+
+Combining Regimes M1 and M2 yields the central theorem of constructive bosonization.
+
+\begin{theorem}[$U(1)$ Kac--Moody Current Algebra on $B(N, K)$]
+\label{thm:kac_moody}
+Let $M \ge 1$ be a mode cutoff. Under the uniform margin condition:
+\begin{equation}
+2M + K + |N| \le h,
+\end{equation}
+the normal-ordered density modes $:\!\rho_m\!:$ satisfy the exact Kac--Moody algebra for all $|m|, |n| \le M$ on the budget subspace $B(N, K)$:
+\begin{equation}
+\left[ :\!\rho_m\!:, :\!\rho_n\!: \right] \psi = -m\, \delta_{m+n, 0}\, \psi \quad \text{for all } \psi \in B(N, K).
+\end{equation}
+Equivalently, setting $n = -m$ with $m \ge 1$:
+\begin{equation}
+\left[ :\!\rho_{-m}\!:, :\!\rho_m\!: \right] \psi = m \psi.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $|m|, |n| \le M$.
+\begin{enumerate}
+    \item If $m = 0$ or $n = 0$: $:\!\rho_0\!: = \hat{N}$. By Theorem~\ref{thm:charge_energy_covariance}(1), $[\hat{N}, \rho_m] = 0$, so $[:\!\rho_0\!:, :\!\rho_n\!:] = 0 = -0 \cdot \delta_{0+n, 0} I$.
+    \item If $m + n \neq 0$: since $|m| + |n| \le 2M$, the uniform condition $2M + K + |N| \le h$ implies the M2 margin condition $|m| + |n| + K + |N| \le h$. By Theorem~\ref{thm:regime_m2}, $[:\!\rho_m\!:, :\!\rho_n\!:] \psi = 0 = -m \delta_{m+n, 0} \psi$.
+    \item If $m + n = 0$ with $m \ge 1$ (so $n = -m$): the condition $2M + K + |N| \le h$ implies $m + K + |N| \le h$ (since $m \le M \le 2M$).
+    By Theorem~\ref{thm:regime_m1}, $[\rho_{-m}, \rho_m] \psi = m \psi$.
+    By antisymmetry of the commutator:
+    \[
+    [:\!\rho_m\!:, :\!\rho_{-m}\!:] \psi = - [:\!\rho_{-m}\!:, :\!\rho_m\!:] \psi = - m \psi = -m\, \delta_{m+(-m), 0} \psi.
+    \]
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[Harmonic Oscillator Bosonic Modes]
+For each mode $m \ge 1$, we define the normalized bosonic creation and annihilation operators on $B(N, K)$ by:
+\begin{equation}
+b_m \coloneqq \frac{1}{\sqrt{m}} :\!\rho_{-m}\!:, \qquad b_m^\dagger \coloneqq \frac{1}{\sqrt{m}} :\!\rho_m\!: = (b_m)^\dagger.
+\end{equation}
+Under the margin condition of Theorem~\ref{thm:kac_moody}, these operators satisfy the standard harmonic oscillator algebra on $B(N, K)$:
+\begin{equation}
+[b_m, b_n^\dagger] \psi = \delta_{m, n} \psi, \qquad [b_m, b_n] \psi = 0, \qquad [b_m^\dagger, b_n^\dagger] \psi = 0.
+\end{equation}
+\end{definition}
+
+\section{Word-Excursion Tracking in Composed Products}
+
+When evaluating products of density operators $\rho_{a_1} \rho_{a_2} \cdots \rho_{a_s}$ (such as in vertex operators or multi-mode partition states), intermediate states undergo transient energy fluctuations.
+
+\begin{definition}[Application Order and Cumulative Energy Excursion]
+For a written operator product $W = \rho_{a_1} \rho_{a_2} \cdots \rho_{a_s}$, the operators act from right to left in the sequence of signed transfers $(a_s, a_{s-1}, \dots, a_1)$.
+\begin{enumerate}
+    \item The partial energy shift after applying the first $r$ operators ($0 \le r \le s$) is:
+    \begin{equation}
+    \Delta E_r \coloneqq \sum_{j=1}^r a_{s - j + 1}.
+    \end{equation}
+    \item The \emph{maximum upward energy excursion} $X(W)$ is:
+    \begin{equation}
+    X(W) \coloneqq \max\left(0, \; \max_{0 \le r \le s} \Delta E_r \right).
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Valid Margin Excursion Accounting]
+\label{thm:excursion_accounting}
+Let $W = \rho_{a_1} \dots \rho_{a_s}$ be an operator word with mode cutoff $|a_j| \le M$. If the input state $\psi \in B(N, K)$ satisfies:
+\begin{equation}
+2M + K + X(W) + |N| \le h,
+\end{equation}
+then every intermediate state generated during the evaluation of $W \psi$ belongs to $B(N, K + X(W))$, and every commutator $[:\!\rho_m\!:, :\!\rho_n\!:]$ encountered along the evaluation acts as the exact scalar $-m \delta_{m+n, 0}$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:budget_action_annihilation}, applying $\rho_{a_s}$ to $\psi \in B(N, K)$ produces a state in $B(N, K + a_s)$. By induction, after $r$ steps the state belongs to $B(N, K + \Delta E_r) \subseteq B(N, K + X(W))$.
+Since $2M + (K + X(W)) + |N| \le h$, each intermediate state satisfies the uniform margin condition of Theorem~\ref{thm:kac_moody}. Therefore, all intermediate commutators evaluate to exact scalars.
+\end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 core (Chapter 10, Heisenberg Algebra), the Schwinger term is proved without delta functions or infinite sums. The cancellation of off-diagonal terms is verified by exact finite set bijections.
+In the verified Lean~4 development (as formalized in Chapter~10 and Appendix~A04), all edge formulas, margin bounds, and excursion trackers are certified constructively without noncomputable axioms. The reconciliation of the finite-dimensional trace obstruction is precise: on the bare empty state $|\emptyset\rangle$, the commutator $[\rho_{-m}, \rho_m] |\emptyset\rangle = 0 \neq m |\emptyset\rangle$. The commutator is strictly traceless across the full Fock carrier $\mathcal{F}(L)$, yet evaluates identically to the non-zero central scalar $m I$ on the physical low-energy budget subspace $B(N, K)$.
 \end{remark}
