@@ -17,5 +17,7 @@
   "Bosonize/Core/Ch09DensityModes.lean": "085d890f8c56b7dc8b9bf9ea15fc36a92f7f6ddd81ae6125343c6e567323097e",
   "Bosonize/Core/Ch10Heisenberg.lean": "b60b521055ca01363a033e227f473e9bb51a21abc58d92fc668d1ab5c49af735",
   "Bosonize/Core/Ch11HaldaneCompleteness.lean": "1d3b1f289ddb0f4dfd43abbe8767c031d30abf3aa17355cb657f4a877b295616",
-  "Bosonize/Core/Ch12Sugawara.lean": "24bd8be1167243715b3c4b50d55917581599facdfabf3b53111669b32619bcab"
+  "Bosonize/Core/Ch12Sugawara.lean": "24bd8be1167243715b3c4b50d55917581599facdfabf3b53111669b32619bcab",
+  "Bosonize/Core/A05MultiSpecies.lean": "bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf02a983f92335bc2",
+  "Bosonize/Core/Ch13KleinFactors.lean": "9a4a7ed40e514a5e57345ad731f23c967b4e725e388d5d9b7b6c2d36a65f5c32"
 }

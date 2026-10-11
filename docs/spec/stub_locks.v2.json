@@ -7488,7 +7488,7 @@
         }
       }
     },
-    "BosonizeStubs/A05MultiSpecies.lean": {
+    "Bosonize/Core/A05MultiSpecies.lean": {
       "commands": [
         {
           "kind": "module",
@@ -7896,7 +7896,7 @@
         }
       }
     },
-    "BosonizeStubs/Ch13KleinFactors.lean": {
+    "Bosonize/Core/Ch13KleinFactors.lean": {
       "commands": [
         {
           "kind": "module",
@@ -7912,9 +7912,9 @@
         },
         {
           "kind": "import",
-          "label": "import BosonizeStubs.A05MultiSpecies",
-          "hash": "aa833d77291415cfe228a47d1f9b56328952eb13bee48d79f8f61e02db8afcab",
-          "text": "import BosonizeStubs.A05MultiSpecies"
+          "label": "import Bosonize.Core.A05MultiSpecies",
+          "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",
+          "text": "import Bosonize.Core.A05MultiSpecies"
         },
         {
           "kind": "@",
@@ -8041,151 +8041,151 @@
         "Bosonize.Ch13.double_kernel_ground_nonzero": {
           "kind": "lemma",
           "hash": "0b2e232aa7d5fc76143d1c826966a6dbc9a3fe9cd6d3407de00bc235603f3c5b",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma double_kernel_ground_nonzero (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν η : σ) (K : ℕ) (hm : fourSectorMargin h K Ns ν η) : kleinKernel h (lowerCharge Ns ν) η K (kleinKernel h Ns ν K (A05.groundKet h Ns)) ≠ 0"
         },
         "Bosonize.Ch13.ground_field_coefficient": {
           "kind": "lemma",
           "hash": "ae38f4507fe8c731809853e35810e27ce03ae7d201a44d4b79c654e71e22b533",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma ground_field_coefficient (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (hN : A05.admissible h Ns) (ν : σ) (hν : -(h : ℤ)+1 ≤ Ns ν) (b : σ → Ch06Ext.BoundaryTwist (2*h)) (x : ℤ) : inner ℂ (A05.groundKet h (lowerCharge Ns ν)) (A05.liftedAnnihilation h b ν x (A05.groundKet h Ns)) = (A01.normalization (2*h) : ℂ) * kleinPhase h Ns ν * Ch06Ext.liftPhase (2*h) (b ν) x * A01.canonicalRoot (2*h)^(x*Ns ν)"
         },
         "Bosonize.Ch13.ground_top_annihilation": {
           "kind": "lemma",
           "hash": "217514bcc66fc0697efa8317cd414dbe9c71f2d62bd253b568d6373a03cfd9aa",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma ground_top_annihilation (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (hN : A05.admissible h Ns) (ν : σ) (hν : -(h : ℤ)+1 ≤ Ns ν) (k : Ch01.Band (2*h)) (hk : k.val=Ns ν) : A05.annihilation h ν k (A05.groundKet h Ns) = kleinPhase h Ns ν • A05.groundKet h (lowerCharge Ns ν)"
         },
         "Bosonize.Ch13.inverse_kernel_source": {
           "kind": "lemma",
           "hash": "6f7b5e10945d2e858cf76277b6163a528f3355617aa279857b1be17041bc6a74",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma inverse_kernel_source (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hm : pairMargin h K Ns ν) (v : FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : inverseKernel h Ns ν K (kleinKernel h Ns ν K v) = v"
         },
         "Bosonize.Ch13.inverse_maps_budget": {
           "kind": "lemma",
           "hash": "b12428587575fde320a0930366678df9648f31a8ee4035daf155843fe59c0f22",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma inverse_maps_budget (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hN : A05.admissible h Ns) (v : FockSpace σ h) : inverseKernel h Ns ν K v ∈ A05.jointBudget h Ns K"
         },
         "Bosonize.Ch13.inverse_partition": {
           "kind": "lemma",
           "hash": "46b65869c476c26b9e77ca0acce5c7ac6db8140653c12dd41dab0e0b6eea5ee5",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma inverse_partition (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hR2 : A05.r2 h K (lowerCharge Ns ν)) (p : A05.JointPartitions σ K) : inverseKernel h Ns ν K (A05.partitionState h (lowerCharge Ns ν) p) = star (kleinPhase h Ns ν) • A05.partitionState h Ns p"
         },
         "Bosonize.Ch13.kernel_adjoint": {
           "kind": "lemma",
           "hash": "8c8de59440a89bee51a97fe821ffcb2797c64208548ef363e27ed0089e67181d",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_adjoint (h : ℕ) (Ns : σ → ℤ) (ν : σ) (K : ℕ) : LinearMap.adjoint (kleinKernel h Ns ν K) = inverseKernel h Ns ν K"
         },
         "Bosonize.Ch13.kernel_cross_anticommute": {
           "kind": "lemma",
           "hash": "36e17159a3bc778c557a56b4b647deee26af6308e8900e9696dae0e958cec85b",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_cross_anticommute (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν η : σ) (hne : ν≠η) (K : ℕ) (hm : fourSectorMargin h K Ns ν η) (v : FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : kleinKernel h (lowerCharge Ns ν) η K (kleinKernel h Ns ν K v) + kleinKernel h (lowerCharge Ns η) ν K (kleinKernel h Ns η K v) = 0"
         },
         "Bosonize.Ch13.kernel_cutoff_consistent": {
           "kind": "lemma",
           "hash": "c20d8e73890a30152ff8a7a4a4b479d1960f234270029bfc4f1bc436b88140fd",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_cutoff_consistent (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K J : ℕ) (hKJ : K≤J) (hm : pairMargin h J Ns ν) (v : FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : kleinKernel h Ns ν J v = kleinKernel h Ns ν K v"
         },
         "Bosonize.Ch13.kernel_ground": {
           "kind": "lemma",
           "hash": "2d7086c73d76f7199fc7962821ccd760c7af2dbc155a24d7f115db27e2f50212",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_ground (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hm : pairMargin h K Ns ν) : kleinKernel h Ns ν K (A05.groundKet h Ns) = kleinPhase h Ns ν • A05.groundKet h (lowerCharge Ns ν)"
         },
         "Bosonize.Ch13.kernel_ground_nonzero": {
           "kind": "lemma",
           "hash": "c3e8cae33e411a0ff4fd4db501e01793b6f0a692b64c57287fbf8bcc10ff8eb9",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_ground_nonzero (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hm : pairMargin h K Ns ν) : kleinKernel h Ns ν K (A05.groundKet h Ns) ≠ 0"
         },
         "Bosonize.Ch13.kernel_inner_budget": {
           "kind": "lemma",
           "hash": "64a7be9c476fe762abdd9d317f5e534701071d99e606d77204a71fddaa984385",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_inner_budget (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hm : pairMargin h K Ns ν) (v w : FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) (hw : w ∈ A05.jointBudget h Ns K) : inner ℂ (kleinKernel h Ns ν K v) (kleinKernel h Ns ν K w) = inner ℂ v w"
         },
         "Bosonize.Ch13.kernel_inverse_target": {
           "kind": "lemma",
           "hash": "6a80e6463126dda82d48ddcbb41906d47f04f799bd6e6df0bfcfc8e7efca73d1",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_inverse_target (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hm : pairMargin h K Ns ν) (v : FockSpace σ h) (hv : v ∈ A05.jointBudget h (lowerCharge Ns ν) K) : kleinKernel h Ns ν K (inverseKernel h Ns ν K v) = v"
         },
         "Bosonize.Ch13.kernel_lowering_intertwine": {
           "kind": "lemma",
           "hash": "898491b5908b42941759cbd0a6d207859cde9f0bac51e9b990daa142797c8275",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_lowering_intertwine (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν η : σ) (K m : ℕ) (hmpos : 0<m) (hm : pairMargin h (K+m) Ns ν) (v : FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns (K+m)) : kleinKernel h Ns ν K (A05.rho h η (-(m : ℤ)) v) = A05.rho h η (-(m : ℤ)) (kleinKernel h Ns ν (K+m) v)"
         },
         "Bosonize.Ch13.kernel_maps_budget": {
           "kind": "lemma",
           "hash": "aed0612b245e147cc4db0872f14045c7911ae43442273e15416f981a7c4621f0",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_maps_budget (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hN : A05.admissible h (lowerCharge Ns ν)) (v : FockSpace σ h) : kleinKernel h Ns ν K v ∈ A05.jointBudget h (lowerCharge Ns ν) K"
         },
         "Bosonize.Ch13.kernel_number_shift": {
           "kind": "lemma",
           "hash": "23fe0ff0563d7fcc943210e10476f8fa9d05216a540c6e52a7eba68a17b73d18",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_number_shift (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν η : σ) (K : ℕ) (hm : pairMargin h K Ns ν) (v : FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : kleinKernel h Ns ν K (A05.chargeObservable h η v) = A05.chargeObservable h η (kleinKernel h Ns ν K v) + (if ν=η then (1 : ℂ) else 0) • kleinKernel h Ns ν K v"
         },
         "Bosonize.Ch13.kernel_partition": {
           "kind": "lemma",
           "hash": "336d38c7cdfc4940b82bf611def5f43be94dde70d0c30889514c4c67503076d5",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_partition (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hR2 : A05.r2 h K Ns) (p : A05.JointPartitions σ K) : kleinKernel h Ns ν K (A05.partitionState h Ns p) = kleinPhase h Ns ν • A05.partitionState h (lowerCharge Ns ν) p"
         },
         "Bosonize.Ch13.kernel_raising_intertwine": {
           "kind": "lemma",
           "hash": "59e594a16b519f063d4b1400f68f7206ff5bfcd9e0b3b1b28474c6e8ab5a78c6",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma kernel_raising_intertwine (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν η : σ) (K m : ℕ) (hmpos : 0<m) (hm : pairMargin h (K+m) Ns ν) (v : FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : kleinKernel h Ns ν (K+m) (A05.rho h η (m : ℤ) v) = A05.rho h η (m : ℤ) (kleinKernel h Ns ν K v)"
         },
         "Bosonize.Ch13.klein_isometry_equiv": {
           "kind": "theorem",
           "hash": "8a5447fc2fd31aeb22106cd8b266e4cd30dcdf1efeb4eae58d1e25c034fd0cbc",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "theorem klein_isometry_equiv (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (K : ℕ) (hm : pairMargin h K Ns ν) : ∃ F : A05.jointBudget h Ns K ≃ₗᵢ[ℂ] A05.jointBudget h (lowerCharge Ns ν) K, ∀ v, (F v : FockSpace σ h) = kleinKernel h Ns ν K v"
         },
         "Bosonize.Ch13.klein_lowering_square": {
           "kind": "theorem",
           "hash": "b6cc1650cfb559e60369f8aff0801e062832376b195ea486d037990203aec3dd",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "theorem klein_lowering_square (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν η : σ) (K m : ℕ) (hmpos : 0<m) (hm : pairMargin h (K+m) Ns ν) : ∃ F0 : A05.jointBudget h Ns K ≃ₗᵢ[ℂ] A05.jointBudget h (lowerCharge Ns ν) K, ∃ F1 : A05.jointBudget h Ns (K+m) ≃ₗᵢ[ℂ] A05.jointBudget h (lowerCharge Ns ν) (K+m), ∃ R0 : A05.jointBudget h Ns (K+m) →ₗ[ℂ] A05.jointBudget h Ns K, ∃ R1 : A05.jointBudget h (lowerCharge Ns ν) (K+m) →ₗ[ℂ] A05.jointBudget h (lowerCharge Ns ν) K, (∀ v, (F0 v : FockSpace σ h)=kleinKernel h Ns ν K v) ∧ (∀ v, (F1 v : FockSpace σ h)=kleinKernel h Ns ν (K+m) v) ∧ (∀ v, (R0 v : FockSpace σ h)=A05.rho h η (-(m : ℤ)) v) ∧ (∀ v, (R1 v : FockSpace σ h)=A05.rho h η (-(m : ℤ)) v) ∧ F0.toLinearMap.comp R0 = R1.comp F1.toLinearMap"
         },
         "Bosonize.Ch13.klein_raising_square": {
           "kind": "theorem",
           "hash": "c30ff8c278b670b4006e126bb9b8947e1e6f1cdd7f4b8a84f5ab7dd3f1f43eb0",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "theorem klein_raising_square (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν η : σ) (K m : ℕ) (hmpos : 0<m) (hm : pairMargin h (K+m) Ns ν) : ∃ F0 : A05.jointBudget h Ns K ≃ₗᵢ[ℂ] A05.jointBudget h (lowerCharge Ns ν) K, ∃ F1 : A05.jointBudget h Ns (K+m) ≃ₗᵢ[ℂ] A05.jointBudget h (lowerCharge Ns ν) (K+m), ∃ R0 : A05.jointBudget h Ns K →ₗ[ℂ] A05.jointBudget h Ns (K+m), ∃ R1 : A05.jointBudget h (lowerCharge Ns ν) K →ₗ[ℂ] A05.jointBudget h (lowerCharge Ns ν) (K+m), (∀ v, (F0 v : FockSpace σ h)=kleinKernel h Ns ν K v) ∧ (∀ v, (F1 v : FockSpace σ h)=kleinKernel h Ns ν (K+m) v) ∧ (∀ v, (R0 v : FockSpace σ h)=A05.rho h η (m : ℤ) v) ∧ (∀ v, (R1 v : FockSpace σ h)=A05.rho h η (m : ℤ) v) ∧ F1.toLinearMap.comp R0 = R1.comp F0.toLinearMap"
         },
         "Bosonize.Ch13.lower_charge_commute": {
           "kind": "lemma",
           "hash": "1ba8e1c35b1cbe446f2a2a52c354e4cde2f13e0267212e113326752ba02a6f42",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "omit [Fintype σ] in lemma lower_charge_commute (Ns : σ → ℤ) (ν η : σ) (hne : ν≠η) : lowerCharge (lowerCharge Ns ν) η = lowerCharge (lowerCharge Ns η) ν"
         },
         "Bosonize.Ch13.phase_cross_sign": {
           "kind": "lemma",
           "hash": "1f577be16d3ee270227ce516e3d01e8ee50f88c7b1a40ea72a2b39f08115f773",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma phase_cross_sign (h : ℕ) (Ns : σ → ℤ) (ν η : σ) (hne : ν≠η) : kleinPhase h (lowerCharge Ns ν) η * kleinPhase h Ns ν = -(kleinPhase h (lowerCharge Ns η) ν * kleinPhase h Ns η)"
         },
         "Bosonize.Ch13.phase_norm": {
           "kind": "lemma",
           "hash": "bd866ff5bfe11991a9b5c61147ce9eef54ff37144fe4a35c351656eff8ca48de",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "lemma phase_norm (h : ℕ) (Ns : σ → ℤ) (ν : σ) : ‖kleinPhase h Ns ν‖ = 1"
         },
         "Bosonize.Ch13.r2_admissible": {
           "kind": "lemma",
           "hash": "16c2fc3af305e99c5e67d4ca42f6f6be02ef5edcec704a961cf0a87c4f84c1d2",
-          "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
+          "ctx": "675912da4599458413978e9797e33f8c1b21522d7ef8ee24f1e302daf8721f4d",
           "text": "omit [Fintype σ] [LinearOrder σ] in lemma r2_admissible (h K : ℕ) (Ns : σ → ℤ) (hR2 : A05.r2 h K Ns) : A05.admissible h Ns"
         }
       }

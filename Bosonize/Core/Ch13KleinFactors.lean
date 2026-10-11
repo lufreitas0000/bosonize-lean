@@ -1,6 +1,6 @@
 module
 
-public import BosonizeStubs.A05MultiSpecies
+public import Bosonize.Core.A05MultiSpecies
 
 /-! CH13: explicit finite Gram-kernel Klein operators on the actual CAR carrier.
 Complete finite data with proved typed budget isometries and intertwining squares. -/

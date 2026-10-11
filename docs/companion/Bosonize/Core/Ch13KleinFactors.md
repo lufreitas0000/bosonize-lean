@@ -1,6 +1,6 @@
 # CH13 Klein factors: Phase A companion
 
-Status: Phase B complete: all 25 theorem proofs and all supporting data are freshly standard-axiom audited. Zero warnings/placeholders. Phase C promotion and complementary pedagogical synchronization are pending; no Core promotion is claimed.
+Status: Phase B complete and source promoted/frozen in Core under the independently reviewed migration. Phase C execution checks and complementary pedagogical review are in progress; overall Phase C completion is pending.
 
 Sources: `notes/md/ch13_Klein_factors.md`, `notes/appendices/a05_exponentials_klein_and_vertex_scope.md`, the CH13 TOC entry, applicable restricted-map/tensor-budget/phase corrections in `note/proof_suggestions_revision_2026-10-09.md`, and current frozen CH07, CH11, CH04/A02, CH09 and CH06Ext contracts. Historical brainstorm/API suggestions are advisory; nonexistent `docs/stub_suggestion/` and `docs/proof_suggestion/` were not invented. The A05 exponential and CH14 vertex research sections are excluded from this chapter: this draft asserts no unprojected vertex equality or analytic exponential.
 
@@ -235,11 +235,11 @@ An independent finite integer-parity oracle checks 1384 ground top-mode removals
 
 ## Reviewed interface freeze
 
-Independent author-distinct review by `/root/ch11_gram_probe`: [PASS](../../../note/ch13_phase_a_review_2026-10-11.md), tied to the final source hash above. All previous manifest records remain identical; only the two reviewed staging entries are added. The committed baseline authorizes proof-body replacements only. All 53 obligations remain unproved at freeze; promotion requires complete proofs, fresh audits and independently reviewed complementary lectures.
+Independent author-distinct review by `/root/ch11_gram_probe`: [PASS](../../../../note/ch13_phase_a_review_2026-10-11.md), tied to the final source hash above. All previous manifest records remain identical; only the two reviewed staging entries are added. The committed baseline authorizes proof-body replacements only. All 53 obligations remain unproved at freeze; promotion requires complete proofs, fresh audits and independently reviewed complementary lectures.
 
 ## Phase B partial checkpoint — 2026-10-11
 
-Completed and freshly standard-axiom audited: `lower_charge_commute`, `phase_norm`, `phase_cross_sign`, `r2_admissible`. No completed theorem depends on `sorryAx`. The integrated two-module build passes 3398 jobs with exactly 37 warnings for remaining placeholders and no other warnings. Full Phase B and Phase C are pending. See [partial audit](../../../note/ch13_phase_b_partial_audit_2026-10-11.json) and [reviewed instance cleanup](../../../note/ch13_unused_instance_amendment_review_2026-10-11.md). The Phase A source hash above is historical; the current source hash is in the partial audit.
+Completed and freshly standard-axiom audited: `lower_charge_commute`, `phase_norm`, `phase_cross_sign`, `r2_admissible`. No completed theorem depends on `sorryAx`. The integrated two-module build passes 3398 jobs with exactly 37 warnings for remaining placeholders and no other warnings. Full Phase B and Phase C are pending. See [partial audit](../../../../note/ch13_phase_b_partial_audit_2026-10-11.json) and [reviewed instance cleanup](../../../../note/ch13_unused_instance_amendment_review_2026-10-11.md). The Phase A source hash above is historical; the current source hash is in the partial audit.
 
 ## Complete Phase B audit — 2026-10-11
 
@@ -247,4 +247,8 @@ The current source SHA-256 is `83ff4f45673fc2c87541d2f732f08a7594c121dd9114bacb5
 
 The finite ambient Gram kernel has denominator equal to the squared norm (the product Hall factor), source/target range proofs and an actual ambient adjoint. Both budget inverse identities and inner preservation establish the surjective typed isometry. Positive current raising is verified by adding a positive partition part; lowering follows actual adjoints and testing against the surjective lower-budget isometry. Typed squares use actual density codomain restrictions with the stated signed shifts. The physical ground field coefficient keeps the species twist, and only the ground-to-ground matrix element is asserted. Same-species double ground action is covered by its doubly lowered margin.
 
-Fresh evidence: [axiom audit](../../../note/ch13_phase_b_axiom_audit_2026-10-11.json), [independent final review](../../../note/ch13_phase_b_review_2026-10-11.md), [budget/basis/kernel review](../../../note/ch13_budget_basis_kernel_review_2026-10-11.md), [typed-square review](../../../note/ch13_typed_squares_review_2026-10-11.md), [migration plan](../../../note/ch13_promotion_plan_review_2026-10-11.md). The final review discloses authorship and independent checks; proof authors do not certify their own bodies. Flash/Pro tools were unavailable, so exposed inherited Codex agents supplied the recorded sectional and independent-review work.
+Fresh evidence: [axiom audit](../../../../note/ch13_phase_b_axiom_audit_2026-10-11.json), [independent final review](../../../../note/ch13_phase_b_review_2026-10-11.md), [budget/basis/kernel review](../../../../note/ch13_budget_basis_kernel_review_2026-10-11.md), [typed-square review](../../../../note/ch13_typed_squares_review_2026-10-11.md), [migration plan](../../../../note/ch13_promotion_plan_review_2026-10-11.md). The final review discloses authorship and independent checks; proof authors do not certify their own bodies. Flash/Pro tools were unavailable, so exposed inherited Codex agents supplied the recorded sectional and independent-review work.
+
+## Core migration — 2026-10-11
+
+Source: [promoted Lean module](../../../../Bosonize/Core/Ch13KleinFactors.lean), SHA-256 `9a4a7ed40e514a5e57345ad731f23c967b4e725e388d5d9b7b6c2d36a65f5c32`. A05 is byte-identical to its fully audited staging source; CH13 changes only the independently reviewed staging-to-Core import. All 53 theorem-header hashes are unchanged; only that CH13 import command and its 25 dependent context digests change. Old nineteen Core hashes are preserved. See [migration evidence](../../../../note/ch13_phase_c_migration_2026-10-11.json).

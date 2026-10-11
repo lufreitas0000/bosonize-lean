@@ -1,6 +1,6 @@
 # A05 multispecies support: Phase A companion
 
-Status: Phase B complete: all 28 theorem proofs and all supporting data are freshly standard-axiom audited. Zero warnings/placeholders. Phase C promotion and complementary pedagogical synchronization are pending; no Core promotion is claimed.
+Status: Phase B complete and source promoted/frozen in Core under the independently reviewed migration. Phase C execution checks and complementary pedagogical review are in progress; overall Phase C completion is pending.
 
 Sources: `notes/md/ch13_Klein_factors.md`, `notes/appendices/a05_exponentials_klein_and_vertex_scope.md`, the CH13 TOC entry, applicable restricted-map/tensor-budget/phase corrections in `note/proof_suggestions_revision_2026-10-09.md`, and current frozen CH07, CH11, CH04/A02, CH09 and CH06Ext contracts. Historical brainstorm/API suggestions are advisory; nonexistent `docs/stub_suggestion/` and `docs/proof_suggestion/` were not invented. The A05 exponential and CH14 vertex research sections are excluded from this chapter: this draft asserts no unprojected vertex equality or analytic exponential.
 
@@ -199,11 +199,11 @@ An independent finite integer-parity oracle checks 1384 ground top-mode removals
 
 ## Reviewed interface freeze
 
-Independent author-distinct review by `/root/ch11_gram_probe`: [PASS](../../../note/ch13_phase_a_review_2026-10-11.md), tied to the final source hash above. All previous manifest records remain identical; only the two reviewed staging entries are added. The committed baseline authorizes proof-body replacements only. All 53 obligations remain unproved at freeze; promotion requires complete proofs, fresh audits and independently reviewed complementary lectures.
+Independent author-distinct review by `/root/ch11_gram_probe`: [PASS](../../../../note/ch13_phase_a_review_2026-10-11.md), tied to the final source hash above. All previous manifest records remain identical; only the two reviewed staging entries are added. The committed baseline authorizes proof-body replacements only. All 53 obligations remain unproved at freeze; promotion requires complete proofs, fresh audits and independently reviewed complementary lectures.
 
 ## Phase B partial checkpoint — 2026-10-11
 
-Completed and freshly standard-axiom audited: `tensor_kets`, `mode_lt_iff`, `species_joint_configuration`, `joint_species_configuration`, `annihilation_car`, `creation_car`, `mixed_car`, `creation_adjoint`, `ground_ne_zero`, `ground_mem_budget`, `joint_normalization_positive`, `charge_budget`. No completed theorem depends on `sorryAx`. The integrated two-module build passes 3398 jobs with exactly 37 warnings for remaining placeholders and no other warnings. Full Phase B and Phase C are pending. See [partial audit](../../../note/ch13_phase_b_partial_audit_2026-10-11.json) and [reviewed instance cleanup](../../../note/ch13_unused_instance_amendment_review_2026-10-11.md). The Phase A source hash above is historical; the current source hash is in the partial audit.
+Completed and freshly standard-axiom audited: `tensor_kets`, `mode_lt_iff`, `species_joint_configuration`, `joint_species_configuration`, `annihilation_car`, `creation_car`, `mixed_car`, `creation_adjoint`, `ground_ne_zero`, `ground_mem_budget`, `joint_normalization_positive`, `charge_budget`. No completed theorem depends on `sorryAx`. The integrated two-module build passes 3398 jobs with exactly 37 warnings for remaining placeholders and no other warnings. Full Phase B and Phase C are pending. See [partial audit](../../../../note/ch13_phase_b_partial_audit_2026-10-11.json) and [reviewed instance cleanup](../../../../note/ch13_unused_instance_amendment_review_2026-10-11.md). The Phase A source hash above is historical; the current source hash is in the partial audit.
 
 ## Complete Phase B audit — 2026-10-11
 
@@ -211,4 +211,8 @@ The current source SHA-256 is `bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf
 
 The implemented proof uses actual occupation configurations and coordinate products, with local multilinearity extending ket identities. Earlier-species parity occurs twice in an even hop and cancels. Total-budget spanning uses dependent fixed-energy bases at the actual fiber energies; only joined labels whose summed energy is at most K enter the span. It does not use a product of independently capped budgets.
 
-Fresh evidence: [axiom audit](../../../note/ch13_phase_b_axiom_audit_2026-10-11.json), [independent final review](../../../note/ch13_phase_b_review_2026-10-11.md), [budget/basis/kernel review](../../../note/ch13_budget_basis_kernel_review_2026-10-11.md), [typed-square review](../../../note/ch13_typed_squares_review_2026-10-11.md), [migration plan](../../../note/ch13_promotion_plan_review_2026-10-11.md). The final review discloses authorship and independent checks; proof authors do not certify their own bodies. Flash/Pro tools were unavailable, so exposed inherited Codex agents supplied the recorded sectional and independent-review work.
+Fresh evidence: [axiom audit](../../../../note/ch13_phase_b_axiom_audit_2026-10-11.json), [independent final review](../../../../note/ch13_phase_b_review_2026-10-11.md), [budget/basis/kernel review](../../../../note/ch13_budget_basis_kernel_review_2026-10-11.md), [typed-square review](../../../../note/ch13_typed_squares_review_2026-10-11.md), [migration plan](../../../../note/ch13_promotion_plan_review_2026-10-11.md). The final review discloses authorship and independent checks; proof authors do not certify their own bodies. Flash/Pro tools were unavailable, so exposed inherited Codex agents supplied the recorded sectional and independent-review work.
+
+## Core migration — 2026-10-11
+
+Source: [promoted Lean module](../../../../Bosonize/Core/A05MultiSpecies.lean), SHA-256 `bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf02a983f92335bc2`. A05 is byte-identical to its fully audited staging source; CH13 changes only the independently reviewed staging-to-Core import. All 53 theorem-header hashes are unchanged; only that CH13 import command and its 25 dependent context digests change. Old nineteen Core hashes are preserved. See [migration evidence](../../../../note/ch13_phase_c_migration_2026-10-11.json).

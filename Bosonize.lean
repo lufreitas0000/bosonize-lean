@@ -10,6 +10,8 @@ import Bosonize.Core.Ch06Ext
 import Bosonize.Core.A03EnergyBudgets
 import Bosonize.Core.Ch07VacuumBudget
 import Bosonize.Core.Ch08Boson
+import Bosonize.Core.A05MultiSpecies
+import Bosonize.Core.Ch13KleinFactors
 
 import Bosonize.Core.A04DensityKinematics
 import Bosonize.Core.Ch09DensityModes

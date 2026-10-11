@@ -1,0 +1,24 @@
+{
+  "modules": {
+    "A05MultiSpecies": {
+      "old": "BosonizeStubs/A05MultiSpecies.lean",
+      "new": "Bosonize/Core/A05MultiSpecies.lean",
+      "old_sha256": "bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf02a983f92335bc2",
+      "new_sha256": "bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf02a983f92335bc2",
+      "changed_commands": [],
+      "unchanged_headers": 28
+    },
+    "Ch13KleinFactors": {
+      "old": "BosonizeStubs/Ch13KleinFactors.lean",
+      "new": "Bosonize/Core/Ch13KleinFactors.lean",
+      "old_sha256": "83ff4f45673fc2c87541d2f732f08a7594c121dd9114bacb54badc0f670afd0d",
+      "new_sha256": "9a4a7ed40e514a5e57345ad731f23c967b4e725e388d5d9b7b6c2d36a65f5c32",
+      "changed_commands": [
+        2
+      ],
+      "unchanged_headers": 25
+    }
+  },
+  "old_core_preserved": 19,
+  "core_modules": 21
+}
