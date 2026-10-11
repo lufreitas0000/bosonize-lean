@@ -1,0 +1,16 @@
+{
+  "scope": "Exact finite arithmetic oracle for proposed CH13 lexicographic ground-annihilation phase and cross-species phase cocycle; not Lean proof",
+  "h_values": [
+    1,
+    2,
+    3
+  ],
+  "species_counts": [
+    1,
+    2,
+    3
+  ],
+  "ground_cases": 1384,
+  "ordered_cross_species_cases": 2176,
+  "errors": []
+}

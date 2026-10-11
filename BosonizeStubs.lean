@@ -1,4 +1,6 @@
 import Bosonize
+import BosonizeStubs.A05MultiSpecies
+import BosonizeStubs.Ch13KleinFactors
 
 /-!
 # Bosonize Staging Library

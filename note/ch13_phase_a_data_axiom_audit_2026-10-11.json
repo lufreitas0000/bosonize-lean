@@ -1,0 +1,186 @@
+{
+  "status": "data-only-standard-axioms",
+  "compiler_exit": 0,
+  "sources": {
+    "BosonizeStubs/A05MultiSpecies.lean": {
+      "sha256": "320d0252816ec01dff10de1a6e3d7f76a80c7c9e3276043c3c6ea29c6f04a092",
+      "theorems": 28,
+      "sorry_tokens": 28
+    },
+    "BosonizeStubs/Ch13KleinFactors.lean": {
+      "sha256": "5a9b5da4a02b0d879baa47128089fa3c7a3cc6edab9accb0d846d111cb43fd4e",
+      "theorems": 25,
+      "sorry_tokens": 25
+    }
+  },
+  "declarations": [
+    {
+      "declaration": "Bosonize.A05.Mode",
+      "audit": "does not depend on any axioms"
+    },
+    {
+      "declaration": "Bosonize.A05.speciesOrder",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.localModeLinearOrder",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.localModeLT",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.localModeLE",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.localModeDecidableEq",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.Occupation",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.FockSpace",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.Operators",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.jointBudget",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.admissible",
+      "audit": "does not depend on any axioms"
+    },
+    {
+      "declaration": "Bosonize.A05.r2",
+      "audit": "depends on axioms: [propext]"
+    },
+    {
+      "declaration": "Bosonize.A05.jointConfiguration",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.groundConfiguration",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.groundKet",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.tensorVector",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.annihilation",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.creation",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.rho",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.chargeObservable",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.creatorWord",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.wordState",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.JointPartitions",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.jointPartitionsFintype",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.jointEnergy",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.jointNormalization",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.partitionState",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.A05.liftedAnnihilation",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.localModeLinearOrder",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.localModeLT",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.localModeLE",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.localModeDecidableEq",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.FockSpace",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.Operators",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.lowerCharge",
+      "audit": "does not depend on any axioms"
+    },
+    {
+      "declaration": "Bosonize.Ch13.phaseExponent",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.kleinPhase",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.pairMargin",
+      "audit": "depends on axioms: [propext]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.fourSectorMargin",
+      "audit": "depends on axioms: [propext]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.kleinKernel",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.inverseKernel",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    {
+      "declaration": "Bosonize.Ch13.kleinFromBudget",
+      "audit": "depends on axioms: [propext, Classical.choice, Quot.sound]"
+    }
+  ]
+}
