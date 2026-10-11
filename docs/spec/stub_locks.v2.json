@@ -1554,6 +1554,264 @@
         }
       }
     },
+    "Bosonize/Core/A04PartitionCombinatorics.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "8c651675780351509e1ae21a972e5b9c42b26e6656ac3725eab2736353ce8b2b",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch07VacuumBudget",
+          "text": "import Bosonize.Core.Ch07VacuumBudget"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "557e1970d8e21da15f1325655a470dab17e79cb1cb5e2ff6a91d874610b3c998",
+          "kind": "import",
+          "label": "import Mathlib.Combinatorics.Enumerative.Partition.Basic",
+          "text": "import Mathlib.Combinatorics.Enumerative.Partition.Basic"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "214937ae70f6af1fa886ecd7f19850b8271d0056492fc8364d57720bcd96e968",
+          "kind": "namespace",
+          "label": "namespace Bosonize.A04Partitions",
+          "text": "namespace Bosonize.A04Partitions"
+        },
+        {
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "hash": "344890b00d19f9c9b3878209174632d4183cf40ab2ad737e8a5dd75a3ed9ed84",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.A04Partitions.EnergyConfigurations",
+          "text": "abbrev EnergyConfigurations (h : ℕ) (N : ℤ) (K : ℕ) :=\n  {S : Ch07.Occupation h // Ch07.relativeCharge h S = N ∧ Ch07.excitationEnergy h S = (K : ℤ)}"
+        },
+        {
+          "hash": "e6f87506247ce5263543e943e9772ce1d1d1b40a646a889564ae49ad7a822813",
+          "kind": "def",
+          "label": "def Bosonize.A04Partitions.displacementParts",
+          "text": "noncomputable def displacementParts (h : ℕ) (S : Ch07.Occupation h) : Multiset ℕ :=\n  (Finset.univ.val.map fun i : Fin S.card => (Ch07.displacement h S i).toNat).filter (· ≠ 0)"
+        },
+        {
+          "hash": "5f2edb0a10c4fe2e401097c9ff03ab40d4afff1a0a726ff0333cc3111b68d5dc",
+          "kind": "def",
+          "label": "def Bosonize.A04Partitions.displacementWeight",
+          "text": "noncomputable def displacementWeight (h : ℕ) (S : Ch07.Occupation h) : ℕ :=\n  (displacementParts h S).sum"
+        },
+        {
+          "hash": "c3b59fa49baa927f9cd14e337c8bfefea5fa9c6e5151c114e35b844778e28f56",
+          "kind": "def",
+          "label": "def Bosonize.A04Partitions.displacementPartition",
+          "text": "noncomputable def displacementPartition (h : ℕ) (S : Ch07.Occupation h) :\n    Nat.Partition (displacementWeight h S) := Nat.Partition.ofMultiset (displacementParts h S)"
+        },
+        {
+          "hash": "5f7570c6c01d5d7f77a904b6b179125aa1c65dbbf5a76860d8be47ec18aab91c",
+          "kind": "def",
+          "label": "def Bosonize.A04Partitions.FitsRectangle",
+          "text": "def FitsRectangle {K : ℕ} (rows cols : ℕ) (p : Nat.Partition K) : Prop :=\n  p.parts.card ≤ rows ∧ ∀ m ∈ p.parts, m ≤ cols"
+        },
+        {
+          "hash": "9243c6c26c6b3c70273384e3767bb563d5ccf5bb7c777138c8be813f6ca71e37",
+          "kind": "def",
+          "label": "def Bosonize.A04Partitions.paddedRows",
+          "text": "def paddedRows {K : ℕ} (rows : ℕ) (p : Nat.Partition K) : List ℕ :=\n  List.replicate (rows-p.parts.card) 0 ++ p.parts.sort (· ≤ ·)"
+        },
+        {
+          "hash": "a955cfc58e898d2d4c85b5e00284b5ae07f2172824af316858954243a88c3860",
+          "kind": "def",
+          "label": "def Bosonize.A04Partitions.inverseConfiguration",
+          "text": "noncomputable def inverseConfiguration {K : ℕ} (h rows : ℕ) (p : Nat.Partition K) : Ch07.Occupation h :=\n  Finset.univ.filter fun k => ∃ i : Fin rows,\n    k.val = -(h : ℤ)+1+(i.val : ℤ)+((paddedRows rows p).getD i.val 0 : ℤ)"
+        },
+        {
+          "hash": "315e879dc2bae7a78f988a2721d08e218726c4f6cef3e00eb1d8303ccd50a5ca",
+          "kind": "end",
+          "label": "end Bosonize.A04Partitions",
+          "text": "end Bosonize.A04Partitions"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A04Partitions.displacement_inverse_configuration": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "7e29a89fa4d884c0fd85e7541a5d6a142359528cafff6e40e120e820f0c3732c",
+          "kind": "lemma",
+          "text": "lemma displacement_inverse_configuration (h : ℕ) (S : Ch07.Occupation h) : inverseConfiguration h S.card (displacementPartition h S) = S"
+        },
+        "Bosonize.A04Partitions.displacement_partition_parts": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "e730e78ce649beaabc8b20187ba3b57574cb551f9003a62b5a8fec102fc3630a",
+          "kind": "lemma",
+          "text": "lemma displacement_partition_parts (h : ℕ) (S : Ch07.Occupation h) : (displacementPartition h S).parts = displacementParts h S"
+        },
+        "Bosonize.A04Partitions.displacement_partition_rectangle": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "9993cb915c0637bdafc467af4d3bdbe42318651e5261f650280620f9953b6279",
+          "kind": "lemma",
+          "text": "lemma displacement_partition_rectangle (h : ℕ) (S : Ch07.Occupation h) : FitsRectangle S.card (2*h-S.card) (displacementPartition h S)"
+        },
+        "Bosonize.A04Partitions.displacement_parts_pos": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "6d936c76d30ad695556f94aade4e0add80510b7b102a3b3dd7fca2a5e5be81a7",
+          "kind": "lemma",
+          "text": "lemma displacement_parts_pos (h : ℕ) (S : Ch07.Occupation h) : ∀ m ∈ displacementParts h S, 0 < m"
+        },
+        "Bosonize.A04Partitions.displacement_upper_bound": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "71e24b2583bcbcd33a996c4eac8ff59de36e1d61755a01b0586b419ee01815e3",
+          "kind": "lemma",
+          "text": "lemma displacement_upper_bound (h : ℕ) (S : Ch07.Occupation h) (i : Fin S.card) : Ch07.displacement h S i ≤ (2*h-S.card : ℕ)"
+        },
+        "Bosonize.A04Partitions.displacement_weight_energy": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "0946b9fc3f20b7e41ee9049325fc2130dbf6dd512a47351e09ccc0941ab9dd82",
+          "kind": "lemma",
+          "text": "lemma displacement_weight_energy (h : ℕ) (hh : 0 < h) (S : Ch07.Occupation h) : (displacementWeight h S : ℤ) = Ch07.excitationEnergy h S"
+        },
+        "Bosonize.A04Partitions.energy_space_finrank_coordinates": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "1103bdc33a018d1aec308c1a46f90943831c8e69d798e341a65d992e35239d85",
+          "kind": "lemma",
+          "text": "lemma energy_space_finrank_coordinates (h : ℕ) (N : ℤ) (K : ℕ) : Module.finrank ℂ (Ch07.energySpace h N K) = Fintype.card (EnergyConfigurations h N K)"
+        },
+        "Bosonize.A04Partitions.energy_space_finrank_r1": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "99250efcdec17185fb9c9d9f2bd9476923159bf35847c2e8de03cdf1e7319cde",
+          "kind": "theorem",
+          "text": "theorem energy_space_finrank_r1 (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR1 : (K : ℤ) ≤ min ((h : ℤ)+N) ((h : ℤ)-N)) : Module.finrank ℂ (Ch07.energySpace h N K) = Fintype.card (Nat.Partition K)"
+        },
+        "Bosonize.A04Partitions.inverse_configuration_card": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "b6a8de0f99b67695ee6169657baa6bdfef62a5bfbea142c6e7b7dc6a277bc907",
+          "kind": "lemma",
+          "text": "lemma inverse_configuration_card {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : (inverseConfiguration h rows p).card = rows"
+        },
+        "Bosonize.A04Partitions.inverse_configuration_charge": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "b68179293bb5463023f6421c694bf247813ad75e2e810ca7eee90c4a6a34e597",
+          "kind": "lemma",
+          "text": "lemma inverse_configuration_charge {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : Ch07.relativeCharge h (inverseConfiguration h rows p) = (rows : ℤ)-(h : ℤ)"
+        },
+        "Bosonize.A04Partitions.inverse_configuration_energy": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "a207c0a9840d9591a8adcee5273c8b21667d078fa498f03635bc85eedf60cd9b",
+          "kind": "lemma",
+          "text": "lemma inverse_configuration_energy {K : ℕ} (h rows : ℕ) (hh : 0 < h) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : Ch07.excitationEnergy h (inverseConfiguration h rows p) = (K : ℤ)"
+        },
+        "Bosonize.A04Partitions.inverse_configuration_sorted_label": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "a0913653e052d5607af4cf014ed8a5b71bdb46919b070f3ce9ca6572f9ebeec1",
+          "kind": "lemma",
+          "text": "lemma inverse_configuration_sorted_label {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) (i : Fin (inverseConfiguration h rows p).card) : (Ch07.sortedMode h (inverseConfiguration h rows p) i).val = -(h : ℤ)+1+(i.val : ℤ)+((paddedRows rows p).getD i.val 0 : ℤ)"
+        },
+        "Bosonize.A04Partitions.inverse_displacement_parts": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "8769cf4ebbb9f818df3673c595e1e64c5a96653070c5377e1ad1111a3c708e2c",
+          "kind": "lemma",
+          "text": "lemma inverse_displacement_parts {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : displacementParts h (inverseConfiguration h rows p) = p.parts"
+        },
+        "Bosonize.A04Partitions.inverse_labels_in_band": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "a4da1b9c14525fbf2d45e505a15da9c761423a8cd0488b669bcf9190fb6c548f",
+          "kind": "lemma",
+          "text": "lemma inverse_labels_in_band {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) (i : Fin rows) : Ch01.inBandPredicate (2*h) (-(h : ℤ)+1+(i.val : ℤ)+((paddedRows rows p).getD i.val 0 : ℤ))"
+        },
+        "Bosonize.A04Partitions.inverse_labels_strict_mono": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "d16aa56552d9daeb2d4953a428ed8b46b5de0cb630f42659a5fc96ee4bf1f28a",
+          "kind": "lemma",
+          "text": "lemma inverse_labels_strict_mono {K : ℕ} (rows cols : ℕ) (p : Nat.Partition K) (hp : FitsRectangle rows cols p) : StrictMono (fun i : Fin rows => (i.val : ℤ)+((paddedRows rows p).getD i.val 0 : ℤ))"
+        },
+        "Bosonize.A04Partitions.padded_displacement_recovery": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "fe244271e2654578eee83e39f48941a881cece8ce919f13f9bdc61521a4ec349",
+          "kind": "lemma",
+          "text": "lemma padded_displacement_recovery (h : ℕ) (S : Ch07.Occupation h) : paddedRows S.card (displacementPartition h S) = List.ofFn (fun i : Fin S.card => (Ch07.displacement h S i).toNat)"
+        },
+        "Bosonize.A04Partitions.padded_rows_filter": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "4a758d8ad5f888a1c8d944c14c722e6aa12a1c89eb3501bb887f2d78d60f3062",
+          "kind": "lemma",
+          "text": "lemma padded_rows_filter {K : ℕ} (rows : ℕ) (p : Nat.Partition K) : ((paddedRows rows p : Multiset ℕ).filter (· ≠ 0)) = p.parts"
+        },
+        "Bosonize.A04Partitions.padded_rows_get_le": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "086991d75287677e2731014fc3e70c60ab6d018d1c5b14f49601100860dc44f0",
+          "kind": "lemma",
+          "text": "lemma padded_rows_get_le {K : ℕ} (rows cols : ℕ) (p : Nat.Partition K) (hp : FitsRectangle rows cols p) (i : Fin rows) : (paddedRows rows p).getD i.val 0 ≤ cols"
+        },
+        "Bosonize.A04Partitions.padded_rows_length": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "106f46d51c594650379c8eed9ef80d1b83eccbd835ed1fc6adf6a0d40f14291c",
+          "kind": "lemma",
+          "text": "lemma padded_rows_length {K : ℕ} (rows cols : ℕ) (p : Nat.Partition K) (hp : FitsRectangle rows cols p) : (paddedRows rows p).length = rows"
+        },
+        "Bosonize.A04Partitions.padded_rows_monotone": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "b8d4947e1f560c15831bd05d84e749f6d207feb7a056e7a8e1e72fc3f6045217",
+          "kind": "lemma",
+          "text": "lemma padded_rows_monotone {K : ℕ} (rows : ℕ) (p : Nat.Partition K) : (paddedRows rows p).Pairwise (· ≤ ·)"
+        },
+        "Bosonize.A04Partitions.padded_rows_sum": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "34d50a62021f4db6b53b249ee967ea2fd14ff7e37f825732576f8484582cf060",
+          "kind": "lemma",
+          "text": "lemma padded_rows_sum {K : ℕ} (rows : ℕ) (p : Nat.Partition K) : (paddedRows rows p).sum = K"
+        },
+        "Bosonize.A04Partitions.partition_card_le": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "71549d44e0e11ae584241246112bb17ceb325ea68e96b47ab38ba9a59c07834b",
+          "kind": "lemma",
+          "text": "lemma partition_card_le {K : ℕ} (p : Nat.Partition K) : p.parts.card ≤ K"
+        },
+        "Bosonize.A04Partitions.partition_fits_r1": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "d2a9897a0953eda758beb8068c49abff83f6bba78bfaaca5c14de6a63f82fba3",
+          "kind": "lemma",
+          "text": "lemma partition_fits_r1 (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR1 : (K : ℤ) ≤ min ((h : ℤ)+N) ((h : ℤ)-N)) (p : Nat.Partition K) : FitsRectangle ((h : ℤ)+N).toNat ((h : ℤ)-N).toNat p"
+        },
+        "Bosonize.A04Partitions.rectangle_equiv": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "0bc674a11dccba727ed57319803a81aa5f78d3cb6d90176e6c9deb6317595e32",
+          "kind": "theorem",
+          "text": "theorem rectangle_equiv (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) : ∃ e : EnergyConfigurations h N K ≃ {p : Nat.Partition K // FitsRectangle ((h : ℤ)+N).toNat ((h : ℤ)-N).toNat p}, (∀ S, (e S).val.parts = displacementParts h S.val) ∧ (∀ p, (e.symm p).val = inverseConfiguration h ((h : ℤ)+N).toNat p.val)"
+        },
+        "Bosonize.A04Partitions.unrestricted_equiv_r1": {
+          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
+          "hash": "21cb8e3225fcd0ef048cd241f006d0a939eb56aa17ed2a01cbf93abb26a02284",
+          "kind": "theorem",
+          "text": "theorem unrestricted_equiv_r1 (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR1 : (K : ℤ) ≤ min ((h : ℤ)+N) ((h : ℤ)-N)) : ∃ e : EnergyConfigurations h N K ≃ Nat.Partition K, (∀ S, (e S).parts = displacementParts h S.val) ∧ (∀ p, (e.symm p).val = inverseConfiguration h ((h : ℤ)+N).toNat p)"
+        }
+      }
+    },
     "Bosonize/Core/Ch01LatticeBand.lean": {
       "commands": [
         {
@@ -6660,591 +6918,573 @@
         }
       }
     },
-    "Bosonize/Core/A04PartitionCombinatorics.lean": {
-      "commands": [
-        {
-          "kind": "module",
-          "label": "module",
-          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
-          "text": "module"
-        },
-        {
-          "kind": "public",
-          "label": "public",
-          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
-          "text": "public"
-        },
-        {
-          "kind": "import",
-          "label": "import Bosonize.Core.Ch07VacuumBudget",
-          "hash": "8c651675780351509e1ae21a972e5b9c42b26e6656ac3725eab2736353ce8b2b",
-          "text": "import Bosonize.Core.Ch07VacuumBudget"
-        },
-        {
-          "kind": "public",
-          "label": "public",
-          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
-          "text": "public"
-        },
-        {
-          "kind": "import",
-          "label": "import Mathlib.Combinatorics.Enumerative.Partition.Basic",
-          "hash": "557e1970d8e21da15f1325655a470dab17e79cb1cb5e2ff6a91d874610b3c998",
-          "text": "import Mathlib.Combinatorics.Enumerative.Partition.Basic"
-        },
-        {
-          "kind": "@",
-          "label": "@ [expose] public",
-          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
-          "text": "@[expose] public"
-        },
-        {
-          "kind": "section",
-          "label": "section",
-          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
-          "text": "section"
-        },
-        {
-          "kind": "namespace",
-          "label": "namespace Bosonize.A04Partitions",
-          "hash": "214937ae70f6af1fa886ecd7f19850b8271d0056492fc8364d57720bcd96e968",
-          "text": "namespace Bosonize.A04Partitions"
-        },
-        {
-          "kind": "open",
-          "label": "open scoped BigOperators Classical",
-          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
-          "text": "open scoped BigOperators Classical"
-        },
-        {
-          "kind": "abbrev",
-          "label": "abbrev Bosonize.A04Partitions.EnergyConfigurations",
-          "hash": "344890b00d19f9c9b3878209174632d4183cf40ab2ad737e8a5dd75a3ed9ed84",
-          "text": "abbrev EnergyConfigurations (h : ℕ) (N : ℤ) (K : ℕ) :=\n  {S : Ch07.Occupation h // Ch07.relativeCharge h S = N ∧ Ch07.excitationEnergy h S = (K : ℤ)}"
-        },
-        {
-          "kind": "def",
-          "label": "def Bosonize.A04Partitions.displacementParts",
-          "hash": "e6f87506247ce5263543e943e9772ce1d1d1b40a646a889564ae49ad7a822813",
-          "text": "noncomputable def displacementParts (h : ℕ) (S : Ch07.Occupation h) : Multiset ℕ :=\n  (Finset.univ.val.map fun i : Fin S.card => (Ch07.displacement h S i).toNat).filter (· ≠ 0)"
-        },
-        {
-          "kind": "def",
-          "label": "def Bosonize.A04Partitions.displacementWeight",
-          "hash": "5f2edb0a10c4fe2e401097c9ff03ab40d4afff1a0a726ff0333cc3111b68d5dc",
-          "text": "noncomputable def displacementWeight (h : ℕ) (S : Ch07.Occupation h) : ℕ :=\n  (displacementParts h S).sum"
-        },
-        {
-          "kind": "def",
-          "label": "def Bosonize.A04Partitions.displacementPartition",
-          "hash": "c3b59fa49baa927f9cd14e337c8bfefea5fa9c6e5151c114e35b844778e28f56",
-          "text": "noncomputable def displacementPartition (h : ℕ) (S : Ch07.Occupation h) :\n    Nat.Partition (displacementWeight h S) := Nat.Partition.ofMultiset (displacementParts h S)"
-        },
-        {
-          "kind": "def",
-          "label": "def Bosonize.A04Partitions.FitsRectangle",
-          "hash": "5f7570c6c01d5d7f77a904b6b179125aa1c65dbbf5a76860d8be47ec18aab91c",
-          "text": "def FitsRectangle {K : ℕ} (rows cols : ℕ) (p : Nat.Partition K) : Prop :=\n  p.parts.card ≤ rows ∧ ∀ m ∈ p.parts, m ≤ cols"
-        },
-        {
-          "kind": "def",
-          "label": "def Bosonize.A04Partitions.paddedRows",
-          "hash": "9243c6c26c6b3c70273384e3767bb563d5ccf5bb7c777138c8be813f6ca71e37",
-          "text": "def paddedRows {K : ℕ} (rows : ℕ) (p : Nat.Partition K) : List ℕ :=\n  List.replicate (rows-p.parts.card) 0 ++ p.parts.sort (· ≤ ·)"
-        },
-        {
-          "kind": "def",
-          "label": "def Bosonize.A04Partitions.inverseConfiguration",
-          "hash": "a955cfc58e898d2d4c85b5e00284b5ae07f2172824af316858954243a88c3860",
-          "text": "noncomputable def inverseConfiguration {K : ℕ} (h rows : ℕ) (p : Nat.Partition K) : Ch07.Occupation h :=\n  Finset.univ.filter fun k => ∃ i : Fin rows,\n    k.val = -(h : ℤ)+1+(i.val : ℤ)+((paddedRows rows p).getD i.val 0 : ℤ)"
-        },
-        {
-          "kind": "end",
-          "label": "end Bosonize.A04Partitions",
-          "hash": "315e879dc2bae7a78f988a2721d08e218726c4f6cef3e00eb1d8303ccd50a5ca",
-          "text": "end Bosonize.A04Partitions"
-        }
-      ],
-      "lemmas": {
-        "Bosonize.A04Partitions.displacement_inverse_configuration": {
-          "kind": "lemma",
-          "hash": "7e29a89fa4d884c0fd85e7541a5d6a142359528cafff6e40e120e820f0c3732c",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma displacement_inverse_configuration (h : ℕ) (S : Ch07.Occupation h) : inverseConfiguration h S.card (displacementPartition h S) = S"
-        },
-        "Bosonize.A04Partitions.displacement_partition_parts": {
-          "kind": "lemma",
-          "hash": "e730e78ce649beaabc8b20187ba3b57574cb551f9003a62b5a8fec102fc3630a",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma displacement_partition_parts (h : ℕ) (S : Ch07.Occupation h) : (displacementPartition h S).parts = displacementParts h S"
-        },
-        "Bosonize.A04Partitions.displacement_partition_rectangle": {
-          "kind": "lemma",
-          "hash": "9993cb915c0637bdafc467af4d3bdbe42318651e5261f650280620f9953b6279",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma displacement_partition_rectangle (h : ℕ) (S : Ch07.Occupation h) : FitsRectangle S.card (2*h-S.card) (displacementPartition h S)"
-        },
-        "Bosonize.A04Partitions.displacement_parts_pos": {
-          "kind": "lemma",
-          "hash": "6d936c76d30ad695556f94aade4e0add80510b7b102a3b3dd7fca2a5e5be81a7",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma displacement_parts_pos (h : ℕ) (S : Ch07.Occupation h) : ∀ m ∈ displacementParts h S, 0 < m"
-        },
-        "Bosonize.A04Partitions.displacement_upper_bound": {
-          "kind": "lemma",
-          "hash": "71e24b2583bcbcd33a996c4eac8ff59de36e1d61755a01b0586b419ee01815e3",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma displacement_upper_bound (h : ℕ) (S : Ch07.Occupation h) (i : Fin S.card) : Ch07.displacement h S i ≤ (2*h-S.card : ℕ)"
-        },
-        "Bosonize.A04Partitions.displacement_weight_energy": {
-          "kind": "lemma",
-          "hash": "0946b9fc3f20b7e41ee9049325fc2130dbf6dd512a47351e09ccc0941ab9dd82",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma displacement_weight_energy (h : ℕ) (hh : 0 < h) (S : Ch07.Occupation h) : (displacementWeight h S : ℤ) = Ch07.excitationEnergy h S"
-        },
-        "Bosonize.A04Partitions.energy_space_finrank_coordinates": {
-          "kind": "lemma",
-          "hash": "1103bdc33a018d1aec308c1a46f90943831c8e69d798e341a65d992e35239d85",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma energy_space_finrank_coordinates (h : ℕ) (N : ℤ) (K : ℕ) : Module.finrank ℂ (Ch07.energySpace h N K) = Fintype.card (EnergyConfigurations h N K)"
-        },
-        "Bosonize.A04Partitions.energy_space_finrank_r1": {
-          "kind": "theorem",
-          "hash": "99250efcdec17185fb9c9d9f2bd9476923159bf35847c2e8de03cdf1e7319cde",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "theorem energy_space_finrank_r1 (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR1 : (K : ℤ) ≤ min ((h : ℤ)+N) ((h : ℤ)-N)) : Module.finrank ℂ (Ch07.energySpace h N K) = Fintype.card (Nat.Partition K)"
-        },
-        "Bosonize.A04Partitions.inverse_configuration_card": {
-          "kind": "lemma",
-          "hash": "b6a8de0f99b67695ee6169657baa6bdfef62a5bfbea142c6e7b7dc6a277bc907",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma inverse_configuration_card {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : (inverseConfiguration h rows p).card = rows"
-        },
-        "Bosonize.A04Partitions.inverse_configuration_charge": {
-          "kind": "lemma",
-          "hash": "b68179293bb5463023f6421c694bf247813ad75e2e810ca7eee90c4a6a34e597",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma inverse_configuration_charge {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : Ch07.relativeCharge h (inverseConfiguration h rows p) = (rows : ℤ)-(h : ℤ)"
-        },
-        "Bosonize.A04Partitions.inverse_configuration_energy": {
-          "kind": "lemma",
-          "hash": "a207c0a9840d9591a8adcee5273c8b21667d078fa498f03635bc85eedf60cd9b",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma inverse_configuration_energy {K : ℕ} (h rows : ℕ) (hh : 0 < h) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : Ch07.excitationEnergy h (inverseConfiguration h rows p) = (K : ℤ)"
-        },
-        "Bosonize.A04Partitions.inverse_configuration_sorted_label": {
-          "kind": "lemma",
-          "hash": "a0913653e052d5607af4cf014ed8a5b71bdb46919b070f3ce9ca6572f9ebeec1",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma inverse_configuration_sorted_label {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) (i : Fin (inverseConfiguration h rows p).card) : (Ch07.sortedMode h (inverseConfiguration h rows p) i).val = -(h : ℤ)+1+(i.val : ℤ)+((paddedRows rows p).getD i.val 0 : ℤ)"
-        },
-        "Bosonize.A04Partitions.inverse_displacement_parts": {
-          "kind": "lemma",
-          "hash": "8769cf4ebbb9f818df3673c595e1e64c5a96653070c5377e1ad1111a3c708e2c",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma inverse_displacement_parts {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : displacementParts h (inverseConfiguration h rows p) = p.parts"
-        },
-        "Bosonize.A04Partitions.inverse_labels_in_band": {
-          "kind": "lemma",
-          "hash": "a4da1b9c14525fbf2d45e505a15da9c761423a8cd0488b669bcf9190fb6c548f",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma inverse_labels_in_band {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) (i : Fin rows) : Ch01.inBandPredicate (2*h) (-(h : ℤ)+1+(i.val : ℤ)+((paddedRows rows p).getD i.val 0 : ℤ))"
-        },
-        "Bosonize.A04Partitions.inverse_labels_strict_mono": {
-          "kind": "lemma",
-          "hash": "d16aa56552d9daeb2d4953a428ed8b46b5de0cb630f42659a5fc96ee4bf1f28a",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma inverse_labels_strict_mono {K : ℕ} (rows cols : ℕ) (p : Nat.Partition K) (hp : FitsRectangle rows cols p) : StrictMono (fun i : Fin rows => (i.val : ℤ)+((paddedRows rows p).getD i.val 0 : ℤ))"
-        },
-        "Bosonize.A04Partitions.padded_displacement_recovery": {
-          "kind": "lemma",
-          "hash": "fe244271e2654578eee83e39f48941a881cece8ce919f13f9bdc61521a4ec349",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma padded_displacement_recovery (h : ℕ) (S : Ch07.Occupation h) : paddedRows S.card (displacementPartition h S) = List.ofFn (fun i : Fin S.card => (Ch07.displacement h S i).toNat)"
-        },
-        "Bosonize.A04Partitions.padded_rows_filter": {
-          "kind": "lemma",
-          "hash": "4a758d8ad5f888a1c8d944c14c722e6aa12a1c89eb3501bb887f2d78d60f3062",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma padded_rows_filter {K : ℕ} (rows : ℕ) (p : Nat.Partition K) : ((paddedRows rows p : Multiset ℕ).filter (· ≠ 0)) = p.parts"
-        },
-        "Bosonize.A04Partitions.padded_rows_get_le": {
-          "kind": "lemma",
-          "hash": "086991d75287677e2731014fc3e70c60ab6d018d1c5b14f49601100860dc44f0",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma padded_rows_get_le {K : ℕ} (rows cols : ℕ) (p : Nat.Partition K) (hp : FitsRectangle rows cols p) (i : Fin rows) : (paddedRows rows p).getD i.val 0 ≤ cols"
-        },
-        "Bosonize.A04Partitions.padded_rows_length": {
-          "kind": "lemma",
-          "hash": "106f46d51c594650379c8eed9ef80d1b83eccbd835ed1fc6adf6a0d40f14291c",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma padded_rows_length {K : ℕ} (rows cols : ℕ) (p : Nat.Partition K) (hp : FitsRectangle rows cols p) : (paddedRows rows p).length = rows"
-        },
-        "Bosonize.A04Partitions.padded_rows_monotone": {
-          "kind": "lemma",
-          "hash": "b8d4947e1f560c15831bd05d84e749f6d207feb7a056e7a8e1e72fc3f6045217",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma padded_rows_monotone {K : ℕ} (rows : ℕ) (p : Nat.Partition K) : (paddedRows rows p).Pairwise (· ≤ ·)"
-        },
-        "Bosonize.A04Partitions.padded_rows_sum": {
-          "kind": "lemma",
-          "hash": "34d50a62021f4db6b53b249ee967ea2fd14ff7e37f825732576f8484582cf060",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma padded_rows_sum {K : ℕ} (rows : ℕ) (p : Nat.Partition K) : (paddedRows rows p).sum = K"
-        },
-        "Bosonize.A04Partitions.partition_card_le": {
-          "kind": "lemma",
-          "hash": "71549d44e0e11ae584241246112bb17ceb325ea68e96b47ab38ba9a59c07834b",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma partition_card_le {K : ℕ} (p : Nat.Partition K) : p.parts.card ≤ K"
-        },
-        "Bosonize.A04Partitions.partition_fits_r1": {
-          "kind": "lemma",
-          "hash": "d2a9897a0953eda758beb8068c49abff83f6bba78bfaaca5c14de6a63f82fba3",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma partition_fits_r1 (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR1 : (K : ℤ) ≤ min ((h : ℤ)+N) ((h : ℤ)-N)) (p : Nat.Partition K) : FitsRectangle ((h : ℤ)+N).toNat ((h : ℤ)-N).toNat p"
-        },
-        "Bosonize.A04Partitions.rectangle_equiv": {
-          "kind": "theorem",
-          "hash": "0bc674a11dccba727ed57319803a81aa5f78d3cb6d90176e6c9deb6317595e32",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "theorem rectangle_equiv (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) : ∃ e : EnergyConfigurations h N K ≃ {p : Nat.Partition K // FitsRectangle ((h : ℤ)+N).toNat ((h : ℤ)-N).toNat p}, (∀ S, (e S).val.parts = displacementParts h S.val) ∧ (∀ p, (e.symm p).val = inverseConfiguration h ((h : ℤ)+N).toNat p.val)"
-        },
-        "Bosonize.A04Partitions.unrestricted_equiv_r1": {
-          "kind": "theorem",
-          "hash": "21cb8e3225fcd0ef048cd241f006d0a939eb56aa17ed2a01cbf93abb26a02284",
-          "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "theorem unrestricted_equiv_r1 (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR1 : (K : ℤ) ≤ min ((h : ℤ)+N) ((h : ℤ)-N)) : ∃ e : EnergyConfigurations h N K ≃ Nat.Partition K, (∀ S, (e S).parts = displacementParts h S.val) ∧ (∀ p, (e.symm p).val = inverseConfiguration h ((h : ℤ)+N).toNat p)"
-        }
-      }
-    },
     "Bosonize/Core/Ch11HaldaneCompleteness.lean": {
       "commands": [
         {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
           "kind": "module",
           "label": "module",
-          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
           "text": "module"
         },
         {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
           "kind": "public",
           "label": "public",
-          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
           "text": "public"
         },
         {
+          "hash": "8eea16e134d1a504ebcaa5b2a754a35615d088ca7bee226396f9a4a1cbaa86f5",
           "kind": "import",
           "label": "import Bosonize.Core.Ch10Heisenberg",
-          "hash": "8eea16e134d1a504ebcaa5b2a754a35615d088ca7bee226396f9a4a1cbaa86f5",
           "text": "import Bosonize.Core.Ch10Heisenberg"
         },
         {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
           "kind": "public",
           "label": "public",
-          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
           "text": "public"
         },
         {
+          "hash": "92098a14d8b1c0c0a5fd6a416dfdb6125a330f2ffcf1aef9828871cf05099b74",
           "kind": "import",
           "label": "import Bosonize.Core.A04PartitionCombinatorics",
-          "hash": "92098a14d8b1c0c0a5fd6a416dfdb6125a330f2ffcf1aef9828871cf05099b74",
           "text": "import Bosonize.Core.A04PartitionCombinatorics"
         },
         {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
           "kind": "@",
           "label": "@ [expose] public",
-          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
           "text": "@[expose] public"
         },
         {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
           "kind": "section",
           "label": "section",
-          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
           "text": "section"
         },
         {
+          "hash": "64e36faa37805946d173512f424836c7e93af0d39acaa5cb9bd6590a23132415",
           "kind": "namespace",
           "label": "namespace Bosonize.Ch11",
-          "hash": "64e36faa37805946d173512f424836c7e93af0d39acaa5cb9bd6590a23132415",
           "text": "namespace Bosonize.Ch11"
         },
         {
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
           "kind": "open",
           "label": "open scoped BigOperators Classical",
-          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
           "text": "open scoped BigOperators Classical"
         },
         {
+          "hash": "9a7ddb895bdd87801fcf5c7fd714e8b79df884d0f40ecd524dd1386622f1ab64",
           "kind": "def",
           "label": "def Bosonize.Ch11.creatorWord",
-          "hash": "9a7ddb895bdd87801fcf5c7fd714e8b79df884d0f40ecd524dd1386622f1ab64",
           "text": "noncomputable def creatorWord (h : ℕ) (parts : List ℕ) : Ch09.Operators h :=\n  (parts.map fun m => Ch09.rho h (m : ℤ)).prod"
         },
         {
+          "hash": "7e0f9860d41d5b2d599ca80a50f0b9c6b3243b8a2f61c34138296927a20ecbf1",
           "kind": "def",
           "label": "def Bosonize.Ch11.wordState",
-          "hash": "7e0f9860d41d5b2d599ca80a50f0b9c6b3243b8a2f61c34138296927a20ecbf1",
           "text": "noncomputable def wordState (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N)\n    (parts : List ℕ) : Ch07.FockSpace h := creatorWord h parts (Ch07.groundKet h N hN)"
         },
         {
+          "hash": "1a6c03ba647389be950505ab6dfe0b0907e8a3a37e0cc083d72611dffc9c255d",
           "kind": "def",
           "label": "def Bosonize.Ch11.partitionList",
-          "hash": "1a6c03ba647389be950505ab6dfe0b0907e8a3a37e0cc083d72611dffc9c255d",
           "text": "def partitionList {E : ℕ} (p : Nat.Partition E) : List ℕ := p.parts.sort (· ≥ ·)"
         },
         {
+          "hash": "2efc2188fdb334c3b3282ea79d1f46d1539418e224c2e5f413414bfa5c0cb063",
           "kind": "def",
           "label": "def Bosonize.Ch11.partitionState",
-          "hash": "2efc2188fdb334c3b3282ea79d1f46d1539418e224c2e5f413414bfa5c0cb063",
           "text": "noncomputable def partitionState (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N)\n    {E : ℕ} (p : Nat.Partition E) : Ch07.FockSpace h := wordState h N hN (partitionList p)"
         },
         {
+          "hash": "6b1952c1bac234bdb10f25a5b2986671914455b0fa4f9962064ceff6145f7930",
           "kind": "def",
           "label": "def Bosonize.Ch11.hallFactor",
-          "hash": "6b1952c1bac234bdb10f25a5b2986671914455b0fa4f9962064ceff6145f7930",
           "text": "def hallFactor (parts : Multiset ℕ) : ℕ :=\n  ∏ m ∈ parts.toFinset, m ^ parts.count m * (parts.count m).factorial"
         },
         {
+          "hash": "ea9a2ac1b5d8de2d722f190682a21d4ee2a0753957ee8b7ffd8fb9ea7abfdd55",
           "kind": "def",
           "label": "def Bosonize.Ch11.partitionNormalization",
-          "hash": "ea9a2ac1b5d8de2d722f190682a21d4ee2a0753957ee8b7ffd8fb9ea7abfdd55",
           "text": "def partitionNormalization {E : ℕ} (p : Nat.Partition E) : ℕ := hallFactor p.parts"
         },
         {
+          "hash": "2b6ed055ee566b623023094595a7c0687b19c6331df6bc394aaac15a4423edb9",
           "kind": "abbrev",
           "label": "abbrev Bosonize.Ch11.BudgetPartitions",
-          "hash": "2b6ed055ee566b623023094595a7c0687b19c6331df6bc394aaac15a4423edb9",
           "text": "abbrev BudgetPartitions (K : ℕ) := (E : Fin (K+1)) × Nat.Partition E.val"
         },
         {
+          "hash": "b83a53f993af3a8a4d4765ddafa36d20e08b81b25c12e3118e3f880ec1518619",
           "kind": "def",
           "label": "def Bosonize.Ch11.budgetPartitionState",
-          "hash": "b83a53f993af3a8a4d4765ddafa36d20e08b81b25c12e3118e3f880ec1518619",
           "text": "noncomputable def budgetPartitionState (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N)\n    {K : ℕ} (p : BudgetPartitions K) : Ch07.FockSpace h := partitionState h N hN p.2"
         },
         {
+          "hash": "7c66daacdc1ba5df558ec5ed51945ca2b6c1425f0b73890ee2bafedb010f5e0c",
           "kind": "end",
           "label": "end Bosonize.Ch11",
-          "hash": "7c66daacdc1ba5df558ec5ed51945ca2b6c1425f0b73890ee2bafedb010f5e0c",
           "text": "end Bosonize.Ch11"
         }
       ],
       "lemmas": {
         "Bosonize.Ch11.budget_partition_basis": {
-          "kind": "theorem",
-          "hash": "82a2ffda266d898b782d6ac2bbdd814480a0c3514ab29fef957f4aa9413ea4ee",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "82a2ffda266d898b782d6ac2bbdd814480a0c3514ab29fef957f4aa9413ea4ee",
+          "kind": "theorem",
           "text": "theorem budget_partition_basis (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : ∃ b : Module.Basis (BudgetPartitions K) ℂ (Ch07.fixedBudget h N (K : ℤ)), ∀ p, (b p : Ch07.FockSpace h) = budgetPartitionState h N hN p"
         },
         "Bosonize.Ch11.budget_partition_gram": {
-          "kind": "lemma",
-          "hash": "5166668845bd6e7c63cdefcea35fc0e7fcc4b622a3337fb78afa0468c844fc98",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "5166668845bd6e7c63cdefcea35fc0e7fcc4b622a3337fb78afa0468c844fc98",
+          "kind": "lemma",
           "text": "lemma budget_partition_gram (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (p q : BudgetPartitions K) : inner ℂ (budgetPartitionState h N hN p) (budgetPartitionState h N hN q) = if p=q then (partitionNormalization p.2 : ℂ) else 0"
         },
         "Bosonize.Ch11.budget_partition_linear_independent": {
-          "kind": "lemma",
-          "hash": "d2b40ba271a62a4727c872f2e9f8edf3c1132251467bc5f00496d79faefb0501",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "d2b40ba271a62a4727c872f2e9f8edf3c1132251467bc5f00496d79faefb0501",
+          "kind": "lemma",
           "text": "lemma budget_partition_linear_independent (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : LinearIndependent ℂ (budgetPartitionState h N hN (K := K))"
         },
         "Bosonize.Ch11.budget_partition_mem": {
-          "kind": "lemma",
-          "hash": "e6b25f5add4a650e8159e24d53cc86115e31e696e771c5f684ca52f5d2d597ba",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "e6b25f5add4a650e8159e24d53cc86115e31e696e771c5f684ca52f5d2d597ba",
+          "kind": "lemma",
           "text": "lemma budget_partition_mem (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (p : BudgetPartitions K) : budgetPartitionState h N hN p ∈ Ch07.fixedBudget h N (K : ℤ)"
         },
         "Bosonize.Ch11.budget_partition_spanning": {
-          "kind": "theorem",
-          "hash": "1161f26e0b8bc758da6a13559d41111377657101e1a93677e9855a9476b69fd3",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "1161f26e0b8bc758da6a13559d41111377657101e1a93677e9855a9476b69fd3",
+          "kind": "theorem",
           "text": "theorem budget_partition_spanning (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : Submodule.span ℂ (Set.range (budgetPartitionState h N hN (K := K))) = Ch07.fixedBudget h N (K : ℤ)"
         },
         "Bosonize.Ch11.creator_word_cons": {
-          "kind": "lemma",
-          "hash": "83df8440fbc17b4441a80bb10c36ab97403614f4fb524f8ecffbbb66d21b5739",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "83df8440fbc17b4441a80bb10c36ab97403614f4fb524f8ecffbbb66d21b5739",
+          "kind": "lemma",
           "text": "lemma creator_word_cons (h m : ℕ) (parts : List ℕ) : creatorWord h (m::parts) = Ch09.rho h (m : ℤ) * creatorWord h parts"
         },
         "Bosonize.Ch11.creator_word_exact_shift": {
-          "kind": "lemma",
-          "hash": "1816fac556868c9159f0634e45d2a8288dd3f7a76c4238d06b540e5dd7562f73",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "1816fac556868c9159f0634e45d2a8288dd3f7a76c4238d06b540e5dd7562f73",
+          "kind": "lemma",
           "text": "lemma creator_word_exact_shift (h : ℕ) (parts : List ℕ) : A03.ExactShift (Ch07.relativeCharge h) (Ch07.excitationEnergy h) (creatorWord h parts) 0 (parts.sum : ℤ)"
         },
         "Bosonize.Ch11.creator_word_nil": {
-          "kind": "lemma",
-          "hash": "59b84d8678e71ed0ac9421b300716ac798fb1bac9c45020ec2fe4d698da834b6",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "59b84d8678e71ed0ac9421b300716ac798fb1bac9c45020ec2fe4d698da834b6",
+          "kind": "lemma",
           "text": "lemma creator_word_nil (h : ℕ) : creatorWord h [] = 1"
         },
         "Bosonize.Ch11.creator_word_perm": {
-          "kind": "lemma",
-          "hash": "0fe64821268d24d1473c06a08ec2d9711f71ddcd121e2ece020945c197d5ff53",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "0fe64821268d24d1473c06a08ec2d9711f71ddcd121e2ece020945c197d5ff53",
+          "kind": "lemma",
           "text": "lemma creator_word_perm (h : ℕ) (parts other : List ℕ) (hp : parts.Perm other) : creatorWord h parts = creatorWord h other"
         },
         "Bosonize.Ch11.fixed_energy_basis": {
-          "kind": "theorem",
-          "hash": "55697d0b5ce1ee2016e297b29efe6c85d8f7cf2440f35ef879792de3dc218353",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "55697d0b5ce1ee2016e297b29efe6c85d8f7cf2440f35ef879792de3dc218353",
+          "kind": "theorem",
           "text": "theorem fixed_energy_basis (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : ∃ b : Module.Basis (Nat.Partition K) ℂ (Ch07.energySpace h N (K : ℤ)), ∀ p, (b p : Ch07.FockSpace h) = partitionState h N hN p"
         },
         "Bosonize.Ch11.fixed_energy_spanning": {
-          "kind": "theorem",
-          "hash": "49b7add6fbe575ef5e60c0236ec41234b4dba90fa44a6dde9bee463eea10cf45",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "49b7add6fbe575ef5e60c0236ec41234b4dba90fa44a6dde9bee463eea10cf45",
+          "kind": "theorem",
           "text": "theorem fixed_energy_spanning (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : Submodule.span ℂ (Set.range (partitionState h N hN (E := K))) = Ch07.energySpace h N (K : ℤ)"
         },
         "Bosonize.Ch11.ground_inner_ground": {
-          "kind": "lemma",
-          "hash": "2c6a6e80c878cad3d6a1d4818c5fe01a313c8f868a3b202537811475a21870a4",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "2c6a6e80c878cad3d6a1d4818c5fe01a313c8f868a3b202537811475a21870a4",
+          "kind": "lemma",
           "text": "lemma ground_inner_ground (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N) : inner ℂ (Ch07.groundKet h N hN) (Ch07.groundKet h N hN) = 1"
         },
         "Bosonize.Ch11.ground_inner_word_zero": {
-          "kind": "lemma",
-          "hash": "86394230e13128924b9db3659a588bda0cf4eba9ec3089eed657cf95d6e0598e",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "86394230e13128924b9db3659a588bda0cf4eba9ec3089eed657cf95d6e0598e",
+          "kind": "lemma",
           "text": "lemma ground_inner_word_zero (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (parts : List ℕ) (hE : 0 < parts.sum) : inner ℂ (Ch07.groundKet h N hN) (wordState h N hN parts) = 0"
         },
         "Bosonize.Ch11.hall_factor_cons": {
-          "kind": "lemma",
-          "hash": "c6e2a88502d2ee4beb8a8d4b191b29929eff0664ec3c7a61c6a69726601202b8",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "c6e2a88502d2ee4beb8a8d4b191b29929eff0664ec3c7a61c6a69726601202b8",
+          "kind": "lemma",
           "text": "lemma hall_factor_cons (m : ℕ) (parts : Multiset ℕ) : hallFactor (m ::ₘ parts) = m*(parts.count m+1)*hallFactor parts"
         },
         "Bosonize.Ch11.hall_factor_positive": {
-          "kind": "lemma",
-          "hash": "25d8b395e709c7f336c1bd92e4f521536f9fb9124f3de77a792304af2e4cdc51",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "25d8b395e709c7f336c1bd92e4f521536f9fb9124f3de77a792304af2e4cdc51",
+          "kind": "lemma",
           "text": "lemma hall_factor_positive (parts : Multiset ℕ) (hpos : ∀ m ∈ parts, 0 < m) : 0 < hallFactor parts"
         },
         "Bosonize.Ch11.lowering_cons": {
-          "kind": "lemma",
-          "hash": "ba28a01a085034fb5ea17b38d6a4bfaacc4d035c14eda04c8eae3701ad28d6fc",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "ba28a01a085034fb5ea17b38d6a4bfaacc4d035c14eda04c8eae3701ad28d6fc",
+          "kind": "lemma",
           "text": "lemma lowering_cons (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (m n : ℕ) (hm : 0 < m) (hn : 0 < n) (parts : List ℕ) (hmargin : (m : ℤ)+(n : ℤ)+(parts.sum : ℤ)+|N| ≤ (h : ℤ)) : Ch09.rho h (-(m : ℤ)) (wordState h N hN (n::parts)) = Ch09.rho h (n : ℤ) (Ch09.rho h (-(m : ℤ)) (wordState h N hN parts)) + (if m=n then (m : ℂ) else 0) • wordState h N hN parts"
         },
         "Bosonize.Ch11.lowering_through_word": {
-          "kind": "lemma",
-          "hash": "237419f4c6b60863b201efa5f31b55ab0df1f0bdefd3520711e4a734d7aaf50f",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "237419f4c6b60863b201efa5f31b55ab0df1f0bdefd3520711e4a734d7aaf50f",
+          "kind": "lemma",
           "text": "lemma lowering_through_word (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K m : ℕ) (hm : 0 < m) (hmK : m ≤ K) (parts : List ℕ) (hpos : ∀ n ∈ parts, 0 < n) (hE : parts.sum ≤ K) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : Ch09.rho h (-(m : ℤ)) (wordState h N hN parts) = ∑ i : Fin parts.length, if parts[i] = m then (m : ℂ) • wordState h N hN (parts.eraseIdx i.val) else 0"
         },
         "Bosonize.Ch11.lowering_through_word_erase": {
-          "kind": "lemma",
-          "hash": "dde128aa1d9231ec00dd0b0b14c58462b1a774dfc0285a46ee77c9d82da23671",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "dde128aa1d9231ec00dd0b0b14c58462b1a774dfc0285a46ee77c9d82da23671",
+          "kind": "lemma",
           "text": "lemma lowering_through_word_erase (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K m : ℕ) (hm : 0 < m) (hmK : m ≤ K) (parts : List ℕ) (hpos : ∀ n ∈ parts, 0 < n) (hE : parts.sum ≤ K) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : Ch09.rho h (-(m : ℤ)) (wordState h N hN parts) = (m*parts.count m : ℕ) • wordState h N hN (parts.erase m)"
         },
         "Bosonize.Ch11.partition_gram": {
-          "kind": "theorem",
-          "hash": "1c5dcbed325f2b1e88c8bffc94810e13be74fdd6bc9b63ce516d7d22fde04449",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "1c5dcbed325f2b1e88c8bffc94810e13be74fdd6bc9b63ce516d7d22fde04449",
+          "kind": "theorem",
           "text": "theorem partition_gram (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (p q : Nat.Partition K) : inner ℂ (partitionState h N hN p) (partitionState h N hN q) = if p=q then (partitionNormalization p : ℂ) else 0"
         },
         "Bosonize.Ch11.partition_list_multiset": {
-          "kind": "lemma",
-          "hash": "5e07d38818d0487ade2799b0a3e72a20ce23cb3de48526ec8e3376db02e22912",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "5e07d38818d0487ade2799b0a3e72a20ce23cb3de48526ec8e3376db02e22912",
+          "kind": "lemma",
           "text": "lemma partition_list_multiset {E : ℕ} (p : Nat.Partition E) : (partitionList p : Multiset ℕ) = p.parts"
         },
         "Bosonize.Ch11.partition_list_positive": {
-          "kind": "lemma",
-          "hash": "c391a58b400005956b63fe4b4f47731ff1af89ff559a180b0da6d6754e2b2cd3",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "c391a58b400005956b63fe4b4f47731ff1af89ff559a180b0da6d6754e2b2cd3",
+          "kind": "lemma",
           "text": "lemma partition_list_positive {E : ℕ} (p : Nat.Partition E) : ∀ m ∈ partitionList p, 0 < m"
         },
         "Bosonize.Ch11.partition_list_sum": {
-          "kind": "lemma",
-          "hash": "9a7b334e9e4d5e5492de06ad9b2ec65447a741b3f6c382511aee70a7714370e5",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "9a7b334e9e4d5e5492de06ad9b2ec65447a741b3f6c382511aee70a7714370e5",
+          "kind": "lemma",
           "text": "lemma partition_list_sum {E : ℕ} (p : Nat.Partition E) : (partitionList p).sum = E"
         },
         "Bosonize.Ch11.partition_state_mem_energy": {
-          "kind": "lemma",
-          "hash": "40765a4e73600b5c3c6c9bf37700953825a4693d1a2b3a70acdd041c59af8e54",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "40765a4e73600b5c3c6c9bf37700953825a4693d1a2b3a70acdd041c59af8e54",
+          "kind": "lemma",
           "text": "lemma partition_state_mem_energy (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) {E : ℕ} (p : Nat.Partition E) : partitionState h N hN p ∈ Ch07.energySpace h N (E : ℤ)"
         },
         "Bosonize.Ch11.partition_state_ne_zero": {
-          "kind": "lemma",
-          "hash": "08111b566f9e4cc8c12ae77124750d75f58fe49e98e162b4179969627896fe9a",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "08111b566f9e4cc8c12ae77124750d75f58fe49e98e162b4179969627896fe9a",
+          "kind": "lemma",
           "text": "lemma partition_state_ne_zero (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (p : Nat.Partition K) : partitionState h N hN p ≠ 0"
         },
         "Bosonize.Ch11.partition_state_order_independent": {
-          "kind": "lemma",
-          "hash": "25c3c4d7141f8d737533dd2ed6657e54e7824618d98e1cc4aeca6b79463b05bd",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "25c3c4d7141f8d737533dd2ed6657e54e7824618d98e1cc4aeca6b79463b05bd",
+          "kind": "lemma",
           "text": "lemma partition_state_order_independent (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N) {E : ℕ} (p : Nat.Partition E) (parts : List ℕ) (hp : (parts : Multiset ℕ) = p.parts) : wordState h N hN parts = partitionState h N hN p"
         },
         "Bosonize.Ch11.partition_states_linear_independent": {
-          "kind": "lemma",
-          "hash": "4a46896238a9329d31bcda70dd5a12344fd17c2e21629a65c95e216cc456671d",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "4a46896238a9329d31bcda70dd5a12344fd17c2e21629a65c95e216cc456671d",
+          "kind": "lemma",
           "text": "lemma partition_states_linear_independent (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : LinearIndependent ℂ (partitionState h N hN (E := K))"
         },
         "Bosonize.Ch11.r2_implies_r1": {
-          "kind": "lemma",
-          "hash": "eb0d39853108a81fde5df3c3687e826474dcbd446c361562446673663af9bcd1",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "eb0d39853108a81fde5df3c3687e826474dcbd446c361562446673663af9bcd1",
+          "kind": "lemma",
           "text": "lemma r2_implies_r1 (h K : ℕ) (N : ℤ) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : (K : ℤ) ≤ min ((h : ℤ)+N) ((h : ℤ)-N)"
         },
         "Bosonize.Ch11.remainder_ccr": {
-          "kind": "lemma",
-          "hash": "64ba1e044be517914bbd647fd8ce7d36047ddcf9da360f1cdabeed4c6217cd94",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "64ba1e044be517914bbd647fd8ce7d36047ddcf9da360f1cdabeed4c6217cd94",
+          "kind": "lemma",
           "text": "lemma remainder_ccr (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (m n : ℕ) (hm : 0 < m) (hn : 0 < n) (parts : List ℕ) (hmargin : (m : ℤ)+(n : ℤ)+(parts.sum : ℤ)+|N| ≤ (h : ℤ)) : A02.commutator (Ch09.rho h (-(m : ℤ))) (Ch09.rho h (n : ℤ)) (wordState h N hN parts) = (if m=n then (m : ℂ) else 0) • wordState h N hN parts"
         },
         "Bosonize.Ch11.right_remainder_margin": {
-          "kind": "lemma",
-          "hash": "ef9c49aa0cd0f6a16c6a317fb261cf41cca5ab92e6ad3a75b8d297058d9171dd",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "ef9c49aa0cd0f6a16c6a317fb261cf41cca5ab92e6ad3a75b8d297058d9171dd",
+          "kind": "lemma",
           "text": "lemma right_remainder_margin (h K m n : ℕ) (N : ℤ) (parts : List ℕ) (hm : m ≤ K) (hn : n+parts.sum ≤ K) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : (m : ℤ)+(n : ℤ)+(parts.sum : ℤ)+|N| ≤ (h : ℤ)"
         },
         "Bosonize.Ch11.word_gram": {
-          "kind": "lemma",
-          "hash": "acb819e977fb8aee89bd62ee55b5712e7b16b833e136b87e263f32fd241689c8",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "acb819e977fb8aee89bd62ee55b5712e7b16b833e136b87e263f32fd241689c8",
+          "kind": "lemma",
           "text": "lemma word_gram (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K : ℕ) (left right : List ℕ) (hl : ∀ m ∈ left, 0 < m) (hr : ∀ m ∈ right, 0 < m) (hlK : left.sum ≤ K) (hrK : right.sum ≤ K) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : inner ℂ (wordState h N hN left) (wordState h N hN right) = if (left : Multiset ℕ) = (right : Multiset ℕ) then (hallFactor (left : Multiset ℕ) : ℂ) else 0"
         },
         "Bosonize.Ch11.word_inner_cons": {
-          "kind": "lemma",
-          "hash": "521c63bd18f3fd6680f28f73963d63b9ab4ad19c8a4ba8894a50f59b431b2ad1",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "521c63bd18f3fd6680f28f73963d63b9ab4ad19c8a4ba8894a50f59b431b2ad1",
+          "kind": "lemma",
           "text": "lemma word_inner_cons (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N) (m : ℕ) (left right : List ℕ) : inner ℂ (wordState h N hN (m::left)) (wordState h N hN right) = inner ℂ (wordState h N hN left) (Ch09.rho h (-(m : ℤ)) (wordState h N hN right))"
         },
         "Bosonize.Ch11.word_state_cons": {
-          "kind": "lemma",
-          "hash": "8bf64f759d01613e4947bf2e925a57eefece0bfef735b3cab4fc5955880d0874",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "8bf64f759d01613e4947bf2e925a57eefece0bfef735b3cab4fc5955880d0874",
+          "kind": "lemma",
           "text": "lemma word_state_cons (h m : ℕ) (N : ℤ) (hN : Ch07.admissible h N) (parts : List ℕ) : wordState h N hN (m::parts) = Ch09.rho h (m : ℤ) (wordState h N hN parts)"
         },
         "Bosonize.Ch11.word_state_cons_erase": {
-          "kind": "lemma",
-          "hash": "f5b89bc587e9b81edb1c51d4db5378f64d77cfd6824465309bcaa73f2ed602f8",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "f5b89bc587e9b81edb1c51d4db5378f64d77cfd6824465309bcaa73f2ed602f8",
+          "kind": "lemma",
           "text": "lemma word_state_cons_erase (h m : ℕ) (N : ℤ) (hN : Ch07.admissible h N) (parts : List ℕ) (hm : m ∈ parts) : wordState h N hN parts = Ch09.rho h (m : ℤ) (wordState h N hN (parts.erase m))"
         },
         "Bosonize.Ch11.word_state_mem_budget": {
-          "kind": "lemma",
-          "hash": "d2a315ca54517ad6b1fbfcd65a1aedaee760b3b80d4654cf5e03425a57a012aa",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "d2a315ca54517ad6b1fbfcd65a1aedaee760b3b80d4654cf5e03425a57a012aa",
+          "kind": "lemma",
           "text": "lemma word_state_mem_budget (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (parts : List ℕ) (K : ℕ) (hK : parts.sum ≤ K) : wordState h N hN parts ∈ Ch07.fixedBudget h N (K : ℤ)"
         },
         "Bosonize.Ch11.word_state_mem_energy": {
-          "kind": "lemma",
-          "hash": "735cc1727222e039c850b77e91394065167b5126e620a0ffbcda80c3f87fee2b",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "735cc1727222e039c850b77e91394065167b5126e620a0ffbcda80c3f87fee2b",
+          "kind": "lemma",
           "text": "lemma word_state_mem_energy (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (parts : List ℕ) : wordState h N hN parts ∈ Ch07.energySpace h N (parts.sum : ℤ)"
         },
         "Bosonize.Ch11.word_state_nil": {
-          "kind": "lemma",
-          "hash": "bbaa8cfa5d940c9d622a93709d7e28ee822c4ec539b49c663b8a31509f1dfd5f",
           "ctx": "a71fd02bb1fabcc6cc36d9c8ba0aa7ec679306742afb814d94b6d6e5bee16ba5",
+          "hash": "bbaa8cfa5d940c9d622a93709d7e28ee822c4ec539b49c663b8a31509f1dfd5f",
+          "kind": "lemma",
           "text": "lemma word_state_nil (h : ℕ) (N : ℤ) (hN : Ch07.admissible h N) : wordState h N hN [] = Ch07.groundKet h N hN"
+        }
+      }
+    },
+    "BosonizeStubs/Ch12Sugawara.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "a4af2350d47ea8cea8b433da154a6dcd4a9992446c540c3fca951c58db6ca360",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch11HaldaneCompleteness",
+          "text": "import Bosonize.Core.Ch11HaldaneCompleteness"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "ce5b8229edd10386bc19bcfc95218126ad5c252613a2224d9a95617e0fc5cb84",
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch12",
+          "text": "namespace Bosonize.Ch12"
+        },
+        {
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "hash": "69842c88fadac2030427b4a40c244e3b83be1ba94c15cfe7e3d5238f3f6b205e",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch12.FockSpace",
+          "text": "abbrev FockSpace (h : ℕ) := Ch07.FockSpace h"
+        },
+        {
+          "hash": "310aa80a1e81e306782039e5a41e2f791c76dd12672f71c29f6aac500d79b60e",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch12.Operators",
+          "text": "abbrev Operators (h : ℕ) := Ch07.Operators h"
+        },
+        {
+          "hash": "9db1fc326c26fbe3d7e1acf220536bd7391748202d65e37666afca2ca99e48d5",
+          "kind": "def",
+          "label": "def Bosonize.Ch12.sugawaraHamiltonian",
+          "text": "noncomputable def sugawaraHamiltonian (h M : ℕ) : Operators h :=\n  ∑ m ∈ Finset.Icc 1 M, Ch09.rho h (m : ℤ) * Ch09.rho h (-(m : ℤ))"
+        },
+        {
+          "hash": "c3711762d80f3dfeaa577d3f04f92b90bcd8005f99e776ba2e87e6f651811fd6",
+          "kind": "def",
+          "label": "def Bosonize.Ch12.physicalRelativeHamiltonian",
+          "text": "noncomputable def physicalRelativeHamiltonian (h : ℕ) (β : ℝ) : Operators h :=\n  Ch09.physicalHamiltonian h β -\n    (Ch06Ext.physicalOccupationEnergy (2*h) β (Ch05.seaConfiguration (2*h)) : ℂ) • 1"
+        },
+        {
+          "hash": "e7ecaa384c3ea8fb2fddfb13596a98bfe6751d78bcac8be9e03fec5ce4e430d0",
+          "kind": "def",
+          "label": "def Bosonize.Ch12.physicalExcitationObservable",
+          "text": "noncomputable def physicalExcitationObservable (h : ℕ) (β : ℝ) : Operators h :=\n  physicalRelativeHamiltonian h β - A03.diagonal (fun S =>\n    (Ch06Ext.physicalGroundEnergy β (Ch07.relativeCharge h S) : ℂ))"
+        },
+        {
+          "hash": "1d2d006d65fa5c05f9bf5fd7d6e84c6000bbcf50ce554e0be1ac0353bed61c91",
+          "kind": "end",
+          "label": "end Bosonize.Ch12",
+          "text": "end Bosonize.Ch12"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch12.density_bilinear_word": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "5defdcf371291468953b90f86955ff3b6ff004fc54c04d59452fac212c017061",
+          "kind": "lemma",
+          "text": "lemma density_bilinear_word (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K m : ℕ) (hm : 0 < m) (hmK : m ≤ K) (parts : List ℕ) (hE : parts.sum ≤ K) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : (Ch09.rho h (m : ℤ) * Ch09.rho h (-(m : ℤ))) (Ch11.wordState h N hN parts) = ((m*parts.count m : ℕ) : ℂ) • Ch11.wordState h N hN parts"
+        },
+        "Bosonize.Ch12.excitation_energy_space": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "297dbde68d287c0f82feb8bda68cec915bee0f353dbebd4165a2d59d8886093c",
+          "kind": "lemma",
+          "text": "lemma excitation_energy_space (h : ℕ) (N E : ℤ) (v : FockSpace h) (hv : v ∈ Ch07.energySpace h N E) : Ch07.excitationObservable h v = (E : ℂ) • v"
+        },
+        "Bosonize.Ch12.excitation_partition_eigenvalue": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "963ad8a7f3e865866728b42c22684545ae717ea3aebfe93955f13f2e777cf293",
+          "kind": "lemma",
+          "text": "lemma excitation_partition_eigenvalue (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (E : ℕ) (p : Nat.Partition E) : Ch07.excitationObservable h (Ch11.partitionState h N hN p) = (E : ℂ) • Ch11.partitionState h N hN p"
+        },
+        "Bosonize.Ch12.ground_energy_complex": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "b7c182e2731d20d7599d44174dcfeb9dc7238e801d0585e0000f369ace64679d",
+          "kind": "lemma",
+          "text": "lemma ground_energy_complex (N : ℤ) : (Ch07.groundEnergy N : ℂ) = (N : ℂ)*((N : ℂ)+1)/2"
+        },
+        "Bosonize.Ch12.inactive_mode_zero": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "436b7071df5161e81a387d3add961b99622a80d3c026b9730095b3e2f6b3747c",
+          "kind": "lemma",
+          "text": "lemma inactive_mode_zero (h : ℕ) (hh : 0 < h) (N : ℤ) (K m : ℕ) (hm : K < m) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : (Ch09.rho h (m : ℤ) * Ch09.rho h (-(m : ℤ))) v = 0"
+        },
+        "Bosonize.Ch12.physical_excitation_cancel": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "1e76912309410942ae823a1f2c0bc5676c19f476a43e8e0c53fa6c2116d39247",
+          "kind": "lemma",
+          "text": "lemma physical_excitation_cancel (h : ℕ) (hh : 0 < h) (β : ℝ) : physicalExcitationObservable h β = Ch07.excitationObservable h"
+        },
+        "Bosonize.Ch12.physical_relative_budget": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "0c5944eba0809cf5ce004968f7caadffe4d1480f56ee990c25a8695881688978",
+          "kind": "lemma",
+          "text": "lemma physical_relative_budget (h : ℕ) (hh : 0 < h) (β : ℝ) (N : ℤ) (K : ℕ) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : physicalRelativeHamiltonian h β v = Ch05.shiftedHamiltonian (2*h) v + ((β : ℂ)*(N : ℂ)) • v"
+        },
+        "Bosonize.Ch12.physical_sugawara_budget": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "beda7bfbeb172380fe88896ff68e94f9a4f442ee010b29d66aa0c2b530f4ce5e",
+          "kind": "theorem",
+          "text": "theorem physical_sugawara_budget (h : ℕ) (hh : 0 < h) (β : ℝ) (N : ℤ) (hN : Ch07.admissible h N) (K M : ℕ) (hM : K ≤ M) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : physicalRelativeHamiltonian h β v = sugawaraHamiltonian h M v + (Ch06Ext.physicalGroundEnergy β N : ℂ) • v"
+        },
+        "Bosonize.Ch12.positive_word_weight": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "56bc31ca98c2308b76583c67ec2fb4275c249c4e7c0def3c0828ca1e96255c18",
+          "kind": "lemma",
+          "text": "lemma positive_word_weight (K : ℕ) (parts : List ℕ) (hE : parts.sum ≤ K) : ∑ m ∈ Finset.Icc 1 K, m*parts.count m = parts.sum"
+        },
+        "Bosonize.Ch12.relative_energy_budget": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "58bc307e917da25c2add474ab3ea3061835af119ad55bc4e2c41afa057236960",
+          "kind": "lemma",
+          "text": "lemma relative_energy_budget (h : ℕ) (N : ℤ) (K : ℕ) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : Ch05.shiftedHamiltonian (2*h) v = Ch07.excitationObservable h v + (Ch07.groundEnergy N : ℂ) • v"
+        },
+        "Bosonize.Ch12.sugawara_adjoint": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "c7236188426ade659524f34bf46dd9d7e942cdba2bc51ce36cb1e4c4e869a059",
+          "kind": "lemma",
+          "text": "lemma sugawara_adjoint (h M : ℕ) : LinearMap.adjoint (sugawaraHamiltonian h M) = sugawaraHamiltonian h M"
+        },
+        "Bosonize.Ch12.sugawara_apply": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "bd6c15b84d9270729a2187188af3467c6af0586e1c1cf2eb0d9653a5d534de62",
+          "kind": "lemma",
+          "text": "lemma sugawara_apply (h M : ℕ) (v : FockSpace h) : sugawaraHamiltonian h M v = ∑ m ∈ Finset.Icc 1 M, Ch09.rho h (m : ℤ) (Ch09.rho h (-(m : ℤ)) v)"
+        },
+        "Bosonize.Ch12.sugawara_budget_partition_eigenvalue": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "a41b0b3898199650de659cbef48ca584e5c5357c29741a96f142e791744c3bc5",
+          "kind": "lemma",
+          "text": "lemma sugawara_budget_partition_eigenvalue (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K M : ℕ) (hM : K ≤ M) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (p : Ch11.BudgetPartitions K) : sugawaraHamiltonian h M (Ch11.budgetPartitionState h N hN p) = (p.1.val : ℂ) • Ch11.budgetPartitionState h N hN p"
+        },
+        "Bosonize.Ch12.sugawara_commutator_witness": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "a2ce22800ecab96814cf655a7f4829b1ef485a78d71fa7bac90ed664fd62465f",
+          "kind": "lemma",
+          "text": "lemma sugawara_commutator_witness (h : ℕ) (hh : 0 < h) (M n : ℕ) (hn : 0 < n) (hM : n ≤ M) (hR2 : 2*n ≤ h) : ∃ v : FockSpace h, v ∈ Ch07.fixedBudget h 0 0 ∧ v ≠ 0 ∧ Ch09.rho h (n : ℤ) v ≠ 0 ∧ A02.commutator (sugawaraHamiltonian h M) (Ch09.rho h (n : ℤ)) v ≠ 0"
+        },
+        "Bosonize.Ch12.sugawara_cutoff_budget": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "6a21d45f63b54f1f8ba86390bf8b958dc2509c51f5be8075d3aa67cbed2aec27",
+          "kind": "lemma",
+          "text": "lemma sugawara_cutoff_budget (h : ℕ) (hh : 0 < h) (N : ℤ) (K M : ℕ) (hM : K ≤ M) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : sugawaraHamiltonian h M v = sugawaraHamiltonian h K v"
+        },
+        "Bosonize.Ch12.sugawara_cutoff_independent": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "ac42f7bffcc600b41d603dc53cc2a265b7ae9612ea86cc8f22da9ceee94a484e",
+          "kind": "lemma",
+          "text": "lemma sugawara_cutoff_independent (h : ℕ) (hh : 0 < h) (N : ℤ) (K M M' : ℕ) (hM : K ≤ M) (hM' : K ≤ M') (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : sugawaraHamiltonian h M v = sugawaraHamiltonian h M' v"
+        },
+        "Bosonize.Ch12.sugawara_equivalence": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "f2cf1c9d778d2c5eaa56c6a2380fd6a3d9a4b3bd9221ae68a7a1851f712d3c0a",
+          "kind": "theorem",
+          "text": "theorem sugawara_equivalence (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K M : ℕ) (hM : K ≤ M) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : Ch07.excitationObservable h v = sugawaraHamiltonian h M v"
+        },
+        "Bosonize.Ch12.sugawara_excited_witness": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "b025f076effc81f48f454a0cbf913600d374c74970471077b828500048d3f03f",
+          "kind": "lemma",
+          "text": "lemma sugawara_excited_witness (h : ℕ) (hh : 0 < h) (K M m : ℕ) (hm : 0 < m) (hmK : m ≤ K) (hM : K ≤ M) (hR2 : 2*K ≤ h) : ∃ v : FockSpace h, v ∈ Ch07.fixedBudget h 0 (K : ℤ) ∧ v ≠ 0 ∧ sugawaraHamiltonian h M v = (m : ℂ) • v ∧ sugawaraHamiltonian h M v ≠ 0"
+        },
+        "Bosonize.Ch12.sugawara_ground": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "9eb6f1d3ed0a388154c333e39041737f78a8328c008d039bdb76de453e23f098",
+          "kind": "lemma",
+          "text": "lemma sugawara_ground (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (M : ℕ) : sugawaraHamiltonian h M (Ch07.groundKet h N hN) = 0"
+        },
+        "Bosonize.Ch12.sugawara_inner": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "9709e475da0ca236c32a4a65e9d8965394d3dc30b962186bcad18f49223aec92",
+          "kind": "lemma",
+          "text": "lemma sugawara_inner (h M : ℕ) (v : FockSpace h) : inner ℂ v (sugawaraHamiltonian h M v) = ∑ m ∈ Finset.Icc 1 M, inner ℂ (Ch09.rho h (-(m : ℤ)) v) (Ch09.rho h (-(m : ℤ)) v)"
+        },
+        "Bosonize.Ch12.sugawara_partition_eigenvalue": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "4c09a91aca9058aca8d2e9c4be61d1269d802e0440030a100224ead4d142e563",
+          "kind": "lemma",
+          "text": "lemma sugawara_partition_eigenvalue (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K M E : ℕ) (hEK : E ≤ K) (hM : K ≤ M) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (p : Nat.Partition E) : sugawaraHamiltonian h M (Ch11.partitionState h N hN p) = (E : ℂ) • Ch11.partitionState h N hN p"
+        },
+        "Bosonize.Ch12.sugawara_raising_commutator": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "4c4ba0c4d6c154a61378f9c4adcaa4900eeead5ba3faae5bcc9137f7b9aeaec2",
+          "kind": "theorem",
+          "text": "theorem sugawara_raising_commutator (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K M n : ℕ) (hM : K+n ≤ M) (hR2 : 2*((K+n : ℕ) : ℤ)+|N| ≤ (h : ℤ)) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : A02.commutator (sugawaraHamiltonian h M) (Ch09.rho h (n : ℤ)) v = (n : ℂ) • Ch09.rho h (n : ℤ) v"
+        },
+        "Bosonize.Ch12.sugawara_relative_hamiltonian": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "36cb0c0bd2205243ba5af2623efb66618925f0a2ff1f7c7b2a19518acf4581cf",
+          "kind": "theorem",
+          "text": "theorem sugawara_relative_hamiltonian (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K M : ℕ) (hM : K ≤ M) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : Ch05.shiftedHamiltonian (2*h) v = (sugawaraHamiltonian h M + ((N : ℂ)*((N : ℂ)+1)/2) • 1) v"
+        },
+        "Bosonize.Ch12.sugawara_signed_commutator": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "72183477d8c21366a2211313c8ad07c8cbaf321ffaa7238208cd687eba48285a",
+          "kind": "theorem",
+          "text": "theorem sugawara_signed_commutator (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K J M : ℕ) (n : ℤ) (hshift : (K : ℤ)+n ≤ (J : ℤ)) (hMK : K ≤ M) (hMJ : J ≤ M) (hsource : 2*(K : ℤ)+|N| ≤ (h : ℤ)) (htarget : 2*(J : ℤ)+|N| ≤ (h : ℤ)) (v : FockSpace h) (hv : v ∈ Ch07.fixedBudget h N (K : ℤ)) : A02.commutator (sugawaraHamiltonian h M) (Ch09.rho h n) v = (n : ℂ) • Ch09.rho h n v"
+        },
+        "Bosonize.Ch12.sugawara_word_eigenvalue": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "709d34120895b984e80fdbd650aacc968c7e07d3d01f8a472ecdcfacc97047c8",
+          "kind": "lemma",
+          "text": "lemma sugawara_word_eigenvalue (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N) (K M : ℕ) (hM : K ≤ M) (parts : List ℕ) (hE : parts.sum ≤ K) (hR2 : 2*(K : ℤ)+|N| ≤ (h : ℤ)) : sugawaraHamiltonian h M (Ch11.wordState h N hN parts) = (parts.sum : ℂ) • Ch11.wordState h N hN parts"
+        },
+        "Bosonize.Ch12.sugawara_zero": {
+          "ctx": "96d18962d3ad94b377fe09ac8caccda9af7db4a4e195718365ede2db94399b6a",
+          "hash": "7576ec2320d65d646cb5e0e4788c330e0efadd2e46b5bebaa3ec3aa03dd97a1c",
+          "kind": "lemma",
+          "text": "lemma sugawara_zero (h : ℕ) : sugawaraHamiltonian h 0 = 0"
         }
       }
     }

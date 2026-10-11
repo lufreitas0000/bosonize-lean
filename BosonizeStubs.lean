@@ -5,3 +5,5 @@ import Bosonize
 Aggregator for the draft definitions and theorem signatures.
 This library may contain `sorry` placeholders.
 -/
+
+import BosonizeStubs.Ch12Sugawara
