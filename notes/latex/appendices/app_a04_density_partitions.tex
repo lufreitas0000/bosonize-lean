@@ -1,16 +1,305 @@
-\chapter{Current Margins, Density Kinematics, and Partition Combinatorics}
+\chapter[Current Margins, Kinematics, and Partitions]{Current Margins, Density Kinematics, and Partition Combinatorics}
 \label{app:density_partitions}
 
-\section{Overview and Purpose}
-This appendix supplies the detailed combinatorial and algebraic lemmas underlying the Heisenberg algebra (Chapter~\ref{ch:heisenberg_algebra}) and Haldane completeness (Chapter~\ref{ch:haldane_completeness}). It covers margin tracking, non-wrapping density kinematics, and the particle-hole partition bijection.
+\section{Introduction and Scope}
 
-\section{Core Properties}
-\begin{itemize}
-    \item \textbf{Non-Wrapping Kinematics:} Proof that density shifts $k \mapsto k \ominus m$ do not wrap around the Brillouin zone boundaries when operating on states satisfying the margin conditions.
-    \item \textbf{Exact Edge Domains:} Explicit computation of the top and bottom edge domains for commutators.
-    \item \textbf{Partition Bijection:} The bijective mapping between particle-hole excitation sequences and integer partitions $\lambda \vdash E$, establishing $\dim \mathcal{H}(N, E) = p(E)$.
-\end{itemize}
+This appendix provides the technical combinatorial and kinematic apparatus supporting the derivation of the $U(1)$ Kac--Moody (Heisenberg) algebra in Chapter~\ref{ch:heisenberg_algebra} and the proof of Haldane completeness in Chapter~\ref{ch:haldane_completeness}.
+
+In conventional field theory, the Schwinger term $[J(x), J(y)] = \frac{i}{2\pi} \delta'(x - y)$ is derived by regularizing singular operator products (e.g., via point-splitting or $\zeta$-function regularization). In our constructive finite-lattice framework, all operators are finite-dimensional endomorphisms on the $2^{2h}$-dimensional Fock space $\mathcal{F}(L)$. The central central term $m \delta_{m+n, 0}$ does not arise as an ultraviolet divergence, but as an exact boundary edge difference between deep Fermi sea saturation and high-energy empty modes.
+
+Here, we present the complete mathematical details of this construction across three integrated layers:
+\begin{enumerate}
+    \item \textbf{One-Particle Shift Kinematics:} The algebra of partial shift matrices $T_m$ and the second quantization Lie homomorphism $d\Gamma$.
+    \item \textbf{Exact Edge Domains and Current Margins:} The explicit derivation of the bottom-minus-top edge operator and the margin inequalities for Regimes M1 and M2.
+    \item \textbf{Partition Combinatorics and the Rectangle Bijection:} The constructive bijection between fermionic displacements and integer partitions, and the right-remainder Gram induction.
+\end{enumerate}
+
+\section[One-Particle Shift Matrices and the dGamma Lie Homomorphism]{One-Particle Shift Matrices and the $d\Gamma$ Lie Homomorphism}
+
+Let $h \ge 1$ and $L = 2h$. The asymmetric momentum band is $B = \{-h+1, \dots, h\}$.
+
+\begin{definition}[Valid Shift Pairs and Partial Shift Matrices]
+For any integer transfer $m \in \mathbb{Z}$:
+\begin{enumerate}
+    \item The \emph{valid transfer domain} $D_m \subseteq B \times B$ is:
+    \begin{equation}
+    D_m \coloneqq \left\{ (p, k) \in B \times B \mid p = k + m \right\}.
+    \end{equation}
+    \item The \emph{partial shift matrix} $T_m \in \operatorname{End}_{\mathbb{C}}(\mathbb{C}^B)$ is the $2h \times 2h$ matrix with entries:
+    \begin{equation}
+    (T_m)_{p, k} \coloneqq \begin{cases} 1, & \text{if } p = k + m, \\ 0, & \text{otherwise}. \end{cases}
+    \end{equation}
+    \item The \emph{second quantization map} $d\Gamma : \operatorname{End}_{\mathbb{C}}(\mathbb{C}^B) \to \operatorname{End}_{\mathbb{C}}(\mathcal{F}(L))$ is defined by:
+    \begin{equation}
+    d\Gamma(A) \coloneqq \sum_{p, k \in B} A_{p, k}\, c_p^\dagger c_k.
+    \end{equation}
+\end{enumerate}
+In particular, the non-wrapping density mode is $\rho_m = d\Gamma(T_m) = \sum_{(p, k) \in D_m} c_p^\dagger c_k$.
+\end{definition}
+
+\begin{lemma}[$d\Gamma$ Lie Algebra Homomorphism]
+\label{lem:app_dgamma_lie}
+The second quantization map $d\Gamma$ preserves matrix Lie brackets:
+\begin{equation}
+\left[ d\Gamma(A), \; d\Gamma(B) \right] = d\Gamma([A, B]) \quad \text{for all } A, B \in \operatorname{End}_{\mathbb{C}}(\mathbb{C}^B).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expanding the commutator of bilinears:
+\[
+[d\Gamma(A), d\Gamma(B)] = \sum_{p, k, q, l \in B} A_{p, k} B_{q, l} \left[ c_p^\dagger c_k, \; c_q^\dagger c_l \right].
+\]
+By the CAR bilinear commutator identity (Theorem~\ref{thm:app_bilinear_commutator}):
+\[
+[c_p^\dagger c_k, \; c_q^\dagger c_l] = \delta_{k, q} c_p^\dagger c_l - \delta_{p, l} c_q^\dagger c_k.
+\]
+Substituting this into the sum:
+\begin{align*}
+[d\Gamma(A), d\Gamma(B)] &= \sum_{p, k, l \in B} A_{p, k} B_{k, l} c_p^\dagger c_l - \sum_{k, q, l \in B} A_{l, k} B_{q, l} c_q^\dagger c_k \\
+&= \sum_{p, l \in B} (A B)_{p, l} c_p^\dagger c_l - \sum_{q, k \in B} (B A)_{q, k} c_q^\dagger c_k \\
+&= d\Gamma(A B) - d\Gamma(B A) = d\Gamma([A, B]).
+\end{align*}
+\end{proof}
+
+\begin{theorem}[Matrix Composition and Intermediate Indicators]
+\label{thm:app_shift_composition}
+Let $m, n \in \mathbb{Z}$. The product of two partial shift matrices has entries:
+\begin{equation}
+(T_m T_n)_{p, k} = \mathbf{1}_{p = k + m + n} \cdot \mathbf{1}_{k + n \in B}.
+\end{equation}
+Consequently:
+\begin{enumerate}
+    \item \textbf{Same-Sign Commutativity:} If $m, n \ge 0$ or $m, n \le 0$:
+    \begin{equation}
+    T_m T_n = T_{m+n} = T_n T_m \implies [\rho_m, \rho_n] = 0 \quad \text{globally on } \mathcal{F}(L).
+    \end{equation}
+    \item \textbf{General Matrix Commutator:} For any $m, n \in \mathbb{Z}$:
+    \begin{equation}
+    ([T_m, T_n])_{p, k} = \mathbf{1}_{p = k + m + n} \left( \mathbf{1}_{k + n \in B} - \mathbf{1}_{k + m \in B} \right).
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By matrix multiplication:
+\[
+(T_m T_n)_{p, k} = \sum_{j \in B} (T_m)_{p, j} (T_n)_{j, k} = \sum_{j \in B} \mathbf{1}_{p = j + m} \mathbf{1}_{j = k + n}.
+\]
+The summand is non-zero only if $j = k + n$ and $p = k + m + n$. Since $j \in B$, this requires $k + n \in B$.
+Hence $(T_m T_n)_{p, k} = \mathbf{1}_{p = k + m + n} \mathbf{1}_{k + n \in B}$.
+
+If $m, n \ge 0$, then $k \le k + n \le k + m + n = p$. Since $k, p \in B$ and $B = \{-h+1, \dots, h\}$ is an integer interval, the intermediate point $k + n$ automatically belongs to $B$. Hence $\mathbf{1}_{k + n \in B} = 1$, giving $T_m T_n = T_{m+n}$.
+By symmetry, $T_n T_m = T_{n+m} = T_{m+n}$, so $[T_m, T_n] = 0$.
+By Lemma~\ref{lem:app_dgamma_lie}, $[\rho_m, \rho_n] = d\Gamma([T_m, T_n]) = 0$.
+\end{proof}
+
+\section{Exact Edge Domains and the Schwinger Commutator}
+
+When $m$ and $n$ have opposite signs, the intermediate indicator $\mathbf{1}_{k+n \in B} - \mathbf{1}_{k+m \in B}$ does not vanish.
+Let $a = -h + 1$ and $b = h$ denote the bottom and top boundaries of the momentum band $B = [a, b]$.
+
+\begin{lemma}[Opposite Shift Commutator Matrix]
+\label{lem:app_opposite_shift_matrix}
+For positive integers $m, k \ge 1$:
+\begin{equation}
+([T_{-m}, T_k])_{p, q} = \mathbf{1}_{p = q + k - m} \left( \mathbf{1}_{q < a + m} - \mathbf{1}_{q > b - k} \right).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Setting $m \mapsto -m$ and $n \mapsto k$ in Theorem~\ref{thm:app_shift_composition}(2):
+\[
+([T_{-m}, T_k])_{p, q} = \mathbf{1}_{p = q + k - m} \left( \mathbf{1}_{q + k \in B} - \mathbf{1}_{q - m \in B} \right).
+\]
+Since $q \in B$ and $k \ge 1$, $q + k \ge a + 1 > a$, so $q + k \in B \iff q + k \le b \iff q \le b - k$. Thus $\mathbf{1}_{q+k \in B} = 1 - \mathbf{1}_{q > b - k}$.
+Similarly, since $q \in B$ and $m \ge 1$, $q - m \le b - 1 < b$, so $q - m \in B \iff q - m \ge a \iff q \ge a + m$. Thus $\mathbf{1}_{q-m \in B} = 1 - \mathbf{1}_{q < a + m}$.
+Subtracting the two indicators:
+\[
+\mathbf{1}_{q+k \in B} - \mathbf{1}_{q-m \in B} = (1 - \mathbf{1}_{q > b - k}) - (1 - \mathbf{1}_{q < a + m}) = \mathbf{1}_{q < a + m} - \mathbf{1}_{q > b - k}.
+\]
+\end{proof}
+
+\begin{theorem}[Diagonal Edge Operator Formula]
+\label{thm:app_diagonal_edge}
+For any mode $1 \le m \le h$, the matrix $[T_{-m}, T_m]$ is diagonal:
+\begin{equation}
+([T_{-m}, T_m])_{p, q} = \delta_{p, q} \left( \mathbf{1}_{q \in E_{\mathrm{bot}}(m)} - \mathbf{1}_{q \in E_{\mathrm{top}}(m)} \right),
+\end{equation}
+where the bottom and top edge zones are:
+\begin{align}
+E_{\mathrm{bot}}(m) &\coloneqq \{-h+1, -h+2, \dots, -h+m\}, \qquad \#E_{\mathrm{bot}}(m) = m, \\
+E_{\mathrm{top}}(m) &\coloneqq \{h-m+1, h-m+2, \dots, h\}, \qquad \#E_{\mathrm{top}}(m) = m.
+\end{align}
+Consequently, the second-quantized commutator on Fock space is:
+\begin{equation}
+[\rho_{-m}, \rho_m] = \hat{N}_{\mathrm{bot}}(m) - \hat{N}_{\mathrm{top}}(m) = \sum_{k \in E_{\mathrm{bot}}(m)} c_k^\dagger c_k - \sum_{k \in E_{\mathrm{top}}(m)} c_k^\dagger c_k.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Setting $k = m$ in Lemma~\ref{lem:app_opposite_shift_matrix}, the factor $\mathbf{1}_{p = q + m - m} = \delta_{p, q}$ forces the matrix to be diagonal.
+The indicator $\mathbf{1}_{q < a + m}$ selects $q \in \{-h+1, \dots, -h+m\} = E_{\mathrm{bot}}(m)$.
+The indicator $\mathbf{1}_{q > b - m}$ selects $q \in \{h-m+1, \dots, h\} = E_{\mathrm{top}}(m)$.
+Since $m \le h$, the two sets are disjoint. Applying $d\Gamma$ yields the edge number operator formula.
+\end{proof}
+
+\section{Current Margins: Regimes M1 and M2}
+
+We now lift the edge operator identities to the budget subspace $B(N, K)$ using the Frozen Margins Theorem (Theorem~\ref{thm:frozen_margins}).
+
+\begin{theorem}[Regime M1 Buffer Evaluation]
+\label{thm:app_regime_m1}
+Let $1 \le m \le h$. Under the \emph{Regime M1 margin condition}:
+\begin{equation}
+m + K + |N| \le h,
+\end{equation}
+every state $\psi \in B(N, K)$ satisfies:
+\begin{equation}
+[\rho_{-m}, \rho_m] \psi = m \psi.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $|S\rangle$ be an occupation basis ket in $B(N, K)$, so $N(S) = N$ and $e(S) \le K$.
+By Theorem~\ref{thm:frozen_margins} (Frozen Margins):
+\begin{enumerate}
+    \item Every mode $k \le N - K$ is rigidly occupied in $S$.
+    Under the M1 condition, $-h + m \le -|N| - K \le N - K$.
+    Thus every mode in $E_{\mathrm{bot}}(m) = \{-h+1, \dots, -h+m\}$ satisfies $k \le -h+m \le N-K$, so $k \in S$.
+    Therefore, $c_k^\dagger c_k |S\rangle = 1 |S\rangle$ for all $k \in E_{\mathrm{bot}}(m)$, giving:
+    \[
+    \hat{N}_{\mathrm{bot}}(m) |S\rangle = \sum_{k \in E_{\mathrm{bot}}(m)} 1 |S\rangle = m |S\rangle.
+    \]
+    \item Every mode $k > N + K$ is rigidly empty in $S$.
+    Under the M1 condition, $h - m + 1 \ge |N| + K + 1 > N + K$.
+    Thus every mode in $E_{\mathrm{top}}(m) = \{h-m+1, \dots, h\}$ satisfies $k > N+K$, so $k \notin S$.
+    Therefore, $c_k^\dagger c_k |S\rangle = 0 |S\rangle$ for all $k \in E_{\mathrm{top}}(m)$, giving:
+    \[
+    \hat{N}_{\mathrm{top}}(m) |S\rangle = 0.
+    \]
+\end{enumerate}
+Substituting into Theorem~\ref{thm:app_diagonal_edge}:
+\[
+[\rho_{-m}, \rho_m] |S\rangle = (m - 0) |S\rangle = m |S\rangle.
+\]
+By linearity, this holds for all $\psi \in B(N, K)$.
+\end{proof}
+
+\begin{theorem}[Regime M2 Off-Diagonal Suppression]
+\label{thm:app_regime_m2}
+Let $m, k \ge 1$ with $m \neq k$. Under the \emph{Regime M2 margin condition}:
+\begin{equation}
+m + k + K + |N| \le h,
+\end{equation}
+every state $\psi \in B(N, K)$ satisfies:
+\begin{equation}
+[\rho_{-m}, \rho_k] \psi = 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:app_opposite_shift_matrix}, $[T_{-m}, T_k]$ has non-zero entries only at single-particle hopping terms $c_p^\dagger c_q$ where $p = q + k - m \neq q$, and either $q \in E_{\mathrm{bot}}(m)$ or $q \in E_{\mathrm{top}}(k)$.
+Let $|S\rangle \in B(N, K)$.
+\begin{enumerate}
+    \item If $q \in E_{\mathrm{top}}(k)$, then $q > h - k \ge |N| + K \ge N + K$. By Frozen Margins, $q \notin S$, so the annihilation operator annihilates the state: $c_q |S\rangle = 0$.
+    \item If $q \in E_{\mathrm{bot}}(m)$, then $q \le -h + m$. The target mode is $p = q + k - m \le -h + k \le -|N| - K \le N - K$. By Frozen Margins, $p \in S$, so the creation operator annihilates the state by Pauli blocking: $c_p^\dagger |S\rangle = 0$.
+\end{enumerate}
+In both cases, every hopping operator in $[T_{-m}, T_k]$ annihilates $|S\rangle$.
+Hence $[\rho_{-m}, \rho_k] |S\rangle = 0$, and by linearity $[\rho_{-m}, \rho_k] \psi = 0$.
+\end{proof}
+
+\section{Partition Combinatorics and Rectangle Saturation}
+
+We now detail the combinatorial mechanics of integer partitions and the rectangle bijection.
+
+\begin{definition}[Bounded Partitions and Rectangle Embedding]
+An integer partition $\lambda \vdash E$ fits inside an $R \times C$ rectangle (denoted $\lambda \subseteq R \times C$) if:
+\begin{equation}
+\ell(\lambda) \le R \qquad \text{and} \qquad \lambda_1 \le C,
+\end{equation}
+where $\ell(\lambda)$ is the number of positive parts, and $\lambda_1$ is the largest part.
+The number of such bounded partitions is denoted $p(E; R, C)$.
+\end{definition}
+
+\begin{theorem}[Explicit Reconstruction and Bijection]
+\label{thm:app_rectangle_bijection}
+Let $n = h + N$ and $R = n$, $C = 2h - n = h - N$.
+The map $\Phi: S \mapsto (d_0, \dots, d_{n-1})$ defined by $d_i = s_i - (-h + 1 + i)$ is a bijection between:
+\begin{equation}
+\left\{ S \subseteq B \mid \#S = n,\; e(S) = E \right\} \longleftrightarrow \left\{ \lambda \vdash E \mid \lambda \subseteq (h+N) \times (h-N) \right\}.
+\end{equation}
+Its explicit two-sided inverse $\Psi: \lambda \mapsto S$ is given by:
+\begin{enumerate}
+    \item Represent $\lambda$ as a non-decreasing list of length $n$: $(d_0, \dots, d_{n-1})$ with $0 \le d_0 \le \dots \le d_{n-1} \le h - N$.
+    \item Reconstruct the sorted momentum modes:
+    \begin{equation}
+    s_i \coloneqq -h + 1 + i + d_i \quad (0 \le i < n).
+    \end{equation}
+    \item Set $\Psi(\lambda) \coloneqq \{s_0, s_1, \dots, s_{n-1}\} \subseteq B$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:app_rank_formula}, $0 \le d_0 \le \dots \le d_{n-1} \le 2h - n = h - N$, and $\sum d_i = e(S) = E$.
+Conversely, given any bounded partition $\lambda \subseteq n \times (h-N)$, padding with $n - \ell(\lambda) \ge 0$ zeros yields a non-decreasing sequence $0 \le d_0 \le \dots \le d_{n-1} \le h - N$.
+The reconstructed values $s_i$ satisfy:
+\[
+s_{i+1} - s_i = 1 + (d_{i+1} - d_i) \ge 1,
+\]
+so the values $s_i$ are strictly increasing.
+Furthermore:
+\[
+s_0 = -h + 1 + d_0 \ge -h + 1, \qquad s_{n-1} = -h + n + d_{n-1} \le -h + n + (2h - n) = h.
+\]
+Thus $s_i \in B$ for all $i$.
+Computing the excitation energy of $S = \{s_0, \dots, s_{n-1}\}$:
+\[
+e(S) = \sum_{i=0}^{n-1} (s_i - g_i) = \sum_{i=0}^{n-1} d_i = E.
+\]
+The compositions $\Phi \circ \Psi$ and $\Psi \circ \Phi$ are identities on their respective domains.
+\end{proof}
+
+\begin{theorem}[Rectangle Saturation and the R1 Condition]
+\label{thm:app_r1_condition}
+Let $E \ge 0$. If $E$ satisfies the Regime R1 margin condition:
+\begin{equation}
+E \le \min(h + N, \; h - N) = h - |N|,
+\end{equation}
+then every unrestricted partition $\lambda \vdash E$ satisfies $\ell(\lambda) \le E \le h+N$ and $\lambda_1 \le E \le h-N$.
+Consequently:
+\begin{equation}
+p(E; h+N, h-N) = p(E), \qquad \text{and} \qquad \dim_{\mathbb{C}} \mathcal{H}(N, E) = p(E).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For any unrestricted partition $\lambda \vdash E$, the sum of parts is $E$. Since every part is at least $1$, the number of parts is at most $E$. Since each part is positive, no part can exceed $E$.
+Under $E \le \min(h+N, h-N)$, the rectangle bounds are guaranteed never to exclude any partition of $E$.
+Therefore, the bounded partition count equals the unrestricted partition count $p(E)$.
+\end{proof}
+
+\section{Gram Pull-Through and the Hall Metric}
+
+\begin{theorem}[Right-Remainder Invariant and Hall Normalization]
+\label{thm:app_hall_normalization}
+Let $\lambda, \mu \vdash E \le K$ with $2K + |N| \le h$.
+Commuting lowering currents $\rho_{-m}$ through the written product $\prod \rho_{n_i}$ reduces the inner product to the vacuum:
+\begin{equation}
+\langle \lambda; N \mid \mu; N \rangle = \delta_{\lambda, \mu} z_\lambda = \delta_{\lambda, \mu} \prod_{m \ge 1} m^{r_m(\lambda)}\, r_m(\lambda)!.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $w$ be the remaining creator sub-word of energy $E_{\mathrm{rem}} \le K - n$.
+When commuting $\rho_{-m}$ past $\rho_n$, the joint excursion satisfies $m + n + E_{\mathrm{rem}} + |N| \le m + K + |N| \le 2K + |N| \le h$.
+By Theorem~\ref{thm:app_regime_m2}, off-diagonal commutators evaluate to zero.
+By Theorem~\ref{thm:app_regime_m1}, diagonal commutators evaluate to $m I$.
+The number of ways to contract $r_m$ identical creation operators with $r_m$ identical annihilation operators is $r_m!$, with each contraction contributing a factor of $m$.
+This yields $m^{r_m} r_m!$.
+Since distinct part sizes commute and have zero mutual contractions, the product factors over all distinct parts $m \ge 1$.
+\end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 formalization (Appendix A04, including Current Margins, Density Kinematics, and Partition Combinatorics), all margin bounds and partition bijections are verified without placeholders or nonstandard axioms.
+In the verified Lean~4 development (Appendix~A04, spanning current margins, density kinematics, and partition combinatorics), all theorems in this appendix are certified constructively without noncomputable choice. In particular, the one-particle shift matrix indicators, the exact edge commutators, the rectangle bijection, and the Hall metric evaluation are fully verified in the Lean 4 kernel.
 \end{remark}
