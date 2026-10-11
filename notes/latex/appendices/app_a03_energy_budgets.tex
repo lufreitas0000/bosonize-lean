@@ -1,16 +1,283 @@
 \chapter{Energy Budgets and Filtered Maps}
 \label{app:energy_budgets}
 
-\section{Overview and Purpose}
-This appendix provides the technical framework for the energy budget regularization scheme utilized in Chapters~\ref{ch:vacuum_budget} through~\ref{ch:haldane_completeness}. It establishes integer excitation energy formulas, sector charge stability, and operator margin filtrations.
+\section{Introduction and Scope}
 
-\section{Core Properties}
-\begin{itemize}
-    \item \textbf{Integer Energy Grading:} Proof that excitation energy is a strictly non-negative integer for all configurations in admissible sectors.
-    \item \textbf{Sorted Particle Rank Formula:} Proof that sorted momentum indices $s_1 < s_2 < \dots < s_{h+N}$ uniquely determine the excitation energy relative to the sector sea ground.
-    \item \textbf{Filtration Preservation:} Proof that operators with maximum energy shift $M$ map $B(N, K)$ into $B(N, K+M)$.
-\end{itemize}
+In infinite-volume quantum field theory, the Dirac sea has infinite negative depth, and the energy spectrum is unbounded both above and below. In our constructive finite-lattice formulation on $L = 2h$ sites, all Hilbert spaces are finite-dimensional, and boundary effects inevitably emerge when momentum transfers reach the band edges.
+
+To construct an exact operator bosonization without continuum approximations or infrared/ultraviolet divergences, we introduced the \emph{energy budget regularization} in Chapter~\ref{ch:vacuum_budget}. Rather than truncating operators by continuous cutoffs, the budget framework defines coordinate subspaces of the fermionic Fock space based on exact integer charges $N(S) \in \mathbb{Z}$ and integer excitation energies $e(S) \in \mathbb{N}$.
+
+This appendix provides the complete combinatorial and algebraic foundations of the energy budget scheme. We prove the rank formula and non-negativity of excitation energies, develop the coordinate projection calculus on finite power sets, formulate the filtered operator mapping theorems, and establish the operator word excursion mechanics that underpin the proofs in Chapters~\ref{ch:vacuum_budget} through~\ref{ch:haldane_completeness}.
+
+\section{Integer Arithmetic of Charge, Momentum, and the Fermi Sea}
+
+Let $h \ge 1$ be a positive integer and consider the asymmetric momentum band:
+\begin{equation}
+B = \{-h+1, -h+2, \dots, h\}, \qquad \#B = 2h = L.
+\end{equation}
+An occupation configuration is a subset $S \subseteq B$.
+
+\begin{definition}[Relative Sector Charge]
+The \emph{relative sector charge} $N(S) \in \mathbb{Z}$ of a configuration $S \subseteq B$ is defined by:
+\begin{equation}
+N(S) \coloneqq \#S - h.
+\end{equation}
+The charge $N(S)$ takes integer values in the range $-h \le N(S) \le h$.
+A sector $N \in \mathbb{Z}$ is called \emph{admissible} if $-h \le N \le h$.
+\end{definition}
+
+\begin{definition}[Vacuum Reference and Excitation Energy]
+\begin{enumerate}
+    \item The unperturbed reference vacuum configuration (charge $N = 0$) is the half-filled Dirac sea:
+    \begin{equation}
+    S_0 \coloneqq \{-h+1, -h+2, \dots, 0\}, \qquad \#S_0 = h.
+    \end{equation}
+    \item The total momentum of $S_0$ is the vacuum reference energy:
+    \begin{equation}
+    E_\Omega \coloneqq \sum_{k=-h+1}^0 k = - \frac{h(h-1)}{2} \in \mathbb{Z}.
+    \end{equation}
+    \item For any configuration $S \subseteq B$, its \emph{vacuum-subtracted momentum} $P(S) \in \mathbb{Z}$ is:
+    \begin{equation}
+    P(S) \coloneqq \sum_{k \in S} k - E_\Omega.
+    \end{equation}
+    \item For any integer $N \in \mathbb{Z}$, the ground-energy shift $t(N) \in \mathbb{Z}$ is defined by:
+    \begin{equation}
+    t(N) \coloneqq \frac{N(N+1)}{2}.
+    \end{equation}
+    \item The \emph{excitation energy} $e(S) \in \mathbb{Z}$ is:
+    \begin{equation}
+    e(S) \coloneqq P(S) - t(N(S)).
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Parity of Triangular Shifts]
+\label{lem:triangular_even}
+For every integer $N \in \mathbb{Z}$, the product $N(N+1)$ is an even integer. Consequently, $t(N) \in \mathbb{Z}$ is an exact integer, and $e(S) \in \mathbb{Z}$ is an exact integer for every configuration $S \subseteq B$.
+\end{lemma}
+
+\begin{proof}
+For any integer $N$, one of the two consecutive integers $N$ or $N+1$ is necessarily even. Hence their product is divisible by $2$ in $\mathbb{Z}$.
+\end{proof}
+
+\begin{definition}[Sector Ground Configurations]
+For each admissible sector charge $-h \le N \le h$, the \emph{sector ground configuration} $S_N \subseteq B$ consists of the lowest $n = h + N$ momentum modes:
+\begin{equation}
+S_N \coloneqq \{-h+1, -h+2, \dots, N\}.
+\end{equation}
+The corresponding state is the sector ground ket $|N\rangle_0 \coloneqq |S_N\rangle$.
+\end{definition}
+
+\begin{lemma}[Ground State Values]
+\label{lem:ground_values}
+For every admissible sector $-h \le N \le h$:
+\begin{equation}
+N(S_N) = N, \qquad P(S_N) = t(N), \qquad e(S_N) = 0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The cardinality of $S_N$ is $(N - (-h+1) + 1) = h + N$, so $N(S_N) = (h+N) - h = N$.
+The momentum of $S_N$ is:
+\[
+\sum_{k=-h+1}^N k = \sum_{k=-h+1}^0 k + \sum_{k=1}^N k = E_\Omega + \frac{N(N+1)}{2} = E_\Omega + t(N),
+\]
+which holds identically for both $N \ge 0$ and $N < 0$ (with the sum interpreted with standard signed limits).
+Therefore $P(S_N) = t(N)$, so $e(S_N) = t(N) - t(N) = 0$.
+\end{proof}
+
+\section{The Rank Formula and Non-Negativity of Excitation Energies}
+
+We now prove that the excitation energy $e(S)$ is strictly non-negative for all configurations, and that $S_N$ is the unique configuration with zero excitation energy.
+
+\begin{definition}[Sorted Occupations and Displacements]
+Let $S \subseteq B$ be a configuration with cardinality $\#S = n = h + N$.
+\begin{enumerate}
+    \item We sort the occupied modes in strictly increasing order:
+    \begin{equation}
+    -h < s_0 < s_1 < \dots < s_{n-1} \le h.
+    \end{equation}
+    \item The reference ground positions are:
+    \begin{equation}
+    g_i \coloneqq -h + 1 + i \quad \text{for } 0 \le i < n.
+    \end{equation}
+    \item The \emph{displacement} of the $i$-th occupied mode is:
+    \begin{equation}
+    d_i \coloneqq s_i - g_i = s_i - (-h + 1 + i).
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Displacement Monotonicity and the Rank Formula]
+\label{thm:app_rank_formula}
+For any configuration $S \subseteq B$ with $\#S = n = h + N$:
+\begin{enumerate}
+    \item \textbf{Monotonicity and Bounds:} The displacements satisfy:
+    \begin{equation}
+    0 \le d_0 \le d_1 \le \dots \le d_{n-1} \le 2h - n.
+    \end{equation}
+    \item \textbf{Sum Formula:} The excitation energy is the sum of particle displacements:
+    \begin{equation}
+    e(S) = \sum_{i=0}^{n-1} d_i.
+    \end{equation}
+    \item \textbf{Strict Non-Negativity:} $e(S) \ge 0$ for all configurations $S \subseteq B$.
+    \item \textbf{Ground Uniqueness:} $e(S) = 0$ if and only if $S = S_N$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}
+    \item Since $s_0 \in B$, $s_0 \ge -h + 1 = g_0$, so $d_0 = s_0 - g_0 \ge 0$.
+    Since the elements $s_i$ are strictly increasing integers, $s_{i+1} - s_i \ge 1$.
+    On the other hand, $g_{i+1} - g_i = 1$. Therefore:
+    \[
+    d_{i+1} - d_i = (s_{i+1} - g_{i+1}) - (s_i - g_i) = (s_{i+1} - s_i) - 1 \ge 0.
+    \]
+    Thus $d_0 \le d_1 \le \dots \le d_{n-1}$.
+    Finally, since $s_{n-1} \le h$, we have:
+    \[
+    d_{n-1} = s_{n-1} - g_{n-1} \le h - (-h + 1 + n - 1) = 2h - n.
+    \]
+    \item We expand the sum of displacements:
+    \[
+    \sum_{i=0}^{n-1} d_i = \sum_{i=0}^{n-1} (s_i - g_i) = \sum_{i=0}^{n-1} s_i - \sum_{i=0}^{n-1} g_i.
+    \]
+    The first sum is the total momentum $\sum_{k \in S} k$.
+    The second sum is the ground momentum $\sum_{k \in S_N} k = E_\Omega + t(N)$.
+    Therefore:
+    \[
+    \sum_{i=0}^{n-1} d_i = \left(\sum_{k \in S} k - E_\Omega\right) - t(N) = P(S) - t(N) = e(S).
+    \]
+    \item Since $d_i \ge 0$ for each $i \in \{0, \dots, n-1\}$, the sum $e(S) = \sum d_i \ge 0$.
+    \item If $S = S_N$, then $s_i = g_i$ for all $i$, so each $d_i = 0$, giving $e(S_N) = 0$.
+    Conversely, if $e(S) = 0$, then $\sum d_i = 0$. Since each $d_i \ge 0$, this implies $d_i = 0$ for all $i$.
+    Hence $s_i = g_i$ for all $0 \le i < n$, which means $S = S_N$.
+\end{enumerate}
+\end{proof}
+
+\section{Coordinate Subspaces and Projector Algebra}
+
+\begin{definition}[Coordinate Subspaces and Projections]
+Let $\mathcal{F}(\iota)$ be the fermionic Fock space with orthonormal basis $\{|S\rangle\}_{S \subseteq \iota}$.
+For any subset of configurations $U \subseteq \mathcal{P}(\iota)$:
+\begin{enumerate}
+    \item The \emph{coordinate subspace} $\operatorname{coord}(U)$ is the closed linear span:
+    \begin{equation}
+    \operatorname{coord}(U) \coloneqq \operatorname{span}_{\mathbb{C}} \left\{ |S\rangle \mid S \in U \right\}.
+    \end{equation}
+    \item The \emph{coordinate projection operator} $P_U \in \operatorname{End}_{\mathbb{C}}(\mathcal{F}(\iota))$ is defined on basis kets by:
+    \begin{equation}
+    P_U |S\rangle \coloneqq \begin{cases} |S\rangle, & \text{if } S \in U, \\ 0, & \text{if } S \notin U. \end{cases}
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Properties of Coordinate Projectors]
+\label{thm:app_projector_properties}
+For all subsets $U, V \subseteq \mathcal{P}(\iota)$:
+\begin{enumerate}
+    \item \textbf{Idempotence and Self-Adjointness:} $P_U^2 = P_U$ and $P_U^\dagger = P_U$.
+    \item \textbf{Range:} $\operatorname{Ran}(P_U) = \operatorname{coord}(U)$.
+    \item \textbf{Intersection and Union:} $P_U P_V = P_{U \cap V}$, and $P_{U \cup V} = P_U + P_V - P_{U \cap V}$.
+    \item \textbf{Orthogonality:} If $U \cap V = \emptyset$, then $P_U P_V = 0$ and $\operatorname{coord}(U) \perp \operatorname{coord}(V)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Evaluating on basis kets $|S\rangle$:
+$P_U^2 |S\rangle = [S \in U]^2 |S\rangle = [S \in U] |S\rangle = P_U |S\rangle$.
+For adjointness: $\langle S \mid P_U T \rangle = [T \in U] \delta_{S, T} = [S \in U] \delta_{S, T} = \langle P_U S \mid T \rangle$, so $P_U^\dagger = P_U$.
+For product: $P_U P_V |S\rangle = [S \in U][S \in V] |S\rangle = [S \in U \cap V] |S\rangle = P_{U \cap V} |S\rangle$.
+If $U \cap V = \emptyset$, then $[S \in U \cap V] = 0$, so $P_U P_V = 0$, and for $u \in \operatorname{coord}(U), v \in \operatorname{coord}(V)$, $\langle u \mid v \rangle = \langle P_U u \mid P_V v \rangle = \langle u \mid P_U P_V v \rangle = 0$.
+\end{proof}
+
+\begin{definition}[Energy and Budget Subspaces]
+\begin{enumerate}
+    \item \textbf{Fixed-Energy Subspace:}
+    \begin{equation}
+    \mathcal{H}(N, E) \coloneqq \operatorname{coord}\left( \{S \subseteq B \mid N(S) = N,\; e(S) = E\} \right).
+    \end{equation}
+    \item \textbf{Fixed-Charge Budget Subspace:}
+    \begin{equation}
+    B(N, K) \coloneqq \operatorname{coord}\left( \{S \subseteq B \mid N(S) = N,\; e(S) \le K\} \right) = \bigoplus_{E=0}^K \mathcal{H}(N, E).
+    \end{equation}
+    \item \textbf{Charge-Box Budget Subspace:}
+    \begin{equation}
+    \mathcal{B}_{K, N_{\max}} \coloneqq \operatorname{coord}\left( \{S \subseteq B \mid e(S) \le K,\; |N(S)| \le N_{\max}\} \right) = \bigoplus_{|N| \le N_{\max}} B(N, K).
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\section{Filtered and Graded Operator Maps}
+
+\begin{definition}[Filtered and Exact-Shift Operators]
+Let $A \in \operatorname{End}_{\mathbb{C}}(\mathcal{F}(L))$ be a linear operator, and let $q, d \in \mathbb{Z}$.
+\begin{enumerate}
+    \item $A$ is called \emph{filtered with charge shift $q$ and energy bound $d$} if for every basis ket $|S\rangle$:
+    \begin{equation}
+    A |S\rangle \in \operatorname{coord}\left( \{T \subseteq B \mid N(T) = N(S) + q,\; e(T) \le e(S) + d\} \right).
+    \end{equation}
+    \item $A$ is called an \emph{exact shift operator} if for every basis ket $|S\rangle$:
+    \begin{equation}
+    A |S\rangle \in \operatorname{coord}\left( \{T \subseteq B \mid N(T) = N(S) + q,\; e(T) = e(S) + d\} \right).
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Budget Filtration Preservation]
+\label{thm:app_filtration_preservation}
+Let $A$ be a filtered operator with charge shift $q$ and energy bound $d$. Then for all admissible sectors $N$ and cutoffs $K$:
+\begin{equation}
+A\big( B(N, K) \big) \subseteq B(N + q, \; K + d).
+\end{equation}
+In particular, if $q = 0$ (charge conservation) and $d \le 0$ (energy lowering), $A$ maps $B(N, K)$ into $B(N, K)$.
+\end{theorem}
+
+\begin{proof}
+Every vector $\psi \in B(N, K)$ is a linear combination of basis kets $|S\rangle$ with $N(S) = N$ and $e(S) \le K$.
+Applying $A$:
+\[
+A |S\rangle \in \operatorname{span}_{\mathbb{C}} \{ |T\rangle \mid N(T) = N + q,\; e(T) \le e(S) + d \}.
+\]
+Since $e(S) \le K$, we have $e(T) \le K + d$.
+Therefore, every output basis ket belongs to $B(N + q, K + d)$.
+\end{proof}
+
+\section{Word Excursion Tracking and Compression Remainders}
+
+\begin{definition}[Operator Word Excursion]
+For a product of operators $W = A_1 A_2 \cdots A_s$ with exact energy shifts $\Delta e_j$, the operators act from right to left in the sequence $(\Delta e_s, \dots, \Delta e_1)$.
+The \emph{maximum upward energy excursion} $X(W)$ is:
+\begin{equation}
+X(W) \coloneqq \max\left( 0, \; \max_{1 \le r \le s} \sum_{j=1}^r \Delta e_{s - j + 1} \right).
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Word Evaluation Safety]
+\label{thm:app_word_safety}
+If an input state $\psi \in B(N, K)$ satisfies $K + X(W) \le K_{\max}$, then every intermediate state generated during the sequential application of $W \psi$ belongs to $B(N + \sum q_j, K_{\max})$.
+\end{theorem}
+
+\begin{proof}
+After applying the first $r$ operators from the right, the partial energy shift satisfies:
+\begin{equation}
+\sum_{j=1}^r \Delta e_{s-j+1} \le X(W).
+\end{equation}
+Consequently, every intermediate state has excitation at most $K + X(W) \le K_{\max}$.
+\end{proof}
+
+\begin{proposition}[Compression Remainder Identity]
+\label{prop:compression_remainder}
+Let $P = P_U$ be a coordinate projector and let $A, B$ be operators. The product of compressed operators differs from the compressed product by an exact intermediate leakage term:
+\begin{equation}
+P A B P - (P A P)(P B P) = P A (I - P) B P.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$P A B P - P A P B P = P A (I - P) B P$, using linearity and $I - P = P_{U^c}$.
+\end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 formalization (Appendix A03, Energy Budgets), all 114 lemmas on energy gradings, projections, and ground states are verified in the Lean 4 kernel.
+In the verified Lean~4 core (Appendix~A03), all 114 lemmas covering coordinate subspaces, rank monotonicity, excitation non-negativity, operator filtrations, and word excursion accounting are certified in the Lean 4 kernel without noncomputable choice.
 \end{remark}
