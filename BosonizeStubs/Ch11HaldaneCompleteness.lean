@@ -268,15 +268,8 @@ lemma hall_factor_positive (parts : Multiset ℕ) (hpos : ∀ m ∈ parts, 0 < m
   intro m hm
   exact Nat.mul_pos (Nat.pow_pos (hpos m (by simpa using hm))) (Nat.factorial_pos _)
 
-lemma hall_factor_cons (m : ℕ) (hm : 0 < m) (parts : Multiset ℕ)
-    (hpos : ∀ n ∈ parts, 0 < n) :
+lemma hall_factor_cons (m : ℕ) (parts : Multiset ℕ) :
     hallFactor (m ::ₘ parts) = m*(parts.count m+1)*hallFactor parts := by
-  have hpositive : 0 < hallFactor (m::ₘ parts) := hall_factor_positive _ (by
-    intro n hn
-    rcases Multiset.mem_cons.mp hn with he | he
-    · simpa [he] using hm
-    · exact hpos n he)
-  apply Nat.eq_of_mul_eq_mul_left hpositive
   have hsplit (xs : Multiset ℕ) : hallFactor xs = m^(xs.count m)*(xs.count m).factorial *
       ∏ n ∈ xs.toFinset.erase m, n^(xs.count n)*(xs.count n).factorial := by
     unfold hallFactor
@@ -340,8 +333,7 @@ lemma word_gram (h : ℕ) (hh : 0 < h) (N : ℤ) (hN : Ch07.admissible h N)
               m*(xs.count m+1)*hallFactor (xs : Multiset ℕ) from
             by
               simpa only [Multiset.cons_coe, Multiset.coe_count] using
-                hall_factor_cons m (hxpos m (by simp)) (xs : Multiset ℕ)
-                  (fun n hn => hxpos n (List.mem_cons_of_mem m (show n ∈ xs from hn)))]
+                hall_factor_cons m (xs : Multiset ℕ)]
           simp only [Nat.cast_mul, Nat.cast_add, Nat.cast_one]
         · have hp' : ¬(m::xs).Perm ys := fun h => hp (hequiv.mp h)
           simp [hp, hp']

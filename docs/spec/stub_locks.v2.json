@@ -7110,9 +7110,9 @@
         },
         "Bosonize.Ch11.hall_factor_cons": {
           "kind": "lemma",
-          "hash": "c5a9cf336a59a1e790f57db54d139cf44e7934b9e65c4a11596deb703c621da1",
+          "hash": "c6e2a88502d2ee4beb8a8d4b191b29929eff0664ec3c7a61c6a69726601202b8",
           "ctx": "e24b7aae6c734631f38c0fb296b7c95fbc7371502c6f63ec257836b72298cb5e",
-          "text": "lemma hall_factor_cons (m : ℕ) (hm : 0 < m) (parts : Multiset ℕ) (hpos : ∀ n ∈ parts, 0 < n) : hallFactor (m ::ₘ parts) = m*(parts.count m+1)*hallFactor parts"
+          "text": "lemma hall_factor_cons (m : ℕ) (parts : Multiset ℕ) : hallFactor (m ::ₘ parts) = m*(parts.count m+1)*hallFactor parts"
         },
         "Bosonize.Ch11.hall_factor_positive": {
           "kind": "lemma",
