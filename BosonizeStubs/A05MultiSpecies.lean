@@ -85,17 +85,45 @@ noncomputable def liftedAnnihilation (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist
   (A01.normalization (2*h) : ℂ) •
     ∑ k : Ch01.Band (2*h), Ch06Ext.twistedCharacter (2*h) (b ν) k x • annihilation h ν k
 
+omit [Fintype σ] in
 lemma mode_lt_iff (h : ℕ) (ν η : σ) (k l : Ch01.Band (2*h)) :
-    (ν,k) < (η,l) ↔ ν < η ∨ ν=η ∧ k<l := by sorry
+    (ν,k) < (η,l) ↔ ν < η ∨ ν=η ∧ k<l := by
+  exact Prod.Lex.toLex_lt_toLex (x := (ν,k)) (y := (η,l))
 
 lemma species_joint_configuration (h : ℕ) (Ss : σ → Ch07.Occupation h) (ν : σ) :
-    Ch07.speciesConfiguration h (jointConfiguration h Ss) ν = Ss ν := by sorry
+    Ch07.speciesConfiguration h (jointConfiguration h Ss) ν = Ss ν := by
+  ext k
+  simp only [Ch07.speciesConfiguration, jointConfiguration, Finset.mem_image,
+    Finset.mem_filter, Finset.mem_biUnion, Finset.mem_univ, true_and]
+  aesop
 
 lemma joint_species_configuration (h : ℕ) (S : Occupation σ h) :
-    jointConfiguration h (fun ν => Ch07.speciesConfiguration h S ν) = S := by sorry
+    jointConfiguration h (fun ν => Ch07.speciesConfiguration h S ν) = S := by
+  ext p
+  simp only [jointConfiguration, Ch07.speciesConfiguration, Finset.mem_image,
+    Finset.mem_filter, Finset.mem_biUnion, Finset.mem_univ, true_and]
+  aesop
 
 lemma tensor_kets (h : ℕ) (Ss : σ → Ch07.Occupation h) :
-    tensorVector h (fun ν => A02.ket (Ss ν)) = A02.ket (jointConfiguration h Ss) := by sorry
+    tensorVector h (fun ν => A02.ket (Ss ν)) = A02.ket (jointConfiguration h Ss) := by
+  apply (A02.coordinates (Mode σ h)).injective
+  funext S
+  simp only [tensorVector, LinearEquiv.apply_symm_apply, A02.coordinates_ket]
+  by_cases he : S = jointConfiguration h Ss
+  · subst S
+    simp [A02.ket_apply, species_joint_configuration]
+  · have hn : ¬ ∀ ν, Ch07.speciesConfiguration h S ν = Ss ν := by
+      intro ha
+      apply he
+      rw [← joint_species_configuration h S]
+      congr 1
+      funext ν
+      exact ha ν
+    push Not at hn
+    obtain ⟨ν, hν⟩ := hn
+    rw [ite_eq_right he]
+    apply Finset.prod_eq_zero (Finset.mem_univ ν)
+    simp [A02.ket_apply, hν]
 
 lemma tensor_inner (h : ℕ) (vs ws : σ → Ch07.FockSpace h) :
     inner ℂ (tensorVector h vs) (tensorVector h ws) = ∏ ν, inner ℂ (vs ν) (ws ν) := by sorry
@@ -108,14 +136,17 @@ lemma word_tensor (h : ℕ) (Ns : σ → ℤ) (hN : admissible h Ns) (parts : σ
     wordState h Ns parts = tensorVector h (fun ν => Ch11.wordState h (Ns ν) (hN ν) (parts ν)) := by sorry
 
 lemma annihilation_car (h : ℕ) (i j : Mode σ h) :
-    A02.anticommutator (annihilation h i.1 i.2) (annihilation h j.1 j.2) = 0 := by sorry
+    A02.anticommutator (annihilation h i.1 i.2) (annihilation h j.1 j.2) = 0 := by
+  simpa only [annihilation, Prod.mk.eta] using Ch04.annihilation_car i j
 
 lemma creation_car (h : ℕ) (i j : Mode σ h) :
-    A02.anticommutator (creation h i.1 i.2) (creation h j.1 j.2) = 0 := by sorry
+    A02.anticommutator (creation h i.1 i.2) (creation h j.1 j.2) = 0 := by
+  simpa only [creation, Prod.mk.eta] using Ch04.creation_car i j
 
 lemma mixed_car (h : ℕ) (i j : Mode σ h) :
     A02.anticommutator (annihilation h i.1 i.2) (creation h j.1 j.2) =
-      (if i=j then (1 : ℂ) else 0) • (1 : Operators σ h) := by sorry
+      (if i=j then (1 : ℂ) else 0) • (1 : Operators σ h) := by
+  simpa only [annihilation, creation, Prod.mk.eta] using Ch04.mixed_car i j
 
 /-- The preceding-species parity occurs twice in this same-species even hop. -/
 lemma hopping_tensor (h : ℕ) (ν : σ) (p k : Ch01.Band (2*h)) (vs : σ → Ch07.FockSpace h) :
@@ -128,7 +159,8 @@ lemma preceding_count_split (h : ℕ) (ν : σ) (k : Ch01.Band (2*h)) (S : Occup
         Ch04.precedingCount k (Ch07.speciesConfiguration h S ν) := by sorry
 
 lemma creation_adjoint (h : ℕ) (ν : σ) (k : Ch01.Band (2*h)) :
-    LinearMap.adjoint (annihilation h ν k) = creation h ν k := by sorry
+    LinearMap.adjoint (annihilation h ν k) = creation h ν k := by
+  exact (Ch04.creation_eq_adjoint (ν,k)).symm
 
 lemma rho_adjoint (h : ℕ) (ν : σ) (m : ℤ) :
     LinearMap.adjoint (rho h ν m) = rho h ν (-m) := by sorry
@@ -148,9 +180,21 @@ lemma rho_lowering_budget_zero (h : ℕ) (hh : 0 < h) (ν : σ) (m K : ℕ)
     rho h ν (-(m : ℤ)) v = 0 := by sorry
 
 lemma ground_mem_budget (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (hN : admissible h Ns) (K : ℕ) :
-    groundKet h Ns ∈ jointBudget h Ns K := by sorry
+    groundKet h Ns ∈ jointBudget h Ns K := by
+  apply (Ch07.species_budget_ket h (groundConfiguration h Ns) Ns (K : ℤ)).mpr
+  have hc : ∀ ν : σ, Ch07.speciesConfiguration h (groundConfiguration h Ns) ν = Ch07.groundConfiguration h (Ns ν) := by
+    intro ν
+    exact species_joint_configuration h _ ν
+  constructor
+  · intro ν
+    rw [hc ν]
+    exact Ch07.ground_configuration_charge h hh (Ns ν) (hN ν)
+  · unfold Ch07.totalExcitation
+    simp only [hc, Ch07.ground_configuration_excitation h hh _ (hN _)]
+    simp
 
-lemma ground_ne_zero (h : ℕ) (Ns : σ → ℤ) : groundKet h Ns ≠ 0 := by sorry
+lemma ground_ne_zero (h : ℕ) (Ns : σ → ℤ) : groundKet h Ns ≠ 0 := by
+  exact A02.ket_ne_zero (groundConfiguration h Ns)
 
 lemma word_mem_budget (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (hN : admissible h Ns)
     (parts : σ → List ℕ) (K : ℕ) (hE : ∑ ν, (parts ν).sum ≤ K) :
@@ -160,8 +204,13 @@ lemma partition_mem_budget (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ)
     (hN : admissible h Ns) (K : ℕ) (p : JointPartitions σ K) :
     partitionState h Ns p ∈ jointBudget h Ns K := by sorry
 
+omit [LinearOrder σ] in
 lemma joint_normalization_positive (K : ℕ) (p : JointPartitions σ K) :
-    0 < jointNormalization p := by sorry
+    0 < jointNormalization p := by
+  unfold jointNormalization
+  apply Finset.prod_pos
+  intro ν _
+  exact Ch11.hall_factor_positive (p.val ν).2.parts (fun m hm => (p.val ν).2.parts_pos hm)
 
 lemma partition_gram (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ)
     (hN : admissible h Ns) (K : ℕ) (hR2 : r2 h K Ns) (p q : JointPartitions σ K) :
@@ -183,6 +232,15 @@ lemma partition_basis (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ)
 
 lemma charge_budget (h : ℕ) (ν : σ) (Ns : σ → ℤ) (K : ℕ)
     (v : FockSpace σ h) (hv : v ∈ jointBudget h Ns K) :
-    chargeObservable h ν v = (Ns ν : ℂ) • v := by sorry
+    chargeObservable h ν v = (Ns ν : ℂ) • v := by
+  change v ∈ A03.coordinateSpace _ at hv
+  induction hv using Submodule.span_induction with
+  | mem x hx =>
+    rcases hx with ⟨S, hS, rfl⟩
+    change (∀ η, Ch07.relativeCharge h (Ch07.speciesConfiguration h S η) = Ns η) ∧ _ at hS
+    rw [chargeObservable, A03.diagonal_ket, hS.1 ν]
+  | zero => simp
+  | add x y _ _ hx hy => simp only [map_add, hx, hy, smul_add]
+  | smul a x _ hx => simp only [map_smul, hx, smul_comm a]
 
 end Bosonize.A05

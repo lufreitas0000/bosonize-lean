@@ -1,6 +1,6 @@
 # A05 multispecies support: Phase A companion
 
-Status: Phase A draft only. Every theorem ends with exactly one `sorry`; all definitions, abbreviations and instances are complete. No Phase B proof completion, interface freeze, Core promotion or mathematical proof is claimed by this build. Core and locks remain unchanged.
+Status: Phase A independently reviewed and frozen at `32b2a03`; Phase B is in progress. 12 theorem proofs are complete and freshly audited; 16 theorem placeholders remain. Four scoped instance omissions have separate independent review. No Phase C/Core promotion is claimed.
 
 Sources: `notes/md/ch13_Klein_factors.md`, `notes/appendices/a05_exponentials_klein_and_vertex_scope.md`, the CH13 TOC entry, applicable restricted-map/tensor-budget/phase corrections in `note/proof_suggestions_revision_2026-10-09.md`, and current frozen CH07, CH11, CH04/A02, CH09 and CH06Ext contracts. Historical brainstorm/API suggestions are advisory; nonexistent `docs/stub_suggestion/` and `docs/proof_suggestion/` were not invented. The A05 exponential and CH14 vertex research sections are excluded from this chapter: this draft asserts no unprojected vertex equality or analytic exponential.
 
@@ -30,11 +30,12 @@ No current coefficient, surjectivity, or factorization is assumed as a data cert
 
 ## Validation and exact interface
 
-The combined target build passed 3398 jobs with exactly 53 expected sorry warnings (A05:28, CH13:25); no errors or non-sorry warnings. Native CH13 error diagnostics completed with partial=false, success=true, empty items and no failed dependencies. Fresh data audit covers all 42 named data/abbreviation/instance constants, INCLUDING the eight local order projections; only standard axioms are permitted and no sorryAx data dependency occurs. See `note/ch13_phase_a_data_axiom_audit_2026-10-11.json` for the source-bound audit. Compilation establishes data/header elaboration only. Every theorem below remains unproved.
+The combined target build passed 3398 jobs with exactly 53 expected sorry warnings (A05:28, CH13:25); no errors or non-sorry warnings. Native CH13 error diagnostics completed with partial=false, success=true, empty items and no failed dependencies. Fresh data audit covers all 42 named data/abbreviation/instance constants, INCLUDING the eight local order projections; only standard axioms are permitted and no sorryAx data dependency occurs. See `note/ch13_phase_a_data_axiom_audit_2026-10-11.json` for the source-bound audit. That historical Phase A build establishes data/header elaboration only. Current partial proof evidence is recorded below.
 
 Source SHA-256: `320d0252816ec01dff10de1a6e3d7f76a80c7c9e3276043c3c6ea29c6f04a092`.
 
 ```lean
+omit [Fintype σ] in
 lemma mode_lt_iff (h : ℕ) (ν η : σ) (k l : Ch01.Band (2*h)) :
     (ν,k) < (η,l) ↔ ν < η ∨ ν=η ∧ k<l
 ```
@@ -153,6 +154,7 @@ lemma partition_mem_budget (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ)
 ```
 
 ```lean
+omit [LinearOrder σ] in
 lemma joint_normalization_positive (K : ℕ) (p : JointPartitions σ K) :
     0 < jointNormalization p
 ```
@@ -198,3 +200,7 @@ An independent finite integer-parity oracle checks 1384 ground top-mode removals
 ## Reviewed interface freeze
 
 Independent author-distinct review by `/root/ch11_gram_probe`: [PASS](../../../note/ch13_phase_a_review_2026-10-11.md), tied to the final source hash above. All previous manifest records remain identical; only the two reviewed staging entries are added. The committed baseline authorizes proof-body replacements only. All 53 obligations remain unproved at freeze; promotion requires complete proofs, fresh audits and independently reviewed complementary lectures.
+
+## Phase B partial checkpoint — 2026-10-11
+
+Completed and freshly standard-axiom audited: `tensor_kets`, `mode_lt_iff`, `species_joint_configuration`, `joint_species_configuration`, `annihilation_car`, `creation_car`, `mixed_car`, `creation_adjoint`, `ground_ne_zero`, `ground_mem_budget`, `joint_normalization_positive`, `charge_budget`. No completed theorem depends on `sorryAx`. The integrated two-module build passes 3398 jobs with exactly 37 warnings for remaining placeholders and no other warnings. Full Phase B and Phase C are pending. See [partial audit](../../../note/ch13_phase_b_partial_audit_2026-10-11.json) and [reviewed instance cleanup](../../../note/ch13_unused_instance_amendment_review_2026-10-11.md). The Phase A source hash above is historical; the current source hash is in the partial audit.

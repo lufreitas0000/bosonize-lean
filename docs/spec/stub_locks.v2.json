@@ -7770,9 +7770,9 @@
         },
         "Bosonize.A05.joint_normalization_positive": {
           "kind": "lemma",
-          "hash": "f3e496e32ddedd540f82f678d4c35152fc17f350613036c6d483c00f554d0dd6",
+          "hash": "989da2c49e02302386598e6d3b365df2307d4f8c96099e6983eb14faf5bf64b0",
           "ctx": "da2e0a30b08e51e6ce489739679a843a9c7bffa90add77b5198b98aed0755948",
-          "text": "lemma joint_normalization_positive (K : ℕ) (p : JointPartitions σ K) : 0 < jointNormalization p"
+          "text": "omit [LinearOrder σ] in lemma joint_normalization_positive (K : ℕ) (p : JointPartitions σ K) : 0 < jointNormalization p"
         },
         "Bosonize.A05.joint_species_configuration": {
           "kind": "lemma",
@@ -7788,9 +7788,9 @@
         },
         "Bosonize.A05.mode_lt_iff": {
           "kind": "lemma",
-          "hash": "1f3d27401464fab70ca73680dfcf8e004ef81b5d494e454cd4c341dae4c59326",
+          "hash": "5de8d8dc8a93240282d6457914ebbfaf89d2c728b7cb0b0a1363c230cc66c6ec",
           "ctx": "da2e0a30b08e51e6ce489739679a843a9c7bffa90add77b5198b98aed0755948",
-          "text": "lemma mode_lt_iff (h : ℕ) (ν η : σ) (k l : Ch01.Band (2*h)) : (ν,k) < (η,l) ↔ ν < η ∨ ν=η ∧ k<l"
+          "text": "omit [Fintype σ] in lemma mode_lt_iff (h : ℕ) (ν η : σ) (k l : Ch01.Band (2*h)) : (ν,k) < (η,l) ↔ ν < η ∨ ν=η ∧ k<l"
         },
         "Bosonize.A05.partition_basis": {
           "kind": "lemma",
@@ -8166,9 +8166,9 @@
         },
         "Bosonize.Ch13.lower_charge_commute": {
           "kind": "lemma",
-          "hash": "6d06134bea7f7cf82e6778f4c7155fe50c96e8684e13b023b2234be0919fec16",
+          "hash": "1ba8e1c35b1cbe446f2a2a52c354e4cde2f13e0267212e113326752ba02a6f42",
           "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
-          "text": "lemma lower_charge_commute (Ns : σ → ℤ) (ν η : σ) (hne : ν≠η) : lowerCharge (lowerCharge Ns ν) η = lowerCharge (lowerCharge Ns η) ν"
+          "text": "omit [Fintype σ] in lemma lower_charge_commute (Ns : σ → ℤ) (ν η : σ) (hne : ν≠η) : lowerCharge (lowerCharge Ns ν) η = lowerCharge (lowerCharge Ns η) ν"
         },
         "Bosonize.Ch13.phase_cross_sign": {
           "kind": "lemma",
@@ -8184,9 +8184,9 @@
         },
         "Bosonize.Ch13.r2_admissible": {
           "kind": "lemma",
-          "hash": "f3c3923e3d5de20fc66f992c87ddd28f3ad7e2f0d61baa7a2c2cf96e33f22ef0",
+          "hash": "16c2fc3af305e99c5e67d4ca42f6f6be02ef5edcec704a961cf0a87c4f84c1d2",
           "ctx": "adf037e6b4a06ee68b30779c453e738b555be75f38896795eac00d25a3095601",
-          "text": "lemma r2_admissible (h K : ℕ) (Ns : σ → ℤ) (hR2 : A05.r2 h K Ns) : A05.admissible h Ns"
+          "text": "omit [Fintype σ] [LinearOrder σ] in lemma r2_admissible (h K : ℕ) (Ns : σ → ℤ) (hR2 : A05.r2 h K Ns) : A05.admissible h Ns"
         }
       }
     }

@@ -52,17 +52,60 @@ noncomputable def kleinFromBudget (h : ℕ) (Ns : σ → ℤ) (ν : σ) (K : ℕ
     A05.jointBudget h Ns K →ₗ[ℂ] FockSpace σ h :=
   (kleinKernel h Ns ν K).comp (A05.jointBudget h Ns K).subtype
 
+omit [Fintype σ] in
 lemma lower_charge_commute (Ns : σ → ℤ) (ν η : σ) (hne : ν≠η) :
-    lowerCharge (lowerCharge Ns ν) η = lowerCharge (lowerCharge Ns η) ν := by sorry
+    lowerCharge (lowerCharge Ns ν) η = lowerCharge (lowerCharge Ns η) ν := by
+  funext γ
+  by_cases hγν : γ=ν
+  · subst γ
+    simp [lowerCharge, hne, Ne.symm hne]
+  · by_cases hγη : γ=η
+    · subst γ
+      simp [lowerCharge, hne, Ne.symm hne]
+    · simp [lowerCharge, hγν, hγη]
 
-lemma phase_norm (h : ℕ) (Ns : σ → ℤ) (ν : σ) : ‖kleinPhase h Ns ν‖ = 1 := by sorry
+lemma phase_norm (h : ℕ) (Ns : σ → ℤ) (ν : σ) : ‖kleinPhase h Ns ν‖ = 1 := by
+  simp [kleinPhase, norm_zpow]
 
 lemma phase_cross_sign (h : ℕ) (Ns : σ → ℤ) (ν η : σ) (hne : ν≠η) :
     kleinPhase h (lowerCharge Ns ν) η * kleinPhase h Ns ν =
-      -(kleinPhase h (lowerCharge Ns η) ν * kleinPhase h Ns η) := by sorry
+      -(kleinPhase h (lowerCharge Ns η) ν * kleinPhase h Ns η) := by
+  have hshift (a b : σ) (hab : a≠b) :
+      phaseExponent h (lowerCharge Ns a) b = phaseExponent h Ns b - (if a<b then 1 else 0) := by
+    have hpoint (γ : σ) : (h : ℤ)+lowerCharge Ns a γ = (h : ℤ)+Ns γ - (if γ=a then 1 else 0) := by
+      by_cases hγ : γ=a
+      · subst γ
+        simp [lowerCharge]
+        ring
+      · simp [lowerCharge, hγ]
+    simp only [phaseExponent]
+    simp only [hpoint, Finset.sum_sub_distrib]
+    simp [Ne.symm hab]
+    ring
+  have hphase (a b : σ) (hab : a≠b) :
+      kleinPhase h (lowerCharge Ns a) b = if a<b then -kleinPhase h Ns b else kleinPhase h Ns b := by
+    unfold kleinPhase
+    rw [hshift a b hab]
+    by_cases hlt : a<b
+    · simp only [hlt, ite_true]
+      rw [zpow_sub₀ (by norm_num : (-1 : ℂ)≠0)]
+      simp [div_neg, div_one]
+    · simp [hlt]
+  rw [hphase ν η hne, hphase η ν hne.symm]
+  rcases lt_or_gt_of_ne hne with hlt | hgt
+  · simp only [hlt, not_lt_of_gt hlt, ite_true, ite_false]
+    ring
+  · simp only [hgt, not_lt_of_gt hgt, ite_true, ite_false]
+    ring
 
+omit [Fintype σ] [LinearOrder σ] in
 lemma r2_admissible (h K : ℕ) (Ns : σ → ℤ) (hR2 : A05.r2 h K Ns) :
-    A05.admissible h Ns := by sorry
+    A05.admissible h Ns := by
+  intro ν
+  have hm := hR2 ν
+  have hn := le_abs_self (Ns ν)
+  have hl := neg_le_abs (Ns ν)
+  constructor <;> omega
 
 /-- Actual lexicographic CAR ground coefficient includes both sign contributions. -/
 lemma ground_top_annihilation (h : ℕ) (hh : 0 < h) (Ns : σ → ℤ)

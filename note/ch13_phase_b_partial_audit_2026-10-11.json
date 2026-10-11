@@ -1,0 +1,57 @@
+{
+  "status": "Phase B partial; no Core promotion",
+  "sources": {
+    "BosonizeStubs/A05MultiSpecies.lean": {
+      "sha256": "a584013c2f880bd855dd13723bf444c145066d873532ad32a175763d7d0ed73f",
+      "remaining_placeholders": 16
+    },
+    "BosonizeStubs/Ch13KleinFactors.lean": {
+      "sha256": "2b3ebc357970605ff9e2720da0b0c6885c7f747d4fafb79ec842abf893c78b1a",
+      "remaining_placeholders": 21
+    }
+  },
+  "completed": {
+    "A05": [
+      "mode_lt_iff",
+      "species_joint_configuration",
+      "joint_species_configuration",
+      "annihilation_car",
+      "creation_car",
+      "mixed_car",
+      "creation_adjoint",
+      "ground_ne_zero",
+      "ground_mem_budget",
+      "joint_normalization_positive",
+      "charge_budget",
+      "tensor_kets"
+    ],
+    "Ch13": [
+      "lower_charge_commute",
+      "phase_norm",
+      "phase_cross_sign",
+      "r2_admissible"
+    ]
+  },
+  "axiom_output": [
+    "'Bosonize.A05.mode_lt_iff' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.species_joint_configuration' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.joint_species_configuration' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.annihilation_car' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.creation_car' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.mixed_car' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.creation_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.ground_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.ground_mem_budget' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.joint_normalization_positive' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.A05.charge_budget' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch13.lower_charge_commute' depends on axioms: [propext, Quot.sound]",
+    "'Bosonize.Ch13.phase_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch13.phase_cross_sign' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch13.r2_admissible' depends on axioms: [propext, Quot.sound]",
+    "'Bosonize.A05.tensor_kets' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "build": "3398 jobs; exactly37 expected unfinished-theorem warnings, no other warnings/errors",
+  "guard": "756 statements/588 commands; Core19 hashes unchanged",
+  "guard_tests": "69 passing",
+  "native_diagnostics": "complete; A05 16 and CH13 21 expected placeholder warnings, no errors/other warnings/failed dependencies"
+}
