@@ -128,3 +128,7 @@ theorem energy_space_finrank_r1 (h : ℕ) (hh : 0 < h) (N : ℤ)
     Module.finrank ℂ (Ch07.energySpace h N K) = Fintype.card (Nat.Partition K) := by sorry
 
 ```
+
+## Phase B integration and scoped interface review
+
+All theorem bodies are complete. Initial reviewed baseline: `c788bb3`. The [independent proof and migration review](../../../note/ch11_phase_b_review_2026-10-11.md) approved dropping only the redundant positive-size hypothesis of `inverse_displacement_parts`; its geometric recovery proof also covers the empty h=0 case. The sole caller was adjusted; every other header, data declaration and existing Core file is unchanged. The signatures above are the historical Phase A snapshot. Fresh whole-module builds and all-declaration axiom audits precede promotion.

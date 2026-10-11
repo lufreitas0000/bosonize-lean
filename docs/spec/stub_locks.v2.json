@@ -6840,9 +6840,9 @@
         },
         "Bosonize.A04Partitions.inverse_displacement_parts": {
           "kind": "lemma",
-          "hash": "080a6013144d5b77dc142e7a177aa782d4ae09dc7b5fb92ce8aff0f1cba130c9",
+          "hash": "8769cf4ebbb9f818df3673c595e1e64c5a96653070c5377e1ad1111a3c708e2c",
           "ctx": "31c2d63802792985c5403af723399b6bc22a9cd8d4a0b3c215dce05a5ee65034",
-          "text": "lemma inverse_displacement_parts {K : ℕ} (h rows : ℕ) (hh : 0 < h) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : displacementParts h (inverseConfiguration h rows p) = p.parts"
+          "text": "lemma inverse_displacement_parts {K : ℕ} (h rows : ℕ) (hr : rows ≤ 2*h) (p : Nat.Partition K) (hp : FitsRectangle rows (2*h-rows) p) : displacementParts h (inverseConfiguration h rows p) = p.parts"
         },
         "Bosonize.A04Partitions.inverse_labels_in_band": {
           "kind": "lemma",
