@@ -1,6 +1,6 @@
 # A05 multispecies support: Phase A companion
 
-Status: Phase B complete and source promoted/frozen in Core under the independently reviewed migration. Phase C execution checks and complementary pedagogical review are in progress; overall Phase C completion is pending.
+Status: Phase C complete. All theorem proofs/data are freshly standard-axiom audited, warning-free, promoted and frozen in Core. Corresponding complementary lectures pass independent review.
 
 Sources: `notes/md/ch13_Klein_factors.md`, `notes/appendices/a05_exponentials_klein_and_vertex_scope.md`, the CH13 TOC entry, applicable restricted-map/tensor-budget/phase corrections in `note/proof_suggestions_revision_2026-10-09.md`, and current frozen CH07, CH11, CH04/A02, CH09 and CH06Ext contracts. Historical brainstorm/API suggestions are advisory; nonexistent `docs/stub_suggestion/` and `docs/proof_suggestion/` were not invented. The A05 exponential and CH14 vertex research sections are excluded from this chapter: this draft asserts no unprojected vertex equality or analytic exponential.
 
@@ -216,3 +216,9 @@ Fresh evidence: [axiom audit](../../../../note/ch13_phase_b_axiom_audit_2026-10-
 ## Core migration — 2026-10-11
 
 Source: [promoted Lean module](../../../../Bosonize/Core/A05MultiSpecies.lean), SHA-256 `bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf02a983f92335bc2`. A05 is byte-identical to its fully audited staging source; CH13 changes only the independently reviewed staging-to-Core import. All 53 theorem-header hashes are unchanged; only that CH13 import command and its 25 dependent context digests change. Old nineteen Core hashes are preserved. See [migration evidence](../../../../note/ch13_phase_c_migration_2026-10-11.json).
+
+## Complete Phase C evidence
+
+Proof checkpoint `f8bf779`, reviewed migration `aad0c37`. All 95 declarations pass fresh audits through the Core aggregator. Full CI passes 69 tests, 756 statement interfaces/588 commands, 21 Core hashes and both warning-free library builds. Original nineteen Core sources are unchanged. [Validation](../../../../note/ch13_phase_c_validation_2026-10-11.md), [Core axiom audit](../../../../note/ch13_phase_c_axiom_audit_2026-10-11.json), [pedagogical review](../../../../note/ch13_phase_c_pedagogical_review_2026-10-11.md), [Markdown validation](../../../../note/ch13_phase_c_markdown_validation_2026-10-11.json).
+
+Complementary lectures: [CH13](../../../../notes/md/ch13_Klein_factors.md#134-constructive-realization-in-lean) and [A05](../../../../notes/appendices/a05_exponentials_klein_and_vertex_scope.md). The CH13 lecture explains the exact CAR carrier, total-energy grading, product Gram/basis, finite normalized kernel, typed isometry/squares and twist-aware ground field coefficient; the A05 lecture explains its implemented multispecies portion while preserving exponential/vertex obligations. Original reference notes are byte-prefix preserved and independently reviewed. Historical draft/checkpoint counts above are superseded by this evidence.

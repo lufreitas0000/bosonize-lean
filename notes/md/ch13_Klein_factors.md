@@ -116,3 +116,24 @@ $$
 
 *Lean 4 Proof Strategy:*
 Express the number operator `N_hat` acting on a specific charge sector as a scalar multiplication by `N_nu'`. Apply both sides to a basis vector $|\lambda;N\rangle$. The operator `N_hat_nu'` yields eigenvalue `N_nu'`, while on the RHS, mapping to $N-e_\nu$ reduces the species charge by `δ_nu_nu'`, which perfectly offsets the added `δ_nu_nu' I` term, proving `F_nu ∘ N_hat_nu' = (N_hat_nu' + δ_nu_nu' • id) ∘ F_nu`.
+
+#### 13.4 Constructive realization in Lean
+
+The completed proofs are now in [CH13](../../Bosonize/Core/Ch13KleinFactors.lean), supported by [A05](../../Bosonize/Core/A05MultiSpecies.lean). Their fresh declaration audits passed before and after promotion, and the Core library checks pass. The earlier proof strategies remain reference proposals. The implementation uses an explicit finite kernel rather than taking a chosen basis isometry as its definition.
+
+The Hilbert space has an orthonormal ket for every finite occupation of the pairs $(\nu,k)$, with $-h+1\le k\le h$. These pairs are ordered lexicographically: species first, then momentum. Splitting an occupation into its species components is a proved bijection. A coordinate product therefore gives an actual vector in this fermionic Hilbert space, and its inner product factors into the component inner products. For a same-species density bilinear, the preceding-species sign occurs twice and cancels. Consequently the genuine density acts on its own component, and densities of distinct species commute.
+
+The joint budget bounds the **sum** of species excitation energies by $K$. Its labels are tuples of ordinary partitions satisfying $\sum_\eta |\lambda_\eta|\le K$. Under $2K+|N_\eta|\le h$ for every species, the actual density-generated vectors form a basis, with diagonal Gram factor
+$$
+ z_{\vec\lambda}=\prod_\eta z_{\lambda_\eta}>0.
+$$
+This follows from the single-species physical states and their proved completeness; the joint Gram and spanning properties are not assumptions. Arbitrary natural mode lists, including zero entries, are allowed in the intermediate word-factorization theorem. Partition parts remain strictly positive.
+
+Writing $u_{\vec\lambda}$ and $v_{\vec\lambda}$ for the source and lowered-sector states, the ambient operator is the finite sum
+$$
+ Fw=\sum_{\vec\lambda}\frac{P(\nu,\vec N)}{z_{\vec\lambda}}
+       v_{\vec\lambda}\langle u_{\vec\lambda},w\rangle.
+$$
+Here $z_{\vec\lambda}$ is the squared norm, rather than the norm itself. The Gram factor makes its action exactly $Fu_{\vec\lambda}=P v_{\vec\lambda}$. The reversed kernel with conjugate source phase is its actual ambient adjoint. When both sectors satisfy the stated margins, their restrictions are mutually inverse and preserve inner products, giving a surjective typed isometry between the two budgets. Enlarging a valid cutoff preserves the action on the smaller budget. The raising and lowering squares use actual density maps into their stated target budgets, with the enlarged margins in §13.2.
+
+The phase in (13.5) is derived from actual occupied modes. Earlier species contribute $\sum_{\eta<\nu}(h+N_\eta)$, and the top occupied mode contributes $h+N_\nu-1$. Its removal gives exactly the lowered ground ket. Each species retains its own boundary parameter: the ground-to-ground field coefficient is $L^{-1/2}P\,r_\nu^x\zeta^{xN_\nu}$. This matrix element does not identify the full field-ground vector, which can also contain deeper holes. Distinct-species anticommutation is proved across the four admissible sectors; double ground action is nonzero, including same-species squares whenever the doubly lowered sector satisfies the margin.

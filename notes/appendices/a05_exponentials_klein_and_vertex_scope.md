@@ -156,3 +156,13 @@ To rigorously support arbitrary spatial twists $\tau$ without modifying the froz
     P_\beta(S) = P_0(S) + \beta N(S), \qquad t_\beta(N) = t_0(N) + \beta N, \qquad e_\beta(S) = P_\beta(S) - t_\beta(N(S)) = e_0(S).
    $$
    Because excitation energies $e_\beta(S) = e_0(S)$ are strictly invariant under this uniform linear shift, the excitation budgets and partition counting of A03/CH07 are fully reusable, requiring only a rational/real scalar bridge for the physical sector ground energy $t_\beta(N) = N^2/2$ at centered APBC $\beta = -1/2$.
+
+## Verified finite multispecies support for Chapter 13
+
+The multispecies portion is realized by [A05MultiSpecies](../../Bosonize/Core/A05MultiSpecies.lean) and [Ch13KleinFactors](../../Bosonize/Core/Ch13KleinFactors.lean). Complete proofs and fresh declaration audits passed before and after promotion; the Core library checks pass. Exact technical evidence belongs to the [A05 companion](../../docs/companion/Bosonize/Core/A05MultiSpecies.md) and [CH13 companion](../../docs/companion/Bosonize/Core/Ch13KleinFactors.md).
+
+Here “tensor” means a proved product of occupation coordinates on the actual finite CAR carrier. It preserves actual joint ground kets and density words, and the finite inner-product sum factors over species. Lexicographic ordering is essential for odd operators; the even density action loses the preceding-species parity because that contribution appears twice. Signed density grading preserves all species charges and shifts the **total** excitation cutoff by its mode index. A lowering mode larger than the total budget annihilates it. Positive-current commutation is an actual finite operator theorem; the joint Haldane basis additionally requires the species margins.
+
+The kernel denominator is the proved positive product Gram normalization. Its inverse, adjoint, budget isometry, cutoff compatibility and four-budget squares are derived on these actual states. Thus the identical source/target Gram factors anticipated in Definition 2 are proved here, rather than supplied as hypotheses. The integer phase includes both preceding-species particle counts and the top-mode removal sign, matching the fixed occupation-basis ground convention.
+
+This support completes the finite multispecies and Klein-map portion only. The exponential and vertex proposals above retain their stated unproved obligations. The physical field coefficient retains the same external twist as its comparison field; excitation invariance under a uniform linear offset does not remove that field parameter, change the reference sea, or establish an unprojected field–vertex identity.
