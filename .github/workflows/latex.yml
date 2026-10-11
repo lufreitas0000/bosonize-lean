@@ -43,7 +43,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cp notes/latex/main.pdf bosonize-monograph.pdf
-          gh release create latest bosonize-monograph.pdf \
-            --title "Bosonize-Lean Monograph (Latest Build)" \
-            --notes "Continuous automated build of the Bosonize-Lean LaTeX monograph (Chapters 1–11 and Appendices A01–A04). Direct download of the uncompressed PDF is available below." \
-            --clobber
+          if gh release view latest >/dev/null 2>&1; then
+            echo "Updating existing release..."
+            gh release upload latest bosonize-monograph.pdf --clobber
+          else
+            echo "Creating initial release..."
+            gh release create latest bosonize-monograph.pdf \
+              --title "Bosonize-Lean Monograph (Latest Build)" \
+              --notes "Continuous automated build of the Bosonize-Lean LaTeX monograph (Chapters 1–11 and Appendices A01–A04). Direct download of the uncompressed PDF is available below."
+          fi
