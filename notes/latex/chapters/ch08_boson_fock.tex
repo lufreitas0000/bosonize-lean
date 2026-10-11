@@ -1,35 +1,293 @@
 \chapter{The Umbral Boson Fock Layer}
 \label{ch:boson_fock}
 
-\section{Introduction and Purely Algebraic Bosons}
-Traditional bosonic Fock spaces require infinite-dimensional Hilbert spaces of square-integrable wavefunctions, leading to unbounded creation/annihilation operators and domain subtleties. 
-In the Umbral algebraic bosonization framework, the bosonic carrier is realized purely algebraically as the ring of multivariate polynomials:
+\section{Introduction and the Algebraic Oscillator Approach}
+
+In conventional quantum field theory, bosonic Fock spaces are constructed as infinite direct sums of symmetric tensor products $\bigoplus_{n=0}^\infty \mathrm{Sym}^n(\mathcal{H}_1)$ over a single-particle Hilbert space $\mathcal{H}_1$. This analytic framework inherently requires unbounded creation and annihilation operators, dense domains, topological completions, and subtle operator trace anomalies.
+
+In the algebraic bosonization program presented in this monograph, we circumvent all topological subtleties by constructing the bosonic Fock layer \emph{purely algebraically}. The bosonic carrier is realized as a commutative multivariate polynomial ring over $\mathbb{C}$. 
+In this umbral setting:
+\begin{enumerate}
+    \item Annihilation operators are partial derivatives scaled by mode weights.
+    \item Creation operators are polynomial coordinate multiplications.
+    \item The state space is endowed with the positive-definite \emph{Haldane inner product}, making creation and annihilation operators exact formal adjoints.
+    \item Finite energy budget subspaces $\mathcal{F}_{\le K}$ provide finite-dimensional Hilbert carriers where operators are nilpotent, eliminating infinite series while preserving the exact Lie algebra in the ambient space.
+\end{enumerate}
+
+\section{The Polynomial Carrier and the Haldane Inner Product}
+
+Let $M \ge 1$ be a positive integer mode cutoff. The set of mode indices is $Q = \{1, 2, \dots, M\}$, where each mode $m \in Q$ carries an intrinsic positive weight $m$.
+
+\begin{definition}[Bosonic Polynomial Carrier Space]
+The algebraic bosonic carrier space $\mathcal{F}_b$ is the commutative ring of multivariate polynomials in $M$ indeterminates:
 \begin{equation}
-\mathcal{F}_b \coloneqq \mathbb{C}[X_1, X_2, \dots].
+\mathcal{F}_b \coloneqq \mathbb{C}[X_1, X_2, \dots, X_M].
+\end{equation}
+The bosonic vacuum state $|\Omega_b\rangle$ is the constant polynomial $1 \in \mathcal{F}_b$.
+\end{definition}
+
+An occupation configuration of bosonic modes is a tuple of non-negative integers $r = (r_1, r_2, \dots, r_M) \in \mathbb{N}^M$. Each occupation vector $r$ defines a basis monomial:
+\begin{equation}
+X^r \coloneqq \prod_{m=1}^M X_m^{r_m} = X_1^{r_1} X_2^{r_2} \cdots X_M^{r_M}.
+\end{equation}
+The total particle number and total excitation energy of the monomial $X^r$ are:
+\begin{equation}
+N(r) \coloneqq \sum_{m=1}^M r_m, \qquad E(r) \coloneqq \sum_{m=1}^M m\, r_m.
 \end{equation}
 
-\section{Raw Currents and the Haldane Inner Product}
-For mode integer $m \ge 1$:
-\begin{itemize}
-    \item \textbf{Creation Operator (Current):} $C_m \coloneqq X_m$ (multiplication by indeterminate $X_m$).
-    \item \textbf{Annihilation Operator:} $A_m \coloneqq m \frac{\partial}{\partial X_m}$.
-\end{itemize}
-These operators satisfy the exact Canonical Commutation Relations (CCR):
-\begin{equation}
-[A_m, C_n] = m\, \delta_{m, n}\, I.
-\end{equation}
-The Haldane inner product is the unique positive-definite Hermitian form making $A_m^\dagger = C_m$. Monomials $\prod_{i} X_{\lambda_i}$ are mutually orthogonal with norm squared:
-\begin{equation}
-\left\langle \prod X_{\lambda_i}, \prod X_{\mu_j} \right\rangle = z_\lambda\, \delta_{\lambda, \mu},
-\end{equation}
-where $z_\lambda = \prod_m m^{a_m} a_m!$ is the standard partition symmetry factor.
+\begin{definition}[Current Operators and Derivatives]
+For each mode $m \in Q$:
+\begin{enumerate}
+    \item The \emph{creation operator (current)} $C_m \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}_b)$ is the coordinate multiplication:
+    \begin{equation}
+    (C_m p)(X) \coloneqq X_m \cdot p(X).
+    \end{equation}
+    \item The \emph{annihilation operator} $A_m \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}_b)$ is the weighted partial derivative:
+    \begin{equation}
+    (A_m p)(X) \coloneqq m\, \frac{\partial p}{\partial X_m}(X).
+    \end{equation}
+\end{enumerate}
+\end{definition}
 
-\section{Key Results and Formal Discoveries}
-\begin{itemize}
-    \item \textbf{Nilpotent Exponentials:} On any weight-truncated subspace $\mathcal{F}_{\le K}$, the operator $A_m$ is nilpotent. Consequently, the formal exponential series $\exp(t A_m)$ terminates after finitely many terms as an exact polynomial operator without analytic limits.
-    \item \textbf{Exact Baker--Campbell--Hausdorff (BCH) Formula:} For commute-to-scalar operators, $e^{A} e^{B} = e^{A+B} e^{\frac{1}{2}[A, B]}$ is an exact finite algebraic identity on truncated polynomial spaces.
-\end{itemize}
+\begin{definition}[The Haldane Inner Product]
+The \emph{Haldane inner product} $\langle \cdot, \cdot \rangle_H$ on $\mathcal{F}_b$ is the Hermitian form defined on monomials $X^r, X^{r'}$ by:
+\begin{equation}
+\langle X^r, X^{r'} \rangle_H \coloneqq w(r)\, \delta_{r, r'},
+\end{equation}
+where the Haldane combinatorial weight $w(r)$ is:
+\begin{equation}
+w(r) \coloneqq \prod_{m=1}^M m^{r_m} (r_m!).
+\end{equation}
+For general polynomials $p = \sum_r p_r X^r$ and $q = \sum_r q_r X^r$, the pairing is given by the finite sum:
+\begin{equation}
+\langle p, q \rangle_H \coloneqq \sum_{r \in \mathbb{N}^M} \overline{p_r}\, w(r)\, q_r.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Positive Definiteness and Adjoint Pairing]
+\label{prop:haldane_adjoint}
+\begin{enumerate}
+    \item The Haldane inner product is positive-definite: $\langle p, p \rangle_H \ge 0$, with $\langle p, p \rangle_H = 0$ if and only if $p = 0$.
+    \item For every mode $m \in Q$ and all polynomials $p, q \in \mathcal{F}_b$:
+    \begin{equation}
+    \langle C_m p, q \rangle_H = \langle p, A_m q \rangle_H.
+    \end{equation}
+    That is, $A_m^\dagger = C_m$ and $C_m^\dagger = A_m$ under the Haldane metric.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+    \item Since every mode weight $m \ge 1$ and every $r_m \ge 0$, the weight $w(r) = \prod m^{r_m} r_m! > 0$ is strictly positive. Therefore $\langle p, p \rangle_H = \sum_r w(r) |p_r|^2 \ge 0$. If the sum vanishes, each $|p_r|^2 = 0$, so $p = 0$.
+    \item It suffices to evaluate the pairing on basis monomials $p = X^r$ and $q = X^{r'}$.
+    Applying $C_m$ raises the $m$-th occupation: $C_m X^r = X^{r + e_m}$.
+    Applying $A_m$ lowers the $m$-th occupation: $A_m X^{r'} = m r_m' X^{r' - e_m}$ if $r_m' \ge 1$, and $0$ if $r_m' = 0$.
+    Therefore:
+    \[
+    \langle C_m X^r, X^{r'} \rangle_H = \langle X^{r + e_m}, X^{r'} \rangle_H = w(r + e_m)\, \delta_{r + e_m, r'}.
+    \]
+    On the other hand:
+    \[
+    \langle X^r, A_m X^{r'} \rangle_H = m r_m' \langle X^r, X^{r' - e_m} \rangle_H = m r_m'\, w(r)\, \delta_{r, r' - e_m}.
+    \]
+    When $r' = r + e_m$, we have $r_m' = r_m + 1$. The ratio of Haldane weights satisfies the exact identity:
+    \[
+    w(r + e_m) = m^{r_m + 1} (r_m + 1)! \prod_{k \neq m} k^{r_k} r_k! = m (r_m + 1) w(r) = m r_m' w(r).
+    \]
+    Thus $\langle C_m X^r, X^{r'} \rangle_H = \langle X^r, A_m X^{r'} \rangle_H$ for all basis monomials.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[Bosonic Observables]
+The total bosonic particle number operator $\hat{N}_b$ and the chiral bosonic Hamiltonian $\hat{H}_b$ are defined by:
+\begin{align}
+\hat{N}_b &\coloneqq \sum_{m=1}^M \frac{1}{m} C_m A_m = \sum_{m=1}^M X_m \frac{\partial}{\partial X_m}, \\
+\hat{H}_b &\coloneqq \sum_{m=1}^M C_m A_m = \sum_{m=1}^M m X_m \frac{\partial}{\partial X_m}.
+\end{align}
+\end{definition}
+
+\begin{lemma}[Diagonal Action on Monomials]
+For every monomial basis state $X^r$:
+\begin{equation}
+\hat{N}_b X^r = N(r) X^r = \left(\sum_{m=1}^M r_m\right) X^r, \qquad \hat{H}_b X^r = E(r) X^r = \left(\sum_{m=1}^M m\, r_m\right) X^r.
+\end{equation}
+Both $\hat{N}_b$ and $\hat{H}_b$ are formally self-adjoint under the Haldane inner product.
+\end{lemma}
+
+\begin{proof}
+Applying the Euler operator $X_m \frac{\partial}{\partial X_m}$ to $X^r$ yields $r_m X^r$. Summing over $m$ gives $\sum r_m X^r$. Scaling each mode by $m$ yields $\sum m r_m X^r$. Self-adjointness follows since $(C_m A_m)^\dagger = A_m^\dagger C_m^\dagger = C_m A_m$.
+\end{proof}
+
+\section{The Exact Ambient Canonical Commutation Relations}
+
+\begin{theorem}[Exact Canonical Commutation Relations (CCR)]
+\label{thm:exact_ccr}
+On the polynomial space $\mathcal{F}_b$, the operators $\{A_m, C_m \mid m \in Q\}$ satisfy the exact Canonical Commutation Relations:
+\begin{align}
+[A_m, C_n] &\coloneqq A_m C_n - C_n A_m = m\, \delta_{m, n}\, I, \label{eq:boson_ccr} \\
+[A_m, A_n] &= 0, \\
+[C_m, C_n] &= 0.
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Coordinate multiplications commute: $[C_m, C_n] p = X_m X_n p - X_n X_m p = 0$.
+Partial derivatives commute: $[A_m, A_n] p = m n \left(\frac{\partial^2 p}{\partial X_m \partial X_n} - \frac{\partial^2 p}{\partial X_n \partial X_m}\right) = 0$ by Schwarz's theorem on polynomials.
+
+For the mixed commutator, let $p \in \mathcal{F}_b$ and apply the product rule for differentiation:
+\[
+\frac{\partial}{\partial X_m}(X_n p) = \left(\frac{\partial X_n}{\partial X_m}\right) p + X_n \frac{\partial p}{\partial X_m} = \delta_{m, n} p + X_n \frac{\partial p}{\partial X_m}.
+\]
+Multiplying by $m$:
+\[
+A_m(C_n p) = m\, \delta_{m, n} p + X_n \left(m \frac{\partial p}{\partial X_m}\right) = m\, \delta_{m, n} p + C_n(A_m p).
+\]
+Subtracting $C_n(A_m p)$ yields $[A_m, C_n] p = m\, \delta_{m, n} p = (m \delta_{m, n} I) p$.
+\end{proof}
+
+\section{Energy Filtration and Finite Carrier Spaces}
+
+We now construct the finite-dimensional regularized counterpart of the bosonic Fock space.
+
+\begin{definition}[Energy Budget Filtration]
+For any energy cutoff $K \in \mathbb{N}$, the \emph{bosonic energy budget subspace} $\mathcal{F}_{\le K} \subset \mathcal{F}_b$ is the subspace of polynomials of weighted degree at most $K$:
+\begin{equation}
+\mathcal{F}_{\le K} \coloneqq \mathrm{span}_{\mathbb{C}} \left\{ X^r \;\middle|\; E(r) = \sum_{m=1}^M m\, r_m \le K \right\}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Finite Dimensionality and Nilpotency]
+\label{prop:nilpotency}
+\begin{enumerate}
+    \item Because every mode weight satisfies $m \ge 1$, the condition $\sum m r_m \le K$ implies $0 \le r_m \le K$ for all $m$. Consequently, the set of admissible occupations:
+    \begin{equation}
+    I_K \coloneqq \left\{ r \in \mathbb{N}^M \;\middle|\; \sum_{m=1}^M m\, r_m \le K \right\} \subset \{0, 1, \dots, K\}^M
+    \end{equation}
+    is strictly finite, and $\dim_{\mathbb{C}} \mathcal{F}_{\le K} = \#I_K < \infty$.
+    \item For every mode $m \in Q$, the annihilation operator $A_m$ lowers the excitation energy by $m$:
+    \begin{equation}
+    A_m\big( \mathcal{F}_{\le K} \big) \subseteq \mathcal{F}_{\le K - m} \quad (\text{with } \mathcal{F}_{\le K - m} = \{0\} \text{ if } K < m).
+    \end{equation}
+    In particular, $A_m$ is strictly \emph{nilpotent} on $\mathcal{F}_{\le K}$:
+    \begin{equation}
+    A_m^{\lfloor K/m \rfloor + 1} = 0 \quad \text{on } \mathcal{F}_{\le K}.
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Applying $A_m$ to $X^r$ produces $m r_m X^{r - e_m}$, which has energy $E(r - e_m) = E(r) - m \le K - m$. If $K < m$, no monomial has non-negative energy $\le K - m$, so the space is $\{0\}$. Repeated application at most $\lfloor K/m \rfloor + 1$ times reduces the energy below zero, annihilating all vectors.
+\end{proof}
+
+\begin{definition}[Compressed Operators and Projection Remainders]
+Let $P_K : \mathcal{F}_b \to \mathcal{F}_{\le K}$ denote the orthogonal projection discarding monomials with $E(r) > K$.
+For any ambient operator $O$, the \emph{compressed operator} on $\mathcal{F}_{\le K}$ is $\tilde{O} \coloneqq P_K \circ O \circ P_K$.
+\end{definition}
+
+\begin{theorem}[Compressed Commutator Remainder Identity]
+\label{thm:compressed_commutator}
+For any ambient operators $A, B$, the commutator of their compressed projections satisfies:
+\begin{equation}
+[P_K A P_K, \; P_K B P_K] = P_K [A, B] P_K - P_K A (I - P_K) B P_K + P_K B (I - P_K) A P_K.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Expanding $P_K A P_K P_K B P_K = P_K A P_K B P_K$. Writing $P_K = I - (I - P_K)$:
+\[
+P_K A P_K B P_K = P_K A (I - (I - P_K)) B P_K = P_K A B P_K - P_K A (I - P_K) B P_K.
+\]
+Symmetrically:
+\[
+P_K B P_K A P_K = P_K B A P_K - P_K B (I - P_K) A P_K.
+\]
+Subtracting the two expressions gives the desired identity.
+\end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 core (Chapter 8, Boson Fock Layer), this entire bosonic structure is proved constructively over polynomials with rational and complex coefficients without analytic convergence theorems.
+Theorem~\ref{thm:compressed_commutator} provides the exact mathematical explanation of the No-Go Theorem~\ref{thm:no_go} in the context of finite bosonic cutoffs. On the finite-dimensional carrier $\mathcal{F}_{\le K}$, the trace of any commutator $[\tilde{A}_m, \tilde{C}_m]$ must vanish identically by cyclic trace invariance: $\mathrm{Tr}([\tilde{A}_m, \tilde{C}_m]) = 0$. However, on the ambient space, $[A_m, C_m] = m I$, whose projected trace would be $m \dim(\mathcal{F}_{\le K}) > 0$. The discrepancy is precisely accounted for by the boundary terms $P_K C_m (I - P_K) A_m P_K$, which measure transient excursions out of the budget. 
+
+This proves that exact scalar commutation relations can only hold on the ambient infinite-dimensional space $\mathcal{F}_b$, or within protected internal margins where $(I - P_K)$ is not populated.
+\end{remark}
+
+\section{Exact Nilpotent Exponentials and the Baker--Campbell--Hausdorff Formula}
+
+\begin{definition}[Nilpotent Exponential]
+Let $V$ be a vector space and $A \in \mathrm{End}(V)$ a nilpotent operator with $A^{d+1} = 0$. The \emph{nilpotent exponential} $\operatorname{expNil}(A)$ is the finite polynomial:
+\begin{equation}
+\operatorname{expNil}(A) \coloneqq \sum_{j=0}^d \frac{1}{j!} A^j.
+\end{equation}
+Because $A^{j} = 0$ for all $j > d$, this expression is an exact finite algebraic operator requiring no limits or analytic convergence.
+\end{definition}
+
+\begin{theorem}[Exact Baker--Campbell--Hausdorff (BCH) Formula]
+\label{thm:bch}
+Let $A, B$ be operators in an associative algebra satisfying $[A, [A, B]] = 0$ and $[B, [A, B]] = 0$, so that the commutator $c \coloneqq [A, B]$ commutes with both $A$ and $B$.
+Then for any formal parameter $t$:
+\begin{equation}
+e^{t A} e^{t B} = e^{t B} e^{t A} e^{t^2 [A, B]}.
+\end{equation}
+In particular, for the ambient bosonic currents with $[A_m, C_m] = m I$:
+\begin{equation}
+e^{\alpha A_m} e^{\beta C_m} = e^{\beta C_m} e^{\alpha A_m} e^{m \alpha \beta I}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $F(t) \coloneqq e^{t A} e^{t B} e^{-t A}$. Differentiating with respect to the formal parameter $t$:
+\[
+F'(t) = e^{t A} A e^{t B} e^{-t A} + e^{t A} e^{t B} B e^{-t A} - e^{t A} e^{t B} e^{-t A} A = e^{t A} [A, e^{t B}] e^{-t A} + e^{t A} e^{t B} B e^{-t A}.
+\]
+Using $[A, B^n] = n B^{n-1} [A, B] = n c B^{n-1}$, we have $[A, e^{t B}] = t c e^{t B}$. Thus:
+\[
+F'(t) = t c F(t) + e^{t A} e^{t B} B e^{-t A} - e^{t A} e^{t B} A e^{-t A} = t c F(t).
+\]
+Integrating the formal differential equation with initial condition $F(0) = I$ yields:
+\[
+F(t) = e^{t B} e^{t c} \implies e^{t A} e^{t B} = e^{t B} e^{t A} e^{t^2 [A, B]}.
+\]
+\end{proof}
+
+\section{Wick's Theorem and Vacuum Polynomial Recurrence}
+
+We conclude this chapter with the algebraic formulation of Wick's theorem.
+
+\begin{definition}[Symmetric Position Operator]
+For a mode $m \in Q$, the symmetric operator $\hat{x}_m$ is defined by:
+\begin{equation}
+\hat{x}_m \coloneqq D_m + X_m = \frac{1}{m} A_m + C_m.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Wick's Theorem and Polynomial Vacuum Recurrence]
+\label{thm:wick}
+\begin{enumerate}
+    \item For any integer $n \ge 0$, the operator power satisfies:
+    \begin{equation}
+    (\hat{x}_m)^n = \sum_{k=0}^{\lfloor n/2 \rfloor} \frac{n!}{k! (n - 2k)! 2^k} :(\hat{x}_m)^{n-2k}:,
+    \end{equation}
+    where $:\! X_m^a D_m^b \!: \coloneqq X_m^a D_m^b$.
+    \item Evaluating on the vacuum state $1 \in \mathcal{F}_b$, all terms with $D_m$ annihilate the vacuum, yielding the vacuum polynomial $P_n(X) \coloneqq (\hat{x}_m)^n 1$.
+    The polynomials $P_n(X)$ satisfy the recurrence relation:
+    \begin{equation}
+    P_0(X) = 1, \qquad P_1(X) = X_m, \qquad P_{n+1}(X) = X_m P_n(X) + n P_{n-1}(X),
+    \end{equation}
+    with formal generating function:
+    \begin{equation}
+    \sum_{n=0}^\infty P_n(X) \frac{t^n}{n!} = \exp\left( X_m t + \frac{t^2}{2} \right).
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By the commutator $[D_m, X_m] = I$, applying $(D_m + X_m)$ to $P_n(X)$ yields:
+\[
+P_{n+1}(X) = (D_m + X_m) P_n(X) = X_m P_n(X) + D_m P_n(X).
+\]
+By induction on $n$, the derivative satisfies $D_m P_n(X) = n P_{n-1}(X)$. Substituting this into the equation yields the recurrence $P_{n+1}(X) = X_m P_n(X) + n P_{n-1}(X)$.
+Multiplying by $t^n / n!$ and summing over $n \ge 0$ solves the differential equation for the generating function, yielding $\exp(X_m t + t^2/2)$.
+\end{proof}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core (Chapter 8, Boson Fock Layer), this entire bosonic structure is proved constructively over polynomials with rational and complex coefficients without analytic convergence theorems. The positive sign in the polynomial recurrence ($P_2 = X^2 + 1$) reflects the convention of the operator $(D + X)$, distinguishing it from the probabilists' Hermite polynomials $\mathrm{He}_2(X) = X^2 - 1$ which arise from $(X - D)$.
 \end{remark}
