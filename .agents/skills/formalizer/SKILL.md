@@ -11,7 +11,7 @@ For authorized chapter development, follow the repository's automatic A–B–C 
 
 ## Usage allowance and checkpoints
 
-Check live Codex usage before chapters, phase transitions and parallel proof groups, and approximately every 5–10 minutes during sustained work. If less than 10% of the five-hour allowance or less than 5% of the weekly allowance remains, warn, stop new proof work, save a resumable checkpoint and yield with a recommendation to pause. Follow [Usage allowance and resumable checkpoints](references/usage_budget.md) for tool availability, shared-account limits, delegated work and resumption. This guard can defer an otherwise automatic A–B–C transition; it never relaxes proof or freeze requirements.
+Check live Codex usage before chapters, phase transitions and parallel proof groups, and approximately every 5–10 minutes during sustained work. If less than 10% of the five-hour allowance or less than 5% of the weekly allowance remains, warn, stop new proof work, save a resumable checkpoint and yield with a recommendation to pause. Follow [Usage allowance and resumable checkpoints](references/usage_budget.md) for tool availability, shared-account limits, delegated work and resumption. This guard can defer an otherwise automatic A–B–C transition; it never relaxes proof or freeze requirements. When the user explicitly authorizes autonomous quota resumption, schedule a thread wakeup after the limiting reset and recheck live allowance before restarting; do not spend reset credits. A whole-project request authorizes sequential roadmap items, while every chapter retains its independent review and validation gates.
 
 ## Source reconciliation and proof design
 
