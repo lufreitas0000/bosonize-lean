@@ -1,0 +1,8 @@
+{
+  "source_sha256": "24bd8be1167243715b3c4b50d55917581599facdfabf3b53111669b32619bcab",
+  "old_path": "BosonizeStubs/Ch12Sugawara.lean",
+  "new_path": "Bosonize/Core/Ch12Sugawara.lean",
+  "import_changes": [],
+  "interface_record_unchanged": true,
+  "old_core_modules_unchanged": 18
+}

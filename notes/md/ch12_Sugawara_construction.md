@@ -84,3 +84,77 @@ Since $2(K+n) + |N| \le h$ and $M \ge K+n$, Theorem 12.3 applies to both $\psi \
 Subtracting the two expressions gives $[H_{\text{sug}}^{(M)}, \rho_n] \psi = [\hat{E}, \rho_n] \psi = n \rho_n \psi$.
 
 *Useful cutoff lemma:* For m>K the rightmost lowering mode annihilates every input in B(N,K) by grading. Split the sum into active modes m≤K and inactive modes before pull-through; the inactive terms do not require an additional upper-M current margin.
+
+#### 12.4 Constructive realization in Lean
+
+The CH12 construction is proved and promoted to Core. Fresh declaration axiom audits, warning-free builds and both freeze checks pass; the formal companion records validation evidence.
+
+The [CH12 construction](../../Bosonize/Core/Ch12Sugawara.lean) and [formal companion](../../docs/companion/Bosonize/Core/Ch12Sugawara.md) realize the energy equivalence on the actual finite fermionic carrier. The earlier proof-strategy paragraphs, including the illustrative code in §12.1, are proposals retained for reference. The construction uses the ambient occupation Hilbert space and then proves equality of actions on the prescribed budgets; it does not define a separate compressed current algebra.
+
+**A finite positive operator and a stable cutoff.** At band length $L=2h$, the carrier has the orthonormal occupation basis $\delta_S$ for subsets of $B=\{-h+1,\ldots,h\}$. Each density $\rho_m$ is the previously constructed finite sum of CAR bilinears with integer transfer $m$. The cutoff $M$ is any natural number, including zero, and
+
+$$
+H_{\mathrm{sug}}^{(M)}=\sum_{m=1}^{M}\rho_m\rho_{-m}.
+$$
+
+The lowering current acts first. The actual Hilbert adjoint relation $\rho_m^\dagger=\rho_{-m}$ makes each summand self-adjoint, and gives, on every ambient vector,
+
+$$
+\langle v,H_{\mathrm{sug}}^{(M)}v\rangle
+=\sum_{m=1}^{M}\langle\rho_{-m}v,\rho_{-m}v\rangle
+=\sum_{m=1}^{M}\|\rho_{-m}v\|^2.
+$$
+
+Thus the sum has a positive quadratic form. The empty cutoff gives the zero operator. Every admissible sector ground is annihilated by the sum for every $M$, since all positive lowering modes annihilate that ground.
+
+Cutoff stability is a separate grading fact. For $v\in B(N,K)$ and $m>K$, the lowering current maps $v$ into a negative excitation budget, whose only vector is zero. Hence $\rho_m\rho_{-m}v=0$, and
+
+$$
+M\ge K\quad\Longrightarrow\quad
+H_{\mathrm{sug}}^{(M)}v=H_{\mathrm{sug}}^{(K)}v.
+$$
+
+In particular any two cutoffs at least $K$ have the same action on this budget. This conclusion requires $h>0$ and budget membership, but no R2 margin and no upper bound on $M$. Boundary control is needed only for the active modes in the subsequent pull-through argument.
+
+**Multiplicities determine the eigenvalue.** For a written density word $W(w)$ on the admissible ground, let $r_m(w)$ count its occurrences of $m$. Assume $w$ is a list of natural labels with total weight at most $K$, and $2K+|N|\le h$. For each active $0<m\le K$, the right-remainder calculation gives
+
+$$
+\rho_m\rho_{-m}W(w)=m\,r_m(w)\,W(w).
+$$
+
+The lowering step contracts each matching occurrence. Global commutativity of the nonnegative density modes lets the left creator restore the erased occurrence, producing the original word. If $m$ is absent, the multiplicity is zero and the formula still holds. The proof checks the restricted commutator on the actual right remainder, where $n+E\le K$ supplies the local bound $m+n+E+|N|\le2K+|N|$.
+
+This word identity also permits zero labels. They contribute no weight to $\sum_m m\,r_m(w)$, and the proof handles their zero-transfer current directly. They are not positive partition parts. The eigenvalue identity is valid even when a word state vanishes; it does not assert that every arbitrary natural word gives a nonzero vector.
+
+After eliminating inactive modes, summing the active multiplicities yields
+
+$$
+H_{\mathrm{sug}}^{(M)}W(w)
+=\left(\sum_i w_i\right)W(w),\qquad M\ge K.
+$$
+
+Partition states are the positive-word specialization. Chapter 11 already supplies their exact energy membership and their complete basis of the whole budget, with labels $(E,\lambda)$ for $0\le E\le K$ and $\lambda\vdash E$. The diagonal excitation observable and the Sugawara sum both have eigenvalue $E$ on each of these actual vectors. Extending this equality by linearity across their span proves (12.3). Completeness is an upstream proved input; the Sugawara commutator is derived afterwards, so it is not used to justify the basis or energy equality.
+
+**Signed transfers use two budgets.** The implemented commutator theorem allows any integer transfer $n$, with separate natural source and target bounds $K,J$. Its conditions are
+
+$$
+K+n\le J,\qquad M\ge K,\quad M\ge J,
+\qquad 2K+|N|\le h,\quad 2J+|N|\le h.
+$$
+
+For $v\in B(N,K)$, grading first puts $\rho_n v$ in the signed budget $B(N,K+n)$ and then in $B(N,J)$. Apply energy equivalence on the source and the target and use the already established exact excitation commutator. This gives $[H_{\mathrm{sug}}^{(M)},\rho_n]v=n\rho_n v$. For a nonnegative transfer, $J=K+n$ gives the enlarged-margin corollary above, including $n=0$. A negative transfer may use a smaller target bound; if the signed output budget is negative, the current action is zero. The theorem concerns these specified input vectors, rather than an unrestricted ambient scalar-current identity.
+
+**The physical ground shift is retained.** Let $\beta\in\mathbb R$ be the existing uniform momentum offset in the physical linear Hamiltonian. Subtract the energy of the same reference sea to define its relative operator $H_{\mathrm{rel},\beta}$. On a fixed-charge budget,
+
+$$
+H_{\mathrm{rel},\beta}v
+=H_{\mathrm{sug}}^{(M)}v+
+\left(\frac{N(N+1)}2+\beta N\right)v,
+\qquad 2K+|N|\le h,\quad M\ge K.
+$$
+
+The ground term therefore retains both the integer asymmetric-sea shift and the physical offset. Subtracting instead the diagonal observable of the matching ground polynomial, evaluated at each occupation's own charge, gives the excitation observable on the entire ambient carrier for $h>0$. That cancellation is a global equality of excitation operators and needs no budget margin. It does not remove $\beta$ from bare or sea-relative physical energy, and it does not change the reference sea.
+
+**Nonzero action has an actual witness.** In charge zero, take $v=\rho_m|\Omega\rangle$ with $0<m\le K$, $2K\le h$ and $M\ge K$. The previously computed sea norm makes $v$ nonzero, and the word eigenvalue gives $H_{\mathrm{sug}}^{(M)}v=mv\ne0$. Similarly, for $0<n\le M$ and $2n\le h$, the nonzero ground input $|\Omega\rangle$ has nonzero raised vector $\rho_n|\Omega\rangle$ and nonzero Sugawara commutator action $n\rho_n|\Omega\rangle$. These witnesses establish more than mere nonemptiness of a budget.
+
+The realization is finite and algebraic, with genuine Hilbert adjoints and exact identities. The physical offset formulas use the existing linear-energy convention; no analytic limit, changed-sea identification or enlarged unrestricted current algebra is required.

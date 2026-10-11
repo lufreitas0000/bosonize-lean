@@ -1,0 +1,157 @@
+{
+  "Bosonize.Ch12.FockSpace": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.Operators": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawaraHamiltonian": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.physicalRelativeHamiltonian": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.physicalExcitationObservable": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.density_bilinear_word": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.excitation_energy_space": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.excitation_partition_eigenvalue": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.ground_energy_complex": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.inactive_mode_zero": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.physical_excitation_cancel": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.physical_relative_budget": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.physical_sugawara_budget": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.positive_word_weight": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.relative_energy_budget": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_adjoint": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_apply": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_budget_partition_eigenvalue": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_commutator_witness": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_cutoff_budget": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_cutoff_independent": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_equivalence": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_excited_witness": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_ground": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_inner": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_partition_eigenvalue": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_raising_commutator": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_relative_hamiltonian": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_signed_commutator": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_word_eigenvalue": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "Bosonize.Ch12.sugawara_zero": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

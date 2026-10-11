@@ -1,0 +1,7 @@
+{
+  "files": 34,
+  "fragments": 3224,
+  "errors": [],
+  "katex": "0.16.22",
+  "scope": "inline $ and display $$ math outside fenced/inline code"
+}

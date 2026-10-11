@@ -1,5 +1,4 @@
 import Bosonize
-import BosonizeStubs.Ch12Sugawara
 
 /-!
 # Bosonize Staging Library
