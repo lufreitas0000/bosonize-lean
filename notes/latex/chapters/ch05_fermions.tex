@@ -1,29 +1,225 @@
 \chapter{Position and Momentum Fermions}
 \label{ch:fermions}
 
-\section{Introduction and Momentum CAR}
-Let $L = 2h$ with $h \ge 1$. We instantiate the CAR algebra of Chapter~\ref{ch:car_fock} over the momentum band $\Lambda^* = \{-h+1, \dots, h\}$, yielding momentum fermionic operators $\{c_k, c_k^\dagger \mid k \in \Lambda^*\}$.
+\section{Introduction and Physical Framework}
 
-\section{Spatial Fermions via Discrete Fourier Transform}
-Spatial fermion operators $\psi_x, \psi_x^\dagger$ for $x \in \Lambda$ are defined directly via the unitary discrete Fourier transform:
+Having established the abstract Canonical Anticommutation Relations (CAR) and Fock space representations in Chapter~\ref{ch:car_fock}, and the discrete Fourier transform in Chapter~\ref{ch:fourier}, we now unite these structures to describe physical fermions on the one-dimensional lattice.
+
+Throughout this chapter and the remainder of the monograph, the lattice length is assumed to be an even positive integer:
+\begin{equation}
+L = 2h, \quad h \in \mathbb{N}, \quad h \ge 1.
+\end{equation}
+The single-particle index set $\iota$ is instantiated as the centered momentum band:
+\begin{equation}
+\iota = \Lambda^* = \left\{ k \in \mathbb{Z} \;\middle|\; -L < 2k \le L \right\} = \{-h+1, -h+2, \dots, h-1, h\},
+\end{equation}
+endowed with the standard linear order inherited from $\mathbb{Z}$. 
+
+The fermionic state space is the Fock space over the momentum band:
+\begin{equation}
+\mathcal{F}(L) \coloneqq \ell^2(\mathcal{P}(\Lambda^*)) \equiv \bigoplus_{S \subseteq \Lambda^*} \mathbb{C} |S\rangle,
+\end{equation}
+which has exact complex dimension $\dim_{\mathbb{C}} \mathcal{F}(L) = 2^L$. The momentum creation and annihilation operators $\{c_k, c_k^\dagger \mid k \in \Lambda^*\}$ satisfy the standard CAR algebra:
+\begin{equation}
+\{c_k, c_p^\dagger\} = \delta_{k, p} I, \qquad \{c_k, c_p\} = 0, \qquad \{c_k^\dagger, c_p^\dagger\} = 0, \qquad c_k^\dagger = (c_k)^\dagger.
+\end{equation}
+
+\section{Spatial Fermions via the Unitary Fourier Transform}
+
+In continuous quantum field theory, field operators $\psi(x)$ are operator-valued distributions that must be smeared with test functions. On our discrete spatial circle $\Lambda = \mathbb{Z}/L\mathbb{Z}$, spatial fermions are well-defined bounded operators constructed as finite linear combinations of momentum modes.
+
+Recall from Chapter~\ref{ch:fourier} the real normalization factor $a \coloneqq 1/\sqrt{L} \in \mathbb{R}_{>0}$ satisfying $L a^2 = 1$, and the canonical primitive $L$-th root $\zeta = e^{2\pi i / L}$.
+
+\begin{definition}[Spatial Fermionic Operators]
+For every spatial site $x \in \Lambda$, the spatial annihilation operator $c_x$ and spatial creation operator $c_x^\dagger$ are defined by:
 \begin{align}
-\psi_x &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x)\, c_k, \\
-\psi_x^\dagger &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x)\, c_k^\dagger.
+c_x &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x)\, c_k = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}}\, c_k, \label{eq:spatial_c} \\
+c_x^\dagger &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x)\, c_k^\dagger = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{-k x_{\mathrm{val}}}\, c_k^\dagger. \label{eq:spatial_cdag}
 \end{align}
+The local spatial fermion number operator is defined by:
+\begin{equation}
+n_x \coloneqq c_x^\dagger c_x.
+\end{equation}
+\end{definition}
 
-\section{Key Results and Formal Discoveries}
-\begin{itemize}
-    \item \textbf{Spatial CAR Algebra:} Using the orthogonality of characters (Chapter~\ref{ch:fourier}), the spatial fermions satisfy exact local CAR relations:
+\begin{lemma}[Hilbert Adjoint Compatibility]
+The spatial creation operator is the exact Hilbert adjoint of the spatial annihilation operator:
+\begin{equation}
+(c_x)^\dagger = c_x^\dagger \quad \text{for all } x \in \Lambda.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Taking the Hilbert adjoint of the linear combination~\eqref{eq:spatial_c}:
+\[
+(c_x)^\dagger = \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}} c_k \right)^\dagger = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \overline{\zeta^{k x_{\mathrm{val}}}} (c_k)^\dagger.
+\]
+Because $(c_k)^\dagger = c_k^\dagger$ and $\overline{\zeta^{k x_{\mathrm{val}}}} = \zeta^{-k x_{\mathrm{val}}} = \chi(-k, x)$, this sum coincides with the definition of $c_x^\dagger$ in~\eqref{eq:spatial_cdag}.
+\end{proof}
+
+\section{Exact Position CAR Inheritance}
+
+The fundamental theorem of discrete spatial fermions is that they inherit the local canonical anticommutation relations without distortion.
+
+\begin{theorem}[Exact Spatial CAR]
+\label{thm:spatial_car}
+For all spatial sites $x, y \in \Lambda$, the spatial operators satisfy:
+\begin{align}
+\{c_x, c_y^\dagger\} &= \delta_{x, y} I, \label{eq:pos_car_mixed} \\
+\{c_x, c_y\} &= 0, \label{eq:pos_car_ann} \\
+\{c_x^\dagger, c_y^\dagger\} &= 0. \label{eq:pos_car_cre}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+We evaluate each anticommutator using the bilinearity of $\{\cdot, \cdot\}$:
+\begin{enumerate}
+    \item For the mixed anticommutator:
+    \begin{align*}
+    \{c_x, c_y^\dagger\} &= \left\{ \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x) c_k, \; \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \chi(-p, y) c_p^\dagger \right\} \\
+    &= \frac{1}{L} \sum_{k \in \Lambda^*} \sum_{p \in \Lambda^*} \chi(k, x) \chi(-p, y) \{c_k, c_p^\dagger\}.
+    \end{align*}
+    Substituting the momentum CAR $\{c_k, c_p^\dagger\} = \delta_{k, p} I$:
     \[
-    \{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I, \qquad \{\psi_x, \psi_y\} = 0, \qquad \{\psi_x^\dagger, \psi_y^\dagger\} = 0.
+    \{c_x, c_y^\dagger\} = \frac{1}{L} \sum_{k \in \Lambda^*} \chi(k, x) \chi(-k, y) I = \frac{1}{L} \left( \sum_{k \in \Lambda^*} \zeta^{k (x_{\mathrm{val}} - y_{\mathrm{val}})} \right) I.
     \]
-    \item \textbf{Absence of Non-Local Strings:} Because spatial fermions are defined directly through the global Fourier transform of momentum fermions, there are no non-local Jordan--Wigner tail operators between position and momentum modes.
-    \item \textbf{Conservation of Total Particle Number:} The total particle number observable $\hat{N}$ satisfies:
+    By Theorem~\ref{thm:fourier_orthogonality}(2) (dual character orthogonality), the momentum sum equals $L\, \delta_{x, y}$. Therefore:
     \[
-    \hat{N} = \sum_{k \in \Lambda^*} c_k^\dagger c_k = \sum_{x \in \Lambda} \psi_x^\dagger \psi_x.
+    \{c_x, c_y^\dagger\} = \frac{1}{L} (L\, \delta_{x, y}) I = \delta_{x, y} I.
     \]
-\end{itemize}
+
+    \item For the annihilation anticommutator:
+    \[
+    \{c_x, c_y\} = \frac{1}{L} \sum_{k, p \in \Lambda^*} \chi(k, x) \chi(p, y) \{c_k, c_p\} = 0,
+    \]
+    because $\{c_k, c_p\} = 0$ for all $k, p \in \Lambda^*$. Taking adjoints yields $\{c_x^\dagger, c_y^\dagger\} = 0$.
+\end{enumerate}
+\end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 core (Chapter 5, Position and Momentum Fermions), the Fourier-transported CAR algebra is proved via the bilinearity of anticommutators and character orthogonality.
+In the verified Lean~4 core (Chapter 5, Position and Momentum Fermions), this result is proved purely through bilinear expansion and character orthogonality. Notice an essential conceptual feature of this construction: spatial fermions are obtained directly as global Fourier transforms of momentum fermions, rather than through local Jordan--Wigner transformations from spin operators. Consequently, there are no non-local string operators connecting spatial modes to momentum modes.
 \end{remark}
+
+\section{Operator Fourier Inversion}
+
+The relationship between position and momentum fermions is completely symmetric under Fourier inversion.
+
+\begin{theorem}[Fourier Inversion for Operators]
+\label{thm:op_fourier_inversion}
+The momentum operators are recovered from spatial fermions via the inverse discrete Fourier transform:
+\begin{align}
+c_k &= \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(-k, x)\, c_x = \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \zeta^{-k x_{\mathrm{val}}}\, c_x, \label{eq:inv_ck} \\
+c_k^\dagger &= \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(k, x)\, c_x^\dagger = \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \zeta^{k x_{\mathrm{val}}}\, c_x^\dagger. \label{eq:inv_ckdag}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Substitute the definition of $c_x$ from~\eqref{eq:spatial_c} into the right-hand side of~\eqref{eq:inv_ck}:
+\[
+\frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(-k, x) \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \chi(p, x) c_p \right) = \frac{1}{L} \sum_{p \in \Lambda^*} \left( \sum_{x \in \Lambda} \chi(p - k, x) \right) c_p.
+\]
+By Theorem~\ref{thm:fourier_orthogonality}(1) (spatial character orthogonality), $\sum_{x \in \Lambda} \chi(p - k, x) = L\, \delta_{p, k}$. Thus:
+\[
+\frac{1}{L} \sum_{p \in \Lambda^*} (L\, \delta_{p, k}) c_p = c_k.
+\]
+Taking Hilbert adjoints yields the corresponding identity for $c_k^\dagger$.
+\end{proof}
+
+\section{Conservation of Total Particle Number}
+
+\begin{theorem}[Particle Number Invariance]
+\label{thm:number_invariance}
+The total particle number operator $\hat{N}_{\mathrm{tot}}$ satisfies:
+\begin{equation}
+\hat{N}_{\mathrm{tot}} = \sum_{k \in \Lambda^*} c_k^\dagger c_k = \sum_{x \in \Lambda} c_x^\dagger c_x = \sum_{x \in \Lambda} n_x.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Expand the sum of spatial number operators using~\eqref{eq:spatial_c} and~\eqref{eq:spatial_cdag}:
+\begin{align*}
+\sum_{x \in \Lambda} c_x^\dagger c_x &= \sum_{x \in \Lambda} \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x) c_k^\dagger \right) \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \chi(p, x) c_p \right) \\
+&= \frac{1}{L} \sum_{k, p \in \Lambda^*} c_k^\dagger c_p \left( \sum_{x \in \Lambda} \chi(p - k, x) \right).
+\end{align*}
+Applying spatial character orthogonality $\sum_{x \in \Lambda} \chi(p - k, x) = L\, \delta_{p, k}$:
+\[
+\sum_{x \in \Lambda} c_x^\dagger c_x = \frac{1}{L} \sum_{k, p \in \Lambda^*} c_k^\dagger c_p (L\, \delta_{p, k}) = \sum_{k \in \Lambda^*} c_k^\dagger c_k = \hat{N}_{\mathrm{tot}}.
+\]
+\end{proof}
+
+\section{The Dirac Fermi Sea and Linearized Hamiltonians}
+
+In relativistic field theory, the physical vacuum is not the bare state $|\emptyset\rangle$ devoid of particles, but the filled Dirac sea where all negative energy states are occupied.
+
+\begin{definition}[Dirac Sea Configuration and Vacuum]
+For even lattice length $L = 2h$, the half-filled Dirac Fermi sea configuration $S_\Omega \subset \Lambda^*$ consists of all non-positive momentum modes:
+\begin{equation}
+S_\Omega \coloneqq \{k \in \Lambda^* \mid k \le 0\} = \{-h+1, -h+2, \dots, -1, 0\}.
+\end{equation}
+The cardinality of the Fermi sea is $\#S_\Omega = h = L/2$. The Dirac sea vacuum state is the corresponding occupation state:
+\begin{equation}
+|\Omega\rangle \coloneqq |S_\Omega\rangle \in \mathcal{F}(L).
+\end{equation}
+\end{definition}
+
+\begin{definition}[Bare and Physical Momentum Hamiltonians]
+\begin{enumerate}
+    \item The bare kinetic Hamiltonian $H_0$ is defined by:
+    \begin{equation}
+    H_0 \coloneqq \sum_{k \in \Lambda^*} k\, c_k^\dagger c_k = \sum_{k \in \Lambda^*} k\, n_k.
+    \end{equation}
+    \item The ground state sea energy $E_\Omega$ is the eigenvalue of $H_0$ on $|\Omega\rangle$:
+    \begin{equation}
+    E_\Omega \coloneqq \sum_{k \in S_\Omega} k.
+    \end{equation}
+    \item The physical, normal-ordered Hamiltonian $\hat{P}$ is defined by:
+    \begin{equation}
+    \hat{P} \coloneqq H_0 - E_\Omega \cdot I,
+    \end{equation}
+    so that $\hat{P} |\Omega\rangle = 0$.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Evaluation of Ground State Energy]
+For $L = 2h$ with $h \ge 1$, the bare ground state energy evaluates to:
+\begin{equation}
+E_\Omega = -\frac{h(h-1)}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By definition, $S_\Omega = \{-h+1, \dots, 0\}$. Summing the integers:
+\[
+E_\Omega = \sum_{j=-h+1}^0 j = - \sum_{m=1}^{h-1} m = - \frac{(h-1) h}{2} = -\frac{h(h-1)}{2}.
+\]
+\end{proof}
+
+\begin{theorem}[Spectra and Commutation Relations]
+\label{thm:h0_commutators}
+\begin{enumerate}
+    \item On any occupation basis state $|S\rangle$ ($S \subseteq \Lambda^*$):
+    \begin{equation}
+    H_0 |S\rangle = \left( \sum_{k \in S} k \right) |S\rangle, \qquad \hat{P} |S\rangle = \left( \sum_{k \in S} k - E_\Omega \right) |S\rangle.
+    \end{equation}
+    \item For any mode $p \in \Lambda^*$, the creation and annihilation operators satisfy:
+    \begin{align}
+    [H_0, c_p^\dagger] &= [\hat{P}, c_p^\dagger] = p\, c_p^\dagger, \\
+    [H_0, c_p] &= [\hat{P}, c_p] = -p\, c_p.
+    \end{align}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We prove each statement:
+\begin{enumerate}
+    \item Each $n_k$ is diagonal on basis states: $n_k |S\rangle = |S\rangle$ if $k \in S$, and $0$ otherwise. Summing over $k \in \Lambda^*$ gives $H_0 |S\rangle = (\sum_{k \in S} k) |S\rangle$. Subtracting $E_\Omega I$ gives the eigenvalue for $\hat{P}$.
+    \item Using the bilinear CAR commutator $[n_k, c_p^\dagger] = \delta_{k, p} c_p^\dagger$ from Theorem~\ref{thm:algebraic_car}(2):
+    \[
+    [H_0, c_p^\dagger] = \left[ \sum_{k \in \Lambda^*} k\, n_k, \; c_p^\dagger \right] = \sum_{k \in \Lambda^*} k\, [n_k, c_p^\dagger] = \sum_{k \in \Lambda^*} k (\delta_{k, p} c_p^\dagger) = p\, c_p^\dagger.
+    \]
+    Similarly, $[n_k, c_p] = -\delta_{k, p} c_p$ yields $[H_0, c_p] = -p\, c_p$.
+    Because $\hat{P} = H_0 - E_\Omega I$ differs from $H_0$ only by a central scalar multiple of the identity, the commutators with $\hat{P}$ are identical.
+\end{enumerate}
+\end{proof}
+
+Theorem~\ref{thm:h0_commutators} confirms that $c_p^\dagger$ raises the total physical momentum energy by $p$, while $c_p$ lowers it by $p$. This provides the kinematic foundation for constructing particle-hole excitations and density modes in the subsequent chapters.
