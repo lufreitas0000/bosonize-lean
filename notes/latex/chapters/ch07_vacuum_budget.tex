@@ -1,0 +1,43 @@
+\chapter{Vacuum, Sectors, Energy, and the Budget Space}
+\label{ch:vacuum_budget}
+
+\section{Introduction and the Regularization Problem}
+In the continuum Dirac sea, the vacuum contains an infinite number of negative-energy fermions, leading to divergent ground state energies and undefined traces. In traditional treatments, normal ordering is introduced formally by subtracting divergent expectation values.
+In the discrete lattice AQFT framework, divergence is avoided by two rigorous algebraic tools:
+\begin{enumerate}
+    \item Admissible charge sectors $-h \le N \le h$.
+    \item Energy budget subspaces $B(N, K)$ with finite energy cutoffs $K$.
+\end{enumerate}
+
+\section{Sector Ground Configurations and Dirac Sea}
+For even $L = 2h$, each configuration is a subset $\sigma \subset \Lambda^*$ of occupied modes. The reference half-filled sea is:
+\begin{equation}
+S_0 \coloneqq \{-h+1, -h+2, \dots, 0\}.
+\end{equation}
+For any integer charge sector $N \in \{-h, \dots, h\}$, the sector ground configuration is:
+\begin{equation}
+S_N \coloneqq \{-h+1, \dots, N\}.
+\end{equation}
+The sector ground state is $|N\rangle_0 \coloneqq \prod_{k \in S_N} c_k^\dagger |0\rangle$, which has particle number $h + N$.
+
+\section{Excitation Energy and Energy Budgets}
+The excitation energy of any configuration $\sigma$ with $\#\sigma = h + N$ is defined by:
+\begin{equation}
+E(\sigma) \coloneqq \sum_{k \in \sigma} k - \sum_{k \in S_N} k \ge 0.
+\end{equation}
+The fixed-energy subspace $\mathcal{H}(N, E)$ is spanned by basis states $|\sigma\rangle$ with $\#\sigma = h + N$ and $E(\sigma) = E$.
+The energy budget subspace $B(N, K)$ is defined as the finite direct sum:
+\begin{equation}
+B(N, K) \coloneqq \bigoplus_{E=0}^K \mathcal{H}(N, E).
+\end{equation}
+
+\section{Key Results and Formal Discoveries}
+\begin{itemize}
+    \item \textbf{Ground State Uniqueness:} $E(\sigma) \ge 0$ for all configurations of charge $N$, with equality $E(\sigma) = 0$ if and only if $\sigma = S_N$.
+    \item \textbf{Budget Margins:} Operators that raise energy by at most $M$ preserve the budget filtration when $K + M \le K_{\max}$.
+    \item \textbf{Sector Charge Shifts:} Charge-raising operators shift sector ground states cleanly between adjacent charge sectors.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core (Chapter 7 and Appendix A03), the excitation energy is proved non-negative strictly through discrete sorting permutations and integer differences without real analysis.
+\end{remark}

@@ -1,0 +1,35 @@
+\chapter{The Umbral Boson Fock Layer}
+\label{ch:boson_fock}
+
+\section{Introduction and Purely Algebraic Bosons}
+Traditional bosonic Fock spaces require infinite-dimensional Hilbert spaces of square-integrable wavefunctions, leading to unbounded creation/annihilation operators and domain subtleties. 
+In the Umbral algebraic bosonization framework, the bosonic carrier is realized purely algebraically as the ring of multivariate polynomials:
+\begin{equation}
+\mathcal{F}_b \coloneqq \mathbb{C}[X_1, X_2, \dots].
+\end{equation}
+
+\section{Raw Currents and the Haldane Inner Product}
+For mode integer $m \ge 1$:
+\begin{itemize}
+    \item \textbf{Creation Operator (Current):} $C_m \coloneqq X_m$ (multiplication by indeterminate $X_m$).
+    \item \textbf{Annihilation Operator:} $A_m \coloneqq m \frac{\partial}{\partial X_m}$.
+\end{itemize}
+These operators satisfy the exact Canonical Commutation Relations (CCR):
+\begin{equation}
+[A_m, C_n] = m\, \delta_{m, n}\, I.
+\end{equation}
+The Haldane inner product is the unique positive-definite Hermitian form making $A_m^\dagger = C_m$. Monomials $\prod_{i} X_{\lambda_i}$ are mutually orthogonal with norm squared:
+\begin{equation}
+\left\langle \prod X_{\lambda_i}, \prod X_{\mu_j} \right\rangle = z_\lambda\, \delta_{\lambda, \mu},
+\end{equation}
+where $z_\lambda = \prod_m m^{a_m} a_m!$ is the standard partition symmetry factor.
+
+\section{Key Results and Formal Discoveries}
+\begin{itemize}
+    \item \textbf{Nilpotent Exponentials:} On any weight-truncated subspace $\mathcal{F}_{\le K}$, the operator $A_m$ is nilpotent. Consequently, the formal exponential series $\exp(t A_m)$ terminates after finitely many terms as an exact polynomial operator without analytic limits.
+    \item \textbf{Exact Baker--Campbell--Hausdorff (BCH) Formula:} For commute-to-scalar operators, $e^{A} e^{B} = e^{A+B} e^{\frac{1}{2}[A, B]}$ is an exact finite algebraic identity on truncated polynomial spaces.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core (Chapter 8, Boson Fock Layer), this entire bosonic structure is proved constructively over polynomials with rational and complex coefficients without analytic convergence theorems.
+\end{remark}

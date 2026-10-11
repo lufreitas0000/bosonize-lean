@@ -1,0 +1,34 @@
+\chapter{Density Modes and Kinematics}
+\label{ch:density_modes}
+
+\section{Introduction and the Bridge to Bosons}
+The bridge between fermionic Fock space and bosonic current algebra is formed by the fermionic density modes $\rho_m$. In the continuum, $\rho(x) = \psi^\dagger(x) \psi(x)$ is singular and requires subtractive renormalization. On the discrete band $\Lambda^*$, density modes are defined as exact truncated momentum-shift operators.
+
+\section{Truncated and Normal-Ordered Densities}
+For mode integer $m \in \mathbb{Z} \setminus \{0\}$, the raw density operator on the momentum CAR algebra is:
+\begin{equation}
+\rho_m^{\mathrm{raw}} \coloneqq \sum_{k \in \Lambda^*} c_{k \ominus m}^\dagger c_k.
+\end{equation}
+The normal-ordered density mode with respect to the Dirac sea $S_N$ is defined by:
+\begin{equation}
+:\!\rho_m\!: \coloneqq \sum_{k \in \Lambda^*} : \! c_{k \ominus m}^\dagger c_k \!:_{S_N},
+\end{equation}
+where $: \! c_p^\dagger c_k \!:_{S_N} = c_p^\dagger c_k - \langle N|_0 c_p^\dagger c_k |N\rangle_0 I$.
+
+\section{Key Results and Formal Discoveries}
+\begin{itemize}
+    \item \textbf{Energy Grading:} For $m > 0$, the normal-ordered density $:\!\rho_m\!:$ acts as an annihilation-type operator that lowers excitation energy by $m$, while $:\!\rho_{-m}\!:$ raises excitation energy by $m$ within the admissible margin.
+    \item \textbf{Charge Conservation:} The density modes commute with the total fermion number:
+    \[
+    [\hat{N}, :\!\rho_m\!:] = 0.
+    \]
+    Density excitations conserve net fermion charge.
+    \item \textbf{Action on the Vacuum:} The ground state $|N\rangle_0$ is annihilated by positive density modes:
+    \[
+    :\!\rho_m\!: |N\rangle_0 = 0 \quad \text{for all } m > 0.
+    \]
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core (Chapter 9 and Appendix A04), the non-wrapping kinematics and margin inequalities are formalized constructively, ensuring that density shifts do not cause boundary wraps when applied to states within the budget.
+\end{remark}

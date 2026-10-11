@@ -1,0 +1,16 @@
+\chapter{Energy Budgets and Filtered Maps}
+\label{app:energy_budgets}
+
+\section{Overview and Purpose}
+This appendix provides the technical framework for the energy budget regularization scheme utilized in Chapters~\ref{ch:vacuum_budget} through~\ref{ch:haldane_completeness}. It establishes integer excitation energy formulas, sector charge stability, and operator margin filtrations.
+
+\section{Core Properties}
+\begin{itemize}
+    \item \textbf{Integer Energy Grading:} Proof that excitation energy is a strictly non-negative integer for all configurations in admissible sectors.
+    \item \textbf{Sorted Particle Rank Formula:} Proof that sorted momentum indices $s_1 < s_2 < \dots < s_{h+N}$ uniquely determine the excitation energy relative to the sector sea ground.
+    \item \textbf{Filtration Preservation:} Proof that operators with maximum energy shift $M$ map $B(N, K)$ into $B(N, K+M)$.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 formalization (Appendix A03, Energy Budgets), all 114 lemmas on energy gradings, projections, and ground states are verified in the Lean 4 kernel.
+\end{remark}

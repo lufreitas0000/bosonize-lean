@@ -1,0 +1,16 @@
+\chapter{Current Margins, Density Kinematics, and Partition Combinatorics}
+\label{app:density_partitions}
+
+\section{Overview and Purpose}
+This appendix supplies the detailed combinatorial and algebraic lemmas underlying the Heisenberg algebra (Chapter~\ref{ch:heisenberg_algebra}) and Haldane completeness (Chapter~\ref{ch:haldane_completeness}). It covers margin tracking, non-wrapping density kinematics, and the particle-hole partition bijection.
+
+\section{Core Properties}
+\begin{itemize}
+    \item \textbf{Non-Wrapping Kinematics:} Proof that density shifts $k \mapsto k \ominus m$ do not wrap around the Brillouin zone boundaries when operating on states satisfying the margin conditions.
+    \item \textbf{Exact Edge Domains:} Explicit computation of the top and bottom edge domains for commutators.
+    \item \textbf{Partition Bijection:} The bijective mapping between particle-hole excitation sequences and integer partitions $\lambda \vdash E$, establishing $\dim \mathcal{H}(N, E) = p(E)$.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 formalization (Appendix A04, including Current Margins, Density Kinematics, and Partition Combinatorics), all margin bounds and partition bijections are verified without placeholders or nonstandard axioms.
+\end{remark}

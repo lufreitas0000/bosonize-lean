@@ -1,0 +1,43 @@
+% Preamble for Bosonize-Lean Pedagogical Monograph
+% Plain LaTeX standard configuration without custom macro layers
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% Standard AMS mathematical typesetting
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Page layout and typography
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+% Hyperlinks
+\usepackage[
+    colorlinks=true,
+    linkcolor=blue!75!black,
+    citecolor=green!50!black,
+    urlcolor=blue!75!black,
+    pdfauthor={Bosonize-Lean Project},
+    pdftitle={Constructive 1+1D Lattice Bosonization}
+]{hyperref}
+
+% Standard AMS theorem environments numbered within chapters
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{note}[theorem]{Note}

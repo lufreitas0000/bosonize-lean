@@ -1,0 +1,16 @@
+\chapter{Fourier Characters and Algebraic Normalization}
+\label{app:fourier_characters}
+
+\section{Overview and Purpose}
+This appendix formalizes the exact algebraic theory of discrete Fourier characters on cyclic rings $\mathbb{Z}/L\mathbb{Z}$. It provides the rigorous foundation for Chapter~\ref{ch:fourier} and ensures that character orthogonality holds over general algebraic scalar fields containing primitive roots of unity.
+
+\section{Core Properties}
+\begin{itemize}
+    \item \textbf{Primitive Roots:} Definition and properties of primitive $L$-th roots of unity $\zeta$.
+    \item \textbf{Representative Independence:} Proof that $\zeta^{k x}$ is invariant under shifts $x \mapsto x + m L$.
+    \item \textbf{Geometric Sum Cancellation:} Proof that $\sum_{x=0}^{L-1} \zeta^{m x} = 0$ for all $m \not\equiv 0 \pmod L$.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 formalization (Appendix A01, Fourier Characters), 61 theorems prove every step of character orthogonality constructively.
+\end{remark}

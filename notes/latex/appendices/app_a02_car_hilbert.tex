@@ -1,0 +1,16 @@
+\chapter{CAR Hilbert Carriers and Sign Involutions}
+\label{app:car_hilbert}
+
+\section{Overview and Purpose}
+This appendix provides the constructive foundation for the fermionic Fock spaces and CAR algebras treated in Chapter~\ref{ch:car_fock}. It analyzes the signed exterior algebra, basis encodings via finsets, and the explicit Jordan--Wigner signs.
+
+\section{Core Properties}
+\begin{itemize}
+    \item \textbf{Fermionic Sign Involution:} Properties of $\sigma(i, S) = (-1)^{\#\{j \in S \mid j < i\}}$.
+    \item \textbf{Adjoint Verification:} Verification that creation and annihilation operators are exact Hilbert adjoints with respect to the standard orthonormal occupation basis.
+    \item \textbf{Sign Cancellation in Anticommutators:} The combinatorial proof that $\sigma(i, S \cup \{j\}) \sigma(j, S) + \sigma(j, S \cup \{i\}) \sigma(i, S) = 0$ for $i \neq j$.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 formalization (Appendix A02, CAR Hilbert Spaces), all sign identities and adjoint properties are proved without classical axioms.
+\end{remark}

@@ -1,0 +1,30 @@
+\chapter{Umbral Calculus Core}
+\label{ch:umbral_calculus}
+
+\section{Introduction and Algebraic Setting}
+In continuum field theory, spatial derivatives $\partial_x$ act on smooth field operators and generate spatial momentum translations. On a discrete spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, continuous derivatives do not exist and must be replaced by exact difference operators. Umbral calculus provides the rigorous algebraic framework for replacing differential operators with finite differences without losing the core algebraic relations of Lie algebras and polynomial expansions.
+
+\section{Core Definitions and Difference Operators}
+Let $R$ be a commutative ring (such as $\mathbb{C}$ or $\mathbb{Z}$). The algebra of functions $\mathcal{F}(\Lambda, R)$ is acted upon by three fundamental operators:
+\begin{itemize}
+    \item \textbf{Shift Operator:} $(E f)(x) \coloneqq f(x+1)$.
+    \item \textbf{Forward Difference:} $(\Delta f)(x) \coloneqq (E - I)f(x) = f(x+1) - f(x)$.
+    \item \textbf{Backward Difference:} $(\nabla f)(x) \coloneqq (I - E^{-1})f(x) = f(x) - f(x-1)$.
+\end{itemize}
+
+\section{Key Results and Formal Discoveries}
+\begin{itemize}
+    \item \textbf{Discrete Leibniz Rule:} For any functions $f, g \in \mathcal{F}(\Lambda, R)$:
+    \[
+    \Delta(f g) = (\Delta f) g + E(f) (\Delta g) = (\Delta f) g + f (\Delta g) + (\Delta f)(\Delta g).
+    \]
+    \item \textbf{Discrete Summation by Parts:} Under periodic boundary conditions, the forward difference $\Delta$ and backward difference $-\nabla$ are exact formal adjoints under the spatial sum $\sum_{x \in \Lambda}$:
+    \[
+    \sum_{x \in \Lambda} f(x) (\Delta g)(x) = - \sum_{x \in \Lambda} (\nabla f)(x) g(x).
+    \]
+    \item \textbf{Umbral Commutator and Finite Carrier Obstruction:} While the position multiplier $X$ and derivative $\partial_x$ satisfy $[ \partial_x, X ] = I$ on infinite-dimensional polynomial spaces, no finite-dimensional carrier admits operators satisfying $[A, B] = I$ due to the trace identity $\mathrm{Tr}([A, B]) = 0$. The exact discrete formulation establishes how the finite spatial lattice regularizes this commutator.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core (Chapter 2, Umbral Calculus), difference operators are defined without division, operating over general commutative rings. Summation by parts is proved strictly constructively through index shifting in $\mathbb{Z}/L\mathbb{Z}$, without topological boundary terms.
+\end{remark}

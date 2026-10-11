@@ -1,0 +1,29 @@
+\chapter{Position and Momentum Fermions}
+\label{ch:fermions}
+
+\section{Introduction and Momentum CAR}
+Let $L = 2h$ with $h \ge 1$. We instantiate the CAR algebra of Chapter~\ref{ch:car_fock} over the momentum band $\Lambda^* = \{-h+1, \dots, h\}$, yielding momentum fermionic operators $\{c_k, c_k^\dagger \mid k \in \Lambda^*\}$.
+
+\section{Spatial Fermions via Discrete Fourier Transform}
+Spatial fermion operators $\psi_x, \psi_x^\dagger$ for $x \in \Lambda$ are defined directly via the unitary discrete Fourier transform:
+\begin{align}
+\psi_x &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x)\, c_k, \\
+\psi_x^\dagger &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x)\, c_k^\dagger.
+\end{align}
+
+\section{Key Results and Formal Discoveries}
+\begin{itemize}
+    \item \textbf{Spatial CAR Algebra:} Using the orthogonality of characters (Chapter~\ref{ch:fourier}), the spatial fermions satisfy exact local CAR relations:
+    \[
+    \{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I, \qquad \{\psi_x, \psi_y\} = 0, \qquad \{\psi_x^\dagger, \psi_y^\dagger\} = 0.
+    \]
+    \item \textbf{Absence of Non-Local Strings:} Because spatial fermions are defined directly through the global Fourier transform of momentum fermions, there are no non-local Jordan--Wigner tail operators between position and momentum modes.
+    \item \textbf{Conservation of Total Particle Number:} The total particle number observable $\hat{N}$ satisfies:
+    \[
+    \hat{N} = \sum_{k \in \Lambda^*} c_k^\dagger c_k = \sum_{x \in \Lambda} \psi_x^\dagger \psi_x.
+    \]
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core (Chapter 5, Position and Momentum Fermions), the Fourier-transported CAR algebra is proved via the bilinearity of anticommutators and character orthogonality.
+\end{remark}

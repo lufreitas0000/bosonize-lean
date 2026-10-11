@@ -1,0 +1,36 @@
+\chapter{Haldane Completeness}
+\label{ch:haldane_completeness}
+
+\section{Introduction and the Completeness Problem}
+While Chapter~\ref{ch:heisenberg_algebra} establishes that fermionic density operators satisfy the bosonic Heisenberg algebra on budget states, a crucial question remains: \emph{do the bosonic density states span the entire fermionic low-energy Hilbert space?}
+Haldane completeness answers this affirmatively: the low-energy fermionic Fock space is isomorphic to the bosonic Fock space, with basis states in exact one-to-one correspondence with integer partitions.
+
+\section{Bosonic Partition States}
+An integer partition $\lambda \vdash E$ is a non-increasing sequence of positive integers $\lambda = (\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_\ell > 0)$ such that $\sum_{i=1}^\ell \lambda_i = E$.
+For each partition $\lambda \vdash E$, the corresponding bosonic partition state in sector $N$ is defined by:
+\begin{equation}
+|\lambda; N\rangle \coloneqq :\! \rho_{-\lambda_1} \!: :\! \rho_{-\lambda_2} \!: \dots :\! \rho_{-\lambda_\ell} \!: |N\rangle_0.
+\end{equation}
+
+\section{Key Results and Proved Theorems}
+\begin{itemize}
+    \item \textbf{Regime R1 (Dimension Equality):} The dimension of the fermionic fixed-energy subspace $\mathcal{H}(N, E)$ equals the number of integer partitions $p(E)$ when $E$ satisfies the margin bound $E \le h - |N|$:
+    \[
+    \dim \mathcal{H}(N, E) = p(E).
+    \]
+    This is established via an explicit, constructive bijection between fermionic particle-hole excitation configurations and integer partitions.
+    \item \textbf{Regime R2 (Hall--Gram Invertibility):} The Gram matrix of partition states:
+    \[
+    G_{\lambda, \mu} \coloneqq \langle \lambda; N | \mu; N \rangle
+    \]
+    is strictly positive-definite on the budget subspace under the margin hypotheses.
+    \item \textbf{Whole Budget Basis:} The set of partition states:
+    \[
+    \mathcal{B}_{\mathrm{basis}}(N, K) \coloneqq \bigcup_{E=0}^K \{|\lambda; N\rangle \mid \lambda \vdash E\}
+    \]
+    forms a complete, linearly independent basis of the whole budget subspace $B(N, K)$.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core (Chapter 11 and Appendix A04), 61 proved theorems establish the occupation--partition bijection, the strict dimension count, the non-singularity of the Hall--Gram matrix, and the explicit basis expansion without non-constructive principles.
+\end{remark}

@@ -1,0 +1,35 @@
+name: Build LaTeX Monograph
+
+on:
+  push:
+    paths:
+      - 'notes/latex/**'
+      - '.github/workflows/latex.yml'
+  pull_request:
+    paths:
+      - 'notes/latex/**'
+      - '.github/workflows/latex.yml'
+  workflow_dispatch:
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX Document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: notes/latex
+          latexmk_use_lualatex: false
+          latexmk_use_xelatex: false
+          args: "-pdf -interaction=nonstopmode -halt-on-error"
+
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bosonize-latex-monograph
+          path: notes/latex/main.pdf
+          if-no-files-found: error

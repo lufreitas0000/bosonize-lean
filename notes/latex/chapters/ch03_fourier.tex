@@ -1,0 +1,33 @@
+\chapter{The Finite Fourier Transform}
+\label{ch:fourier}
+
+\section{Introduction and Discrete Characters}
+The finite Fourier transform connects the spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ to the dual momentum band $\Lambda^* = \{-h+1, \dots, h\}$ (for $L = 2h$). Rather than invoking transcendental complex exponentials and real numbers, the algebraic formulation relies on primitive $L$-th roots of unity in an algebraically closed field or splitting field $\mathbb{C}$.
+
+\section{Representative-Independent Characters}
+For spatial site $x \in \Lambda$ and momentum mode $k \in \Lambda^*$, the Fourier character is defined by:
+\begin{equation}
+\chi(k, x) \coloneqq \zeta^{k \cdot x_{\mathrm{val}}}, \quad \zeta \coloneqq e^{2\pi i / L}.
+\end{equation}
+The character satisfies exact representative independence: for any integer representative $\tilde{x} \equiv x \pmod L$ and any band mode $k$, $\chi(k, x)$ depends only on the quotient class.
+
+\section{Orthogonality, Unitarity, and Diagonalization}
+\begin{itemize}
+    \item \textbf{Row and Column Orthogonality:}
+    \[
+    \sum_{x \in \Lambda} \chi(k, x) \overline{\chi(p, x)} = L\, \delta_{k, p}, \qquad \sum_{k \in \Lambda^*} \chi(k, x) \overline{\chi(k, y)} = L\, \delta_{x, y}.
+    \]
+    \item \textbf{Unitary Discrete Fourier Transform:} The normalized operator $\mathcal{F} : \mathcal{F}(\Lambda, \mathbb{C}) \to \mathcal{F}(\Lambda^*, \mathbb{C})$ defined by:
+    \[
+    (\mathcal{F} f)(k) \coloneqq \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(-k, x) f(x)
+    \]
+    is a unitary linear bijection.
+    \item \textbf{Diagonalization of the Umbral Shift:} The spatial shift operator $E$ is diagonalized by the Fourier basis:
+    \[
+    (\mathcal{F} (E f))(k) = \chi(k, 1) (\mathcal{F} f)(k) = e^{2\pi i k / L} (\mathcal{F} f)(k).
+    \]
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 formalization (Chapter 3 and Appendix A01), all 61 Fourier character lemmas are proved constructively over roots of unity. The proof of orthogonality utilizes the geometric sum formula without analytical limits.
+\end{remark}

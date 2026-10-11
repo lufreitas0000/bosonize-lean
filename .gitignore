@@ -26,3 +26,15 @@ __pycache__/
 .DS_Store
 Thumbs.db
 *:Zone.Identifier
+
+# LaTeX build outputs and temporary files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+notes/latex/*.pdf

@@ -1,0 +1,250 @@
+\chapter{Lattice and Band Geometry}
+\label{ch:lattice_band}
+
+\section{Introduction and Discrete Setting}
+
+In relativistic quantum field theory in $1+1$ dimensions, continuous spacetime coordinates and infinite-dimensional momentum representations frequently introduce severe infrared and ultraviolet divergences. In the constructivist and algebraic program developed in this monograph, all continuum divergences are eliminated at the foundation by formulating the theory on a strictly finite, discrete spatial manifold and its exact Fourier-dual momentum space.
+
+Throughout this chapter, let $L \in \mathbb{N}$ denote the number of spatial lattice sites, assuming $L \ge 1$. While general difference calculus and Fourier transforms can be formulated for arbitrary positive integers $L$, the construction of half-filled Dirac seas and fermionic Fock spaces from Chapter~\ref{ch:fermions} onward strictly requires an even lattice length:
+\[
+L = 2h, \quad h \in \mathbb{N}, \quad h \ge 1.
+\]
+The integer $h$ represents the half-filling number or the positive Nyquist cut-off.
+
+\section{The Spatial Lattice}
+
+The spatial geometry of the physical system is that of a discrete one-dimensional circular chain of $L$ sites with periodic boundary conditions.
+
+\begin{definition}[Spatial Lattice]
+The spatial lattice $\Lambda$ is defined as the cyclic quotient group of integers modulo $L$:
+\begin{equation}
+\Lambda \coloneqq \mathbb{Z}/L\mathbb{Z}.
+\end{equation}
+Elements $x, y \in \Lambda$ represent discrete spatial positions. Periodic boundary conditions are an intrinsic algebraic property of the quotient ring: translation by $L$ sites corresponds to the identity operation in $\Lambda$.
+\end{definition}
+
+Because $L \ge 1$, the spatial lattice $\Lambda$ is a finite commutative ring of cardinality $\#\Lambda = L$, endowed with canonical addition and multiplication inherited from $\mathbb{Z}$.
+
+\begin{remark}[Formalization Note]
+In constructive formalizations of mathematics, algebraic structures must carry computational and decidable content. The spatial lattice $\Lambda$ is realized directly via the cyclic quotient type with an explicit hypothesis of strict positivity ($L > 0$), preventing degenerate structures associated with modulo-zero division. Periodic boundary conditions require no auxiliary topological constraints; they are enforced by the quotient equality $x + L = x$.
+\end{remark}
+
+\section{The Momentum Band and Nyquist Asymmetry}
+
+In continuous quantum field theory, the dual momentum space is the real line $\mathbb{R}$ or the continuous circle $\mathbb{R}/(2\pi/a)\mathbb{Z}$. On a discrete spatial lattice of $L$ sites, the dual momentum band (the first Brillouin zone) must consist of exactly $L$ discrete momentum modes.
+
+To center the physical momentum around zero while maintaining exact finite cardinality, we define the momentum band as an integer interval centered near the origin.
+
+\begin{definition}[Momentum Band]
+The momentum band $\Lambda^*$ is the subset of signed integers satisfying the two-sided inequalities:
+\begin{equation}
+\Lambda^* \coloneqq \left\{ k \in \mathbb{Z} \;\middle|\; -L < 2k \le L \right\}.
+\end{equation}
+Momenta are denoted by variables $k, p, q \in \Lambda^*$. The physical momentum corresponding to mode index $k$ is given by the scaled wavenumber $p_{\mathrm{phys}} = \frac{2\pi k}{L}$.
+\end{definition}
+
+The choice of inequalities $-L < 2k \le L$ is subtle and fundamental:
+\begin{itemize}
+    \item When $L = 2h$ is even, the condition $-2h < 2k \le 2h$ simplifies to $-h < k \le h$. Consequently, the momentum band consists explicitly of the $2h$ consecutive integers:
+    \begin{equation}
+    \Lambda^* = \{-h+1, -h+2, \dots, -1, 0, 1, \dots, h-1, h\}.
+    \end{equation}
+    \item The interval is intrinsically asymmetric: it includes the positive Nyquist mode $k = +h = +L/2$, but excludes the negative counterpart $k = -h = -L/2$.
+    \item When $L$ is odd, say $L = 2m+1$, the condition becomes $-2m-1 < 2k \le 2m+1$, which yields the symmetric set $\{-m, -m+1, \dots, m-1, m\}$ of cardinality $2m+1$.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+A common convention in physics textbooks is to choose a symmetric interval $[-h, h]$, which contains $2h+1$ modes, or to assign fractional statistical weights to the boundaries $\pm h$. Such conventions destroy the exact bijective correspondence between spatial sites and momentum modes. In a kernel-checked algebraic formalization, exact finite dimensionality is paramount: the discrete Fourier transform must be a bijective isometry between two spaces of identical dimension $L$. Retaining the positive Nyquist mode $+h$ while excluding $-h$ preserves exact cardinality $\#\Lambda^* = L$ while avoiding duplicate periodic modes, because $-h \equiv +h \pmod L$.
+
+Furthermore, while $\Lambda^*$ is defined as an abstract comprehension over $\mathbb{Z}$, constructive computation requires a decidable finite set. In formal practice, $\Lambda^*$ is constructed by filtering the bounded finset $\mathbb{Z} \cap [-L, L]$ with the decidable predicate $-L < 2k \le L$, establishing the finite type instance without invoking non-constructive choice principles.
+\end{remark}
+
+\section{Quotient Projections and the Centered Section}
+
+Because $\Lambda = \mathbb{Z}/L\mathbb{Z}$ is a quotient group, there is a natural projection from any integer to its equivalence class in the lattice.
+
+\begin{definition}[Canonical Projection]
+The canonical projection $\pi : \mathbb{Z} \to \Lambda$ maps an integer $k \in \mathbb{Z}$ to its periodic residue class:
+\begin{equation}
+\pi(k) \coloneqq k \bmod L.
+\end{equation}
+By restriction, $\pi$ maps any momentum mode $k \in \Lambda^*$ to an element $\pi(k) \in \Lambda$.
+\end{definition}
+
+To construct the inverse mapping, we seek a section of $\pi$ whose range lies strictly within the momentum band $\Lambda^*$. Every element $x \in \Lambda = \mathbb{Z}/L\mathbb{Z}$ possesses a unique canonical representative $x_{\mathrm{val}} \in \{0, 1, \dots, L-1\}$.
+
+\begin{definition}[Centered Lift Section]
+The centered lift map $r : \Lambda \to \Lambda^*$ is defined piecewise on the unsigned representative $x_{\mathrm{val}} \in \{0, 1, \dots, L-1\}$ by:
+\begin{equation}
+r(x) \coloneqq \begin{cases}
+x_{\mathrm{val}}, & \text{if } 2 x_{\mathrm{val}} \le L, \\
+x_{\mathrm{val}} - L, & \text{if } 2 x_{\mathrm{val}} > L.
+\end{cases}
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Well-Definedness and Inversion]
+\label{lem:section_identities}
+For any positive integer $L \ge 1$:
+\begin{enumerate}
+    \item For every $x \in \Lambda$, the value $r(x)$ belongs to the momentum band $\Lambda^*$, and:
+    \begin{equation}
+    \pi(r(x)) = x.
+    \end{equation}
+    \item For every $k \in \Lambda^*$, the centered lift recovers the original mode:
+    \begin{equation}
+    r(\pi(k)) = k.
+    \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+We verify both statements directly from the definitions:
+\begin{enumerate}
+    \item Let $x \in \Lambda$ and let $a = x_{\mathrm{val}} \in \{0, 1, \dots, L-1\}$.
+    \begin{itemize}
+        \item If $2a \le L$, then $r(x) = a$. Since $a \ge 0$, we have $2a \ge 0 > -L$. Since $2a \le L$, $a$ satisfies $-L < 2a \le L$, so $r(x) \in \Lambda^*$. Furthermore, $\pi(r(x)) = \pi(a) = x$.
+        \item If $2a > L$, then $r(x) = a - L$. Since $a \le L - 1$, we have $a - L \le -1$, so $2(a - L) \le -2 < 0 \le L$. Conversely, $2a > L$ implies $2(a - L) > -L$. Thus $-L < 2(a - L) \le L$, establishing that $r(x) \in \Lambda^*$. Moreover, $\pi(a - L) = \pi(a) - \pi(L) = x - 0 = x$.
+    \end{itemize}
+    In both branches, $r(x) \in \Lambda^*$ and $\pi(r(x)) = x$.
+    
+    \item Let $k \in \Lambda^*$. Then $-L < 2k \le L$. Consider the difference $k - r(\pi(k))$. Since $\pi(r(\pi(k))) = \pi(k)$ by part (1), both $k$ and $r(\pi(k))$ project to the same residue class under $\pi$. Therefore, their difference is an integer multiple of $L$:
+    \[
+    k - r(\pi(k)) = m L \quad \text{for some } m \in \mathbb{Z}.
+    \]
+    However, both $k$ and $r(\pi(k))$ satisfy the band bounds:
+    \[
+    -\frac{L}{2} < k \le \frac{L}{2} \quad \text{and} \quad -\frac{L}{2} < r(\pi(k)) \le \frac{L}{2}.
+    \]
+    Subtracting these inequalities yields:
+    \[
+    -L < k - r(\pi(k)) < L.
+    \]
+    The only integer multiple of $L$ strictly between $-L$ and $L$ is $0$. Hence $m = 0$, which proves $r(\pi(k)) = k$.
+\end{enumerate}
+\end{proof}
+
+\begin{corollary}[Canonical Bijection]
+The restriction of the canonical projection $\pi|_{\Lambda^*} : \Lambda^* \to \Lambda$ is a bijection, whose two-sided inverse is the centered lift section $r : \Lambda \to \Lambda^*$. In particular, the cardinality of the momentum band is strictly:
+\begin{equation}
+\#\Lambda^* = \#\Lambda = L.
+\end{equation}
+\end{corollary}
+
+\begin{remark}[Formalization Note]
+In the formalized proof, rather than carrying out tedious case analysis on the numerical boundaries of the unsigned residue $x_{\mathrm{val}}$, the proof of injectivity and two-sided inversion is established algebraically via the division theorem: any two elements of $\Lambda^*$ with the same quotient image have a difference divisible by $L$; because the diameter of $\Lambda^*$ is strictly less than $2L$, this difference must vanish identically. This algebraic argument avoids dependent type casework and simplifies proof maintenance.
+\end{remark}
+
+\section{Transported Band Arithmetic and Umklapp Wrapping}
+
+While $\Lambda = \mathbb{Z}/L\mathbb{Z}$ is an abelian group under addition, the momentum band $\Lambda^*$ is an integer subset. The usual sum of two momenta $k, p \in \Lambda^*$ may lie outside the interval $(-L/2, L/2]$. 
+
+To endow $\Lambda^*$ with a group structure isomorphic to $\Lambda$, we transport the addition and negation of the cyclic group through the bijection $(\pi, r)$.
+
+\begin{definition}[Transported Band Arithmetic]
+For any momenta $k, p \in \Lambda^*$, we define band addition $\oplus$ and band negation $\ominus$ by:
+\begin{align}
+k \oplus p &\coloneqq r(\pi(k) + \pi(p)), \\
+\ominus k &\coloneqq r(-\pi(k)).
+\end{align}
+\end{definition}
+
+Because $(\pi, r)$ is a bijection between $\Lambda^*$ and the abelian group $\Lambda$, $(\Lambda^*, \oplus, \ominus, 0)$ forms a finite abelian group isomorphic to $\mathbb{Z}/L\mathbb{Z}$, with neutral element $0 = r(\pi(0))$.
+
+In physics, the sum of two crystal momenta $k + p$ may exceed the Brillouin zone boundaries, triggering an Umklapp process where a reciprocal lattice vector transfers momentum to the crystal. The difference between ordinary integer addition $k+p$ and band addition $k \oplus p$ is made precise by the following theorem.
+
+\begin{theorem}[Umklapp Wrapping Lemma]
+\label{thm:wrap_lemma}
+For any $k, p \in \Lambda^*$, there exists a unique integer $w \in \{-1, 0, 1\}$ such that:
+\begin{equation}
+k + p = (k \oplus p) + w L.
+\end{equation}
+The integer $w$ is the Umklapp multiplier and is explicitly determined by:
+\begin{equation}
+w = \begin{cases}
++1, & \text{if } 2(k+p) > L, \\
+0, & \text{if } -L < 2(k+p) \le L, \\
+-1, & \text{if } 2(k+p) \le -L.
+\end{cases}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $s = k + p \in \mathbb{Z}$. Since $k, p \in \Lambda^*$, we have $-L < 2k \le L$ and $-L < 2p \le L$. Adding these inequalities gives:
+\[
+-2L < 2(k+p) \le 2L \implies -L < s \le L.
+\]
+By definition of band addition, $\pi(k \oplus p) = \pi(r(\pi(k) + \pi(p))) = \pi(k) + \pi(p) = \pi(s)$. Thus $s$ and $k \oplus p$ project to the same element in $\Lambda$, meaning $s - (k \oplus p)$ is an integer multiple of $L$:
+\[
+s - (k \oplus p) = w L \quad \text{for some } w \in \mathbb{Z}.
+\]
+Since $-L < s \le L$ and $-L/2 < k \oplus p \le L/2$, we obtain bounds on $w$:
+\[
+-L - \frac{L}{2} < s - (k \oplus p) < L - \left(-\frac{L}{2}\right) \implies -\frac{3L}{2} < wL < \frac{3L}{2}.
+\]
+Dividing by $L > 0$ yields $-\frac{3}{2} < w < \frac{3}{2}$. Because $w \in \mathbb{Z}$, the only possible values are $w \in \{-1, 0, 1\}$.
+
+Now test the three cases:
+\begin{itemize}
+    \item If $2s > L$, choose candidate $s' = s - L$. Then $2s' = 2s - 2L > L - 2L = -L$, and $2s' \le 2L - 2L = 0 \le L$. Thus $s' \in \Lambda^*$ and $\pi(s') = \pi(s)$. By uniqueness of the centered representative in $\Lambda^*$, $k \oplus p = s - L$, so $w = 1$.
+    \item If $-L < 2s \le L$, then $s$ already belongs to $\Lambda^*$. Uniqueness gives $k \oplus p = s$, so $w = 0$.
+    \item If $2s \le -L$, choose candidate $s' = s + L$. Then $2s' \le -L + 2L = L$, and $2s' > -2L + 2L = 0 > -L$. Thus $s' \in \Lambda^*$ and $\pi(s') = \pi(s)$. Uniqueness implies $k \oplus p = s + L$, so $w = -1$.
+\end{itemize}
+Uniqueness of $w$ follows since $(w_1 - w_2) L = 0$ implies $w_1 = w_2$ when $L > 0$.
+\end{proof}
+
+\section{The Exceptional Nyquist Mode}
+
+We now examine the behavior of band negation $\ominus k$ when the lattice length is even, $L = 2h$.
+
+\begin{theorem}[Nyquist Mode Negation]
+\label{thm:nyquist_neg}
+Let $L = 2h$ with $h \ge 1$.
+\begin{enumerate}
+    \item The positive Nyquist mode $k = h = L/2$ is self-inverse under band negation:
+    \begin{equation}
+    \ominus \left(\frac{L}{2}\right) = \frac{L}{2}.
+    \end{equation}
+    \item For any mode $k \in \Lambda^*$ distinct from the Nyquist mode ($k \neq L/2$), band negation coincides with ordinary integer arithmetic negation:
+    \begin{equation}
+    \ominus k = -k.
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Let $L = 2h$.
+\begin{enumerate}
+    \item For the mode $k = L/2 = h$, ordinary negation yields $-k = -h = -L/2$. In the quotient ring $\Lambda = \mathbb{Z}/L\mathbb{Z}$:
+    \[
+    -\pi(L/2) = \pi(-L/2) = \pi(-L/2 + L) = \pi(L/2).
+    \]
+    Applying the section $r$, we have:
+    \[
+    \ominus (L/2) = r(-\pi(L/2)) = r(\pi(L/2)) = L/2,
+    \]
+    by Lemma~\ref{lem:section_identities}(2). Hence $\ominus(L/2) = L/2$.
+
+    \item Suppose $k \in \Lambda^*$ with $k \neq L/2$. Since $k \in \{-h+1, \dots, h\}$ and $k \neq h$, we must have:
+    \[
+    -h+1 \le k \le h-1 \implies -(h-1) \le -k \le h-1.
+    \]
+    Multiplying by $2$:
+    \[
+    -2h < -2(h-1) \le 2(-k) \le 2(h-1) < 2h = L.
+    \]
+    Thus $-k$ satisfies the strict bounds $-L < 2(-k) \le L$, establishing that the integer $-k$ is already in $\Lambda^*$. By Lemma~\ref{lem:section_identities}(2), $r(\pi(-k)) = -k$. Therefore:
+    \[
+    \ominus k = r(-\pi(k)) = r(\pi(-k)) = -k.
+    \]
+\end{enumerate}
+\end{proof}
+
+\begin{remark}[Formalization Note]
+In physical literature, authors often assume $\ominus k = -k$ for all momenta without addressing the boundary mode, causing subtle inconsistencies in Fourier inversion and Bogoliubov transformations at the Nyquist frequency. The constructive formalization in Lean 4 guarantees that all transformations and commutators account for the single exceptional point $k = L/2$. Specifically:
+\begin{itemize}
+    \item The pair $(k, \ominus k)$ contains two distinct modes for all $k \notin \{0, L/2\}$.
+    \item The fixed points of the negation involution $k \mapsto \ominus k$ on $\Lambda^*$ are precisely the two zero-energy/boundary modes: $k = 0$ and $k = L/2$.
+\end{itemize}
+This exact accounting ensures that no double-counting or missing modes occur when partitioning momentum sums into pairs $(k, -k)$ in later chapters.
+\end{remark}

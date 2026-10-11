@@ -1,0 +1,29 @@
+\chapter{Heisenberg Algebra and the Exact Schwinger Term}
+\label{ch:heisenberg_algebra}
+
+\section{Introduction and the Schwinger Anomaly}
+The central miracle of bosonization is that bilinear products of fermionic operators satisfy bosonic commutation relations. In continuum field theory, this is the $U(1)$ Kac--Moody current algebra with a central Schwinger term:
+\begin{equation}
+[\rho_m, \rho_{-n}] = m\, \delta_{m, n}\, I.
+\end{equation}
+In continuous theory, this central term arises from point-splitting or Dirac sea regularization. In lattice AQFT, it is proved as an exact finite-dimensional operator identity under explicit budget margin bounds.
+
+\section{Edge Domains and the Commutator Evaluation}
+Evaluating the commutator $[:\!\rho_m\!:, :\!\rho_{-n}\!:]$ on a state in $B(N, K)$ expands into a double sum over momentum modes. By CAR bilinearity, the terms cancel everywhere in the interior of the Fermi sea and far above the Fermi surface, leaving non-vanishing contributions strictly at the Fermi edge:
+\begin{equation}
+k \in S_N \quad \text{and} \quad k + m \notin S_N.
+\end{equation}
+
+\section{Key Results and Formal Discoveries}
+\begin{itemize}
+    \item \textbf{Exact Diagonal Edge Formula:} When $m = n > 0$, the edge sum counts exactly the number of integers in $\{N-m+1, \dots, N\}$, which is identically $m$.
+    \item \textbf{Off-Diagonal Suppression (Regime M2):} When $m \neq n$, the commutator vanishes identically on the budget subspace under the unified margin hypothesis:
+    \[
+    2M + K + |N| \le h.
+    \]
+    \item \textbf{Exact Central Extension:} Under the margin condition, the fermionic density modes realize the exact Heisenberg Kac--Moody Lie algebra on $B(N, K)$.
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core (Chapter 10, Heisenberg Algebra), the Schwinger term is proved without delta functions or infinite sums. The cancellation of off-diagonal terms is verified by exact finite set bijections.
+\end{remark}
