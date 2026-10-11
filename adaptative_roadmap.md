@@ -168,3 +168,7 @@ identity. This sprint does not begin that subsequent chapter.
 ## CH10/A04 completed continuation — 2026-10-10
 
 Reviewed interface `e2074b4`, complete proofs `7b0f1c1`; [Phase C evidence](note/ch10_phase_c_validation_2026-10-10.md). Thirty-seven new theorem proofs and six data definitions are complete and frozen in Core, with both complementary lectures updated and independently reviewed. Existing fourteen Core modules are unchanged. The one-time continuation automation was deleted after handling its wakeup. CH11/A04 is the exact next item; no work on that chapter has started. Current weekly allowance is 4%, below the adopted 5% threshold; development is paused after this completed checkpoint. No automatic resumption or quota reset is scheduled.
+
+## CH11/A04 active sprint — 2026-10-11
+
+Fresh usage permits development again. Phase A independently approved 61 targets (25 A04 partition combinatorics and 36 CH11 density-state completeness) and 15 complete data declarations. The explicit occupation/partition inverse, R1 count and actual right-remainder R2 Gram contracts are locked. See [independent review](note/ch11_phase_a_review_2026-10-11.md). Phase B supplies proofs next; none of these targets is yet promoted or proved. CH12 remains outside this sprint. Existing sixteen Core modules are unchanged.

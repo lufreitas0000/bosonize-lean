@@ -1,3 +1,5 @@
+import BosonizeStubs.A04PartitionCombinatorics
+import BosonizeStubs.Ch11HaldaneCompleteness
 import Bosonize
 
 /-!
