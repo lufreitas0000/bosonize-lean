@@ -1,33 +1,279 @@
 \chapter{The Finite Fourier Transform}
 \label{ch:fourier}
 
-\section{Introduction and Discrete Characters}
-The finite Fourier transform connects the spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ to the dual momentum band $\Lambda^* = \{-h+1, \dots, h\}$ (for $L = 2h$). Rather than invoking transcendental complex exponentials and real numbers, the algebraic formulation relies on primitive $L$-th roots of unity in an algebraically closed field or splitting field $\mathbb{C}$.
+\section{Introduction and Algebraic Setting}
 
-\section{Representative-Independent Characters}
-For spatial site $x \in \Lambda$ and momentum mode $k \in \Lambda^*$, the Fourier character is defined by:
+The discrete Fourier transform is the central kinematic bridge of quantum field theory on a lattice. It connects the spatial coordinate representation on the periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ to the dual momentum representation on the centered band $\Lambda^* = \{-h+1, \dots, h\}$ (for even $L = 2h$).
+
+In standard physics presentations, the Fourier transform is defined immediately on complex functions using transcendental exponentials $e^{2\pi i k x / L}$ and the unitary normalization factor $1/\sqrt{L}$. While physically standard, this conflates two distinct mathematical layers:
+\begin{enumerate}
+    \item \textbf{The algebraic character layer:} Character orthogonality and algebraic Fourier inversion require only a commutative field $K$ containing a primitive $L$-th root of unity $\zeta$, and the invertibility of the lattice size $(L : K) \neq 0$. Square roots and analytic limits are completely unnecessary.
+    \item \textbf{The Hilbert unitary layer:} To make the Fourier transform an exact isometry that preserves Canonical Anticommutation Relations (CAR) between position and momentum fermions without spurious factors of $\sqrt{L}$, we instantiate $K = \mathbb{C}$ and introduce the metric normalization $a = 1/\sqrt{L}$.
+\end{enumerate}
+
+In this chapter, we develop both layers in full mathematical rigor, following the verified constructive formalization.
+
+\section{Generic Character Algebra over Fields}
+
+\begin{definition}[Primitive Root of Unity]
+Let $K$ be a commutative field, and let $L \ge 1$ be a positive integer. An element $\zeta \in K$ is a primitive $L$-th root of unity if:
 \begin{equation}
-\chi(k, x) \coloneqq \zeta^{k \cdot x_{\mathrm{val}}}, \quad \zeta \coloneqq e^{2\pi i / L}.
+\zeta^L = 1, \qquad \text{and} \qquad \zeta^m \neq 1 \quad \text{for all } m \in \{1, 2, \dots, L-1\}.
 \end{equation}
-The character satisfies exact representative independence: for any integer representative $\tilde{x} \equiv x \pmod L$ and any band mode $k$, $\chi(k, x)$ depends only on the quotient class.
+\end{definition}
 
-\section{Orthogonality, Unitarity, and Diagonalization}
+When $K = \mathbb{C}$, the canonical primitive $L$-th root of unity is:
+\begin{equation}
+\zeta_{\mathrm{can}} \coloneqq \exp\left(\frac{2\pi i}{L}\right).
+\end{equation}
+
+\begin{definition}[Representative-Independent Character]
+For any momentum mode $k \in \Lambda^*$ and spatial site $x \in \Lambda$, let $x_{\mathrm{val}} \in \{0, 1, \dots, L-1\}$ denote the unsigned residue of $x$. The discrete Fourier character is defined by:
+\begin{equation}
+\chi(k, x) \coloneqq \zeta^{k \cdot x_{\mathrm{val}}}.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Representative Independence]
+\label{lem:rep_independence}
+For any integer $k \in \mathbb{Z}$ and any integer representative $\tilde{x} \in \mathbb{Z}$ of $x$ (so that $\tilde{x} \equiv x_{\mathrm{val}} \pmod L$):
+\begin{equation}
+\zeta^{k \tilde{x}} = \zeta^{k \cdot x_{\mathrm{val}}} = \chi(k, x).
+\end{equation}
+In particular, $\chi$ depends only on the quotient class $x \in \mathbb{Z}/L\mathbb{Z}$.
+\end{lemma}
+
+\begin{proof}
+Since $\tilde{x} \equiv x_{\mathrm{val}} \pmod L$, there exists $m \in \mathbb{Z}$ such that $\tilde{x} = x_{\mathrm{val}} + m L$. Therefore:
+\[
+\zeta^{k \tilde{x}} = \zeta^{k (x_{\mathrm{val}} + m L)} = \zeta^{k x_{\mathrm{val}}} \cdot (\zeta^L)^{k m}.
+\]
+Because $\zeta$ is an $L$-th root of unity, $\zeta^L = 1$, so $(\zeta^L)^{k m} = 1^{k m} = 1$. Hence $\zeta^{k \tilde{x}} = \zeta^{k x_{\mathrm{val}}}$.
+\end{proof}
+
+\section{The Unscaled Analysis and Synthesis Transforms}
+
+Because the spatial lattice $\Lambda$ and the momentum band $\Lambda^*$ are distinct sets, the Fourier transform consists of two directional linear maps between distinct function modules:
 \begin{itemize}
-    \item \textbf{Row and Column Orthogonality:}
-    \[
-    \sum_{x \in \Lambda} \chi(k, x) \overline{\chi(p, x)} = L\, \delta_{k, p}, \qquad \sum_{k \in \Lambda^*} \chi(k, x) \overline{\chi(k, y)} = L\, \delta_{x, y}.
-    \]
-    \item \textbf{Unitary Discrete Fourier Transform:} The normalized operator $\mathcal{F} : \mathcal{F}(\Lambda, \mathbb{C}) \to \mathcal{F}(\Lambda^*, \mathbb{C})$ defined by:
-    \[
-    (\mathcal{F} f)(k) \coloneqq \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(-k, x) f(x)
-    \]
-    is a unitary linear bijection.
-    \item \textbf{Diagonalization of the Umbral Shift:} The spatial shift operator $E$ is diagonalized by the Fourier basis:
-    \[
-    (\mathcal{F} (E f))(k) = \chi(k, 1) (\mathcal{F} f)(k) = e^{2\pi i k / L} (\mathcal{F} f)(k).
-    \]
+    \item Spatial function space: $K^\Lambda \equiv (\Lambda \to K)$.
+    \item Momentum function space: $K^{\Lambda^*} \equiv (\Lambda^* \to K)$.
 \end{itemize}
 
+\begin{definition}[Analysis and Synthesis Transforms]
+We define the $K$-linear transforms:
+\begin{enumerate}
+    \item \textbf{Analysis Transform $S : K^\Lambda \to K^{\Lambda^*}$:}
+    \begin{equation}
+    (S f)(k) \coloneqq \sum_{x \in \Lambda} f(x)\, \chi(-k, x), \quad k \in \Lambda^*.
+    \end{equation}
+    \item \textbf{Synthesis Transform $T : K^{\Lambda^*} \to K^\Lambda$:}
+    \begin{equation}
+    (T g)(x) \coloneqq \sum_{k \in \Lambda^*} g(k)\, \chi(k, x), \quad x \in \Lambda.
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+Note that $\chi(-k, x) = \zeta^{-k x_{\mathrm{val}}} = (\zeta^{k x_{\mathrm{val}}})^{-1} = \chi(k, x)^{-1}$. By Lemma~\ref{lem:rep_independence}, evaluating at $-k \in \mathbb{Z}$ agrees with evaluating at the transported band negation $\ominus k \in \Lambda^*$, ensuring algebraic consistency even when $-k \notin \Lambda^*$.
+
+\section{Dual Character Orthogonality and Algebraic Inversion}
+
+The foundation of Fourier analysis on finite abelian groups is character orthogonality.
+
+\begin{lemma}[Geometric Sum of Roots of Unity]
+\label{lem:geom_sum}
+Let $\zeta \in K$ be a primitive $L$-th root of unity. For any integer $m \in \mathbb{Z}$:
+\begin{equation}
+\sum_{x=0}^{L-1} \zeta^{m x} = \begin{cases}
+L \cdot 1_K, & \text{if } m \equiv 0 \pmod L, \\
+0, & \text{if } m \not\equiv 0 \pmod L.
+\end{cases}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+If $m \equiv 0 \pmod L$, then $\zeta^m = 1$, so each of the $L$ terms equals $1$, giving $\sum_{x=0}^{L-1} 1 = L \cdot 1_K$.
+
+If $m \not\equiv 0 \pmod L$, then $\zeta^m \neq 1$ because $\zeta$ is a primitive $L$-th root of unity. In any field, multiplying the sum by $(1 - \zeta^m)$ gives the telescoping sum:
+\[
+(1 - \zeta^m) \sum_{x=0}^{L-1} \zeta^{m x} = \sum_{x=0}^{L-1} \zeta^{m x} - \sum_{x=0}^{L-1} \zeta^{m (x+1)} = 1 - \zeta^{m L} = 1 - (\zeta^L)^m = 1 - 1 = 0.
+\]
+Because $K$ is a field and $(1 - \zeta^m) \neq 0$, dividing by $(1 - \zeta^m)$ proves $\sum_{x=0}^{L-1} \zeta^{m x} = 0$.
+\end{proof}
+
+\begin{theorem}[Dual Character Orthogonality Relations]
+\label{thm:fourier_orthogonality}
+Let $\zeta$ be a primitive $L$-th root of unity in $K$.
+\begin{enumerate}
+    \item \textbf{Spatial Orthogonality:} For any modes $k, p \in \Lambda^*$:
+    \begin{equation}
+    \sum_{x \in \Lambda} \chi(k - p, x) = L\, \delta_{k, p}.
+    \end{equation}
+    \item \textbf{Momentum (Dual) Orthogonality:} For any spatial sites $x, y \in \Lambda$:
+    \begin{equation}
+    \sum_{k \in \Lambda^*} \chi(k, x) \chi(-k, y) = L\, \delta_{x, y}.
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We prove each identity:
+\begin{enumerate}
+    \item The sum over $x \in \Lambda$ is explicitly the sum over unsigned residues $x_{\mathrm{val}} \in \{0, \dots, L-1\}$:
+    \[
+    \sum_{x \in \Lambda} \chi(k - p, x) = \sum_{x_{\mathrm{val}}=0}^{L-1} \zeta^{(k - p) x_{\mathrm{val}}}.
+    \]
+    By Lemma~\ref{lem:geom_sum}, this sum equals $L$ if $k - p \equiv 0 \pmod L$, and $0$ otherwise. Since both $k, p \in \Lambda^*$, their difference satisfies $-L < k - p < L$. The only multiple of $L$ in this range is $0$, meaning $k - p \equiv 0 \pmod L$ if and only if $k = p$. Thus the sum equals $L\, \delta_{k, p}$.
+
+    \item By the canonical bijection $r : \Lambda \to \Lambda^*$ established in Chapter~\ref{ch:lattice_band}, summing over $k \in \Lambda^*$ is equivalent to summing over $k = r(z)$ for $z \in \Lambda$. Using representative independence (Lemma~\ref{lem:rep_independence}):
+    \[
+    \sum_{k \in \Lambda^*} \chi(k, x) \chi(-k, y) = \sum_{k \in \Lambda^*} \zeta^{k (x_{\mathrm{val}} - y_{\mathrm{val}})} = \sum_{z \in \Lambda} \zeta^{z_{\mathrm{val}} (x_{\mathrm{val}} - y_{\mathrm{val}})} = \sum_{z_{\mathrm{val}}=0}^{L-1} \zeta^{(x_{\mathrm{val}} - y_{\mathrm{val}}) z_{\mathrm{val}}}.
+    \]
+    By Lemma~\ref{lem:geom_sum}, this sum equals $L$ if $x_{\mathrm{val}} - y_{\mathrm{val}} \equiv 0 \pmod L$ (which means $x = y$ in $\Lambda$), and $0$ otherwise. This gives $L\, \delta_{x, y}$.
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}[Unscaled Inversion and Algebraic Isomorphism]
+\label{thm:unscaled_inversion}
+The compositions of analysis and synthesis satisfy:
+\begin{equation}
+T \circ S = L \cdot \mathrm{id}_{K^\Lambda}, \qquad S \circ T = L \cdot \mathrm{id}_{K^{\Lambda^*}}.
+\end{equation}
+Consequently, if $(L : K) \neq 0$ in the field $K$, $S$ and $T$ are linear isomorphisms, and the exact two-sided algebraic inverse of $S$ is:
+\begin{equation}
+S^{-1} = L^{-1} T.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $f \in K^\Lambda$ and evaluate $(T(S f))(y)$ at site $y \in \Lambda$:
+\begin{align*}
+(T(S f))(y) &= \sum_{k \in \Lambda^*} (S f)(k)\, \chi(k, y) = \sum_{k \in \Lambda^*} \left( \sum_{x \in \Lambda} f(x)\, \chi(-k, x) \right) \chi(k, y) \\
+&= \sum_{x \in \Lambda} f(x) \left( \sum_{k \in \Lambda^*} \chi(k, y) \chi(-k, x) \right).
+\end{align*}
+By Theorem~\ref{thm:fourier_orthogonality}(2), the inner sum equals $L\, \delta_{y, x} = L\, \delta_{x, y}$. Therefore:
+\[
+(T(S f))(y) = \sum_{x \in \Lambda} f(x) \cdot L\, \delta_{x, y} = L\, f(y).
+\]
+Hence $T \circ S = L \cdot \mathrm{id}_{K^\Lambda}$. Reversing the order and applying Theorem~\ref{thm:fourier_orthogonality}(1) similarly yields $S \circ T = L \cdot \mathrm{id}_{K^{\Lambda^*}}$.
+\end{proof}
+
 \begin{remark}[Formalization Note]
-In the verified Lean~4 formalization (Chapter 3 and Appendix A01), all 61 Fourier character lemmas are proved constructively over roots of unity. The proof of orthogonality utilizes the geometric sum formula without analytical limits.
+In the verified Lean~4 formalization (Chapter 3 and Appendix A01), all 61 Fourier character lemmas are proved constructively over roots of unity. The proof of orthogonality utilizes the geometric sum formula without analytical limits. This algebraic decoupling guarantees that the discrete Fourier transform is fully well-defined and bijective over any field of characteristic zero, without requiring metric completions or square roots of $L$.
 \end{remark}
+
+\section{Unitary Normalization on Complex Euclidean Space}
+
+We now specialize to the field of complex numbers $K = \mathbb{C}$ equipped with the standard complex conjugation and the canonical root $\zeta = e^{2\pi i / L}$.
+
+To define unitary operators, we endow the function spaces with their standard counting $\ell^2$ inner products:
+\begin{itemize}
+    \item Spatial Euclidean space $\mathcal{H}_{\mathrm{pos}} \coloneqq \ell^2(\Lambda)$:
+    \begin{equation}
+    \langle f_1, f_2 \rangle_{\mathrm{pos}} \coloneqq \sum_{x \in \Lambda} \overline{f_1(x)}\, f_2(x).
+    \end{equation}
+    \item Momentum Euclidean space $\mathcal{H}_{\mathrm{mom}} \coloneqq \ell^2(\Lambda^*)$:
+    \begin{equation}
+    \langle g_1, g_2 \rangle_{\mathrm{mom}} \coloneqq \sum_{k \in \Lambda^*} \overline{g_1(k)}\, g_2(k).
+    \end{equation}
+\end{itemize}
+
+\begin{definition}[Unitary Fourier Transform]
+Let $a \coloneqq \frac{1}{\sqrt{L}} \in \mathbb{R}_{>0}$, so that $L a^2 = 1$. The unitary discrete Fourier transform $U : \mathcal{H}_{\mathrm{pos}} \to \mathcal{H}_{\mathrm{mom}}$ and its inverse $U^{-1} : \mathcal{H}_{\mathrm{mom}} \to \mathcal{H}_{\mathrm{pos}}$ are defined by:
+\begin{align}
+(U f)(k) &\coloneqq \frac{1}{\sqrt{L}} (S f)(k) = \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} f(x)\, \chi(-k, x), \\
+(U^{-1} g)(x) &\coloneqq \frac{1}{\sqrt{L}} (T g)(x) = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} g(k)\, \chi(k, x).
+\end{align}
+\end{definition}
+
+\begin{theorem}[Hilbert Adjoint and Unitarity]
+\label{thm:unitary_fourier}
+Under the counting inner products:
+\begin{enumerate}
+    \item The adjoint of the analysis map satisfies $S^\dagger = T$, and therefore:
+    \begin{equation}
+    U^\dagger = U^{-1}.
+    \end{equation}
+    \item $U$ is an exact Hilbert space isometry preserving inner products (Parseval / Plancherel identity):
+    \begin{equation}
+    \langle U f_1, U f_2 \rangle_{\mathrm{mom}} = \langle f_1, f_2 \rangle_{\mathrm{pos}} \quad \text{for all } f_1, f_2 \in \mathcal{H}_{\mathrm{pos}}.
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We evaluate the inner product directly:
+\begin{align*}
+\langle S f, g \rangle_{\mathrm{mom}} &= \sum_{k \in \Lambda^*} \overline{(S f)(k)}\, g(k) = \sum_{k \in \Lambda^*} \left( \sum_{x \in \Lambda} \overline{f(x)}\, \overline{\chi(-k, x)} \right) g(k) \\
+&= \sum_{x \in \Lambda} \overline{f(x)} \left( \sum_{k \in \Lambda^*} g(k)\, \chi(k, x) \right) = \sum_{x \in \Lambda} \overline{f(x)}\, (T g)(x) = \langle f, T g \rangle_{\mathrm{pos}},
+\end{align*}
+using $\overline{\chi(-k, x)} = \overline{\zeta^{-k x_{\mathrm{val}}}} = \zeta^{k x_{\mathrm{val}}} = \chi(k, x)$. Thus $S^\dagger = T$.
+Scaling by $a = 1/\sqrt{L} \in \mathbb{R}$:
+\[
+U^\dagger = (a S)^\dagger = a S^\dagger = a T = U^{-1}.
+\]
+Finally:
+\[
+\langle U f_1, U f_2 \rangle_{\mathrm{mom}} = \langle f_1, U^\dagger U f_2 \rangle_{\mathrm{pos}} = \langle f_1, U^{-1} U f_2 \rangle_{\mathrm{pos}} = \langle f_1, f_2 \rangle_{\mathrm{pos}}.
+\]
+This proves that $U$ is a unitary isomorphism.
+\end{proof}
+
+\section{Diagonalization of Difference Operators and Exact Dispersion}
+
+We now connect the Fourier transform to the discrete difference operators of Chapter~\ref{ch:umbral_calculus}.
+
+\begin{theorem}[Diagonal Action on Characters]
+\label{thm:diagonal_dispersion}
+Let $\chi_k(x) \coloneqq \chi(k, x)$ denote the Fourier character as a spatial function.
+\begin{enumerate}
+    \item The shift operator $E$ acts diagonally:
+    \begin{equation}
+    (E \chi_k)(x) = \zeta^k \chi_k(x).
+    \end{equation}
+    \item The forward and backward differences act diagonally:
+    \begin{align}
+    (\Delta \chi_k)(x) &= (\zeta^k - 1) \chi_k(x), \\
+    (\nabla \chi_k)(x) &= (1 - \zeta^{-k}) \chi_k(x).
+    \end{align}
+    \item The discrete Laplacian acts diagonally with eigenvalue $\lambda_k = \zeta^k + \zeta^{-k} - 2$:
+    \begin{equation}
+    (\Delta\nabla \chi_k)(x) = (\zeta^k + \zeta^{-k} - 2) \chi_k(x).
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Evaluating the definitions:
+\begin{enumerate}
+    \item $(E \chi_k)(x) = \chi_k(x+1) = \zeta^{k (x_{\mathrm{val}}+1)} = \zeta^k \zeta^{k x_{\mathrm{val}}} = \zeta^k \chi_k(x)$ by Lemma~\ref{lem:rep_independence}.
+    \item $(\Delta \chi_k)(x) = (E - I)\chi_k(x) = (\zeta^k - 1)\chi_k(x)$, and $(\nabla \chi_k)(x) = (I - E^{-1})\chi_k(x) = (1 - \zeta^{-k})\chi_k(x)$.
+    \item Composing the two differences:
+    \[
+    \Delta(\nabla \chi_k) = (\zeta^k - 1)(1 - \zeta^{-k})\chi_k = (\zeta^k - 1 - 1 + \zeta^{-k})\chi_k = (\zeta^k + \zeta^{-k} - 2)\chi_k.
+    \]
+\end{enumerate}
+\end{proof}
+
+\begin{corollary}[Exact Lattice Dispersion in $\mathbb{C}$]
+Under the canonical root $\zeta = e^{2\pi i / L}$, the Laplacian eigenvalue evaluates to:
+\begin{equation}
+\zeta^k + \zeta^{-k} - 2 = -4 \sin^2\left(\frac{\pi k}{L}\right).
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Using Euler's formula with angle $\theta = \frac{2\pi k}{L}$:
+\[
+\zeta^k + \zeta^{-k} = e^{i\theta} + e^{-i\theta} = 2 \cos\theta.
+\]
+Using the trigonometric half-angle identity $\cos\theta = 1 - 2 \sin^2(\theta/2)$:
+\[
+\zeta^k + \zeta^{-k} - 2 = 2 \cos\left(\frac{2\pi k}{L}\right) - 2 = 2 \left( 1 - 2 \sin^2\left(\frac{\pi k}{L}\right) \right) - 2 = -4 \sin^2\left(\frac{\pi k}{L}\right).
+\]
+\end{proof}
+
+In the long-wavelength continuum limit where the mode index is small compared to the lattice size ($|k| \ll L$), we approximate $\sin(\pi k / L) \approx \frac{\pi k}{L}$. The dispersion becomes:
+\begin{equation}
+-4 \sin^2\left(\frac{\pi k}{L}\right) \approx -4 \left(\frac{\pi k}{L}\right)^2 = -\left(\frac{2\pi k}{L}\right)^2 = -p_{\mathrm{phys}}^2,
+\end{equation}
+recovering the continuous kinetic energy dispersion and Laplacian $-\partial_x^2$. On the discrete lattice, the trigonometric dispersion naturally truncates high-momentum modes, eliminating all ultraviolet divergences.
