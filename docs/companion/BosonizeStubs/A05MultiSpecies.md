@@ -1,6 +1,6 @@
 # A05 multispecies support: Phase A companion
 
-Status: Phase A independently reviewed and frozen at `32b2a03`; Phase B is in progress. 12 theorem proofs are complete and freshly audited; 16 theorem placeholders remain. Four scoped instance omissions have separate independent review. No Phase C/Core promotion is claimed.
+Status: Phase B complete: all 28 theorem proofs and all supporting data are freshly standard-axiom audited. Zero warnings/placeholders. Phase C promotion and complementary pedagogical synchronization are pending; no Core promotion is claimed.
 
 Sources: `notes/md/ch13_Klein_factors.md`, `notes/appendices/a05_exponentials_klein_and_vertex_scope.md`, the CH13 TOC entry, applicable restricted-map/tensor-budget/phase corrections in `note/proof_suggestions_revision_2026-10-09.md`, and current frozen CH07, CH11, CH04/A02, CH09 and CH06Ext contracts. Historical brainstorm/API suggestions are advisory; nonexistent `docs/stub_suggestion/` and `docs/proof_suggestion/` were not invented. The A05 exponential and CH14 vertex research sections are excluded from this chapter: this draft asserts no unprojected vertex equality or analytic exponential.
 
@@ -204,3 +204,11 @@ Independent author-distinct review by `/root/ch11_gram_probe`: [PASS](../../../n
 ## Phase B partial checkpoint — 2026-10-11
 
 Completed and freshly standard-axiom audited: `tensor_kets`, `mode_lt_iff`, `species_joint_configuration`, `joint_species_configuration`, `annihilation_car`, `creation_car`, `mixed_car`, `creation_adjoint`, `ground_ne_zero`, `ground_mem_budget`, `joint_normalization_positive`, `charge_budget`. No completed theorem depends on `sorryAx`. The integrated two-module build passes 3398 jobs with exactly 37 warnings for remaining placeholders and no other warnings. Full Phase B and Phase C are pending. See [partial audit](../../../note/ch13_phase_b_partial_audit_2026-10-11.json) and [reviewed instance cleanup](../../../note/ch13_unused_instance_amendment_review_2026-10-11.md). The Phase A source hash above is historical; the current source hash is in the partial audit.
+
+## Complete Phase B audit — 2026-10-11
+
+The current source SHA-256 is `bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf02a983f92335bc2`. All 53 combined theorem proofs and 42 data declarations pass the fresh 95-declaration axiom audit, using only `propext`, `Classical.choice`, and `Quot.sound`, with no `sorryAx`. Both modules pass direct warning-as-error compilation and the 3398-job combined build. Native diagnostics are complete with no warnings/errors/failed dependencies; CH13 has one informational tactic suggestion only. Strict guard verifies 756 statements/588 commands; 69 guard tests pass. Existing nineteen Core sources remain unchanged. Historical Phase A/partial checkpoint counts above are retained as history and superseded by this complete audit.
+
+The implemented proof uses actual occupation configurations and coordinate products, with local multilinearity extending ket identities. Earlier-species parity occurs twice in an even hop and cancels. Total-budget spanning uses dependent fixed-energy bases at the actual fiber energies; only joined labels whose summed energy is at most K enter the span. It does not use a product of independently capped budgets.
+
+Fresh evidence: [axiom audit](../../../note/ch13_phase_b_axiom_audit_2026-10-11.json), [independent final review](../../../note/ch13_phase_b_review_2026-10-11.md), [budget/basis/kernel review](../../../note/ch13_budget_basis_kernel_review_2026-10-11.md), [typed-square review](../../../note/ch13_typed_squares_review_2026-10-11.md), [migration plan](../../../note/ch13_promotion_plan_review_2026-10-11.md). The final review discloses authorship and independent checks; proof authors do not certify their own bodies. Flash/Pro tools were unavailable, so exposed inherited Codex agents supplied the recorded sectional and independent-review work.

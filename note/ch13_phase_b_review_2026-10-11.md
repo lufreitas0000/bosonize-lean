@@ -1,0 +1,51 @@
+# CH13/A05 integrated Phase B review and promotion plan
+
+**Verdict: PASS.** All 53 theorem bodies are complete, the mathematical construction matches the accepted finite source, and the final imported axiom audit has no custom axioms or sorryAx. No unresolved proof/interface finding remains. Phase C execution, Core rebuilding and pedagogical review remain separate obligations.
+
+Exact reviewed sources:
+
+| Source | SHA-256 | Theorems | sorry/admit |
+| --- | --- | ---: | ---: |
+| `BosonizeStubs/A05MultiSpecies.lean` | `bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf02a983f92335bc2` | 28 | 0 |
+| `BosonizeStubs/Ch13KleinFactors.lean` | `83ff4f45673fc2c87541d2f732f08a7594c121dd9114bacb54badc0f670afd0d` | 25 | 0 |
+
+## Review independence and compiler evidence
+
+Reviewer `/root/ch12_phase_a` authored the original Phase A draft and seven Phase B targets: A05 `preceding_count_split`, `hopping_tensor`, `rho_tensor`; CH13 `lower_charge_commute`, `phase_norm`, `phase_cross_sign`, `r2_admissible`. This report does **not** claim an author-distinct proof review of those seven. The parent independently reviewed and integrated them; the recorded root messages confirm that gate. `note/ch13_phase_b_dependency_order_review_2026-10-11.md` additionally records the actual count/dependency-order review. This reviewer inspected the other 46 final proofs as an author-distinct integration review, including the final repaired raising proof. Fresh compiler/axiom checks below cover every declaration regardless of author.
+
+Independent final checks:
+
+- `lake env lean -DwarningAsError=true BosonizeStubs/A05MultiSpecies.lean`: exit **0**, output empty.
+- `lake env lean -DwarningAsError=true BosonizeStubs/Ch13KleinFactors.lean`: exit **0**, one informational ring suggestion only; zero warnings/errors.
+- Fresh imported audit `lake env lean -DwarningAsError=true /tmp/bosonize-ch13/final-95-audit.lean`: exit **0**; all **95 named declarations** (42 data/abbreviations/instances, 53 theorems) have only `propext`, `Classical.choice`, `Quot.sound`, or no axioms. All eight named local order projections are included. The current source hashes were rechecked against this audit snapshot. Permanent evidence: `note/ch13_phase_b_axiom_audit_2026-10-11.json`.
+- Strict statement/data guard: **756 statements / 588 frozen commands**, passed against the reviewed current baseline.
+- Complete-source guard: all **19 prior Core modules**, passed. They remain unchanged.
+- `git diff --check`: passed.
+
+The parent separately completed the final target build (3398 jobs, zero errors/warnings) and native Lean MCP diagnostics (complete; A05 empty, CH13 information only, no failed dependencies). Those calls are parent evidence, not falsely reported as reviewer calls.
+
+## Mathematical review
+
+**Actual carrier and tensor bridge.** The data retain CH07's ordinary product occupation carrier and actual total-excitation budget. The named lexical order and its explicitly local projections preserve the intended CAR order without exporting a global product-order instance. Combined/fiber configurations are inverse on actual finite sets. `tensor_inner` uses that actual finite occupation equivalence and the finite product-of-sums identity, not an assumed tensor norm. Root independently reviewed the actual hopping parity cancellation; `rho_tensor` lifts those genuine even CAR operators, not commuting odd tensor factors. `word_tensor` applies each species word in its actual order, then uses a noduplicated sorted species list so each component is updated once.
+
+**Kinematics and total budget.** Density adjoints swap actual valid pairs; cross-species CAR bilinear contractions vanish because the first coordinates differ. Nonnegative same-species commutation is proved through the actual block matrix shifts and dGamma Lie identity, not an associative second-quantization claim. `rho_budget_map` operates on each actual supported joint occupation ket: the selected component gets its frozen CH09 signed excitation shift, every other nonzero coordinate product forces the original component, and summing component bounds gives K+m. Its proof-local equality-decision normalization does not change the guarded operator or carrier. Lowering below zero uses the actual negative TOTAL budget theorem. Word membership accumulates the actual natural word shifts from the actual ground.
+
+**Gram and whole physical basis.** Actual word tensor action plus actual tensor inner product give the product of frozen CH11 Gram factors. Distinct dependent labels differ in at least one species, producing a zero factor; equal labels give the positive product Hall normalization. Whole-budget spanning expands every admitted joint occupation ket, using each fiber's nonnegative exact energy eν. The actual total support gives Σeν≤K, hence local R2. Each fiber ket is expanded in its frozen FIXED-ENERGY basis at eν. Finite product-of-sums yields only labels of these exact energies with total≤K. Thus the result spans the physical total budget, rather than a product of independent K-budgets or an abstract coefficient space. Gram independence and this actual spanning construct the subtype basis, including the empty-species limiting case.
+
+**Physical ground phase and field coefficient.** `ground_top_annihilation` computes actual lexical preceding occupations and the top same-species count. Its integer exponent is exactly Ση<ν(h+Nsη)+(h+Nsν−1), including the same-species term once. Removing the actual top mode gives the actual lowered ground configuration. `ground_field_coefficient` retains the full external species twist family bν. Only the ground-to-ground matrix coefficient selects the top mode; orthogonality excludes other holes from that coefficient. The entire field action is never falsely identified with its ground component, and no absolute-energy/holonomy independence is inferred.
+
+**Kernels, inverses and typed maps.** The finite rank-one data remain literal sums of actual source/target joint current states, with coefficient P/z, where z is their squared norm. Source Gram collapses forward action; target Gram collapses inverse action. Positivity permits exact denominator cancellation. Unrestricted range membership follows actual target/source partition membership with only the corresponding admissibility assumption. Inner preservation follows equal product Gram and a unit phase. Both budget inverse equations are independently proved before constructing the typed surjective linear isometry equivalence. The ambient adjoint conjugates the source phase and reverses the actual rank-one factors; it is not an assertion of ambient unitarity or identity on complements.
+
+**Cutoff and four-budget intertwining.** Cutoff consistency embeds identical dependent partition labels and actual states from the smaller total budget into the larger one, under the larger margin. The final raising proof constructs a valid positive partition by adding m, packages a label of total energy increased by m, and transports dependent sigma equality only through the nondependent sorted-parts expression. Actual rho tensor action and the frozen order-independent creator-word theorem identify the raised state in both charge sectors. The phase is unchanged because it depends on source charge, not partitions. Both kernels then agree on basis states and extend to the actual input span. Strict m>0 is retained; zero transfer would fail same-species commutation and remains the separate number-shift result.
+
+Lowering uses actual density adjoints, actual input/output grading, kernel inner preservation on each relevant budget and surjectivity of the smaller typed isometry. Its inner-product test spans precisely the target budget K; no global inverse or invariant single cutoff is assumed. The raising/lowering square theorems construct all four actual typed arrows by codomain restrictions, identify their ambient actions pointwise, and prove their composition equality. Their source/target cutoffs and enlarged pair margins remain explicit.
+
+**Statistics and nonzero action.** Cross-species anticommutation uses the exact integer phase-product minus sign and explicit equality of the two final charge functions, on the actual source span. The number-shift theorem uses actual species charge observables, including the same-species delta. Ground and double-ground witnesses are actual nonzero occupation states with unit phases. The double result also allows same-species repeated lowering where the doubly lowered sector margin is supplied, correctly recording that F² need not vanish. For distinct species, the two anticommuting paths are substantive nonzero maps; they are not merely formal phase calculations. No Clifford, global unitary, analytic exponential or unconditional vertex claim is added.
+
+## Reviewed Phase C migration plan
+
+PASS subject to execution checks. A05 imports only already frozen Core and Mathlib, so its move to `Bosonize/Core/A05MultiSpecies.lean` must be byte-identical with the A05 SHA above. CH13 must change exactly its one source import from `BosonizeStubs.A05MultiSpecies` to `Bosonize.Core.A05MultiSpecies` when moving to `Bosonize/Core/Ch13KleinFactors.lean`. This required substitution preserves every mathematical definition, statement and proof body; compute and record the resulting CH13 complete-source hash after the one-line change.
+
+Move only these two v2 manifest records to the Core paths. A05's record is unchanged. For CH13 recompute only the substituted import command and its dependent context hashes; all theorem-header and other command hashes must remain identical. Preserve every unrelated record and every one of the old 19 Core source hashes/bytes. Add exactly two new complete-source Core manifest entries. Move/update both companions, add both imports to the real `Bosonize.lean` aggregator, and remove any direct staging imports from `BosonizeStubs.lean`.
+
+Before Phase C completion, repeat all named data/theorem audits through the Core aggregator, run both guards and CI/guard tests, verify exact migration deltas, and obtain author-distinct pedagogical synchronization review for CH13 and the implemented A05 scope. Existing A05 exponential/CH14 research claims remain outside this proved construction. Reuse of this staging audit does not certify a later changed source snapshot.
