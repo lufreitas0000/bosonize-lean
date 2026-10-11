@@ -47,7 +47,7 @@ Because $\zeta \neq 0$, the power $\zeta^{k x}$ is well-defined for all signed i
 \end{definition}
 
 \begin{lemma}[Representative Independence]
-\label{lem:rep_independence}
+\label{lem:a01_rep_independence}
 Let $\zeta \in K$ be a primitive $L$-th root of unity (so $\zeta^L = 1$). For all integers $k, x, s, t \in \mathbb{Z}$:
 \begin{equation}
 \chi_{\mathbb{Z}}(\zeta, k + s L, \; x + t L) = \chi_{\mathbb{Z}}(\zeta, k, x).
@@ -71,7 +71,7 @@ For residue classes $k, x \in \mathbb{Z}/L\mathbb{Z}$ with canonical unsigned re
 \begin{equation}
 \chi_{\mathrm{res}}(L, \zeta, k, x) \coloneqq \chi_{\mathbb{Z}}(\zeta, k_{\mathrm{val}}, x_{\mathrm{val}}).
 \end{equation}
-By Lemma~\ref{lem:rep_independence}, $\chi_{\mathrm{res}}(L, \zeta, k, x)$ is independent of the choice of integer representatives for $k$ and $x$.
+By Lemma~\ref{lem:a01_rep_independence}, $\chi_{\mathrm{res}}(L, \zeta, k, x)$ is independent of the choice of integer representatives for $k$ and $x$.
 \end{definition}
 
 \begin{definition}[Tier 3: Band Character]
@@ -95,7 +95,7 @@ Let $\zeta \in K$ be a primitive $L$-th root of unity. The character pairing sat
     \chi_{\mathrm{res}}(k + p, x) = \chi_{\mathrm{res}}(k, x) \chi_{\mathrm{res}}(p, x).
     \end{equation}
     \item \textbf{Inversion:} $\chi_{\mathrm{res}}(-k, x) = \chi_{\mathrm{res}}(k, x)^{-1} = \chi_{\mathrm{res}}(k, -x)$.
-    \item \textbf{Transported Band Addition:} For $k, p \in \Lambda^*$, let $k \oplus p \in \Lambda^*$ denote the transported band addition defined in Chapter~\ref{ch:lattice_band_geometry}. Then:
+    \item \textbf{Transported Band Addition:} For $k, p \in \Lambda^*$, let $k \oplus p \in \Lambda^*$ denote the transported band addition defined in Chapter~\ref{ch:lattice_band}. Then:
     \begin{equation}
     \chi_{\mathrm{band}}(k \oplus p, x) = \chi_{\mathrm{band}}(k, x) \chi_{\mathrm{band}}(p, x).
     \end{equation}
@@ -104,9 +104,9 @@ Let $\zeta \in K$ be a primitive $L$-th root of unity. The character pairing sat
 \end{theorem}
 
 \begin{proof}
-Items 1--3 follow directly from Lemma~\ref{lem:rep_independence} and the index laws $\zeta^{k(x+y)} = \zeta^{kx}\zeta^{ky}$.
+Items 1--3 follow directly from Lemma~\ref{lem:a01_rep_independence} and the index laws $\zeta^{k(x+y)} = \zeta^{kx}\zeta^{ky}$.
 For item 4: by Theorem~\ref{thm:wrap_lemma}, $k \oplus p = k + p - w L$ where $w \in \{-1, 0, 1\}$.
-By Lemma~\ref{lem:rep_independence}:
+By Lemma~\ref{lem:a01_rep_independence}:
 \[
 \chi_{\mathrm{band}}(k \oplus p, x) = \zeta^{(k + p - w L) x_{\mathrm{val}}} = \zeta^{(k+p) x_{\mathrm{val}}} = \zeta^{k x_{\mathrm{val}}} \zeta^{p x_{\mathrm{val}}} = \chi_{\mathrm{band}}(k, x) \chi_{\mathrm{band}}(p, x).
 \]
@@ -176,7 +176,7 @@ Let $K^\Lambda$ and $K^{\Lambda^*}$ denote the $K$-vector spaces of functions on
 \end{definition}
 
 \begin{theorem}[Two-Sided Unscaled Inversion]
-\label{thm:unscaled_inversion}
+\label{thm:a01_unscaled_inversion}
 The linear maps $S$ and $T$ satisfy:
 \begin{equation}
 T \circ S = L \cdot I_{K^\Lambda}, \qquad S \circ T = L \cdot I_{K^{\Lambda^*}}.
