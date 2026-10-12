@@ -1,36 +1,44 @@
 \chapter{The Lattice AQFT Net and Boundary Extensions}
 \label{ch:lattice_aqft_net}
 
-\section{Introduction to Lattice AQFT}
+\section{Introduction to Lattice AQFT and Algebraic Preliminaries}
 
-In standard formulations of Quantum Field Theory, fields $\psi(x)$ are regarded as primary objects, and physical states are defined as rays in a Hilbert space. In Algebraic Quantum Field Theory (AQFT), following the foundational framework of Haag and Kastler, the foundational structure of a theory is its \emph{net of local observable algebras}: an assignment of a unital $*$-algebra $\mathfrak{A}(O)$ to each spacetime region $O$, satisfying causality, isotony, and covariance.
+In standard formulations of Quantum Field Theory, fields $\psi(x)$ are regarded as primary objects, and physical states are defined as rays in a Hilbert space. In Algebraic Quantum Field Theory (AQFT), following the foundational framework of Rudolf Haag and Daniel Kastler~\cite{haag1996}, the primary mathematical structure of a quantum theory is its \emph{net of local observable algebras}: an assignment of a unital $*$-algebra $\mathfrak{A}(O)$ to each spacetime region $O$, satisfying causality, isotony, and covariance.
 
 In continuum spacetime, establishing the existence of a local net that satisfies the Haag--Kastler axioms for interacting theories is an arduous analytic problem, often encountering severe ultraviolet singularities. On the discrete spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$), the situation is dramatically different and conceptually pristine:
 \begin{enumerate}
     \item No abstract physical axioms need to be postulated.
-    \item Every local algebra $\mathfrak{A}(I)$ is constructed constructively from the spatial CAR operators $\{c_x, c_x^\dagger \mid x \in I\}$ acting on the finite-dimensional fermionic Fock space $\mathcal{F}(L)$.
+    \item Every local algebra $\mathfrak{A}(I)$ is constructed explicitly from the spatial CAR operators $\{\psi_x, \psi_x^\dagger \mid x \in I\}$ acting on the finite-dimensional fermionic Fock space $\mathcal{F}(L)$.
     \item All the Haag--Kastler axioms---including isotony, additivity, twisted locality, and global irreducibility---are established as rigorous constructive theorems.
 \end{enumerate}
 
-Furthermore, on a spatial circle, physical fermions may satisfy twisted boundary conditions parametrized by a boundary holonomy $\tau \in U(1)$. In this chapter, we develop both the standard local net and the complete algebraic theory of boundary twists and spatial transport.
+\paragraph{Algebraic Primer for Physicists.}
+To ensure the mathematical terminology is completely transparent to readers from both mathematics and theoretical physics, we review the essential algebraic concepts used in this chapter:
+\begin{itemize}
+    \item \textbf{Endomorphism Algebra $\mathrm{End}_{\mathbb{C}}(V)$:} For a complex vector space $V$, $\mathrm{End}_{\mathbb{C}}(V)$ is the associative algebra of all linear maps from $V$ to $V$. When $V = \mathcal{F}(L)$ has finite dimension $2^L$, $\mathrm{End}_{\mathbb{C}}(V)$ is simply the algebra of $2^L \times 2^L$ complex matrices $\mathrm{Mat}_{2^L \times 2^L}(\mathbb{C})$.
+    \item \textbf{$C^*$-Algebra and $*$-Subalgebra:} A complex associative algebra $\mathcal{A}$ endowed with an involutive conjugate-linear anti-automorphism $* : \mathcal{A} \to \mathcal{A}$ satisfying $(A^*) = A$, $(A B)^* = B^* A^*$, and the $C^*$-norm property $\|A^* A\| = \|A\|^2$. On a finite-dimensional Hilbert space, the $*$-operation is the standard Hermitian adjoint $A^* \equiv A^\dagger$, and every $*$-subalgebra is automatically closed and forms a $C^*$-algebra.
+    \item \textbf{Unital Subalgebra:} A subalgebra $\mathcal{B} \subseteq \mathcal{A}$ is \emph{unital} if it contains the multiplicative identity operator $I$ of the ambient algebra $\mathcal{A}$.
+    \item \textbf{Generated Subalgebra $\mathrm{AlgGen}_{\mathbb{C}}(\mathcal{S})$:} For any subset of operators $\mathcal{S} \subseteq \mathrm{End}_{\mathbb{C}}(V)$, $\mathrm{AlgGen}_{\mathbb{C}}(\mathcal{S})$ denotes the smallest unital complex subalgebra containing $\mathcal{S}$. It consists of all finite complex linear combinations of finite products (words) of operators in $\mathcal{S}$ and the identity $I$.
+    \item \textbf{Automorphism:} An invertible linear map $\alpha : \mathcal{A} \to \mathcal{A}$ preserving algebraic multiplication: $\alpha(A B) = \alpha(A) \alpha(B)$. It is a $*$-automorphism if it also preserves the adjoint: $\alpha(A^\dagger) = (\alpha(A))^\dagger$.
+\end{itemize}
 
 \section{The Local Net of Observable Algebras}
 
-Let $\Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L = 2h$ be the discrete spatial lattice, and let $\mathcal{F}(L)$ be the fermionic Fock space of dimension $2^L$. The full operator algebra is the finite-dimensional $C^*$-algebra $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$.
+Let $\Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L = 2h$ be the discrete spatial lattice, and let $\mathcal{F}(L)$ be the fermionic Fock space of dimension $2^L$. The ambient operator algebra is the finite-dimensional $C^*$-algebra $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$.
 
 \begin{definition}[Local Generating Sets and Local Algebras]
 For any spatial subset (region) $I \subseteq \Lambda$:
 \begin{enumerate}
     \item The set of \emph{local fermionic generators} $\mathcal{G}(I)$ is defined by:
     \begin{equation}
-    \mathcal{G}(I) \coloneqq \{ c_x \mid x \in I \} \cup \{ c_x^\dagger \mid x \in I \}.
+    \mathcal{G}(I) \coloneqq \{ \psi_x \mid x \in I \} \cup \{ \psi_x^\dagger \mid x \in I \}.
     \end{equation}
     \item The \emph{local field algebra} $\mathfrak{A}(I)$ is the unital complex subalgebra of $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ generated by $\mathcal{G}(I)$:
     \begin{equation}
     \mathfrak{A}(I) \coloneqq \mathrm{AlgGen}_{\mathbb{C}}(\mathcal{G}(I)).
     \end{equation}
-    Because $(c_x)^\dagger = c_x^\dagger$ and $(c_x^\dagger)^\dagger = c_x$, $\mathcal{G}(I)$ is stable under the Hilbert space adjoint. Consequently, $\mathfrak{A}(I)$ is automatically a unital $*$-subalgebra of $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$.
-    \item Over the empty set, the algebra consists solely of the scalar multiples of the identity:
+    Because $(\psi_x)^\dagger = \psi_x^\dagger$ and $(\psi_x^\dagger)^\dagger = \psi_x$, $\mathcal{G}(I)$ is closed under the Hilbert space adjoint. Consequently, $\mathfrak{A}(I)$ is automatically a unital $*$-subalgebra of $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$.
+    \item Over the empty set, the algebra consists solely of scalar multiples of the identity:
     \begin{equation}
     \mathfrak{A}(\emptyset) = \mathbb{C} \cdot I.
     \end{equation}
@@ -42,11 +50,11 @@ For any spatial subset (region) $I \subseteq \Lambda$:
 Fermionic operators change sign under a $2\pi$ spatial rotation, corresponding to the global fermion parity symmetry.
 
 \begin{definition}[Parity Automorphism]
-Let $\Gamma$ be the global fermion parity operator from Chapter~\ref{ch:car_fock}, satisfying $\Gamma^\dagger = \Gamma$, $\Gamma^2 = I$, and $\Gamma c_x \Gamma = -c_x$, $\Gamma c_x^\dagger \Gamma = -c_x^\dagger$ for all $x \in \Lambda$. The \emph{parity automorphism} $\alpha : \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L)) \to \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ is defined by:
+Let $\Gamma$ be the global fermion parity operator from Chapter~\ref{ch:car_fock}, satisfying $\Gamma^\dagger = \Gamma$, $\Gamma^2 = I$, and $\Gamma \psi_x \Gamma = -\psi_x$, $\Gamma \psi_x^\dagger \Gamma = -\psi_x^\dagger$ for all $x \in \Lambda$. The \emph{parity automorphism} $\alpha : \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L)) \to \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ is defined by:
 \begin{equation}
 \alpha(A) \coloneqq \Gamma A \Gamma.
 \end{equation}
-Because $\Gamma^2 = I$, $\alpha$ is a involutive $*$-automorphism: $\alpha(\alpha(A)) = A$ and $\alpha(A B) = \alpha(A) \alpha(B)$.
+Because $\Gamma^2 = I$, $\alpha$ is an involutive $*$-automorphism: $\alpha(\alpha(A)) = A$ and $\alpha(A B) = \alpha(A) \alpha(B)$.
 \end{definition}
 
 \begin{definition}[Homogeneous Subspaces and Observable Net]
@@ -56,7 +64,7 @@ For each parity degree $\sigma \in \{0, 1\} \equiv \mathbb{Z}_2$, the $\sigma$-h
 \end{equation}
 \begin{enumerate}
     \item \textbf{Even Subalgebra (Physical Observables):} $\mathfrak{A}_+(I) \coloneqq \mathfrak{A}_0(I) = \{A \in \mathfrak{A}(I) \mid \alpha(A) = A\}$.
-    Because $\alpha(A B) = \alpha(A) \alpha(B) = A B$, $\mathfrak{A}_+(I)$ is a unital $*$-subalgebra. In quantum physics, only even operators are gauge-invariant under fermion parity and correspond to physically measurable observables.
+    Because $\alpha(A B) = \alpha(A) \alpha(B) = A B$, $\mathfrak{A}_+(I)$ is a unital $*$-subalgebra. In quantum physics, only even operators are gauge-invariant under fermion parity and correspond to physically measurable observables (such as charge densities $\psi_x^\dagger \psi_x$ and hopping energies $\psi_x^\dagger \psi_{x+1} + \psi_{x+1}^\dagger \psi_x$).
     \item \textbf{Odd Subspace (Fermionic Fields):} $\mathfrak{A}_-(I) \coloneqq \mathfrak{A}_1(I) = \{A \in \mathfrak{A}(I) \mid \alpha(A) = -A\}$.
     This is a linear subspace, but not an algebra, since the product of two odd operators is even: $\mathfrak{A}_-(I) \cdot \mathfrak{A}_-(I) \subseteq \mathfrak{A}_+(I)$.
 \end{enumerate}
@@ -66,12 +74,12 @@ The parity projections $P_\pm \coloneqq \frac{1}{2}(I \pm \alpha)$ yield the dir
 \end{equation}
 \end{definition}
 
-\begin{definition}[Word Decomposition]
-A \emph{letter} is a pair $(x, b) \in \Lambda \times \{0, 1\}$, representing $c_x^\dagger$ (if $b = 1$) or $c_x$ (if $b = 0$). A \emph{word} of length $m$ is a finite sequence $w = [a_1, a_2, \dots, a_m]$ of letters, representing the operator product:
+\begin{definition}[Operator Word Decomposition]
+A \emph{letter} is a pair $(x, \tau) \in \Lambda \times \{0, 1\}$, representing $\psi_x^\dagger$ (if $\tau = 1$) or $\psi_x$ (if $\tau = 0$). A \emph{word} of length $m \in \mathbb{N}$ is a finite sequence $w = [a_1, a_2, \dots, a_m]$ of letters, representing the operator monomial product:
 \begin{equation}
 O(w) \coloneqq O(a_1) O(a_2) \cdots O(a_m).
 \end{equation}
-A word $w$ is supported in region $I$ if all its letters have coordinates in $I$.
+A word $w$ is supported in region $I \subseteq \Lambda$ if all its letters have spatial coordinates in $I$.
 \end{definition}
 
 \begin{lemma}[Parity of Operator Words]
@@ -88,7 +96,7 @@ By definition of the automorphism $\alpha$ on products:
 \[
 \alpha(O(w)) = \Gamma O(a_1) \cdots O(a_m) \Gamma = (\Gamma O(a_1) \Gamma) \cdots (\Gamma O(a_m) \Gamma).
 \]
-Since each letter is either $c_x$ or $c_x^\dagger$, $\Gamma O(a_k) \Gamma = - O(a_k)$. Therefore:
+Since each letter is either $\psi_x$ or $\psi_x^\dagger$, $\Gamma O(a_k) \Gamma = - O(a_k)$. Therefore:
 \[
 \alpha(O(w)) = (-1)^m O(a_1) \cdots O(a_m) = (-1)^m O(w).
 \]
@@ -117,7 +125,6 @@ For all regions $I, J \subseteq \Lambda$:
 
 \begin{proof}
 If $I \subseteq J$, then the generating sets satisfy $\mathcal{G}(I) \subseteq \mathcal{G}(J)$. Because the operation of taking the generated subalgebra is monotonic, $\mathrm{AlgGen}(\mathcal{G}(I)) \subseteq \mathrm{AlgGen}(\mathcal{G}(J))$, establishing isotony.
-
 For additivity, the generating set of $I \cup J$ is the union of generating sets: $\mathcal{G}(I \cup J) = \mathcal{G}(I) \cup \mathcal{G}(J)$. The subalgebra generated by $\mathcal{G}(I) \cup \mathcal{G}(J)$ is by definition the supremum $\mathfrak{A}(I) \vee \mathfrak{A}(J)$.
 \end{proof}
 
@@ -156,7 +163,8 @@ Let $I, J \subseteq \Lambda$ be disjoint regions. For any physical (even) observ
 Since $A$ and $B$ are even, $\sigma = 0$ and $\tau = 0$, so $\sigma \cdot \tau = 0$. Theorem~\ref{thm:twisted_locality} immediately yields $A B = (-1)^0 B A = B A$, so $[A, B] = 0$.
 \end{proof}
 
-Corollary~\ref{cor:observable_locality} is the discrete lattice realization of Einstein causality: measurements performed in spatially separated regions commute and cannot interfere with one another.
+\paragraph{Physical Context for Locality.}
+Corollary~\ref{cor:observable_locality} is the discrete lattice realization of Einstein causality: measurements performed in spatially disjoint regions commute and cannot interfere with one another. This graded commutation structure explains why only even operators qualify as physical observables. Fermionic fields $\psi_x$ are unobservable directly; only their even bilinears $\psi_x^\dagger \psi_x$, $\psi_x^\dagger \psi_y$ generate physically measurable gauge-invariant observables.
 
 \section{Global Algebra Irreducibility}
 
@@ -173,7 +181,7 @@ Over the entire spatial lattice $\Lambda$, the local algebra generates the entir
 \begin{proof}
 The operator space $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ is spanned by the elementary rank-one matrix units $|S\rangle\langle T|$ for all configurations $S, T \subseteq \Lambda^*$. We prove that every such matrix unit belongs to $\mathfrak{A}(\Lambda)$:
 \begin{enumerate}
-    \item By Theorem~\ref{thm:op_fourier_inversion} (operator Fourier inversion), each momentum mode generator $c_k$ and $c_k^\dagger$ is a linear combination of spatial operators $\{c_x, c_x^\dagger \mid x \in \Lambda\}$. Therefore, $c_k \in \mathfrak{A}(\Lambda)$ and $c_k^\dagger \in \mathfrak{A}(\Lambda)$ for all $k \in \Lambda^*$.
+    \item By Theorem~\ref{thm:op_fourier_inversion} (operator Fourier inversion), each momentum mode generator $c_k$ and $c_k^\dagger$ is a linear combination of spatial operators $\{\psi_x, \psi_x^\dagger \mid x \in \Lambda\}$. Therefore, $c_k \in \mathfrak{A}(\Lambda)$ and $c_k^\dagger \in \mathfrak{A}(\Lambda)$ for all $k \in \Lambda^*$.
     \item The orthogonal projection onto the empty vacuum state $|\emptyset\rangle$ is constructed as:
     \[
     P_\emptyset \coloneqq \prod_{k \in \Lambda^*} (I - c_k^\dagger c_k) = |\emptyset\rangle\langle\emptyset|.
@@ -194,52 +202,69 @@ Because the matrix units span $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$, we co
 \end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 core (Chapter 6 and the Boundary Extension module), the proof of global irreducibility avoids non-constructive dimension counting arguments. Instead, the rank-one matrix units $|S\rangle\langle T|$ are constructed explicitly via ordered creation/annihilation words and the vacuum projector $P_\emptyset$.
+In the verified Lean~4 core, the proof of global irreducibility avoids non-constructive dimension counting arguments. Instead, the rank-one matrix units $|S\rangle\langle T|$ are constructed explicitly via ordered creation/annihilation words and the vacuum projector $P_\emptyset$.
 \end{remark}
 
 \section{Boundary Extensions: Holonomy, Twists, and Spatial Transport}
+\label{sec:boundary_extensions}
 
 In physical systems on a spatial ring, fermions may acquire a non-trivial boundary phase upon traversing the circle. This occurs in the presence of an Aharonov--Bohm magnetic flux through the ring, or when mapping 1D spin chains to fermions via Jordan--Wigner transformations.
 
-\begin{definition}[Boundary Twist and Holonomy]
-Let $L \ge 1$. A \emph{boundary twist} is a complex number $r \in \mathbb{C}$ of modulus one ($|r| = 1$), representing the phase acquired per spatial unit step.
+\subsection{Distinction Between Dual Space Modes and the Momentum Band}
+
+A common source of confusion in the physics literature is the distinction between:
 \begin{enumerate}
-    \item The total \emph{boundary holonomy} $\tau \in U(1)$ is the phase accumulated over a full circuit of length $L$:
+    \item \textbf{Modes in the abstract dual space:} The discrete Fourier modes remain indexed by the same discrete integers $k \in \{-h+1, \dots, h\}$. The single-particle state space dimension remains strictly $L$.
+    \item \textbf{The physical momentum band:} In the presence of a boundary twist $\beta \in \mathbb{R}$, the physical crystal wavenumbers are shifted by the flux:
     \begin{equation}
-    \tau \coloneqq r^L.
+    p_{\mathrm{phys}}(k) \coloneqq \frac{2\pi (k + \beta)}{L}.
     \end{equation}
-    \item A uniform angular twist is parametrized by a real flux / twist parameter $\beta \in \mathbb{R}$:
-    \begin{equation}
-    r = \exp\left(\frac{2\pi i \beta}{L}\right) \implies \tau = \exp(2\pi i \beta).
-    \end{equation}
-    \item \textbf{Periodic Boundary Conditions (PBC):} $\beta = 0 \implies r = 1, \tau = 1$.
-    \item \textbf{Antiperiodic Boundary Conditions (APBC):} $\beta = -\frac{1}{2} \implies \tau = -1$.
+    Under periodic boundary conditions ($\beta = 0$), $p_{\mathrm{phys}}(k) = \frac{2\pi k}{L}$. Under anti-periodic boundary conditions ($\beta = -1/2$), the wavenumbers are shifted by half a unit: $p_{\mathrm{phys}}(k) = \frac{2\pi (k - 1/2)}{L}$, rendering the band completely reflection-symmetric around zero.
 \end{enumerate}
+
+\subsection{The Boundary Condition Datum and Lifted Spatial Fields}
+
+\begin{definition}[Boundary Datum $b$ and Boundary Twist]
+A \emph{boundary condition datum} $b$ on the circular chain $\Lambda = \mathbb{Z}/L\mathbb{Z}$ consists of a pair:
+\begin{equation}
+b \coloneqq (r, \tau),
+\end{equation}
+where $r \in \mathbb{C}$ is a complex phase factor with $|r| = 1$ representing the phase acquired per spatial unit step, and $\tau \in U(1)$ is the total \emph{boundary holonomy} accumulated over a full circuit of length $L$:
+\begin{equation}
+\tau \coloneqq r^L.
+\end{equation}
+Parametrizing $r$ by a real flux / twist parameter $\beta \in \mathbb{R}$:
+\begin{equation}
+r = \exp\left(\frac{2\pi i \beta}{L}\right) \implies \tau = \exp(2\pi i \beta).
+\end{equation}
+Standard physical cases are:
+\begin{itemize}
+    \item \textbf{Periodic Boundary Conditions (PBC):} $\beta = 0 \implies r = 1, \tau = 1$.
+    \item \textbf{Anti-Periodic Boundary Conditions (APBC):} $\beta = -\frac{1}{2} \implies r = e^{-\pi i / L}, \tau = -1$.
+\end{itemize}
 \end{definition}
 
-Under antiperiodic boundary conditions, physical momenta are shifted by half-integers: the modes $k \in \Lambda^*$ correspond to physical crystal momenta $k + \beta = k - 1/2$. For $L = 2h$, the APBC momentum band is $\{-h+1/2, \dots, h-1/2\}$, which is completely reflection-symmetric around zero.
-
-\begin{definition}[Twisted Spatial Fields and Seam Phases]
+\begin{definition}[Lifted Twisted Spatial Fields]
 For an integer coordinate $n \in \mathbb{Z}$, let $n = w L + x_{\mathrm{val}}$ be the unique Euclidean division with winding number $w \in \mathbb{Z}$ and residue $x_{\mathrm{val}} \in \{0, \dots, L-1\}$.
-The lifted twisted fermion field on $\mathbb{Z}$ is defined by:
+The lifted twisted fermion field on $\mathbb{Z}$ associated with boundary datum $b = (r, \tau)$ is defined by:
 \begin{equation}
-c_b(n) \coloneqq r^n\, c_{x_{\mathrm{val}}}.
+\psi_b(n) \coloneqq r^n\, \psi_{x_{\mathrm{val}}}.
 \end{equation}
 Shifting by a full circuit of length $L$ incurs the seam holonomy phase:
 \begin{equation}
-c_b(n + L) = r^{n+L} c_{x_{\mathrm{val}}} = \tau\, c_b(n).
+\psi_b(n + L) = r^{n+L} \psi_{x_{\mathrm{val}}} = r^L (r^n \psi_{x_{\mathrm{val}}}) = \tau\, \psi_b(n).
 \end{equation}
 \end{definition}
 
 \begin{theorem}[Spatial Translation Unitary and Holonomy Action]
 \label{thm:twisted_transport}
-For each shift $m \in \mathbb{Z}$, there exists a unitary operator $T_b(m) \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ acting on momentum basis states by:
+For each spatial shift $m \in \mathbb{Z}$ and boundary datum $b = (r, \tau)$, there exists a unitary operator $T_b(m) \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ acting on momentum basis states $|S\rangle$ by:
 \begin{equation}
 T_b(m) |S\rangle \coloneqq r^{-m \#S} \zeta^{-m \sum_{k \in S} k} |S\rangle,
 \end{equation}
 such that spatial fields transform covariantly:
 \begin{equation}
-T_b(m) c_b(n) T_b(m)^\dagger = c_b(n + m).
+T_b(m) \psi_b(n) T_b(m)^\dagger = \psi_b(n + m).
 \end{equation}
 In particular, a full circuit translation $m = L$ evaluates to the total charge gauge transformation:
 \begin{equation}
@@ -247,8 +272,36 @@ T_b(L) = \tau^{-\hat{N}_{\mathrm{tot}}}.
 \end{equation}
 \end{theorem}
 
+\begin{proof}
+We evaluate the conjugation action of $T_b(m)$ on the momentum modes $c_k$:
+\begin{enumerate}
+    \item On basis state $|S\rangle$, $c_k$ lowers particle number by $1$ and momentum by $k$:
+    \[
+    T_b(m) c_k T_b(m)^\dagger |S\rangle = T_b(m) c_k \left( r^{m \#S} \zeta^{m \sum_{p \in S} p} |S\rangle \right).
+    \]
+    If $k \in S$, $c_k |S\rangle = \epsilon(k, S) |S \setminus \{k\}\rangle$. Then:
+    \begin{align*}
+    T_b(m) c_k |S\rangle &= r^{-m (\#S - 1)} \zeta^{-m (\sum_{p \in S} p - k)} \epsilon(k, S) |S \setminus \{k\}\rangle \\
+    &= r^m \zeta^{m k} \left( r^{-m \#S} \zeta^{-m \sum_{p \in S} p} c_k |S\rangle \right).
+    \end{align*}
+    Thus $T_b(m) c_k T_b(m)^\dagger = r^m \zeta^{m k} c_k$.
+    \item Now apply this to the lifted spatial field $\psi_b(n) = r^n \psi_{x_{\mathrm{val}}} = \frac{r^n}{\sqrt{L}} \sum_k \zeta^{k n} c_k$:
+    \begin{align*}
+    T_b(m) \psi_b(n) T_b(m)^\dagger &= \frac{r^n}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k n} \left( T_b(m) c_k T_b(m)^\dagger \right) \\
+    &= \frac{r^n}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k n} \left( r^m \zeta^{m k} c_k \right) \\
+    &= \frac{r^{n+m}}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k (n+m)} c_k = \psi_b(n + m).
+    \end{align*}
+    \item For a full circuit translation $m = L$, since $\zeta = e^{2\pi i / L}$, we have $\zeta^L = 1$, so $\zeta^{-L \sum k} = 1$. The unitary evaluates to:
+    \[
+    T_b(L) |S\rangle = r^{-L \#S} |S\rangle = (r^L)^{-\#S} |S\rangle = \tau^{-\#S} |S\rangle.
+    \]
+    Since $\tau^{-\#S} = \tau^{-(\#S - h) - h} = \tau^{-h} \tau^{-\hat{N}}$, up to the central ground phase this is the global gauge transformation $\tau^{-\hat{N}_{\mathrm{tot}}}$.
+\end{enumerate}
+\end{proof}
+
 \begin{corollary}[Jordan--Wigner Sector Dictionary]
-When mapping a 1D spin-$1/2$ chain with periodic boundary conditions to lattice fermions via the Jordan--Wigner transformation, the effective boundary condition for the fermions depends on the total particle number:
+\label{cor:jw_dictionary}
+When mapping a 1D spin-$1/2$ chain with periodic boundary conditions to lattice fermions via the Jordan--Wigner transformation, the effective boundary condition for the fermions depends dynamically on the total particle number:
 \begin{equation}
 \tau_{\mathrm{eff}} = - (-1)^{\hat{N}_{\mathrm{tot}}}.
 \end{equation}
@@ -259,4 +312,22 @@ Consequently:
 \end{itemize}
 \end{corollary}
 
-This dictionary explains why a complete formalization of 1D quantum field theories must accommodate general boundary holonomies: interacting models dynamically couple fermion parity to boundary conditions.
+\paragraph{Physical Context for the Sector Dictionary.}
+Corollary~\ref{cor:jw_dictionary} explains why a complete formalization of 1D quantum field theories must accommodate general boundary holonomies. When solving the 1D quantum Ising or XY spin chain in a transverse field (Lieb, Schultz, and Mattis~\cite{lieb1961}), the Hamiltonian decomposes into two uncoupled parity blocks: the even-fermion parity block (which feels antiperiodic boundary conditions) and the odd-fermion parity block (which feels periodic boundary conditions). Accommodating arbitrary holonomies $\tau \in U(1)$ is therefore not a mathematical luxury, but a physical necessity for diagonalizing interacting quantum spin models.
+
+\section{Chapter Summary and Literature Comparison}
+
+In this chapter, we formulated and proved the Haag--Kastler axioms of Algebraic Quantum Field Theory on the discrete lattice:
+\begin{itemize}
+    \item Provided precise definitions of operator algebras, $C^*$-subalgebras, and automorphisms for physics readers.
+    \item Local field algebras $\mathfrak{A}(I)$ are generated by spatial fermions $\{\psi_x, \psi_x^\dagger \mid x \in I\}$.
+    \item The global parity operator $\Gamma$ generates an involutive $*$-automorphism $\alpha$, yielding a direct-sum $\mathbb{Z}_2$-grading $\mathfrak{A}(I) = \mathfrak{A}_+(I) \oplus \mathfrak{A}_-(I)$.
+    \item Proved the Haag--Kastler axioms: Isotony, Additivity, Twisted Locality ($A B = (-1)^{\sigma\cdot\tau} B A$), and Strict Locality of Physical Observables ($[A, B] = 0$ for $A, B \in \mathfrak{A}_+$).
+    \item Proved Global Irreducibility $\mathfrak{A}(\Lambda) = \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ constructively via vacuum projectors and creation words.
+    \item Formulated boundary extensions: explicitly distinguished dual space modes from shifted physical wavenumbers $p_{\mathrm{phys}} = \frac{2\pi(k+\beta)}{L}$, defined the boundary datum $b = (r, \tau)$, proved the covariance of spatial translation unitaries $T_b(m) \psi_b(n) T_b(m)^\dagger = \psi_b(n+m)$, and contextualized the Jordan--Wigner sector dictionary.
+\end{itemize}
+
+\paragraph{Comparison with Standard Continuum Literature.}
+In continuum AQFT (Haag~\cite{haag1996}), local nets $\mathfrak{A}(O)$ are assigned to open diamond regions in continuous Minkowski spacetime. Proving that an interacting continuum model satisfies the Haag--Kastler axioms requires profound functional analysis (e.g., Glimm--Jaffe constructive quantum field theory, Tomita--Takesaki modular theory, and Bisognano--Wichmann bisector theorems). 
+
+On the discrete lattice, as demonstrated in this chapter, all Haag--Kastler axioms become constructive algebraic theorems on finite-dimensional matrices. By establishing strict locality and global irreducibility at the lattice level, we ensure that the bosonization dictionary developed in Chapters~\ref{ch:heisenberg_algebra} and~\ref{ch:haldane_completeness} is mathematically watertight before taking continuum approximations.
