@@ -8189,6 +8189,504 @@
           "text": "omit [Fintype σ] [LinearOrder σ] in lemma r2_admissible (h K : ℕ) (Ns : σ → ℤ) (hR2 : A05.r2 h K Ns) : A05.admissible h Ns"
         }
       }
+    },
+    "BosonizeStubs/A05FiniteExponentials.lean": {
+      "commands": [
+        {
+          "kind": "module",
+          "label": "module",
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "text": "module"
+        },
+        {
+          "kind": "public",
+          "label": "public",
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "text": "public"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch08Boson",
+          "hash": "4b8e9aacacd480d6c61437dd6e65f77bd3775a8f6fed89734c8724bc07f02c94",
+          "text": "import Bosonize.Core.Ch08Boson"
+        },
+        {
+          "kind": "@",
+          "label": "@ [expose] public",
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "text": "@[expose] public"
+        },
+        {
+          "kind": "section",
+          "label": "section",
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "text": "section"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.A05Exp",
+          "hash": "9e99ab024afcf89e56bfa2fef0d092233234867ad8869a6f14fdf9477c04ce60",
+          "text": "namespace Bosonize.A05Exp"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A05Exp.finiteTaylor",
+          "hash": "d17d0e299b7f579e15e30fbe0187db8ede1ad00650777706ce22ff62d874a72e",
+          "text": "noncomputable def finiteTaylor {V : Type*} [AddCommGroup V] [Module ℂ V]\n    (d : ℕ) (A : Module.End ℂ V) : Module.End ℂ V :=\n  ∑ j ∈ Finset.range (d + 1), ((j.factorial : ℂ)⁻¹) • A ^ j"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.A05Exp",
+          "hash": "4c28efac866bf1352a7b4e2cf207a6c5e6fae68822fedc65dc266ec5aba43765",
+          "text": "end Bosonize.A05Exp"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A05Exp.filtration_nilpotent": {
+          "kind": "theorem",
+          "hash": "4e52ca9bbd923e58a19388819e31f4baa52214a9aafc33ada1078ec45746ce94",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem filtration_nilpotent {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) (A : Module.End ℂ V) (F : ℕ → Submodule ℂ V) (hbottom : F 0 = ⊥) (htop : F (d + 1) = ⊤) (hlower : ∀ n ≤ d, ∀ v ∈ F (n + 1), A v ∈ F n) : A ^ (d + 1) = 0"
+        },
+        "Bosonize.A05Exp.finite_taylor_adjoint": {
+          "kind": "theorem",
+          "hash": "7be44f6c908979175d3fe78075360108c5fd2ffdc223dc8bdd321f17610c79e5",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_adjoint {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V] (d : ℕ) (A : Module.End ℂ V) : LinearMap.adjoint (finiteTaylor d A) = finiteTaylor d (LinearMap.adjoint A)"
+        },
+        "Bosonize.A05Exp.finite_taylor_apply": {
+          "kind": "theorem",
+          "hash": "4c4e8e1f1bb8a389f7fe656e50537f403be9efb878aa9ac88aa9f0489acd3090",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_apply {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) (A : Module.End ℂ V) (v : V) : finiteTaylor d A v = ∑ j ∈ Finset.range (d + 1), ((j.factorial : ℂ)⁻¹) • (A ^ j) v"
+        },
+        "Bosonize.A05Exp.finite_taylor_commute": {
+          "kind": "theorem",
+          "hash": "3a72b12bccdc36159a1578ee41b1bb218698f3a523393a7ca764f6f89c4a7a62",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_commute {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) (A : Module.End ℂ V) : Commute A (finiteTaylor d A)"
+        },
+        "Bosonize.A05Exp.finite_taylor_cutoff": {
+          "kind": "theorem",
+          "hash": "23fcc564505a2645085f4347cc358978f4347f7d624a5532c84c7ee2521cf57a",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_cutoff {V : Type*} [AddCommGroup V] [Module ℂ V] (d e : ℕ) (A : Module.End ℂ V) (hnil : A ^ (d + 1) = 0) (hde : d ≤ e) : finiteTaylor e A = finiteTaylor d A"
+        },
+        "Bosonize.A05Exp.finite_taylor_injective": {
+          "kind": "theorem",
+          "hash": "f42b422f62a7cecc2f6950eee67c4b6ddab4d2c8a3eda65dd128f66c733ea651",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_injective {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) (A : Module.End ℂ V) (hnil : A ^ (d + 1) = 0) : Function.Injective (finiteTaylor d A)"
+        },
+        "Bosonize.A05Exp.finite_taylor_intertwine": {
+          "kind": "theorem",
+          "hash": "00f5f72c1f6ffd2e450786467e647cffa43abce5285c01ddafe10e74d8b3fac0",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_intertwine {V W : Type*} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W] (d : ℕ) (A : Module.End ℂ V) (B : Module.End ℂ W) (T : V →ₗ[ℂ] W) (hT : T.comp A = B.comp T) : T.comp (finiteTaylor d A) = (finiteTaylor d B).comp T"
+        },
+        "Bosonize.A05Exp.finite_taylor_mul_neg": {
+          "kind": "theorem",
+          "hash": "b90e0fff3b1622322bfffa0ba010f68ebaefe51cd064fd0a53e0573fb767c451",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_mul_neg {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) (A : Module.End ℂ V) (hnil : A ^ (d + 1) = 0) : finiteTaylor d A * finiteTaylor d (-A) = 1"
+        },
+        "Bosonize.A05Exp.finite_taylor_ne_zero": {
+          "kind": "theorem",
+          "hash": "ff8a07698a30f33211c8dad555d1dd123740957644977964da493eb0f4120ca6",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_ne_zero {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) (A : Module.End ℂ V) (hnil : A ^ (d + 1) = 0) (v : V) (hv : v ≠ 0) : finiteTaylor d A v ≠ 0"
+        },
+        "Bosonize.A05Exp.finite_taylor_neg_mul": {
+          "kind": "theorem",
+          "hash": "895560a34370ae323208b5ea659af2898388d90035c518d0f07ff460d06ced24",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_neg_mul {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) (A : Module.End ℂ V) (hnil : A ^ (d + 1) = 0) : finiteTaylor d (-A) * finiteTaylor d A = 1"
+        },
+        "Bosonize.A05Exp.finite_taylor_surjective": {
+          "kind": "theorem",
+          "hash": "76bbe9f0cf0a89f1e4bded144166645a671840d6c27802ae57b3ccf38b82e6a7",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_surjective {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) (A : Module.End ℂ V) (hnil : A ^ (d + 1) = 0) : Function.Surjective (finiteTaylor d A)"
+        },
+        "Bosonize.A05Exp.finite_taylor_zero_cutoff": {
+          "kind": "theorem",
+          "hash": "0b2aa68e52e64526cdaac0c9c59ca540e06e7ef1a50705e3b6aca77404110acb",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_zero_cutoff {V : Type*} [AddCommGroup V] [Module ℂ V] (A : Module.End ℂ V) : finiteTaylor 0 A = 1"
+        },
+        "Bosonize.A05Exp.finite_taylor_zero_operator": {
+          "kind": "theorem",
+          "hash": "c4815f1538da85db865be67bab23bc73a2e94ff0a1a5230c197944048851902b",
+          "ctx": "c11626a638edf8d80e2e11757239a6a7b74ffe85ff85c5b2861bd39335835631",
+          "text": "theorem finite_taylor_zero_operator {V : Type*} [AddCommGroup V] [Module ℂ V] (d : ℕ) : finiteTaylor d (0 : Module.End ℂ V) = 1"
+        }
+      }
+    },
+    "BosonizeStubs/Ch14Mandelstam.lean": {
+      "commands": [
+        {
+          "kind": "module",
+          "label": "module",
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "text": "module"
+        },
+        {
+          "kind": "public",
+          "label": "public",
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "text": "public"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch13KleinFactors",
+          "hash": "7b3d41cda2e55931231e1178017a8d152c7b182325e78da2adb3d3054d986855",
+          "text": "import Bosonize.Core.Ch13KleinFactors"
+        },
+        {
+          "kind": "public",
+          "label": "public",
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "text": "public"
+        },
+        {
+          "kind": "import",
+          "label": "import BosonizeStubs.A05FiniteExponentials",
+          "hash": "f2a1dbd6d8f4dae592b88198641f9f57a66b7676c6eb568ac7dc68bd873da1c7",
+          "text": "import BosonizeStubs.A05FiniteExponentials"
+        },
+        {
+          "kind": "@",
+          "label": "@ [expose] public",
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "text": "@[expose] public"
+        },
+        {
+          "kind": "section",
+          "label": "section",
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "text": "section"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch14",
+          "hash": "6d611697558c8a8b5011c52e78abe7edb3308712acc05a17abee55f0b69f60e3",
+          "text": "namespace Bosonize.Ch14"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "kind": "section",
+          "label": "section Cyclic",
+          "hash": "b751db5473a4bfd8c9a843342c47708c850df1bd017ee4db5fa8fcbefda7bf9a",
+          "text": "section Cyclic"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {R V W I : Type*} [Semiring R] [AddCommG",
+          "hash": "50a0d8bcc40204e2f3e822bd708f19b8e154d7ed6728b0db7b560c32a5e6ebfa",
+          "text": "variable {R V W I : Type*} [Semiring R] [AddCommGroup V] [AddCommGroup W]\n  [Module R V] [Module R W]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.creatorWord",
+          "hash": "54aac657b1ba40adc9f295970de51dfb4ee86688c96ce4257923c088ae619287",
+          "text": "def creatorWord (G : I → Module.End R V) (is : List I) : Module.End R V :=\n  (is.map G).prod"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.cyclicSpan",
+          "hash": "4fb56f29cc85646c60286afb041592e5335224da8a06fc577d30ca968d57715e",
+          "text": "def cyclicSpan (G : I → Module.End R V) (v₀ : V) : Submodule R V :=\n  Submodule.span R (Set.range (fun is : List I => creatorWord G is v₀))"
+        },
+        {
+          "kind": "end",
+          "label": "end Cyclic",
+          "hash": "3b551bc1b61ce2b0e07ca84becee10ae515d3f1828e9d179a69b01432020778e",
+          "text": "end Cyclic"
+        },
+        {
+          "kind": "section",
+          "label": "section FiniteCAR",
+          "hash": "bc2d1b4a2706d946175fc2cb5929cc28fcff1420a734dd38c35c957c87397061",
+          "text": "section FiniteCAR"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {σ : Type*} [Fintype σ] [LinearOrder σ]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {σ : Type*} [Fintype σ] [LinearOrder σ]"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch14.localModeLinearOrder",
+          "hash": "e4a9226589020622ca19a2087877202f3558b7dc0aa9bd344fa5c8ef937ac7b8",
+          "text": "noncomputable local instance localModeLinearOrder (h : ℕ) : LinearOrder (A05.Mode σ h) := A05.speciesOrder h"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch14.localModeLT",
+          "hash": "d0a5f5e74290acf5c17ce7a0ea9146e724f885cc56d341a0ca387113e8fa8b85",
+          "text": "noncomputable local instance localModeLT (h : ℕ) : LT (A05.Mode σ h) := (A05.speciesOrder h).toLT"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch14.localModeLE",
+          "hash": "e4a48318c8a30eda5e13f9f7240db07b1245bd0a873a80f63541d0a47497dbb0",
+          "text": "noncomputable local instance localModeLE (h : ℕ) : LE (A05.Mode σ h) := (A05.speciesOrder h).toLE"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch14.localModeDecidableEq",
+          "hash": "474a03e9466f9e7effbc0f8eb71ff27930fcdd03e06d757347bd9a077a8458ea",
+          "text": "noncomputable local instance localModeDecidableEq (h : ℕ) : DecidableEq (A05.Mode σ h) := (A05.speciesOrder h).toDecidableEq"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.budgetSet",
+          "hash": "f480482000c38f850426b70091a2634a50cb53b7cf6e6731f64e2066a984204b",
+          "text": "def budgetSet (h : ℕ) (Ns : σ → ℤ) (K : ℕ) : Set (A05.Occupation σ h) :=\n  {S | (∀ ν, Ch07.relativeCharge h (Ch07.speciesConfiguration h S ν) = Ns ν) ∧\n    Ch07.totalExcitation h S ≤ (K : ℤ)}"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.projection",
+          "hash": "319ba9e6ba59f55125b1dc6c8d5a09c5904ccf82a9a38f77f170568462d79a65",
+          "text": "noncomputable def projection (h : ℕ) (Ns : σ → ℤ) (K : ℕ) : A05.Operators σ h :=\n  A03.coordinateProjection (budgetSet h Ns K)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.projectedMap",
+          "hash": "d87ec61c6542016aafe8f5597275f4cd5ee3b5b1bf3169de447f8226e9a29add",
+          "text": "noncomputable def projectedMap (h : ℕ) (Ns Nt : σ → ℤ) (Kin Kout : ℕ)\n    (A : A05.Operators σ h) : A05.jointBudget h Ns Kin →ₗ[ℂ] A05.jointBudget h Nt Kout :=\n  (projection h Nt Kout * A).domRestrict (A05.jointBudget h Ns Kin) |>.codRestrict\n    (A05.jointBudget h Nt Kout) (fun v => by\n      change projection h Nt Kout (A v.val) ∈ A03.coordinateSpace (budgetSet h Nt Kout)\n      rw [← A03.projection_range]\n      exact ⟨A v.val, rfl⟩)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.budgetAdjoint",
+          "hash": "4614d6ada722b66e812717dbf7e4cf7e9dbe523b872e7752aa4f813e74f2235e",
+          "text": "noncomputable def budgetAdjoint (h : ℕ) (Ns Nt : σ → ℤ) (Kin Kout : ℕ)\n    (A : A05.jointBudget h Ns Kin →ₗ[ℂ] A05.jointBudget h Nt Kout) :\n    A05.jointBudget h Nt Kout →ₗ[ℂ] A05.jointBudget h Ns Kin :=\n  LinearMap.adjoint (𝕜 := ℂ) (E := A05.jointBudget h Ns Kin) (F := A05.jointBudget h Nt Kout) A"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.groundVector",
+          "hash": "e882bad83043e538cb33ec426daf1e9556daab5742fb67ea1d9087087b60a6a6",
+          "text": "noncomputable def groundVector (h : ℕ) (hh : 0<h) (Ns : σ → ℤ)\n    (hN : A05.admissible h Ns) (K : ℕ) : A05.jointBudget h Ns K :=\n  ⟨A05.groundKet h Ns, A05.ground_mem_budget h hh Ns hN K⟩"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.wPlus",
+          "hash": "5e9890ce3c1ff8d851e1a90fda9136d73ebcdfb07e89dddfdacc4cd41087a8b5",
+          "text": "noncomputable def wPlus (h M : ℕ) (ν : σ) (x : ℤ) : A05.Operators σ h :=\n  ∑ m ∈ Finset.range M, (A01.integerCharacter (A01.canonicalRoot (2*h)) ((m+1 : ℕ) : ℤ) x /\n    (m+1 : ℂ)) • A05.rho h ν (-((m+1 : ℕ) : ℤ))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.wMinus",
+          "hash": "f88b83a8c2501a483086f0d79705e4d8d043e9aad039fc188d43294bfd344685",
+          "text": "noncomputable def wMinus (h M : ℕ) (ν : σ) (x : ℤ) : A05.Operators σ h :=\n  -∑ m ∈ Finset.range M, (A01.integerCharacter (A01.canonicalRoot (2*h)) (-((m+1 : ℕ) : ℤ)) x /\n    (m+1 : ℂ)) • A05.rho h ν ((m+1 : ℕ) : ℤ)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.compressedPlus",
+          "hash": "21850c41ed15fa70bd970c01615bb02800610754ca724d60cfc5a6266577da6f",
+          "text": "noncomputable def compressedPlus (h M : ℕ) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) : A05.Operators σ h :=\n  projection h Ns K * wPlus h M ν x * projection h Ns K"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.compressedMinus",
+          "hash": "aa2babfcdf100efc6f572c1d816696cb523d31723542d902a21a98cc7c926aef",
+          "text": "noncomputable def compressedMinus (h M : ℕ) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) : A05.Operators σ h :=\n  projection h Ns K * wMinus h M ν x * projection h Ns K"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.zeroScalar",
+          "hash": "c57fe4407ad0503cc379878a5faf5b83ca0f5a23a4424e9e82e384240b1c3d16",
+          "text": "noncomputable def zeroScalar (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))\n    (Ns : σ → ℤ) (ν : σ) (x : ℤ) : ℂ :=\n  Ch06Ext.liftPhase (2*h) (b ν) x * A01.integerCharacter (A01.canonicalRoot (2*h)) (Ns ν) x"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.zeroMode",
+          "hash": "940f0f8c3f13c6285c0f1403e4671621068b09f988554a2776e13dc87ab1d3b5",
+          "text": "noncomputable def zeroMode (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))\n    (Ns : σ → ℤ) (ν : σ) (x : ℤ) (K : ℕ) : Module.End ℂ (A05.jointBudget h Ns K) :=\n  zeroScalar h b Ns ν x • LinearMap.id"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.physicalMap",
+          "hash": "e748468aa93d6ff5f88213e312673c8f59a869a52dc3b1a0d47afd165958493c",
+          "text": "noncomputable def physicalMap (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))\n    (Ns : σ → ℤ) (ν : σ) (x : ℤ) (Kin Kout : ℕ) :\n    A05.jointBudget h Ns Kin →ₗ[ℂ] A05.jointBudget h (Ch13.lowerCharge Ns ν) Kout :=\n  projectedMap h Ns (Ch13.lowerCharge Ns ν) Kin Kout (A05.liftedAnnihilation h b ν x)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch14.vertexCandidate",
+          "hash": "7d8e9e197799582fcbb61e62240e46ce9f633be4cc4b5151c1e97f4a079613ab",
+          "text": "noncomputable def vertexCandidate (h M : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))\n    (Ns : σ → ℤ) (ν : σ) (x : ℤ) (Kin Kout : ℕ) :\n    A05.jointBudget h Ns Kin →ₗ[ℂ] A05.jointBudget h (Ch13.lowerCharge Ns ν) Kout :=\n  let Nt := Ch13.lowerCharge Ns ν\n  (A01.normalization (2*h) : ℂ) •\n    (A05Exp.finiteTaylor Kout (projectedMap h Nt Nt Kout Kout (wMinus h M ν x))).comp\n      ((projectedMap h Nt Nt Kin Kout LinearMap.id).comp\n        ((A05Exp.finiteTaylor Kin (projectedMap h Nt Nt Kin Kin (wPlus h M ν x))).comp\n          ((projectedMap h Ns Nt Kin Kin (Ch13.kleinKernel h Ns ν Kin)).comp\n            (zeroMode h b Ns ν x Kin))))"
+        },
+        {
+          "kind": "end",
+          "label": "end FiniteCAR",
+          "hash": "914712a307ddaf09c34d6b62c937a358c3c166aba108ee00d9521836fbfbf744",
+          "text": "end FiniteCAR"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.Ch14",
+          "hash": "94d15b758866d8e83796400139d8caf7d07d0babc79fa5fc73b56ddf22005932",
+          "text": "end Bosonize.Ch14"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch14.compressed_minus_nilpotent": {
+          "kind": "lemma",
+          "hash": "b9f89209a822181815fea5fde153a61203e09565b9329a403cb6810e70b6f7ab",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma compressed_minus_nilpotent (h M : ℕ) (hh : 0<h) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) : compressedMinus h M Ns K ν x ^ (K+1) = 0"
+        },
+        "Bosonize.Ch14.compressed_plus_nilpotent": {
+          "kind": "lemma",
+          "hash": "b386c512d0f71dc6c9272d09cb16b007b6ebe34e53c704e2068047e6d6496876",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma compressed_plus_nilpotent (h M : ℕ) (hh : 0<h) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) : compressedPlus h M Ns K ν x ^ (K+1) = 0"
+        },
+        "Bosonize.Ch14.cyclic_common_residual": {
+          "kind": "theorem",
+          "hash": "5c9b65523c8c9df5d28dbe1cf49a3ea490ce6586b2b82809951ed457cc7f622b",
+          "ctx": "60c0028a1a1c26e4e9c6061aa49e7ebf968ade77d7d2fd31630510045ae0dcef",
+          "text": "theorem cyclic_common_residual (G : I → Module.End R V) (T : I → Module.End R W) (A B : V →ₗ[R] W) (residual : I → V →ₗ[R] W) (v₀ : V) (hcyclic : cyclicSpan G v₀ = ⊤) (hground : A v₀ = B v₀) (hA : ∀ i, A.comp (G i) = (T i).comp A + residual i) (hB : ∀ i, B.comp (G i) = (T i).comp B + residual i) : A = B"
+        },
+        "Bosonize.Ch14.field_vertex_of_common_residual": {
+          "kind": "theorem",
+          "hash": "6154e87f257a7576c250b8507abd5d09b40dc0ca985e82a0f22b390e73eab4f1",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "theorem field_vertex_of_common_residual (h M : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) (Kin Kout : ℕ) {I : Type*} (G : I → Module.End ℂ (A05.jointBudget h Ns Kin)) (T : I → Module.End ℂ (A05.jointBudget h (Ch13.lowerCharge Ns ν) Kout)) (residual : I → A05.jointBudget h Ns Kin →ₗ[ℂ] A05.jointBudget h (Ch13.lowerCharge Ns ν) Kout) (v₀ : A05.jointBudget h Ns Kin) (hcyclic : cyclicSpan G v₀ = ⊤) (hground : physicalMap h b Ns ν x Kin Kout v₀ = vertexCandidate h M b Ns ν x Kin Kout v₀) (hA : ∀ i, (physicalMap h b Ns ν x Kin Kout).comp (G i) = (T i).comp (physicalMap h b Ns ν x Kin Kout) + residual i) (hB : ∀ i, (vertexCandidate h M b Ns ν x Kin Kout).comp (G i) = (T i).comp (vertexCandidate h M b Ns ν x Kin Kout) + residual i) : physicalMap h b Ns ν x Kin Kout = vertexCandidate h M b Ns ν x Kin Kout"
+        },
+        "Bosonize.Ch14.klein_zero_ground": {
+          "kind": "lemma",
+          "hash": "12b2a3f51a07704d9b1e754f2bcff2cd831e1a87e7c660d94a2464bcfee9e32f",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma klein_zero_ground (h : ℕ) (hh : 0<h) (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) (K : ℕ) (hm : Ch13.pairMargin h K Ns ν) : Ch13.kleinKernel h Ns ν K (zeroScalar h b Ns ν x • A05.groundKet h Ns) = (zeroScalar h b Ns ν x * Ch13.kleinPhase h Ns ν) • A05.groundKet h (Ch13.lowerCharge Ns ν)"
+        },
+        "Bosonize.Ch14.physical_ground_expansion": {
+          "kind": "lemma",
+          "hash": "75572fc6b70a51773924152c630bf102e9c4415698583ef76eece7b5f36b5110",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma physical_ground_expansion (h : ℕ) (hh : 0<h) (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (hN : A05.admissible h Ns) (ν : σ) (x : ℤ) (Kin Kout : ℕ) : (physicalMap h b Ns ν x Kin Kout (groundVector h hh Ns hN Kin) : A05.FockSpace σ h) = (A01.normalization (2*h) : ℂ) • ∑ k : Ch01.Band (2*h), if (ν,k) ∈ A05.groundConfiguration h Ns then (Ch06Ext.twistedCharacter (2*h) (b ν) k x * Ch04.fermionSign (ν,k) (A05.groundConfiguration h Ns)) • projection h (Ch13.lowerCharge Ns ν) Kout (A02.ket ((A05.groundConfiguration h Ns).erase (ν,k))) else 0"
+        },
+        "Bosonize.Ch14.physical_map_winding": {
+          "kind": "lemma",
+          "hash": "2cf83f2f5331eb929b1d0eaab64aa22b646bd609e108313fc2b68140e151407b",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma physical_map_winding (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x w : ℤ) (Kin Kout : ℕ) : physicalMap h b Ns ν (x+w*(2*h : ℕ)) Kin Kout = Ch06Ext.holonomy (2*h) (b ν)^w • physicalMap h b Ns ν x Kin Kout"
+        },
+        "Bosonize.Ch14.physical_occupation_expansion": {
+          "kind": "lemma",
+          "hash": "0450b34f5ad661e382dc50eabb69f6d8cb61d76d9c037925f1b37e792cd0127c",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma physical_occupation_expansion (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) (Kout : ℕ) (S : A05.Occupation σ h) : projection h (Ch13.lowerCharge Ns ν) Kout (A05.liftedAnnihilation h b ν x (A02.ket S)) = (A01.normalization (2*h) : ℂ) • ∑ k : Ch01.Band (2*h), if (ν,k) ∈ S then (Ch06Ext.twistedCharacter (2*h) (b ν) k x * Ch04.fermionSign (ν,k) S) • projection h (Ch13.lowerCharge Ns ν) Kout (A02.ket (S.erase (ν,k))) else 0"
+        },
+        "Bosonize.Ch14.projected_map_adjoint": {
+          "kind": "lemma",
+          "hash": "43b5ea75b6d7d5f5737e36fedff55c2bd2da88c4a6b20a2565847ebafa8d7c52",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma projected_map_adjoint (h : ℕ) (Ns Nt : σ → ℤ) (Kin Kout : ℕ) (A : A05.Operators σ h) : budgetAdjoint h Ns Nt Kin Kout (projectedMap h Ns Nt Kin Kout A) = projectedMap h Nt Ns Kout Kin (LinearMap.adjoint A)"
+        },
+        "Bosonize.Ch14.projected_map_apply": {
+          "kind": "lemma",
+          "hash": "d2c93675351d19ef3492ae21508a32c39cd88f45c81d95bfb4bef44ad95ee239",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma projected_map_apply (h : ℕ) (Ns Nt : σ → ℤ) (Kin Kout : ℕ) (A : A05.Operators σ h) (v : A05.jointBudget h Ns Kin) : (projectedMap h Ns Nt Kin Kout A v : A05.FockSpace σ h) = projection h Nt Kout (A v)"
+        },
+        "Bosonize.Ch14.projected_minus_nilpotent": {
+          "kind": "lemma",
+          "hash": "6bbbdf9cea770754fa552ae922eb91366a220b48ce0c93f3efd1f1294e7998c8",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma projected_minus_nilpotent (h M : ℕ) (hh : 0<h) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) : projectedMap h Ns Ns K K (wMinus h M ν x) ^ (K+1) = 0"
+        },
+        "Bosonize.Ch14.projected_plus_nilpotent": {
+          "kind": "lemma",
+          "hash": "753772c13c402c8dee94c6909d97dfbddd565a92454a7b6900ea0637da78e28f",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma projected_plus_nilpotent (h M : ℕ) (hh : 0<h) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) : projectedMap h Ns Ns K K (wPlus h M ν x) ^ (K+1) = 0"
+        },
+        "Bosonize.Ch14.projected_recurrence_residual": {
+          "kind": "lemma",
+          "hash": "5c2534b396852ad754fd4c12a53ae5c8c46d2532473733b02f54395a8b0ccb7b",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma projected_recurrence_residual (h : ℕ) (Ns Nt : σ → ℤ) (Kin Kout : ℕ) (c rho : A05.Operators σ h) : let Pin := projection h Ns Kin let Pout := projection h Nt Kout (Pout*c*Pin)*(Pin*rho*Pin) - (Pout*rho*Pout)*(Pout*c*Pin) = Pout*(c*rho-rho*c)*Pin - Pout*c*(1-Pin)*rho*Pin + Pout*rho*(1-Pout)*c*Pin"
+        },
+        "Bosonize.Ch14.vertex_candidate_adjoint": {
+          "kind": "lemma",
+          "hash": "78fac66c1ebee56341b7e5d93a2ba36274b1e36ae48b9bfc2ef7e93ea948fc34",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma vertex_candidate_adjoint (h M : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) (Kin Kout : ℕ) : let Nt := Ch13.lowerCharge Ns ν budgetAdjoint h Ns Nt Kin Kout (vertexCandidate h M b Ns ν x Kin Kout) = (A01.normalization (2*h) : ℂ) • (budgetAdjoint h Ns Ns Kin Kin (zeroMode h b Ns ν x Kin)).comp ((budgetAdjoint h Ns Nt Kin Kin (projectedMap h Ns Nt Kin Kin (Ch13.kleinKernel h Ns ν Kin))).comp ((budgetAdjoint h Nt Nt Kin Kin (A05Exp.finiteTaylor Kin (projectedMap h Nt Nt Kin Kin (wPlus h M ν x)))).comp ((budgetAdjoint h Nt Nt Kin Kout (projectedMap h Nt Nt Kin Kout LinearMap.id)).comp (budgetAdjoint h Nt Nt Kout Kout (A05Exp.finiteTaylor Kout (projectedMap h Nt Nt Kout Kout (wMinus h M ν x)))))))"
+        },
+        "Bosonize.Ch14.vertex_candidate_winding": {
+          "kind": "lemma",
+          "hash": "236fd73ce44d5efb1f3ca35757a9a4cd686ae2b5028ff907378a4af5f9121f01",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma vertex_candidate_winding (h M : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x w : ℤ) (Kin Kout : ℕ) : vertexCandidate h M b Ns ν (x+w*(2*h : ℕ)) Kin Kout = Ch06Ext.holonomy (2*h) (b ν)^w • vertexCandidate h M b Ns ν x Kin Kout"
+        },
+        "Bosonize.Ch14.w_minus_adjoint": {
+          "kind": "lemma",
+          "hash": "8e08960ca9061fdb437f1ce33a304ea7563453de4101b577dcdf5904ba5b02ac",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma w_minus_adjoint (h M : ℕ) [NeZero (2*h)] (ν : σ) (x : ℤ) : LinearMap.adjoint (wMinus h M ν x) = -wPlus h M ν x"
+        },
+        "Bosonize.Ch14.w_minus_periodic": {
+          "kind": "lemma",
+          "hash": "c295752282fb6e9c9258b26d9aa222875a91cf8e76c38b80755dc401c8e7ac54",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma w_minus_periodic (h M : ℕ) [NeZero (2*h)] (ν : σ) (x w : ℤ) : wMinus h M ν (x+w*(2*h : ℕ)) = wMinus h M ν x"
+        },
+        "Bosonize.Ch14.w_plus_adjoint": {
+          "kind": "lemma",
+          "hash": "482ae9678ce7d561d99e5446585efabed4599d0b00950dad116f2804ace9cc19",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma w_plus_adjoint (h M : ℕ) [NeZero (2*h)] (ν : σ) (x : ℤ) : LinearMap.adjoint (wPlus h M ν x) = -wMinus h M ν x"
+        },
+        "Bosonize.Ch14.w_plus_periodic": {
+          "kind": "lemma",
+          "hash": "0d17904ab8635b67f9f9ebb55ad8f6eb26a54ae33eacdb04d0eb1359ef1af13b",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma w_plus_periodic (h M : ℕ) [NeZero (2*h)] (ν : σ) (x w : ℤ) : wPlus h M ν (x+w*(2*h : ℕ)) = wPlus h M ν x"
+        },
+        "Bosonize.Ch14.zero_mode_adjoint": {
+          "kind": "lemma",
+          "hash": "c6b34a86a613a51fbe72816187d2f039a42deff1f3f90172e6ab33b808c0f601",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma zero_mode_adjoint (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) (K : ℕ) : LinearMap.adjoint (𝕜 := ℂ) (E := A05.jointBudget h Ns K) (F := A05.jointBudget h Ns K) (zeroMode h b Ns ν x K) = star (zeroScalar h b Ns ν x) • LinearMap.id"
+        },
+        "Bosonize.Ch14.zero_mode_unitary": {
+          "kind": "lemma",
+          "hash": "8ffc8a6c5c1bac65b32c7253ffd8f6f5e87668c64966eefc7127f17d964b4b89",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma zero_mode_unitary (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) (K : ℕ) : LinearMap.adjoint (𝕜 := ℂ) (E := A05.jointBudget h Ns K) (F := A05.jointBudget h Ns K) (zeroMode h b Ns ν x K) * zeroMode h b Ns ν x K = 1 ∧ zeroMode h b Ns ν x K * LinearMap.adjoint (𝕜 := ℂ) (E := A05.jointBudget h Ns K) (F := A05.jointBudget h Ns K) (zeroMode h b Ns ν x K) = 1"
+        },
+        "Bosonize.Ch14.zero_mode_winding": {
+          "kind": "lemma",
+          "hash": "d30be5eca66e71edd44c6c7b2f1c834948bd4b5d99fad3cf13f542b378ef0eaa",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma zero_mode_winding (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x w : ℤ) (K : ℕ) : zeroMode h b Ns ν (x+w*(2*h : ℕ)) K = Ch06Ext.holonomy (2*h) (b ν)^w • zeroMode h b Ns ν x K"
+        },
+        "Bosonize.Ch14.zero_scalar_norm": {
+          "kind": "lemma",
+          "hash": "aca5e79940776a117a663a0e75f6b4f0534e26ad9499918bc430f6f60c7fd4bf",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma zero_scalar_norm (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) : ‖zeroScalar h b Ns ν x‖ = 1"
+        },
+        "Bosonize.Ch14.zero_scalar_winding": {
+          "kind": "lemma",
+          "hash": "5ada80aacefa6e01df24b7e4497a57b432051474c68166edce91fc3a9aa68858",
+          "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "text": "lemma zero_scalar_winding (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x w : ℤ) : zeroScalar h b Ns ν (x+w*(2*h : ℕ)) = Ch06Ext.holonomy (2*h) (b ν)^w * zeroScalar h b Ns ν x"
+        }
+      }
     }
   },
   "version": 2

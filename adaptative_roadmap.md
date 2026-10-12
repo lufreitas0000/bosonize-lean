@@ -214,3 +214,7 @@ Independent review passes the exact actual multispecies draft: A05 28 and CH13 2
 ## CH13/A05 Phase C completion and quota checkpoint — 2026-10-11
 
 All53proofs/42data pass fresh standard-axiom closure; Core migration freezes21modules/756proved statements, old19unchanged. Both complementary lectures preserve reference content and pass independent review. Full CI/KaTeX checks pass. [Validation](note/ch13_phase_c_validation_2026-10-11.md). Usage9%five-hour/56%weekly: pause beforeCH14/A05 PhaseA. Supported continuation01:16FortalezaOctober12 after04:15:20UTCreset requires freshquota. Whole-project goal remainsunfinished; noreset creditsused.
+
+## CH14/A05 reviewed Phase A — 2026-10-12
+
+Fresh quota permits resumption at the clean CH13 checkpoint. Independently reviewed 37 theorem obligations (A05 13, CH14 24) and 20 complete data declarations are frozen. The interface covers generic finite Taylor algebra and bounded filtration nilpotency, actual compressed/subtype phase nilpotency, typed adjoints, explicit source holonomy, full projected CAR ground expansion, exact projection residuals and the conditional cyclic comparison criterion. No unconditional numerical-margin field–vertex identity is included. Phase B is next. Existing 21 Core modules remain immutable.

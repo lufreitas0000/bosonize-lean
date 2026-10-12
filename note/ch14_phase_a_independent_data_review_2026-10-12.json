@@ -1,0 +1,126 @@
+{
+  "source_sha256": "6e11f90d2801fc18b0e51fe5bde2f19d137590199943824d950039ee347c5c16",
+  "companion_contracts": [
+    {
+      "name": "theorem cyclic_common_residual (G : I \u2192 Module.End R V) (T : I \u2192 Module.End R W)",
+      "matches": true
+    },
+    {
+      "name": "lemma projected_map_apply (h : \u2115) (Ns Nt : \u03c3 \u2192 \u2124) (Kin Kout : \u2115)",
+      "matches": true
+    },
+    {
+      "name": "lemma projected_map_adjoint (h : \u2115) (Ns Nt : \u03c3 \u2192 \u2124) (Kin Kout : \u2115)",
+      "matches": true
+    },
+    {
+      "name": "lemma vertex_candidate_adjoint (h M : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma w_plus_periodic (h M : \u2115) [NeZero (2*h)] (\u03bd : \u03c3) (x w : \u2124) :",
+      "matches": true
+    },
+    {
+      "name": "lemma w_minus_periodic (h M : \u2115) [NeZero (2*h)] (\u03bd : \u03c3) (x w : \u2124) :",
+      "matches": true
+    },
+    {
+      "name": "lemma w_plus_adjoint (h M : \u2115) [NeZero (2*h)] (\u03bd : \u03c3) (x : \u2124) :",
+      "matches": true
+    },
+    {
+      "name": "lemma w_minus_adjoint (h M : \u2115) [NeZero (2*h)] (\u03bd : \u03c3) (x : \u2124) :",
+      "matches": true
+    },
+    {
+      "name": "lemma compressed_plus_nilpotent (h M : \u2115) (hh : 0<h) (Ns : \u03c3 \u2192 \u2124) (K : \u2115) (\u03bd : \u03c3) (x : \u2124) :",
+      "matches": true
+    },
+    {
+      "name": "lemma compressed_minus_nilpotent (h M : \u2115) (hh : 0<h) (Ns : \u03c3 \u2192 \u2124) (K : \u2115) (\u03bd : \u03c3) (x : \u2124) :",
+      "matches": true
+    },
+    {
+      "name": "lemma projected_plus_nilpotent (h M : \u2115) (hh : 0<h) (Ns : \u03c3 \u2192 \u2124) (K : \u2115) (\u03bd : \u03c3) (x : \u2124) :",
+      "matches": true
+    },
+    {
+      "name": "lemma projected_minus_nilpotent (h M : \u2115) (hh : 0<h) (Ns : \u03c3 \u2192 \u2124) (K : \u2115) (\u03bd : \u03c3) (x : \u2124) :",
+      "matches": true
+    },
+    {
+      "name": "lemma zero_scalar_norm (h : \u2115) [NeZero (2*h)] (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma zero_scalar_winding (h : \u2115) [NeZero (2*h)] (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma zero_mode_winding (h : \u2115) [NeZero (2*h)] (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma zero_mode_adjoint (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma zero_mode_unitary (h : \u2115) [NeZero (2*h)] (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma klein_zero_ground (h : \u2115) (hh : 0<h) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma physical_occupation_expansion (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma physical_ground_expansion (h : \u2115) (hh : 0<h) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma projected_recurrence_residual (h : \u2115) (Ns Nt : \u03c3 \u2192 \u2124) (Kin Kout : \u2115)",
+      "matches": true
+    },
+    {
+      "name": "lemma physical_map_winding (h : \u2115) [NeZero (2*h)] (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "lemma vertex_candidate_winding (h M : \u2115) [NeZero (2*h)] (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    },
+    {
+      "name": "theorem field_vertex_of_common_residual (h M : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h))",
+      "matches": true
+    }
+  ],
+  "warning_count": 24,
+  "expected_sorry_warning_count": 24,
+  "errors": 0,
+  "data_axiom_lines": [
+    "'Bosonize.Ch14.creatorWord' depends on axioms: [propext, Quot.sound]",
+    "'Bosonize.Ch14.cyclicSpan' depends on axioms: [propext, Quot.sound]",
+    "'Bosonize.Ch14.localModeLinearOrder' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.localModeLT' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.localModeLE' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.localModeDecidableEq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.budgetSet' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.projection' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.projectedMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.budgetAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.groundVector' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.wPlus' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.wMinus' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.compressedPlus' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.compressedMinus' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.zeroScalar' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.zeroMode' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.physicalMap' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'Bosonize.Ch14.vertexCandidate' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "sorryAx": false
+}
