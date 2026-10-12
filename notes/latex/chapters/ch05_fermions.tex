@@ -23,6 +23,7 @@ which has exact complex dimension $\dim_{\mathbb{C}} \mathcal{F}(L) = 2^L$. The 
 \begin{equation}
 \{c_k, c_p^\dagger\} = \delta_{k, p} I, \qquad \{c_k, c_p\} = 0, \qquad \{c_k^\dagger, c_p^\dagger\} = 0, \qquad c_k^\dagger = (c_k)^\dagger.
 \end{equation}
+Following our global notation conventions, the symbols $c_k, c_k^\dagger$ are reserved strictly for momentum modes.
 
 \section{Spatial Fermions via the Unitary Fourier Transform}
 
@@ -31,30 +32,30 @@ In continuous quantum field theory, field operators $\psi(x)$ are operator-value
 Recall from Chapter~\ref{ch:fourier} the real normalization factor $a \coloneqq 1/\sqrt{L} \in \mathbb{R}_{>0}$ satisfying $L a^2 = 1$, and the canonical primitive $L$-th root $\zeta = e^{2\pi i / L}$.
 
 \begin{definition}[Spatial Fermionic Operators]
-For every spatial site $x \in \Lambda$, the spatial annihilation operator $c_x$ and spatial creation operator $c_x^\dagger$ are defined by:
+For every spatial site $x \in \Lambda$, the spatial annihilation operator $\psi_x$ and spatial creation operator $\psi_x^\dagger$ are defined by:
 \begin{align}
-c_x &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x)\, c_k = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}}\, c_k, \label{eq:spatial_c} \\
-c_x^\dagger &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x)\, c_k^\dagger = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{-k x_{\mathrm{val}}}\, c_k^\dagger. \label{eq:spatial_cdag}
+\psi_x &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x)\, c_k = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}}\, c_k, \label{eq:spatial_psi} \\
+\psi_x^\dagger &\coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x)\, c_k^\dagger = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{-k x_{\mathrm{val}}}\, c_k^\dagger. \label{eq:spatial_psidag}
 \end{align}
 The local spatial fermion number operator is defined by:
 \begin{equation}
-n_x \coloneqq c_x^\dagger c_x.
+n_x \coloneqq \psi_x^\dagger \psi_x.
 \end{equation}
 \end{definition}
 
 \begin{lemma}[Hilbert Adjoint Compatibility]
 The spatial creation operator is the exact Hilbert adjoint of the spatial annihilation operator:
 \begin{equation}
-(c_x)^\dagger = c_x^\dagger \quad \text{for all } x \in \Lambda.
+(\psi_x)^\dagger = \psi_x^\dagger \quad \text{for all } x \in \Lambda.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-Taking the Hilbert adjoint of the linear combination~\eqref{eq:spatial_c}:
+Taking the Hilbert adjoint of the linear combination~\eqref{eq:spatial_psi}:
 \[
-(c_x)^\dagger = \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}} c_k \right)^\dagger = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \overline{\zeta^{k x_{\mathrm{val}}}} (c_k)^\dagger.
+(\psi_x)^\dagger = \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}} c_k \right)^\dagger = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \overline{\zeta^{k x_{\mathrm{val}}}} (c_k)^\dagger.
 \]
-Because $(c_k)^\dagger = c_k^\dagger$ and $\overline{\zeta^{k x_{\mathrm{val}}}} = \zeta^{-k x_{\mathrm{val}}} = \chi(-k, x)$, this sum coincides with the definition of $c_x^\dagger$ in~\eqref{eq:spatial_cdag}.
+Because $(c_k)^\dagger = c_k^\dagger$ and $\overline{\zeta^{k x_{\mathrm{val}}}} = \zeta^{-k x_{\mathrm{val}}} = \chi(-k, x)$, this sum coincides with the definition of $\psi_x^\dagger$ in~\eqref{eq:spatial_psidag}.
 \end{proof}
 
 \section{Exact Position CAR Inheritance}
@@ -65,9 +66,9 @@ The fundamental theorem of discrete spatial fermions is that they inherit the lo
 \label{thm:spatial_car}
 For all spatial sites $x, y \in \Lambda$, the spatial operators satisfy:
 \begin{align}
-\{c_x, c_y^\dagger\} &= \delta_{x, y} I, \label{eq:pos_car_mixed} \\
-\{c_x, c_y\} &= 0, \label{eq:pos_car_ann} \\
-\{c_x^\dagger, c_y^\dagger\} &= 0. \label{eq:pos_car_cre}
+\{\psi_x, \psi_y^\dagger\} &= \delta_{x, y} I, \label{eq:pos_car_mixed} \\
+\{\psi_x, \psi_y\} &= 0, \label{eq:pos_car_ann} \\
+\{\psi_x^\dagger, \psi_y^\dagger\} &= 0. \label{eq:pos_car_cre}
 \end{align}
 \end{theorem}
 
@@ -76,29 +77,32 @@ We evaluate each anticommutator using the bilinearity of $\{\cdot, \cdot\}$:
 \begin{enumerate}
     \item For the mixed anticommutator:
     \begin{align*}
-    \{c_x, c_y^\dagger\} &= \left\{ \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x) c_k, \; \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \chi(-p, y) c_p^\dagger \right\} \\
+    \{\psi_x, \psi_y^\dagger\} &= \left\{ \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x) c_k, \; \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \chi(-p, y) c_p^\dagger \right\} \\
     &= \frac{1}{L} \sum_{k \in \Lambda^*} \sum_{p \in \Lambda^*} \chi(k, x) \chi(-p, y) \{c_k, c_p^\dagger\}.
     \end{align*}
     Substituting the momentum CAR $\{c_k, c_p^\dagger\} = \delta_{k, p} I$:
     \[
-    \{c_x, c_y^\dagger\} = \frac{1}{L} \sum_{k \in \Lambda^*} \chi(k, x) \chi(-k, y) I = \frac{1}{L} \left( \sum_{k \in \Lambda^*} \zeta^{k (x_{\mathrm{val}} - y_{\mathrm{val}})} \right) I.
+    \{\psi_x, \psi_y^\dagger\} = \frac{1}{L} \sum_{k \in \Lambda^*} \chi(k, x) \chi(-k, y) I = \frac{1}{L} \left( \sum_{k \in \Lambda^*} \zeta^{k (x_{\mathrm{val}} - y_{\mathrm{val}})} \right) I.
     \]
     By Theorem~\ref{thm:fourier_orthogonality}(2) (dual character orthogonality), the momentum sum equals $L\, \delta_{x, y}$. Therefore:
     \[
-    \{c_x, c_y^\dagger\} = \frac{1}{L} (L\, \delta_{x, y}) I = \delta_{x, y} I.
+    \{\psi_x, \psi_y^\dagger\} = \frac{1}{L} (L\, \delta_{x, y}) I = \delta_{x, y} I.
     \]
 
     \item For the annihilation anticommutator:
     \[
-    \{c_x, c_y\} = \frac{1}{L} \sum_{k, p \in \Lambda^*} \chi(k, x) \chi(p, y) \{c_k, c_p\} = 0,
+    \{\psi_x, \psi_y\} = \frac{1}{L} \sum_{k, p \in \Lambda^*} \chi(k, x) \chi(p, y) \{c_k, c_p\} = 0,
     \]
-    because $\{c_k, c_p\} = 0$ for all $k, p \in \Lambda^*$. Taking adjoints yields $\{c_x^\dagger, c_y^\dagger\} = 0$.
+    because $\{c_k, c_p\} = 0$ for all $k, p \in \Lambda^*$. Taking adjoints yields $\{\psi_x^\dagger, \psi_y^\dagger\} = 0$.
 \end{enumerate}
 \end{proof}
 
-\begin{remark}[Formalization Note]
-In the verified Lean~4 core (Chapter 5, Position and Momentum Fermions), this result is proved purely through bilinear expansion and character orthogonality. Notice an essential conceptual feature of this construction: spatial fermions are obtained directly as global Fourier transforms of momentum fermions, rather than through local Jordan--Wigner transformations from spin operators. Consequently, there are no non-local string operators connecting spatial modes to momentum modes.
-\end{remark}
+\paragraph{Formal Correctness vs.\ Physical Implications: Global Fourier vs.\ Jordan--Wigner.}
+Notice a remarkable conceptual feature of our construction: spatial fermions $\psi_x$ are obtained directly as global unitary Fourier transforms of momentum fermions $c_k$. In standard 1D lattice physics (such as Lieb, Schultz, and Mattis~\cite{lieb1961}), lattice fermions are frequently introduced through Jordan--Wigner transformations from Pauli spin matrices $\sigma_j^\pm$:
+\[
+\psi_j = \left( \prod_{l < j} \sigma_l^z \right) \sigma_j^-.
+\]
+While physically intuitive for quantum spin chains, Jordan--Wigner strings introduce non-local phase tails that complicate spatial locality on periodic rings. In our formulation, the spatial operators $\psi_x$ anticommute locally across distinct sites $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$ as an exact consequence of character orthogonality, requiring no string operators whatsoever.
 
 \section{Operator Fourier Inversion}
 
@@ -108,13 +112,13 @@ The relationship between position and momentum fermions is completely symmetric 
 \label{thm:op_fourier_inversion}
 The momentum operators are recovered from spatial fermions via the inverse discrete Fourier transform:
 \begin{align}
-c_k &= \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(-k, x)\, c_x = \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \zeta^{-k x_{\mathrm{val}}}\, c_x, \label{eq:inv_ck} \\
-c_k^\dagger &= \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(k, x)\, c_x^\dagger = \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \zeta^{k x_{\mathrm{val}}}\, c_x^\dagger. \label{eq:inv_ckdag}
+c_k &= \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(-k, x)\, \psi_x = \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \zeta^{-k x_{\mathrm{val}}}\, \psi_x, \label{eq:inv_ck} \\
+c_k^\dagger &= \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(k, x)\, \psi_x^\dagger = \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \zeta^{k x_{\mathrm{val}}}\, \psi_x^\dagger. \label{eq:inv_ckdag}
 \end{align}
 \end{theorem}
 
 \begin{proof}
-Substitute the definition of $c_x$ from~\eqref{eq:spatial_c} into the right-hand side of~\eqref{eq:inv_ck}:
+Substitute the definition of $\psi_x$ from~\eqref{eq:spatial_psi} into the right-hand side of~\eqref{eq:inv_ck}:
 \[
 \frac{1}{\sqrt{L}} \sum_{x \in \Lambda} \chi(-k, x) \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \chi(p, x) c_p \right) = \frac{1}{L} \sum_{p \in \Lambda^*} \left( \sum_{x \in \Lambda} \chi(p - k, x) \right) c_p.
 \]
@@ -131,34 +135,34 @@ Taking Hilbert adjoints yields the corresponding identity for $c_k^\dagger$.
 \label{thm:number_invariance}
 The total particle number operator $\hat{N}_{\mathrm{tot}}$ satisfies:
 \begin{equation}
-\hat{N}_{\mathrm{tot}} = \sum_{k \in \Lambda^*} c_k^\dagger c_k = \sum_{x \in \Lambda} c_x^\dagger c_x = \sum_{x \in \Lambda} n_x.
+\hat{N}_{\mathrm{tot}} \coloneqq \sum_{k \in \Lambda^*} c_k^\dagger c_k = \sum_{x \in \Lambda} \psi_x^\dagger \psi_x = \sum_{x \in \Lambda} n_x.
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-Expand the sum of spatial number operators using~\eqref{eq:spatial_c} and~\eqref{eq:spatial_cdag}:
+Expand the sum of spatial number operators using~\eqref{eq:spatial_psi} and~\eqref{eq:spatial_psidag}:
 \begin{align*}
-\sum_{x \in \Lambda} c_x^\dagger c_x &= \sum_{x \in \Lambda} \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x) c_k^\dagger \right) \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \chi(p, x) c_p \right) \\
+\sum_{x \in \Lambda} \psi_x^\dagger \psi_x &= \sum_{x \in \Lambda} \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x) c_k^\dagger \right) \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \chi(p, x) c_p \right) \\
 &= \frac{1}{L} \sum_{k, p \in \Lambda^*} c_k^\dagger c_p \left( \sum_{x \in \Lambda} \chi(p - k, x) \right).
 \end{align*}
 Applying spatial character orthogonality $\sum_{x \in \Lambda} \chi(p - k, x) = L\, \delta_{p, k}$:
 \[
-\sum_{x \in \Lambda} c_x^\dagger c_x = \frac{1}{L} \sum_{k, p \in \Lambda^*} c_k^\dagger c_p (L\, \delta_{p, k}) = \sum_{k \in \Lambda^*} c_k^\dagger c_k = \hat{N}_{\mathrm{tot}}.
+\sum_{x \in \Lambda} \psi_x^\dagger \psi_x = \frac{1}{L} \sum_{k, p \in \Lambda^*} c_k^\dagger c_p (L\, \delta_{p, k}) = \sum_{k \in \Lambda^*} c_k^\dagger c_k = \hat{N}_{\mathrm{tot}}.
 \]
 \end{proof}
 
 \section{The Dirac Fermi Sea and Linearized Hamiltonians}
 
-In relativistic field theory, the physical vacuum is not the bare state $|\emptyset\rangle$ devoid of particles, but the filled Dirac sea where all negative energy states are occupied.
+In relativistic field theory and 1D condensed matter physics, the physical vacuum is not the bare state $|\emptyset\rangle$ devoid of particles, but the filled Dirac sea where all negative-energy single-particle levels are occupied.
 
 \begin{definition}[Dirac Sea Configuration and Vacuum]
-For even lattice length $L = 2h$, the half-filled Dirac Fermi sea configuration $S_\Omega \subset \Lambda^*$ consists of all non-positive momentum modes:
+For even lattice length $L = 2h$, the half-filled Dirac Fermi sea configuration $\mathcal{S}_0 \subset \Lambda^*$ consists of all non-positive momentum modes:
 \begin{equation}
-S_\Omega \coloneqq \{k \in \Lambda^* \mid k \le 0\} = \{-h+1, -h+2, \dots, -1, 0\}.
+\mathcal{S}_0 \coloneqq \{k \in \Lambda^* \mid k \le 0\} = \{-h+1, -h+2, \dots, -1, 0\}.
 \end{equation}
-The cardinality of the Fermi sea is $\#S_\Omega = h = L/2$. The Dirac sea vacuum state is the corresponding occupation state:
+The cardinality of the Fermi sea is $\#\mathcal{S}_0 = h = L/2$. The Dirac sea vacuum state is the corresponding occupation state:
 \begin{equation}
-|\Omega\rangle \coloneqq |S_\Omega\rangle \in \mathcal{F}(L).
+|\Omega\rangle \coloneqq |\mathcal{S}_0\rangle \in \mathcal{F}(L).
 \end{equation}
 \end{definition}
 
@@ -170,7 +174,7 @@ The cardinality of the Fermi sea is $\#S_\Omega = h = L/2$. The Dirac sea vacuum
     \end{equation}
     \item The ground state sea energy $E_\Omega$ is the eigenvalue of $H_0$ on $|\Omega\rangle$:
     \begin{equation}
-    E_\Omega \coloneqq \sum_{k \in S_\Omega} k.
+    E_\Omega \coloneqq \sum_{k \in \mathcal{S}_0} k.
     \end{equation}
     \item The physical, normal-ordered Hamiltonian $\hat{P}$ is defined by:
     \begin{equation}
@@ -188,7 +192,7 @@ E_\Omega = -\frac{h(h-1)}{2}.
 \end{lemma}
 
 \begin{proof}
-By definition, $S_\Omega = \{-h+1, \dots, 0\}$. Summing the integers:
+By definition, $\mathcal{S}_0 = \{-h+1, \dots, 0\}$. Summing the consecutive negative integers:
 \[
 E_\Omega = \sum_{j=-h+1}^0 j = - \sum_{m=1}^{h-1} m = - \frac{(h-1) h}{2} = -\frac{h(h-1)}{2}.
 \]
@@ -222,4 +226,21 @@ We prove each statement:
 \end{enumerate}
 \end{proof}
 
-Theorem~\ref{thm:h0_commutators} confirms that $c_p^\dagger$ raises the total physical momentum energy by $p$, while $c_p$ lowers it by $p$. This provides the kinematic foundation for constructing particle-hole excitations and density modes in the subsequent chapters.
+\paragraph{Formal Correctness vs.\ Physical Implications: Linearization and the Dirac Sea.}
+In standard Luttinger liquid theory (e.g., Haldane~\cite{haldane1981}, Giamarchi~\cite{giamarchi2004}, and von Delft--Schoeller~\cite{vondelft1998}), the kinetic dispersion is linearized near the Fermi points $\pm k_F$. The spectrum is extended to $-\infty$, yielding an infinite Dirac sea. While this makes the model solvable, it leads to an infinite ground state energy $\sum_{k \le 0} k = -\infty$, requiring formal infinite normal ordering.
+
+In our finite constructive formulation, the Dirac sea $\mathcal{S}_0$ has a finite bottom at mode $-h+1$. The ground state energy $E_\Omega = -h(h-1)/2$ is an exact finite integer. No infinite subtraction is required. At the same time, for low-energy excitations near the Fermi surface $k \approx 0$, the spectrum is strictly linear ($\epsilon_k = k$), exactly matching the physics of chiral 1D fermions.
+
+\section{Chapter Summary and Literature Comparison}
+
+In this chapter, we united the Fourier transform and CAR representations to describe physical lattice fermions:
+\begin{itemize}
+    \item Spatial fermionic operators $\psi_x, \psi_x^\dagger$ are constructed via the unitary Fourier transform, leaving $c_k, c_k^\dagger$ strictly reserved for momentum modes.
+    \item Spatial operators satisfy exact local CAR relations $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$ without non-local Jordan--Wigner strings.
+    \item Total particle number is strictly conserved across representations: $\hat{N}_{\mathrm{tot}} = \sum_k c_k^\dagger c_k = \sum_x \psi_x^\dagger \psi_x$.
+    \item The half-filled Dirac sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$ provides a finite ground state $|\Omega\rangle$ with exact finite energy $E_\Omega = -h(h-1)/2$.
+    \item The physical momentum Hamiltonian $\hat{P} = H_0 - E_\Omega I$ generates exact energy shifts $[P, c_p^\dagger] = p c_p^\dagger$.
+\end{itemize}
+
+\paragraph{Comparison with Standard Continuum Literature.}
+In standard physics texts, such as Giamarchi~\cite{giamarchi2004} and Gogolin et al.~\cite{gogolin1998}, spatial fermions $\psi(x)$ and momentum modes $c_k$ are introduced simultaneously with continuous spatial indices $x \in [0, \mathcal{L}]$. Field operators satisfy singular anticommutators $\{\psi(x), \psi^\dagger(y)\} = \delta(x-y)$. In contrast, our finite lattice fermions $\psi_x$ are bounded operators on a finite-dimensional Hilbert space of dimension $2^L$. All sums are finite, operator products are well-defined, and the Dirac sea is mathematically regular, setting the stage for the Algebraic Quantum Field Theory local net in Chapter~\ref{ch:lattice_aqft_net}.
