@@ -3,7 +3,11 @@
 
 \section{Introduction and Discrete Differential Structure}
 
-In continuum quantum field theory, the fundamental kinematics of fields and spatial symmetries are mediated by the spatial derivative $\partial_x$. Continuous derivatives generate spatial translations and satisfy the infinitesimal Leibniz product rule $\partial_x(f g) = (\partial_x f) g + f (\partial_x g)$, while pairing with the position multiplier $X$ yields the Heisenberg canonical commutation relation $[\partial_x, X] = I$.
+In continuum quantum field theory, the fundamental kinematics of fields and spatial symmetries are mediated by the continuous spatial derivative $\partial_x$. Continuous derivatives generate infinitesimal spatial translations and satisfy the symmetric Leibniz product rule:
+\begin{equation}
+\partial_x(f g) = (\partial_x f) g + f (\partial_x g).
+\end{equation}
+Furthermore, pairing the momentum operator $P = -i \partial_x$ with the position multiplier $X$ yields the Heisenberg canonical commutation relation $[P, X] = -i I$.
 
 On a discrete spatial lattice, such as the periodic circular chain $\Lambda = \mathbb{Z}/L\mathbb{Z}$ introduced in Chapter~\ref{ch:lattice_band}, infinitesimal derivatives do not exist. Instead, calculus must be formulated through finite differences. Umbral calculus provides the rigorous algebraic framework that replaces differential operators with finite differences without loss of algebraic structure. 
 
@@ -48,11 +52,11 @@ We define the following linear operators in $\mathrm{End}_R(R^S)$:
     \end{equation}
     \item \textbf{Forward Difference Operator $\Delta$:}
     \begin{equation}
-    \Delta \coloneqq E - I, \qquad (\Delta f)(x) = f(x+1) - f(x).
+    \Delta \coloneqq E - I, \qquad (\Delta f)(x) \coloneqq f(x+1) - f(x).
     \end{equation}
     \item \textbf{Backward Difference Operator $\nabla$:}
     \begin{equation}
-    \nabla \coloneqq I - E^{-1}, \qquad (\nabla f)(x) = f(x) - f(x-1).
+    \nabla \coloneqq I - E^{-1}, \qquad (\nabla f)(x) \coloneqq f(x) - f(x-1).
     \end{equation}
     \item \textbf{Discrete Laplacian Operator $\Delta\nabla$:}
     \begin{equation}
@@ -60,6 +64,9 @@ We define the following linear operators in $\mathrm{End}_R(R^S)$:
     \end{equation}
 \end{enumerate}
 \end{definition}
+
+\paragraph{Physical Intuition: Discretizing Differential Operators.}
+In condensed matter physics, a spatial derivative is approximated by $\partial_x f(x) \approx \frac{f(x+a) - f(x)}{a}$. In our unit lattice units ($a = 1$), $\Delta$ is the forward discrete derivative, $\nabla$ is the backward discrete derivative, and their composition $\Delta\nabla$ is the standard nearest-neighbor discrete kinetic Laplacian.
 
 \begin{proposition}[Laplacian Expansion]
 In the operator algebra $\mathrm{End}_R(R^S)$, the discrete Laplacian satisfies:
@@ -81,7 +88,7 @@ Similarly, $\nabla \circ \Delta = (I - E^{-1})(E - I) = E - I - I + E^{-1}$. Eva
 \end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 core (Chapter 2, Umbral Calculus), difference operators are defined as bundled linear maps over general commutative rings. Because no division by a lattice spacing $a$ is required, the operator algebra is valid over rings of any characteristic, including $\mathbb{Z}$.
+In the verified Lean~4 core, difference operators are defined as bundled linear maps over general commutative rings. Because no division by a lattice spacing $a$ is required, the operator algebra is valid over rings of any characteristic, including $\mathbb{Z}$.
 \end{remark}
 
 \section{Discrete Leibniz Rules}
@@ -102,149 +109,129 @@ Alternatively, expressed in fully expanded form:
 \end{theorem}
 
 \begin{proof}
-We evaluate the left-hand side at an arbitrary coordinate $x \in S$:
+Evaluate the left-hand side at an arbitrary coordinate $x \in S$:
 \[
-\Delta(f g)(x) = f(x+1) g(x+1) - f(x) g(x).
+(\Delta(f g))(x) = (f g)(x+1) - (f g)(x) = f(x+1) g(x+1) - f(x) g(x).
 \]
-In any ring, for elements $a, b, c, d \in R$, we have the algebraic identities:
-\[
-a b - c d = (a - c) d + a (b - d) = c (b - d) + (a - c) b.
-\]
-Setting $a = f(x+1)$, $b = g(x+1)$, $c = f(x)$, and $d = g(x)$:
-\begin{enumerate}
-    \item The first identity gives:
-    \[
-    (f(x+1) - f(x)) g(x) + f(x+1) (g(x+1) - g(x)) = (\Delta f)(x) g(x) + (E f)(x) (\Delta g)(x),
-    \]
-    which establishes~\eqref{eq:leibniz_1}.
-    \item The second identity gives:
-    \[
-    f(x) (g(x+1) - g(x)) + (f(x+1) - f(x)) g(x+1) = f(x) (\Delta g)(x) + (\Delta f)(x) (E g)(x),
-    \]
-    which establishes~\eqref{eq:leibniz_2}.
-    \item Expanding $(E f) = f + \Delta f$ in~\eqref{eq:leibniz_1} immediately yields~\eqref{eq:leibniz_symmetric}.
-\end{enumerate}
-All steps are exact algebraic identities in the ring $R$ requiring no approximations.
+To prove~\eqref{eq:leibniz_1}, add and subtract $f(x+1) g(x)$:
+\begin{align*}
+(\Delta(f g))(x) &= f(x+1) g(x+1) - f(x+1) g(x) + f(x+1) g(x) - f(x) g(x) \\
+&= f(x+1) [g(x+1) - g(x)] + [f(x+1) - f(x)] g(x) \\
+&= (E f)(x) (\Delta g)(x) + (\Delta f)(x) g(x).
+\end{align*}
+To obtain~\eqref{eq:leibniz_symmetric}, substitute $(E f)(x) = f(x) + (\Delta f)(x)$:
+\begin{align*}
+(\Delta(f g))(x) &= [f(x) + (\Delta f)(x)] (\Delta g)(x) + (\Delta f)(x) g(x) \\
+&= f(x)(\Delta g)(x) + (\Delta f)(x) g(x) + (\Delta f)(x)(\Delta g)(x).
+\end{align*}
+Identity~\eqref{eq:leibniz_2} follows by symmetry under swapping $f$ and $g$.
 \end{proof}
 
-\section{Summation by Parts on Periodic Lattices}
+\paragraph{Formal Correctness vs.\ Physical Implications: Umbral Cross-Term.}
+The quadratic cross-term $(\Delta f)(\Delta g)$ in~\eqref{eq:leibniz_symmetric} is the hallmark of discrete lattice calculus. Reintroducing the lattice spacing $a$, let $\Delta_a f(x) = \frac{f(x+a) - f(x)}{a}$. The discrete Leibniz rule becomes:
+\[
+\Delta_a(f g)(x) = (\Delta_a f)(x) g(x) + f(x) (\Delta_a g)(x) + a (\Delta_a f)(x) (\Delta_a g)(x).
+\]
+In the continuum limit $a \to 0$, the cross-term is of order $\mathcal{O}(a)$ and vanishes, recovering the standard continuum product rule. On a discrete lattice, however, this cross-term is non-zero and exact. Ignoring this term leads to spurious violations of conservation laws and gauge invariance in discrete field theories.
 
-In continuum field theory on a circle without boundary, integration by parts yields $\int f (\partial_x g) \, dx = - \int (\partial_x f) g \, dx$. On the discrete spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L \ge 1$, periodic boundary conditions yield an exact discrete analog without boundary terms.
+\section{Discrete Summation by Parts on Periodic Lattices}
+
+In continuum field theory, integration by parts $\int \partial_x f \, g \, dx = - \int f \, \partial_x g \, dx$ transfers derivatives from one field to another, provided boundary terms vanish. On the discrete circle $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the boundary terms vanish identically by cyclicity.
 
 \begin{theorem}[Discrete Summation by Parts]
 \label{thm:summation_by_parts}
-Let $\Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L \ge 1$, and let $R$ be a commutative ring. For any functions $f, g : \Lambda \to R$, the forward difference $\Delta$ and backward difference $\nabla$ are exact negative adjoints under the summation pairing $\langle f, g \rangle \coloneqq \sum_{x \in \Lambda} f(x) g(x)$:
+Let $R$ be an arbitrary commutative ring. For any functions $f, g : \Lambda \to R$ on the periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L \ge 1$):
 \begin{equation}
-\sum_{x \in \Lambda} f(x) (\Delta g)(x) = - \sum_{x \in \Lambda} (\nabla f)(x) g(x).
+\sum_{x \in \Lambda} (\Delta f)(x)\, g(x) = - \sum_{x \in \Lambda} f(x)\, (\nabla g)(x).
+\end{equation}
+That is, the backward difference $\nabla$ is the exact formal negative adjoint of the forward difference $\Delta$ under the natural trace pairing $\langle f, g \rangle \coloneqq \sum_{x \in \Lambda} f(x) g(x)$:
+\begin{equation}
+\Delta^\dagger = - \nabla.
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-Expanding the definition of the forward difference:
+Expand the left-hand sum:
 \[
-\sum_{x \in \Lambda} f(x) (\Delta g)(x) = \sum_{x \in \Lambda} f(x) \big( g(x+1) - g(x) \big) = \sum_{x \in \Lambda} f(x) g(x+1) - \sum_{x \in \Lambda} f(x) g(x).
+\sum_{x \in \Lambda} (\Delta f)(x)\, g(x) = \sum_{x \in \Lambda} [f(x+1) - f(x)]\, g(x) = \sum_{x \in \Lambda} f(x+1) g(x) - \sum_{x \in \Lambda} f(x) g(x).
 \]
-Consider the mapping $e : \Lambda \to \Lambda$ defined by $e(x) = x + 1$. Because $\Lambda$ is a quotient group, $e$ is a bijection of the finite set $\Lambda$ onto itself, whose inverse is $e^{-1}(y) = y - 1$. Therefore, performing the change of summation index $y = x + 1$ (so that $x = y - 1$):
+In the first sum, perform the change of summation variable $y = x+1$. Because translation by $1$ is a bijection of the finite cyclic group $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the sum over $y$ runs over all of $\Lambda$, and $x = y-1$:
 \[
-\sum_{x \in \Lambda} f(x) g(x+1) = \sum_{y \in \Lambda} f(y-1) g(y).
+\sum_{x \in \Lambda} f(x+1) g(x) = \sum_{y \in \Lambda} f(y) g(y-1) = \sum_{x \in \Lambda} f(x) g(x-1).
 \]
-Renaming the dummy summation variable back to $x$:
-\[
-\sum_{x \in \Lambda} f(x) g(x+1) - \sum_{x \in \Lambda} f(x) g(x) = \sum_{x \in \Lambda} f(x-1) g(x) - \sum_{x \in \Lambda} f(x) g(x).
-\]
-Factoring the common term $g(x)$:
-\[
-\sum_{x \in \Lambda} \big( f(x-1) - f(x) \big) g(x) = - \sum_{x \in \Lambda} \big( f(x) - f(x-1) \big) g(x) = - \sum_{x \in \Lambda} (\nabla f)(x) g(x).
-\]
-This completes the proof.
+Recombining the two sums:
+\begin{align*}
+\sum_{x \in \Lambda} (\Delta f)(x)\, g(x) &= \sum_{x \in \Lambda} f(x) g(x-1) - \sum_{x \in \Lambda} f(x) g(x) \\
+&= - \sum_{x \in \Lambda} f(x) [g(x) - g(x-1)] = - \sum_{x \in \Lambda} f(x) (\nabla g)(x).
+\end{align*}
 \end{proof}
 
 \begin{corollary}[Self-Adjointness of the Discrete Laplacian]
 The discrete Laplacian $\Delta\nabla$ is formally self-adjoint under periodic lattice summation:
 \begin{equation}
-\sum_{x \in \Lambda} f(x) (\Delta\nabla g)(x) = \sum_{x \in \Lambda} (\Delta\nabla f)(x) g(x) = - \sum_{x \in \Lambda} (\nabla f)(x) (\nabla g)(x).
+\sum_{x \in \Lambda} (\Delta\nabla f)(x)\, g(x) = \sum_{x \in \Lambda} f(x)\, (\Delta\nabla g)(x).
 \end{equation}
 \end{corollary}
 
 \begin{proof}
-Apply Theorem~\ref{thm:summation_by_parts} with $g$ replaced by $\nabla g$:
+Apply Theorem~\ref{thm:summation_by_parts} twice:
 \[
-\sum_{x \in \Lambda} f(x) \Delta(\nabla g)(x) = - \sum_{x \in \Lambda} (\nabla f)(x) (\nabla g)(x).
+\langle \Delta\nabla f, g \rangle = \langle \Delta(\nabla f), g \rangle = - \langle \nabla f, \nabla g \rangle = \langle f, \Delta(\nabla g) \rangle = \langle f, \Delta\nabla g \rangle.
 \]
-By symmetry of the product $(\nabla f)(x) (\nabla g)(x)$ in the commutative ring $R$, reversing the roles of $f$ and $g$ establishes self-adjointness.
 \end{proof}
 
-\begin{remark}[Formalization Note]
-In the verified Lean formalization, the index reindexing $\sum_x f(x) g(x+1) = \sum_x f(x-1) g(x)$ is formalized using the theorem that summation over a finite set is invariant under reindexing by an equivalence of types. Because $\Lambda = \mathbb{Z}/L\mathbb{Z}$ has no endpoints, no edge corrections or boundary remainders appear in the formal proof.
-\end{remark}
+\section{Newton Binomial Expansions and Falling Factorials}
 
-\section{Algebraic Newton Binomial Expansion}
+In continuous analysis, Taylor series express translations through powers of the derivative: $e^{t \partial_x} f(x) = \sum_{n=0}^\infty \frac{t^n}{n!} f^{(n)}(x)$. In discrete calculus, the shift operator $E = I + \Delta$ yields an exact terminating polynomial expansion without convergence issues.
 
-In continuum calculus, Taylor's formula expresses translations as formal operator exponentials: $f(x+t) = \exp(t \partial_x) f(x) = \sum_{n=0}^\infty \frac{t^n}{n!} \partial_x^n f(x)$. In discrete calculus, an exact polynomial expansion relates shift powers $E^n$ to powers of the difference operator $\Delta$.
-
-\begin{theorem}[Newton Expansion of Shift Powers]
-\label{thm:newton_expansion}
-In the operator algebra $\mathrm{End}_R(R^S)$, for any non-negative integer $n \in \mathbb{N}$:
+\begin{definition}[Falling Factorials]
+For an indeterminate $X$ and an integer $n \in \mathbb{N}$:
 \begin{equation}
-E^n = \sum_{k=0}^n \binom{n}{k} \Delta^k.
+X^{\underline{n}} \coloneqq \begin{cases}
+1, & \text{if } n = 0, \\
+X (X - 1) (X - 2) \cdots (X - n + 1), & \text{if } n \ge 1.
+\end{cases}
 \end{equation}
-Consequently, for any function $f \in R^S$ and coordinate $x \in S$:
+\end{definition}
+
+\begin{theorem}[Newton Binomial Expansion of Translations]
+\label{thm:newton_binomial}
+In the endomorphism ring $\mathrm{End}_R(R^S)$, for any integer $n \in \mathbb{N}$:
+\begin{equation}
+E^n = (I + \Delta)^n = \sum_{k=0}^n \binom{n}{k} \Delta^k.
+\end{equation}
+Consequently, for any function $f \in R^S$ and point $x \in S$:
 \begin{equation}
 f(x+n) = \sum_{k=0}^n \binom{n}{k} (\Delta^k f)(x).
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-By definition of the forward difference, $E = \Delta + I$. Because the identity operator $I$ lies in the center of $\mathrm{End}_R(R^S)$, the operators $\Delta$ and $I$ commute: $[\Delta, I] = \Delta I - I \Delta = 0$.
-
-In any ring, when two elements $A$ and $B$ commute, their sum satisfies the binomial theorem:
-\[
-(A + B)^n = \sum_{k=0}^n \binom{n}{k} A^k B^{n-k}.
-\]
-Setting $A = \Delta$ and $B = I$, and noting that $I^{n-k} = I$:
-\[
-E^n = (\Delta + I)^n = \sum_{k=0}^n \binom{n}{k} \Delta^k I^{n-k} = \sum_{k=0}^n \binom{n}{k} \Delta^k.
-\]
-Applying both sides to a test function $f$ and evaluating at $x$ yields $f(x+n) = \sum_{k=0}^n \binom{n}{k} (\Delta^k f)(x)$.
+Because the identity operator $I$ and the difference operator $\Delta$ commute ($I \circ \Delta = \Delta \circ I = \Delta$), the standard binomial theorem applies in the associative ring $\mathrm{End}_R(R^S)$.
 \end{proof}
 
-\section{The Umbral Intertwining Map and Falling Factorials}
+\section{The Umbral Intertwining Isomorphism}
 
-We now examine how discrete difference operators intertwine with continuum polynomial derivatives.
+The central theorem of umbral calculus is that the continuous derivative $D = \frac{d}{dX}$ on ordinary powers $X^n$ is algebraically isomorphic to the discrete difference $\Delta$ on falling factorials $X^{\underline{n}}$.
 
-\begin{definition}[Falling Factorial Polynomials]
-For $n \in \mathbb{N}$, the $n$-th falling factorial polynomial $X^{\underline{n}} \in R[X]$ is defined by:
+\begin{theorem}[Umbral Intertwining Isomorphism]
+\label{thm:umbral_iso}
+Let $K$ be a field of characteristic zero, and let $K[X]$ denote the polynomial ring. Let $\Phi : K[X] \to K[X]$ be the linear isomorphism defined on the monomial basis by:
 \begin{equation}
-X^{\underline{0}} \coloneqq 1, \qquad X^{\underline{n}} \coloneqq \prod_{k=0}^{n-1} (X - k) = X(X-1)(X-2)\cdots(X-n+1).
+\Phi(X^n) \coloneqq X^{\underline{n}} \quad \text{for all } n \in \mathbb{N}.
 \end{equation}
-The polynomials satisfy the inductive recurrence $X^{\underline{n+1}} = X^{\underline{n}} (X - n)$.
-\end{definition}
-
-\begin{definition}[Formal Umbral Map]
-The formal umbral map $\Phi : R[X] \to R[X]$ is the unique $R$-linear map defined on the standard monomial basis $\{X^n\}_{n \ge 0}$ by:
-\begin{equation}
-\Phi(X^n) \coloneqq X^{\underline{n}}.
-\end{equation}
-\end{definition}
-
-Let $D = \frac{d}{dX} : R[X] \to R[X]$ denote the formal algebraic derivative on polynomials, defined by $D(X^n) = n X^{n-1}$, and let $\Delta_{\mathrm{poly}} : R[X] \to R[X]$ denote the discrete polynomial forward difference:
-\begin{equation}
-(\Delta_{\mathrm{poly}} p)(X) \coloneqq p(X+1) - p(X).
-\end{equation}
-
-\begin{theorem}[Umbral Intertwining Theorem]
-\label{thm:umbral_intertwining}
-The umbral map $\Phi$ intertwines the formal algebraic derivative $D$ and the discrete difference $\Delta_{\mathrm{poly}}$:
+Let $D \coloneqq \frac{d}{dX}$ be the continuous differentiation operator, and let $\Delta_{\mathrm{poly}} p(X) \coloneqq p(X+1) - p(X)$ be the discrete difference operator.
+Then $\Phi$ is an exact intertwining isomorphism:
 \begin{equation}
 \Phi \circ D = \Delta_{\mathrm{poly}} \circ \Phi.
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-By linearity, it suffices to verify the identity on the monomial basis $X^n$ for each $n \in \mathbb{N}$:
+It suffices to evaluate both sides on the basis monomials $X^n$ for $n \in \mathbb{N}$:
 \begin{enumerate}
-    \item For $n = 0$: $D(X^0) = D(1) = 0$, so $\Phi(D(1)) = 0$. On the other hand, $\Delta_{\mathrm{poly}}(\Phi(1)) = \Delta_{\mathrm{poly}}(1) = 1 - 1 = 0$.
-    \item For $n \ge 1$: applying the derivative gives $D(X^n) = n X^{n-1}$. Applying $\Phi$ yields:
+    \item For $n = 0$: $D(1) = 0$, so $\Phi(D(1)) = 0$. On the other hand, $\Phi(1) = 1$, so $\Delta_{\mathrm{poly}}(\Phi(1)) = 1 - 1 = 0$.
+    \item For $n \ge 1$: $D(X^n) = n X^{n-1}$, so:
     \[
     \Phi(D(X^n)) = \Phi(n X^{n-1}) = n \Phi(X^{n-1}) = n X^{\underline{n-1}}.
     \]
@@ -252,19 +239,16 @@ By linearity, it suffices to verify the identity on the monomial basis $X^n$ for
     \[
     \Delta_{\mathrm{poly}}(X^{\underline{n}}) = (X+1)^{\underline{n}} - X^{\underline{n}}.
     \]
-    We evaluate the difference of falling factorials:
+    Factoring the falling factorials:
     \begin{align*}
     (X+1)^{\underline{n}} &= (X+1) X (X-1) \cdots (X - n + 2), \\
     X^{\underline{n}} &= X (X-1) \cdots (X - n + 2) (X - n + 1).
     \end{align*}
-    Factoring the common product $X (X-1) \cdots (X - n + 2) = X^{\underline{n-1}}$:
+    The product of the first $n-1$ factors is $X^{\underline{n-1}}$. Factoring this out:
     \[
     (X+1)^{\underline{n}} - X^{\underline{n}} = X^{\underline{n-1}} \big[ (X+1) - (X - n + 1) \big] = X^{\underline{n-1}} [1 + n - 1] = n X^{\underline{n-1}}.
     \]
-    Therefore:
-    \[
-    \Delta_{\mathrm{poly}}(\Phi(X^n)) = n X^{\underline{n-1}} = \Phi(D(X^n)).
-    \]
+    Therefore $\Delta_{\mathrm{poly}}(\Phi(X^n)) = n X^{\underline{n-1}} = \Phi(D(X^n))$.
 \end{enumerate}
 This establishes $\Phi \circ D = \Delta_{\mathrm{poly}} \circ \Phi$ on all polynomials.
 \end{proof}
@@ -338,15 +322,35 @@ On the other hand, the trace of the $n \times n$ identity matrix $I_n$ is:
 \[
 \mathrm{Tr}(I_n) = \sum_{i=1}^n 1_K = n \cdot 1_K.
 \]
-Equating the two traces yields:
-\[
-0 = n \cdot 1_K.
-\]
+Equating the two traces yields $0 = n \cdot 1_K$.
 Because $K$ has characteristic zero and $n \ge 1$, $n \cdot 1_K \neq 0$ in $K$. This contradiction shows that no such matrices exist.
 \end{proof}
 
-\begin{remark}[Formalization Note]
-Theorem~\ref{thm:no_go} explains why the exact discrete Heisenberg pair in Theorem~\ref{thm:discrete_heisenberg} requires the infinite-dimensional carrier $R^\mathbb{Z}$. On a finite periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, functions form a finite-dimensional space of dimension $L$. Consequently, any exact commutator $[A, B]$ between operators on $R^L$ must be traceless, precluding an exact identity $[A, B] = I$. 
+\paragraph{Formal Correctness vs.\ Physical Implications: Resolution of the CCR Obstruction.}
+Theorem~\ref{thm:no_go} explains why quantum canonical commutation relations cannot be realized by finite-dimensional single-particle matrices. On a finite periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the space of single-particle wavefunctions has dimension $L < \infty$, so single-particle position and momentum operators cannot satisfy $[P, X] = -i I$.
 
-In the lattice AQFT program, this obstruction is resolved by bosonization: the bosonic Canonical Commutation Relations are not realized as unbounded matrix position-momentum pairs on single-particle spaces, but emerge on the graded, infinite-dimensional Umbral polynomial Fock layer (Chapter~\ref{ch:boson_fock}) and on budget-regularized current algebras (Chapters~\ref{ch:heisenberg_algebra} and~\ref{ch:haldane_completeness}).
+In condensed matter physics, this obstruction is frequently bypassed by asserting infinite-dimensional Hilbert spaces or imposing periodic boundary conditions with discontinuous sawtooth position operators. In our constructive program, the obstruction is resolved through \emph{bosonization}:
+\begin{itemize}
+    \item The bosonic CCR is not sought as a single-particle operator pair $[P, X]$.
+    \item Instead, it emerges in second quantization on the graded Umbral polynomial Fock layer (Chapter~\ref{ch:boson_fock}) and as an exact Kac--Moody current algebra on finite energy budget subspaces (Chapters~\ref{ch:heisenberg_algebra} and~\ref{ch:haldane_completeness}).
+\end{itemize}
+
+\begin{remark}[Formalization Note]
+In the verified Lean~4 core, the proof of Theorem~\ref{thm:no_go} is formalized by exhibiting the trace map on matrices over fields of characteristic zero. This formal check guarantees that attempts to realize single-particle CCR on finite lattices are mathematically excluded, providing strict justification for the energy budget regularization introduced in Chapter~\ref{ch:vacuum_budget}.
 \end{remark}
+
+\section{Chapter Summary and Literature Comparison}
+
+In this chapter, we developed the algebraic foundations of discrete differences:
+\begin{itemize}
+    \item Forward $\Delta = E - I$ and backward $\nabla = I - E^{-1}$ differences satisfy exact discrete Leibniz rules with a cross-term $(\Delta f)(\Delta g)$.
+    \item On periodic lattices $\Lambda$, $\Delta$ and $-\nabla$ are exact formal adjoints, yielding summation by parts without boundary terms.
+    \item The shift operator expands into finite Newton binomial series over falling factorials $X^{\underline{n}}$.
+    \item The umbral map $\Phi$ intertwines polynomial differentiation with discrete differences.
+    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists on bilateral sequences, while the finite-dimensional No-Go theorem proves that quantum CCR cannot be represented on finite-dimensional single-particle matrices.
+\end{itemize}
+
+\paragraph{Comparison with Standard Continuum Literature.}
+In standard bosonization texts (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), field derivatives $\partial_x \phi(x)$ are taken in the continuum sense. The Leibniz rule is assumed to be the classical derivation rule, and integration by parts is carried out by dropping boundary terms at spatial infinity or across periodic boundary lengths $\mathcal{L}$.
+
+As shown by Mattis and Lieb~\cite{mattis1965} and Haldane~\cite{haldane1981}, the continuum derivative is an idealization that conceals how lattice cutoffs regularize field theories. The umbral framework developed here establishes that exact algebraic analogues of differential calculus exist directly on the discrete lattice without taking limits. Furthermore, the finite-dimensional No-Go theorem provides the mathematical reason why current algebras in Chapter~\ref{ch:heisenberg_algebra} must emerge via normal ordering on fermionic Fock spaces rather than single-particle coordinate pairs.
