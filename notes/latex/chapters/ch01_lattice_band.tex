@@ -6,10 +6,10 @@
 In relativistic quantum field theory in $1+1$ dimensions, continuous spacetime coordinates and infinite-dimensional momentum representations frequently introduce severe infrared and ultraviolet divergences. In the constructivist and algebraic program developed in this monograph, all continuum divergences are eliminated at the foundation by formulating the theory on a strictly finite, discrete spatial manifold and its exact Fourier-dual momentum space.
 
 Throughout this chapter, let $L \in \mathbb{N}$ denote the number of spatial lattice sites, assuming $L \ge 1$. While general difference calculus and Fourier transforms can be formulated for arbitrary positive integers $L$, the construction of half-filled Dirac seas and fermionic Fock spaces from Chapter~\ref{ch:fermions} onward strictly requires an even lattice length:
-\[
+\begin{equation}
 L = 2h, \quad h \in \mathbb{N}, \quad h \ge 1.
-\]
-The integer $h$ represents the half-filling number or the positive Nyquist cut-off.
+\end{equation}
+The integer $h$ represents the half-filling particle number or the positive Nyquist cut-off.
 
 \section{The Spatial Lattice}
 
@@ -29,6 +29,10 @@ Because $L \ge 1$, the spatial lattice $\Lambda$ is a finite commutative ring of
 In constructive formalizations of mathematics, algebraic structures must carry computational and decidable content. The spatial lattice $\Lambda$ is realized directly via the cyclic quotient type with an explicit hypothesis of strict positivity ($L > 0$), preventing degenerate structures associated with modulo-zero division. Periodic boundary conditions require no auxiliary topological constraints; they are enforced by the quotient equality $x + L = x$.
 \end{remark}
 
+\paragraph{Formal Correctness vs.\ Physical Implications: Discrete Chains vs.\ Continuum Circles.}
+In condensed matter physics, a circular chain is often treated in the continuum limit by taking the lattice spacing $a \to 0$ and the number of sites $L \to \infty$ while holding the macroscopic circumference $\mathcal{L} = L a$ fixed. In that limit, spatial positions $x a$ tend to continuous coordinates on the circle $\mathbb{R}/\mathcal{L}\mathbb{Z}$, and fields become continuous functions or operator-valued distributions. 
+In our exact algebraic framework, by contrast, the lattice spacing $a$ is set to $1$ without loss of generality, and all positions $x \in \Lambda$ are exact residue classes. This eliminates distribution-theoretic smearing and guarantees that every spatial operator algebra is strictly finite-dimensional.
+
 \section{The Momentum Band and Nyquist Asymmetry}
 
 In continuous quantum field theory, the dual momentum space is the real line $\mathbb{R}$ or the continuous circle $\mathbb{R}/(2\pi/a)\mathbb{Z}$. On a discrete spatial lattice of $L$ sites, the dual momentum band (the first Brillouin zone) must consist of exactly $L$ discrete momentum modes.
@@ -40,7 +44,10 @@ The momentum band $\Lambda^*$ is the subset of signed integers satisfying the tw
 \begin{equation}
 \Lambda^* \coloneqq \left\{ k \in \mathbb{Z} \;\middle|\; -L < 2k \le L \right\}.
 \end{equation}
-Momenta are denoted by variables $k, p, q \in \Lambda^*$. The physical momentum corresponding to mode index $k$ is given by the scaled wavenumber $p_{\mathrm{phys}} = \frac{2\pi k}{L}$.
+Momenta are denoted by variables $k, p, q \in \Lambda^*$. The physical wavenumber corresponding to mode index $k$ is given by the scaled wavenumber:
+\begin{equation}
+p_{\mathrm{phys}} \coloneqq \frac{2\pi k}{L}.
+\end{equation}
 \end{definition}
 
 The choice of inequalities $-L < 2k \le L$ is subtle and fundamental:
@@ -53,10 +60,13 @@ The choice of inequalities $-L < 2k \le L$ is subtle and fundamental:
     \item When $L$ is odd, say $L = 2m+1$, the condition becomes $-2m-1 < 2k \le 2m+1$, which yields the symmetric set $\{-m, -m+1, \dots, m-1, m\}$ of cardinality $2m+1$.
 \end{itemize}
 
-\begin{remark}[Formalization Note]
-A common convention in physics textbooks is to choose a symmetric interval $[-h, h]$, which contains $2h+1$ modes, or to assign fractional statistical weights to the boundaries $\pm h$. Such conventions destroy the exact bijective correspondence between spatial sites and momentum modes. In a kernel-checked algebraic formalization, exact finite dimensionality is paramount: the discrete Fourier transform must be a bijective isometry between two spaces of identical dimension $L$. Retaining the positive Nyquist mode $+h$ while excluding $-h$ preserves exact cardinality $\#\Lambda^* = L$ while avoiding duplicate periodic modes, because $-h \equiv +h \pmod L$.
+\paragraph{Formal Correctness vs.\ Physical Implications: Brillouin Zone Boundaries.}
+In standard solid-state physics textbooks (such as Ashcroft and Mermin or Kittel), the first Brillouin zone is customarily drawn as the symmetric interval $[-\pi/a, \pi/a]$, or $[-h, h]$ in mode units. However, on an even lattice of $L = 2h$ sites, the modes $k = -h$ and $k = +h$ represent the \emph{same} physical wave on the lattice, since $e^{i (-h) (2\pi x / 2h)} = e^{-i \pi x} = (-1)^x = e^{i \pi x} = e^{i (+h) (2\pi x / 2h)}$.
+Including both $-h$ and $+h$ yields $2h+1$ modes, which violates the fundamental dimension theorem $\dim(\ell^2(\Lambda)) = \dim(\ell^2(\Lambda^*)) = L$. Physics literature often circumvents this by assigning fractional weights $1/2$ to the boundary modes or passing implicitly to the thermodynamic limit. 
+For an exact, kernel-checked algebraic formalization, exact finite dimensionality is strictly required: the discrete Fourier transform must be a bijective isometry between two spaces of identical dimension $L$. Retaining the positive Nyquist mode $+h$ while excluding $-h$ preserves exact cardinality $\#\Lambda^* = L$ while avoiding duplicate periodic modes.
 
-Furthermore, while $\Lambda^*$ is defined as an abstract comprehension over $\mathbb{Z}$, constructive computation requires a decidable finite set. In formal practice, $\Lambda^*$ is constructed by filtering the bounded finset $\mathbb{Z} \cap [-L, L]$ with the decidable predicate $-L < 2k \le L$, establishing the finite type instance without invoking non-constructive choice principles.
+\begin{remark}[Formalization Note]
+While $\Lambda^*$ is defined as an abstract comprehension over $\mathbb{Z}$, constructive computation requires a decidable finite set. In formal practice, $\Lambda^*$ is constructed by filtering the bounded finite set $\mathbb{Z} \cap [-L, L]$ with the decidable predicate $-L < 2k \le L$, establishing the finite type instance without invoking non-constructive choice principles.
 \end{remark}
 
 \section{Quotient Projections and the Centered Section}
@@ -82,6 +92,9 @@ x_{\mathrm{val}} - L, & \text{if } 2 x_{\mathrm{val}} > L.
 \end{cases}
 \end{equation}
 \end{definition}
+
+\paragraph{Physical Intuition for the Centered Lift.}
+The map $r$ takes a non-negative residue $x_{\mathrm{val}} \in [0, L-1]$ and centers it around zero: values in the upper half of the range $[h+1, 2h-1]$ are translated downward by $L$ to become negative integers in $[-h+1, -1]$, corresponding to negative-frequency or left-moving momentum modes in physical terminology.
 
 \begin{lemma}[Well-Definedness and Inversion]
 \label{lem:section_identities}
@@ -116,10 +129,7 @@ We verify both statements directly from the definitions:
     \[
     -\frac{L}{2} < k \le \frac{L}{2} \quad \text{and} \quad -\frac{L}{2} < r(\pi(k)) \le \frac{L}{2}.
     \]
-    Subtracting these inequalities yields:
-    \[
-    -L < k - r(\pi(k)) < L.
-    \]
+    Subtracting these inequalities yields $-L < k - r(\pi(k)) < L$.
     The only integer multiple of $L$ strictly between $-L$ and $L$ is $0$. Hence $m = 0$, which proves $r(\pi(k)) = k$.
 \end{enumerate}
 \end{proof}
@@ -151,7 +161,8 @@ k \oplus p &\coloneqq r(\pi(k) + \pi(p)), \\
 
 Because $(\pi, r)$ is a bijection between $\Lambda^*$ and the abelian group $\Lambda$, $(\Lambda^*, \oplus, \ominus, 0)$ forms a finite abelian group isomorphic to $\mathbb{Z}/L\mathbb{Z}$, with neutral element $0 = r(\pi(0))$.
 
-In physics, the sum of two crystal momenta $k + p$ may exceed the Brillouin zone boundaries, triggering an Umklapp process where a reciprocal lattice vector transfers momentum to the crystal. The difference between ordinary integer addition $k+p$ and band addition $k \oplus p$ is made precise by the following theorem.
+\paragraph{Physical Intuition: Umklapp Scattering on a Lattice.}
+In solid-state physics, when two quasi-particles with crystal momenta $k$ and $p$ scatter, their total momentum $k+p$ can exceed the boundary of the first Brillouin zone. The crystal lattice absorbs a reciprocal lattice vector $G = \pm L$, scattering the particles back into the first Brillouin zone with crystal momentum $k \oplus p = k + p \mp L$. This physical phenomenon is known as an \emph{Umklapp process}. Theorem~\ref{thm:wrap_lemma} makes this exact algebraically: the integer difference between arithmetic addition and band addition is always $w L$ with $w \in \{-1, 0, 1\}$.
 
 \begin{theorem}[Umklapp Wrapping Lemma]
 \label{thm:wrap_lemma}
@@ -184,7 +195,7 @@ Since $-L < s \le L$ and $-L/2 < k \oplus p \le L/2$, we obtain bounds on $w$:
 \]
 Dividing by $L > 0$ yields $-\frac{3}{2} < w < \frac{3}{2}$. Because $w \in \mathbb{Z}$, the only possible values are $w \in \{-1, 0, 1\}$.
 
-Now test the three cases:
+Testing the three ranges:
 \begin{itemize}
     \item If $2s > L$, choose candidate $s' = s - L$. Then $2s' = 2s - 2L > L - 2L = -L$, and $2s' \le 2L - 2L = 0 \le L$. Thus $s' \in \Lambda^*$ and $\pi(s') = \pi(s)$. By uniqueness of the centered representative in $\Lambda^*$, $k \oplus p = s - L$, so $w = 1$.
     \item If $-L < 2s \le L$, then $s$ already belongs to $\Lambda^*$. Uniqueness gives $k \oplus p = s$, so $w = 0$.
@@ -248,3 +259,25 @@ In physical literature, authors often assume $\ominus k = -k$ for all momenta wi
 \end{itemize}
 This exact accounting ensures that no double-counting or missing modes occur when partitioning momentum sums into pairs $(k, -k)$ in later chapters.
 \end{remark}
+
+\section{Chapter Summary and Literature Comparison}
+
+In this opening chapter, we established the discrete spatial and momentum geometry that underlies all subsequent field-theoretic constructions:
+\begin{itemize}
+    \item The spatial lattice is the finite cyclic group $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$).
+    \item The momentum band is the asymmetric Brillouin zone $\Lambda^* = \{-h+1, \dots, h\}$, retaining $+h$ and excluding $-h$.
+    \item The canonical projection $\pi$ and centered lift section $r$ form a two-sided bijection $\Lambda^* \cong \Lambda$.
+    \item Group arithmetic on $\Lambda^*$ is transported via $(\pi, r)$, with integer discrepancies governed by the Umklapp wrapping multiplier $w \in \{-1, 0, 1\}$.
+    \item The positive Nyquist mode $k = h$ is the unique non-zero self-inverse mode under band negation $\ominus$.
+\end{itemize}
+
+\paragraph{Comparison with Standard Continuum Literature.}
+In standard condensed matter bosonization texts, such as Giamarchi~\cite{giamarchi2004}, Gogolin, Nersesyan, and Tsvelik~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the spatial circle is typically taken as a continuous interval $[0, \mathcal{L}]$ with periodic boundary conditions, leading to an infinite set of discrete momentum modes $k_n = \frac{2\pi n}{\mathcal{L}}$ ($n \in \mathbb{Z}$). In that setting, there is no upper momentum cutoff, Umklapp scattering is treated as an extrinsic perturbation or ignored in low-energy Tomonaga--Luttinger models, and the Fermi sea has infinite depth.
+
+By contrast, our constructive formulation models the physical lattice from the outset. As emphasized by Haldane~\cite{haldane1981}, the lattice acts as an intrinsic ultraviolet regulator. The asymmetric Brillouin zone $\Lambda^*$ is the unique choice that simultaneously achieves:
+\begin{enumerate}
+    \item Exact finite dimension: $\dim(\ell^2(\Lambda)) = \dim(\ell^2(\Lambda^*)) = L$.
+    \item Absence of duplicate physical modes.
+    \item Decidable, constructive arithmetic without boundary ambiguities.
+\end{enumerate}
+In later chapters (specifically Chapter~\ref{ch:heisenberg_algebra} and Chapter~\ref{ch:haldane_completeness}), we will demonstrate that when particle excitations are restricted to an energy budget margin $2M + K + |N| \le h$, the Umklapp wrapping $w$ vanishes identically ($w = 0$), and the exact lattice dynamics reproduces the continuum current algebra of Giamarchi~\cite{giamarchi2004} and von Delft--Schoeller~\cite{vondelft1998} with zero error.
