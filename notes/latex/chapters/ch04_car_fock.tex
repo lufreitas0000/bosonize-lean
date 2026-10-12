@@ -17,7 +17,7 @@ Typical physical realizations of $\iota$ include:
     \item Multi-species or spinful chiral fermions $\iota = \{R, L\} \times \{\uparrow, \downarrow\} \times \Lambda^*$, endowed with the lexicographic product order.
 \end{enumerate}
 
-\section{The Two-Tiered CAR Hierarchy: Algebraic vs. Hilbert Setting}
+\section{The Two-Tiered CAR Hierarchy: Algebraic vs.\ Hilbert Setting}
 
 To separate pure algebraic identities from metric and inner-product properties, we distinguish between two tiers of CAR representations.
 
@@ -71,7 +71,7 @@ We verify each algebraic identity:
     
     \item Setting $a = b = i$ and $c = j$ in the bilinear identity gives $[n_i, c_j^\dagger c_d] = \delta_{i, j} c_i^\dagger c_d - \delta_{i, d} c_j^\dagger c_i$. Contracting with a test state or using $\{c_i, c_j^\dagger\} = \delta_{i,j}$:
     \[
-    n_i c_j^\dagger = c_i^\dagger c_i c_j^\dagger = c_i^\dagger (\delta_{i, j} I - c_j^\dagger c_i) = \delta_{i, j} c_i^\dagger - c_i^\dagger c_j^\dagger c_i = \delta_{i, j} c_j^\dagger + c_j^\dagger c_i^\dagger c_i = \delta_{i, j} c_j^\dagger + c_j^\dagger n_i,
+    n_i c_j^\dagger = c_i^\dagger c_i c_j^\dagger = c_i^\dagger (\delta_{i, j} I - c_j^\dagger c_i) = \delta_{i, j} c_j^\dagger - c_i^\dagger c_j^\dagger c_i = \delta_{i, j} c_j^\dagger + c_j^\dagger c_i^\dagger c_i = \delta_{i, j} c_j^\dagger + c_j^\dagger n_i,
     \]
     which gives $[n_i, c_j^\dagger] = \delta_{i, j} c_j^\dagger$. The annihilation commutator follows analogously.
     
@@ -86,6 +86,13 @@ c_i^\dagger = (c_i)^\dagger \quad \text{for all } i \in \iota,
 \end{equation}
 where $(A)^\dagger$ denotes the unique Hilbert space adjoint satisfying $\langle u, A v \rangle = \langle A^\dagger u, v \rangle$.
 \end{definition}
+
+\paragraph{Bra-Ket Matrix Elements and Operator Notation.}
+In Dirac bra-ket notation, for any states $|u\rangle, |v\rangle \in V$ and linear operator $A \in \mathrm{End}_{\mathbb{C}}(V)$, the matrix element is written using vertical bars:
+\begin{equation}
+\langle u \mid A \mid v \rangle \coloneqq \langle u \mid A v \rangle \equiv \langle A^\dagger u \mid v \rangle.
+\end{equation}
+This notation is completely rigorous: the placement of the operator between the bra and ket reflects the self-adjointness of the inner product pairing, meaning that acting forward on the ket with $A$ is identical to acting backward on the bra with $A^\dagger$.
 
 \begin{remark}[Formalization Note]
 In the verified Lean formalization (\texttt{Bosonize.A02}), the separation between \texttt{AlgebraicCAR} and \texttt{CAR} is strictly maintained. Adjoint compatibility is an independent geometric axiom: if $(c, c^\dagger)$ is an algebraic CAR pair and $S$ is an invertible non-unitary operator, the similarity transform $\tilde{c}_i \coloneqq S c_i S^{-1}$ and $\tilde{c}_i^\dagger \coloneqq S c_i^\dagger S^{-1}$ preserves all anticommutators, but $\tilde{c}_i^\dagger \neq (\tilde{c}_i)^\dagger$. Thus, adjointness is an essential condition that fixes the physical Hilbert space metric.
@@ -111,7 +118,7 @@ For each subset $S \subseteq \iota$, the basis vector $|S\rangle$ is the indicat
     \end{equation}
     \item Basis states form an orthonormal basis under the standard Euclidean inner product:
     \begin{equation}
-    \langle S | T \rangle = \delta_{S, T} \quad \text{for all } S, T \subseteq \iota.
+    \langle S \mid T \rangle = \delta_{S, T} \quad \text{for all } S, T \subseteq \iota.
     \end{equation}
     \item The state $|\emptyset\rangle$ is the unique normalized fermionic vacuum state.
 \end{enumerate}
@@ -124,7 +131,7 @@ To define creation and annihilation operators on $\mathcal{F}(\iota)$ that satis
 \begin{definition}[Preceding Count and Fermionic Sign]
 Let $\iota$ be linearly ordered by $\le$. For any mode $i \in \iota$ and any occupation subset $S \subseteq \iota$:
 \begin{enumerate}
-    \item The \emph{preceding count} $\sigma(i, S)$ is the number of occupied modes in $S$ strictly preceding $i$:
+    \item The \emph{preceding count} $\sigma(i, S) \in \mathbb{N}$ is the number of occupied modes in $S$ strictly preceding $i$:
     \begin{equation}
     \sigma(i, S) \coloneqq \#\{j \in S \mid j < i\}.
     \end{equation}
@@ -135,7 +142,7 @@ Let $\iota$ be linearly ordered by $\le$. For any mode $i \in \iota$ and any occ
 \end{enumerate}
 \end{definition}
 
-In constructive mathematics, to avoid underflow errors when computing counts in $\mathbb{N}$ (where $0 - 1 = 0$), all set operations are formulated additively.
+To maintain strict mathematical precision, the domain of the count $\sigma(i, S)$ is defined in $\mathbb{N}$, and arithmetic evaluations are carried out additively via disjoint unions.
 
 \begin{lemma}[Additive Atomic Counts]
 \label{lem:atomic_counts}
@@ -156,6 +163,63 @@ Let $i, j \in \iota$ and $S \subseteq \iota$.
 \begin{proof}
 The preceding set $\{k \in S \cup \{j\} \mid k < i\}$ is the disjoint union of $\{k \in S \mid k < i\}$ and $\{j\}$ if $j < i$, or simply $\{k \in S \mid k < i\}$ if $j \ge i$. Taking set cardinalities yields the additive formula. Part (2) is the inverse statement, and part (3) follows because $i < i$ is false.
 \end{proof}
+
+\paragraph{Pedagogical Context and Physical Interpretation of Fermionic Signs.}
+Why are fermionic signs $\epsilon(i, S)$ necessary, and how do they ensure anticommutation?
+In quantum mechanics, multi-particle wavefunctions for fermions must be completely antisymmetric under particle exchange: $\Psi(x_1, x_2) = - \Psi(x_2, x_1)$. When formulating this on an occupation basis $|S\rangle$, each state is conceptually an ordered product of creation operators acting on the vacuum:
+\[
+|S\rangle = c_{i_k}^\dagger \cdots c_{i_2}^\dagger c_{i_1}^\dagger |\emptyset\rangle \quad \text{with } i_1 < i_2 < \dots < i_k.
+\]
+When an additional fermion is created at mode $j \notin S$, the operator $c_j^\dagger$ must be commuted past all existing particles with modes $p < j$ to reach its canonical position in the ordered product. Since adjacent fermionic operators anticommute ($\{c_p^\dagger, c_j^\dagger\} = 0$), each permutation past an occupied mode contributes a factor of $(-1)$. Therefore, the insertion of particle $j$ incurs the phase $(-1)^{\sigma(j, S)} = \epsilon(j, S)$.
+
+When two operations are performed sequentially, say creating mode $j$ and then creating mode $i$ (with $j < i$), two distinct orderings are possible:
+\begin{enumerate}
+    \item \textbf{Creating $j$ then $i$:} When $j$ is created first, it enters the state with phase $\epsilon(j, S)$. When $i$ is created next, mode $j$ is already present in the configuration. Because $j < i$, mode $j$ contributes $+1$ to the count of particles preceding $i$, so the second phase is $(-1)^{\sigma(i, S) + 1} = -\epsilon(i, S)$.
+    \item \textbf{Creating $i$ then $j$:} When $i$ is created first, it enters with phase $\epsilon(i, S)$. When $j$ is created next, although $i$ is now in the configuration, $i > j$ does \emph{not} precede $j$! Thus the count of particles preceding $j$ is unaffected: $\sigma(j, S \cup \{i\}) = \sigma(j, S)$, so the phase remains $\epsilon(j, S)$.
+\end{enumerate}
+Comparing the two composite phases reveals a relative factor of $-1$. This fundamental sign discrepancy is the exact combinatorial origin of $\{c_i^\dagger, c_j^\dagger\} = 0$.
+
+Figure~\ref{fig:sign_mechanics} illustrates this asymmetric count shift visually.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1, >=latex]
+    % Draw horizontal axis
+    \draw[thick, ->] (0, 0) -- (11, 0) node[right] {Mode index in $\iota$};
+    
+    % Draw modes j and i
+    \draw[blue!80!black, ultra thick] (3.5, -0.4) -- (3.5, 0.4) node[above] {$j$};
+    \draw[red!80!black, ultra thick] (8.0, -0.4) -- (8.0, 0.4) node[above] {$i$};
+    
+    % Occupied particles of S
+    \filldraw[black] (1.0, 0) circle (3pt) node[below=4pt] {$s_1$};
+    \filldraw[black] (2.2, 0) circle (3pt) node[below=4pt] {$s_2$};
+    \filldraw[black] (5.5, 0) circle (3pt) node[below=4pt] {$s_3$};
+    \filldraw[black] (6.8, 0) circle (3pt) node[below=4pt] {$s_4$};
+    \filldraw[black] (9.5, 0) circle (3pt) node[below=4pt] {$s_5$};
+    
+    % Brackets for regions
+    \draw[decorate, decoration={brace, amplitude=6pt, mirror}] (0.8, -0.8) -- (2.4, -0.8) 
+        node[midway, below=8pt] {$\sigma(j, S) = 2$ particles};
+    \draw[decorate, decoration={brace, amplitude=6pt, mirror}] (0.8, -1.8) -- (7.0, -1.8) 
+        node[midway, below=8pt] {$\sigma(i, S) = 4$ particles};
+        
+    % Insertion paths
+    \draw[->, blue!80!black, thick] (3.5, 1.2) -- (3.5, 0.6) 
+        node[midway, left=2pt] {Insert $j$: phase $(-1)^{\sigma(j, S)}$};
+        
+    \node[draw, rounded corners, fill=yellow!10, text width=12cm, align=left] at (5.5, -3.2) {
+        \textbf{Sequential Orderings ($j < i$):}\\
+        $\bullet$ \textbf{Case 1 ($j$ then $i$):} Adding $j$ increases the count preceding $i$ by $1$ because $j < i$:\\
+        \hspace*{1.5cm} $\sigma(i, S \cup \{j\}) = \sigma(i, S) + 1 \implies \text{Phase} = \epsilon(j, S) \cdot [-\epsilon(i, S)]$.\\
+        $\bullet$ \textbf{Case 2 ($i$ then $j$):} Adding $i$ does \emph{not} affect the count preceding $j$ because $i > j$:\\
+        \hspace*{1.5cm} $\sigma(j, S \cup \{i\}) = \sigma(j, S) \implies \text{Phase} = \epsilon(i, S) \cdot \epsilon(j, S)$.\\
+        $\implies$ \textbf{Relative sign: } $\epsilon(j, S)\epsilon(i, S \cup \{j\}) = - \epsilon(i, S)\epsilon(j, S \cup \{i\})$.
+    };
+\end{tikzpicture}
+\caption{Visual mechanics of the fermionic sign exchange for $j < i$. When mode $j$ is inserted first, it falls to the left of mode $i$, shifting the preceding count of $i$ by $+1$ and introducing an extra factor of $-1$. When mode $i$ is inserted first, it falls to the right of $j$, leaving the count of modes preceding $j$ completely invariant.}
+\label{fig:sign_mechanics}
+\end{figure}
 
 \begin{theorem}[Fermionic Sign Exchange Identities]
 \label{thm:sign_exchange}
@@ -229,82 +293,84 @@ In particular, $\mathcal{F}(\iota)$ is a concrete Hilbert CAR representation.
 \begin{proof}
 We verify both properties on arbitrary basis states $|S\rangle, |T\rangle$:
 \begin{enumerate}
-    \item For adjointness, we compute the matrix elements $\langle S | c_i | T \rangle$ and $\langle c_i^\dagger S | T \rangle$:
+    \item For adjointness, we compute the matrix elements $\langle S \mid c_i \mid T \rangle$ and $\langle c_i^\dagger S \mid T \rangle$:
     \begin{itemize}
-        \item If $i \in T$ and $S = T \setminus \{i\}$, then $c_i |T\rangle = \epsilon(i, T) |S\rangle$, so $\langle S | c_i | T \rangle = \epsilon(i, T)$. Also, $i \notin S$ and $S \cup \{i\} = T$, so $c_i^\dagger |S\rangle = \epsilon(i, S) |T\rangle$. By Lemma~\ref{lem:atomic_counts}(3), $\sigma(i, S) = \sigma(i, T)$, so $\epsilon(i, S) = \epsilon(i, T)$. Thus $\langle c_i^\dagger S | T \rangle = \epsilon(i, S) = \epsilon(i, T) = \langle S | c_i | T \rangle$.
+        \item If $i \in T$ and $S = T \setminus \{i\}$, then $c_i |T\rangle = \epsilon(i, T) |S\rangle$, so $\langle S \mid c_i \mid T \rangle = \epsilon(i, T)$. Also, $i \notin S$ and $S \cup \{i\} = T$, so $c_i^\dagger |S\rangle = \epsilon(i, S) |T\rangle$. By Lemma~\ref{lem:atomic_counts}(3), $\sigma(i, S) = \sigma(i, T)$, so $\epsilon(i, S) = \epsilon(i, T)$. Thus $\langle c_i^\dagger S \mid T \rangle = \epsilon(i, S) = \epsilon(i, T) = \langle S \mid c_i \mid T \rangle$.
         \item In all other cases, both matrix elements vanish identically.
     \end{itemize}
     Since this holds for all basis states, $c_i^\dagger = (c_i)^\dagger$.
 
     \item For anticommutators:
     \begin{itemize}
-        \item If $i = j$: $c_i^2 |S\rangle = 0$ because if $i \in S$, $c_i |S\rangle \propto |S \setminus \{i\}\rangle$, which no longer contains $i$, so applying $c_i$ again yields $0$. Similarly, $(c_i^\dagger)^2 = 0$. For the mixed term: if $i \in S$, $c_i^\dagger c_i |S\rangle = |S\rangle$ and $c_i c_i^\dagger |S\rangle = 0$; if $i \notin S$, $c_i^\dagger c_i |S\rangle = 0$ and $c_i c_i^\dagger |S\rangle = |S\rangle$. In both cases, $(c_i c_i^\dagger + c_i^\dagger c_i) |S\rangle = |S\rangle = \delta_{i, i} |S\rangle$.
-        \item If $i \neq j$: when $i, j \notin S$, $(c_i^\dagger c_j^\dagger + c_j^\dagger c_i^\dagger)|S\rangle = \big( \epsilon(j, S) \epsilon(i, S \cup \{j\}) + \epsilon(i, S) \epsilon(j, S \cup \{i\}) \big) |S \cup \{i, j\}\rangle$. By Theorem~\ref{thm:sign_exchange}(1), the sum of signs is $0$. The same holds for $\{c_i, c_j\} = 0$ and $\{c_i, c_j^\dagger\} = 0$ using parts (2) and (3) of Theorem~\ref{thm:sign_exchange}.
+        \item \textbf{Same-mode anticommutator:} If $i = j$, $c_i^2 |S\rangle = 0$ because $i$ cannot be removed twice, and $(c_i^\dagger)^2 |S\rangle = 0$ because $i$ cannot be inserted twice. For the mixed product: $c_i c_i^\dagger |S\rangle = |S\rangle$ if $i \notin S$ and $0$ if $i \in S$; while $c_i^\dagger c_i |S\rangle = |S\rangle$ if $i \in S$ and $0$ if $i \notin S$. Summing the two yields $\{c_i, c_i^\dagger\} |S\rangle = |S\rangle = I |S\rangle$.
+        \item \textbf{Distinct-mode anticommutator:} If $i \neq j$, applying $c_i^\dagger c_j^\dagger |S\rangle$ yields $\epsilon(j, S) \epsilon(i, S \cup \{j\}) |S \cup \{i, j\}\rangle$ if $i, j \notin S$. Applying $c_j^\dagger c_i^\dagger |S\rangle$ yields $\epsilon(i, S) \epsilon(j, S \cup \{i\}) |S \cup \{i, j\}\rangle$. By Theorem~\ref{thm:sign_exchange}(1), these two coefficients are exact negatives of each other, so their sum vanishes: $\{c_i^\dagger, c_j^\dagger\} |S\rangle = 0$. Annihilation pairs and mixed pairs vanish identically by parts (2) and (3) of Theorem~\ref{thm:sign_exchange}.
     \end{itemize}
 \end{enumerate}
 \end{proof}
 
-\section{Observables, Parity, and the Hopping Algebra}
+\section{The Global Fermion Parity Operator}
 
-\begin{definition}[Number and Parity Observables]
-\begin{enumerate}
-    \item \textbf{Local Number Operator:} $n_i \coloneqq c_i^\dagger c_i$. On basis states:
-    \begin{equation}
-    n_i |S\rangle = \begin{cases} |S\rangle, & \text{if } i \in S, \\ 0, & \text{if } i \notin S. \end{cases}
-    \end{equation}
-    \item \textbf{Total Particle Number Operator:} $\hat{N}_{\mathrm{tot}} \coloneqq \sum_{i \in \iota} n_i$. On basis states:
-    \begin{equation}
-    \hat{N}_{\mathrm{tot}} |S\rangle = (\#S)\, |S\rangle.
-    \end{equation}
-    \item \textbf{Global Fermion Parity Operator $\Gamma$:} Defined as the ordered product over the sorted index set $\iota = \{i_1 < i_2 < \dots < i_d\}$:
-    \begin{equation}
-    \Gamma \coloneqq \prod_{k=1}^d (I - 2 n_{i_k}).
-    \end{equation}
-\end{enumerate}
-\end{definition}
-
-\begin{proposition}[Properties of Global Fermion Parity]
-\label{prop:parity}
-The parity operator $\Gamma$ satisfies:
-\begin{enumerate}
-    \item Action on basis states:
-    \begin{equation}
-    \Gamma |S\rangle = (-1)^{\#S} |S\rangle.
-    \end{equation}
-    \item Involution and self-adjointness: $\Gamma^2 = I$ and $\Gamma^\dagger = \Gamma$.
-    \item Anticommutation with fermionic generators:
-    \begin{equation}
-    \{\Gamma, c_i\} = 0, \qquad \{\Gamma, c_i^\dagger\} = 0 \quad \text{for all } i \in \iota.
-    \end{equation}
-\end{enumerate}
-\end{proposition}
-
-\begin{proof}
-For any $i \in \iota$, $(I - 2n_i)|S\rangle = -|S\rangle$ if $i \in S$, and $+|S\rangle$ if $i \notin S$. Since all $n_i$ commute with each other, the product evaluates to $\prod_{i \in S} (-1) = (-1)^{\#S}$.
-Since $(-1)^{\#S} \in \{+1, -1\}$, $\Gamma^2 |S\rangle = (-1)^{2\#S} |S\rangle = |S\rangle$, and $\Gamma$ is self-adjoint.
-Finally, $c_i$ reduces $\#S$ by $1$ if $i \in S$, so $\Gamma c_i |S\rangle = (-1)^{\#S - 1} c_i |S\rangle = - c_i (-1)^{\#S} |S\rangle = - c_i \Gamma |S\rangle$.
-\end{proof}
-
-\begin{definition}[Hopping Operator]
-For any modes $i, j \in \iota$, the hopping operator $T_{i, j}$ is defined by:
+\begin{definition}[Global Fermion Parity]
+Let the single-particle index set $\iota = \{i_1 < i_2 < \dots < i_d\}$ be ordered. The \emph{Global Fermion Parity Operator} $\Gamma \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(\iota))$ is defined by:
 \begin{equation}
-T_{i, j} \coloneqq c_i^\dagger c_j.
+\Gamma \coloneqq \prod_{k=1}^d (I - 2 n_{i_k}).
 \end{equation}
 \end{definition}
 
-\begin{theorem}[Hopping Lie Algebra]
-The hopping operators satisfy:
+\begin{theorem}[Parity Properties]
+\label{thm:parity_properties}
 \begin{enumerate}
-    \item Adjoint relation: $T_{i, j}^\dagger = T_{j, i}$.
-    \item Commutation relations forming the Lie algebra $\mathfrak{u}(d)$:
+    \item On any occupation basis state $|S\rangle$:
     \begin{equation}
-    [T_{a, b}, T_{c, d}] = \delta_{b, c} T_{a, d} - \delta_{a, d} T_{c, b}.
+    \Gamma |S\rangle = (-1)^{\#S} |S\rangle.
+    \end{equation}
+    \item $\Gamma$ is self-adjoint and unitary: $\Gamma^\dagger = \Gamma$ and $\Gamma^2 = I$.
+    \item $\Gamma$ anticommutes with all fermionic generators:
+    \begin{equation}
+    \Gamma c_i = - c_i \Gamma, \qquad \Gamma c_i^\dagger = - c_i^\dagger \Gamma \quad \text{for all } i \in \iota.
     \end{equation}
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-This is an immediate consequence of Theorem~\ref{thm:algebraic_car}(1) and adjoint compatibility $c_i^\dagger = (c_i)^\dagger$.
+On basis state $|S\rangle$, each factor $(I - 2 n_k)$ evaluates to $-1$ if $k \in S$, and $+1$ if $k \notin S$. Taking the product over all $d$ modes yields $\prod_{k \in S} (-1) \prod_{k \notin S} (+1) = (-1)^{\#S}$.
+Since $(-1)^{\#S} \in \{+1, -1\}$, $\Gamma^2 |S\rangle = ((-1)^{\#S})^2 |S\rangle = |S\rangle$, so $\Gamma^2 = I$. Self-adjointness follows because eigenvalues are real.
+For anticommutation: $c_i$ changes the particle number by $-1$, so $\#(S \setminus \{i\}) = \#S - 1$.
+Therefore $\Gamma c_i |S\rangle = (-1)^{\#S - 1} c_i |S\rangle = - c_i (-1)^{\#S} |S\rangle = - c_i \Gamma |S\rangle$.
+Taking adjoints yields $\Gamma c_i^\dagger = - c_i^\dagger \Gamma$.
 \end{proof}
 
-The hopping operators $T_{i, j}$ form the exact algebraic building blocks for the kinetic Hamiltonian and the density operators in the chapters that follow.
+\begin{remark}[Connection to Clifford Algebras and Planned Appendix]
+\label{rem:clifford_algebra}
+The algebraic structure of the fermionic Fock space $\mathcal{F}(\iota)$ and the global parity operator $\Gamma$ has a deep geometric interpretation through the theory of \emph{Clifford algebras}. 
+Defining the self-adjoint Majorana operators:
+\begin{equation}
+\gamma_{2j-1} \coloneqq c_j + c_j^\dagger, \qquad \gamma_{2j} \coloneqq -i (c_j - c_j^\dagger) \quad (j = 1, \dots, d),
+\end{equation}
+these $2d$ operators satisfy the standard Clifford algebra relations $\mathcal{C}\ell(2d, \mathbb{C})$:
+\begin{equation}
+\{\gamma_a, \gamma_b\} = 2 \delta_{a, b} I \quad (a, b \in \{1, \dots, 2d\}).
+\end{equation}
+Under this correspondence, the global parity operator $\Gamma$ is proportional to the canonical Clifford volume element (chirality operator):
+\begin{equation}
+\Gamma = (-i)^d \gamma_1 \gamma_2 \cdots \gamma_{2d}.
+\end{equation}
+By the representation theory of complex Clifford algebras, $\mathcal{C}\ell(2d, \mathbb{C}) \cong \mathrm{End}(\mathbb{C}^{2^d})$, and the Fock space $\mathcal{F}(\iota)$ is its unique irreducible spin representation. A planned supporting appendix will develop this Clifford representation theory systematically, providing an alternative algebraic proof of Fock space irreducibility and parity grading.
+\end{remark}
+
+\section{Chapter Summary and Literature Comparison}
+
+In this chapter, we developed the exact theory of fermions on finite index sets:
+\begin{itemize}
+    \item Established the two-tiered hierarchy separating algebraic CAR identities from Hilbert space adjoint compatibility.
+    \item Clarified Dirac bra-ket notation and operator matrix elements $\langle u \mid A \mid v \rangle$.
+    \item Proved that fermionic sign factors $\epsilon(i, S) = (-1)^{\sigma(i, S)}$ satisfy exact sign exchange identities, eliminating sign ambiguities without software heuristics.
+    \item Provided a visual TikZ specification of fermionic sign mechanics for creation, annihilation, and mixed pairs.
+    \item Constructed the concrete $2^d$-dimensional Fock space $\mathcal{F}(\iota)$ and proved that it forms an exact Hilbert CAR representation.
+    \item Defined the global fermion parity operator $\Gamma$ and contextualized it within Clifford representation theory.
+\end{itemize}
+
+\paragraph{Comparison with Standard Continuum Literature.}
+In standard condensed matter physics literature (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), fermionic creation and annihilation operators are introduced directly through continuum field operators $\psi(x)$ or Fourier modes $c_k$ without establishing the underlying finite-dimensional representation theory. Permutation signs are handled implicitly using anticommuting Grassmann variables or Jordan--Wigner strings $\exp(i \pi \sum_{j < i} n_j)$.
+
+As demonstrated in this chapter, our constructive formulation defines the sign factors $\epsilon(i, S)$ directly on discrete subsets, proving all sign identities algebraically without infinite operator exponentials. This ensures that the Fock space carrier is well-defined and ready to host the position and momentum fermions developed in Chapter~\ref{ch:fermions}.
