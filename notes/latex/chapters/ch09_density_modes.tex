@@ -271,16 +271,16 @@ Since eigenstates corresponding to distinct eigenvalues $m \in \{1, \dots, h\}$ 
 
 \section{Spatial Density Fourier Expansion and Wrap Remainders}
 
-To connect the momentum density modes to spatial local observables, consider the spatial density operator $\rho(x) \coloneqq \psi^\dagger(x) \psi(x) = c_x^\dagger c_x$.
+To connect the momentum density modes to spatial local observables, consider the spatial density operator $\rho(x) \coloneqq \psi_x^\dagger \psi_x$.
 Taking the discrete Fourier transform of the spatial density:
 \begin{align*}
-\sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}} c_x^\dagger c_x &= \sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}} \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \zeta^{-p x_{\mathrm{val}}} c_p^\dagger \right) \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}} c_k \right) \\
+\sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}} \psi_x^\dagger \psi_x &= \sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}} \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \zeta^{-p x_{\mathrm{val}}} c_p^\dagger \right) \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}} c_k \right) \\
 &= \frac{1}{L} \sum_{p, k \in \Lambda^*} c_p^\dagger c_k \left( \sum_{x \in \Lambda} \zeta^{(k - p + m) x_{\mathrm{val}}} \right).
 \end{align*}
 By spatial character orthogonality (Theorem~\ref{thm:fourier_orthogonality}), the spatial sum forces the modular congruence $k - p + m \equiv 0 \pmod L \iff p \equiv k + m \pmod L$.
 This decomposes the sum into two distinct components:
 \begin{equation}
-\sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}}\, c_x^\dagger c_x = \rho_m + R_m,
+\sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}}\, \psi_x^\dagger \psi_x = \rho_m + R_m,
 \end{equation}
 where:
 \begin{itemize}
