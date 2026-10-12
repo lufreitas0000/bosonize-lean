@@ -303,3 +303,7 @@ Phase A author validation (2026-10-12): source SHA-256 `6e11f90d2801fc18b0e51fe5
 ## Reviewed Phase B instance cleanup
 
 Exactly zero_scalar_norm and zero_scalar_winding omit unused finite enumeration and species-order instances. Their external twist, nonzero length and explicit parameters remain. Independent compiler/signature review: note/ch14_phase_b_instance_cleanup_review_2026-10-12.md. All other interfaces and data are unchanged.
+
+## Complete Phase B — 2026-10-12
+
+All 37 combined theorem proofs and 20 data declarations are complete and freshly audited with only standard axioms; no placeholders or warnings remain. Both native diagnostic calls complete with empty items. The combined build passes 3405 jobs; strict guard verifies 793 statements and 632 commands. Independent final review records authorship and the root’s distinct review of the reviewer-authored eight proofs. Only the two previously reviewed scalar-instance omissions changed the frozen interface. Exact current source hashes and all 57 axiom reports are in note/ch14_phase_b_independent_audit_2026-10-12.json. Phase C promotion and complementary lecture review are next. Earlier Phase A status and placeholder counts are historical.

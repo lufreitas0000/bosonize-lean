@@ -345,15 +345,77 @@ lemma compressed_plus_nilpotent (h M : ℕ) (hh : 0<h) (Ns : σ → ℤ) (K : �
 /-- Adjoint reversal and the minus sign transfer lowering nilpotency to the
 actual compressed raising operator, with no finite-dimensionality shortcut. -/
 lemma compressed_minus_nilpotent (h M : ℕ) (hh : 0<h) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) :
-    compressedMinus h M Ns K ν x ^ (K+1) = 0 := by sorry
+    compressedMinus h M Ns K ν x ^ (K+1) = 0 := by
+  let : NeZero (2*h) := ⟨by omega⟩
+  have hP : star (projection h Ns K) = projection h Ns K := by
+    rw [LinearMap.star_eq_adjoint, projection, A03.projection_adjoint]
+  have hW : star (wPlus h M ν x) = -wMinus h M ν x := by
+    rw [LinearMap.star_eq_adjoint, w_plus_adjoint]
+  have hs : star (compressedPlus h M Ns K ν x) = -compressedMinus h M Ns K ν x := by
+    simp only [compressedPlus, compressedMinus, star_mul, hP, hW]
+    simp only [mul_neg, neg_mul, mul_assoc]
+  have hz := congrArg star (compressed_plus_nilpotent h M hh Ns K ν x)
+  rw [star_pow, star_zero, hs, neg_pow] at hz
+  have hu : IsUnit ((-1 : A05.Operators σ h) ^ (K+1)) := (isUnit_neg_one).pow _
+  exact hu.mul_left_cancel (hz.trans (mul_zero _).symm)
 
 /-- On the actual subtype carrier, projected lowering has the same degree bound. -/
 lemma projected_plus_nilpotent (h M : ℕ) (hh : 0<h) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) :
-    projectedMap h Ns Ns K K (wPlus h M ν x) ^ (K+1) = 0 := by sorry
+    projectedMap h Ns Ns K K (wPlus h M ν x) ^ (K+1) = 0 := by
+  have hfix (v : A05.jointBudget h Ns K) : projection h Ns K v.val = v.val := by
+    let : DecidableEq (A05.Mode σ h) := instDecidableEqProd
+    apply (A03.projection_fixed_iff (budgetSet h Ns K) v.val).mpr
+    exact v.property
+  have hstep (v : A05.jointBudget h Ns K) :
+      (projectedMap h Ns Ns K K (wPlus h M ν x) v : A05.FockSpace σ h) =
+        compressedPlus h M Ns K ν x v.val := by
+    rw [projected_map_apply]
+    change projection h Ns K (wPlus h M ν x v.val) =
+      projection h Ns K (wPlus h M ν x (projection h Ns K v.val))
+    rw [hfix]
+  have hp (n : ℕ) (v : A05.jointBudget h Ns K) :
+      ((projectedMap h Ns Ns K K (wPlus h M ν x) ^ n) v : A05.FockSpace σ h) =
+        (compressedPlus h M Ns K ν x ^ n) v.val := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [pow_succ', pow_succ', Module.End.mul_apply, Module.End.mul_apply,
+        hstep, ih]
+  apply LinearMap.ext
+  intro v
+  apply Subtype.ext
+  change ((projectedMap h Ns Ns K K (wPlus h M ν x) ^ (K+1)) v : A05.FockSpace σ h) = 0
+  rw [hp, compressed_plus_nilpotent h M hh Ns K ν x]
+  simp
 
 /-- On the actual subtype carrier, projected raising has the same degree bound. -/
 lemma projected_minus_nilpotent (h M : ℕ) (hh : 0<h) (Ns : σ → ℤ) (K : ℕ) (ν : σ) (x : ℤ) :
-    projectedMap h Ns Ns K K (wMinus h M ν x) ^ (K+1) = 0 := by sorry
+    projectedMap h Ns Ns K K (wMinus h M ν x) ^ (K+1) = 0 := by
+  have hfix (v : A05.jointBudget h Ns K) : projection h Ns K v.val = v.val := by
+    let : DecidableEq (A05.Mode σ h) := instDecidableEqProd
+    apply (A03.projection_fixed_iff (budgetSet h Ns K) v.val).mpr
+    exact v.property
+  have hstep (v : A05.jointBudget h Ns K) :
+      (projectedMap h Ns Ns K K (wMinus h M ν x) v : A05.FockSpace σ h) =
+        compressedMinus h M Ns K ν x v.val := by
+    rw [projected_map_apply]
+    change projection h Ns K (wMinus h M ν x v.val) =
+      projection h Ns K (wMinus h M ν x (projection h Ns K v.val))
+    rw [hfix]
+  have hp (n : ℕ) (v : A05.jointBudget h Ns K) :
+      ((projectedMap h Ns Ns K K (wMinus h M ν x) ^ n) v : A05.FockSpace σ h) =
+        (compressedMinus h M Ns K ν x ^ n) v.val := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [pow_succ', pow_succ', Module.End.mul_apply, Module.End.mul_apply,
+        hstep, ih]
+  apply LinearMap.ext
+  intro v
+  apply Subtype.ext
+  change ((projectedMap h Ns Ns K K (wMinus h M ν x) ^ (K+1)) v : A05.FockSpace σ h) = 0
+  rw [hp, compressed_minus_nilpotent h M hh Ns K ν x]
+  simp
 
 omit [Fintype σ] [LinearOrder σ] in
 /-- Both the external lift and the integer-charge Fourier factor have modulus one. -/

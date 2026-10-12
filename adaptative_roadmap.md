@@ -218,3 +218,7 @@ All53proofs/42data pass fresh standard-axiom closure; Core migration freezes21mo
 ## CH14/A05 reviewed Phase A — 2026-10-12
 
 Fresh quota permits resumption at the clean CH13 checkpoint. Independently reviewed 37 theorem obligations (A05 13, CH14 24) and 20 complete data declarations are frozen. The interface covers generic finite Taylor algebra and bounded filtration nilpotency, actual compressed/subtype phase nilpotency, typed adjoints, explicit source holonomy, full projected CAR ground expansion, exact projection residuals and the conditional cyclic comparison criterion. No unconditional numerical-margin field–vertex identity is included. Phase B is next. Existing 21 Core modules remain immutable.
+
+## CH14/A05 complete Phase B — 2026-10-12
+
+All 37 proofs and 20 data declarations pass fresh standard-axiom audits and warning-free compilation. Actual ambient and subtype phase nilpotency is proved, alongside true adjoint reversal, holonomy, complete retained ground-vector expansion, exact projection excursions and conditional cyclic uniqueness. No unconditional field dictionary is asserted. Independent final review and exact migration plan are recorded; Phase C is next.

@@ -1,0 +1,168 @@
+{
+  "status": "CONDITIONAL PASS: apply only after fresh full Phase B audit/build gate",
+  "old_core_count": 21,
+  "old_core_current_hashes_match": true,
+  "files": [
+    {
+      "before": "BosonizeStubs/A05FiniteExponentials.lean",
+      "after": "Bosonize/Core/A05FiniteExponentials.lean",
+      "before_sha256": "57d36818adb50f3f981c14191e786efce2d9d1eed872313110f9dd00a392aee5",
+      "after_sha256": "57d36818adb50f3f981c14191e786efce2d9d1eed872313110f9dd00a392aee5",
+      "byte_identical": true,
+      "unchanged_theorem_header_count": 13,
+      "changed_commands": [],
+      "changed_context_entries": [],
+      "all_other_declarations_and_proofs_preserved": true,
+      "candidate": "/tmp/bosonize-ch14/A05FiniteExponentials-promoted-candidate.lean"
+    },
+    {
+      "before": "BosonizeStubs/Ch14Mandelstam.lean",
+      "after": "Bosonize/Core/Ch14Mandelstam.lean",
+      "before_sha256": "ef78dbd4c20ca8b853ae44b123ef9f69932442e4f2b005ea32eca4fe6a4dac83",
+      "after_sha256": "0d3feed562023e5d8a20027021014cc56512d636b58848fa7a8122b61cc320fc",
+      "byte_identical": false,
+      "unchanged_theorem_header_count": 24,
+      "changed_commands": [
+        {
+          "index": 4,
+          "before": {
+            "kind": "import",
+            "label": "import BosonizeStubs.A05FiniteExponentials",
+            "hash": "f2a1dbd6d8f4dae592b88198641f9f57a66b7676c6eb568ac7dc68bd873da1c7",
+            "text": "import BosonizeStubs.A05FiniteExponentials"
+          },
+          "after": {
+            "kind": "import",
+            "label": "import Bosonize.Core.A05FiniteExponentials",
+            "hash": "14080500d90e3154894d05c21f74874e0082b0d4c1595e7bf7753dca8e1752bd",
+            "text": "import Bosonize.Core.A05FiniteExponentials"
+          }
+        }
+      ],
+      "changed_context_entries": [
+        {
+          "name": "Bosonize.Ch14.compressed_minus_nilpotent",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.compressed_plus_nilpotent",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.cyclic_common_residual",
+          "before_ctx": "60c0028a1a1c26e4e9c6061aa49e7ebf968ade77d7d2fd31630510045ae0dcef",
+          "after_ctx": "62ed2f537e90bb1f53cbfe9cbff2e581f654a9cd6b8856fe5ff4fffd89bdf417"
+        },
+        {
+          "name": "Bosonize.Ch14.field_vertex_of_common_residual",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.klein_zero_ground",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.physical_ground_expansion",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.physical_map_winding",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.physical_occupation_expansion",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.projected_map_adjoint",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.projected_map_apply",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.projected_minus_nilpotent",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.projected_plus_nilpotent",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.projected_recurrence_residual",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.vertex_candidate_adjoint",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.vertex_candidate_winding",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.w_minus_adjoint",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.w_minus_periodic",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.w_plus_adjoint",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.w_plus_periodic",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.zero_mode_adjoint",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.zero_mode_unitary",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.zero_mode_winding",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.zero_scalar_norm",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        },
+        {
+          "name": "Bosonize.Ch14.zero_scalar_winding",
+          "before_ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
+          "after_ctx": "222e28a762ad8d92fd43b36ab718ffe93b48811a7cf45a67256df1ce31149dfd"
+        }
+      ],
+      "all_other_declarations_and_proofs_preserved": true,
+      "candidate": "/tmp/bosonize-ch14/Ch14Mandelstam-promoted-candidate.lean"
+    }
+  ]
+}

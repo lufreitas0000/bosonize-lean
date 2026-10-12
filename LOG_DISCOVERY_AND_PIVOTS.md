@@ -104,3 +104,6 @@ Initial scratch proofs failed on unfolded `creatorWord` rewrite matching, ker me
 | 2026-10-12 | CH14 two-instance cleanup candidate | Inserting `omit ... in` between a declaration doc comment and its lemma header caused an unexpected-token parser error. | Move the omission before the declaration doc comment, matching the existing Core convention; no mathematical or proof change. |
 
 | 2026-10-12 | CH14 compressed lowering filtration | Ket membership chooses lexical equality while Core species budgets retain product decisions; arithmetic leaves zero casts and successor equality condition folded. | Select the product equality decision locally for the membership theorem; normalize signed zero budget and the n<K branch explicitly. |
+
+### 2026-10-12 — CH14 subtype nilpotency bridge
+The first power-intertwining scratch proof encountered the known stored coordinate-budget `DecidableEq` mismatch (local lexicographic CAR equality versus product equality captured by the budget). The projector-fixed theorem must be applied with the stored product equality instance, as in the audited ambient proof. Also, unrestricted `ext v` traversed the subtype and occupation coordinates; use explicit `LinearMap.ext` before `Subtype.ext`. These are elaboration fixes to proof bodies; carriers and frozen contracts are unchanged.

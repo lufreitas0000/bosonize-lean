@@ -156,3 +156,7 @@ Iteratively lower from the whole-module top to the zero bottom, then use endomor
 ## Completion gate
 
 All thirteen theorem candidates remain unproved in Phase A. Nilpotency of the actual Chapter 14 phase operators is a separate obligation; neither it nor a physical field–vertex identity follows from this generic foundation. Require complete Phase B proofs, fresh standard-axiom audits, zero warnings/placeholders, strict guards and builds before promotion. The complementary A05 lecture update belongs to independently reviewed Phase C.
+
+## Complete Phase B — 2026-10-12
+
+All 37 combined theorem proofs and 20 data declarations are complete and freshly audited with only standard axioms; no placeholders or warnings remain. Both native diagnostic calls complete with empty items. The combined build passes 3405 jobs; strict guard verifies 793 statements and 632 commands. Independent final review records authorship and the root’s distinct review of the reviewer-authored eight proofs. Only the two previously reviewed scalar-instance omissions changed the frozen interface. Exact current source hashes and all 57 axiom reports are in note/ch14_phase_b_independent_audit_2026-10-12.json. Phase C promotion and complementary lecture review are next. Earlier Phase A status and placeholder counts are historical.
