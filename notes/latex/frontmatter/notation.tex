@@ -4,18 +4,36 @@
 
 This monograph presents a completely self-contained, exact, and constructive formulation of $1+1$-dimensional lattice bosonization within algebraic quantum field theory (AQFT). Unlike traditional continuum heuristic treatments that rely on divergent operator products, formal distribution limits, or unbounded operators, all mathematical statements established here are exact theorems on strictly finite-dimensional carrier spaces, finite lattices, or explicitly graded polynomial algebras.
 
-To maintain clarity and consistency across all chapters, this section establishes the unified mathematical notation used throughout the text.
+To bridge the gap between rigorous mathematical formalization and standard condensed matter physics literature, this section establishes the unified mathematical notation used throughout the text.
+
+\section*{Hilbert Spaces and Dirac Bra-Ket Conventions}
+
+While Dirac notation is ubiquitous in physics, in mathematical literature it represents a specific pairing between vectors and continuous linear functionals:
+\begin{itemize}
+    \item \textbf{States and Kets:} For a complex Hilbert space $\mathcal{H}$ equipped with inner product $\langle \cdot, \cdot \rangle$ (linear in the second argument and conjugate-linear in the first argument, as standard in physics and mathematical physics), vectors are denoted by kets $|\psi\rangle, |\phi\rangle \in \mathcal{H}$.
+    \item \textbf{Dual Vectors and Bras:} For each vector $|\phi\rangle \in \mathcal{H}$, the corresponding bra $\langle \phi| \in \mathcal{H}^*$ denotes the continuous linear functional $\langle \phi| : \mathcal{H} \to \mathbb{C}$ defined by the Riesz representation theorem as the inner product:
+    \[
+    \langle \phi|(|\psi\rangle) \coloneqq \langle \phi, \psi \rangle \equiv \langle \phi \mid \psi \rangle.
+    \]
+    \item \textbf{Operator Matrix Elements and Vertical Bars:} For any linear operator $A \in \mathrm{End}_{\mathbb{C}}(\mathcal{H})$, physicists write matrix elements with vertical bars. We explicitly define this standard notation without ambiguity:
+    \[
+    \langle \phi \mid A \mid \psi \rangle \coloneqq \langle \phi \mid A \psi \rangle \equiv \langle A^\dagger \phi \mid \psi \rangle.
+    \]
+    The vertical bar notation is mathematically unambiguous because $(A^\dagger)^\dagger = A$ and the inner product satisfies $\langle \phi, A \psi \rangle = \langle A^\dagger \phi, \psi \rangle$.
+    \item \textbf{Outer Products and Projections:} For normalized vectors $|\phi\rangle, |\psi\rangle$, the operator $|\psi\rangle\langle \phi| \in \mathrm{End}_{\mathbb{C}}(\mathcal{H})$ denotes the rank-one operator defined by $(|\psi\rangle\langle \phi|)|\chi\rangle \coloneqq \langle \phi \mid \chi \rangle |\psi\rangle$.
+\end{itemize}
 
 \section*{Lattice Geometry and Discrete Kinematics}
 
 \begin{itemize}
-    \item \textbf{Lattice size:} $L \in \mathbb{N}$ denotes the number of discrete spatial lattice sites, strictly positive ($L \ge 1$). Throughout the fermionic and bosonization development, $L$ is assumed to be an even integer, parametrized by a half-length $h \ge 1$ such that $L = 2h$.
-    \item \textbf{Spatial lattice:} $\Lambda = \mathbb{Z}/L\mathbb{Z}$ is the discrete 1D periodic chain of sites $x, y \in \Lambda$, endowed with the standard quotient group structure modeling periodic boundary conditions.
+    \item \textbf{Lattice size:} $L \in \mathbb{N}$ denotes the number of discrete spatial lattice sites, strictly positive ($L \ge 1$). Throughout the fermionic and bosonization development, $L$ is assumed to be an even integer, parametrized by a half-length $h \in \mathbb{N}$ with $h \ge 1$ such that $L = 2h$.
+    \item \textbf{Spatial lattice:} $\Lambda \coloneqq \mathbb{Z}/L\mathbb{Z}$ is the discrete 1D periodic chain of sites $x, y \in \Lambda$, endowed with the standard quotient group structure modeling periodic boundary conditions.
     \item \textbf{Momentum band:} $\Lambda^*$ denotes the centered discrete Brillouin zone of $L$ integers:
     \[
-    \Lambda^* = \left\{ k \in \mathbb{Z} \;\middle|\; -L < 2k \le L \right\}.
+    \Lambda^* \coloneqq \left\{ k \in \mathbb{Z} \;\middle|\; -L < 2k \le L \right\}.
     \]
     When $L = 2h$, this interval is explicitly $\Lambda^* = \{-h+1, -h+2, \dots, h-1, h\}$. This choice retains the positive Nyquist mode $k = +h = L/2$ and excludes $-h$, ensuring an exact bijection with $\Lambda$ while deliberately breaking reflection symmetry.
+    \item \textbf{Physical wavenumber:} The physical crystal momentum corresponding to mode index $k \in \Lambda^*$ is $p_{\mathrm{phys}} = \frac{2\pi k}{L}$.
     \item \textbf{Projection and Section:}
     \begin{itemize}
         \item $\pi : \mathbb{Z} \to \Lambda$ denotes the canonical quotient projection $\pi(k) = k \bmod L$.
@@ -23,7 +41,7 @@ To maintain clarity and consistency across all chapters, this section establishe
     \end{itemize}
     \item \textbf{Transported band arithmetic:}
     \[
-    k \oplus p = r(\pi(k) + \pi(p)), \qquad \ominus k = r(-\pi(k)).
+    k \oplus p \coloneqq r(\pi(k) + \pi(p)), \qquad \ominus k \coloneqq r(-\pi(k)).
     \]
     The discrepancy between integer addition $k+p$ and band addition $k \oplus p$ is governed by the Umklapp integer $w \in \{-1, 0, 1\}$ such that $k+p = (k \oplus p) + wL$.
 \end{itemize}
@@ -31,36 +49,45 @@ To maintain clarity and consistency across all chapters, this section establishe
 \section*{Difference Calculus and Fourier Analysis}
 
 \begin{itemize}
-    \item \textbf{Shift and differences:} For functions $f : \Lambda \to \mathbb{C}$, the shift operator is $(E f)(x) = f(x+1)$, the forward difference is $\Delta = E - I$, and the backward difference is $\nabla = I - E^{-1}$.
-    \item \textbf{Fourier transform:} For $k \in \Lambda^*$ and $x \in \Lambda$, the character is $\chi(k,x) = \exp(2\pi i k x / L)$. The discrete Fourier transform $\mathcal{F}$ maps spatial functions to momentum space unitarily, satisfying exact Parseval and Plancherel identities over the finite cyclic group.
+    \item \textbf{Shift and differences:} For functions $f : \Lambda \to \mathbb{C}$, the shift operator is $(E f)(x) = f(x+1)$, the forward difference is $\Delta \coloneqq E - I$, and the backward difference is $\nabla \coloneqq I - E^{-1}$.
+    \item \textbf{Fourier transform:} For $k \in \Lambda^*$ and $x \in \Lambda$, the character is $\chi(k,x) \coloneqq \exp(2\pi i k x / L) = \zeta^{k x_{\mathrm{val}}}$ where $\zeta = e^{2\pi i / L}$. The discrete Fourier transform $\mathcal{F}$ maps spatial functions to momentum space unitarily, satisfying exact Parseval and Plancherel identities over the finite cyclic group.
 \end{itemize}
 
 \section*{Fermionic Fock Spaces and Observable Nets}
 
 \begin{itemize}
-    \item \textbf{CAR Algebra:} The canonical anticommutation relations on the momentum band $\Lambda^*$ are generated by operators $c_k, c_k^\dagger$ satisfying:
+    \item \textbf{Momentum CAR Algebra:} The canonical anticommutation relations on the momentum band $\Lambda^*$ are generated by operators $c_k, c_k^\dagger$ ($k \in \Lambda^*$) satisfying:
     \[
     \{c_k, c_p^\dagger\} = \delta_{k,p} I, \qquad \{c_k, c_p\} = 0, \qquad \{c_k^\dagger, c_p^\dagger\} = 0, \quad \forall k, p \in \Lambda^*.
     \]
-    \item \textbf{Spatial fermions:} Constructed via the finite discrete Fourier transform:
+    The letters $c_k, c_k^\dagger$ are reserved strictly for momentum modes.
+    \item \textbf{Spatial fermions:} Denoted strictly by $\psi_x, \psi_x^\dagger$ ($x \in \Lambda$), constructed via the finite discrete Fourier transform:
     \[
-    \psi_x = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x)\, c_k, \qquad \psi_x^\dagger = \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x)\, c_k^\dagger.
+    \psi_x \coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(-k, x)\, c_k, \qquad \psi_x^\dagger \coloneqq \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \chi(k, x)\, c_k^\dagger.
     \]
-    \item \textbf{Local nets:} For an interval $I \subset \Lambda$, $\mathfrak{A}(I)$ is the von Neumann / $C^*$-subalgebra generated by $\{\psi_x, \psi_x^\dagger \mid x \in I\}$.
+    \item \textbf{Local nets:} For an interval $I \subset \Lambda$, $\mathfrak{A}(I)$ is the unital $C^*$-subalgebra generated by $\{\psi_x, \psi_x^\dagger \mid x \in I\}$.
 \end{itemize}
 
 \section*{Vacuum Structure, Charge Sectors, and Energy Budgets}
 
 \begin{itemize}
-    \item \textbf{Dirac sea vacuum:} $|\Omega\rangle$ denotes the half-filled reference sea configuration $S_0 = \{-h+1, \dots, 0\}$.
-    \item \textbf{Admissible charge sectors:} For $N \in \mathbb{Z}$ with $-h \le N \le h$, the sector ground configuration is $S_N = \{-h+1, \dots, N\}$, with ground state $|N\rangle_0$ of total particle number $h + N$.
+    \item \textbf{Dirac sea vacuum:} $|\Omega\rangle$ denotes the half-filled reference sea configuration $\mathcal{S}_0 = \{-h+1, \dots, 0\}$, with ground ket $|\Omega\rangle \coloneqq |\mathcal{S}_0\rangle$.
+    \item \textbf{Admissible charge sectors:} For integer $N \in \mathbb{Z}$ with $-h \le N \le h$, the sector ground configuration is denoted by calligraphic $\mathcal{S}_N$:
+    \[
+    \mathcal{S}_N \coloneqq \{-h+1, -h+2, \dots, N\},
+    \]
+    with ground state $|N\rangle_0 \coloneqq |\mathcal{S}_N\rangle$ carrying total particle number $h + N$. This distinct notation avoids any confusion with the symmetric group $\mathfrak{S}_n$.
+    \item \textbf{Ground reference energy shift:} For charge sector $N \in \mathbb{Z}$, the ground energy offset is:
+    \[
+    E_0(N) \coloneqq \frac{N(N+1)}{2} \in \mathbb{Z}.
+    \]
     \item \textbf{Excitation energy:} For an occupation configuration $\sigma \subset \Lambda^*$ of cardinality $h+N$, the excitation energy above the sector ground is:
     \[
-    E(\sigma) = \sum_{k \in \sigma} k - \sum_{k \in S_N} k \ge 0.
+    e(\sigma) \coloneqq \sum_{k \in \sigma} k - \sum_{k \in \mathcal{S}_N} k \ge 0.
     \]
     \item \textbf{Energy budget subspace:} For sector $N$ and energy cutoff $K \ge 0$:
     \[
-    B(N, K) = \bigoplus_{E=0}^K \mathcal{H}(N, E),
+    B(N, K) \coloneqq \bigoplus_{E=0}^K \mathcal{H}(N, E),
     \]
     where $\mathcal{H}(N,E)$ is the subspace spanned by configurations with charge $N$ and excitation energy $E$.
 \end{itemize}
@@ -70,7 +97,7 @@ To maintain clarity and consistency across all chapters, this section establishe
 \begin{itemize}
     \item \textbf{Normal-ordered density modes:} For mode integer $m \neq 0$:
     \[
-    :\!\rho_m\!: = \sum_{k \in \Lambda^*} : \! c_{k \ominus m}^\dagger c_k \!:
+    :\!\rho_m\!: \;\coloneqq \sum_{k \in \Lambda^*} : \! c_{k \ominus m}^\dagger c_k \!:
     \]
     \item \textbf{Heisenberg / Kac--Moody algebra:} Under explicit margin conditions ($2M + K + |N| \le h$), the density modes satisfy the exact commutation relations on $B(N,K)$:
     \[
@@ -78,7 +105,7 @@ To maintain clarity and consistency across all chapters, this section establishe
     \]
     \item \textbf{Bosonic partition states:} For an integer partition $\lambda = (\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_\ell > 0)$ of size $|\lambda| = \sum \lambda_i = E$:
     \[
-    |\lambda; N\rangle = :\! \rho_{\lambda_1} \!: :\! \rho_{\lambda_2} \!: \dots :\! \rho_{\lambda_\ell} \!: |N\rangle_0.
+    |\lambda; N\rangle \coloneqq :\! \rho_{\lambda_1} \!: :\! \rho_{\lambda_2} \!: \dots :\! \rho_{\lambda_\ell} \!: |N\rangle_0.
     \]
     \item \textbf{Haldane completeness:} The states $\{|\lambda; N\rangle \mid |\lambda| = E\}$ form an exact basis of $\mathcal{H}(N, E)$, and $\bigcup_{E=0}^K \{|\lambda; N\rangle \mid |\lambda| = E\}$ forms a basis of $B(N, K)$.
 \end{itemize}
@@ -87,4 +114,4 @@ To maintain clarity and consistency across all chapters, this section establishe
 
 Every mathematical theorem in this monograph corresponds to a fully verified, kernel-checked theorem in the Lean 4 formalization. Rather than polluting the mathematical discourse with code identifiers, tactic transcripts, or backticks, the text presents rigorous, complete human-readable proofs. 
 
-Where constructive methods deviate from traditional non-constructive continuum habits (such as the choice of asymmetric Nyquist modes, finite decidable filters, quotient injectivity, or polynomial state carriers), the text highlights the underlying mathematical rationale in dedicated \emph{Formalization Note} remarks.
+Where constructive methods deviate from traditional non-constructive continuum habits (such as the choice of asymmetric Nyquist modes, finite decidable filters, quotient injectivity, or polynomial state carriers), the text highlights the underlying mathematical rationale in dedicated \emph{Formalization Notes} and contextualizes these results against thermodynamic limits and physical scaling in dedicated \emph{Formal Correctness vs.\ Physical Implications} sections.
