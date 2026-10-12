@@ -8676,15 +8676,15 @@
         },
         "Bosonize.Ch14.zero_scalar_norm": {
           "kind": "lemma",
-          "hash": "aca5e79940776a117a663a0e75f6b4f0534e26ad9499918bc430f6f60c7fd4bf",
+          "hash": "1effaa9ab4028e29045cd779bf987bf23b3024a2e32a94dcddd6a0d34fa9aebe",
           "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
-          "text": "lemma zero_scalar_norm (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) : ‖zeroScalar h b Ns ν x‖ = 1"
+          "text": "omit [Fintype σ] [LinearOrder σ] in lemma zero_scalar_norm (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x : ℤ) : ‖zeroScalar h b Ns ν x‖ = 1"
         },
         "Bosonize.Ch14.zero_scalar_winding": {
           "kind": "lemma",
-          "hash": "5ada80aacefa6e01df24b7e4497a57b432051474c68166edce91fc3a9aa68858",
+          "hash": "ba796f30adcd744f9a39e6263c2fa9639e97cb565646632a598e02f05b15cb9a",
           "ctx": "52d3ac03b4175149b3e9d680cc2af426d869bd11fbd9052643f5703f8ee46c58",
-          "text": "lemma zero_scalar_winding (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x w : ℤ) : zeroScalar h b Ns ν (x+w*(2*h : ℕ)) = Ch06Ext.holonomy (2*h) (b ν)^w * zeroScalar h b Ns ν x"
+          "text": "omit [Fintype σ] [LinearOrder σ] in lemma zero_scalar_winding (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x w : ℤ) : zeroScalar h b Ns ν (x+w*(2*h : ℕ)) = Ch06Ext.holonomy (2*h) (b ν)^w * zeroScalar h b Ns ν x"
         }
       }
     }

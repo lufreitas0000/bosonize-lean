@@ -93,3 +93,14 @@ This journal preserves critical formalization insights for `bosonize-lean`. When
 
 | 2026-10-11 | Independent CH13 raising multiset coercion | Typed cons-coercion change and partition_list_multiset rewrite solve the equality completely; subsequent rfl is rejected as no goals. | Remove only the redundant final rfl. |
 | 2026-10-12 | CH14 Phase A source-budget zero-mode adjoint | Implicit carrier inference rejected `LinearMap.adjoint (zeroMode ...)` although the typed zero-mode data itself elaborates. | Preserve actual subtype operator and inspect installed adjoint binders/instances before providing explicit carrier parameters; no mathematical convention change. |
+
+### 2026-10-12 — A05 generic Taylor Phase B scratch
+The first generic inverse adaptation of CH08 exposed that an arbitrary `Module ℂ V` does not automatically synthesize the rational scalar module used by Mathlib's nilpotent exponential. Resolve with local restricted scalar instances compatible with the complex module, preserving the frozen generic statement. Two scratch generation indentation mistakes and an endomorphism identity simplification name were also caught by the compiler; no frozen source was altered.
+| 2026-10-12 | CH14 Phase B phase/holonomy batch | Initial tactics used nonexistent `LinearMap.id_mul`; unrestricted `ext v` descended through the budget subtype to coordinate components before Subtype.ext. Completed scalar proofs also exposed redundant Fintype/LinearOrder section assumptions. | Replace identity multiplication by generic `one_mul`, constrain linear-map extensionality to one level, and request independently reviewed scoped instance omission; preserve frozen data/headers until review. |
+
+### 2026-10-12 — CH14 criterion proof elaboration (review agent)
+
+Initial scratch proofs failed on unfolded `creatorWord` rewrite matching, ker membership coercion, and field sum evaluation (`Module.End` application must be exposed before map_smul/map_sum). The exact projected recurrence also needs both source and target projector idempotence, since its two compressed products repeat each projector. These are proof API/algebra decomposition fixes; approved statements remain unchanged. Next approach uses explicit `change`, endomorphism sum/apply lemmas, and both checked projector identities.
+| 2026-10-12 | CH14 two-instance cleanup candidate | Inserting `omit ... in` between a declaration doc comment and its lemma header caused an unexpected-token parser error. | Move the omission before the declaration doc comment, matching the existing Core convention; no mathematical or proof change. |
+
+| 2026-10-12 | CH14 compressed lowering filtration | Ket membership chooses lexical equality while Core species budgets retain product decisions; arithmetic leaves zero casts and successor equality condition folded. | Select the product equality decision locally for the membership theorem; normalize signed zero budget and the n<K branch explicitly. |

@@ -1,0 +1,382 @@
+{
+  "source_sha256": "6e11f90d2801fc18b0e51fe5bde2f19d137590199943824d950039ee347c5c16",
+  "phase": "A data-only;24 theorem placeholders remain",
+  "declarations": [
+    {
+      "name": "Bosonize.Ch14.creatorWord",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.cyclicSpan",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.localModeLinearOrder",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.localModeLT",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.localModeLE",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.localModeDecidableEq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.budgetSet",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.projection",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.projectedMap",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.budgetAdjoint",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.groundVector",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.wPlus",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.wMinus",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.compressedPlus",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.compressedMinus",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.zeroScalar",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.zeroMode",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.physicalMap",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Bosonize.Ch14.vertexCandidate",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "passed": true,
+  "native_diagnostics": {
+    "partial": false,
+    "still_elaborating_lines": null,
+    "success": true,
+    "timed_out": false,
+    "items": [
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 32,
+        "column": 9,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 141,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 147,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 154,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 167,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 171,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 175,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 179,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 184,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 189,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 193,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 197,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 201,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 205,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 210,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 216,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 221,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 228,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 235,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 245,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 256,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 265,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 272,
+        "column": 7,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      },
+      {
+        "severity": "warning",
+        "message": "declaration uses `sorry`",
+        "line": 280,
+        "column": 9,
+        "lean_tags": null,
+        "category": "sorry",
+        "hint": null
+      }
+    ],
+    "failed_dependencies": []
+  }
+}

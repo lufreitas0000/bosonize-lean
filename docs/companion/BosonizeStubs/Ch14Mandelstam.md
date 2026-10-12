@@ -149,6 +149,7 @@ The identical subtype/ambient argument for compressed raising.
 ### `zero_scalar_norm`
 
 ```lean
+omit [Fintype σ] [LinearOrder σ] in
 lemma zero_scalar_norm (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h))
     (Ns : σ → ℤ) (ν : σ) (x : ℤ) : ‖zeroScalar h b Ns ν x‖ = 1
 ```
@@ -158,6 +159,7 @@ Product of Core lift_phase_norm and canonical-root character norm.
 ### `zero_scalar_winding`
 
 ```lean
+omit [Fintype σ] [LinearOrder σ] in
 lemma zero_scalar_winding (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h))
     (Ns : σ → ℤ) (ν : σ) (x w : ℤ) :
     zeroScalar h b Ns ν (x+w*(2*h : ℕ)) = Ch06Ext.holonomy (2*h) (b ν)^w * zeroScalar h b Ns ν x
@@ -297,3 +299,7 @@ Apply cyclic_common_residual to the actual two typed maps. Full ground-vector eq
 The source is a Phase A candidate until independent review and a scoped lock. A successful placeholder build confirms type elaboration only. Before freezing, record the exact source SHA, declaration counts, data-only standard-axiom audit, native diagnostic results and independent review. After proofs, require zero warnings/placeholders, all theorem dependencies standard-axiom audited, unchanged old Core hashes, and independently reviewed lecture synchronization before promotion.
 
 Phase A author validation (2026-10-12): source SHA-256 `6e11f90d2801fc18b0e51fe5bde2f19d137590199943824d950039ee347c5c16`; 24 one-sorry theorem obligations and 19 complete data/instance declarations. `lake build BosonizeStubs.Ch14Mandelstam` succeeded (3405 jobs), with precisely the 24 expected placeholder warnings and no errors or other warnings. A fresh audit of all 19 data declarations uses only `propext`, `Classical.choice`, `Quot.sound`, and no `sorryAx`: [audit](../../../note/ch14_phase_a_data_axiom_audit_2026-10-12.json). Native Lean MCP diagnostics independently completed with exactly 24 sorry warnings, no errors, no timeout/partial result and no failed dependencies. Independent reviewer decision is still required before freezing.
+
+## Reviewed Phase B instance cleanup
+
+Exactly zero_scalar_norm and zero_scalar_winding omit unused finite enumeration and species-order instances. Their external twist, nonzero length and explicit parameters remain. Independent compiler/signature review: note/ch14_phase_b_instance_cleanup_review_2026-10-12.md. All other interfaces and data are unchanged.
