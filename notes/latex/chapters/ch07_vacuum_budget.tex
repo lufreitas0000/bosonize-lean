@@ -15,61 +15,70 @@ Throughout this chapter, let $L = 2h$ with $h \ge 1$ be an even positive integer
 
 \section{Admissible Charge Sectors and Sector Grounds}
 
-Because the single-particle band $\Lambda^*$ contains exactly $2h$ modes, a configuration $S \subseteq \Lambda^*$ can have particle number $\#S$ between $0$ and $2h$. 
+Because the single-particle band $\Lambda^*$ contains exactly $2h$ modes, an occupation configuration $S \subseteq \Lambda^*$ can have particle number $\#S$ between $0$ and $2h$. 
 
 \begin{definition}[Admissible Charge Sectors]
 The net charge deviation $N \in \mathbb{Z}$ of an occupation configuration $S \subseteq \Lambda^*$ relative to half-filling is defined by:
 \begin{equation}
-N(S) \coloneqq (\#S : \mathbb{Z}) - h.
+N(S) \coloneqq \#S - h \in \mathbb{Z}.
 \end{equation}
 A charge sector $N$ is \emph{admissible} if it can be realized by a subset of $\Lambda^*$:
 \begin{equation}
 -h \le N \le h.
 \end{equation}
-For any admissible sector $N$, the unique \emph{sector ground configuration} $S_N \subset \Lambda^*$ is the set of the lowest $h + N$ momentum modes:
+For any admissible sector $N$, the unique \emph{sector ground configuration} $\mathcal{S}_N \subset \Lambda^*$ is the set of the lowest $h + N$ momentum modes:
 \begin{equation}
-S_N \coloneqq \{ k \in \Lambda^* \mid k \le N \} = \{-h+1, -h+2, \dots, N\}.
+\mathcal{S}_N \coloneqq \{ k \in \Lambda^* \mid k \le N \} = \{-h+1, -h+2, \dots, N\}.
 \end{equation}
 The \emph{sector ground state} $|N\rangle_0 \in \mathcal{F}(L)$ is the corresponding Fock basis vector:
 \begin{equation}
-|N\rangle_0 \coloneqq |S_N\rangle.
+|N\rangle_0 \coloneqq |\mathcal{S}_N\rangle.
 \end{equation}
-When $N = 0$, $S_0 = S_\Omega = \{-h+1, \dots, 0\}$ is the reference half-filled Dirac vacuum, and $|0\rangle_0 = |\Omega\rangle$.
+When $N = 0$, $\mathcal{S}_0 = \{-h+1, \dots, 0\}$ is the reference half-filled Dirac vacuum, and $|0\rangle_0 = |\Omega\rangle$.
 \end{definition}
 
 \begin{lemma}[Cardinality of Sector Grounds]
 For any admissible charge $N \in \{-h, \dots, h\}$:
 \begin{equation}
-\#S_N = h + N, \qquad N(S_N) = N.
+\#\mathcal{S}_N = h + N, \qquad N(\mathcal{S}_N) = N.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-The modes in $S_N$ are consecutive integers from $-h+1$ to $N$. The number of elements is $N - (-h+1) + 1 = N + h$. Subtracting $h$ yields $N(S_N) = (h+N) - h = N$.
+The modes in $\mathcal{S}_N$ are consecutive integers from $-h+1$ to $N$. The number of elements is $N - (-h+1) + 1 = N + h$. Subtracting $h$ yields $N(\mathcal{S}_N) = (h+N) - h = N$.
 \end{proof}
 
 \section{Integer Energy Grading and Observables}
 
-To prevent natural number underflow anomalies, all combinatorial quantities are defined strictly in $\mathbb{Z}$.
+To maintain strict mathematical rigor, all combinatorial quantities are defined as exact signed integers in $\mathbb{Z}$.
 
-\begin{definition}[Integer Charge, Momentum, and Excitation Energy]
+\begin{definition}[Integer Charge, Momentum, and Ground Energy Offset]
 For any configuration $S \subseteq \Lambda^*$:
 \begin{enumerate}
     \item The total bare momentum energy relative to the half-filled sea is:
     \begin{equation}
-    P(S) \coloneqq \sum_{k \in S} k - \sum_{k \in S_\Omega} k.
+    P(S) \coloneqq \sum_{k \in S} k - \sum_{k \in \mathcal{S}_0} k \in \mathbb{Z}.
     \end{equation}
-    \item The sector ground reference offset $t(N)$ is defined for $N \in \mathbb{Z}$ by:
+    \item The \emph{sector ground reference energy offset} $E_0(N)$ is defined for $N \in \mathbb{Z}$ by:
     \begin{equation}
-    t(N) \coloneqq \frac{N(N+1)}{2} \in \mathbb{Z}.
+    E_0(N) \coloneqq \frac{N(N+1)}{2} \in \mathbb{Z}.
     \end{equation}
-    Because one of $N$ or $N+1$ is always even, $N(N+1)$ is divisible by $2$, so $t(N)$ is an integer for every $N \in \mathbb{Z}$.
+    Because one of $N$ or $N+1$ is always even, the product $N(N+1)$ is divisible by $2$ in $\mathbb{Z}$, so $E_0(N)$ is an exact integer for every $N \in \mathbb{Z}$.
     \item The \emph{excitation energy} $e(S)$ of configuration $S$ is defined by:
     \begin{equation}
-    e(S) \coloneqq P(S) - t(N(S)).
+    e(S) \coloneqq P(S) - E_0(N(S)).
     \end{equation}
 \end{enumerate}
 \end{definition}
+
+\paragraph{Physical Intuition for the Ground Energy Offset $E_0(N)$.}
+Why does the ground state of charge sector $N$ carry energy $E_0(N) = N(N+1)/2$?
+Consider adding $N > 0$ particles to the half-filled Dirac sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$. To minimize total kinetic energy, the particles must occupy the lowest available empty modes immediately above the Fermi surface, which are the consecutive positive modes $k = 1, 2, \dots, N$. The total momentum added is:
+\[
+\sum_{k=1}^N k = 1 + 2 + \dots + N = \frac{N(N+1)}{2}.
+\]
+Similarly, if $N < 0$ particles are removed, the lowest-energy configuration removes the highest occupied modes $k = 0, -1, \dots, N+1$ from the sea. The net momentum change is $-\sum_{k=N+1}^0 k = \frac{|N|(|N|-1)}{2} + |N| = \frac{N(N+1)}{2}$.
+In 1D physics, this quadratic term $E_0(N) = \frac{1}{2} N^2 + \frac{1}{2} N$ reflects the macroscopic charging energy of a 1D Luttinger liquid: adding particles increases the Fermi momentum $k_F \propto N$, so the total kinetic energy increases quadratically as $\int_0^N k \, dk \sim \frac{1}{2} N^2$.
 
 \begin{definition}[Operator Observables]
 The relative charge observable $\hat{N}$ and excitation energy observable $\hat{E}$ are diagonal linear operators on $\mathcal{F}(L)$ defined on basis states by:
@@ -82,37 +91,53 @@ The relative charge observable $\hat{N}$ and excitation energy observable $\hat{
 \begin{lemma}[Vacuum Ground State Evaluation]
 The ground states satisfy:
 \begin{equation}
-P(S_N) = t(N), \qquad e(S_N) = 0 \quad \text{for all } N \in \{-h, \dots, h\}.
+P(\mathcal{S}_N) = E_0(N), \qquad e(\mathcal{S}_N) = 0 \quad \text{for all } N \in \{-h, \dots, h\}.
 \end{equation}
 In particular, $\hat{E} |N\rangle_0 = 0$.
 \end{lemma}
 
 \begin{proof}
-For $N \ge 0$, $S_N$ is obtained from $S_0$ by adding the positive modes $\{1, 2, \dots, N\}$. Thus:
+For $N \ge 0$, $\mathcal{S}_N$ is obtained from $\mathcal{S}_0$ by adding the positive modes $\{1, 2, \dots, N\}$. Thus:
 \[
-P(S_N) = \sum_{k \in S_N} k - \sum_{k \in S_0} k = \sum_{k=1}^N k = \frac{N(N+1)}{2} = t(N).
+P(\mathcal{S}_N) = \sum_{k \in \mathcal{S}_N} k - \sum_{k \in \mathcal{S}_0} k = \sum_{k=1}^N k = \frac{N(N+1)}{2} = E_0(N).
 \]
-For $N < 0$, $S_N$ is obtained from $S_0$ by removing modes $\{N+1, \dots, 0\}$. Thus:
+For $N < 0$, $\mathcal{S}_N$ is obtained from $\mathcal{S}_0$ by removing modes $\{N+1, \dots, 0\}$. Thus:
 \[
-P(S_N) = - \sum_{k=N+1}^0 k = - \sum_{j=0}^{-N-1} (N+1+j) = \frac{N(N+1)}{2} = t(N).
+P(\mathcal{S}_N) = - \sum_{k=N+1}^0 k = - \sum_{j=0}^{-N-1} (N+1+j) = \frac{N(N+1)}{2} = E_0(N).
 \]
-In both cases, $e(S_N) = P(S_N) - t(N) = 0$.
+In both cases, $e(\mathcal{S}_N) = P(\mathcal{S}_N) - E_0(N) = 0$.
 \end{proof}
 
 \section{The Rank Formula and Ground State Uniqueness}
 
-A central theorem of the energy budget is that the excitation energy $e(S)$ is strictly non-negative for all configurations, and vanishes if and only if $S$ is the sector ground configuration $S_N$.
+A central theorem of the energy budget is that the excitation energy $e(S)$ is strictly non-negative for all configurations, and vanishes if and only if $S$ is the sector ground configuration $\mathcal{S}_N$.
+
+\begin{definition}[Ordered Modes, Ground Positions, and Particle Displacements]
+Let $S \subseteq \Lambda^*$ be an occupation configuration with cardinality $\#S = h + N$.
+\begin{enumerate}
+    \item The \emph{ordered occupied modes} of $S$ are the elements of $S$ written in strictly increasing order:
+    \begin{equation}
+    s_0 < s_1 < s_2 < \dots < s_{h+N-1}.
+    \end{equation}
+    \item The \emph{ground reference positions} are the consecutive elements of the sector ground $\mathcal{S}_N$:
+    \begin{equation}
+    g_i \coloneqq -h + 1 + i \quad \text{for } i \in \{0, 1, \dots, h+N-1\}.
+    \end{equation}
+    \item For each particle index $i \in \{0, 1, \dots, h+N-1\}$, the \emph{particle displacement} $d_i$ is defined by:
+    \begin{equation}
+    d_i \coloneqq s_i - g_i \in \mathbb{Z}.
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\paragraph{Physical Intuition for Particle Displacements.}
+The ground state $\mathcal{S}_N$ is a compact Fermi droplet where particles occupy consecutive lowest modes $g_i$. Any excited state $S$ is created by displacing particles upward from their ground positions. The integer $d_i = s_i - g_i$ measures how far the $i$-th fermion has been promoted above its ground state reference position.
 
 \begin{theorem}[Rank Formula and Non-Negativity of Excitation Energy]
 \label{thm:rank_formula}
 Let $S \subseteq \Lambda^*$ be any configuration with cardinality $\#S = h + N$ (so $N(S) = N$). 
-Sort the occupied modes in strictly increasing order:
-\begin{equation}
-s_0 < s_1 < s_2 < \dots < s_{h+N-1}.
-\end{equation}
-Let $g_i \coloneqq -h + 1 + i$ denote the $i$-th element of the ground configuration $S_N$.
 \begin{enumerate}
-    \item For every index $i \in \{0, 1, \dots, h+N-1\}$, the displacement $d_i \coloneqq s_i - g_i$ satisfies:
+    \item For every index $i \in \{0, 1, \dots, h+N-1\}$, the displacements satisfy:
     \begin{equation}
     d_i \ge 0, \qquad \text{and} \qquad d_{i+1} \ge d_i.
     \end{equation}
@@ -121,7 +146,7 @@ Let $g_i \coloneqq -h + 1 + i$ denote the $i$-th element of the ground configura
     e(S) = \sum_{i=0}^{h+N-1} d_i.
     \end{equation}
     \item Non-negativity: $e(S) \ge 0$ for all $S \subseteq \Lambda^*$.
-    \item Uniqueness: $e(S) = 0$ if and only if $S = S_N$.
+    \item Uniqueness: $e(S) = 0$ if and only if $S = \mathcal{S}_N$.
 \end{enumerate}
 \end{theorem}
 
@@ -136,29 +161,37 @@ We prove each assertion:
     \]
     By induction, $d_i \ge d_{i-1} \ge \dots \ge d_0 \ge 0$ for all $i$.
     
-    \item By definition of the ground configuration $S_N$, $\sum_{k \in S_N} k = \sum_{i=0}^{h+N-1} g_i$. The total momentum of $S$ is $\sum_{k \in S} k = \sum_{i=0}^{h+N-1} s_i$. Therefore:
+    \item By definition of the ground configuration $\mathcal{S}_N$, $\sum_{k \in \mathcal{S}_N} k = \sum_{i=0}^{h+N-1} g_i$. The total momentum of $S$ is $\sum_{k \in S} k = \sum_{i=0}^{h+N-1} s_i$. Therefore:
     \[
-    \sum_{k \in S} k - \sum_{k \in S_N} k = \sum_{i=0}^{h+N-1} (s_i - g_i) = \sum_{i=0}^{h+N-1} d_i.
+    \sum_{k \in S} k - \sum_{k \in \mathcal{S}_N} k = \sum_{i=0}^{h+N-1} (s_i - g_i) = \sum_{i=0}^{h+N-1} d_i.
     \]
     On the other hand:
     \[
-    \sum_{k \in S} k - \sum_{k \in S_N} k = \left( \sum_{k \in S} k - \sum_{k \in S_0} k \right) - \left( \sum_{k \in S_N} k - \sum_{k \in S_0} k \right) = P(S) - t(N) = e(S).
+    \sum_{k \in S} k - \sum_{k \in \mathcal{S}_N} k = \left( \sum_{k \in S} k - \sum_{k \in \mathcal{S}_0} k \right) - \left( \sum_{k \in \mathcal{S}_N} k - \sum_{k \in \mathcal{S}_0} k \right) = P(S) - E_0(N) = e(S).
     \]
     Thus $e(S) = \sum_{i=0}^{h+N-1} d_i$.
     
     \item Since each $d_i \ge 0$, the sum of non-negative integers is non-negative: $e(S) \ge 0$.
     
     \item Since $d_i \ge 0$, the sum $\sum d_i = 0$ holds if and only if $d_i = 0$ for every $i \in \{0, \dots, h+N-1\}$.
-    This means $s_i = g_i$ for all $i$, which implies $S = S_N$.
+    This means $s_i = g_i$ for all $i$, which implies $S = \mathcal{S}_N$.
 \end{enumerate}
 \end{proof}
 
 \begin{corollary}[One-Dimensional Ground Subspace]
-In each admissible sector $N$, the zero-excitation energy subspace is one-dimensional:
+\label{cor:ground_subspace}
+In each admissible sector $N$, the zero-excitation energy subspace is strictly one-dimensional:
 \begin{equation}
 \mathcal{H}(N, 0) \coloneqq \mathrm{span}_{\mathbb{C}} \{ |S\rangle \mid N(S) = N, \; e(S) = 0 \} = \mathbb{C} \cdot |N\rangle_0.
 \end{equation}
 \end{corollary}
+
+\paragraph{Physical Implications: Gapless Spectrum and Ground State Non-Degeneracy.}
+In condensed matter physics, Corollary~\ref{cor:ground_subspace} carries profound physical meaning:
+\begin{enumerate}
+    \item \textbf{Non-Degenerate Ground State:} For any fixed particle number $h + N$, the ground state is unique (non-degenerate). There are no spontaneous symmetry-breaking degeneracies at zero temperature in 1D.
+    \item \textbf{The Energy Gap:} The lowest possible non-zero excitation energy is obtained by setting $d_{h+N-1} = 1$ and all other $d_i = 0$, which corresponds to promoting the highest fermion across the Fermi level into mode $N+1$. The excitation energy of this state is $e(S) = 1$. In physical energy units, the excitation gap is $\Delta \epsilon = \frac{2\pi v_F}{L}$. As $L \to \infty$, the gap vanishes as $\mathcal{O}(1/L)$, confirming that the 1D free Fermi gas is a \emph{gapless (critical) system} with a continuous low-energy spectrum.
+\end{enumerate}
 
 \section{The Frozen Margins Theorem}
 
@@ -219,12 +252,23 @@ For sector $N \in \{-h, \dots, h\}$ and cutoff $K \in \mathbb{N}$:
 The orthogonal coordinate projectors onto these subspaces are denoted $P_{N, K}$ and $P_{K, N_{\max}}$, respectively.
 \end{definition}
 
+\begin{definition}[Filtered Operator Parameters: Charge Shift and Energy Increase]
+Let $A \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ be a linear operator.
+\begin{enumerate}
+    \item $A$ carries a \emph{charge shift} $q \in \mathbb{Z}$ if for every basis state $|S\rangle$, every output state $|S'\rangle$ in the support of $A |S\rangle$ has charge:
+    \begin{equation}
+    N(S') = N(S) + q.
+    \end{equation}
+    \item $A$ carries an \emph{energy increase bound} $d \in \mathbb{N}$ if for every basis state $|S\rangle$, every output state $|S'\rangle$ in the support of $A |S\rangle$ has excitation energy:
+    \begin{equation}
+    e(S') \le e(S) + d.
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
 \begin{theorem}[Filtered Operator Action]
 \label{thm:filtered_action}
-Let $A$ be a linear operator with charge shift $q \in \mathbb{Z}$ and bounded energy increase $d \in \mathbb{N}$, meaning that for all basis states $|S\rangle$:
-\begin{equation}
-N(S') = N(S) + q, \qquad e(S') \le e(S) + d \quad \text{for all } |S'\rangle \text{ in the support of } A |S\rangle.
-\end{equation}
+Let $A$ be a linear operator with charge shift $q \in \mathbb{Z}$ and energy increase bound $d \in \mathbb{N}$.
 Then $A$ maps the budget subspace $B(N, K)$ into $B(N+q, K+d)$:
 \begin{equation}
 A\big( B(N, K) \big) \subseteq B(N+q, K+d).
@@ -250,5 +294,22 @@ Applying a mode shift of size $M$, the shifted momentum must not exceed the top 
 \end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 core (Chapter 7 and Appendix A03), all 114 lemmas on energy gradings, projections, and ground states are verified in the Lean 4 kernel. The rank formula and displacement monotonicity are proved by finite sorting induction, ensuring that the entire regularized framework is constructive and mathematically rigid.
+In the verified Lean~4 core, all 114 lemmas on energy gradings, projections, and ground states are verified in the Lean 4 kernel. The rank formula and displacement monotonicity are proved by finite sorting induction, ensuring that the entire regularized framework is constructive and mathematically rigid.
 \end{remark}
+
+\section{Chapter Summary and Literature Comparison}
+
+In this chapter, we developed the Energy Budget regularization scheme:
+\begin{itemize}
+    \item Admissible charge sectors $N \in \{-h, \dots, h\}$ possess unique ground configurations $\mathcal{S}_N = \{-h+1, \dots, N\}$.
+    \item The sector ground reference offset $E_0(N) = N(N+1)/2$ evaluates the macroscopic charging energy in exact integer arithmetic.
+    \item Defined particle displacements $d_i = s_i - g_i$ and proved the Rank Formula $e(S) = \sum d_i \ge 0$, establishing ground state uniqueness $e(S) = 0 \iff S = \mathcal{S}_N$.
+    \item Connected ground state non-degeneracy to the gapless $\mathcal{O}(1/L)$ critical scaling of the 1D Fermi gas.
+    \item Proved the Frozen Margins Theorem: states with $e(S) \le K$ have rigidly filled deep seas ($k \le N - K$) and rigidly empty high modes ($k > N + K$).
+    \item Defined budget subspaces $B(N, K) = \bigoplus_{E=0}^K \mathcal{H}(N, E)$, formalized filtered operator parameters $(q, d)$, and proved the Unified Margin Inequality $2M + K + K_{\mathrm{excursion}} + N_{\max} \le h$.
+\end{itemize}
+
+\paragraph{Comparison with Standard Continuum Literature.}
+In standard continuum bosonization (Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), energy cutoffs are applied after the fact using smooth exponential damping factors $e^{-\alpha |k|}$ or soft Gaussian filters. While convenient for computing momentum integrals, soft cutoffs create non-orthogonal states and leave open whether the underlying Hilbert space is genuinely finite-dimensional.
+
+In our constructive framework, the energy budget $B(N, K)$ is an exact finite-dimensional orthogonal subspace. As shown in Theorem~\ref{thm:unified_margin}, when the unified margin condition is satisfied, the finite boundary does not introduce any distortion: operators act on $B(N, K)$ exactly as they do in the continuum, but with strictly finite-dimensional matrix representations.
