@@ -45,7 +45,7 @@ help:
 	@echo 'verify-c PROPOSAL=docs/webllm/drafts/task.md (Markdown structure only)'
 	@echo 'audit-data / audit-axioms TARGETS="path/to/Module.lean ..." (fresh import-based axiom output)'
 	@echo 'test-webllm (verifier regression tests)'
-	@echo 'From hub: make chapter-task CHAPTER=15 PHASE=B; make packet SPEC=...'
+	@echo 'Automated cycle: make lean-start-phaseB 15 / make lean-finish-phaseB 15 (also A/C)'
 verify-a:
 	@test -n "$(PROPOSAL)" || { echo 'Set PROPOSAL=path.md'; exit 2; }
 	@python3 scripts/webllm/verify_phase_a.py "$(PROPOSAL)"
@@ -65,3 +65,10 @@ audit-data:
 audit-axioms:
 	@test -n "$(TARGETS)" || { echo 'Set TARGETS="Bosonize/Core/Module.lean ..."'; exit 2; }
 	@python3 scripts/webllm/audit_axioms.py $(TARGETS)
+
+# Shared one-command chapter cycle, also available from this repository.
+LEAN_CYCLE_REPO := $(CURDIR)
+# Resolve through the primary Git checkout so isolated worktrees also find the hub.
+# Standalone clones retain ordinary build/CI commands when the hub is unavailable.
+LEAN_CYCLE_HUB ?= $(abspath $(shell git rev-parse --git-common-dir)/../../..)
+-include $(LEAN_CYCLE_HUB)/scripts/lean_cycle.mk

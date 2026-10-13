@@ -1,5 +1,11 @@
 # ChatGPT Chat workflow for the remaining Bosonize chapters
 
+For normal chapter work, use the automated [start/finish workflow](SELF_SERVICE.md):
+`make lean-start-phaseB 15`, review/download the Chat response, then
+`make lean-finish-phaseB 15`. The runner handles packets, branches, source
+integration, checks, locks, evidence, commits and pushes. The lower-level
+commands below remain available as background and troubleshooting guidance.
+
 Prepared October 13, 2026. CH15/A06 is the first real task. The current verified
 freeze contains 23 Core modules, 793 statements and 632 context/data commands;
 fresh `make ci` passed both libraries and 69 guard tests. CH15–21 remain development

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -65,6 +66,16 @@ def inspect(text):
 
 
 def compiler_root(repo):
+    # The cycle runner builds its own private transaction checkout before CI.
+    # An explicit local override avoids using a moved primary checkout/cache.
+    override = os.environ.get("WEBLLM_COMPILER_ROOT")
+    if override:
+        working = Path(override).resolve()
+        expected = subprocess.check_output(["git", "-C", str(repo), "rev-parse", "HEAD"], text=True).strip()
+        actual = subprocess.check_output(["git", "-C", str(working), "rev-parse", "HEAD"], text=True).strip()
+        if expected != actual:
+            raise ValueError("Explicit compiler checkout differs from candidate HEAD")
+        return working
     common = subprocess.check_output(["git", "-C", str(repo), "rev-parse", "--git-common-dir"], text=True).strip()
     primary = (repo / common).resolve().parent
     # Phase A proposals import immutable Core only. Reuse the checked primary
