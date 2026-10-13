@@ -67,6 +67,7 @@ audit-axioms:
 	@python3 scripts/webllm/audit_axioms.py $(TARGETS)
 
 # Shared one-command chapter cycle, also available from this repository.
+# Start commands print the absolute packet path and a "Send the file ... to ChatGPT" message.
 LEAN_CYCLE_REPO := $(CURDIR)
 # Resolve through the primary Git checkout so isolated worktrees also find the hub.
 # Standalone clones retain ordinary build/CI commands when the hub is unavailable.

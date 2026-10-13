@@ -212,3 +212,23 @@ The user can run every local check and own the mathematical review and phase
 transition decisions without a Codex conversation. See [SELF_SERVICE.md](SELF_SERVICE.md).
 Call Codex for issues or a final independent audit as desired. Local verification
 commands do not invoke a model; automatic mathematical approval is not provided.
+
+## CH15 Phase B context after the diagnostic reply
+
+Run `python3 scripts/webllm/export_core_api.py` to refresh the comprehensive
+reference from the exact frozen Core sources. It checks the complete inventory
+and each source hash before writing. The reference includes all Core definitions,
+instances and theorem headers in their original command order, plus 16 selected
+complete Core proofs and a guide covering every A06 target obligation. This fixes
+the missing Ch07/A03 context without changing a Lean declaration or proof.
+
+The A06 start command uses this comprehensive reference as its generated API,
+avoids a second narrow digest and inherits the support spec's 400,000-byte packet
+budget. This is a local transport limit, not a claim about a particular ChatGPT
+model's context capacity. The entire Mathlib library is not included. Context
+coverage is not a proof of the outstanding statements.
+
+After committing refreshed inputs, `make lean-start-phaseB 15` creates a new packet
+and preserves earlier packets in history. It prints both the stable file to send
+to the ChatGPT web chat and the actual created packet path. Use the new packet ID
+and base SHA for the next response; the old diagnostic remains historical evidence.
