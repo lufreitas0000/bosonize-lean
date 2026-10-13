@@ -149,3 +149,6 @@ in the two complete notes, zero errors. The current pre-C repeat compiler audit
 of both staging modules passes all 38 declarations with standard axioms only.
 These checks precede promotion; final promoted-source gates and acceptance are
 recorded separately after the runner completes them.
+
+
+Phase C finish evidence: `note/webllm/ch15/phaseC-ch15_cycle_c_463e5816.md`.

@@ -1,3 +1,5 @@
+import Bosonize.Core.A06ChiralFields
+import Bosonize.Core.Ch15DualFields
 import Bosonize.Core.Ch01LatticeBand
 import Bosonize.Core.Ch02UmbralCalculus
 import Bosonize.Core.A01FourierCharacters

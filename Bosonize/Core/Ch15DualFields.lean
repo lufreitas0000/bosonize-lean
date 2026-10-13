@@ -1,4 +1,4 @@
-import BosonizeStubs.A06ChiralFields
+import Bosonize.Core.A06ChiralFields
 
 namespace Bosonize.Ch15
 

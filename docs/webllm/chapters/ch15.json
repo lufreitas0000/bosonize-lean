@@ -2,17 +2,63 @@
   "chapter": 15,
   "modules": [
     {
-      "path": "BosonizeStubs/A06ChiralFields.lean"
+      "path": "Bosonize/Core/A06ChiralFields.lean"
     },
     {
-      "path": "BosonizeStubs/Ch15DualFields.lean"
+      "path": "Bosonize/Core/Ch15DualFields.lean"
     }
   ],
-  "phase": "B_complete",
+  "phase": "C_complete",
+  "migration": [
+    {
+      "from": "BosonizeStubs/A06ChiralFields.lean",
+      "to": "Bosonize/Core/A06ChiralFields.lean",
+      "source_sha256": "77c579ff06238d2801e9861fdf65c5c1efc66fc31d0161efd18a6a386d2fa768",
+      "old_imports": [
+        "import Bosonize"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.Ch01LatticeBand",
+        "import Bosonize.Core.Ch02UmbralCalculus",
+        "import Bosonize.Core.A01FourierCharacters",
+        "import Bosonize.Core.Ch03Fourier",
+        "import Bosonize.Core.A02CARHilbert",
+        "import Bosonize.Core.Ch04CARFock",
+        "import Bosonize.Core.Ch05Fermions",
+        "import Bosonize.Core.Ch06LocalNet",
+        "import Bosonize.Core.Ch06Ext",
+        "import Bosonize.Core.A03EnergyBudgets",
+        "import Bosonize.Core.Ch07VacuumBudget",
+        "import Bosonize.Core.Ch08Boson",
+        "import Bosonize.Core.A05MultiSpecies",
+        "import Bosonize.Core.Ch13KleinFactors",
+        "import Bosonize.Core.A05FiniteExponentials",
+        "import Bosonize.Core.Ch14Mandelstam",
+        "import Bosonize.Core.A04DensityKinematics",
+        "import Bosonize.Core.Ch09DensityModes",
+        "import Bosonize.Core.A04CurrentMargins",
+        "import Bosonize.Core.Ch10Heisenberg",
+        "import Bosonize.Core.A04PartitionCombinatorics",
+        "import Bosonize.Core.Ch11HaldaneCompleteness",
+        "import Bosonize.Core.Ch12Sugawara"
+      ]
+    },
+    {
+      "from": "BosonizeStubs/Ch15DualFields.lean",
+      "to": "Bosonize/Core/Ch15DualFields.lean",
+      "source_sha256": "30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85",
+      "old_imports": [
+        "import BosonizeStubs.A06ChiralFields"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.A06ChiralFields"
+      ]
+    }
+  ],
   "pending_modules": [],
   "sources": {
-    "BosonizeStubs/A06ChiralFields.lean": "daffa052dbd46a919a001b086804af1cb8b2182c5322a20d4f8581c4a131d603",
-    "BosonizeStubs/Ch15DualFields.lean": "e6863de5211ac488eaf35b3b1afec0168192d5dce585c04c9350fc15a006edf5"
+    "Bosonize/Core/A06ChiralFields.lean": "77c579ff06238d2801e9861fdf65c5c1efc66fc31d0161efd18a6a386d2fa768",
+    "Bosonize/Core/Ch15DualFields.lean": "30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85"
   },
   "theorem_contracts": 23
 }

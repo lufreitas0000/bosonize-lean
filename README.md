@@ -44,6 +44,6 @@ The separate [CH06 extension](Bosonize/Core/Ch06Ext.lean) is proved, promoted an
 <!-- lean-cycle CH15 -->
 ## Automated CH15 checkpoint
 
-CH15: **B_complete**. 23 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch15.json`.
+CH15: **C_complete**. 23 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch15.json`.
 
 <!-- /lean-cycle CH15 -->
