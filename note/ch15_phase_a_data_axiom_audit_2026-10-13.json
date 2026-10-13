@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "data_declarations": 15,
+  "sources": {
+    "BosonizeStubs/A06ChiralFields.lean": "f65574faa2ee8591476c1a9c9a9dba634aa4bd82397e0bd277c1d027f9aaafa1",
+    "BosonizeStubs/Ch15DualFields.lean": "778a972ff2cd909c25e83f4f6e266af2ddacfee2d71d150391549a3c0e38d903"
+  },
+  "stdout": "'Bosonize.A06.Orientation' does not depend on any axioms\n'Bosonize.A06.orientationSign' does not depend on any axioms\n'Bosonize.A06.Branches' does not depend on any axioms\n'Bosonize.A06.speciesOf' does not depend on any axioms\n'Bosonize.A06.marginAt' depends on axioms: [propext]\n'Bosonize.A06.branchMargins' depends on axioms: [propext]\n'Bosonize.A06.latticeCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Bosonize.A06.skewKernel' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Bosonize.A06.dirichletKernel' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Bosonize.A06.opForwardDiff' depends on axioms: [propext, Quot.sound]\n'Bosonize.A06.integerLift' depends on axioms: [propext, Quot.sound]\n'Bosonize.A06.chiralField' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Bosonize.A06.chiralDifferenceExpansion' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Bosonize.Ch15.phiField' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Bosonize.Ch15.thetaField' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "stderr": ""
+}

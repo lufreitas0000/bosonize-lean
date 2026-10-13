@@ -1,4 +1,6 @@
 import Bosonize
+import BosonizeStubs.A06ChiralFields
+import BosonizeStubs.Ch15DualFields
 
 /-!
 # Bosonize Staging Library

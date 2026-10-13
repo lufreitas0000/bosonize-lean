@@ -1,0 +1,45 @@
+version = 1
+id = "ch15_phase_b_support"
+phase = "B"
+repo = ".."
+task = """
+Prove all 16 frozen A06 theorem/lemma bodies in BosonizeStubs/A06ChiralFields.lean.
+Return the complete file using the exact JSON envelope. This is the first CH15
+Phase B batch; the seven CH15 theorems will be requested after this support file
+has a reviewed, proved checkpoint. Do not edit CH15, Core, notebooks or locks.
+
+Preserve every definition, theorem header, hypothesis, namespace and import.
+No new top-level helpers, sorry, admit, sorryAx, native_decide or axioms. Local
+have/let lemmas inside proof bodies are allowed. Use the actual Core API context.
+Treat proof sketches as suggestions: check signatures and orientations carefully.
+
+For joint_signed_current_commutator, use actual occupation-ket spanning of
+Ch07.speciesBudget, individual excitation nonnegativity, tensor_kets,
+joint_species_configuration and rho_tensor to transport Ch10.rho_signed_ccr.
+Do not assume a Cartesian product budget or postulate global scalar CCR.
+Character kernels are finite sums on ZMod (2*h); use representative independence
+and primitive-root laws. Cross species commute via the actual A05 theorem.
+Hermiticity uses LinearMap.adjoint and complex conjugation. Preserve coefficient
+sign -m in Ch10.schwingerCoefficient and the kernel direction x-y.
+
+Prove the actual nonzero ground/budget existence and the explicit Fin 2 witness.
+Suggested witness is h=4, M=1, K=0, zero charges and distinct species 0/1; verify
+all its predicates rather than inventing a witness assumption. Do not add sine
+identities for arbitrary roots, Hamiltonians, analytic limits or field/vertex claims.
+
+All 16 proofs must be complete before ingestion: partial files retaining unrelated
+placeholders are rejected. The local verifier freshly recompiles this target and
+its reachable staging dependencies in a temporary overlay against immutable Core,
+checks locks, treats warnings as errors and audits every target theorem/data axiom.
+Other unproved CH15 staging targets are intentionally not dependencies of this
+batch and remain unproved. Compiler feedback is authoritative; do not invent it.
+If there is a genuine interface problem, give a concrete diagnosis instead of
+changing the locked contract. Independent proof review follows compiler acceptance.
+"""
+targets = ["BosonizeStubs/A06ChiralFields.lean"]
+lean_proofs = ["BosonizeStubs/A06ChiralFields.lean"]
+context = ["docs/webllm/ch15_core_api.md", "Bosonize/Core/A05MultiSpecies.lean", "note/ch15_phase_a_independent_review_2026-10-13.md", "docs/companion/BosonizeStubs/A06ChiralFields.md", "scripts/webllm/verify_phase_b.py"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/A06ChiralFields.lean"]]
+timeout = 900
+max_packet_bytes = 200000

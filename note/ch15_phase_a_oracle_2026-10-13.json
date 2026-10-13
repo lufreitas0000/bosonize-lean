@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "limitations": "Numerical finite ground-input sanity checks only; not Lean proofs or universal validation.",
+  "parameters": {
+    "h": 4,
+    "M": 1,
+    "K": 0,
+    "charges": [
+      0,
+      0
+    ],
+    "species": [
+      0,
+      1
+    ],
+    "root": "exp(2*pi*i/8)",
+    "tested_site_pairs": 64
+  },
+  "branch_margin": true,
+  "no_alias": true,
+  "mixed_ground_coefficient_x1_y0": {
+    "real": 0.0,
+    "imag": 2.82842712474619
+  },
+  "tolerance": 1e-10,
+  "max_residuals": {
+    "phi_self": 0.0,
+    "theta_self": 0.0,
+    "mixed": 3.552713678800501e-15,
+    "mixed_forward_difference": 3.552713678800501e-15,
+    "delta_spatial_sum": 3.3306690738754696e-16,
+    "difference_spatial_sum": 0.0
+  }
+}

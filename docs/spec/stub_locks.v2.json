@@ -8687,6 +8687,306 @@
           "text": "omit [Fintype σ] [LinearOrder σ] in lemma zero_scalar_winding (h : ℕ) [NeZero (2*h)] (b : σ → Ch06Ext.BoundaryTwist (2*h)) (Ns : σ → ℤ) (ν : σ) (x w : ℤ) : zeroScalar h b Ns ν (x+w*(2*h : ℕ)) = Ch06Ext.holonomy (2*h) (b ν)^w * zeroScalar h b Ns ν x"
         }
       }
+    },
+    "BosonizeStubs/A06ChiralFields.lean": {
+      "commands": [
+        {
+          "kind": "import",
+          "label": "import Bosonize",
+          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
+          "text": "import Bosonize"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.A06",
+          "hash": "53f3bdf82eafa89d66689d3d6bff9fd17c14de79c4a0ab059d5feb2d1714833f",
+          "text": "namespace Bosonize.A06"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "kind": "inductive",
+          "label": "inductive Bosonize.A06.Orientation",
+          "hash": "1d4f0cdee4a2258cec35673f62a3099af589b79f51efc76f8de5faa2db2e8f14",
+          "text": "inductive Orientation where\n  | right\n  | left\n  deriving DecidableEq"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.orientationSign",
+          "hash": "79c365e2fc84dd18f4cb19ff4ed3db31f869acecf7326a667820f74d1e478619",
+          "text": "def orientationSign : Orientation → ℤ\n  | .right => 1\n  | .left => -1"
+        },
+        {
+          "kind": "structure",
+          "label": "structure Bosonize.A06.Branches",
+          "hash": "ade1154778d99dd6e7a9e280e6817d0fb1ea3b92bb58e78a5695a236ecc063b1",
+          "text": "structure Branches (σ : Type*) where\n  rightSpecies : σ\n  leftSpecies : σ\n  distinct : rightSpecies ≠ leftSpecies"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.speciesOf",
+          "hash": "42465b27e5269e7300fd9fad4909fa68a91188da105658b9f4c6554b149e56d8",
+          "text": "def speciesOf {σ : Type*} (branches : Branches σ) : Orientation → σ\n  | .right => branches.rightSpecies\n  | .left => branches.leftSpecies"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {σ : Type*} [Fintype σ] [LinearOrder σ]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {σ : Type*} [Fintype σ] [LinearOrder σ]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.marginAt",
+          "hash": "971e399c73dff93328d01d85b8601ff23dedd3d85089a2abcbd380b60cb98164",
+          "text": "def marginAt (h M K : ℕ) (Ns : σ → ℤ) (ν : σ) : Prop :=\n  2 * (M : ℤ) + (K : ℤ) + |Ns ν| ≤ (h : ℤ)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.branchMargins",
+          "hash": "6c861f74c76b1d8619d2cc0b803a7ea578b9d25f8b57737fc2fac2bbb884221f",
+          "text": "def branchMargins (h M K : ℕ) (Ns : σ → ℤ)\n    (branches : Branches σ) : Prop :=\n  marginAt h M K Ns branches.rightSpecies ∧\n    marginAt h M K Ns branches.leftSpecies"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.latticeCharacter",
+          "hash": "7beaf040d60ef6abb9036c60592914dee7a7a2cde6b504b4fe4ffa450872e1dd",
+          "text": "noncomputable def latticeCharacter (h : ℕ) (ζ : ℂ) (k : ℤ)\n    (x : ZMod (2 * h)) : ℂ :=\n  A01.integerCharacter ζ k (x.val : ℤ)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.skewKernel",
+          "hash": "fbb36d970c9bd54e510de6969dd07ff190a7861627b673b5c561e5dd3538d990",
+          "text": "noncomputable def skewKernel (h M : ℕ) (ζ : ℂ)\n    (x y : ZMod (2 * h)) : ℂ :=\n  ∑ m ∈ Finset.Icc 1 M,\n    (latticeCharacter h ζ (m : ℤ) (x - y) -\n      latticeCharacter h ζ (-(m : ℤ)) (x - y)) / (m : ℂ)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.dirichletKernel",
+          "hash": "50f254e13d4f5a485d8f2ac9b900c385e5e19f604469c3ecbea5c378da19a273",
+          "text": "noncomputable def dirichletKernel (h M : ℕ) (ζ : ℂ)\n    (x y : ZMod (2 * h)) : ℂ :=\n  ((2 * h : ℕ) : ℂ)⁻¹ *\n    ∑ m ∈ Finset.Icc (-(M : ℤ)) (M : ℤ),\n      latticeCharacter h ζ m (x - y)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.opForwardDiff",
+          "hash": "a5f90da2d13adbd20d42d034ef9d2603a5cd55eb68f06944513788e4995e2651",
+          "text": "def opForwardDiff (h : ℕ) {V : Type*} [AddGroup V]\n    (f : ZMod (2 * h) → V) : ZMod (2 * h) → V :=\n  fun x => f (x + 1) - f x"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.integerLift",
+          "hash": "cd53aa04e50f10fa33c7b5371439cd3508043dc73ee3fbbeb11655cb9d26f1fd",
+          "text": "def integerLift (h : ℕ) {V : Type*}\n    (f : ZMod (2 * h) → V) (x : ℤ) : V :=\n  f (x : ZMod (2 * h))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.chiralField",
+          "hash": "f532762f64d9ae4935b1129e8d0a998ce2e180aff33cfd0071a5039bf190b6ed",
+          "text": "noncomputable def chiralField (h M : ℕ) (ζ : ℂ)\n    (branches : Branches σ) (η : Orientation)\n    (x : ZMod (2 * h)) : A05.Operators σ h :=\n  ∑ m ∈ Finset.Icc 1 M,\n    (Complex.I / (m : ℂ)) •\n      ((latticeCharacter h ζ (orientationSign η * (m : ℤ)) x •\n          A05.rho h (speciesOf branches η) (-(m : ℤ))) -\n        (latticeCharacter h ζ (-(orientationSign η * (m : ℤ))) x •\n          A05.rho h (speciesOf branches η) (m : ℤ)))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A06.chiralDifferenceExpansion",
+          "hash": "3334def68118f21f97c1ceed374dce7e4d6440c22e5999930998c53051459124",
+          "text": "noncomputable def chiralDifferenceExpansion (h M : ℕ) (ζ : ℂ)\n    (branches : Branches σ) (η : Orientation)\n    (x : ZMod (2 * h)) : A05.Operators σ h :=\n  ∑ m ∈ Finset.Icc 1 M,\n    (Complex.I / (m : ℂ)) •\n      (((A01.integerCharacter ζ (orientationSign η * (m : ℤ)) 1 - 1) *\n          latticeCharacter h ζ (orientationSign η * (m : ℤ)) x) •\n          A05.rho h (speciesOf branches η) (-(m : ℤ)) -\n        ((A01.integerCharacter ζ (-(orientationSign η * (m : ℤ))) 1 - 1) *\n          latticeCharacter h ζ (-(orientationSign η * (m : ℤ))) x) •\n          A05.rho h (speciesOf branches η) (m : ℤ))"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.A06",
+          "hash": "9af5a0df76326fb53093bac80dcb67221164be6cf28c7c5a20b625b08c994531",
+          "text": "end Bosonize.A06"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A06.admissible_ground_nonzero": {
+          "kind": "lemma",
+          "hash": "ac3b600859d1d2824d070baa0da98c87e79c34d79635065334b66106e54a26f3",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma admissible_ground_nonzero (h K : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (hN : A05.admissible h Ns) : ∃ v : A05.FockSpace σ h, v ∈ A05.jointBudget h Ns K ∧ v ≠ 0"
+        },
+        "Bosonize.A06.chiral_adjoint": {
+          "kind": "lemma",
+          "hash": "a8414ff76a49276965f40ceb529f3622a1d282c2063747e5439fc2321dd24d67",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma chiral_adjoint (h M : ℕ) [NeZero (2 * h)] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : Branches σ) (η : Orientation) (x : ZMod (2 * h)) : LinearMap.adjoint (chiralField h M ζ branches η x) = chiralField h M ζ branches η x"
+        },
+        "Bosonize.A06.chiral_cross_commute": {
+          "kind": "lemma",
+          "hash": "179942fa820bee5bbf642a063f1f5317b2920a82b8c1c55080f0474054cd1e13",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma chiral_cross_commute (h M : ℕ) (ζ : ℂ) (branches : Branches σ) (x y : ZMod (2 * h)) : A02.commutator (chiralField h M ζ branches .right x) (chiralField h M ζ branches .left y) = 0"
+        },
+        "Bosonize.A06.chiral_forward_diff": {
+          "kind": "lemma",
+          "hash": "19cc6fe0c3ad321edb04095b6960aca0120231853b94c66e19917c414a865aef",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma chiral_forward_diff (h M : ℕ) [NeZero (2 * h)] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : Branches σ) (η : Orientation) (x : ZMod (2 * h)) : opForwardDiff h (chiralField h M ζ branches η) x = chiralDifferenceExpansion h M ζ branches η x"
+        },
+        "Bosonize.A06.chiral_same_commutator_on_budget": {
+          "kind": "lemma",
+          "hash": "0e1d78fce1e2458ab8c2793773d2dc08f420ac0b4b56ca998a7d814dbc03736a",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma chiral_same_commutator_on_budget (h M K : ℕ) (hh : 0 < h) (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : Branches σ) (η : Orientation) (Ns : σ → ℤ) (hmargin : marginAt h M K Ns (speciesOf branches η)) (x y : ZMod (2 * h)) (v : A05.FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : A02.commutator (chiralField h M ζ branches η x) (chiralField h M ζ branches η y) v = ((orientationSign η : ℂ) * skewKernel h M ζ x y) • v"
+        },
+        "Bosonize.A06.concrete_two_branch_parameters": {
+          "kind": "lemma",
+          "hash": "85244adec94f23158362fdf85957e768f33cfd1f6f5c6069b942a0d3b4997055",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma concrete_two_branch_parameters : ∃ (h M K : ℕ) (Ns : Fin 2 → ℤ) (branches : Branches (Fin 2)), 0 < h ∧ 1 ≤ M ∧ 2 * M < 2 * h ∧ A05.admissible h Ns ∧ branchMargins h M K Ns branches ∧ A05.groundKet h Ns ∈ A05.jointBudget h Ns K ∧ A05.groundKet h Ns ≠ 0"
+        },
+        "Bosonize.A06.dirichlet_diagonal": {
+          "kind": "lemma",
+          "hash": "bd65ce08fdc968ac843e398d0d6e6835cde5387121a41863388b47a2dbf7eb6f",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma dirichlet_diagonal (h M : ℕ) (hh : 0 < h) (ζ : ℂ) : dirichletKernel h M ζ (0 : ZMod (2 * h)) 0 = ((2 * M + 1 : ℕ) : ℂ) / ((2 * h : ℕ) : ℂ)"
+        },
+        "Bosonize.A06.dirichlet_spatial_sum": {
+          "kind": "lemma",
+          "hash": "73effd4c280c8ef220e2a78058c7006018c88dd8c467a15b981138c43b907d67",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma dirichlet_spatial_sum (h M : ℕ) [NeZero (2 * h)] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (hNoAlias : 2 * M < 2 * h) (x : ZMod (2 * h)) : (∑ y : ZMod (2 * h), dirichletKernel h M ζ x y) = 1"
+        },
+        "Bosonize.A06.forward_diff_add": {
+          "kind": "lemma",
+          "hash": "11f9794f82423c1f269e4b14a9af44453bb3237dfdc53c086c768a31cf10ee8e",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma forward_diff_add (h : ℕ) {V : Type*} [AddCommGroup V] (f g : ZMod (2 * h) → V) (x : ZMod (2 * h)) : opForwardDiff h (fun y => f y + g y) x = opForwardDiff h f x + opForwardDiff h g x"
+        },
+        "Bosonize.A06.forward_diff_smul": {
+          "kind": "lemma",
+          "hash": "cf26c3861666c92d06208973d8f44d52f2091922871e0ac5be88c6628ca97ff0",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma forward_diff_smul (h : ℕ) {V : Type*} [AddCommGroup V] [Module ℂ V] (a : ℂ) (f : ZMod (2 * h) → V) (x : ZMod (2 * h)) : opForwardDiff h (fun y => a • f y) x = a • opForwardDiff h f x"
+        },
+        "Bosonize.A06.forward_diff_sum_zero": {
+          "kind": "lemma",
+          "hash": "c6967a6bcd1ac959a08951bb6a48a95fc6f7a01f9b60e8789299bfc54283fde9",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma forward_diff_sum_zero (h : ℕ) [NeZero (2 * h)] {V : Type*} [AddCommGroup V] (f : ZMod (2 * h) → V) : (∑ x : ZMod (2 * h), opForwardDiff h f x) = 0"
+        },
+        "Bosonize.A06.integer_lift_periodic": {
+          "kind": "lemma",
+          "hash": "573a46561d25a5ba98507d70cf9084bd84b29caf31c87d586216c0c8de1bf443",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma integer_lift_periodic (h : ℕ) {V : Type*} (f : ZMod (2 * h) → V) (x : ℤ) : integerLift h f (x + (2 * h : ℕ)) = integerLift h f x"
+        },
+        "Bosonize.A06.joint_signed_current_commutator": {
+          "kind": "lemma",
+          "hash": "498ab50fdc5e50a6db87f143406b4a87719eab6f944d52fa72bf69e92fadfda1",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma joint_signed_current_commutator (h K : ℕ) (hh : 0 < h) (Ns : σ → ℤ) (ν : σ) (m n : ℤ) (hmargin : |m| + |n| + (K : ℤ) + |Ns ν| ≤ (h : ℤ)) (v : A05.FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : A02.commutator (A05.rho h ν m) (A05.rho h ν n) v = Ch10.schwingerCoefficient m n • v"
+        },
+        "Bosonize.A06.lattice_character_conj": {
+          "kind": "lemma",
+          "hash": "bd3bfefd69d7934a85e918042c0f745b5816d3d771f138198d0f05be167bf83d",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma lattice_character_conj (h : ℕ) [NeZero (2 * h)] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (k : ℤ) (x : ZMod (2 * h)) : star (latticeCharacter h ζ k x) = latticeCharacter h ζ (-k) x"
+        },
+        "Bosonize.A06.lattice_character_shift": {
+          "kind": "lemma",
+          "hash": "d2af6f391e1538ea62fbec20cd66e265a9e067b9d11185e0db0c5623ddb27885",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma lattice_character_shift (h : ℕ) [NeZero (2 * h)] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (k : ℤ) (x : ZMod (2 * h)) : latticeCharacter h ζ k (x + 1) = A01.integerCharacter ζ k 1 * latticeCharacter h ζ k x"
+        },
+        "Bosonize.A06.skew_kernel_diff_sum_zero": {
+          "kind": "lemma",
+          "hash": "a9a9c9c4488a4a8a0506e525a8b91bc046a88efd1efd75b1f22106f0b9bf35d9",
+          "ctx": "942b7dd76337f621bed995a806850f306a06d7c885bb01556a16e5550561eeb1",
+          "text": "lemma skew_kernel_diff_sum_zero (h M : ℕ) [NeZero (2 * h)] (ζ : ℂ) (x : ZMod (2 * h)) : (∑ y : ZMod (2 * h), opForwardDiff h (skewKernel h M ζ x) y) = 0"
+        }
+      }
+    },
+    "BosonizeStubs/Ch15DualFields.lean": {
+      "commands": [
+        {
+          "kind": "import",
+          "label": "import BosonizeStubs.A06ChiralFields",
+          "hash": "709337e043810fde593921db73b9e3992ea6113f9b7058e25d7422d3585ce7cf",
+          "text": "import BosonizeStubs.A06ChiralFields"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch15",
+          "hash": "b7a8485fa4cbf0be1a8640298e61f6e8e3e9e0391e286e6841286e085611a4ac",
+          "text": "namespace Bosonize.Ch15"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {σ : Type*} [Fintype σ] [LinearOrder σ]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {σ : Type*} [Fintype σ] [LinearOrder σ]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch15.phiField",
+          "hash": "c67b185e7bf5820a4accfec61be1ba1c711e62b18d9d0bde6773a82a2044cd5f",
+          "text": "noncomputable def phiField (h M : ℕ) (ζ : ℂ)\n    (branches : A06.Branches σ) (x : ZMod (2 * h)) : A05.Operators σ h :=\n  A06.chiralField h M ζ branches .right x +\n    A06.chiralField h M ζ branches .left x"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch15.thetaField",
+          "hash": "7dac956d5fe2de755c5c0375558ed142981749ac99c40bda091755f5907c8973",
+          "text": "noncomputable def thetaField (h M : ℕ) (ζ : ℂ)\n    (branches : A06.Branches σ) (x : ZMod (2 * h)) : A05.Operators σ h :=\n  A06.chiralField h M ζ branches .right x -\n    A06.chiralField h M ζ branches .left x"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.Ch15",
+          "hash": "67d373c358b0049b7ab569b3d3b4c47a08a4f4c10fc8c42dadc77e5479d12234",
+          "text": "end Bosonize.Ch15"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch15.mixed_commutator_on_budget": {
+          "kind": "lemma",
+          "hash": "775cdb6355bac8084c4917b262eafbd2a915d79b9db240d05aef745441fc03d9",
+          "ctx": "29b57860a96035c048d2fb9695f68620662204c05729dbcb7cb6587212efa0b6",
+          "text": "lemma mixed_commutator_on_budget (h M K : ℕ) (hh : 0 < h) (hM : 1 ≤ M) (hNoAlias : 2 * M < 2 * h) (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : A06.Branches σ) (Ns : σ → ℤ) (hmargin : A06.branchMargins h M K Ns branches) (x y : ZMod (2 * h)) (v : A05.FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : A02.commutator (phiField h M ζ branches x) (thetaField h M ζ branches y) v = (2 * A06.skewKernel h M ζ x y) • v"
+        },
+        "Bosonize.Ch15.mixed_forward_diff_on_budget": {
+          "kind": "lemma",
+          "hash": "16f27c24ef3a1d2e168f7ad4532dbbca2ff4742110ebbcc7204c5c624bb095b7",
+          "ctx": "29b57860a96035c048d2fb9695f68620662204c05729dbcb7cb6587212efa0b6",
+          "text": "lemma mixed_forward_diff_on_budget (h M K : ℕ) (hh : 0 < h) (hM : 1 ≤ M) (hNoAlias : 2 * M < 2 * h) (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : A06.Branches σ) (Ns : σ → ℤ) (hmargin : A06.branchMargins h M K Ns branches) (x y : ZMod (2 * h)) (v : A05.FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : A02.commutator (phiField h M ζ branches x) (A06.opForwardDiff h (thetaField h M ζ branches) y) v = (2 * A06.opForwardDiff h (A06.skewKernel h M ζ x) y) • v"
+        },
+        "Bosonize.Ch15.phi_adjoint": {
+          "kind": "lemma",
+          "hash": "9fc3f833b23b1fc00dcd4f2a4447336a7ea4848ff72aa38ee4d15749443dfa9e",
+          "ctx": "29b57860a96035c048d2fb9695f68620662204c05729dbcb7cb6587212efa0b6",
+          "text": "lemma phi_adjoint (h M : ℕ) [NeZero (2 * h)] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : A06.Branches σ) (x : ZMod (2 * h)) : LinearMap.adjoint (phiField h M ζ branches x) = phiField h M ζ branches x"
+        },
+        "Bosonize.Ch15.phi_self_commutator_on_budget": {
+          "kind": "lemma",
+          "hash": "d8ee7aa4b40276bd41306f5bf3088a2bcd7764a28a5670b51118417ba42880ca",
+          "ctx": "29b57860a96035c048d2fb9695f68620662204c05729dbcb7cb6587212efa0b6",
+          "text": "lemma phi_self_commutator_on_budget (h M K : ℕ) (hh : 0 < h) (hM : 1 ≤ M) (hNoAlias : 2 * M < 2 * h) (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : A06.Branches σ) (Ns : σ → ℤ) (hmargin : A06.branchMargins h M K Ns branches) (x y : ZMod (2 * h)) (v : A05.FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : A02.commutator (phiField h M ζ branches x) (phiField h M ζ branches y) v = 0"
+        },
+        "Bosonize.Ch15.theta_adjoint": {
+          "kind": "lemma",
+          "hash": "ff9289d9ea32404dd81830f8f506b004e4b2757edadbd3fd0ad58f7c5ec44fd4",
+          "ctx": "29b57860a96035c048d2fb9695f68620662204c05729dbcb7cb6587212efa0b6",
+          "text": "lemma theta_adjoint (h M : ℕ) [NeZero (2 * h)] (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : A06.Branches σ) (x : ZMod (2 * h)) : LinearMap.adjoint (thetaField h M ζ branches x) = thetaField h M ζ branches x"
+        },
+        "Bosonize.Ch15.theta_self_commutator_on_budget": {
+          "kind": "lemma",
+          "hash": "66542a6b3bf772a60f6420a2eb6835c269f3983b9b349966c84463a75da6d013",
+          "ctx": "29b57860a96035c048d2fb9695f68620662204c05729dbcb7cb6587212efa0b6",
+          "text": "lemma theta_self_commutator_on_budget (h M K : ℕ) (hh : 0 < h) (hM : 1 ≤ M) (hNoAlias : 2 * M < 2 * h) (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : A06.Branches σ) (Ns : σ → ℤ) (hmargin : A06.branchMargins h M K Ns branches) (x y : ZMod (2 * h)) (v : A05.FockSpace σ h) (hv : v ∈ A05.jointBudget h Ns K) : A02.commutator (thetaField h M ζ branches x) (thetaField h M ζ branches y) v = 0"
+        },
+        "Bosonize.Ch15.zero_mode_obstruction_on_ground": {
+          "kind": "theorem",
+          "hash": "388d111b0aaca5e72f7237c56a114736317203312afbd305e780a04f6833241e",
+          "ctx": "29b57860a96035c048d2fb9695f68620662204c05729dbcb7cb6587212efa0b6",
+          "text": "theorem zero_mode_obstruction_on_ground (h M K : ℕ) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 ≤ M) (hNoAlias : 2 * M < 2 * h) (ζ : ℂ) (hζ : IsPrimitiveRoot ζ (2 * h)) (branches : A06.Branches σ) (Ns : σ → ℤ) (hN : A05.admissible h Ns) (hmargin : A06.branchMargins h M K Ns branches) (x : ZMod (2 * h)) (c : ℂ) (hc : c ≠ 0) : ¬ (∀ y : ZMod (2 * h), A02.commutator (phiField h M ζ branches x) (A06.opForwardDiff h (thetaField h M ζ branches) y) (A05.groundKet h Ns) = (c * A06.dirichletKernel h M ζ x y) • A05.groundKet h Ns)"
+        }
+      }
     }
   },
   "version": 2

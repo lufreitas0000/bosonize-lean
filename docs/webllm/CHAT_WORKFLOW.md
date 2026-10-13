@@ -174,8 +174,12 @@ Every chapter gets its own A baseline, B evidence and C promotion checkpoint.
 
 ## Current evidence and limits
 
-CH15 source and APIs are supplied; no CH15 definitions or theorem stubs are yet
-installed in staging. There is no actual Chat response yet. Phase A/C artifact
+The actual Chat response has passed elaboration and independent mathematical
+review. Its exact declarations are staged and frozen: 16 A06 contracts/13 data
+and seven CH15 contracts/two data. All 23 theorem bodies remain unproved.
+The first Phase B task is packets/ch15_phase_b_support.toml. Generate a fresh
+packet from the committed reviewed baseline; the original Phase A packet is
+retained as provenance and is stale for re-ingestion after this integration. Phase A/C artifact
 transport extends the existing B-only Lean importer without weakening its proof
 locks. A draft-only verifier test is not mathematical approval of the chapter.
 
@@ -183,3 +187,15 @@ Official product context: https://learn.chatgpt.com/docs/models?surface=web and
 https://learn.chatgpt.com/docs/web describe model/effort controls where available.
 Your observed Chat interface determines what can actually be selected. The effort
 allocation above is a workflow recommendation, not a measured model capability claim.
+
+## Phase B support verifier
+
+The A06-first batch uses scripts/webllm/verify_phase_b.py. It checks strict locks
+against the matching primary baseline, verifies unchanged Core and dependency
+configuration, builds Core, and freshly recompiles the selected target and all
+reachable staging dependencies in a temporary olean overlay. It audits every
+theorem and named data declaration with warnings treated as errors. It reuses
+only Core/Mathlib inputs from the checked primary compiler environment; candidate
+proofs never overwrite that environment's staging cache. Thus the seven unrelated
+CH15 stubs can remain while the complete A06 target is verified. The CH15 batch
+will depend on fully proved A06 and use a new committed packet afterward.
