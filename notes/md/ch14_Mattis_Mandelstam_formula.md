@@ -155,3 +155,32 @@ $$
 2M+K_*+\max(|N_\nu|,|N_\nu-1|)\le h \tag{14.6}
 $$
 is only a possible wrapper for actual right-suffix bounds, not a sufficient theorem hypothesis. With $h=6,L=12,N=0,K_{\mathrm{in}}=0,K_{\mathrm{out}}=2,M=1,x=0$ the candidate gives coefficient $-1/(2\sqrt{12})$ for the hole at −2, while CAR gives $-1/\sqrt{12}$; missing mode 2 matters. Do not use $M\ge K_*$ as a substitute for proving the full ground expansion and recurrences. This separation supplies a valid useful conditional theorem without freezing an unsupported finite field dictionary.
+
+
+#### 14.4 Constructive realization: finite phases and a conditional field dictionary
+
+The verified construction is in [Ch14Mandelstam](../../Bosonize/Core/Ch14Mandelstam.lean), with exact declarations and validation in its [formal companion](../../docs/companion/Bosonize/Core/Ch14Mandelstam.md). The preceding reference exposition and proposed proof strategies remain useful mathematical context. The construction below specifies which parts now have complete proofs and which physical comparison obligations remain open.
+
+The carrier is the actual finite fermionic occupation Hilbert space, with species ordered lexicographically before momentum. For a charge vector $\vec N$, the budget $B(\vec N,K)$ contains configurations of those species charges whose **total** excitation is at most $K$. Write $P_{\vec N,K}$ for its orthogonal occupation projector. An ambient operator $A$ becomes a genuinely typed map from one budget to another by restricting its input and applying the target projector. Thus the physical map retains every target loss; no projection is silently replaced by the identity.
+
+The implemented phases are exactly (14.1)–(14.2), including the exterior minus in $W^-$. Their finite sums are defined for any natural mode cutoff; the positive-mode regime in the reference remains the intended physical setting. The adjoints satisfy $(W^+)^\dagger=-W^-$ and $(W^-)^\dagger=-W^+$, and both phases are periodic on integer position lifts. On a budget, the actual compressed maps satisfy
+
+$$
+ (P_{\vec N,K}W^\pm P_{\vec N,K})^{K+1}=0.
+$$
+
+For positive half-length $h$, every lowering mode decreases excitation by at least one, while excitation is nonnegative. Iteration through the cutoff levels therefore reaches zero after $K+1$ steps. The raising result follows by taking the actual adjoint of the lowering compression. This argument also proves the corresponding power bounds on the budget subtypes. It uses no Klein completeness margin and does not infer nilpotency merely from finite dimension.
+
+Each species retains its external unit step phase $r_\nu$. The source zero mode multiplies by $r_\nu^x\zeta^{xN_\nu}$ before the Klein map changes charge. Its adjoint is the conjugate scalar, it is unitary, and a signed winding $w$ multiplies it by $\tau_\nu^w$, where $\tau_\nu=r_\nu^L$. The physical map and the finite Taylor candidate obey this same winding law. The Klein-ground bridge separately requires the source and lowered-target completeness margins inherited from Chapter 13.
+
+The candidate uses the ordered factors of (14.4), each on its stated carrier: source zero mode, projected Klein kernel, lowering Taylor on the shifted input budget, cutoff transition, and raising Taylor on the output budget. Its actual Hilbert adjoint reverses those five arrows. In particular, the transition reverses source and target cutoffs, and a projected ambient adjoint retains both corresponding projections.
+
+The whole physical ground image is now proved as the retained signed hole-ket sum displayed above; this includes deeper holes, rather than just the coefficient of the lowered ground. For a source projector $P_{\mathrm{in}}$, target projector $P_{\mathrm{out}}$, field $c$ and current $\rho$, the exact recurrence difference contains
+
+$$
+ P_{\mathrm{out}}[c,\rho]P_{\mathrm{in}}
+ -P_{\mathrm{out}}c(1-P_{\mathrm{in}})\rho P_{\mathrm{in}}
+ +P_{\mathrm{out}}\rho(1-P_{\mathrm{out}})cP_{\mathrm{in}}.
+$$
+
+Both excursions are retained. Finally, the cyclic criterion is proved by cancelling common residuals and inducting over creator words, then extending equality over their span. Its actual field specialization requires full ground-vector equality, cyclicity and both matching recurrences. Those hypotheses have not been established for the candidate: its complete ground image has not been proved equal to the physical one. The counterexamples and mode-coverage warning above therefore remain operative, and the unconditional finite field dictionary remains open.

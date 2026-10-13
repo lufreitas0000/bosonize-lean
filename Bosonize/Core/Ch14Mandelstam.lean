@@ -1,7 +1,7 @@
 module
 
 public import Bosonize.Core.Ch13KleinFactors
-public import BosonizeStubs.A05FiniteExponentials
+public import Bosonize.Core.A05FiniteExponentials
 
 /-!
 # CH14: finite phase data and the conditional cyclic field criterion

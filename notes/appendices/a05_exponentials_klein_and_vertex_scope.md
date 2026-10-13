@@ -166,3 +166,28 @@ Here “tensor” means a proved product of occupation coordinates on the actual
 The kernel denominator is the proved positive product Gram normalization. Its inverse, adjoint, budget isometry, cutoff compatibility and four-budget squares are derived on these actual states. Thus the identical source/target Gram factors anticipated in Definition 2 are proved here, rather than supplied as hypotheses. The integer phase includes both preceding-species particle counts and the top-mode removal sign, matching the fixed occupation-basis ground convention.
 
 This support completes the finite multispecies and Klein-map portion only. The exponential and vertex proposals above retain their stated unproved obligations. The physical field coefficient retains the same external twist as its comparison field; excitation invariance under a uniform linear offset does not remove that field parameter, change the reference sea, or establish an unprojected field–vertex identity.
+
+
+## Verified finite exponential support and its Chapter 14 use
+
+[A05FiniteExponentials](../../Bosonize/Core/A05FiniteExponentials.lean) now realizes the finite polynomial portion of Definition 1 and Lemma 1; its [companion](../../docs/companion/Bosonize/Core/A05FiniteExponentials.md) records the exact contracts. This updates the status of that portion of the earlier proposals without asserting their remaining BCH, analytic or unconditional vertex claims.
+
+For an actual complex module and its endomorphism $A$, the construction is
+
+$$
+ T_d(A)=\sum_{j=0}^{d}\frac{A^j}{j!}.
+$$
+
+This polynomial is defined without any nilpotency assumption. Its action is the finite sum of actual power actions; it commutes with $A$ and respects a proved intertwining map between different modules. On finite inner-product spaces, taking its actual adjoint gives $T_d(A^\dagger)$ because its factorial coefficients are real.
+
+The stronger conclusions retain the explicit hypothesis $A^{d+1}=0$. Only then is a larger cutoff immaterial and
+
+$$
+ T_d(A)T_d(-A)=T_d(-A)T_d(A)=I.
+$$
+
+The same identities establish injectivity, surjectivity and preservation of nonzero vectors, including on infinite-dimensional modules. These are exact algebraic results; no convergence or scalar BCH formula is supplied.
+
+The general nilpotency certificate is a bounded family of submodules: its bottom is zero, its top is the whole carrier, and $A$ maps each level into the preceding one. Applying $A$ successively reaches the zero level. Chapter 14 independently proves the necessary mapping properties for its **actual compressed current phases**, using nonnegative excitation and strict positive-mode lowering. Its degree-$K$ Taylor factors consequently have the asserted nilpotent-exponential meaning on their respective budgets.
+
+The [Chapter 14 realization](../md/ch14_Mattis_Mandelstam_formula.md#144-constructive-realization-finite-phases-and-a-conditional-field-dictionary) also proves typed adjoint reversal, matching holonomy, the physical retained hole expansion and the common-residual equality criterion. It preserves both projection excursions. The candidate-to-field comparison still needs full ground-vector equality and matching physical recurrences on a cyclic source; none follows from one scalar coefficient or numerical margins alone.

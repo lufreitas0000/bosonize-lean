@@ -1,12 +1,14 @@
-# A05 — Generic exact finite exponentials (Phase A)
+# A05 — Verified finite exponential support
 
-Source: [A05FiniteExponentials.lean](../../../BosonizeStubs/A05FiniteExponentials.lean).
+**Status: Phase C complete.** All 13 theorem proofs are complete, warning-free, audited with standard axioms and promoted/frozen in Core. Corresponding lecture updates passed independent preservation and mathematical review. Unconditional field–vertex equality is outside this proved scope.
 
-This is a **review candidate**, not proved support. The definition is complete; thirteen theorem bodies are single-placeholder stubs. `lake build BosonizeStubs.A05FiniteExponentials` passed with exactly thirteen expected `sorry` warnings, zero errors and no other warnings. Independent review and a reviewed interface freeze must precede Phase B. Gemini Flash/Pro tools are not exposed; the available inherited Codex drafting agent is the recorded fallback.
+Source: [A05FiniteExponentials.lean](../../../../Bosonize/Core/A05FiniteExponentials.lean).
+
+Historical Phase A evidence: this was a **review candidate**, not proved support. The original draft had a complete definition and thirteen single-placeholder theorem bodies. `lake build BosonizeStubs.A05FiniteExponentials` passed with exactly thirteen expected `sorry` warnings, zero errors and no other warnings. Independent review and a reviewed interface freeze must precede Phase B. Gemini Flash/Pro tools are not exposed; the available inherited Codex drafting agent is the recorded fallback.
 
 ## Source reconciliation and actual carriers
 
-Source: [A05](../../../notes/appendices/a05_exponentials_klein_and_vertex_scope.md). Complete precedent: [CH08](../../../Bosonize/Core/Ch08Boson.lean), `taylor`, `expNil_cutoff`, `expNil_inverse` and `taylor_adjoint`. The generic definition acts on the supplied complex module itself. Endomorphism multiplication applies the right factor first. Degree d sums through d, so cutoff independence and inverse claims require the actual power A^(d+1)=0. Adjoint support additionally requires an actual finite-dimensional inner-product space. Finite dimensionality alone never certifies nilpotency.
+Source: [A05](../../../../notes/appendices/a05_exponentials_klein_and_vertex_scope.md). Complete precedent: [CH08](../../../../Bosonize/Core/Ch08Boson.lean), `taylor`, `expNil_cutoff`, `expNil_inverse` and `taylor_adjoint`. The generic definition acts on the supplied complex module itself. Endomorphism multiplication applies the right factor first. Degree d sums through d, so cutoff independence and inverse claims require the actual power A^(d+1)=0. Adjoint support additionally requires an actual finite-dimensional inner-product space. Finite dimensionality alone never certifies nilpotency.
 
 The bounded filtration criterion explicitly requires a zero bottom, the actual whole-module top, and lowering of each prescribed level. No monotonicity assumption is needed for the iterative implication. Downstream compressed physical phases must prove those maps themselves. The criterion is nonvacuous: a two-coordinate square-zero shift admits the usual two-step kernel filtration. The nonzero-vector preservation contract retains its nonzero premise.
 
@@ -160,3 +162,9 @@ All thirteen theorem candidates remain unproved in Phase A. Nilpotency of the ac
 ## Complete Phase B — 2026-10-12
 
 All 37 combined theorem proofs and 20 data declarations are complete and freshly audited with only standard axioms; no placeholders or warnings remain. Both native diagnostic calls complete with empty items. The combined build passes 3405 jobs; strict guard verifies 793 statements and 632 commands. Independent final review records authorship and the root’s distinct review of the reviewer-authored eight proofs. Only the two previously reviewed scalar-instance omissions changed the frozen interface. Exact current source hashes and all 57 axiom reports are in note/ch14_phase_b_independent_audit_2026-10-12.json. Phase C promotion and complementary lecture review are next. Earlier Phase A status and placeholder counts are historical.
+
+## Verified Core completion and synchronization — 2026-10-13
+
+The final source SHA-256 is `57d36818adb50f3f981c14191e786efce2d9d1eed872313110f9dd00a392aee5`. Phase B completed at `339b4c0`; source migration follows the independently reviewed import-only plan. Existing 21 Core modules are unchanged. All 37 combined proofs and 20 data declarations are audited again through the Core aggregator. Full CI and synchronization evidence are recorded in [validation](../../../../note/ch14_phase_c_validation_2026-10-13.md). The [independent lecture review](../../../../note/ch14_phase_c_pedagogical_review_2026-10-12.md) binds the unchanged CH14 and A05 note/source hashes and confirms preservation of the original reference exposition.
+
+The [CH14 lecture](../../../../notes/md/ch14_Mattis_Mandelstam_formula.md) explains actual phase nilpotency, typed projection losses, adjoint reversal, explicit holonomy and the full-vector/common-residual cyclic criterion. The [A05 lecture](../../../../notes/appendices/a05_exponentials_klein_and_vertex_scope.md) explains generic exact finite exponentials while preserving separate research proposals. Historical draft build counts above are superseded by the fresh completion evidence.

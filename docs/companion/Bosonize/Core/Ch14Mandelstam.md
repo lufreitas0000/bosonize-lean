@@ -1,6 +1,8 @@
-# CH14 Phase A companion: actual finite phase data and conditional field comparison
+# CH14 — Verified finite phases and conditional field comparison
 
-This companion tracks the exact Lean declarations in `BosonizeStubs/Ch14Mandelstam.lean`. Phase A signatures are obligations, **not proofs**. The complementary lecture remains [Chapter 14](../../../notes/md/ch14_Mattis_Mandelstam_formula.md); [A05](../../../notes/appendices/a05_exponentials_klein_and_vertex_scope.md) supplies the accepted separation of finite candidates and algebraic verification criteria.
+**Status: Phase C complete.** All 24 theorem proofs are complete, warning-free, audited with standard axioms and promoted/frozen in Core. Corresponding lecture updates passed independent preservation and mathematical review. Unconditional field–vertex equality is outside this proved scope.
+
+This companion tracks the exact Lean declarations in `Bosonize/Core/Ch14Mandelstam.lean`. The signatures below were Phase A obligations; their proofs are now complete. The complementary lecture remains [Chapter 14](../../../../notes/md/ch14_Mattis_Mandelstam_formula.md); [A05](../../../../notes/appendices/a05_exponentials_klein_and_vertex_scope.md) supplies the accepted separation of finite candidates and algebraic verification criteria.
 
 The inherited Codex agent is the workflow fallback because the requested Flash/Pro tool tiers are not exposed. Installed Lean elaboration is authoritative; native Lean MCP is available. No existing Core module or lock is edited by this draft.
 
@@ -298,7 +300,7 @@ Apply cyclic_common_residual to the actual two typed maps. Full ground-vector eq
 
 The source is a Phase A candidate until independent review and a scoped lock. A successful placeholder build confirms type elaboration only. Before freezing, record the exact source SHA, declaration counts, data-only standard-axiom audit, native diagnostic results and independent review. After proofs, require zero warnings/placeholders, all theorem dependencies standard-axiom audited, unchanged old Core hashes, and independently reviewed lecture synchronization before promotion.
 
-Phase A author validation (2026-10-12): source SHA-256 `6e11f90d2801fc18b0e51fe5bde2f19d137590199943824d950039ee347c5c16`; 24 one-sorry theorem obligations and 19 complete data/instance declarations. `lake build BosonizeStubs.Ch14Mandelstam` succeeded (3405 jobs), with precisely the 24 expected placeholder warnings and no errors or other warnings. A fresh audit of all 19 data declarations uses only `propext`, `Classical.choice`, `Quot.sound`, and no `sorryAx`: [audit](../../../note/ch14_phase_a_data_axiom_audit_2026-10-12.json). Native Lean MCP diagnostics independently completed with exactly 24 sorry warnings, no errors, no timeout/partial result and no failed dependencies. Independent reviewer decision is still required before freezing.
+Phase A author validation (2026-10-12): source SHA-256 `6e11f90d2801fc18b0e51fe5bde2f19d137590199943824d950039ee347c5c16`; 24 one-sorry theorem obligations and 19 complete data/instance declarations. `lake build BosonizeStubs.Ch14Mandelstam` succeeded (3405 jobs), with precisely the 24 expected placeholder warnings and no errors or other warnings. A fresh audit of all 19 data declarations uses only `propext`, `Classical.choice`, `Quot.sound`, and no `sorryAx`: [audit](../../../../note/ch14_phase_a_data_axiom_audit_2026-10-12.json). Native Lean MCP diagnostics independently completed with exactly 24 sorry warnings, no errors, no timeout/partial result and no failed dependencies. Independent reviewer decision is still required before freezing.
 
 ## Reviewed Phase B instance cleanup
 
@@ -307,3 +309,9 @@ Exactly zero_scalar_norm and zero_scalar_winding omit unused finite enumeration 
 ## Complete Phase B — 2026-10-12
 
 All 37 combined theorem proofs and 20 data declarations are complete and freshly audited with only standard axioms; no placeholders or warnings remain. Both native diagnostic calls complete with empty items. The combined build passes 3405 jobs; strict guard verifies 793 statements and 632 commands. Independent final review records authorship and the root’s distinct review of the reviewer-authored eight proofs. Only the two previously reviewed scalar-instance omissions changed the frozen interface. Exact current source hashes and all 57 axiom reports are in note/ch14_phase_b_independent_audit_2026-10-12.json. Phase C promotion and complementary lecture review are next. Earlier Phase A status and placeholder counts are historical.
+
+## Verified Core completion and synchronization — 2026-10-13
+
+The final source SHA-256 is `0d3feed562023e5d8a20027021014cc56512d636b58848fa7a8122b61cc320fc`. Phase B completed at `339b4c0`; source migration follows the independently reviewed import-only plan. Existing 21 Core modules are unchanged. All 37 combined proofs and 20 data declarations are audited again through the Core aggregator. Full CI and synchronization evidence are recorded in [validation](../../../../note/ch14_phase_c_validation_2026-10-13.md). The [independent lecture review](../../../../note/ch14_phase_c_pedagogical_review_2026-10-12.md) binds the unchanged CH14 and A05 note/source hashes and confirms preservation of the original reference exposition.
+
+The [CH14 lecture](../../../../notes/md/ch14_Mattis_Mandelstam_formula.md) explains actual phase nilpotency, typed projection losses, adjoint reversal, explicit holonomy and the full-vector/common-residual cyclic criterion. The [A05 lecture](../../../../notes/appendices/a05_exponentials_klein_and_vertex_scope.md) explains generic exact finite exponentials while preserving separate research proposals. Historical draft build counts above are superseded by the fresh completion evidence.

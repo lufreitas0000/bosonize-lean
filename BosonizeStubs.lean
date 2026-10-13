@@ -1,6 +1,4 @@
 import Bosonize
-import BosonizeStubs.A05FiniteExponentials
-import BosonizeStubs.Ch14Mandelstam
 
 /-!
 # Bosonize Staging Library

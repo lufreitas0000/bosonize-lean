@@ -12,6 +12,8 @@ import Bosonize.Core.Ch07VacuumBudget
 import Bosonize.Core.Ch08Boson
 import Bosonize.Core.A05MultiSpecies
 import Bosonize.Core.Ch13KleinFactors
+import Bosonize.Core.A05FiniteExponentials
+import Bosonize.Core.Ch14Mandelstam
 
 import Bosonize.Core.A04DensityKinematics
 import Bosonize.Core.Ch09DensityModes

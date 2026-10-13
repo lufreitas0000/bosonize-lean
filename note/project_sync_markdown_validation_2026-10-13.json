@@ -1,0 +1,10 @@
+{
+  "katex": "0.16.22",
+  "files": [
+    "notes/md/ch13_Klein_factors.md",
+    "notes/md/ch14_Mattis_Mandelstam_formula.md",
+    "notes/appendices/a05_exponentials_klein_and_vertex_scope.md"
+  ],
+  "fragments": 321,
+  "errors": []
+}

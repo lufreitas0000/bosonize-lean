@@ -1,0 +1,24 @@
+{
+  "modules": {
+    "A05FiniteExponentials": {
+      "old": "BosonizeStubs/A05FiniteExponentials.lean",
+      "new": "Bosonize/Core/A05FiniteExponentials.lean",
+      "old_sha": "57d36818adb50f3f981c14191e786efce2d9d1eed872313110f9dd00a392aee5",
+      "new_sha": "57d36818adb50f3f981c14191e786efce2d9d1eed872313110f9dd00a392aee5",
+      "changed_commands": [],
+      "headers_preserved": 13
+    },
+    "Ch14Mandelstam": {
+      "old": "BosonizeStubs/Ch14Mandelstam.lean",
+      "new": "Bosonize/Core/Ch14Mandelstam.lean",
+      "old_sha": "ef78dbd4c20ca8b853ae44b123ef9f69932442e4f2b005ea32eca4fe6a4dac83",
+      "new_sha": "0d3feed562023e5d8a20027021014cc56512d636b58848fa7a8122b61cc320fc",
+      "changed_commands": [
+        4
+      ],
+      "headers_preserved": 24
+    }
+  },
+  "old_core_preserved": 21,
+  "core_count": 23
+}
