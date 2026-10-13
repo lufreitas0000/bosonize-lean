@@ -30,13 +30,33 @@ class ExportContextTests(unittest.TestCase):
         for name, digest in hashes.items():
             self.assertIn('## ' + name, result)
             self.assertIn('Full source SHA-256: ' + digest, result)
-        model = exporter.verifier.lean.parse_lean((repo / 'BosonizeStubs/A06ChiralFields.lean').read_text())
+        target = exporter.a06_source(repo)
+        model = exporter.verifier.lean.parse_lean(target.read_text())
         for name in model.lemmas:
             self.assertIn('`' + name.split('.')[-1] + '`', result)
         self.assertTrue('def speciesBudget' in result, 'Missing speciesBudget definition')
         self.assertIn('lemma excitation_nonneg', result)
         self.assertIn('noncomputable def coordinateSpace', result)
-        self.assertEqual(result, (repo / 'docs/webllm/ch15_core_api.md').read_text())
+        # The stored Phase B export is a historical snapshot after promotion.
+        if target.parent.name == 'BosonizeStubs':
+            self.assertEqual(result, (repo / 'docs/webllm/ch15_core_api.md').read_text())
+
+    def test_a06_path_before_and_after_promotion_fails_closed(self):
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder)
+            staging = repo / 'BosonizeStubs/A06ChiralFields.lean'
+            core = repo / 'Bosonize/Core/A06ChiralFields.lean'
+            with self.assertRaisesRegex(ValueError, 'exactly one'):
+                exporter.a06_source(repo)
+            staging.parent.mkdir(parents=True)
+            staging.write_text('import Bosonize\n')
+            self.assertEqual(exporter.a06_source(repo), staging)
+            core.parent.mkdir(parents=True)
+            staging.rename(core)
+            self.assertEqual(exporter.a06_source(repo), core)
+            staging.write_text('import Bosonize\n')
+            with self.assertRaisesRegex(ValueError, 'exactly one'):
+                exporter.a06_source(repo)
 
     def test_inventory_mismatch_rejected(self):
         with tempfile.TemporaryDirectory() as folder:

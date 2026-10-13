@@ -39,13 +39,23 @@ def excerpt(text, examples):
     return '\n\n'.join(parts)
 
 
+def a06_source(repo):
+    """Resolve the reviewed module before or after its Core promotion."""
+    candidates = [repo / name for name in (
+        'BosonizeStubs/A06ChiralFields.lean', 'Bosonize/Core/A06ChiralFields.lean')]
+    present = [path for path in candidates if path.is_file()]
+    if len(present) != 1:
+        raise ValueError('Expected exactly one staging or Core A06 source')
+    return present[0]
+
+
 def render(repo=verifier.REPO):
     hashes = json.loads((repo / 'docs/spec/core_locks.json').read_text())
     actual = {p.relative_to(repo).as_posix() for p in (repo / 'Bosonize/Core').rglob('*.lean')}
     if actual != set(hashes):
         raise ValueError('Core inventory differs from the complete-source lock')
     guide = (repo / 'docs/webllm/ch15_phase_b_context_guide.md').read_text()
-    target = verifier.lean.parse_lean((repo / 'BosonizeStubs/A06ChiralFields.lean').read_text())
+    target = verifier.lean.parse_lean(a06_source(repo).read_text())
     missing = [name for name in target.lemmas if '`' + name.split('.')[-1] + '`' not in guide]
     if missing:
         raise ValueError(f'Guide misses target obligations: {missing}')
