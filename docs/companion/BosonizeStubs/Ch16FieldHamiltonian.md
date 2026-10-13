@@ -12,3 +12,12 @@ Phase A integrated after user review. Theorems remain unproved.
 
 
 Phase A finish evidence: `note/webllm/ch16/phaseA-ch16_cycle_a_be1da0fd.md`.
+
+
+## Local Phase B development checkpoint
+
+Phase A independently reviewed and accepted. Complete proof work is preserved
+in [the quota checkpoint](../../../note/ch16_quota_checkpoint_2026-10-13.md)
+and its candidate archive. Accepted staging statements remain unproved; the
+local candidate results and dependency-blocked bodies are distinguished there.
+Phase B runner acceptance and Phase C remain incomplete.
