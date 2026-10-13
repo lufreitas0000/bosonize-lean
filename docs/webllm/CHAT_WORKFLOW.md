@@ -199,3 +199,10 @@ only Core/Mathlib inputs from the checked primary compiler environment; candidat
 proofs never overwrite that environment's staging cache. Thus the seven unrelated
 CH15 stubs can remain while the complete A06 target is verified. The CH15 batch
 will depend on fully proved A06 and use a new committed packet afterward.
+
+## Self-service mode
+
+The user can run every local check and own the mathematical review and phase
+transition decisions without a Codex conversation. See [SELF_SERVICE.md](SELF_SERVICE.md).
+Call Codex for issues or a final independent audit as desired. Local verification
+commands do not invoke a model; automatic mathematical approval is not provided.
