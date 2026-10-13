@@ -1,6 +1,18 @@
-# Ch15DualFields: reviewed Phase A baseline
+# Ch15DualFields: Phase B complete
 
-Status: complete data; 7 unproved contracts. Phase B is next.
+Status: Phase B complete; all 7 contracts proved and freshly audited.
+Phase C has not started; the module remains in staging.
+Current source SHA-256: `e6863de5211ac488eaf35b3b1afec0168192d5dce585c04c9350fc15a006edf5`.
+
+Local proof disposition, independent review, runner acceptance and final evidence:
+[Phase B validation](../../../note/ch15_phase_b_validation_2026-10-13.md).
+Only proof bodies changed; the reviewed interfaces, source notes and Core remain frozen.
+
+## Historical Phase A snapshot
+
+The following baseline and browser design record describes Phase A before these
+proofs were completed. Its unproved-status statements are historical and are
+superseded by the Phase B status and validation above.
 Source: [Ch15DualFields.lean](../../../BosonizeStubs/Ch15DualFields.lean).
 SHA-256: `778a972ff2cd909c25e83f4f6e266af2ddacfee2d71d150391549a3c0e38d903`.
 

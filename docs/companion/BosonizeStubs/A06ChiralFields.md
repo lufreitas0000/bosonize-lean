@@ -1,6 +1,18 @@
-# A06ChiralFields: reviewed Phase A baseline
+# A06ChiralFields: Phase B complete
 
-Status: complete data; 16 unproved contracts. Phase B is next.
+Status: Phase B complete; all 16 contracts proved and freshly audited.
+Phase C has not started; the module remains in staging.
+Current source SHA-256: `daffa052dbd46a919a001b086804af1cb8b2182c5322a20d4f8581c4a131d603`.
+
+Local proof disposition, independent review, runner acceptance and final evidence:
+[Phase B validation](../../../note/ch15_phase_b_validation_2026-10-13.md).
+Only proof bodies changed; the reviewed interfaces, source notes and Core remain frozen.
+
+## Historical Phase A snapshot
+
+The following baseline and browser design record describes Phase A before these
+proofs were completed. Its unproved-status statements are historical and are
+superseded by the Phase B status and validation above.
 Source: [A06ChiralFields.lean](../../../BosonizeStubs/A06ChiralFields.lean).
 SHA-256: `f65574faa2ee8591476c1a9c9a9dba634aa4bd82397e0bd277c1d027f9aaafa1`.
 

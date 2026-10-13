@@ -112,3 +112,14 @@ The first power-intertwining scratch proof encountered the known stored coordina
 | 2026-10-13 | CH15 Phase B isolated compilation | Fresh worktrees lack Lake caches and whole-library warning checks would include unrelated CH15 placeholders | Recompile the complete target and reachable staging dependencies into a fresh temporary overlay against checked immutable Core/Mathlib; audit every declaration | Tested; A06-first batch ready |
 
 | 2026-10-13 | CH15 Phase B browser proof context | The browser returned only a diagnostic; narrow API digests omitted Ch07 budget definitions and A03 coordinate-space contracts, and provided no compiler iteration | Export every frozen Core API in original declaration order, include selected exact proof examples and a 16-obligation construction guide; retain strict complete-file acceptance and local compiler evidence | Context coverage tests passed; no new A06 proof claimed |
+
+
+### 2026-10-13 — CH15/A06 local Phase B
+
+| Date | Module/Context | Obstruction | Pivot/Resolution | Status |
+| --- | --- | --- | --- | --- |
+| 2026-10-13 | A06 character shift and adjoint | Browser candidates mismatched integer cast of one and guessed adjoint/star helpers. | Normalize Int.cast_one and use the installed semilinear adjoint with star_div₀ and complex conjugation; preserve definitions and interfaces. | Fresh compiler and standard-axiom audits passed. |
+| 2026-10-13 | A06 joint-budget current CCR | Opaque equality instances broke coordinate equivalence cancellation; scalar simp recursed. | Use a transparent eta-expanded local instance, actual occupation-span induction, total-energy component bound and proved linear tensor insertion; explicit scalar rewrites. | Complete proof compiled and audited without sorryAx. |
+| 2026-10-13 | A06 same-branch field CCR | Browser module automation did not substitute all four current identities; diagonal collapse and representative subtraction failed. | Prove explicit operator bilinearity, substitute four pairings before scalar normalization, collapse with sum_eq_single and transport integer differences through residue characters. | Original -m, orientation, x-y and margin preserved; fresh audit passed. |
+| 2026-10-13 | A06 no-alias spatial sum | Divisibility conclusion was placed inside an absolute-value inequality and natural/integer modulus casts differed. | Separate typed natAbs bound from eq_zero_of_dvd_of_natAbs_lt_natAbs; preserve original no-alias hypothesis. | Dirichlet spatial sum compiled and audited. |
+| 2026-10-13 | CH15 periodic zero-mode obstruction | Exact unsubtracted Dirichlet identity has nonzero spatial average. | Sum actual action-valued commutator difference to zero; Dirichlet sum gives c times the genuine nonzero ground ket, yielding contradiction. No mathematical interface pivot. | Seven CH15 contracts accepted through runner; Phase C not started. |
