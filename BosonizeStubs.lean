@@ -1,3 +1,5 @@
+import BosonizeStubs.A07FiniteNormalOrdering
+import BosonizeStubs.Ch16FieldHamiltonian
 import Bosonize
 
 /-!

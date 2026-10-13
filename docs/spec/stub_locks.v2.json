@@ -9119,6 +9119,372 @@
           "text": "theorem zero_mode_obstruction_on_ground (h M K : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hmargin : A06.branchMargins h M K Ns branches) (x : ZMod (2 * h)) (c : \u2102) (hc : c \u2260 0) : \u00ac (\u2200 y : ZMod (2 * h), A02.commutator (phiField h M \u03b6 branches x) (A06.opForwardDiff h (thetaField h M \u03b6 branches) y) (A05.groundKet h Ns) = (c * A06.dirichletKernel h M \u03b6 x y) \u2022 A05.groundKet h Ns)"
         }
       }
+    },
+    "BosonizeStubs/A07FiniteNormalOrdering.lean": {
+      "commands": [
+        {
+          "kind": "import",
+          "label": "import Bosonize",
+          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
+          "text": "import Bosonize"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.A07",
+          "hash": "951e33e2b6ccec8b1b3213e17d7f6c83881534c346cb9c3f6ed9a54a0b290621",
+          "text": "namespace Bosonize.A07"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]"
+        },
+        {
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.A07.Letter",
+          "hash": "9d1b0efc25b6c07d46596c203c033b6f89517bf013ffa2b991f667d87002c490",
+          "text": "abbrev Letter (M : \u2115) := Bool \u00d7 Fin M \u00d7 Bool"
+        },
+        {
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.A07.QuadraticSymbol",
+          "hash": "fc87365394c106cd8dbe1105d09b47f6c7ff866ee04cce323664443bb6636305",
+          "text": "abbrev QuadraticSymbol (M : \u2115) := (Letter M \u00d7 Letter M) \u2192 \u2102"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.orientation",
+          "hash": "4f84148b7d5a960fa906759a57804c0605102eea6480a4dc63ce19ffd4fa9f96",
+          "text": "def orientation (b : Bool) : A06.Orientation :=\n  if b then .left else .right"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.natMode",
+          "hash": "b040d4f07af4bdc20f80bd4b5fabd4936e07a5a8c34ebddce95998f0a68f531f",
+          "text": "def natMode {M : \u2115} (p : Letter M) : \u2115 := p.2.1.val + 1"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.phaseSign",
+          "hash": "eddf2f77f120a98d3e8b451aa5eb7b2580275d8dd2a24d6fc5391e077961e1c6",
+          "text": "def phaseSign {M : \u2115} (p : Letter M) : \u2124 :=\n  if p.2.2 then -1 else 1"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.signedMode",
+          "hash": "16e521c4ce30e0b063813808bb0248bc07e0deae7ea94b4e4ae8aaaee1f7979f",
+          "text": "def signedMode {M : \u2115} (p : Letter M) : \u2124 :=\n  if p.2.2 then (natMode p : \u2124) else -(natMode p : \u2124)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.current",
+          "hash": "4ad45f25f3ec9c15c6d02c0a5edde815d62fb34c3063c7c51f1615d0db0b7315",
+          "text": "noncomputable def current (h M : \u2115) (branches : A06.Branches \u03c3)\n    (p : Letter M) : A05.Operators \u03c3 h :=\n  A05.rho h (A06.speciesOf branches (orientation p.1)) (signedMode p)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.rawPair",
+          "hash": "71d28a5b338c37f0cbd5168fafabd80bbd891ba2efb48e7ea93bfff9a4e9e7bc",
+          "text": "noncomputable def rawPair (h M : \u2115) (branches : A06.Branches \u03c3)\n    (p q : Letter M) : A05.Operators \u03c3 h :=\n  current h M branches p * current h M branches q"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.normalPair",
+          "hash": "0ea032655c299545c9ee6f8262b66f3a11865204fe2ec69a80afc16f901aa425",
+          "text": "noncomputable def normalPair (h M : \u2115) (branches : A06.Branches \u03c3)\n    (p q : Letter M) : A05.Operators \u03c3 h :=\n  if p.2.2 = false \u2227 q.2.2 = true then\n    current h M branches q * current h M branches p\n  else rawPair h M branches p q"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.rawEvaluation",
+          "hash": "3e2db208db767b15478418cb555d953c1d12ec0c2339520ce0f84b62388d7d78",
+          "text": "noncomputable def rawEvaluation (h M : \u2115) (branches : A06.Branches \u03c3)\n    (Q : QuadraticSymbol M) : A05.Operators \u03c3 h :=\n  \u2211 pq : Letter M \u00d7 Letter M, (Q pq) \u2022\n    rawPair h M branches pq.1 pq.2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.normalEvaluation",
+          "hash": "4737879176a089ac52004b2eb7d6f094faa381f436a8d4adbbec5d66d2f8b94d",
+          "text": "noncomputable def normalEvaluation (h M : \u2115) (branches : A06.Branches \u03c3)\n    (Q : QuadraticSymbol M) : A05.Operators \u03c3 h :=\n  \u2211 pq : Letter M \u00d7 Letter M, (Q pq) \u2022\n    normalPair h M branches pq.1 pq.2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.squareSymbol",
+          "hash": "49460d7f984dc2eeb2f2816ddcfba565a4013ba9f82495387fa8962793b2fc1a",
+          "text": "def squareSymbol {M : \u2115} (a : Letter M \u2192 \u2102) : QuadraticSymbol M :=\n  fun pq => a pq.1 * a pq.2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.gradientCoefficient",
+          "hash": "2783a2ee1a94a8e7b444ca8532fca9b32340ec715afd0ec06196c7dd478b69df",
+          "text": "noncomputable def gradientCoefficient (h M : \u2115) (\u03b6 : \u2102)\n    (x : ZMod (2 * h)) (p : Letter M) : \u2102 :=\n  let k : \u2124 := phaseSign p * A06.orientationSign (orientation p.1) *\n    (natMode p : \u2124)\n  ((phaseSign p : \u2102) * Complex.I / (natMode p : \u2102)) *\n    (A01.integerCharacter \u03b6 k 1 - 1) *\n      A06.latticeCharacter h \u03b6 k x"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.chiralCoefficient",
+          "hash": "b1292aebb6a0fbb5bafb834ec7c7c01a04bd1862c36af7716190f5fe57a2cd7a",
+          "text": "noncomputable def chiralCoefficient (h M : \u2115) (\u03b6 : \u2102)\n    (\u03b7 : A06.Orientation) (x : ZMod (2 * h)) (p : Letter M) : \u2102 :=\n  if orientation p.1 = \u03b7 then gradientCoefficient h M \u03b6 x p else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.phiCoefficient",
+          "hash": "2ad8f5f8a2080fbcd78dbe5e223e3403ee8993b90ab9c55e21f2bf70cafca9f6",
+          "text": "noncomputable def phiCoefficient (h M : \u2115) (\u03b6 : \u2102)\n    (x : ZMod (2 * h)) : Letter M \u2192 \u2102 :=\n  gradientCoefficient h M \u03b6 x"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.thetaCoefficient",
+          "hash": "5ec179a38adbd8c8727a2460f1ddc3db5839a365473f01dddf1dd5a8eb378639",
+          "text": "noncomputable def thetaCoefficient (h M : \u2115) (\u03b6 : \u2102)\n    (x : ZMod (2 * h)) (p : Letter M) : \u2102 :=\n  (A06.orientationSign (orientation p.1) : \u2102) *\n    gradientCoefficient h M \u03b6 x p"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07.dualSquareSymbol",
+          "hash": "26b666af5fdb0a5dfe54755a2a7f7bd2cbba599ba78839270230a87b8ba29cfb",
+          "text": "noncomputable def dualSquareSymbol (h M : \u2115) (\u03b6 : \u2102)\n    (x : ZMod (2 * h)) : QuadraticSymbol M :=\n  squareSymbol (phiCoefficient h M \u03b6 x) +\n    squareSymbol (thetaCoefficient h M \u03b6 x)"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.A07",
+          "hash": "99c3f57424c8e6978bf9b26d4558faa308aac460398501e5fe0eca53de0a61e4",
+          "text": "end Bosonize.A07"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A07.chiral_gradient_representation": {
+          "kind": "lemma",
+          "hash": "222269f7395207d73599c4a81a9ef56eb9f47dc903173076acf29a23f36db3c1",
+          "ctx": "b1d03f1999dac445bfbf25a375ce31e924a7de4a83c01c35f885d6a0746ca88c",
+          "text": "lemma chiral_gradient_representation (h M : \u2115) [NeZero (2 * h)] (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (x : ZMod (2 * h)) : (\u2211 p : Letter M, (chiralCoefficient h M \u03b6 \u03b7 x p) \u2022 current h M branches p) = A06.opForwardDiff h (A06.chiralField h M \u03b6 branches \u03b7) x"
+        },
+        "Bosonize.A07.contraction_on_joint_budget": {
+          "kind": "lemma",
+          "hash": "8c2856927acda3d341fe5e6f0d80d006352e924c3ed80a82c4e1741f83bf1835",
+          "ctx": "b1d03f1999dac445bfbf25a375ce31e924a7de4a83c01c35f885d6a0746ca88c",
+          "text": "lemma contraction_on_joint_budget (h M K : \u2115) (hh : 0 < h) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (p q : Letter M) (hp : p.2.2 = false) (hq : q.2.2 = true) (hbranch : p.1 = q.1) (hmargin : A06.marginAt h M K Ns (A06.speciesOf branches (orientation p.1))) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : (normalPair h M branches p q - rawPair h M branches p q) v = (if natMode p = natMode q then -(natMode p : \u2102) else 0) \u2022 v"
+        },
+        "Bosonize.A07.dual_square_chiral_decomposition": {
+          "kind": "lemma",
+          "hash": "2051bdaf08c721fe6317e9a6ff7dac5a68207de26e0709ee84a9ea296b099d24",
+          "ctx": "b1d03f1999dac445bfbf25a375ce31e924a7de4a83c01c35f885d6a0746ca88c",
+          "text": "lemma dual_square_chiral_decomposition (h M : \u2115) (\u03b6 : \u2102) (x : ZMod (2 * h)) : dualSquareSymbol h M \u03b6 x = (2 : \u2102) \u2022 (squareSymbol (chiralCoefficient h M \u03b6 .right x) + squareSymbol (chiralCoefficient h M \u03b6 .left x))"
+        },
+        "Bosonize.A07.normal_evaluation_add": {
+          "kind": "lemma",
+          "hash": "0a20d548675772ff0e080eca542fb806ed998e024ac167a070eb3d4d4bec05c6",
+          "ctx": "b1d03f1999dac445bfbf25a375ce31e924a7de4a83c01c35f885d6a0746ca88c",
+          "text": "lemma normal_evaluation_add (h M : \u2115) (branches : A06.Branches \u03c3) (Q R : QuadraticSymbol M) : normalEvaluation h M branches (Q + R) = normalEvaluation h M branches Q + normalEvaluation h M branches R"
+        },
+        "Bosonize.A07.normal_evaluation_smul": {
+          "kind": "lemma",
+          "hash": "154ef5afb79ce43bc1d5874b6d4bfd8384c3ad98a31840b0f76031195f89d22c",
+          "ctx": "b1d03f1999dac445bfbf25a375ce31e924a7de4a83c01c35f885d6a0746ca88c",
+          "text": "lemma normal_evaluation_smul (h M : \u2115) (branches : A06.Branches \u03c3) (a : \u2102) (Q : QuadraticSymbol M) : normalEvaluation h M branches (a \u2022 Q) = a \u2022 normalEvaluation h M branches Q"
+        },
+        "Bosonize.A07.normal_pair_contraction": {
+          "kind": "lemma",
+          "hash": "4901b76e7945c9b606bdf8da12499edf6c088e24f36bc33cc6345d4291839046",
+          "ctx": "b1d03f1999dac445bfbf25a375ce31e924a7de4a83c01c35f885d6a0746ca88c",
+          "text": "lemma normal_pair_contraction (h M : \u2115) (branches : A06.Branches \u03c3) (p q : Letter M) : normalPair h M branches p q - rawPair h M branches p q = if p.2.2 = false \u2227 q.2.2 = true then A02.commutator (current h M branches q) (current h M branches p) else 0"
+        }
+      }
+    },
+    "BosonizeStubs/Ch16FieldHamiltonian.lean": {
+      "commands": [
+        {
+          "kind": "import",
+          "label": "import Bosonize",
+          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
+          "text": "import Bosonize"
+        },
+        {
+          "kind": "import",
+          "label": "import BosonizeStubs.A07FiniteNormalOrdering",
+          "hash": "8ac850c25076f8dfe95396dbeb403ea1ae1f108fa5f95a0793785a0060e6d1a8",
+          "text": "import BosonizeStubs.A07FiniteNormalOrdering"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch16",
+          "hash": "0b4a5457a6382bb6c4ba16ae53e031d7dc93bc44b11264c29d5305d45ba34eec",
+          "text": "namespace Bosonize.Ch16"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.marginWithExcursion",
+          "hash": "a17c5087538855e450687e6536604afe033809dd136c1ba1c25795e61f7d704f",
+          "text": "def marginWithExcursion (h M K excursion : \u2115) (Ns : \u03c3 \u2192 \u2124)\n    (branches : A06.Branches \u03c3) : Prop :=\n  \u2200 \u03b7 : A06.Orientation,\n    2 * (M : \u2124) + (K : \u2124) + (excursion : \u2124) +\n      |Ns (A06.speciesOf branches \u03b7)| \u2264 (h : \u2124)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.chiralSquare",
+          "hash": "ea21cbacaff9cea2c7b555a0fdd85a3c26b1b3d2e8c0aff3aaa37737d45bc818",
+          "text": "noncomputable def chiralSquare (h M : \u2115) (\u03b6 : \u2102)\n    (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation)\n    (x : ZMod (2 * h)) : A05.Operators \u03c3 h :=\n  A07.normalEvaluation h M branches\n    (A07.squareSymbol (A07.chiralCoefficient h M \u03b6 \u03b7 x))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.localFieldEnergy",
+          "hash": "64aba3d5bd671274b4552ed31ee5246766af6899d25347c95e0f57ec10f17de2",
+          "text": "noncomputable def localFieldEnergy (h M : \u2115) (\u03b6 : \u2102)\n    (branches : A06.Branches \u03c3)\n    (x : ZMod (2 * h)) : A05.Operators \u03c3 h :=\n  A07.normalEvaluation h M branches (A07.dualSquareSymbol h M \u03b6 x)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.fieldHamiltonian",
+          "hash": "6853771e8c6a05a2e7a20770109ecbd9ccaad485b35bfe256f7080ef721ef8a7",
+          "text": "noncomputable def fieldHamiltonian (h M : \u2115) [NeZero (2 * h)]\n    (\u03b6 : \u2102) (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  \u2211 x : ZMod (2 * h), localFieldEnergy h M \u03b6 branches x"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.epsilon",
+          "hash": "4924b862ca83da5d6ae251bdf46dd399db3a1b9af946876eadd97e09961c4b1b",
+          "text": "noncomputable def epsilon (h : \u2115) (\u03b6 : \u2102) (m : \u2115) : \u2102 :=\n  (((2 * h : \u2115) : \u2102) / (m : \u2102) ^ 2) *\n    (A01.integerCharacter \u03b6 (m : \u2124) 1 - 1) *\n      (A01.integerCharacter \u03b6 (-(m : \u2124)) 1 - 1)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.referenceWeight",
+          "hash": "b9056e10c5e3fe99a6fe4afdaccbebf9a406c4aaab3ce27893b8a96384d7e1d3",
+          "text": "noncomputable def referenceWeight (h : \u2115) (\u03b6 : \u2102) : \u2102 :=\n  epsilon h \u03b6 1"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.sugawara",
+          "hash": "f432190228ffd43263a94280fdb8e433e93992df373b5e7372880772d46eabd7",
+          "text": "noncomputable def sugawara (h M : \u2115)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  (\u2211 m \u2208 Finset.Icc 1 M,\n    A05.rho h (A06.speciesOf branches .right) (m : \u2124) *\n      A05.rho h (A06.speciesOf branches .right) (-(m : \u2124))) +\n  (\u2211 m \u2208 Finset.Icc 1 M,\n    A05.rho h (A06.speciesOf branches .left) (m : \u2124) *\n      A05.rho h (A06.speciesOf branches .left) (-(m : \u2124)))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.weightedEnergy",
+          "hash": "3242950a376e16336c1863e3afe162b65d97fe527a1130b6db76892260e52dd4",
+          "text": "noncomputable def weightedEnergy (h M : \u2115) (\u03b6 : \u2102)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  (\u2211 m \u2208 Finset.Icc 1 M,\n    epsilon h \u03b6 m \u2022\n      (A05.rho h (A06.speciesOf branches .right) (m : \u2124) *\n        A05.rho h (A06.speciesOf branches .right) (-(m : \u2124)))) +\n  (\u2211 m \u2208 Finset.Icc 1 M,\n    epsilon h \u03b6 m \u2022\n      (A05.rho h (A06.speciesOf branches .left) (m : \u2124) *\n        A05.rho h (A06.speciesOf branches .left) (-(m : \u2124))))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.weightedError",
+          "hash": "e4dd9acbf496c95790756ee0ccdd02f79ce9f39875067e19c63204470571b305",
+          "text": "noncomputable def weightedError (h M : \u2115) (\u03b6 : \u2102)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  (\u2211 m \u2208 Finset.Icc 1 M,\n    (epsilon h \u03b6 m - referenceWeight h \u03b6) \u2022\n      (A05.rho h (A06.speciesOf branches .right) (m : \u2124) *\n        A05.rho h (A06.speciesOf branches .right) (-(m : \u2124)))) +\n  (\u2211 m \u2208 Finset.Icc 1 M,\n    (epsilon h \u03b6 m - referenceWeight h \u03b6) \u2022\n      (A05.rho h (A06.speciesOf branches .left) (m : \u2124) *\n        A05.rho h (A06.speciesOf branches .left) (-(m : \u2124))))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.errorOperator",
+          "hash": "cd79a3d8563429fc0004d64ee3d1514c0f1f46c8e421d4af05ed57a0110a4721",
+          "text": "noncomputable def errorOperator (h M : \u2115) [NeZero (2 * h)]\n    (\u03b6 : \u2102) (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  fieldHamiltonian h M \u03b6 branches -\n    ((4 : \u2102) * referenceWeight h \u03b6) \u2022 sugawara h M branches"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.excitedKet",
+          "hash": "51f046341dc1c44405d4b88cf0f236f8cca6183fee72355737614d0789815b94",
+          "text": "noncomputable def excitedKet (h : \u2115) (Ns : \u03c3 \u2192 \u2124)\n    (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation)\n    (m : \u2115) : A05.FockSpace \u03c3 h :=\n  A05.rho h (A06.speciesOf branches \u03b7) (m : \u2124) (A05.groundKet h Ns)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch16.standardBranches",
+          "hash": "37ba39691e80cca4375fdbd09c352ecbf48cb9281bf6f730282989cadcc83917",
+          "text": "def standardBranches : A06.Branches (Fin 2) :=\n  \u27e80, 1, by decide\u27e9"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.Ch16",
+          "hash": "46483e471bed94f2eeaad9cc30de4ca0699aae7b6d8a0a098d9a65895fc8197c",
+          "text": "end Bosonize.Ch16"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch16.chiral_spatial_collapse_on_budget": {
+          "kind": "lemma",
+          "hash": "70b83746ee82ef0e91d64db9163268287a0427faa82cf95dab7fd459122db6bd",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "lemma chiral_spatial_collapse_on_budget (h M K : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hmargin : A06.marginAt h M K Ns (A06.speciesOf branches \u03b7)) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : (\u2211 x : ZMod (2 * h), chiralSquare h M \u03b6 branches \u03b7 x) v = ((2 : \u2102) \u2022 (\u2211 m \u2208 Finset.Icc 1 M, epsilon h \u03b6 m \u2022 (A05.rho h (A06.speciesOf branches \u03b7) (m : \u2124) * A05.rho h (A06.speciesOf branches \u03b7) (-(m : \u2124))))) v"
+        },
+        "Bosonize.Ch16.concrete_dispersion_gap": {
+          "kind": "theorem",
+          "hash": "b26097b3e59a0bb39304bebbbb9ca74a5d9568e3e88961d315adf667e1055804",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "theorem concrete_dispersion_gap : epsilon 8 (A01.canonicalRoot 16) 2 \u2260 referenceWeight 8 (A01.canonicalRoot 16)"
+        },
+        "Bosonize.Ch16.concrete_excited_error_witness": {
+          "kind": "theorem",
+          "hash": "fddcfcc2831bb69b41ba71ecb9cf161a2ae7789bf8f5714b75d8e7336039a9c6",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "theorem concrete_excited_error_witness : A05.admissible 8 (fun _ : Fin 2 => 0) \u2227 A06.branchMargins 8 2 2 (fun _ : Fin 2 => 0) standardBranches \u2227 excitedKet 8 (fun _ : Fin 2 => 0) standardBranches .right 2 \u2260 0 \u2227 errorOperator 8 2 (A01.canonicalRoot 16) standardBranches (excitedKet 8 (fun _ : Fin 2 => 0) standardBranches .right 2) \u2260 0"
+        },
+        "Bosonize.Ch16.error_nonzero_witness": {
+          "kind": "theorem",
+          "hash": "ba4b5f9a42e5d48997e38927e3824aaa8759ebc3a643bed330f98d806e86e74a",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "theorem error_nonzero_witness (h M K m : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (hK : m \u2264 K) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (hweight : epsilon h \u03b6 m \u2260 referenceWeight h \u03b6) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hmargin : A06.branchMargins h M K Ns branches) : excitedKet h Ns branches \u03b7 m \u2260 0 \u2227 errorOperator h M \u03b6 branches (excitedKet h Ns branches \u03b7 m) \u2260 0"
+        },
+        "Bosonize.Ch16.error_weighted_on_budget": {
+          "kind": "lemma",
+          "hash": "732caccfff24ddaa4cc3d1018549940b4eb308a95e56d351a591c72570f1c105",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "lemma error_weighted_on_budget (h M K : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : A06.branchMargins h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : errorOperator h M \u03b6 branches v = ((4 : \u2102) \u2022 weightedError h M \u03b6 branches) v"
+        },
+        "Bosonize.Ch16.excited_ket_mem_budget": {
+          "kind": "lemma",
+          "hash": "84f1b57b34789a0947d8345c8e365f58174bf91e582fc4c030fead79d12e5b1f",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "lemma excited_ket_mem_budget (h K m : \u2115) (hh : 0 < h) (hm : m \u2264 K) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) : excitedKet h Ns branches \u03b7 m \u2208 A05.jointBudget h Ns K"
+        },
+        "Bosonize.Ch16.excited_ket_nonzero": {
+          "kind": "lemma",
+          "hash": "b1745e8b4dbdc1b62f50adf3e191b442d6a454cf7d906fa6d8e0d165dcda64d2",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "lemma excited_ket_nonzero (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (hmargin : A06.marginAt h M m Ns (A06.speciesOf branches \u03b7)) : excitedKet h Ns branches \u03b7 m \u2260 0"
+        },
+        "Bosonize.Ch16.field_chiral_identity": {
+          "kind": "lemma",
+          "hash": "7b23180a87a884204b097cee3175b9cae886b7c246dbc648551885b12d07971c",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "lemma field_chiral_identity (h M : \u2115) (\u03b6 : \u2102) (branches : A06.Branches \u03c3) (x : ZMod (2 * h)) : localFieldEnergy h M \u03b6 branches x = (2 : \u2102) \u2022 (chiralSquare h M \u03b6 branches .right x + chiralSquare h M \u03b6 branches .left x)"
+        },
+        "Bosonize.Ch16.field_weighted_after_excursion": {
+          "kind": "theorem",
+          "hash": "12b09f6708f50c29c11230f45d0bf210d30e6b40e8d3b87f7b5de9a2b4e9b413",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "theorem field_weighted_after_excursion (h M K excursion : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : marginWithExcursion h M K excursion Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns (K + excursion)) : fieldHamiltonian h M \u03b6 branches v = ((4 : \u2102) \u2022 weightedEnergy h M \u03b6 branches) v"
+        },
+        "Bosonize.Ch16.field_weighted_on_budget": {
+          "kind": "theorem",
+          "hash": "4557132c2319992beab7b2663dadb28cfe379bd8c1a18cc479a6bf5d69de9911",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "theorem field_weighted_on_budget (h M K : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : A06.branchMargins h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : fieldHamiltonian h M \u03b6 branches v = ((4 : \u2102) \u2022 weightedEnergy h M \u03b6 branches) v"
+        },
+        "Bosonize.Ch16.first_mode_error_zero": {
+          "kind": "theorem",
+          "hash": "b8a39764f29945f0247828d6fcd3255624587d3b89fb359793e6a51fa805ae7e",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "theorem first_mode_error_zero (h M K : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hK : 1 \u2264 K) (hNoAlias : 2 * M < 2 * h) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hmargin : A06.branchMargins h M K Ns branches) : errorOperator h M \u03b6 branches (excitedKet h Ns branches \u03b7 1) = 0"
+        },
+        "Bosonize.Ch16.ground_error_zero": {
+          "kind": "lemma",
+          "hash": "e6dba2a9bd3f8586a1e90a7dd0a690f8b0d1d3f93daf0fbe10d001f8a9c69bd1",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "lemma ground_error_zero (h M K : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hmargin : A06.branchMargins h M K Ns branches) : errorOperator h M \u03b6 branches (A05.groundKet h Ns) = 0"
+        },
+        "Bosonize.Ch16.single_mode_error_eigenvector": {
+          "kind": "theorem",
+          "hash": "0ab618fcd853dec10b1b8583a77958108ff00222ed621c1f3848475cda0fe219",
+          "ctx": "0dc64ecfbfb8f624021513369d7ab2393168775bdb775d4e2af44d558a7714bb",
+          "text": "theorem single_mode_error_eigenvector (h M K m : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (hK : m \u2264 K) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hmargin : A06.branchMargins h M K Ns branches) : errorOperator h M \u03b6 branches (excitedKet h Ns branches \u03b7 m) = ((4 : \u2102) * (m : \u2102) * (epsilon h \u03b6 m - referenceWeight h \u03b6)) \u2022 excitedKet h Ns branches \u03b7 m"
+        }
+      }
     }
   },
   "version": 2
