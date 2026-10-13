@@ -156,7 +156,7 @@ suggestions; the verified A06 realization is the following finite supporting
 construction. Its [formal source](../../Bosonize/Core/A06ChiralFields.lean) and
 [companion notebook](../../docs/companion/Bosonize/Core/A06ChiralFields.md)
 map the sixteen proved contracts. Fresh Phase B compiler and axiom checks passed;
-final Phase C acceptance is recorded separately.
+[completed Phase C validation](../../note/ch15_phase_c_validation_2026-10-13.md) records promotion and acceptance.
 
 **Occupation carrier and transport of the current algebra.** The implementation
 uses the existing finite multispecies Fock space with orthonormal occupation

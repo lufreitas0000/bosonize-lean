@@ -1,0 +1,39 @@
+{
+  "baseline": "af4b8768f0c73c0b1f1f29b2bc27dc5d219d114f",
+  "promotion_commit": "4f526ec138daa0c248a0c583f3b504995960a8ef",
+  "prior_core_hashes_preserved": 23,
+  "core_modules": 25,
+  "sources": {
+    "Bosonize/Core/A06ChiralFields.lean": {
+      "proof_count": 16,
+      "sha256": "77c579ff06238d2801e9861fdf65c5c1efc66fc31d0161efd18a6a386d2fa768",
+      "non_import_bytes_unchanged": true,
+      "headers_unchanged": true
+    },
+    "Bosonize/Core/Ch15DualFields.lean": {
+      "proof_count": 7,
+      "sha256": "30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85",
+      "non_import_bytes_unchanged": true,
+      "headers_unchanged": true
+    }
+  },
+  "notes": {
+    "notes/md/ch15_dual_fields.md": {
+      "original_prefix_bytes": 6836,
+      "original_prefix_sha256": "3675555d5b403e5a781de280372ec33837d4acb25b0e4aea7ab40b74839758fd",
+      "sha256": "093cc249a27a3f02d3b2c5f3cd9a505036243c9d3665077ade67ff3f94c0d704"
+    },
+    "notes/appendices/a06_chiral_fields_and_lattice_kernels.md": {
+      "original_prefix_bytes": 9599,
+      "original_prefix_sha256": "6736664af8a30e085d1bbf312cd743cb30631d2b1e4798e8f727c89776d69cd8",
+      "sha256": "4b24518601c34ff8a2b6cf42bb8267200420e15adda4027e74a8694f77e103d8"
+    }
+  },
+  "unrelated_interface_records_unchanged": true,
+  "toolchain_dependencies_unchanged": true,
+  "math_validation": {
+    "katex": "0.16.22",
+    "fragments": 195,
+    "failures": []
+  }
+}

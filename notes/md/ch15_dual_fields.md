@@ -104,7 +104,7 @@ below describes the actual seven proved chapter contracts and their A06 support.
 The [formal source](../../Bosonize/Core/Ch15DualFields.lean) and
 [companion notebook](../../docs/companion/Bosonize/Core/Ch15DualFields.md)
 provide the implementation and audit mapping. The proofs passed fresh Phase B
-compiler and axiom checks; final Phase C acceptance is recorded separately.
+compiler and axiom checks; [completed Phase C validation](../../note/ch15_phase_c_validation_2026-10-13.md) records promotion and acceptance.
 
 **Finite carrier and shared input budget.** Take a finite ordered set of species
 and a finite one-particle mode set at cutoff $h>0$. The Fock space has an

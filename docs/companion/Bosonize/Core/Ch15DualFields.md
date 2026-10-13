@@ -1,14 +1,14 @@
-# Ch15DualFields: Phase C promotion candidate
+# Ch15DualFields: Phase C complete and frozen
 
-Status: Phase B complete; all 7 contracts proved and freshly audited.
-Phase C promotion candidate prepared; promoted-source build, documentation review
-and runner acceptance are pending.
+Status: Phase C complete; all 7 contracts are proved, audited, promoted and frozen.
+Independent pedagogical review and runner acceptance passed; promotion commit `4f526ec`.
+[Final Phase C validation](../../../../note/ch15_phase_c_validation_2026-10-13.md).
 Verified Phase B source SHA-256: `e6863de5211ac488eaf35b3b1afec0168192d5dce585c04c9350fc15a006edf5`.
 
 Local proof disposition, independent review, runner acceptance and final evidence:
 [Phase B validation](../../../../note/ch15_phase_b_validation_2026-10-13.md).
 Phase B changed only proof bodies and preserved reviewed interfaces, source notes
-and prior Core. The separately authorized Phase C candidate is described below.
+and prior Core. The separately authorized completed Phase C migration is described below.
 
 ## Verified construction and declaration mapping
 
@@ -37,12 +37,12 @@ replacement outside that contradiction. The finite algebraic claims provide
 no unconditional physical-vertex identification, analytic continuum limit,
 CH16 Hamiltonian or normal-ordering identity.
 
-## Promotion candidate and audit boundary
+## Completed promotion and audit boundary
 
-Future source: [Core CH15](../../../../Bosonize/Core/Ch15DualFields.lean).
-Predicted promoted-source SHA-256 after the reviewed import substitution:
-`30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85`. This is a pre-acceptance hash, to be checked against the actual promoted file.
-The exact proposed import substitution is
+Promoted source: [Core CH15](../../../../Bosonize/Core/Ch15DualFields.lean).
+Verified promoted-source SHA-256 after the reviewed import substitution:
+`30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85`. This matches the actual promoted source and complete-source lock.
+The exact accepted import substitution is
 `import BosonizeStubs.A06ChiralFields` → `import Bosonize.Core.A06ChiralFields`.
 A06's `import Bosonize` is expanded to the 23 prior Core imports to avoid a
 cycle through the promoted aggregator. Every non-import source byte is preserved,
@@ -54,10 +54,9 @@ The [Phase B validation](../../../../note/ch15_phase_b_validation_2026-10-13.md)
 records nine freshly audited CH15 declarations and 29 in its A06 dependency,
 all with only `propext`, `Classical.choice`, and `Quot.sound`, zero placeholders
 and zero target warnings. It also records the independent proof review and
-runner acceptance/push. Fresh compilation and axioms after the promotion
-substitutions, scoped lock migration, independent pedagogical review and
-Phase C runner acceptance remain pending. This notebook records a promotion
-candidate and does not infer completion from the proved staging files.
+runner acceptance/push. Fresh promoted compilation and axioms, scoped lock migration, independent
+pedagogical review and Phase C runner acceptance all passed. The final validation
+records actual outputs, the exporter CI repair and unchanged prior Core hashes.
 
 ## Historical Phase A snapshot
 
@@ -145,3 +144,6 @@ recorded separately after the runner completes them.
 
 
 Phase C finish evidence: `note/webllm/ch15/phaseC-ch15_cycle_c_463e5816.md`.
+
+
+Final promoted-source and workflow evidence: [Phase C validation](../../../../note/ch15_phase_c_validation_2026-10-13.md).

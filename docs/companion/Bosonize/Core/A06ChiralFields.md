@@ -1,14 +1,14 @@
-# A06ChiralFields: Phase C promotion candidate
+# A06ChiralFields: Phase C complete and frozen
 
-Status: Phase B complete; all 16 contracts proved and freshly audited.
-Phase C promotion candidate prepared; promoted-source build, documentation review
-and runner acceptance are pending.
+Status: Phase C complete; all 16 contracts are proved, audited, promoted and frozen.
+Independent pedagogical review and runner acceptance passed; promotion commit `4f526ec`.
+[Final Phase C validation](../../../../note/ch15_phase_c_validation_2026-10-13.md).
 Verified Phase B source SHA-256: `daffa052dbd46a919a001b086804af1cb8b2182c5322a20d4f8581c4a131d603`.
 
 Local proof disposition, independent review, runner acceptance and final evidence:
 [Phase B validation](../../../../note/ch15_phase_b_validation_2026-10-13.md).
 Phase B changed only proof bodies and preserved reviewed interfaces, source notes
-and prior Core. The separately authorized Phase C candidate is described below.
+and prior Core. The separately authorized completed Phase C migration is described below.
 
 ## Verified construction and declaration mapping
 
@@ -43,28 +43,27 @@ Only the Dirichlet kernel has the 1/(2h) normalization. No analytic limit,
 sine characterization for an arbitrary primitive root, square/Hamiltonian
 result from the reference appendix, or CH16 result is proved by this module.
 
-## Promotion candidate and audit boundary
+## Completed promotion and audit boundary
 
-Future source: [Core A06](../../../../Bosonize/Core/A06ChiralFields.lean).
-Predicted promoted-source SHA-256 after the reviewed import substitution:
-`77c579ff06238d2801e9861fdf65c5c1efc66fc31d0161efd18a6a386d2fa768`. This is a pre-acceptance hash, to be checked against the actual promoted file.
+Promoted source: [Core A06](../../../../Bosonize/Core/A06ChiralFields.lean).
+Verified promoted-source SHA-256 after the reviewed import substitution:
+`77c579ff06238d2801e9861fdf65c5c1efc66fc31d0161efd18a6a386d2fa768`. This matches the actual promoted source and complete-source lock.
 The exact promotion substitution replaces A06's `import Bosonize` by the
 23 prior Core imports from the reviewed aggregator, avoiding an aggregator
 cycle after promotion. CH15's staging A06 import becomes
-`import Bosonize.Core.A06ChiralFields`. The proposed migration preserves every
+`import Bosonize.Core.A06ChiralFields`. The accepted migration preserves every
 non-import source byte, including all definitions, theorem headers and proofs;
 existing Core sources and their complete-source hashes remain unchanged.
-The scoped interface-lock migration must preserve theorem-header and non-import
+The scoped interface-lock migration preserves theorem-header and non-import
 command hashes, with only reviewed import/context records updated.
 
 The [Phase B validation](../../../../note/ch15_phase_b_validation_2026-10-13.md)
 records 29 freshly audited A06 declarations, with no placeholders or target
 warnings and only `propext`, `Classical.choice`, and `Quot.sound`; `integer_lift_periodic`
 and `forward_diff_add` use only `propext` and `Quot.sound`.
-Runner acceptance and push of Phase B are recorded there. Fresh compilation
-and axiom auditing after the promotion substitutions, scoped lock migration,
-independent pedagogical review and Phase C runner acceptance are pending.
-This candidate notebook does not claim those Phase C gates have passed.
+Runner acceptance and push of Phase B are recorded there. Fresh promoted compilation and axiom auditing, scoped lock migration, independent
+pedagogical review and Phase C runner acceptance all passed. The final validation
+records actual outputs, the exporter CI repair and unchanged prior Core hashes.
 
 ## Historical Phase A snapshot
 
@@ -152,3 +151,6 @@ recorded separately after the runner completes them.
 
 
 Phase C finish evidence: `note/webllm/ch15/phaseC-ch15_cycle_c_463e5816.md`.
+
+
+Final promoted-source and workflow evidence: [Phase C validation](../../../../note/ch15_phase_c_validation_2026-10-13.md).
