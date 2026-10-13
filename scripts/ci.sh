@@ -26,7 +26,7 @@ lake build Bosonize
 echo "== Building BosonizeStubs (Staging) =="
 lake build BosonizeStubs
 
-echo "== Testing the Web-LLM Phase A artifact verifier =="
+echo "== Testing the Web-LLM artifact/proof verifiers and axiom audit =="
 python3 -m unittest discover -s scripts/webllm -p 'test_*.py'
 
 echo "CI OK"

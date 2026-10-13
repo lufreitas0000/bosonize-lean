@@ -35,3 +35,33 @@ cache-get:
 # Clean the build artifacts
 clean:
 	lake clean
+
+# Self-service candidates. TARGETS/PROPOSAL are repository-relative paths.
+.PHONY: help verify-a verify-b verify-c test-webllm
+help:
+	@echo 'build-core / build-stubs / build-all / ci / lock-check / lock-update / cache-get / clean'
+	@echo 'verify-a PROPOSAL=docs/webllm/drafts/task.md (compile + data axiom audit)'
+	@echo 'verify-b TARGETS="BosonizeStubs/Module.lean ..." (fresh proof/dependency axiom audit)'
+	@echo 'verify-c PROPOSAL=docs/webllm/drafts/task.md (Markdown structure only)'
+	@echo 'audit-data / audit-axioms TARGETS="path/to/Module.lean ..." (fresh import-based axiom output)'
+	@echo 'test-webllm (verifier regression tests)'
+	@echo 'From hub: make chapter-task CHAPTER=15 PHASE=B; make packet SPEC=...'
+verify-a:
+	@test -n "$(PROPOSAL)" || { echo 'Set PROPOSAL=path.md'; exit 2; }
+	@python3 scripts/webllm/verify_phase_a.py "$(PROPOSAL)"
+verify-b:
+	@test -n "$(TARGETS)" || { echo 'Set TARGETS="BosonizeStubs/Module.lean ..."'; exit 2; }
+	@python3 scripts/webllm/verify_phase_b.py $(TARGETS)
+verify-c:
+	@test -n "$(PROPOSAL)" || { echo 'Set PROPOSAL=path.md'; exit 2; }
+	@python3 scripts/webllm/verify_phase_c.py "$(PROPOSAL)"
+test-webllm:
+	@python3 -m unittest discover -s scripts/webllm -p 'test_*.py' -v
+
+.PHONY: audit-data audit-axioms
+audit-data:
+	@test -n "$(TARGETS)" || { echo 'Set TARGETS="BosonizeStubs/Module.lean ..."'; exit 2; }
+	@python3 scripts/webllm/audit_axioms.py --data-only $(TARGETS)
+audit-axioms:
+	@test -n "$(TARGETS)" || { echo 'Set TARGETS="Bosonize/Core/Module.lean ..."'; exit 2; }
+	@python3 scripts/webllm/audit_axioms.py $(TARGETS)
