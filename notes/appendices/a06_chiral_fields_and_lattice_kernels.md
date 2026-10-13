@@ -146,3 +146,88 @@ The exact error operator $E_{\text{error}}^{(M)} := H_{\text{field}}^{(M)} - 4 g
 - Nonzero action requires excitation in at least one mode $m \in \{1,\dots,M\}$ with $\varepsilon(m) \neq g_0$; when $M \ge 2$, single-mode state $\psi = \rho_{m,\nu}|\vec{N}\rangle_0$ for $m \ge 2$ provides an explicit nonzero witness: $E_{\text{error}}^{(M)} \psi = 4 m (\varepsilon(m) - g_0) \psi \neq 0$.
 
 A Taylor leading term or RG irrelevance statement requires separately specified asymptotic/error estimates under a defined scaling sequence $(L_n, M_n)$. It is not an exact finite algebraic identity, and should be kept as physical motivation.
+
+
+## Constructive realization in Lean
+
+The preceding proposal, formulas, alternatives, and “Lean 4 Proof Strategy”
+paragraphs are preserved as reference material. The strategies are historical
+suggestions; the verified A06 realization is the following finite supporting
+construction. Its [formal source](../../Bosonize/Core/A06ChiralFields.lean) and
+[companion notebook](../../docs/companion/Bosonize/Core/A06ChiralFields.md)
+map the sixteen proved contracts. Fresh Phase B compiler and axiom checks passed;
+final Phase C acceptance is recorded separately.
+
+**Occupation carrier and transport of the current algebra.** The implementation
+uses the existing finite multispecies Fock space with orthonormal occupation
+kets and ambient complex linear operators. An occupation assigns each species
+an integer charge $N_\nu$ and nonnegative excitation energy. The joint budget
+is the span of configurations with these charges and total excitation at most
+$K$. A species energy is bounded by that total. On each occupation ket, a linear
+tensor insertion transports the single-species current identity into the joint
+space; extending by linearity proves it on every vector of the budget. For
+integer modes $p,q$ the sufficient condition is
+
+$$
+|p|+|q|+K+|N_\nu|\le h,
+\qquad
+[\rho_{p,\nu},\rho_{q,\nu}]v
+=\begin{cases}-p\,v,&p+q=0,\\0,&p+q\ne0.\end{cases}
+$$
+
+This is an identity on the stated input subspace. Current products retain their
+ambient order and are not compressed to the original budget between actions.
+The bound $2M+K+|N_\nu|\le h$ covers every pairing retained in a chiral field.
+
+**Characters, orientation, and actual adjoints.** Space is the residue lattice
+$\mathbb Z/(2h)$, with $h>0$ for the current theorem and a nonzero lattice size
+for the character and finite spatial-sum theorems. The character is
+$\chi_k(z)=\zeta^{k\widetilde z}$. For a primitive $(2h)$-th root, its shift and
+conjugation laws are proved with representative independence. The integer-domain
+wrapper is separately proved periodic. Reversing the spatial orientation in the
+field preserves the existing current convention and gives
+
+$$
+[\varphi_\eta(x),\varphi_\eta(y)]v=\eta S_M(x,y)v,
+\qquad
+S_M(x,y)=\sum_{m=1}^M
+\frac{\chi_m(x-y)-\chi_{-m}(x-y)}{m}.
+$$
+
+The proof expands all four current pairings before using their budget identities.
+Only the diagonal modes survive; $[\rho_m,\rho_{-m}]$ contributes $-m$, and
+$i^2=-1$ supplies the required field sign. Distinct species commute globally.
+The adjoint is the actual finite Hilbert-space adjoint: conjugation exchanges
+the characters and sends $i/m$ to $-i/m$, while current adjoints exchange modes.
+Thus each chiral field is globally self-adjoint. The resulting CH15 mixed
+commutator is exactly $2S_M$, with no extra $i$ or $1/(2h)$ inserted into $S_M$.
+The sine expression applies to the canonical exponential root and is not an
+additional proved arbitrary-root identity.
+
+**Exact finite differences, kernels, and nonzero witnesses.** The periodic
+forward difference is additive, compatible with complex scalar multiplication,
+and has zero spatial sum. Its chiral expansion has exactly the multipliers
+$\zeta^{\pm\eta m}-1$ displayed above. In particular, the proof does not identify
+this difference with an exact constant times density. The Dirichlet kernel has
+diagonal value $(2M+1)/(2h)$ when $h>0$, and spatial sum one for primitive $\zeta$
+under $2M<2h$. Character orthogonality and the no-alias bound exclude all nonzero
+retained multiples of the lattice size. The differentiated skew kernel sums
+to zero.
+
+Every admissible charge sector has a nonzero ground ket in its joint budget.
+The concrete parameters $h=4$, $M=1$, $K=0$, zero charges, and distinct species
+$0,1\in\operatorname{Fin}(2)$ satisfy the margins and no-alias bound. These
+witnesses make the budget claims non-vacuous. CH15's zero-mode obstruction then
+uses the actual nonzero ground ket: summing an assumed nonzero multiple of the
+unsubtracted Dirichlet kernel gives $c g$, whereas summing the periodic
+commutator difference gives zero. Zero-mode-subtracted kernels and the alternative
+field constructions listed above are not excluded by that conclusion.
+
+**Boundary of the implemented portion.** These sixteen A06 contracts cover
+characters, periodic differences, chiral adjoints and restricted commutators,
+Dirichlet identities, and ground witnesses. The preserved “Correct square and
+normalization audit” section and its Hamiltonian/error formulas remain reference
+targets for later work. Normal-ordered squares, field Hamiltonians, excited error
+witnesses, Green functions, continuum or scaling limits, and RG estimates are
+not proved by this A06 module. Their presence here does not extend the verified
+scope to CH16 or analytic claims.

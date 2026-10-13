@@ -1,19 +1,71 @@
-# Ch15DualFields: Phase B complete
+# Ch15DualFields: Phase C promotion candidate
 
 Status: Phase B complete; all 7 contracts proved and freshly audited.
-Phase C has not started; the module remains in staging.
-Current source SHA-256: `e6863de5211ac488eaf35b3b1afec0168192d5dce585c04c9350fc15a006edf5`.
+Phase C promotion candidate prepared; promoted-source build, documentation review
+and runner acceptance are pending.
+Verified Phase B source SHA-256: `e6863de5211ac488eaf35b3b1afec0168192d5dce585c04c9350fc15a006edf5`.
 
 Local proof disposition, independent review, runner acceptance and final evidence:
-[Phase B validation](../../../note/ch15_phase_b_validation_2026-10-13.md).
-Only proof bodies changed; the reviewed interfaces, source notes and Core remain frozen.
+[Phase B validation](../../../../note/ch15_phase_b_validation_2026-10-13.md).
+Phase B changed only proof bodies and preserved reviewed interfaces, source notes
+and prior Core. The separately authorized Phase C candidate is described below.
+
+## Verified construction and declaration mapping
+
+The mathematical explanation is in [Chapter 15's constructive realization](../../../../notes/md/ch15_dual_fields.md#constructive-realization-in-lean).
+`phiField` and `thetaField` are the ambient sum and difference of the two
+oriented A06 fields on the actual A05 occupation Hilbert space. All seven
+declarations below were proved in Phase B; their frozen hypotheses remain intact.
+
+| Declaration in `Bosonize.Ch15` | Pedagogical topic | Checked proof mechanism |
+| --- | --- | --- |
+| `phi_adjoint` | 15.1 Hermiticity and 15.2 dual fields | Distribute the actual conjugate-linear adjoint over addition and use both A06 chiral adjoints. |
+| `theta_adjoint` | 15.1 Hermiticity and 15.2 dual fields | Distribute the actual adjoint over subtraction and use both chiral adjoints. |
+| `phi_self_commutator_on_budget` | 15.2 self-commutator cancellation | Expand four operator brackets; cross-species brackets vanish globally and opposite oriented kernels cancel on the same budget input. |
+| `theta_self_commutator_on_budget` | 15.2 self-commutator cancellation | Use the signed four-term subtraction expansion and both branch margins on the same input. |
+| `mixed_commutator_on_budget` | 15.2 mixed kernel | Four-term bilinearity and the opposite branch kernels give exactly 2 S_M(x,y). |
+| `mixed_forward_diff_on_budget` | 15.3 exact gradient | Subtract mixed identities at y+1 and y; linearity gives exactly 2 Δ_y S_M. |
+| `zero_mode_obstruction_on_ground` | 15.3 periodic zero-mode obstruction | Sum the action-valued commutator difference to zero, sum the assumed Dirichlet identity to c times the actual ground ket, and contradict c≠0 and ground nonzeroness. |
+
+The two self and mixed budget identities retain both species margins,
+`2M+K+|Ns ν|≤h`, and the same input vector throughout. Their frozen contracts
+also retain hM and no-alias hypotheses although their proofs need fewer
+assumptions. The zero-mode proof uses A06's periodic additive difference and
+Dirichlet normalization directly; it does not require the mixed CCR theorem.
+It excludes nonzero multiples of the unsubtracted kernel, leaving a zero-average
+replacement outside that contradiction. The finite algebraic claims provide
+no unconditional physical-vertex identification, analytic continuum limit,
+CH16 Hamiltonian or normal-ordering identity.
+
+## Promotion candidate and audit boundary
+
+Future source: [Core CH15](../../../../Bosonize/Core/Ch15DualFields.lean).
+Predicted promoted-source SHA-256 after the reviewed import substitution:
+`30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85`. This is a pre-acceptance hash, to be checked against the actual promoted file.
+The exact proposed import substitution is
+`import BosonizeStubs.A06ChiralFields` → `import Bosonize.Core.A06ChiralFields`.
+A06's `import Bosonize` is expanded to the 23 prior Core imports to avoid a
+cycle through the promoted aggregator. Every non-import source byte is preserved,
+including both field definitions and all seven proof bodies. The scoped interface
+migration preserves theorem-header and non-import command hashes and updates
+only the reviewed import/context records; all prior Core hashes remain intact.
+
+The [Phase B validation](../../../../note/ch15_phase_b_validation_2026-10-13.md)
+records nine freshly audited CH15 declarations and 29 in its A06 dependency,
+all with only `propext`, `Classical.choice`, and `Quot.sound`, zero placeholders
+and zero target warnings. It also records the independent proof review and
+runner acceptance/push. Fresh compilation and axioms after the promotion
+substitutions, scoped lock migration, independent pedagogical review and
+Phase C runner acceptance remain pending. This notebook records a promotion
+candidate and does not infer completion from the proved staging files.
 
 ## Historical Phase A snapshot
 
 The following baseline and browser design record describes Phase A before these
 proofs were completed. Its unproved-status statements are historical and are
 superseded by the Phase B status and validation above.
-Source: [Ch15DualFields.lean](../../../BosonizeStubs/Ch15DualFields.lean).
+Current successor source: [Ch15DualFields.lean](../../../../Bosonize/Core/Ch15DualFields.lean).
+The following SHA-256 belongs to the original staged Phase A snapshot.
 SHA-256: `778a972ff2cd909c25e83f4f6e266af2ddacfee2d71d150391549a3c0e38d903`.
 
 Independent reviewer `/root/ch15_independent_review` approved the exact staged
@@ -28,9 +80,9 @@ data audit uses freshly built staging imports and only standard axioms; no
 data depends on sorryAx. Core's 23 existing complete-source hashes are unchanged.
 The reviewed interface lock adds only A06/CH15 entries; prior records are unchanged.
 
-See [independent review](../../../note/ch15_phase_a_independent_review_2026-10-13.md),
-[data audit](../../../note/ch15_phase_a_data_axiom_audit_2026-10-13.json), and
-[oracle report](../../../note/ch15_phase_a_oracle_2026-10-13.json). Numerical
+See [independent review](../../../../note/ch15_phase_a_independent_review_2026-10-13.md),
+[data audit](../../../../note/ch15_phase_a_data_axiom_audit_2026-10-13.json), and
+[oracle report](../../../../note/ch15_phase_a_oracle_2026-10-13.json). Numerical
 CAR checks are sanity evidence, not general proofs. Witness statements remain
 unproved until Phase B, as do every new theorem contract.
 
@@ -45,7 +97,8 @@ contracts using that actual proved support checkpoint.
 
 The following text preserves the browser proposal history. Its statement that
 elaboration was not performed refers to the browser response, and is superseded
-by the local compiler/data-audit evidence above. The 23 proof bodies remain unproved.
+by the local compiler/data-audit evidence above. Its unproved-contract labels describe the historical Phase A snapshot; the
+23 proof bodies are now verified by the Phase B evidence above.
 
 
 **Carriers and imports.** `import Bosonize` is the only import. `σ` has precisely the `Fintype` and `LinearOrder` instances required by multispecies A05; no new representation of currents, CAR, charge, or Fock states is postulated. `Branches σ` supplies concrete indices and a proof of inequality. The field and its exact difference expansion are ambient `Module.End ℂ (A05.FockSpace σ h)` values. `LinearMap.adjoint`, rather than an assumed `StarRing` operation on a hypothetical operator algebra, is the actual Core adjoint API. `ζ` is a complex scalar input; results requiring conjugation or Fourier orthogonality assume `IsPrimitiveRoot ζ (2*h)`. The actual phase dictionary is not identified with `Ch14.wPlus/wMinus`, which are compressed, integer-coordinate, species-specific constructions.
@@ -72,4 +125,20 @@ For positive `m`, the `ρ_-m,ρ_m` term contributes `+m` while `ρ_m,ρ_-m` cont
 8. **Boundary of scope.** Review whether the choice of spatial orientation really represents the desired physics without modifying the already fixed current/sea convention. No unconditional CH14 physical-field/vertex identification, CH16 normal-ordering/Hamiltonian construction, infinite-volume limit, Fourier sawtooth, or RG estimate can follow from these declarations alone. Subsequent independent mathematical review and local Core-compatible elaboration must precede staging and locking.
 
 
-Phase B finish evidence: `note/webllm/ch15/phaseB-ch15_cycle_b_ea374fc9.md`.
+[Phase B runner finish evidence](../../../../note/webllm/ch15/phaseB-ch15_cycle_b_ea374fc9.md).
+
+
+## Independent Phase C candidate review
+
+Reviewer `/root/characters` independently approved the exact source/import
+migration and the complete five-file pedagogical/document candidate. The original
+chapter and appendix are exact byte prefixes, preserving every reference paragraph
+and formula. The added mathematical exposition, declaration maps, margins, signs,
+nonzero-ground argument, future limitations, predicted source hashes and future
+Core-depth links pass review with no findings requiring changes.
+
+Root also checked the formulas with KaTeX 0.16.22 in strict mode: 195 fragments
+in the two complete notes, zero errors. The current pre-C repeat compiler audit
+of both staging modules passes all 38 declarations with standard axioms only.
+These checks precede promotion; final promoted-source gates and acceptance are
+recorded separately after the runner completes them.

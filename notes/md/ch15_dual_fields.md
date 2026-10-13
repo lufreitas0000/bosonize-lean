@@ -94,3 +94,91 @@ Prove $\sum_{x \in \Lambda} \Delta f(x) = 0$ via telescoping. Since $\phi, \thet
    * Define all kernels explicitly as finite `Finset` sums of characters $\zeta$. Only as a secondary evaluation (valid away from $t=0$) should you prove equivalence to quotients of sines. At $t=0$, division by zero is undefined, whereas the character sum exactly yields $(2M+1)/L$.
 
 *Proof-design contract:* Each current commutator is an action on an input satisfying its own species margin. First prove the exact finite character kernel with all cutoffs visible, then derive the field cancellation on those inputs. A periodic operator-valued difference needs additive/scalar structure only, not commutative multiplication of endomorphisms.
+
+
+#### Constructive realization in Lean
+
+The preceding reference exposition and its “Lean 4 Proof Strategy” paragraphs
+are preserved. Those strategies describe earlier proposals; the construction
+below describes the actual seven proved chapter contracts and their A06 support.
+The [formal source](../../Bosonize/Core/Ch15DualFields.lean) and
+[companion notebook](../../docs/companion/Bosonize/Core/Ch15DualFields.md)
+provide the implementation and audit mapping. The proofs passed fresh Phase B
+compiler and axiom checks; final Phase C acceptance is recorded separately.
+
+**Finite carrier and shared input budget.** Take a finite ordered set of species
+and a finite one-particle mode set at cutoff $h>0$. The Fock space has an
+orthonormal basis indexed by finite occupation configurations of these modes,
+with complex amplitudes. Each species has an integer charge $N_\nu$ and a
+nonnegative excitation energy. The joint budget is the linear span of occupation
+kets with those charges and **total** excitation at most $K$. Thus all species
+share one energy allowance. The fields are ambient linear endomorphisms of this
+finite Fock space; their products act in the stated order, with the rightmost
+operator acting first.
+
+Choose distinct right and left species, retain $1\le m\le M$, and assign their
+spatial character orientations $+1$ and $-1$. The current convention itself is
+unchanged. The commutator theorems use $M\ge1$, $2M<2h$, a primitive $(2h)$-th
+root $\zeta$, and, for each chosen branch,
+
+$$
+2M+K+|N_\nu|\le h.
+$$
+
+Both chiral commutator substitutions apply to the same input vector in the joint
+budget. Intermediate products remain ambient products; the construction does
+not project each intermediate vector back into the input budget.
+
+**Adjoints and exact kernel normalization.** The chiral field in (15.1) is
+self-adjoint for every primitive root under the finite lattice assumptions.
+Its adjoint reverses current modes, conjugates the characters, and conjugates
+$i/m$ to $-i/m$; these changes recover the original sum. Addition and subtraction
+then give the actual Hilbert adjoints of $\phi$ and $\theta$ globally.
+
+Write $\chi_m(z)=\zeta^{m\widetilde z}$, where $\widetilde z$ is any integer
+representative of $z\in\mathbb Z/(2h)$, and define
+
+$$
+S_M(x,y)=\sum_{m=1}^M
+\frac{\chi_m(x-y)-\chi_{-m}(x-y)}{m}.
+$$
+
+Root primitivity ensures representative independence, including subtraction
+across the lattice boundary. Four-term commutator expansion gives globally
+vanishing cross-species terms and, on budget inputs, chiral coefficients $+S_M$
+and $-S_M$. Consequently the proved formulas are exactly
+
+$$
+[\phi(x),\phi(y)]v=[\theta(x),\theta(y)]v=0,
+\qquad [\phi(x),\theta(y)]v=2S_M(x,y)v.
+$$
+
+There is no additional $i$ or lattice normalization in this definition of $S_M$.
+For the canonical exponential root, elementary complex algebra rewrites $S_M$
+as $i\sum_{m=1}^M(2/m)\sin(2\pi m(x-y)/(2h))$, explaining (15.5).
+That sine rewriting is an interpretation of the reference formula, not an
+additional theorem in this module; the proved character identity works for an
+arbitrary primitive root.
+
+**Difference and a genuine obstruction.** The exact periodic difference is
+$\Delta_y f(y)=f(y+1)-f(y)$, using only additive structure. Subtracting the two
+mixed commutator identities proves
+
+$$
+[\phi(x),\Delta\theta(y)]v=2\Delta_y S_M(x,y)v.
+$$
+
+No low-momentum replacement of the multipliers $\zeta^{\pm m}-1$ occurs.
+Every periodic difference sums to zero. A06 proves that the unsubtracted
+Dirichlet kernel in this cutoff range sums to one. Therefore an identity
+$[\phi(x),\Delta\theta(y)]g=c\delta_M(x-y)g$ for all $y$, with $c\ne0$,
+would imply $0=cg$. Here $g$ is the actual nonzero ground occupation ket in an
+admissible charge sector, and it belongs to the joint budget. The contradiction
+uses this nonzero ket, rather than a possibly zero test vector. A06 also proves
+a concrete example with $h=4$, $M=1$, $K=0$, zero charges, and two distinct species.
+
+This realizes the finite field, adjoint, commutator, exact difference, and
+zero-mode statements. It supplies no identification with CH14 vertex fields,
+normal-ordered square or field Hamiltonian theorem, continuum limit, exact
+sawtooth formula, or analytic error estimate. The reference material about those
+subsequent constructions retains its separate mathematical obligations.
