@@ -8,13 +8,11 @@
       "path": "BosonizeStubs/Ch15DualFields.lean"
     }
   ],
-  "phase": "B_in_progress",
-  "pending_modules": [
-    "BosonizeStubs/Ch15DualFields.lean"
-  ],
+  "phase": "B_complete",
+  "pending_modules": [],
   "sources": {
     "BosonizeStubs/A06ChiralFields.lean": "daffa052dbd46a919a001b086804af1cb8b2182c5322a20d4f8581c4a131d603",
-    "BosonizeStubs/Ch15DualFields.lean": "778a972ff2cd909c25e83f4f6e266af2ddacfee2d71d150391549a3c0e38d903"
+    "BosonizeStubs/Ch15DualFields.lean": "e6863de5211ac488eaf35b3b1afec0168192d5dce585c04c9350fc15a006edf5"
   },
   "theorem_contracts": 23
 }

@@ -231,6 +231,6 @@ CH13 and multispecies A05 remain fully completed and frozen: 53 theorem proofs a
 <!-- lean-cycle CH15 -->
 ## Automated CH15 checkpoint
 
-CH15: **B_in_progress**. 23 contracts; 1 pending proof modules. Current machine record: `docs/webllm/chapters/ch15.json`.
+CH15: **B_complete**. 23 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch15.json`.
 
 <!-- /lean-cycle CH15 -->
