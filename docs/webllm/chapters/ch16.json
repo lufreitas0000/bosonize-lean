@@ -8,13 +8,12 @@
       "path": "BosonizeStubs/Ch16FieldHamiltonian.lean"
     }
   ],
-  "phase": "A_complete",
+  "phase": "B_in_progress",
   "pending_modules": [
-    "BosonizeStubs/A07FiniteNormalOrdering.lean",
     "BosonizeStubs/Ch16FieldHamiltonian.lean"
   ],
   "sources": {
-    "BosonizeStubs/A07FiniteNormalOrdering.lean": "8440173c7b70684c3547cb4e311b15358f07ab27de2adc7d51fe3013be38932f",
+    "BosonizeStubs/A07FiniteNormalOrdering.lean": "0add9f369175f79e96bda84c3ce4580aa4a32f22de7e9836d203246aa5d3be20",
     "BosonizeStubs/Ch16FieldHamiltonian.lean": "5b573e80c0a4588828a6d2e00c884bd73f6f369a8ce4267ad401873e3d3bc66b"
   },
   "theorem_contracts": 19

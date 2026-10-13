@@ -21,3 +21,6 @@ in [the quota checkpoint](../../../note/ch16_quota_checkpoint_2026-10-13.md)
 and its candidate archive. Accepted staging statements remain unproved; the
 local candidate results and dependency-blocked bodies are distinguished there.
 Phase B runner acceptance and Phase C remain incomplete.
+
+
+Phase B finish evidence: `note/webllm/ch16/phaseB-ch16_cycle_b_f9a97a9d.md`.
