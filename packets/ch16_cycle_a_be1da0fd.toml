@@ -1,0 +1,13 @@
+# Automatically prepared start command; scope approved by user finish command.
+version = 1
+id = "ch16_cycle_a_be1da0fd"
+phase = "A"
+repo = ".."
+task = "CH16, Phase A. Scope: Finite normal ordering and field Hamiltonian identities on explicit budgets; include admissibility and nonzero error witnesses. No analytic limits or RG claims.\nSources are proposals, not guaranteed truths. Do not invent verification evidence or silently weaken statements.\nReturn complete Markdown only. Use exactly these headings: ## Source map, ## Design and scope, ## Lean draft, ## Companion notebook, ## Review obligations. Include exactly one lean fence combining chapter and necessary appendix declarations. Import Bosonize or existing Bosonize.Core modules. Named data definitions/instances must be complete; every theorem/lemma ends exactly := by sorry. No macros, new axioms or # commands. Explain carriers, signs, budgets, hypotheses, proof dependencies, admissibility and explicit nonzero witnesses. Human mathematical review precedes integration and freezing.\nAutomatic integration contract: inside the single Lean block, put Core imports first. Then enclose each complete module namespace in exact comment lines -- BEGIN_MODULE BosonizeStubs/Ch16MeaningfulName.lean and -- END_MODULE BosonizeStubs/Ch16MeaningfulName.lean. Supporting modules use BosonizeStubs/AxxMeaningfulName.lean with matching markers. No declarations outside markers and no imports inside them. Modules are in dependency order. Keep each namespace/section balanced inside its module; later modules will automatically import earlier modules. The user reviews these module paths as part of approving the whole proposal."
+targets = ["docs/webllm/drafts/ch16_cycle_a_be1da0fd.md"]
+lean_proofs = []
+context = ["notes/md/ch16_field_Hamiltonian.md", "notes/appendices/a06_chiral_fields_and_lattice_kernels.md", "docs/webllm/generated/ch16_cycle_a_be1da0fd_core_api.md", "scripts/webllm/verify_phase_a.py"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_a.py", "docs/webllm/drafts/ch16_cycle_a_be1da0fd.md"]]
+timeout = 900
+max_packet_bytes = 200000
