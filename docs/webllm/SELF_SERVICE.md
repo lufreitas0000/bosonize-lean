@@ -1,5 +1,7 @@
 # Self-service Chat + local verification
 
+For the short daily checklist, use [QUICKSTART.md](QUICKSTART.md).
+
 The user can run this workflow without a Codex conversation. Chat drafts and
 revises candidates; local Python/Git/Lean commands check them. These commands do
 not call an OpenAI model. The human owns mathematical review, scope decisions,
