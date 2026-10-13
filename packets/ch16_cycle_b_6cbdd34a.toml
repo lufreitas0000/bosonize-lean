@@ -1,0 +1,13 @@
+# Automatically prepared start command; scope approved by user finish command.
+version = 1
+id = "ch16_cycle_b_6cbdd34a"
+phase = "B"
+repo = ".."
+task = "CH16, Phase B. Scope: Finite normal ordering and field Hamiltonian identities on explicit budgets; include admissibility and nonzero error witnesses. No analytic limits or RG claims.\nSources are proposals, not guaranteed truths. Do not invent verification evidence or silently weaken statements.\nProve every placeholder in every requested complete Lean file. Preserve all headers, definitions, imports and context. No new top-level helpers, axioms, sorry/admit/sorryAx/native_decide. Local have/let proofs are allowed. Return the exact JSON envelope from the packet. Report an interface obstruction instead of changing a frozen contract. Every reachable dependency is freshly compiled and every declaration audited; human proof review follows acceptance."
+targets = ["BosonizeStubs/Ch16FieldHamiltonian.lean"]
+lean_proofs = ["BosonizeStubs/Ch16FieldHamiltonian.lean"]
+context = ["notes/md/ch16_field_Hamiltonian.md", "notes/appendices/a06_chiral_fields_and_lattice_kernels.md", "docs/webllm/generated/ch16_cycle_b_6cbdd34a_core_api.md", "BosonizeStubs/A07FiniteNormalOrdering.lean", "scripts/webllm/verify_phase_b.py", "docs/companion/BosonizeStubs/Ch16FieldHamiltonian.md"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/Ch16FieldHamiltonian.lean"]]
+timeout = 900
+max_packet_bytes = 200000
