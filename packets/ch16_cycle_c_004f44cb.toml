@@ -1,0 +1,13 @@
+# Automatically prepared start command; scope approved by user finish command.
+version = 1
+id = "ch16_cycle_c_004f44cb"
+phase = "C"
+repo = ".."
+task = "CH16, Phase C. Scope: Finite normal ordering and field Hamiltonian identities on explicit budgets; include admissibility and nonzero error witnesses. No analytic limits or RG claims.\nSources are proposals, not guaranteed truths. Do not invent verification evidence or silently weaken statements.\nReturn a Markdown synchronization/review candidate with ## Proved scope, ## Evidence, ## Pedagogical changes, ## Remaining limitations. Cite supplied evidence files, preserve source theory and distinguish exact proved results from conditional, formal or analytic claims. Do not invent passed tests. Do not move Lean files or alter locks. Human review and local promotion remain separate gates.\nReturn ALL listed Markdown files completely: the audit artifact, chapter/appendix lecture notes and companions. Preserve the existing reference material, including content for later chapters in shared appendices; update only this chapter's constructive realization and verified scope. The runner will migrate companion paths during Core promotion. No placeholder prose or invented evidence."
+targets = ["docs/webllm/drafts/ch16_cycle_c_004f44cb.md", "notes/md/ch16_field_Hamiltonian.md", "notes/appendices/a06_chiral_fields_and_lattice_kernels.md", "docs/companion/BosonizeStubs/A07FiniteNormalOrdering.md", "docs/companion/BosonizeStubs/Ch16FieldHamiltonian.md"]
+lean_proofs = []
+context = ["notes/md/ch16_field_Hamiltonian.md", "notes/appendices/a06_chiral_fields_and_lattice_kernels.md", "docs/webllm/generated/ch16_cycle_c_004f44cb_core_api.md", "BosonizeStubs/A07FiniteNormalOrdering.lean", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/Ch16FieldHamiltonian.lean", "note/webllm/ch16/phaseB-ch16_cycle_b_6cbdd34a.md", "note/webllm/ch16/phaseB-ch16_cycle_b_f9a97a9d.md", "scripts/webllm/verify_phase_c.py"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/Ch16FieldHamiltonian.lean"], ["python3", "scripts/webllm/verify_phase_c.py", "docs/webllm/drafts/ch16_cycle_c_004f44cb.md"]]
+timeout = 900
+max_packet_bytes = 200000
