@@ -11,3 +11,7 @@ The independently reviewed CH14 and A05 lecture hashes still match ch14_phase_c_
 Verified scope: generic finite Taylor identities and inverses under actual nilpotency; actual ambient/subtype phase nilpotency; true typed adjoints and explicit holonomy; full retained physical ground expansion; exact projection excursions; and the conditional cyclic/common-residual field comparison. This does not prove an unconditional finite field–vertex dictionary, and no analytic exponential or unqualified physical equality is claimed.
 
 CH13 and its multispecies A05 support remain complete through all A–B–C phases with unchanged frozen Core hashes. The broader appendix retains research proposals outside these implemented finite portions. Git/GitHub synchronization follows CI; subsequent chapters are not started by this verification task.
+
+## Final committed CI result
+
+**PASS / CI OK** against migration checkpoint `091cd97`: 69 guard tests, 793 frozen statement interfaces, 632 frozen commands, 23 complete Core source hashes, and both libraries built without warnings or placeholders (Core 3408 jobs; staging 3409 jobs). All reference/user commits present before this task are preserved. The final documentation checkpoint is committed and pushed after this recorded result.
