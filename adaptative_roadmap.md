@@ -227,3 +227,10 @@ All 37 proofs and 20 data declarations pass fresh standard-axiom audits and warn
 ## CH13/A05 verification and CH14 checkpoint synchronization — 2026-10-13
 
 CH13 and multispecies A05 remain fully completed and frozen: 53 theorem proofs and 42 data declarations, independent final proof and lecture reviews. Their original Core hashes are unchanged. The later CH14/finite-exponential A05 checkpoint now completes Phase C with 37 proofs and 20 data declarations, the reviewed migration and unchanged independently reviewed lectures. Fresh current-checkout builds, Core-aggregator axiom audit and full CI are recorded in note/ch14_phase_c_validation_2026-10-13.md. The project now freezes 23 Core modules and 793 proved statements. CH15/A06 is the next development item; no new chapter implementation is part of this synchronization check.
+
+<!-- lean-cycle CH15 -->
+## Automated CH15 checkpoint
+
+CH15: **B_in_progress**. 23 contracts; 1 pending proof modules. Current machine record: `docs/webllm/chapters/ch15.json`.
+
+<!-- /lean-cycle CH15 -->

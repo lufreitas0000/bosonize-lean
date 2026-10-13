@@ -58,3 +58,6 @@ For positive `m`, the `ρ_-m,ρ_m` term contributes `+m` while `ρ_m,ρ_-m` cont
 6. **Character and delta sums.** Check representative independence, spatial translation `x+1`, roots of unity for negative integers, diagonal cardinality `2M+1`, finite orthogonality and `∑_y δ_M(x,y)=1` for **arbitrary** primitive `ζ`. The sine formula is a separate possible canonical-root theorem, not part of the present claims.
 7. **Zero-mode contradiction.** Establish `∑_y Δθ(y)=0` in the ambient additive operator group; commute the finite sum past the commutator action in the stated order, and use `∑_y δ_M(x,y)=1`, `c≠0` and the proved nonzero ground ket. Explain why the result does not prohibit a zero-mode-subtracted target kernel. Check exact difference multipliers rather than replacing them by derivatives.
 8. **Boundary of scope.** Review whether the choice of spatial orientation really represents the desired physics without modifying the already fixed current/sea convention. No unconditional CH14 physical-field/vertex identification, CH16 normal-ordering/Hamiltonian construction, infinite-volume limit, Fourier sawtooth, or RG estimate can follow from these declarations alone. Subsequent independent mathematical review and local Core-compatible elaboration must precede staging and locking.
+
+
+Phase B finish evidence: `note/webllm/ch15/phaseB-ch15_cycle_b_ada86a7d.md`.

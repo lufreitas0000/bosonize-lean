@@ -1,0 +1,20 @@
+{
+  "chapter": 15,
+  "modules": [
+    {
+      "path": "BosonizeStubs/A06ChiralFields.lean"
+    },
+    {
+      "path": "BosonizeStubs/Ch15DualFields.lean"
+    }
+  ],
+  "phase": "B_in_progress",
+  "pending_modules": [
+    "BosonizeStubs/Ch15DualFields.lean"
+  ],
+  "sources": {
+    "BosonizeStubs/A06ChiralFields.lean": "daffa052dbd46a919a001b086804af1cb8b2182c5322a20d4f8581c4a131d603",
+    "BosonizeStubs/Ch15DualFields.lean": "778a972ff2cd909c25e83f4f6e266af2ddacfee2d71d150391549a3c0e38d903"
+  },
+  "theorem_contracts": 23
+}
