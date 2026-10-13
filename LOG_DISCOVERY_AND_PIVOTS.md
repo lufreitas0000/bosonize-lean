@@ -107,3 +107,5 @@ Initial scratch proofs failed on unfolded `creatorWord` rewrite matching, ker me
 
 ### 2026-10-12 — CH14 subtype nilpotency bridge
 The first power-intertwining scratch proof encountered the known stored coordinate-budget `DecidableEq` mismatch (local lexicographic CAR equality versus product equality captured by the budget). The projector-fixed theorem must be applied with the stored product equality instance, as in the audited ambient proof. Also, unrestricted `ext v` traversed the subtype and occupation coordinates; use explicit `LinearMap.ext` before `Subtype.ext`. These are elaboration fixes to proof bodies; carriers and frozen contracts are unchanged.
+
+| 2026-10-13 | CH15/A06 Web-LLM Phase A | Proof-only importer cannot accept new definitions/one-sorry stubs; data can indirectly depend on stub proofs | Import a Markdown proposal only, compile a temporary candidate and freshly audit every named data dependency before independent review and scoped staging integration | Implemented; real Chat draft pending |

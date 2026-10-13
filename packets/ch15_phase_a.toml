@@ -1,0 +1,53 @@
+version = 1
+id = "ch15_phase_a"
+phase = "A"
+repo = ".."
+task = """
+Draft the real CH15 interface and the CH15-relevant part of A06 using the current
+proved Core. Return only docs/webllm/drafts/ch15_phase_a.md as a complete Markdown
+artifact; do not edit active Lean files, reference notes, aggregators or locks.
+
+Use exactly these sections: ## Source map, ## Design and scope, ## Lean draft,
+## Companion notebook, ## Review obligations. The Lean draft contains exactly
+one ```lean block, combining the proposed A06 and CH15 declarations in their
+respective namespaces. Import Bosonize (or separate Bosonize.Core.<module>
+imports); do not introduce new dependencies, module/public-section syntax,
+macros or # commands in this proposal. Give every data declaration an explicit
+ordinary name. Definitions/instances must be complete. Every theorem/lemma is
+exactly a one-sorry stub ending := by sorry. Do not prove theorems in Phase A.
+
+Scope: oriented chiral fields, phi/theta, genuine adjoint/Hermiticity, exact
+finite-character commutator kernels on the actual joint-budget input, additive
+periodic forward difference, and the zero-mode obstruction. Use a two-valued
+orientation and two distinct existing species. Spatial domain is ZMod (2*h);
+integer-domain lifts need proved periodicity. Reuse A05.Operators/rho/jointBudget
+and actual adjoint/current conventions, not abstract postulated CCR. Positive
+rho(m) raises and rho(-m) lowers; Ch10's signed coefficient is -m for
+[rho(m),rho(n)]. Derive/check every normalization and cancellation consistently.
+
+Keep M independent, M>=1 and 2*M<2*h where relevant. Margins concern the actual
+input and species used, with no artificial global operator identity. Include
+explicit non-vacuity/admissible-ground/nonzero-budget witness obligations and
+necessary parameter hypotheses. Primary kernels are character sums; do not
+assume a sine formula for an arbitrary primitive root. The difference uses only
+additive/module structure, not commutative multiplication of endomorphisms.
+
+The appendix also contains CH16 normal ordering, Hamiltonian and excited-witness
+claims: exclude those from this first packet. Do not claim an unconditional
+CH14 physical field/vertex dictionary or analytic/thermodynamic results. Sources
+are proposals, not guaranteed true. Record any incompatible claim explicitly
+and give the correction/evidence without silently weakening a theorem.
+
+Companion: explain carriers, signatures, source/target budgets, imports,
+proof dependencies, margin choices and adopted/adapted/rejected source ideas.
+Review obligations: concrete mathematical questions and required witnesses,
+not self-certification. Local elaboration, data axiom closure and independent
+mathematical review follow. Do not invent successful compiler/test output.
+"""
+targets = ["docs/webllm/drafts/ch15_phase_a.md"]
+context = ["notes/md/ch15_dual_fields.md", "notes/appendices/a06_chiral_fields_and_lattice_kernels.md", "docs/webllm/ch15_core_api.md", "note/ch14_phase_c_validation_2026-10-13.md", "scripts/webllm/verify_phase_a.py", "lean-toolchain", "lakefile.toml"]
+lean_proofs = []
+locked = ["docs/spec/core_locks.json"]
+verify = [["python3", "scripts/webllm/verify_phase_a.py", "docs/webllm/drafts/ch15_phase_a.md"]]
+timeout = 600
+max_packet_bytes = 200000
