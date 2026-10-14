@@ -261,3 +261,8 @@ The historical quota checkpoint is superseded by completed CH16/A07 Phase C. All
 CH17: **A_complete**. 37 contracts; 3 pending proof modules. Current machine record: `docs/webllm/chapters/ch17.json`.
 
 <!-- /lean-cycle CH17 -->
+
+
+### CH17 Phase B partial checkpoint
+
+A07 has 13 implemented bodies, 11 standard-axiom-only theorem proofs, 2 wrappers awaiting helper proofs, and 5 original stubs. A10 (11) and CH17 (8) are unstarted. Definitions/interfaces/Core remain frozen. Resume the saved `codex/ch17-phase-b` worktree after a live allowance check; see `note/webllm/ch17/phaseB-checkpoint-a07.md`. No Phase B batch accepted and no promotion.
