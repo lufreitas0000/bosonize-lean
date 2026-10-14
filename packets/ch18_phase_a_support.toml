@@ -1,0 +1,4 @@
+# Reviewed guidance for CH18 Phase A (merged by the cycle runner at start).
+task = """Use docs/webllm/guidance/ch18_phase_a_sources.md as reviewed guidance (claims ledger with literature anchors, convention flags, review of an earlier unverified draft, and the recommended Phase A scope). Reuse the frozen Core API (A07InteractionsAndBogoliubov, A05, A06, Ch16, Ch17) instead of redefining operators; never assume commutation relations as hypotheses that Core already proves; tie every prefactor to 2h; include the s ≠ 0 witness (v1,v2,u,c,s) = (17,15,8,5/4,3/4). Never name the Luttinger parameter K (K is the energy budget). State finite-budget caveats (chosen pairing model, operator identity on budget vectors, no dressed vacuum) in docstrings."""
+context = ["docs/webllm/guidance/ch18_phase_a_sources.md"]
+max_packet_bytes = 400000
