@@ -1,3 +1,82 @@
+# A10DiscreteSchriefferWolff: Phase B complete; Phase C preparation
+
+Status: 11 proved contracts and 22 complete data declarations in this module.
+All accepted proofs have fresh standard-axiom evidence. Phase B finish `07f9226`:
+[actual runner evidence](../../../../note/webllm/ch17/phaseB-ch17_cycle_b_80e7982b.md).
+Accepted staging source SHA-256: `b77a079f426943fa6fb5609316dfdb645371c88c48be82875ad480094990594c`.
+Planned promoted source: [A10DiscreteSchriefferWolff.lean](../../../../Bosonize/Core/A10DiscreteSchriefferWolff.lean).
+Pedagogical mapping: [corresponding reference note](../../../../notes/appendices/a10_discrete_rg_and_schrieffer_wolff.md).
+The links use the planned `docs/companion/Bosonize/Core/` depth for migration.
+The existing staged source and mathematical interfaces remain authoritative;
+source hashes after import/path migration will be recorded separately.
+
+## Exact proved declaration mapping
+
+Every row below denotes a complete proof in `Bosonize.A10`. Exact
+signatures, carrier instances and hypotheses are preserved in the linked source.
+No historical sketch is substituted for its compiler-checked contract.
+
+| Declaration | Realization and dependency scope |
+| --- | --- |
+| `sw_generator_commutator_eq` | Entrywise non-resonant cancellation gives [S1,H0]=−Voff. |
+| `sw_generator_skew_hermitian` | Hermitian Voff and real energy differences give conjugate-transpose S1=−S1. |
+| `sw_2x2_truncation_witness` | Exact matrix commutator and −2 compressed entry; distinct rational truncation value. |
+| `sw_3x3_no_iff_witness` | Nonzero PVQ despite zero compressed correction, with exact generator signs. |
+| `sw_2x2_exact_eigenpair` | Nonzero vector (−2,1) at t=2/3 has eigenvalue −1/3. |
+| `sw_compressed_bch_second_order` | Complementary projector algebra identifies the degree≤2 BCH polynomial compression. |
+| `shell_proj_partition` | Low and exact-energy shell projectors sum to the actual joint-budget projector for K≥1. |
+| `shell_proj_orthogonal` | Disjoint energy predicates give both ordered projector products zero. |
+| `shell_proj_self_adjoint` | Actual coordinate-projector adjoints fix both shell projectors. |
+| `energy_shell_discards_double_mode_one` | CCR, lowering and adjoint/projector norm argument distinguish energy-shell filtering from mode decimation. |
+| `sw_off_zero_implies_effective_exact` | With both off-block products zero, the explicitly chosen zero generator has no correction. |
+
+The shell operators are ambient coordinate projectors in the existing Fock
+space. Their sum is `Ch14.projection h Ns K`, which acts as identity on the
+budget. The generic BCH theorem separately assumes `P+Q=1` on its entire carrier;
+these ambient shell projectors are not silently substituted for that hypothesis.
+Its generator is off-block and the baseline commutes with P. The proved equality
+concerns the explicit degree-zero-through-two polynomial, not an analytic
+exponential rotation or a norm remainder estimate.
+
+The repeated mode-one witness has actual total budget two and is nonzero because
+two lowering currents recover `2 • groundKet`, under `r2 h 2 Ns`. The low-shell
+projection lands in budget one; two further lowerings kill it. Adjointness and
+the projector's self-adjoint idempotence turn this into a zero-norm statement.
+The low-budget-one projector discards the repeated mode-one state, while the
+exact-energy-two shell projector fixes it. Mode-index decimation is a different
+construction. The 2×2 eigenpair theorem
+supplies eigenvalue −1/3 but no lowest-eigenvalue or exact rotation claim. The
+3×3 witness rules out the converse from zero correction to zero coupling.
+Continuous RG flows, lifetimes, analytic remainder bounds and Mott-gap claims
+remain outside this finite module.
+
+## Verification, review and Phase C boundary
+
+All three batches completed Phase B: 37 proofs and 70 data declarations,
+107 freshly audited names. The saved runner logs record warning-as-error target
+compilation, only `propext`, `Classical.choice`, `Quot.sound` (or no axioms),
+strict statement/data locks and CI. The deliberate verifier regression fixture's
+`sorryAx` output is a negative test, not a target dependency. Historical candidate
+or quota checkpoint results are superseded by these accepted batches.
+
+Independent proof reviews were separated from authorship. Primary reviewed the
+delegated A07/CH17 constructions, including the sharper free bridge and genuine
+witness. `same_ccr` independently reviewed all eleven primary-authored A10 proofs;
+its earlier authorship concerned the Phase A supplement, not those proof bodies.
+`characters` independently reviewed the final quartic CAR proof and its bounded
+resource wrapper. Author rechecks do not count as independent reviews.
+
+Independent pedagogical review: **PASS**, `/root/joint_ccr`, 2026-10-14. The reviewer compared the three original notes as exact byte prefixes and the three original companions as verbatim historical suffixes against `be2584b`, read the accepted sources and Phase B evidence, and reviewed all seven Phase C files. Resolved findings distinguish polynomial value from coefficient, internal positive-c construction from the exported existential theorem, low-budget discard from exact-energy-shell fixation, and unweighted pairing from weighted pairing requiring nonzero mixing. The changed passages were reassessed; no deterministic findings remain. Promotion and fresh Phase C compiler/axiom/lock checks remain pending.
+
+Phase C promotion, complete-source hashes after import migration, final promoted compiler/axiom checks and runner acceptance remain pending. The reviewed candidate is checkpointed because the live five-hour allowance reached 6%, below the formalizer 10% guard. CH18 remains outside this authorized cycle.
+
+## Historical Phase A provenance
+
+The complete original companion follows verbatim. Its proposed, unproved and
+Phase A-only status sentences are dated historical evidence; current proof
+status is the accepted Phase B record above. Its cross-module theory paragraphs
+are retained for provenance rather than treated as this module's declaration map.
+
 # BosonizeStubs/A10DiscreteSchriefferWolff.lean
 
 ### 1. Quartic Sea-Wick Ordering and the Finite Diagonal Correction $Q_{M,\nu}$

@@ -261,3 +261,8 @@ The historical quota checkpoint is superseded by completed CH16/A07 Phase C. All
 CH17: **B_complete**. 37 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch17.json`.
 
 <!-- /lean-cycle CH17 -->
+
+
+## CH17 Phase C reviewed checkpoint — 2026-10-14
+
+Phase B complete; all seven Phase C documents independently reviewed. Promotion and fresh Phase C verification pending because live five-hour allowance reached 6%. See [checkpoint](note/webllm/ch17/phaseC-checkpoint-2026-10-14.md).

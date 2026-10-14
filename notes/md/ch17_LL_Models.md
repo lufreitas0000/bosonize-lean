@@ -123,3 +123,25 @@ Formalize the block decomposition of the budget space $\mathcal{B}_K$. Prove tha
    * Enforce the boundaries of the discrete lattice explicitly in the sums. Do not allow modes to wrap non-physically via modulo arithmetic unless using an explicitly defined modular scattering theory.
 3. **Current Normalization:**
    * Raw currents $\rho_{m,\nu}$ satisfy $[\rho_{-m,\nu}, \rho_{m,\nu}] = m I$. Do not insert extra factors of $m$ in quadratic Hamiltonian sums.
+
+
+#### 17.5 Constructive realization in Lean
+
+The verified carrier is the finite Hilbert space with orthonormal occupation kets for modes $(\nu,k)$, where the species set is finite and ordered and $-h<k\le h$. Thus $L=2h$, and current shifts retain both endpoints in this band without wrapping. The two branches are distinct species with the same computational momentum convention. The joint budget $\mathcal B_{\vec N,K}$ fixes every species charge and bounds total excitation energy by $K$. Operators act on the full finite Fock space; equality on budget inputs does not assert preservation of that budget.
+
+For $h>0$, admissible sector charges, and
+$$
+K\le M,\qquad K+|N_R|<h,\qquad K+|N_L|<h,
+$$
+the vacuum-subtracted fermionic kinetic operator agrees on $\mathcal B_{\vec N,K}$ with the free Sugawara expression used above. The proof first sums sea-Wick quartic words over the full finite transfer domain. Exchanging their creator labels reverses the fermionic sign and cancels the sum. Together with the full-band one-body correction this gives the ambient identity, for each branch,
+$$
+\sum_{m=1}^{2h-1}\rho_{m,\nu}\rho_{-m,\nu}
+=\hat P_\nu-\tfrac12\hat N_\nu(\hat N_\nu+I).
+$$
+On a budget input, every lowering current with $m>K$ annihilates the input, permitting restriction to the cutoff $M$. The argument retains finite-band CAR throughout. It does not require the stronger two-current margin used for Bogoliubov transformations or assume ambient scalar CCR.
+
+Regrouping the coefficients gives a global equality between the chosen Sugawara-based quadratic Hamiltonian and the oscillator-plus-zero-mode expression. The free identity then supplies (17.6) for the model with actual fermionic kinetic energy on the budget specified above. Charge operators act there by $N_\nu$, giving precisely (17.7). The choice $\mu=\pi v_F/L$ cancels its linear charge term. Replacing the chosen current intra-branch term by the raw sea-Wick interaction subtracts the explicit operator $g_4(Q_{M,R}+Q_{M,L})/(2L)$ on that same input, rather than a universal constant.
+
+The raw opposite-transfer inter-branch interaction reduces to hopping; the pairing form is chosen separately. The hopping oscillator kills the admissible sector ground ket. For $1\le m\le M$ and $2M+m+|N_\nu|\le h$ on each branch, the unweighted pairing expression $(C_RC_L+A_RA_L)$ has nonzero ground action. The weighted pairing mode has nonzero ground action when $v_2\ne0$. Both quadratic forms are self-adjoint for real coefficients. A concrete zero-charge realization has $h=8$, $M=K=2$, $v_F=1$, $g_4=g_2=6\pi$, a nonzero ground ket and nonzero Hamiltonian action. This establishes nonvacuity of the finite model and its margins; it does not construct a dressed interacting vacuum.
+
+The supporting appendices prove finite sea-Wick reductions, restricted Bogoliubov identities, actual energy-shell projectors and a separate second-order Schrieffer-Wolff coefficient identity. The shell projectors sum to the budget projection on ambient Fock space. Applying the coefficient theorem, which assumes complementary projectors summing to the ambient identity, needs an additional restriction or compression construction. A general interacting baseline, continuous RG flow, analytic remainder estimate and physical pairing-channel dictionary remain outside the proved scope. The earlier “Lean 4 Proof Strategy” paragraphs remain reference proposals; this section describes the verified realization.
