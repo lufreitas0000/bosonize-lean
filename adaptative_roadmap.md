@@ -258,6 +258,6 @@ The historical quota checkpoint is superseded by completed CH16/A07 Phase C. All
 <!-- lean-cycle CH17 -->
 ## Automated CH17 checkpoint
 
-CH17: **B_in_progress**. 37 contracts; 2 pending proof modules. Current machine record: `docs/webllm/chapters/ch17.json`.
+CH17: **B_in_progress**. 37 contracts; 1 pending proof modules. Current machine record: `docs/webllm/chapters/ch17.json`.
 
 <!-- /lean-cycle CH17 -->

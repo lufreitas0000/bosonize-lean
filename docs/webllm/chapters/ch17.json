@@ -13,12 +13,11 @@
   ],
   "phase": "B_in_progress",
   "pending_modules": [
-    "BosonizeStubs/A10DiscreteSchriefferWolff.lean",
     "BosonizeStubs/Ch17LuttingerModels.lean"
   ],
   "sources": {
     "BosonizeStubs/A07InteractionsAndBogoliubov.lean": "6fb81eaa54ad1b4604a379f69a4462d799a8d31df62df1cb0870602723f19d03",
-    "BosonizeStubs/A10DiscreteSchriefferWolff.lean": "30222b3b04d915e57b625569af5a4a0ddb981e01498aaceda492418fcdb8a2cb",
+    "BosonizeStubs/A10DiscreteSchriefferWolff.lean": "b77a079f426943fa6fb5609316dfdb645371c88c48be82875ad480094990594c",
     "BosonizeStubs/Ch17LuttingerModels.lean": "686ea1568191b59aedbd014d8703da0ebf8283b154e5157073709b06cfe4b595"
   },
   "theorem_contracts": 37
