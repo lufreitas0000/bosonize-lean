@@ -1,0 +1,26 @@
+{
+  "chapter": 17,
+  "modules": [
+    {
+      "path": "BosonizeStubs/A07InteractionsAndBogoliubov.lean"
+    },
+    {
+      "path": "BosonizeStubs/A10DiscreteSchriefferWolff.lean"
+    },
+    {
+      "path": "BosonizeStubs/Ch17LuttingerModels.lean"
+    }
+  ],
+  "phase": "A_complete",
+  "pending_modules": [
+    "BosonizeStubs/A07InteractionsAndBogoliubov.lean",
+    "BosonizeStubs/A10DiscreteSchriefferWolff.lean",
+    "BosonizeStubs/Ch17LuttingerModels.lean"
+  ],
+  "sources": {
+    "BosonizeStubs/A07InteractionsAndBogoliubov.lean": "051a5363645d75c8b6296c61294eb4e41312999d61e7f16e3cb9cc87a6819993",
+    "BosonizeStubs/A10DiscreteSchriefferWolff.lean": "30222b3b04d915e57b625569af5a4a0ddb981e01498aaceda492418fcdb8a2cb",
+    "BosonizeStubs/Ch17LuttingerModels.lean": "686ea1568191b59aedbd014d8703da0ebf8283b154e5157073709b06cfe4b595"
+  },
+  "theorem_contracts": 37
+}

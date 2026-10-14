@@ -254,3 +254,10 @@ CH17 remains outside the authorized scope.
 
 
 The historical quota checkpoint is superseded by completed CH16/A07 Phase C. All 19 contracts are proved and frozen; Core now has 27 modules and 835 statements. See the final validation above.
+
+<!-- lean-cycle CH17 -->
+## Automated CH17 checkpoint
+
+CH17: **A_complete**. 37 contracts; 3 pending proof modules. Current machine record: `docs/webllm/chapters/ch17.json`.
+
+<!-- /lean-cycle CH17 -->

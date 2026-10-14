@@ -9773,6 +9773,846 @@
           "text": "theorem single_mode_error_eigenvector (h M K m : \u2115) [NeZero (2 * h)] (hh : 0 < h) (hM : 1 \u2264 M) (hNoAlias : 2 * M < 2 * h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (hK : m \u2264 K) (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hmargin : A06.branchMargins h M K Ns branches) : errorOperator h M \u03b6 branches (excitedKet h Ns branches \u03b7 m) = ((4 : \u2102) * (m : \u2102) * (epsilon h \u03b6 m - referenceWeight h \u03b6)) \u2022 excitedKet h Ns branches \u03b7 m"
         }
       }
+    },
+    "BosonizeStubs/A07InteractionsAndBogoliubov.lean": {
+      "commands": [
+        {
+          "kind": "import",
+          "label": "import Bosonize",
+          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
+          "text": "import Bosonize"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.A07Interactions",
+          "hash": "9da0c0076dada30d2c13642a6fc4d9d798845f81af744d3d7b49a359a9886541",
+          "text": "namespace Bosonize.A07Interactions"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "kind": "section",
+          "label": "section ScalarAndSyntax",
+          "hash": "530dd77bfe5912b7e6169fc6037f5ae2118f4a87d5cc6e43b629916f9650ae1d",
+          "text": "section ScalarAndSyntax"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaIndicator",
+          "hash": "b14f096ef14a898e2a12d4be5c15d608876d0ab17ac0b515d43eaa451384c768",
+          "text": "def seaIndicator (h : \u2115) (k : Ch01.Band (2 * h)) : \u2102 :=\n  if k.val \u2264 0 then 1 else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.creatorToSeaLetter",
+          "hash": "e20c9298e6c45828a8ca4c64e4c1efa95bae915f98ead7cffe308337a1c0b0ca",
+          "text": "def creatorToSeaLetter (h : \u2115) (k : Ch01.Band (2 * h)) :\n    Bool \u00d7 Ch01.Band (2 * h) :=\n  (decide (0 < k.val), k)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.annihilatorToSeaLetter",
+          "hash": "7e61486707307c3f31856e9c313f10d634ceace2b71b302e5be7b764f3441406",
+          "text": "def annihilatorToSeaLetter (h : \u2115) (k : Ch01.Band (2 * h)) :\n    Bool \u00d7 Ch01.Band (2 * h) :=\n  (decide (k.val \u2264 0), k)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaInversions",
+          "hash": "778c236ea37bfeb0c6efa0e182db4e8958f57fa4702e91f62c9831cf57262ef2",
+          "text": "def seaInversions (h : \u2115) : List (Bool \u00d7 Ch01.Band (2 * h)) \u2192 \u2115\n  | [] => 0\n  | (true, _) :: rest => seaInversions h rest\n  | (false, _) :: rest => (rest.filter (fun l => l.1)).length + seaInversions h rest"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.bilinearWord",
+          "hash": "e86de556175917fc5592fbf77c73992b374bf4b7b858403be3ce4293cf5b2df0",
+          "text": "def bilinearWord (h : \u2115) (a b : Ch01.Band (2 * h)) :\n    List (Bool \u00d7 Ch01.Band (2 * h)) :=\n  [creatorToSeaLetter h a, annihilatorToSeaLetter h b]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.quarticWord",
+          "hash": "145f0f2c33855c50a707e7cc7daae0e7f02232d4c1a2eda380b6e9a1bc2a2f6c",
+          "text": "def quarticWord (h : \u2115) (a b c d : Ch01.Band (2 * h)) :\n    List (Bool \u00d7 Ch01.Band (2 * h)) :=\n  [creatorToSeaLetter h a, annihilatorToSeaLetter h b,\n   creatorToSeaLetter h c, annihilatorToSeaLetter h d]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaWickWeight",
+          "hash": "ec14dfd45efc8168478e1a73b0a47240bb6a02ee8f431fde113983f3052d91ad",
+          "text": "def seaWickWeight (h M : \u2115) (k : Ch01.Band (2 * h)) : \u2124 :=\n  if k.val \u2264 0 then 1 + 2 * min (M : \u2124) (-k.val)\n  else 1 + 2 * min (M : \u2124) (k.val - 1)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.oppositeOrientation",
+          "hash": "e04e56a14df3402ba568bae49dc9a84250cdc20adb3ea9033063932da5745e46",
+          "text": "def oppositeOrientation : A06.Orientation \u2192 A06.Orientation\n  | .right => .left\n  | .left => .right"
+        },
+        {
+          "kind": "structure",
+          "label": "structure Bosonize.A07Interactions.HyperbolicParams",
+          "hash": "ec60c22955c198d89ade53a56a0a7ca9a6a27887f7c90aa263621c677c8e9561",
+          "text": "structure HyperbolicParams (v1 v2 : \u211d) where\n  u : \u211d\n  c : \u211d\n  s : \u211d\n  u_pos : 0 < u\n  c_pos : 0 < c\n  u_sq : u ^ 2 = v1 ^ 2 - v2 ^ 2\n  hyperbolic_id : c ^ 2 - s ^ 2 = 1\n  match_v1 : v1 = u * (c ^ 2 + s ^ 2)\n  match_v2 : v2 = 2 * u * c * s"
+        },
+        {
+          "kind": "end",
+          "label": "end ScalarAndSyntax",
+          "hash": "dc2018eee252dea1247a24e679e00007e52368de5d1708a5c635945de0cce219",
+          "text": "end ScalarAndSyntax"
+        },
+        {
+          "kind": "section",
+          "label": "section Operators",
+          "hash": "360982167605d0d058a7b4670418ee41ec73264894be0cf9044992bcecf54d86",
+          "text": "section Operators"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaQuasiAnnihilator",
+          "hash": "203962212b155d216c8bf380a3050f5ccda7f4542ab9ecefa7f0f8e12ff0f51d",
+          "text": "noncomputable def seaQuasiAnnihilator (h : \u2115) (\u03bd : \u03c3)\n    (k : Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  if k.val \u2264 0 then A05.creation h \u03bd k else A05.annihilation h \u03bd k"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaQuasiCreator",
+          "hash": "50dcbb7bbacfa60aa7606ee1117a16dd2ba96e2e1e93d8b643bb7f4419f21d26",
+          "text": "noncomputable def seaQuasiCreator (h : \u2115) (\u03bd : \u03c3)\n    (k : Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  if k.val \u2264 0 then A05.annihilation h \u03bd k else A05.creation h \u03bd k"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.evalSeaLetter",
+          "hash": "00d85d22d917c28006a27ab3e8fea2c396b7433b192e51a586c17bda9b458ce4",
+          "text": "noncomputable def evalSeaLetter (h : \u2115) (\u03bd : \u03c3)\n    (l : Bool \u00d7 Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  if l.1 then seaQuasiCreator h \u03bd l.2 else seaQuasiAnnihilator h \u03bd l.2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaWickWord",
+          "hash": "c59c329e1ed55d1d836aecd8e689410d62809fd369e3fe6a9e8f6334bc554895",
+          "text": "noncomputable def seaWickWord (h : \u2115) (\u03bd : \u03c3)\n    (w : List (Bool \u00d7 Ch01.Band (2 * h))) : A05.Operators \u03c3 h :=\n  let creators := w.filter (fun l => l.1)\n  let annihilators := w.filter (fun l => !l.1)\n  ((-1 : \u2102) ^ seaInversions h w) \u2022\n    (((creators ++ annihilators).map (evalSeaLetter h \u03bd)).prod)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.numberOp",
+          "hash": "1aa489365f53cc521e2aedb6d23e5a4c798eb3df76eb25008b69d1e3f556c9be",
+          "text": "noncomputable def numberOp (h : \u2115) (\u03bd : \u03c3)\n    (k : Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  A05.creation h \u03bd k * A05.annihilation h \u03bd k"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaSubtractedNumber",
+          "hash": "9f78f20cc22a3e609d35a09427655a3afc887e1dc30b53c62aba747bd4475d09",
+          "text": "noncomputable def seaSubtractedNumber (h : \u2115) (\u03bd : \u03c3)\n    (k : Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  numberOp h \u03bd k - seaIndicator h k \u2022 (1 : A05.Operators \u03c3 h)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaNormalBilinear",
+          "hash": "85e044169a6bd1c63b16911c5e2f0a8fb55dcc693797e2956ce8ce4ac6aafec2",
+          "text": "noncomputable def seaNormalBilinear (h : \u2115) (\u03bd : \u03c3)\n    (a b : Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  A05.creation h \u03bd a * A05.annihilation h \u03bd b -\n    (if a = b then seaIndicator h a else 0) \u2022 (1 : A05.Operators \u03c3 h)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaNormalRho",
+          "hash": "0917e5205561ddf16e16680824d05dce3f2da17bb9a318b95c979c4005aa01a6",
+          "text": "noncomputable def seaNormalRho (h : \u2115) (\u03bd : \u03c3) (m : \u2124) :\n    A05.Operators \u03c3 h :=\n  \u2211 z \u2208 A04.validPairs (2 * h) m, seaNormalBilinear h \u03bd z.1 z.2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.quarticSeaWick",
+          "hash": "985f6c0b52ce6f26b4565af30301a1f2c9a93f5ac884067b8d67dd3385b4d4a5",
+          "text": "noncomputable def quarticSeaWick (h : \u2115) (\u03bd : \u03c3)\n    (a b c d : Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  seaWickWord h \u03bd (quarticWord h a b c d)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.quarticContraction",
+          "hash": "a16316b4fb9d49cbc27fbcdea9bfa84e7241b1b4d51c911acf52f0a460e95a06",
+          "text": "noncomputable def quarticContraction (h : \u2115) (\u03bd : \u03c3)\n    (k p : Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  seaIndicator h p \u2022 seaSubtractedNumber h \u03bd k -\n    (1 - seaIndicator h k) \u2022 seaSubtractedNumber h \u03bd p -\n    (seaIndicator h p * (1 - seaIndicator h k)) \u2022 (1 : A05.Operators \u03c3 h)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaWickTerm",
+          "hash": "0545d5abc0c49b8648a4e47231fdd842d89eace98e0169bd54066a2df6e7dd36",
+          "text": "noncomputable def seaWickTerm (h M : \u2115) (\u03bd : \u03c3)\n    (k : Ch01.Band (2 * h)) : A05.Operators \u03c3 h :=\n  if k.val \u2264 0 then\n    (seaWickWeight h M k : \u2102) \u2022 ((1 : A05.Operators \u03c3 h) - numberOp h \u03bd k)\n  else\n    (seaWickWeight h M k : \u2102) \u2022 numberOp h \u03bd k"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.seaWickCorrection",
+          "hash": "8f966e1cf2f4966fa1dd486008629cb55ba369e96a8b1e509c0d4a73d3d9c630",
+          "text": "noncomputable def seaWickCorrection (h M : \u2115) (\u03bd : \u03c3) :\n    A05.Operators \u03c3 h :=\n  \u2211 k : Ch01.Band (2 * h), seaWickTerm h M \u03bd k"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.computationalMomentum",
+          "hash": "89934c8b29395140c224a3bf909958001d8dbfe36417c983acb78849d5ec6f1a",
+          "text": "noncomputable def computationalMomentum (h : \u2115) (\u03bd : \u03c3) :\n    A05.Operators \u03c3 h :=\n  \u2211 k : Ch01.Band (2 * h), (k.val : \u2102) \u2022 seaSubtractedNumber h \u03bd k"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.speciesRawIntra",
+          "hash": "f7b171010e665293f0b2ef7f57449891de1522bf9a02d09d5dbd21c8fe69b279",
+          "text": "noncomputable def speciesRawIntra (h M : \u2115) (\u03bd : \u03c3) :\n    A05.Operators \u03c3 h :=\n  \u2211 m \u2208 Finset.Icc (-(M : \u2124)) (M : \u2124),\n    \u2211 z \u2208 A04.validPairs (2 * h) m,\n      \u2211 w \u2208 A04.validPairs (2 * h) (-m),\n        quarticSeaWick h \u03bd z.1 z.2 w.1 w.2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.rawIntraBranch",
+          "hash": "933bc04052c99285734ffcdf15fb8409bbcfa1100e2fe7ca35ccb189d2794d02",
+          "text": "noncomputable def rawIntraBranch (h M : \u2115) (g4 : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  ((g4 : \u2102) / (2 * ((2 * h : \u2115) : \u2102))) \u2022\n    (speciesRawIntra h M branches.rightSpecies +\n      speciesRawIntra h M branches.leftSpecies)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.speciesCurrentIntra",
+          "hash": "2ce08d6bbfd96125beaea3395bae3b4e176a744a9e0840a27886bbd8737831ee",
+          "text": "noncomputable def speciesCurrentIntra (h M : \u2115) (\u03bd : \u03c3) :\n    A05.Operators \u03c3 h :=\n  (2 : \u2102) \u2022 (\u2211 m \u2208 Finset.Icc 1 M,\n    A05.rho h \u03bd (m : \u2124) * A05.rho h \u03bd (-(m : \u2124))) +\n    A05.chargeObservable h \u03bd * A05.chargeObservable h \u03bd"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.currentIntraBranch",
+          "hash": "d8f4fa71f966de14ed605777b2994327d6c2113e06f23f98934fe912988b6af8",
+          "text": "noncomputable def currentIntraBranch (h M : \u2115) (g4 : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  ((g4 : \u2102) / (2 * ((2 * h : \u2115) : \u2102))) \u2022\n    (speciesCurrentIntra h M branches.rightSpecies +\n      speciesCurrentIntra h M branches.leftSpecies)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.rawInterBranch",
+          "hash": "cc552d346791194b3342c8b3658e40bf7700fa1580c9700be81349bf5f3176de",
+          "text": "noncomputable def rawInterBranch (h M : \u2115) (g2 : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  ((g2 : \u2102) / ((2 * h : \u2115) : \u2102)) \u2022\n    \u2211 m \u2208 Finset.Icc (-(M : \u2124)) (M : \u2124),\n      seaNormalRho h branches.rightSpecies m *\n        seaNormalRho h branches.leftSpecies (-m)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.hoppingInterBranch",
+          "hash": "4c6409f044d743fd4c8efcb6804ef4cc7918234160e436954f3c64855d8a51a5",
+          "text": "noncomputable def hoppingInterBranch (h M : \u2115) (g2 : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  let r := branches.rightSpecies\n  let l := branches.leftSpecies\n  ((g2 : \u2102) / ((2 * h : \u2115) : \u2102)) \u2022\n    (A05.chargeObservable h r * A05.chargeObservable h l +\n      \u2211 m \u2208 Finset.Icc 1 M,\n        (A05.rho h r (m : \u2124) * A05.rho h l (-(m : \u2124)) +\n          A05.rho h r (-(m : \u2124)) * A05.rho h l (m : \u2124)))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.pairingInterBranch",
+          "hash": "192593ba2528321573b54e2dc808b86fb892243227148b5e9468026976b2ddeb",
+          "text": "noncomputable def pairingInterBranch (h M : \u2115) (g2 : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  let r := branches.rightSpecies\n  let l := branches.leftSpecies\n  ((g2 : \u2102) / ((2 * h : \u2115) : \u2102)) \u2022\n    (A05.chargeObservable h r * A05.chargeObservable h l +\n      \u2211 m \u2208 Finset.Icc 1 M,\n        (A05.rho h r (m : \u2124) * A05.rho h l (m : \u2124) +\n          A05.rho h r (-(m : \u2124)) * A05.rho h l (-(m : \u2124))))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.hoppingMode",
+          "hash": "8d463a01606af6f735d492a924299971cafae419c9e603f4ee02f15195a8366a",
+          "text": "noncomputable def hoppingMode (h m : \u2115) (v1 v2 : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  let r := branches.rightSpecies\n  let l := branches.leftSpecies\n  (v1 : \u2102) \u2022 (A05.rho h r (m : \u2124) * A05.rho h r (-(m : \u2124)) +\n    A05.rho h l (m : \u2124) * A05.rho h l (-(m : \u2124))) +\n  (v2 : \u2102) \u2022 (A05.rho h r (m : \u2124) * A05.rho h l (-(m : \u2124)) +\n    A05.rho h l (m : \u2124) * A05.rho h r (-(m : \u2124)))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.pairingMode",
+          "hash": "cdabcb65950c59684ec84677d3d188eaa53307d5074feddf24774cd744e39932",
+          "text": "noncomputable def pairingMode (h m : \u2115) (v1 v2 : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  let r := branches.rightSpecies\n  let l := branches.leftSpecies\n  (v1 : \u2102) \u2022 (A05.rho h r (m : \u2124) * A05.rho h r (-(m : \u2124)) +\n    A05.rho h l (m : \u2124) * A05.rho h l (-(m : \u2124))) +\n  (v2 : \u2102) \u2022 (A05.rho h r (m : \u2124) * A05.rho h l (m : \u2124) +\n    A05.rho h r (-(m : \u2124)) * A05.rho h l (-(m : \u2124)))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.bogoliubovCreator",
+          "hash": "abc8c186016d79155616d3d39896bf92cbeef3fd5a402c02cb1b208760888f22",
+          "text": "noncomputable def bogoliubovCreator (h m : \u2115) (c s : \u211d)\n    (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) :\n    A05.Operators \u03c3 h :=\n  (c : \u2102) \u2022 A05.rho h (A06.speciesOf branches \u03b7) (m : \u2124) +\n    (s : \u2102) \u2022 A05.rho h (A06.speciesOf branches (oppositeOrientation \u03b7)) (-(m : \u2124))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.bogoliubovAnnihilator",
+          "hash": "2abebfd9209e24b777c4cd2da447d1272f66ea5609db8337b641a2d62d4df332",
+          "text": "noncomputable def bogoliubovAnnihilator (h m : \u2115) (c s : \u211d)\n    (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) :\n    A05.Operators \u03c3 h :=\n  (c : \u2102) \u2022 A05.rho h (A06.speciesOf branches \u03b7) (-(m : \u2124)) +\n    (s : \u2102) \u2022 A05.rho h (A06.speciesOf branches (oppositeOrientation \u03b7)) (m : \u2124)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A07Interactions.dressedModeNumber",
+          "hash": "b1fc2c024167893ea00c45b7b5be398f4f777cdf3eaee75fd1cccde787f667e3",
+          "text": "noncomputable def dressedModeNumber (h m : \u2115) (u c s : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  (u : \u2102) \u2022 (bogoliubovCreator h m c s branches .right *\n      bogoliubovAnnihilator h m c s branches .right +\n    bogoliubovCreator h m c s branches .left *\n      bogoliubovAnnihilator h m c s branches .left)"
+        },
+        {
+          "kind": "end",
+          "label": "end Operators",
+          "hash": "b41c19c025f6092ea0754c015c94d9268e8d4b7a49d43aeef8e86cb4afad418f",
+          "text": "end Operators"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.A07Interactions",
+          "hash": "641a26d98c5d1be6a1c2bd3c5e3b49c52106cf5ee1809c1ca15d9e9c21f21dd1",
+          "text": "end Bosonize.A07Interactions"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A07Interactions.bogoliubov_ccr_on_budget": {
+          "kind": "theorem",
+          "hash": "7003698e0720d0284ae4671f88d0f1cafbeaf4eb40e0dbc7bb2e844caa77bce4",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "theorem bogoliubov_ccr_on_budget (h M K m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (c s : \u211d) (hcs : c ^ 2 - s ^ 2 = 1) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hmargin : A06.branchMargins h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : A02.commutator (bogoliubovAnnihilator h m c s branches \u03b7) (bogoliubovCreator h m c s branches \u03b7) v = (m : \u2102) \u2022 v"
+        },
+        "Bosonize.A07Interactions.bogoliubov_creator_adjoint": {
+          "kind": "lemma",
+          "hash": "1ffb869b25b835dcc6de566b955ebcfa068cdeefd2005fd4691efca0f4059a17",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma bogoliubov_creator_adjoint (h m : \u2115) (c s : \u211d) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) : LinearMap.adjoint (bogoliubovCreator h m c s branches \u03b7) = bogoliubovAnnihilator h m c s branches \u03b7"
+        },
+        "Bosonize.A07Interactions.bogoliubov_expansion_on_budget": {
+          "kind": "theorem",
+          "hash": "bbb67a168dcc772a80854e64ad21578a274a906c44376a1c4a3b5eaa615323d7",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "theorem bogoliubov_expansion_on_budget (h M K m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (v1 v2 : \u211d) (hp : HyperbolicParams v1 v2) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : A06.branchMargins h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : dressedModeNumber h m hp.u hp.c hp.s branches v = pairingMode h m v1 v2 branches v + ((2 * hp.u * hp.s ^ 2 * (m : \u211d) : \u211d) : \u2102) \u2022 v"
+        },
+        "Bosonize.A07Interactions.hopping_mode_kills_ground": {
+          "kind": "lemma",
+          "hash": "c4b24c1384fee6bea65fe83e95cf2ce4a8ee4cf020bf844d2aff435d946623ae",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma hopping_mode_kills_ground (h m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (branches : A06.Branches \u03c3) : (A05.rho h branches.rightSpecies (m : \u2124) * A05.rho h branches.leftSpecies (-(m : \u2124)) + A05.rho h branches.rightSpecies (-(m : \u2124)) * A05.rho h branches.leftSpecies (m : \u2124)) (A05.groundKet h Ns) = 0"
+        },
+        "Bosonize.A07Interactions.hopping_mode_self_adjoint": {
+          "kind": "lemma",
+          "hash": "6d70678d104a3d7338554a98e6b55e8769883d03f4a295a43fdb4d4584f29b6e",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma hopping_mode_self_adjoint (h m : \u2115) (v1 v2 : \u211d) (branches : A06.Branches \u03c3) : LinearMap.adjoint (hoppingMode h m v1 v2 branches) = hoppingMode h m v1 v2 branches"
+        },
+        "Bosonize.A07Interactions.hyperbolic_params_exist": {
+          "kind": "theorem",
+          "hash": "262b3618dcd8f1367086c1e092110ee44b869084bb8cba03481084cbc84061b7",
+          "ctx": "af4ea7ea281e8b3ebf853e2e1e98db768ab4a956d2be511629a1c93df8e0d5f4",
+          "text": "theorem hyperbolic_params_exist (v1 v2 : \u211d) (hstab : |v2| < v1) : \u2203 u c s : \u211d, 0 < u \u2227 u ^ 2 = v1 ^ 2 - v2 ^ 2 \u2227 c ^ 2 - s ^ 2 = 1 \u2227 v1 = u * (c ^ 2 + s ^ 2) \u2227 v2 = 2 * u * c * s"
+        },
+        "Bosonize.A07Interactions.pairing_mode_ground_nonzero": {
+          "kind": "lemma",
+          "hash": "e01a0b51ace0f53fb7baf7ff23817e9bae3f6c52874e5e3d25e3620bda63d472",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma pairing_mode_ground_nonzero (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (branches : A06.Branches \u03c3) (hmargin : A06.branchMargins h M m Ns branches) : (A05.rho h branches.rightSpecies (m : \u2124) * A05.rho h branches.leftSpecies (m : \u2124) + A05.rho h branches.rightSpecies (-(m : \u2124)) * A05.rho h branches.leftSpecies (-(m : \u2124))) (A05.groundKet h Ns) \u2260 0"
+        },
+        "Bosonize.A07Interactions.pairing_mode_self_adjoint": {
+          "kind": "lemma",
+          "hash": "69b54bd2d15c170fa25875f0c70f1721e13ee8262124a018d0e71c0d14841c91",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma pairing_mode_self_adjoint (h m : \u2115) (v1 v2 : \u211d) (branches : A06.Branches \u03c3) : LinearMap.adjoint (pairingMode h m v1 v2 branches) = pairingMode h m v1 v2 branches"
+        },
+        "Bosonize.A07Interactions.quartic_sea_wick_identity": {
+          "kind": "lemma",
+          "hash": "28fb523bc5b37916b94e631d731896b4d2b84c5e8cd40785e162699d78ac69f5",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma quartic_sea_wick_identity (h : \u2115) (\u03bd : \u03c3) (m : \u2124) (z w : Ch01.Band (2 * h) \u00d7 Ch01.Band (2 * h)) (hz : z \u2208 A04.validPairs (2 * h) m) (hw : w \u2208 A04.validPairs (2 * h) (-m)) : quarticSeaWick h \u03bd z.1 z.2 w.1 w.2 = seaNormalBilinear h \u03bd z.1 z.2 * seaNormalBilinear h \u03bd w.1 w.2 + if w.2 = z.1 then quarticContraction h \u03bd z.2 w.2 else 0"
+        },
+        "Bosonize.A07Interactions.quartic_sea_wick_zero_repeated": {
+          "kind": "lemma",
+          "hash": "9656ad803c5ccc04a3b5f0ed1a269bb4ad2229ea9ed94bad88943de41abb03c0",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma quartic_sea_wick_zero_repeated (h : \u2115) (\u03bd : \u03c3) (k : Ch01.Band (2 * h)) : quarticSeaWick h \u03bd k k k k = 0 \u2227 seaNormalBilinear h \u03bd k k * seaNormalBilinear h \u03bd k k + quarticContraction h \u03bd k k = 0"
+        },
+        "Bosonize.A07Interactions.raw_inter_eq_hopping": {
+          "kind": "theorem",
+          "hash": "5715aeda84a09490dc36cd09d8aa1508a3904f41cc328f506d4cfa48b49125bc",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "theorem raw_inter_eq_hopping (h M : \u2115) (g2 : \u211d) (branches : A06.Branches \u03c3) : rawInterBranch h M g2 branches = hoppingInterBranch h M g2 branches"
+        },
+        "Bosonize.A07Interactions.raw_intra_eq_current_sub_correction": {
+          "kind": "theorem",
+          "hash": "96e21098a691885ebb957f2e3e606a4d1e76da1d5503406f3337e13c8cdfbedf",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "theorem raw_intra_eq_current_sub_correction (h M : \u2115) (g4 : \u211d) (branches : A06.Branches \u03c3) : rawIntraBranch h M g4 branches = currentIntraBranch h M g4 branches - ((g4 : \u2102) / (2 * ((2 * h : \u2115) : \u2102))) \u2022 (seaWickCorrection h M branches.rightSpecies + seaWickCorrection h M branches.leftSpecies)"
+        },
+        "Bosonize.A07Interactions.sea_normal_bilinear_diag": {
+          "kind": "lemma",
+          "hash": "fe8311499c3e921d557d00bdcdd8eefd2491dff3b18eaaf72b000d624781da2e",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma sea_normal_bilinear_diag (h : \u2115) (\u03bd : \u03c3) (k : Ch01.Band (2 * h)) : seaNormalBilinear h \u03bd k k = if k.val \u2264 0 then -(A05.annihilation h \u03bd k * A05.creation h \u03bd k) else A05.creation h \u03bd k * A05.annihilation h \u03bd k"
+        },
+        "Bosonize.A07Interactions.sea_normal_rho_nonzero": {
+          "kind": "lemma",
+          "hash": "f3992d46710d593ea58c2626814f860e0c283025e9cceef3c7f89aacad96f7f6",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma sea_normal_rho_nonzero (h : \u2115) (\u03bd : \u03c3) (m : \u2124) (hm : m \u2260 0) : seaNormalRho h \u03bd m = A05.rho h \u03bd m"
+        },
+        "Bosonize.A07Interactions.sea_normal_rho_zero": {
+          "kind": "lemma",
+          "hash": "2e66b32dd48298c0ea3d205d56bd39fcaed799c6199c3d79b653fe18aaec0495",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma sea_normal_rho_zero (h : \u2115) (\u03bd : \u03c3) : seaNormalRho h \u03bd 0 = A05.chargeObservable h \u03bd"
+        },
+        "Bosonize.A07Interactions.sea_wick_correction_full_band": {
+          "kind": "lemma",
+          "hash": "48b54a254c94d72cb9b0089801b64470b7c04c92604334f582929fbb2d4cd7e8",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma sea_wick_correction_full_band (h M : \u2115) (hh : 0 < h) (hM : h - 1 \u2264 M) (\u03bd : \u03c3) : seaWickCorrection h M \u03bd = (2 : \u2102) \u2022 computationalMomentum h \u03bd - A05.chargeObservable h \u03bd"
+        },
+        "Bosonize.A07Interactions.sea_wick_correction_ground_zero": {
+          "kind": "lemma",
+          "hash": "22a22f4d3be0974815c7cea000ec137061e59d3708b7ac222e746480b879039f",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma sea_wick_correction_ground_zero (h M : \u2115) (hh : 0 < h) (\u03bd : \u03c3) : seaWickCorrection h M \u03bd (A05.groundKet h (fun _ : \u03c3 => 0)) = 0"
+        },
+        "Bosonize.A07Interactions.species_raw_intra_eq_current_sub_correction": {
+          "kind": "lemma",
+          "hash": "62dc51b8565c0d0ef41d25d6aad7b800f6e5084394e08008b6771a268451d475",
+          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "text": "lemma species_raw_intra_eq_current_sub_correction (h M : \u2115) (\u03bd : \u03c3) : speciesRawIntra h M \u03bd = speciesCurrentIntra h M \u03bd - seaWickCorrection h M \u03bd"
+        }
+      }
+    },
+    "BosonizeStubs/A10DiscreteSchriefferWolff.lean": {
+      "commands": [
+        {
+          "kind": "import",
+          "label": "import Bosonize",
+          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
+          "text": "import Bosonize"
+        },
+        {
+          "kind": "import",
+          "label": "import BosonizeStubs.A07InteractionsAndBogoliubov",
+          "hash": "cf3fb1e1a4b9aa49ee9c9e9816f2fa87e39f653b6b6e38424d2a171e9250dc80",
+          "text": "import BosonizeStubs.A07InteractionsAndBogoliubov"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.A10",
+          "hash": "078de9a26687de3f888a2b65e7cf5c67b7198b8663d9a7c3894ee9e4a621c3c7",
+          "text": "namespace Bosonize.A10"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "kind": "section",
+          "label": "section MatrixModels",
+          "hash": "18227b30748ad75f4e7da0ffd9d4ed73460bcd06f9993e15667bbbd01839afe7",
+          "text": "section MatrixModels"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swGeneratorMatrix",
+          "hash": "abdfa4ebc2c7f81be7a2e9887a55f4543a7121fb40c8a6bef4dfcb2ae9580089",
+          "text": "noncomputable def swGeneratorMatrix {\u03b9 : Type*}\n    (inLow : \u03b9 \u2192 Bool) (E : \u03b9 \u2192 \u211d) (Voff : Matrix \u03b9 \u03b9 \u2102) :\n    Matrix \u03b9 \u03b9 \u2102 :=\n  fun i j =>\n    if inLow i \u2260 inLow j \u2227 Voff i j \u2260 0 then\n      Voff i j / ((E i - E j : \u211d) : \u2102)\n    else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.diagEnergyMatrix",
+          "hash": "75a0772df2d87783edfb5197448d0e0fbfe60ddb7fdf0a158cf207e4163b381e",
+          "text": "noncomputable def diagEnergyMatrix {\u03b9 : Type*} [DecidableEq \u03b9]\n    (E : \u03b9 \u2192 \u211d) : Matrix \u03b9 \u03b9 \u2102 :=\n  Matrix.diagonal (fun i => ((E i : \u211d) : \u2102))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.nonResonant",
+          "hash": "8e25806e2c0b8da2b4b6cf6eecce3eec715f9fbc7b8ac786a610146a8f9cacd5",
+          "text": "def nonResonant {\u03b9 : Type*} (inLow : \u03b9 \u2192 Bool) (E : \u03b9 \u2192 \u211d)\n    (Voff : Matrix \u03b9 \u03b9 \u2102) : Prop :=\n  \u2200 i j : \u03b9, inLow i \u2260 inLow j \u2192 Voff i j \u2260 0 \u2192 E i \u2260 E j"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterH0_2x2",
+          "hash": "92956978e6c443ca72828df3e06889d9b2f2f731096520d8419db9e3a4900dc8",
+          "text": "def swCounterH0_2x2 : Matrix (Fin 2) (Fin 2) \u2102 :=\n  fun i j => if i = 1 \u2227 j = 1 then 1 else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterV_2x2",
+          "hash": "5b33a76362e71435042c0d7108fc9483efe13802038bb34cb15cb5eda2c05d78",
+          "text": "def swCounterV_2x2 : Matrix (Fin 2) (Fin 2) \u2102 :=\n  fun i j => if i \u2260 j then 1 else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterS1_2x2",
+          "hash": "9a7d4fb2216b4d2afaa2bba3ca1c5c68700dcebf195ec98e99bcd32f7f60eede",
+          "text": "def swCounterS1_2x2 : Matrix (Fin 2) (Fin 2) \u2102 :=\n  fun i j => if i = 0 \u2227 j = 1 then -1 else if i = 1 \u2227 j = 0 then 1 else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterP_2x2",
+          "hash": "1fd89dba0cfb16b55aa2084796bf58bd5a9c3c972331aece468aa138141e8da1",
+          "text": "def swCounterP_2x2 : Matrix (Fin 2) (Fin 2) \u2102 :=\n  fun i j => if i = 0 \u2227 j = 0 then 1 else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterH0_3x3",
+          "hash": "460488ff25814792061a12acb68ec9432abf6c6b9de2904bf28a800b53bc2e72",
+          "text": "def swCounterH0_3x3 : Matrix (Fin 3) (Fin 3) \u2102 :=\n  fun i j =>\n    if i = j then\n      if i = 0 then 0 else if i = 1 then -1 else 1\n    else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterP_3x3",
+          "hash": "77dc3bf2fa0518562921c1662a82695b40cb98510f3cf17017962e43c0b4494f",
+          "text": "def swCounterP_3x3 : Matrix (Fin 3) (Fin 3) \u2102 :=\n  fun i j => if i = 0 \u2227 j = 0 then 1 else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterQ_3x3",
+          "hash": "345911c965d1c5c392467629c7f6b29cf1bab4803c07cf77fb21d4076fcef46d",
+          "text": "def swCounterQ_3x3 : Matrix (Fin 3) (Fin 3) \u2102 :=\n  fun i j => if i = j \u2227 (i = 1 \u2228 i = 2) then 1 else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterV_3x3",
+          "hash": "b2945c489a14541e2cbdeeae1aedc941296499a4ad2a7228f89493a8bbe6fef1",
+          "text": "def swCounterV_3x3 : Matrix (Fin 3) (Fin 3) \u2102 :=\n  fun i j =>\n    if (i = 0 \u2227 (j = 1 \u2228 j = 2)) \u2228 ((i = 1 \u2228 i = 2) \u2227 j = 0) then 1\n    else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterS1_3x3",
+          "hash": "e818152a755fd34b3135e8da2744c9112c049d2a38a4037902d30df279f7f7a5",
+          "text": "def swCounterS1_3x3 : Matrix (Fin 3) (Fin 3) \u2102 :=\n  fun i j =>\n    if i = 0 \u2227 j = 1 then 1\n    else if i = 0 \u2227 j = 2 then -1\n    else if i = 1 \u2227 j = 0 then -1\n    else if i = 2 \u2227 j = 0 then 1\n    else 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swCounterEigenvector_2x2",
+          "hash": "27e60e67c1c7de4605aecbd78eb82e3cc175fc633dd34872db5d3df2bc79c9ad",
+          "text": "def swCounterEigenvector_2x2 : Fin 2 \u2192 \u2102 :=\n  fun i => if i = 0 then -2 else 1"
+        },
+        {
+          "kind": "end",
+          "label": "end MatrixModels",
+          "hash": "d74584334228d6d4b84b46dd219a6def51f2fb5db00c979eec3bff6637d3031a",
+          "text": "end MatrixModels"
+        },
+        {
+          "kind": "section",
+          "label": "section BudgetShells",
+          "hash": "917a41455ff6810f2b73d79bc1a8d7dce5fa91379e1f5e358c5d062be87f45e3",
+          "text": "section BudgetShells"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.exactShellSet",
+          "hash": "a3f011807fb57c3b13420c497ee5afbbffb3c684d61aa9939be4a46a9b9f3682",
+          "text": "def exactShellSet (h : \u2115) (Ns : \u03c3 \u2192 \u2124) (K : \u2115) :\n    Set (A05.Occupation \u03c3 h) :=\n  {S | (\u2200 \u03bd, Ch07.relativeCharge h (Ch07.speciesConfiguration h S \u03bd) = Ns \u03bd) \u2227\n    Ch07.totalExcitation h S = (K : \u2124)}"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.lowShellProj",
+          "hash": "361358d49e73dde906a76bfe786cb4dc0cf92233abede094bb91470d215e170b",
+          "text": "noncomputable def lowShellProj (h : \u2115) (Ns : \u03c3 \u2192 \u2124) (K : \u2115) :\n    A05.Operators \u03c3 h :=\n  Ch14.projection h Ns (K - 1)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.highShellProj",
+          "hash": "417cf15f51fba1497b5bf96b02486f7e13cf67873c1562fca39ed2e09ce8bf0e",
+          "text": "noncomputable def highShellProj (h : \u2115) (Ns : \u03c3 \u2192 \u2124) (K : \u2115) :\n    A05.Operators \u03c3 h :=\n  letI : DecidableEq (A05.Mode \u03c3 h) := (A05.speciesOrder h).toDecidableEq\n  A03.coordinateProjection (exactShellSet h Ns K)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.doubleModeOneKet",
+          "hash": "08842a1dff456651d35346ced6ea0a95566f8762ef74acf8219a372f1dc9bd4a",
+          "text": "noncomputable def doubleModeOneKet (h : \u2115) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) :\n    A05.FockSpace \u03c3 h :=\n  A05.rho h \u03bd 1 (A05.rho h \u03bd 1 (A05.groundKet h Ns))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.diagPart",
+          "hash": "ddd7ea34ec2c7489c5da48a68194ebf547264ff14c41a5d599251af64687f6fd",
+          "text": "noncomputable def diagPart (h : \u2115) (P Q V : A05.Operators \u03c3 h) :\n    A05.Operators \u03c3 h :=\n  P * V * P + Q * V * Q"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.offDiagPart",
+          "hash": "22fd6aaf13d8571ccc730ef5f034171cdd21433e92919aa9dfaf443b506331ef",
+          "text": "noncomputable def offDiagPart (h : \u2115) (P Q V : A05.Operators \u03c3 h) :\n    A05.Operators \u03c3 h :=\n  P * V * Q + Q * V * P"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swSecondOrderCorrection",
+          "hash": "3ba10831be61361a888163903530ae14e939706f6a80229d3fceb6aa829a22ec",
+          "text": "noncomputable def swSecondOrderCorrection (h : \u2115)\n    (P S1 V : A05.Operators \u03c3 h) : A05.Operators \u03c3 h :=\n  ((2 : \u2102)\u207b\u00b9) \u2022 (P * A02.commutator S1 V * P)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.swEffectiveSecondOrder",
+          "hash": "b60b4917ba735ef23175432aa831f5576a99b53020e40f19a9216cdd6c71dee9",
+          "text": "noncomputable def swEffectiveSecondOrder (h : \u2115)\n    (P H0 V S1 : A05.Operators \u03c3 h) (t : \u211d) : A05.Operators \u03c3 h :=\n  P * H0 * P + (t : \u2102) \u2022 (P * V * P) +\n    ((t : \u2102) ^ 2) \u2022 swSecondOrderCorrection h P S1 V"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.A10.bchSecondOrderPolynomial",
+          "hash": "94c171d115cadb0fe81e555b6df0e351c1a5b4cb049574c17988d4a0dd543e22",
+          "text": "noncomputable def bchSecondOrderPolynomial (h : \u2115)\n    (H0 V S1 : A05.Operators \u03c3 h) (t : \u211d) : A05.Operators \u03c3 h :=\n  H0 + (t : \u2102) \u2022 (V + A02.commutator S1 H0) +\n    ((t : \u2102) ^ 2) \u2022 (A02.commutator S1 V +\n      ((2 : \u2102)\u207b\u00b9) \u2022 A02.commutator S1 (A02.commutator S1 H0))"
+        },
+        {
+          "kind": "end",
+          "label": "end BudgetShells",
+          "hash": "27aa54fdfabb26df0553e7b43235cb187ee540bfb15fe2ca9f2f8be4d3607be5",
+          "text": "end BudgetShells"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.A10",
+          "hash": "bf1e1a19c983c09b4041dbe39ed73cb3eeb8865378d89e781c7ef09459afb97a",
+          "text": "end Bosonize.A10"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.A10.energy_shell_discards_double_mode_one": {
+          "kind": "lemma",
+          "hash": "1581e3943e9bc8857a77480434f187b0546be16cec7aa559461dae1a1168851e",
+          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "text": "lemma energy_shell_discards_double_mode_one (h : \u2115) (hh : 2 \u2264 h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (\u03bd : \u03c3) (hR2 : A05.r2 h 2 Ns) : doubleModeOneKet h Ns \u03bd \u2208 A05.jointBudget h Ns 2 \u2227 doubleModeOneKet h Ns \u03bd \u2260 0 \u2227 lowShellProj h Ns 2 (doubleModeOneKet h Ns \u03bd) = 0 \u2227 highShellProj h Ns 2 (doubleModeOneKet h Ns \u03bd) = doubleModeOneKet h Ns \u03bd"
+        },
+        "Bosonize.A10.shell_proj_orthogonal": {
+          "kind": "lemma",
+          "hash": "9f262f23be48fa0d44eec9f25d21054115cb425b5f8b7e0da5411c5e947dd98c",
+          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "text": "lemma shell_proj_orthogonal (h K : \u2115) (hK : 1 \u2264 K) (Ns : \u03c3 \u2192 \u2124) : lowShellProj h Ns K * highShellProj h Ns K = 0 \u2227 highShellProj h Ns K * lowShellProj h Ns K = 0"
+        },
+        "Bosonize.A10.shell_proj_partition": {
+          "kind": "lemma",
+          "hash": "08560d91f019f61a8b74f95672d75a94548d5b8f5051187770d0eff0591e8234",
+          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "text": "lemma shell_proj_partition (h K : \u2115) (hK : 1 \u2264 K) (Ns : \u03c3 \u2192 \u2124) : lowShellProj h Ns K + highShellProj h Ns K = Ch14.projection h Ns K"
+        },
+        "Bosonize.A10.shell_proj_self_adjoint": {
+          "kind": "lemma",
+          "hash": "9a15c9eedae99b61fb9ad6897be063dbbb55a05fc95ba42850d13ed777561884",
+          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "text": "lemma shell_proj_self_adjoint (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : LinearMap.adjoint (lowShellProj h Ns K) = lowShellProj h Ns K \u2227 LinearMap.adjoint (highShellProj h Ns K) = highShellProj h Ns K"
+        },
+        "Bosonize.A10.sw_2x2_exact_eigenpair": {
+          "kind": "theorem",
+          "hash": "e1281f2f2d823f85e52d8e6f19f2a34cf1bd2b99d33972a0211b8fc8d91bc7c3",
+          "ctx": "75ddef0672d6a8f0c09bbb9d8aefff7a057071a79a7b109bf87b489134d03194",
+          "text": "theorem sw_2x2_exact_eigenpair : swCounterEigenvector_2x2 \u2260 0 \u2227 (swCounterH0_2x2 + ((2 : \u2102) / 3) \u2022 swCounterV_2x2).mulVec swCounterEigenvector_2x2 = ((-1 : \u2102) / 3) \u2022 swCounterEigenvector_2x2"
+        },
+        "Bosonize.A10.sw_2x2_truncation_witness": {
+          "kind": "theorem",
+          "hash": "6df0d1acb2fcd25a4de57a83c75c44c2551628d418795e3c937ada0d322b5542",
+          "ctx": "0b62023f3076d6bbbeb116a4f1b8321670b63aa2d529701438e3b86af93c007a",
+          "text": "theorem sw_2x2_truncation_witness : swCounterS1_2x2 * swCounterH0_2x2 - swCounterH0_2x2 * swCounterS1_2x2 = -swCounterV_2x2 \u2227 (swCounterP_2x2 * (swCounterS1_2x2 * swCounterV_2x2 - swCounterV_2x2 * swCounterS1_2x2) * swCounterP_2x2) 0 0 = -2 \u2227 ((-((2 : \u211a) / 3) ^ 2 : \u211a) \u2260 (-1 / 3 : \u211a))"
+        },
+        "Bosonize.A10.sw_3x3_no_iff_witness": {
+          "kind": "theorem",
+          "hash": "419f8ea59629c42c7bc4aaa9e9a11d7fb739685c34de2dce68cb3a9a626ae680",
+          "ctx": "0b62023f3076d6bbbeb116a4f1b8321670b63aa2d529701438e3b86af93c007a",
+          "text": "theorem sw_3x3_no_iff_witness : swCounterS1_3x3 * swCounterH0_3x3 - swCounterH0_3x3 * swCounterS1_3x3 = -swCounterV_3x3 \u2227 swCounterP_3x3 * swCounterV_3x3 * swCounterQ_3x3 \u2260 0 \u2227 swCounterP_3x3 * (swCounterS1_3x3 * swCounterV_3x3 - swCounterV_3x3 * swCounterS1_3x3) * swCounterP_3x3 = 0"
+        },
+        "Bosonize.A10.sw_compressed_bch_second_order": {
+          "kind": "theorem",
+          "hash": "6d45023392fa8f564b3fa4ce54b637ce022e52ebab5da24080df835def1ea2be",
+          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "text": "theorem sw_compressed_bch_second_order (h : \u2115) (P Q H0 V S1 : A05.Operators \u03c3 h) (t : \u211d) (hP : P * P = P) (hQ : Q * Q = Q) (hPartition : P + Q = 1) (hPQ : P * Q = 0) (hQP : Q * P = 0) (hBaseline : A02.commutator P H0 = 0) (hSpp : P * S1 * P = 0) (hSqq : Q * S1 * Q = 0) (hGenerator : A02.commutator S1 H0 = -offDiagPart h P Q V) : P * bchSecondOrderPolynomial h H0 V S1 t * P = swEffectiveSecondOrder h P H0 V S1 t"
+        },
+        "Bosonize.A10.sw_generator_commutator_eq": {
+          "kind": "theorem",
+          "hash": "063f32ac5b53ae71503746e477428900307ccbe18d0570c3a820a54dba08ca9e",
+          "ctx": "0b62023f3076d6bbbeb116a4f1b8321670b63aa2d529701438e3b86af93c007a",
+          "text": "theorem sw_generator_commutator_eq {\u03b9 : Type*} [Fintype \u03b9] [DecidableEq \u03b9] (inLow : \u03b9 \u2192 Bool) (E : \u03b9 \u2192 \u211d) (Voff : Matrix \u03b9 \u03b9 \u2102) (hBlock : \u2200 i j : \u03b9, inLow i = inLow j \u2192 Voff i j = 0) (hNonRes : nonResonant inLow E Voff) : swGeneratorMatrix inLow E Voff * diagEnergyMatrix E - diagEnergyMatrix E * swGeneratorMatrix inLow E Voff = -Voff"
+        },
+        "Bosonize.A10.sw_generator_skew_hermitian": {
+          "kind": "theorem",
+          "hash": "87b323558ca03f713c817bb9032e3090d932f4f0f96d6669321ee1cb0afd2ebf",
+          "ctx": "0b62023f3076d6bbbeb116a4f1b8321670b63aa2d529701438e3b86af93c007a",
+          "text": "theorem sw_generator_skew_hermitian {\u03b9 : Type*} (inLow : \u03b9 \u2192 Bool) (E : \u03b9 \u2192 \u211d) (Voff : Matrix \u03b9 \u03b9 \u2102) (hHerm : Matrix.conjTranspose Voff = Voff) : Matrix.conjTranspose (swGeneratorMatrix inLow E Voff) = -swGeneratorMatrix inLow E Voff"
+        },
+        "Bosonize.A10.sw_off_zero_implies_effective_exact": {
+          "kind": "theorem",
+          "hash": "c61d2c511ee0504d052fae5271d97f7c7acffd80ba74f26a2218a7b0de9a773f",
+          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "text": "theorem sw_off_zero_implies_effective_exact (h : \u2115) (P Q H0 V : A05.Operators \u03c3 h) (t : \u211d) (hPVQ : P * V * Q = 0) (hQVP : Q * V * P = 0) : offDiagPart h P Q V = 0 \u2227 swSecondOrderCorrection h P (0 : A05.Operators \u03c3 h) V = 0 \u2227 swEffectiveSecondOrder h P H0 V (0 : A05.Operators \u03c3 h) t = P * H0 * P + (t : \u2102) \u2022 (P * V * P)"
+        }
+      }
+    },
+    "BosonizeStubs/Ch17LuttingerModels.lean": {
+      "commands": [
+        {
+          "kind": "import",
+          "label": "import Bosonize",
+          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
+          "text": "import Bosonize"
+        },
+        {
+          "kind": "import",
+          "label": "import BosonizeStubs.A07InteractionsAndBogoliubov",
+          "hash": "cf3fb1e1a4b9aa49ee9c9e9816f2fa87e39f653b6b6e38424d2a171e9250dc80",
+          "text": "import BosonizeStubs.A07InteractionsAndBogoliubov"
+        },
+        {
+          "kind": "import",
+          "label": "import BosonizeStubs.A10DiscreteSchriefferWolff",
+          "hash": "88678cfcfa3036bc0c409124b54e8dd56c935c9b09ea524ae4e240add03a1251",
+          "text": "import BosonizeStubs.A10DiscreteSchriefferWolff"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch17",
+          "hash": "b07b91b5cc0f81e1fda0aec8ba8b4c6c451e594dca82a8af0ad5008e03077d04",
+          "text": "namespace Bosonize.Ch17"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators Classical",
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
+          "text": "open scoped BigOperators Classical"
+        },
+        {
+          "kind": "section",
+          "label": "section ScalarParameters",
+          "hash": "1f879d8ab887b809da9c45ff6dcdac5ada7f61b240bb825706376a3ed59c7bb8",
+          "text": "section ScalarParameters"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.v1Velocity",
+          "hash": "306372c14bbad110d8d1e3d068c00d281e438209e3c2fe65db360fa04cf95351",
+          "text": "noncomputable def v1Velocity (vF g4 : \u211d) : \u211d :=\n  vF + g4 / (2 * Real.pi)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.v2Velocity",
+          "hash": "1c0bd8d98effc09de2299e1d6328ab8b7e8dceea9468cd6186fab496ec5052d4",
+          "text": "noncomputable def v2Velocity (g2 : \u211d) : \u211d :=\n  g2 / (2 * Real.pi)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.canonicalMu",
+          "hash": "41dfaf50aa141952b2688da846f945dafca4875fdde4c9695fa091484c1b166d",
+          "text": "noncomputable def canonicalMu (h : \u2115) (vF : \u211d) : \u211d :=\n  Real.pi * vF / ((2 * h : \u2115) : \u211d)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.sugawaraMargin",
+          "hash": "135ff338c8799eae703ad46a610dcbc74f11135a28367473e8970701787232cc",
+          "text": "def sugawaraMargin {\u03c3 : Type*} (h M K : \u2115) (Ns : \u03c3 \u2192 \u2124)\n    (branches : A06.Branches \u03c3) : Prop :=\n  K \u2264 M \u2227\n    (K : \u2124) + |Ns branches.rightSpecies| < (h : \u2124) \u2227\n    (K : \u2124) + |Ns branches.leftSpecies| < (h : \u2124)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.zeroModeEnergyScalar",
+          "hash": "cd32fdc06f04cbcb6314582efc7772f362a92b4fda40c8873b5f02489c15e5b0",
+          "text": "noncomputable def zeroModeEnergyScalar {\u03c3 : Type*} (h : \u2115)\n    (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : \u211d :=\n  let L : \u211d := ((2 * h : \u2115) : \u211d)\n  let nr : \u211d := (Ns branches.rightSpecies : \u211d)\n  let nl : \u211d := (Ns branches.leftSpecies : \u211d)\n  (2 * Real.pi * vF / L) * (nr * (nr + 1) / 2 + nl * (nl + 1) / 2) +\n    (g4 / (2 * L)) * (nr ^ 2 + nl ^ 2) +\n    (g2 / L) * nr * nl -\n    mu * (nr + nl)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.symmetricZeroModeScalar",
+          "hash": "3f92d648cc1f9d3c20e59cd972f7383ea6066bfc0ddeb1f2a1c0dc2c6c3a5a52",
+          "text": "noncomputable def symmetricZeroModeScalar {\u03c3 : Type*} (h : \u2115)\n    (vF g4 g2 : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : \u211d :=\n  let L : \u211d := ((2 * h : \u2115) : \u211d)\n  let nr : \u211d := (Ns branches.rightSpecies : \u211d)\n  let nl : \u211d := (Ns branches.leftSpecies : \u211d)\n  (Real.pi * v1Velocity vF g4 / L) * (nr ^ 2 + nl ^ 2) +\n    (g2 / L) * nr * nl"
+        },
+        {
+          "kind": "end",
+          "label": "end ScalarParameters",
+          "hash": "72ea56a3b760d1bc561f2091a8b7377a508644e67315bb3874ab2b90455edc8a",
+          "text": "end ScalarParameters"
+        },
+        {
+          "kind": "section",
+          "label": "section LuttingerHamiltonians",
+          "hash": "f72ce0cc30e02f43d82d878c35f94a904dbf740730431f6377fbef3eb8e9b6cb",
+          "text": "section LuttingerHamiltonians"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.chemicalPotentialOp",
+          "hash": "013d1266e8ab60b9d5abeae3f0d0ca841203008abe8fdbc72e32e86a53051329",
+          "text": "noncomputable def chemicalPotentialOp (h : \u2115) (mu : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  (mu : \u2102) \u2022 (A05.chargeObservable h branches.rightSpecies +\n    A05.chargeObservable h branches.leftSpecies)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.freeSugawaraKinetic",
+          "hash": "b970486a563c920a43043e46348733e5d008dd8cad4a44a3f294c7395acfe9d6",
+          "text": "noncomputable def freeSugawaraKinetic (h M : \u2115) (vF : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  let r := branches.rightSpecies\n  let l := branches.leftSpecies\n  let prefactor : \u2102 := ((2 * Real.pi * vF : \u211d) : \u2102) / ((2 * h : \u2115) : \u2102)\n  prefactor \u2022 (Ch16.sugawara h M branches +\n    ((2 : \u2102)\u207b\u00b9) \u2022 (A05.chargeObservable h r * (A05.chargeObservable h r + 1) +\n      A05.chargeObservable h l * (A05.chargeObservable h l + 1)))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.freeFermionKinetic",
+          "hash": "c4a6dd7453704c558d522cccba80ed1ef4d94b3383ff4874e2ff3f93eae34c1f",
+          "text": "noncomputable def freeFermionKinetic (h : \u2115) (vF : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  let prefactor : \u2102 := ((2 * Real.pi * vF : \u211d) : \u2102) / ((2 * h : \u2115) : \u2102)\n  prefactor \u2022\n    (A07Interactions.computationalMomentum h branches.rightSpecies +\n      A07Interactions.computationalMomentum h branches.leftSpecies)"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.zeroModeEnergyOp",
+          "hash": "37b1175e62fad36027b91dc9bbe02d0fab4c0537fb367fb19d6e436ca3d5930a",
+          "text": "noncomputable def zeroModeEnergyOp (h : \u2115) (vF g4 g2 mu : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  let L : \u2102 := ((2 * h : \u2115) : \u2102)\n  let nr := A05.chargeObservable h branches.rightSpecies\n  let nl := A05.chargeObservable h branches.leftSpecies\n  (((2 * Real.pi * vF : \u211d) : \u2102) / L) \u2022\n      (((2 : \u2102)\u207b\u00b9) \u2022 (nr * (nr + 1) + nl * (nl + 1))) +\n    ((g4 : \u2102) / (2 * L)) \u2022 (nr * nr + nl * nl) +\n    ((g2 : \u2102) / L) \u2022 (nr * nl) -\n    chemicalPotentialOp h mu branches"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.luttingerOscillatorOp",
+          "hash": "7abfb10ceeb85e97facfd29c1f5568278b03903e4065a06b42295022366cfe62",
+          "text": "noncomputable def luttingerOscillatorOp (h M : \u2115) (vF g4 g2 : \u211d)\n    (branches : A06.Branches \u03c3) : A05.Operators \u03c3 h :=\n  (((2 * Real.pi : \u211d) : \u2102) / ((2 * h : \u2115) : \u2102)) \u2022\n    \u2211 m \u2208 Finset.Icc 1 M,\n      A07Interactions.pairingMode h m\n        (v1Velocity vF g4) (v2Velocity g2) branches"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.luttingerBosonizedHamiltonian",
+          "hash": "cc139284f405f75cdc48995e9be880e75ffad6aac00b220b0a11f0af517077fc",
+          "text": "noncomputable def luttingerBosonizedHamiltonian (h M : \u2115)\n    (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) :\n    A05.Operators \u03c3 h :=\n  luttingerOscillatorOp h M vF g4 g2 branches +\n    zeroModeEnergyOp h vF g4 g2 mu branches"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.luttingerChosenModel",
+          "hash": "4de61f4b1898002dcb3985f7c8e7baadaa38fb203a9cd6e930ae0eb4d306f6e2",
+          "text": "noncomputable def luttingerChosenModel (h M : \u2115)\n    (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) :\n    A05.Operators \u03c3 h :=\n  freeSugawaraKinetic h M vF branches +\n    A07Interactions.currentIntraBranch h M g4 branches +\n    A07Interactions.pairingInterBranch h M g2 branches -\n    chemicalPotentialOp h mu branches"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch17.luttingerFermionChosenModel",
+          "hash": "044f8ab73ffa43ac0e1f935e8bc1b4db0d8cbd686ad5fcbfe1b7a63e3949c730",
+          "text": "noncomputable def luttingerFermionChosenModel (h M : \u2115)\n    (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) :\n    A05.Operators \u03c3 h :=\n  freeFermionKinetic h vF branches +\n    A07Interactions.currentIntraBranch h M g4 branches +\n    A07Interactions.pairingInterBranch h M g2 branches -\n    chemicalPotentialOp h mu branches"
+        },
+        {
+          "kind": "end",
+          "label": "end LuttingerHamiltonians",
+          "hash": "f3e06118b7ae3301359959b62731a8f986e4dbb251ff6f65ea75adbb9d832495",
+          "text": "end LuttingerHamiltonians"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.Ch17",
+          "hash": "d8228a7be18b5d100c06973cd30d0fab1a8b7df7707ebcb9be0fa0efbe7a459c",
+          "text": "end Bosonize.Ch17"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch17.concrete_luttinger_witness": {
+          "kind": "theorem",
+          "hash": "d6a71fad64a0686ef9e4e65308030fa34219dfd32d37e5035f981a67d884182c",
+          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "text": "theorem concrete_luttinger_witness : let Ns : Fin 2 \u2192 \u2124 := fun _ => 0 A05.admissible 8 Ns \u2227 A06.branchMargins 8 2 2 Ns Ch16.standardBranches \u2227 sugawaraMargin 8 2 2 Ns Ch16.standardBranches \u2227 A05.groundKet 8 Ns \u2208 A05.jointBudget 8 Ns 2 \u2227 A05.groundKet 8 Ns \u2260 0 \u2227 luttingerBosonizedHamiltonian 8 2 1 (6 * Real.pi) (6 * Real.pi) (canonicalMu 8 1) Ch16.standardBranches (A05.groundKet 8 Ns) \u2260 0"
+        },
+        "Bosonize.Ch17.free_fermion_eq_sugawara_on_budget": {
+          "kind": "theorem",
+          "hash": "5cfff56cd3c39e999bee2f08f3d7e3bb5cf077a8fc15bba13759ae6043436cbe",
+          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "text": "theorem free_fermion_eq_sugawara_on_budget (h M K : \u2115) (hh : 0 < h) (vF : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hSug : sugawaraMargin h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : freeFermionKinetic h vF branches v = freeSugawaraKinetic h M vF branches v"
+        },
+        "Bosonize.Ch17.luttinger_chosen_eq_bosonized": {
+          "kind": "theorem",
+          "hash": "8ef423eb9b880dfd2f5db39d3557c60efa62cf81f0f8fc6281890573a9fffb99",
+          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "text": "theorem luttinger_chosen_eq_bosonized (h M : \u2115) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) : luttingerChosenModel h M vF g4 g2 mu branches = luttingerBosonizedHamiltonian h M vF g4 g2 mu branches"
+        },
+        "Bosonize.Ch17.luttinger_hamiltonian_canonical_mu_on_budget": {
+          "kind": "theorem",
+          "hash": "f43e03b72864570db6eab022f41f2262b2e4c2ad83f00cc80aee7dde3b4987ff",
+          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "text": "theorem luttinger_hamiltonian_canonical_mu_on_budget (h M K : \u2115) (hh : 0 < h) (vF g4 g2 : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hSug : sugawaraMargin h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : luttingerFermionChosenModel h M vF g4 g2 (canonicalMu h vF) branches v = luttingerOscillatorOp h M vF g4 g2 branches v + (symmetricZeroModeScalar h vF g4 g2 branches Ns : \u2102) \u2022 v"
+        },
+        "Bosonize.Ch17.luttinger_hamiltonian_on_budget": {
+          "kind": "theorem",
+          "hash": "53b663f8781fe70500c992d4e74e5b7f71bf67fe45b06ee69ad9a4680db3491f",
+          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "text": "theorem luttinger_hamiltonian_on_budget (h M K : \u2115) (hh : 0 < h) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hSug : sugawaraMargin h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : luttingerFermionChosenModel h M vF g4 g2 mu branches v = luttingerOscillatorOp h M vF g4 g2 branches v + (zeroModeEnergyScalar h vF g4 g2 mu branches Ns : \u2102) \u2022 v"
+        },
+        "Bosonize.Ch17.luttinger_raw_intra_on_budget": {
+          "kind": "theorem",
+          "hash": "6947f701eb84ae4bf8beb0d722d3e5f3ad8d8dc1c8798c3865baf25dceee92cf",
+          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "text": "theorem luttinger_raw_intra_on_budget (h M K : \u2115) (hh : 0 < h) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hSug : sugawaraMargin h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : (freeFermionKinetic h vF branches + A07Interactions.rawIntraBranch h M g4 branches + A07Interactions.pairingInterBranch h M g2 branches - chemicalPotentialOp h mu branches) v = luttingerOscillatorOp h M vF g4 g2 branches v + (zeroModeEnergyScalar h vF g4 g2 mu branches Ns : \u2102) \u2022 v - (((g4 : \u2102) / (2 * ((2 * h : \u2115) : \u2102))) \u2022 (A07Interactions.seaWickCorrection h M branches.rightSpecies + A07Interactions.seaWickCorrection h M branches.leftSpecies)) v"
+        },
+        "Bosonize.Ch17.zero_mode_op_on_budget": {
+          "kind": "lemma",
+          "hash": "ab5e250e6b4b11815bcc50bc1238f16aac6bf097c233bebf9c5c9fa10edf54ad",
+          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "text": "lemma zero_mode_op_on_budget (h K : \u2115) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : zeroModeEnergyOp h vF g4 g2 mu branches v = (zeroModeEnergyScalar h vF g4 g2 mu branches Ns : \u2102) \u2022 v"
+        },
+        "Bosonize.Ch17.zero_mode_scalar_canonical_mu": {
+          "kind": "lemma",
+          "hash": "b4c84751e2abc6ff07d0cd539154540e7b3921d85f35977453d072719caba6a2",
+          "ctx": "e6822ede3769c0760f558a98a402c89901aebd46cbf8f26e185fd4592e90a7f0",
+          "text": "lemma zero_mode_scalar_canonical_mu {\u03c3 : Type*} (h : \u2115) (vF g4 g2 : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : zeroModeEnergyScalar h vF g4 g2 (canonicalMu h vF) branches Ns = symmetricZeroModeScalar h vF g4 g2 branches Ns"
+        }
+      }
     }
   },
   "version": 2
