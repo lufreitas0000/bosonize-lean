@@ -231,3 +231,90 @@ targets for later work. Normal-ordered squares, field Hamiltonians, excited erro
 witnesses, Green functions, continuum or scaling limits, and RG estimates are
 not proved by this A06 module. Their presence here does not extend the verified
 scope to CH16 or analytic claims.
+
+
+## Constructive realization of normal ordering and field energy in Lean
+
+The earlier realization section describes the sixteen contracts of the A06
+module accepted with Chapter 15. Its scope statement remains a historical
+record of that module. The separate CH16 construction now realizes the finite
+normal-ordering and field-energy targets above through
+[A07FiniteNormalOrdering](../../Bosonize/Core/A07FiniteNormalOrdering.lean)
+and [Ch16FieldHamiltonian](../../Bosonize/Core/Ch16FieldHamiltonian.lean).
+The [A07 companion](../../docs/companion/Bosonize/Core/A07FiniteNormalOrdering.md)
+and [CH16 companion](../../docs/companion/Bosonize/Core/Ch16FieldHamiltonian.md)
+record exact declarations and validation. These source links identify the
+planned Core destinations; final Phase C acceptance is recorded separately.
+The A07 module here supports this appendix's normal-ordering construction;
+it does not implement the separate interactions appendix numbered A07.
+
+**Quadratic symbols before evaluation.** A signed-current label records a
+branch, a retained index $i\in\operatorname{Fin}(M)$, and a creator flag. Its
+positive mode is $m=i+1$, so all denominators represent nonzero modes. A quadratic
+symbol is a complex coefficient function on ordered pairs of these labels.
+Raw evaluation multiplies the represented currents in their original order.
+Normal evaluation swaps a creator on the right past an annihilator on the left;
+other pairs retain their order. Both evaluations concern the supplied symbol,
+rather than a proposed operation on an already evaluated endomorphism. This
+keeps distinct representations of the same operator from being silently confused.
+Normal evaluation is proved additive and compatible with complex scalar
+multiplication.
+
+For a same-branch annihilator of mode $m$ followed by a creator of mode $n$,
+the difference between normal and raw evaluation is
+$[\rho_n,\rho_{-m}]$. On an actual joint-budget input, with
+$2M+K+|N_\nu|\le h$, this difference is $-m\delta_{mn}$ times that input.
+The sign follows the existing current convention; no global central extension
+is assumed. Operators act in the ambient finite occupation Fock space without
+intermediate budget projections.
+
+**Exact coefficients and two surviving spatial terms.** The linear combination
+of signed currents with the gradient coefficients is proved equal to the
+existing periodic chiral forward difference. The proof explicitly matches
+$\operatorname{Fin}(M)$ with $\{1,\ldots,M\}$ and retains the full multipliers
+$\zeta^{\pm\eta m}-1$. At each spatial point, the coefficient identity
+$(a+b)^2+(a-b)^2=2(a^2+b^2)$ cancels the two ordered cross terms separately.
+This is algebra on scalar coefficient functions and needs no commutative
+multiplication of current operators.
+
+For primitive $\zeta$ and $2M<2h$, finite character orthogonality leaves exactly
+the two opposite-sign pairings with equal positive mode. Normal evaluation sends
+both to $\rho_{m,\nu}\rho_{-m,\nu}$, and each has spatial coefficient
+
+$$
+\varepsilon(m)=\frac{2h}{m^2}
+ (\zeta^m-1)(\zeta^{-m}-1).
+$$
+
+Thus one chiral spatial square gives $2\sum_m\varepsilon(m)
+\rho_{m,\nu}\rho_{-m,\nu}$. The dual-field coefficient identity supplies another
+factor two, giving the reference factor four for the two branches. The finite
+symbol collapse admits an ambient operator proof; the frozen chapter contracts
+state its consequences on budget inputs and retain their explicit margins.
+
+**The realized error witnesses.** The algebraic reference weight is
+$g_0=\varepsilon(1)$. CH16 proves that the error kills the admissible ground ket
+and the single excitation $\rho_{1,\nu}g$. More generally, for a retained
+positive $m$ and sufficient input margins,
+
+$$
+E_{\mathrm{error}}\rho_{m,\nu}g
+=4m\bigl(\varepsilon(m)-\varepsilon(1)\bigr)\rho_{m,\nu}g.
+$$
+
+The excited ket is proved nonzero using the restricted current commutator and
+the genuine nonzero ground ket. A concrete witness uses $h=8$, $M=2$, $K=2$,
+zero charges, two distinct species, and the canonical root of order sixteen;
+the unequal weights are proved algebraically. The implementation does not
+establish the reference's broader kernel assertion for arbitrary products of
+reference-mode excitations. That multiword extension, analytic scaling limits,
+RG estimates, general positivity claims, and Green-function constructions retain
+separate obligations.
+
+
+Independent final pedagogical reviewer `/root/characters` returned PASS for all
+five documents after the link and historical-prose corrections. Both complete
+reference prefixes are preserved, declaration mappings and predicted promoted
+hashes are checked, the mathematics matches the proved contracts, and scope
+limitations are explicit. No required findings remain. This review precedes the
+runner's promoted compiler/axiom/CI acceptance and does not replace those gates.

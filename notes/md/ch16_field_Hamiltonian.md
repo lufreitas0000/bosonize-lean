@@ -111,3 +111,59 @@ $$
 E_{\text{error}} \sim \int dx \left[ (\partial^2_x \phi)^2 + (\partial^2_x \theta)^2 \right] \tag{16.10}
 $$
 In the formal language of Wilsonian Renormalization Group (RG) flow, higher spatial derivatives possess higher scaling dimensions and are irrelevant operators in the infrared limit, explaining the emergence of the continuum Luttinger Liquid.
+
+
+#### Constructive realization in Lean
+
+The preceding theory and proof strategies are preserved as the reference exposition. The verified finite construction now realizes its quadratic-symbol Hamiltonian, exact weighted energy, and single-excitation witnesses. The earlier suggestion of a separate cyclotomic field is realized here by exact algebra in the complex numbers. The Taylor and RG discussion remains physical motivation.
+
+**The finite model and what normal ordering acts on.** Put $L=2h$. Spatial points lie in the cyclic lattice $\mathbb Z/L\mathbb Z$, and states lie in the actual finite occupation Hilbert space of the multispecies fermion model. Each branch selects a distinct species and the oriented field already constructed in Chapters 15 and Appendix A06. All operators act on that full carrier. The energy restriction concerns the input vector's total excitation across species, with each species charge fixed; no intermediate budget projection is inserted between currents.
+
+The retained labels have a branch, an index $i\in\{0,\ldots,M-1\}$, and a creator flag. Their physical momentum is $m=i+1$, so the represented modes are positive and denominators never involve zero. A creator represents $\rho_m$; an annihilator represents $\rho_{-m}$. A quadratic symbol assigns a complex coefficient to each **ordered pair** of labels. Raw evaluation uses the pair's original order. Normal evaluation swaps an annihilator followed by a creator into creator–annihilator order and leaves the other pairs in their original order. Evaluation is linear in these coefficients. It is a construction on symbols: the proof does not assign a normal-ordering operation to arbitrary operators that happen to have several symbol representations.
+
+The gradient coefficients expand the exact periodic difference of the existing oriented chiral field. They retain $i/m$, the orientation and the full multipliers $\zeta^{\pm\eta m}-1$, for a primitive $L$-th root $\zeta$. This identifies the symbols being squared with the actual finite differences; it does not replace them by spectral or continuum derivatives.
+
+**Why the weighted coefficient is four.** At the level of ordered quadratic coefficients, the right/left cross terms in the sum of the two dual-field squares cancel separately. Thus linear normal evaluation gives twice the sum of the two chiral squares. For a single chirality, expand its ordered pair sum and then sum over spatial points. Character orthogonality removes same-sign frequencies $\pm(m+n)$, since
+$$
+1\le m,n\le M,\qquad 0<m+n\le2M<L.
+$$
+For opposite signs it retains exactly $m=n$. The two ordered cross pairings each contribute the spatial factor $L$. After prescribed normal ordering both yield $\rho_m\rho_{-m}$, so together they give $2L$. Combining this with the dual-field factor of two yields
+$$
+H_{\mathrm{field}}\psi
+=4\sum_{\eta\in\{R,L\}}\sum_{m=1}^{M}
+\varepsilon(m)\rho_{m,\eta}\rho_{-m,\eta}\psi,
+\qquad
+\varepsilon(m)=\frac{L}{m^2}(\zeta^m-1)(\zeta^{-m}-1).
+$$
+This ordered-symbol collapse uses finite Fourier orthogonality rather than a global scalar current commutator. The approved budget theorem retains $h>0$, $M\ge1$, $2M<L$, root primitivity, and both sufficient branch margins
+$$
+2M+K+|N_\eta|\le h.
+$$
+For an input in the enlarged budget $K+e$, the excursion version retains $2M+K+e+|N_\eta|\le h$. This explicitly matches the bound to the input on which the identity is used.
+
+**Ground and single-excitation error.** The implemented reference is exactly $g_0=\varepsilon(1)$. Subtracting its Sugawara contribution gives the weighted error in (16.7) under the same budget hypotheses. An admissible ground ket belongs to budget zero, is nonzero, and is killed by every positive-mode annihilator $\rho_{-n}$. Consequently the ordered weighted error kills that ground ket.
+
+For $1\le m\le\min(M,K)$, consider the actual single excitation
+$$
+\psi_{m,\eta}=\rho_{m,\eta}|\vec N\rangle_0.
+$$
+The current budget map puts it in budget $K$. Its nonzeroness follows from applying the **restricted** identity $[\rho_{-m},\rho_m]|\vec N\rangle_0=m|\vec N\rangle_0$: a zero excited ket would force the nonzero ground ket to vanish. More generally, applying the lowering mode to the right ground suffix gives zero unless its species and momentum match those of the excitation. In the matching case it gives $m|\vec N\rangle_0$. Cross-species terms vanish by actual species commutation. The finite weighted sum therefore gives exactly
+$$
+E_{\mathrm{error}}\psi_{m,\eta}
+=4m\bigl(\varepsilon(m)-\varepsilon(1)\bigr)\psi_{m,\eta}.
+$$
+At $m=1$ this proves zero error for one first-mode excitation. If the weight differs from the reference, it proves both a nonzero ket and nonzero error action. The stronger statement in part (ii) of Theorem 16.8 about arbitrary products of reference-mode creators is retained as reference theory; this batch does not prove that general word theorem or characterize the full kernel.
+
+**A concrete nonzero error.** Choose $h=8$, $M=2$, $K=2$, zero charges, two distinct species and the primitive root $z=\zeta_{16}$. The margins hold because $2M+K=6\le8$, and $2M=4<16$. The weight gap is proved algebraically. Primitivity gives $z\ne0,1$; an assumed equality $\varepsilon(2)=\varepsilon(1)$, after clearing its nonzero denominators, implies $(z-1)^4=0$, contradicting $z\ne1$. The right-branch mode-two ket is therefore a genuine nonzero excited-error witness.
+
+These results are exact finite complex algebra. They do not prove the sine characterization or positivity of the dispersion, an analytic limit, the Taylor remainder, RG irrelevance, or a complete error-kernel classification. The original descriptions of those broader ideas remain visible above with this distinction.
+
+The [formal source](../../Bosonize/Core/Ch16FieldHamiltonian.lean) and [companion notebook](../../docs/companion/Bosonize/Core/Ch16FieldHamiltonian.md) record the exact hypotheses, declaration mapping and verification evidence. The proved staging batch passed fresh Phase B compiler and axiom checks; Phase C promotion and the independent review of this explanatory addition are pending at preparation time.
+
+
+Independent final pedagogical reviewer `/root/characters` returned PASS for all
+five documents after the link and historical-prose corrections. Both complete
+reference prefixes are preserved, declaration mappings and predicted promoted
+hashes are checked, the mathematics matches the proved contracts, and scope
+limitations are explicit. No required findings remain. This review precedes the
+runner's promoted compiler/axiom/CI acceptance and does not replace those gates.
