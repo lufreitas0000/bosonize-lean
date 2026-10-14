@@ -1,0 +1,13 @@
+# Automatically prepared start command; scope approved by user finish command.
+version = 1
+id = "ch17_cycle_c_fefac95c"
+phase = "C"
+repo = ".."
+task = "CH17, Phase C. Scope: Finite interaction models, transfer versus pairing conventions, sea-Wick corrections and explicit zero modes. Separate formal perturbative claims from exact identities.\nSources are proposals, not guaranteed truths. Do not invent verification evidence or silently weaken statements.\nReturn a Markdown synchronization/review candidate with ## Proved scope, ## Evidence, ## Pedagogical changes, ## Remaining limitations. Cite supplied evidence files, preserve source theory and distinguish exact proved results from conditional, formal or analytic claims. Do not invent passed tests. Do not move Lean files or alter locks. Human review and local promotion remain separate gates.\nReturn ALL listed Markdown files completely: the audit artifact, chapter/appendix lecture notes and companions. Preserve the existing reference material, including content for later chapters in shared appendices; update only this chapter's constructive realization and verified scope. The runner will migrate companion paths during Core promotion. No placeholder prose or invented evidence."
+targets = ["docs/webllm/drafts/ch17_cycle_c_fefac95c.md", "notes/md/ch17_LL_Models.md", "notes/appendices/a07_interactions_and_bogoliubov.md", "notes/appendices/a10_discrete_rg_and_schrieffer_wolff.md", "docs/companion/BosonizeStubs/A07InteractionsAndBogoliubov.md", "docs/companion/BosonizeStubs/A10DiscreteSchriefferWolff.md", "docs/companion/BosonizeStubs/Ch17LuttingerModels.md"]
+lean_proofs = []
+context = ["notes/md/ch17_LL_Models.md", "notes/appendices/a07_interactions_and_bogoliubov.md", "notes/appendices/a10_discrete_rg_and_schrieffer_wolff.md", "docs/webllm/generated/ch17_cycle_c_fefac95c_core_api.md", "BosonizeStubs/A07InteractionsAndBogoliubov.lean", "BosonizeStubs/A10DiscreteSchriefferWolff.lean", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/Ch17LuttingerModels.lean", "note/webllm/ch17/phaseB-ch17_cycle_b_0ed0c297.md", "note/webllm/ch17/phaseB-ch17_cycle_b_80e7982b.md", "note/webllm/ch17/phaseB-ch17_cycle_b_e8f6ec96.md", "scripts/webllm/verify_phase_c.py"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/Ch17LuttingerModels.lean"], ["python3", "scripts/webllm/verify_phase_c.py", "docs/webllm/drafts/ch17_cycle_c_fefac95c.md"]]
+timeout = 900
+max_packet_bytes = 400000
