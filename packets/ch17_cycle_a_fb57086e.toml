@@ -1,0 +1,13 @@
+# Automatically prepared start command; scope approved by user finish command.
+version = 1
+id = "ch17_cycle_a_fb57086e"
+phase = "A"
+repo = ".."
+task = "CH17, Phase A. Scope: Finite interaction models, transfer versus pairing conventions, sea-Wick corrections and explicit zero modes. Separate formal perturbative claims from exact identities.\nSources are proposals, not guaranteed truths. Do not invent verification evidence or silently weaken statements.\nReturn complete Markdown only. Use exactly these headings: ## Source map, ## Design and scope, ## Lean draft, ## Companion notebook, ## Review obligations. Include exactly one lean fence combining chapter and necessary appendix declarations. Import Bosonize or existing Bosonize.Core modules. Named data definitions/instances must be complete; every theorem/lemma ends exactly := by sorry. No macros, new axioms or # commands. Explain carriers, signs, budgets, hypotheses, proof dependencies, admissibility and explicit nonzero witnesses. Human mathematical review precedes integration and freezing.\nAutomatic integration contract: inside the single Lean block, put Core imports first. Then enclose each complete module namespace in exact comment lines -- BEGIN_MODULE BosonizeStubs/Ch17MeaningfulName.lean and -- END_MODULE BosonizeStubs/Ch17MeaningfulName.lean. Supporting modules use BosonizeStubs/AxxMeaningfulName.lean with matching markers. No declarations outside markers and no imports inside them. Modules are in dependency order. Keep each namespace/section balanced inside its module; later modules will automatically import earlier modules. The user reviews these module paths as part of approving the whole proposal."
+targets = ["docs/webllm/drafts/ch17_cycle_a_fb57086e.md"]
+lean_proofs = []
+context = ["notes/md/ch17_LL_Models.md", "notes/appendices/a07_interactions_and_bogoliubov.md", "notes/appendices/a10_discrete_rg_and_schrieffer_wolff.md", "docs/webllm/generated/ch17_cycle_a_fb57086e_core_api.md", "scripts/webllm/verify_phase_a.py"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_a.py", "docs/webllm/drafts/ch17_cycle_a_fb57086e.md"]]
+timeout = 900
+max_packet_bytes = 200000
