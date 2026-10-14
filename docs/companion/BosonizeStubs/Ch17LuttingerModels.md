@@ -1,3 +1,76 @@
+# Ch17LuttingerModels: Phase B complete; Phase C preparation
+
+Status: 8 proved contracts and 14 complete data declarations in this module.
+All accepted proofs have fresh standard-axiom evidence. Phase B finish `f8bb8f6`:
+[actual runner evidence](../../../../note/webllm/ch17/phaseB-ch17_cycle_b_0ed0c297.md).
+Accepted staging source SHA-256: `d535a4cdd406507170e1b202b59dde26e9f33ca33d5f34492b6414a369e65f2e`.
+Planned promoted source: [Ch17LuttingerModels.lean](../../../../Bosonize/Core/Ch17LuttingerModels.lean).
+Pedagogical mapping: [corresponding reference note](../../../../notes/md/ch17_LL_Models.md).
+The links use the planned `docs/companion/Bosonize/Core/` depth for migration.
+The existing staged source and mathematical interfaces remain authoritative;
+source hashes after import/path migration will be recorded separately.
+
+## Exact proved declaration mapping
+
+Every row below denotes a complete proof in `Bosonize.Ch17`. Exact
+signatures, carrier instances and hypotheses are preserved in the linked source.
+No historical sketch is substituted for its compiler-checked contract.
+
+| Declaration | Realization and dependency scope |
+| --- | --- |
+| `zero_mode_scalar_canonical_mu` | Exact cancellation of linear charges at canonical chemical potential, including h=0 scalar conventions. |
+| `luttinger_chosen_eq_bosonized` | Ambient algebraic equality for the chosen current/pairing model with exact coefficients. |
+| `zero_mode_op_on_budget` | Charge observables act as specified Ns scalars on the actual joint budget. |
+| `free_fermion_eq_sugawara_on_budget` | Full-band quartic antisymmetry cancellation gives a global finite identity; lowering removes modes above K, preserving the sharper frozen margin. |
+| `luttinger_hamiltonian_on_budget` | Combine the free bridge, chosen-model equality and exact zero-mode action. |
+| `luttinger_hamiltonian_canonical_mu_on_budget` | The preceding budget theorem with the proved symmetric zero-mode scalar. |
+| `luttinger_raw_intra_on_budget` | Retain the finite Q subtraction when replacing chosen current intra-branch interaction by raw quartic interaction. |
+| `concrete_luttinger_witness` | h=8,M=K=2,zero charges; two lowering currents isolate a nonzero mode-one ground pair. |
+
+The sharp bridge preserves `K≤M` and `K+|Ns ν|<h` for the two selected species.
+It does not infer the stronger legacy Core margin `2K+|Ns ν|≤h`. Instead it proves
+quartic physical-creator antisymmetry and pairs all momentum-conserving terms
+in the full-band raw interaction to cancel them. Combining the accepted finite
+correction identity with `Q=2P−N` gives the global finite Sugawara identity.
+Modes above the actual input's total excitation budget vanish by rightmost
+lowering, permitting the cutoff M. Frozen Core is unchanged.
+
+The model uses chosen current intra-branch and pairing inter-branch interactions.
+The raw intra-branch theorem subtracts Q; it does not identify raw hopping with
+pairing. Chemical potential cancels the linear zero-mode term exactly. The
+concrete witness is not merely a nonempty budget: a local proof keeps its species
+carrier abstract and applies the two branch lowering currents to isolate a
+nonzero mode-one pair. It then specializes to h=8, M=K=2, zero charges, and the
+actual distinct `Fin 2` branches. No physical-channel equivalence, full spectrum,
+analytic continuum theory, or CH18 diagonalization theorem is asserted.
+
+## Verification, review and Phase C boundary
+
+All three batches completed Phase B: 37 proofs and 70 data declarations,
+107 freshly audited names. The saved runner logs record warning-as-error target
+compilation, only `propext`, `Classical.choice`, `Quot.sound` (or no axioms),
+strict statement/data locks and CI. The deliberate verifier regression fixture's
+`sorryAx` output is a negative test, not a target dependency. Historical candidate
+or quota checkpoint results are superseded by these accepted batches.
+
+Independent proof reviews were separated from authorship. Primary reviewed the
+delegated A07/CH17 constructions, including the sharper free bridge and genuine
+witness. `same_ccr` independently reviewed all eleven primary-authored A10 proofs;
+its earlier authorship concerned the Phase A supplement, not those proof bodies.
+`characters` independently reviewed the final quartic CAR proof and its bounded
+resource wrapper. Author rechecks do not count as independent reviews.
+
+Independent pedagogical review: **PASS**, `/root/joint_ccr`, 2026-10-14. The reviewer compared the three original notes as exact byte prefixes and the three original companions as verbatim historical suffixes against `be2584b`, read the accepted sources and Phase B evidence, and reviewed all seven Phase C files. Resolved findings distinguish polynomial value from coefficient, internal positive-c construction from the exported existential theorem, low-budget discard from exact-energy-shell fixation, and unweighted pairing from weighted pairing requiring nonzero mixing. The changed passages were reassessed; no deterministic findings remain. Promotion and fresh Phase C compiler/axiom/lock checks remain pending.
+
+Phase C promotion, complete-source hashes after import migration, final promoted compiler/axiom checks and runner acceptance remain pending. The reviewed candidate is checkpointed because the live five-hour allowance reached 6%, below the formalizer 10% guard. CH18 remains outside this authorized cycle.
+
+## Historical Phase A provenance
+
+The complete original companion follows verbatim. Its proposed, unproved and
+Phase A-only status sentences are dated historical evidence; current proof
+status is the accepted Phase B record above. Its cross-module theory paragraphs
+are retained for provenance rather than treated as this module's declaration map.
+
 # BosonizeStubs/Ch17LuttingerModels.lean
 
 ### 1. Quartic Sea-Wick Ordering and the Finite Diagonal Correction $Q_{M,\nu}$

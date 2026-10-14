@@ -159,3 +159,32 @@ For the half-filling Umklapp perturbation $H_U \propto \sum_x (O_U(x) + O_U^\dag
 
 * In continuum bosonization, $O_U \sim \cos(\sqrt{8\pi}\phi_c)$, and second-order operator product expansions yield the Kosterlitz-Thouless (KT) flow equations, predicting the opening of a charge Mott gap.
 * On the discrete finite lattice, revised Theorem 21.7 requires a nonzero outward component outside the chosen budget. Lemma 21.8 supplies a direct occupation-coefficient witness family with exact sign and coefficient $-g_U/L^2$. Charge shifts or nonzero total HU action alone do not establish leakage, KT flow, or a Mott gap.
+
+
+## Constructive realization in Lean
+
+The construction separates finite complex matrices in a supplied adapted basis from endomorphisms of the finite multispecies Fock Hilbert space. The matrix theorem takes real energies, low/high labels and an off-block perturbation with zero within-block entries. Its piecewise generator cancels an energy denominator only at a nonzero coupled cross-block entry; zero couplings remain zero even at degeneracy. Hermitian perturbation entries give $S_1^\dagger=-S_1$. The adapted basis and energies are inputs, rather than a proved spectral decomposition of a general interacting Fock Hamiltonian.
+
+The actual Fock shell projectors are coordinate projections in the orthonormal occupation basis. A ket must have all prescribed species charges; the low projector additionally requires energy at most $K-1$, and the high projector requires energy exactly $K$. For $K\ge1$ they satisfy
+$$
+P_{K-1}+Q_K=\Pi_{\vec N,K},\qquad P_{K-1}Q_K=Q_KP_{K-1}=0,
+$$
+and both are self-adjoint. Their sum is the identity on the budget, but generally not on ambient Fock space. For $h\ge2$, admissible charges and $4+|N_\nu|\le h$ for every species, the actual vector $\rho_{1,\nu}^2|\vec N\rangle_0$ is nonzero, belongs to budget 2, is killed by the low projector at $K=2$, and is fixed by the high projector. This witnesses loss of the two-mode-1 excitation under shell filtering, independently of deleting mode 2.
+
+A separate theorem uses arbitrary endomorphisms satisfying
+$$
+P^2=P,\quad Q^2=Q,\quad P+Q=I,\quad PQ=QP=0,\quad [P,H_0]=0,
+\quad PS_1P=QS_1Q=0,
+$$
+and $[S_1,H_0]=-(PVQ+QVP)$. With the degree-at-most-two expression
+$$
+B_2(t)=H_0+t\bigl(V+[S_1,H_0]\bigr)
++t^2\left([S_1,V]+\tfrac12[S_1,[S_1,H_0]]\right),
+$$
+it proves exactly
+$$
+PB_2(t)P=PH_0P+tPVP+\tfrac{t^2}{2}P[S_1,V]P.
+$$
+Block identities remove the first-order off-block term and reduce the double commutator after compression. This establishes coefficients through degree two by finite algebra. It does not compare analytic exponentials, bound a remainder or establish an all-orders series. The ambient shell projectors above do not automatically satisfy its hypothesis $P+Q=I$. Applying it on the budget requires transferring operators and generator hypotheses to that restricted carrier, or a further compressed theorem; this bridge is not proved here.
+
+The matrix witnesses are exact algebraic results. At $t=2/3$, the $2\times2$ example has compressed second-order polynomial value $-4/9$, whereas $H_0+(2/3)V$ has explicit nonzero eigenvector $(-2,1)$ with eigenvalue $-1/3$. The exponential-series discussion remains reference context. The $3\times3$ example has nonzero cross-block coupling and zero compressed second-order commutator, disproving the converse to off-block vanishing. If both $PVQ$ and $QVP$ vanish, choosing $S_1=0$ gives exactly $PH_0P+tPVP$ as the effective polynomial. This establishes the zero choice, not uniqueness of every solution to a homogeneous generator equation. Continuous RG flow, lifetime, KT equations and Mott-gap claims remain motivation. Earlier strategy paragraphs retain their reference role alongside this verified realization.

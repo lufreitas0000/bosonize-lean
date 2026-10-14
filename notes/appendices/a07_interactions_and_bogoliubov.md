@@ -88,3 +88,31 @@ Define the "restricted action regime" as a specific subspace `V_m` of the Fock s
 **Strategy:** Expand the commutator linearly. Apply the boundary lemma to annihilate the anomalous terms on the restricted subspace.
 
 For v1>0 and v2≠0, u=√(v1²−v2²)<v1. Repulsive g2 alone does not guarantee a speed larger than the bare vF; the g4 contribution also matters. Correct the physical corollary accordingly.
+
+
+## Constructive realization in Lean
+
+The construction evaluates the interaction formulas in the actual finite multispecies CAR Hilbert space, with orthonormal occupation kets for $(\nu,k)$, $-h<k\le h$. Products are compositions of complex linear endomorphisms. Normal ordering first acts on a list of sea quasiparticle letters, counts inversions, stably places creators before annihilators, and evaluates the signed word. Dropping contractions remains a prescription on syntax, rather than a multiplicative operation on evaluated operators.
+
+The bilinear evaluates to $c_a^\dagger c_b-\delta_{ab}s_aI$. Thus the sea-ordered nonzero current equals the usual truncated current, while the zero current is the relative charge. The quartic contraction formula in Chapter 17 is proved under the opposite-transfer constraints $a=b+m$, $c=d-m$, with all four labels in the band. Actual CAR cover every sea-occupation choice and repeated indices; in particular the repeated single-mode quartic vanishes. Summing the filtered transfers gives the weighted correction $Q_{M,\nu}$ and the ambient identity relating raw and chosen current intra-branch interactions, without scalar-CCR assumptions. This correction annihilates the **zero-charge sea**, not every charged sector ground. For $h>0$ and $M\ge h-1$, its weights simplify to the ambient identity $Q_{M,\nu}=2\hat P_\nu-\hat N_\nu$.
+
+The raw opposite-transfer inter-branch interaction factors exactly into hopping because distinct-species even currents commute. For $h>0$ and a positive mode, hopping kills an admissible sector ground ket. The unweighted pairing expression $(C_RC_L+A_RA_L)$ has nonzero ground action for $1\le m\le M$ under $2M+m+|N_\nu|\le h$ on both branches. The weighted pairing mode therefore has nonzero ground action when $v_2\ne0$. This distinguishes the two models within the same finite carrier. Both quadratic modes have actual Hilbert adjoints equal to themselves for real coefficients, with no budget margin required for those adjoint identities.
+
+For $|v_2|<v_1$, the scalar construction takes
+$$
+u=\sqrt{v_1^2-v_2^2},\qquad
+c=\sqrt{\frac{v_1+u}{2u}},\qquad s=\frac{v_2}{2uc}.
+$$
+It proves positivity of $u$ and of the constructed $c$ before division, and establishes the matching equations and $c^2-s^2=1$ for either sign of $v_2$, including zero. The exported existence theorem concludes $u>0$ and the matching equations; positivity of the constructed $c$ is established internally in its proof. It does not return a value of the stronger hyperbolic parameter package, which also requires $c>0$. Operator expansion assumes that package separately.
+
+For $v\in\mathcal B_{\vec N,K}$, $h>0$, $1\le m\le M$, and
+$$
+2M+K+|N_R|\le h,\qquad 2M+K+|N_L|\le h,
+$$
+the plus-sign creators and their actual adjoints satisfy
+$$
+u(\widetilde C_R\widetilde A_R+\widetilde C_L\widetilde A_L)v
+=H_{\mathrm{pair},m}v+2us^2m\,v,
+\qquad [\widetilde A_\nu,\widetilde C_\nu]v=m\,v.
+$$
+Expansion retains the exact ambient commutators until evaluating them on the permitted input. The two same-species commutators supply the constant, and $c^2-s^2=1$ gives the restricted CCR. Subtracting $2us^2mI$ recovers the pairing mode. These action identities retain boundary effects elsewhere; they establish neither a unitary implementer, a global finite CCR algebra automorphism, nor a dressed-vacuum or spectral diagonalization theorem. Earlier strategy paragraphs remain explanatory proposals alongside this realized construction.
