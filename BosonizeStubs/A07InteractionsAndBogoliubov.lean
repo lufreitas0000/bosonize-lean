@@ -272,7 +272,72 @@ lemma sea_normal_rho_nonzero (h : ℕ) (ν : σ) (m : ℤ) (hm : m ≠ 0) :
     Ch04.hopping, A05.creation, A05.annihilation]
 
 lemma sea_normal_rho_zero (h : ℕ) (ν : σ) :
-    seaNormalRho h ν 0 = A05.chargeObservable h ν := by sorry
+    seaNormalRho h ν 0 = A05.chargeObservable h ν := by
+  have hdiag : seaNormalRho h ν 0 =
+      ∑ k : Ch01.Band (2 * h), seaSubtractedNumber h ν k := by
+    unfold seaNormalRho
+    have hz (z : Ch01.Band (2 * h) × Ch01.Band (2 * h))
+        (hz : z ∈ A04.validPairs (2 * h) 0) : z.1 = z.2 := by
+      have he := (A04.mem_valid_pairs (2 * h) 0 z.1 z.2).mp hz
+      apply Subtype.ext
+      omega
+    apply Finset.sum_bij (fun z _ => z.1)
+    · intro z hz
+      exact Finset.mem_univ _
+    · intro z hZ w hw he
+      apply Prod.ext
+      · exact he
+      · exact (hz z hZ).symm.trans (he.trans (hz w hw))
+    · intro k hk
+      refine ⟨(k,k), ?_, rfl⟩
+      apply (A04.mem_valid_pairs (2 * h) 0 k k).mpr
+      simp
+    · intro z hZ
+      rw [hz z hZ]
+      simp only [seaNormalBilinear, seaSubtractedNumber, numberOp, ite_true]
+  rw [hdiag]
+  let : LinearOrder (A05.Mode σ h) := A05.speciesOrder h
+  let : DecidableEq (A05.Mode σ h) := fun a b => (A05.speciesOrder h).toDecidableEq a b
+  apply A02.end_ext_basis
+  intro S
+  have hmem (k : Ch01.Band (2 * h)) :
+      k ∈ Ch07.speciesConfiguration h S ν ↔ (ν,k) ∈ S := by
+    simp only [Ch07.speciesConfiguration, Finset.mem_image, Finset.mem_filter]
+    constructor
+    · rintro ⟨⟨η,l⟩, ⟨hS, hη⟩, hl⟩
+      dsimp at hη hl
+      subst η
+      subst l
+      exact hS
+    · intro hk
+      exact ⟨(ν,k), ⟨hk,rfl⟩,rfl⟩
+  have hcount : (∑ k : Ch01.Band (2 * h),
+      if (ν,k) ∈ S then (1 : ℂ) else 0) =
+      ((Ch07.speciesConfiguration h S ν).card : ℂ) := by
+    simp only [← hmem]
+    simp
+  have hsea : (∑ k : Ch01.Band (2 * h), seaIndicator h k) = (h : ℂ) := by
+    have hcard : (Ch05.seaConfiguration (2 * h)).card = h := by
+      by_cases hh : 0 < h
+      · exact Ch05.sea_card_even h hh
+      · have hh0 : h = 0 := by omega
+        subst h
+        let : IsEmpty (Ch01.Band (2 * 0)) := ⟨fun k => by
+          have hk := k.property
+          norm_num [Ch01.inBandPredicate] at hk
+          omega⟩
+        simp [Ch05.seaConfiguration]
+    simpa [seaIndicator, Ch05.seaConfiguration] using
+      congrArg (fun n : ℕ => (n : ℂ)) hcard
+  have hn (k : Ch01.Band (2 * h)) :
+      numberOp h ν k (A02.ket S) = (if (ν,k) ∈ S then (1 : ℂ) else 0) • A02.ket S := by
+    exact Ch04.number_ket (ν,k) S
+  simp only [LinearMap.sum_apply, seaSubtractedNumber, LinearMap.sub_apply,
+    LinearMap.smul_apply, Module.End.one_apply, hn,
+    A05.chargeObservable, A03.diagonal_ket, ← sub_smul, ← Finset.sum_smul]
+  rw [Finset.sum_sub_distrib, hcount, hsea]
+  simp only [Ch07.relativeCharge, Int.cast_sub, Int.cast_natCast]
+
 
 lemma quartic_sea_wick_identity (h : ℕ) (ν : σ) (m : ℤ)
     (z w : Ch01.Band (2 * h) × Ch01.Band (2 * h))
@@ -312,7 +377,380 @@ lemma quartic_sea_wick_zero_repeated (h : ℕ) (ν : σ)
 
 lemma species_raw_intra_eq_current_sub_correction (h M : ℕ) (ν : σ) :
     speciesRawIntra h M ν =
-      speciesCurrentIntra h M ν - seaWickCorrection h M ν := by sorry
+      speciesCurrentIntra h M ν - seaWickCorrection h M ν := by
+  classical
+  have hflip (m : ℤ) (f : (Ch01.Band (2*h) × Ch01.Band (2*h)) → A05.Operators σ h) :
+      (∑ z ∈ A04.validPairs (2*h) (-m), f z) =
+        ∑ z ∈ A04.validPairs (2*h) m, f (z.2,z.1) := by
+    apply Finset.sum_bij (fun z _ => (z.2,z.1))
+    · intro z hz
+      rw [A04.mem_valid_pairs] at hz ⊢
+      omega
+    · intro z hz w hw he
+      exact Prod.swap_injective he
+    · intro z hz
+      refine ⟨(z.2,z.1), ?_, rfl⟩
+      rw [A04.mem_valid_pairs] at hz ⊢
+      omega
+    · intro z hz
+      rfl
+  have hcon (m : ℤ) (z : Ch01.Band (2*h) × Ch01.Band (2*h))
+      (hz : z ∈ A04.validPairs (2*h) m) :
+      (∑ w ∈ A04.validPairs (2*h) (-m),
+        if w.2 = z.1 then quarticContraction h ν z.2 w.2 else 0) =
+        quarticContraction h ν z.2 z.1 := by
+    rw [Finset.sum_eq_single (z.2,z.1)]
+    · simp
+    · intro w hw he
+      have hne : w.2 ≠ z.1 := by
+        intro eq
+        apply he
+        apply Prod.ext
+        · apply Subtype.ext
+          change w.1.val = z.2.val
+          have h1 := (A04.mem_valid_pairs _ _ _ _).mp hz
+          have h2 := (A04.mem_valid_pairs _ _ _ _).mp hw
+          have h3 := congrArg Subtype.val eq
+          omega
+        · exact eq
+      simp only [hne, ite_false]
+    · intro hnot
+      have hf : (z.2,z.1) ∈ A04.validPairs (2*h) (-m) := by
+        rw [A04.mem_valid_pairs] at hz ⊢
+        omega
+      exact False.elim (hnot hf)
+  have hraw (m : ℤ) :
+      (∑ z ∈ A04.validPairs (2*h) m,
+        ∑ w ∈ A04.validPairs (2*h) (-m), quarticSeaWick h ν z.1 z.2 w.1 w.2) =
+      seaNormalRho h ν m * seaNormalRho h ν (-m) +
+        ∑ z ∈ A04.validPairs (2*h) m, quarticContraction h ν z.2 z.1 := by
+    calc
+      _ = ∑ z ∈ A04.validPairs (2*h) m,
+          ∑ w ∈ A04.validPairs (2*h) (-m),
+            (seaNormalBilinear h ν z.1 z.2 * seaNormalBilinear h ν w.1 w.2 +
+              if w.2 = z.1 then quarticContraction h ν z.2 w.2 else 0) := by
+        apply Finset.sum_congr rfl
+        intro z hz
+        apply Finset.sum_congr rfl
+        intro w hw
+        exact quartic_sea_wick_identity h ν m z w hz hw
+      _ = _ := by
+        simp_rw [Finset.sum_add_distrib]
+        simp_rw [← Finset.mul_sum]
+        rw [← Finset.sum_mul]
+        congr 1
+        apply Finset.sum_congr rfl
+        intro z hz
+        exact hcon m z hz
+  have hedge (m : ℤ) :
+      A02.commutator (A05.rho h ν (-m)) (A05.rho h ν m) =
+        ∑ z ∈ A04.validPairs (2*h) m, (numberOp h ν z.2 - numberOp h ν z.1) := by
+    let : LinearOrder (A05.Mode σ h) := A05.speciesOrder h
+    unfold A05.rho
+    rw [hflip]
+    have hbilin (s t : Finset (Ch01.Band (2*h) × Ch01.Band (2*h))) :
+        A02.commutator (∑ z ∈ s, Ch04.hopping (ν,z.2) (ν,z.1))
+          (∑ w ∈ t, Ch04.hopping (ν,w.1) (ν,w.2)) =
+        ∑ z ∈ s, ∑ w ∈ t,
+          A02.commutator (Ch04.hopping (ν,z.2) (ν,z.1)) (Ch04.hopping (ν,w.1) (ν,w.2)) := by
+      simp only [A02.commutator, Finset.sum_mul, Finset.mul_sum, Finset.sum_sub_distrib]
+      rw [Finset.sum_comm]
+    rw [hbilin]
+    apply Finset.sum_congr rfl
+    intro z hz
+    rw [Finset.sum_eq_single z]
+    · simp only [Ch04.bilinear_commutator, ite_true, one_smul]
+      rfl
+    · intro w hw he
+      have hf : z.1 ≠ w.1 := by
+        intro eq
+        apply he
+        apply Prod.ext
+        · exact eq.symm
+        · apply Subtype.ext
+          have h1 := (A04.mem_valid_pairs _ _ _ _).mp hz
+          have h2 := (A04.mem_valid_pairs _ _ _ _).mp hw
+          have h3 := congrArg Subtype.val eq
+          omega
+      have hs : z.2 ≠ w.2 := by
+        intro eq
+        apply he
+        apply Prod.ext
+        · apply Subtype.ext
+          have h1 := (A04.mem_valid_pairs _ _ _ _).mp hz
+          have h2 := (A04.mem_valid_pairs _ _ _ _).mp hw
+          have h3 := congrArg Subtype.val eq
+          omega
+        · exact eq.symm
+      simp only [Ch04.bilinear_commutator, Prod.mk.injEq, true_and, hf, hs,
+        ite_false, zero_smul, sub_self]
+    · intro hnot
+      exact False.elim (hnot hz)
+  have hdelta (a b : Ch01.Band (2*h)) (hab : b.val < a.val) :
+      (numberOp h ν b - numberOp h ν a) + quarticContraction h ν b a +
+        quarticContraction h ν a b =
+      (-2 : ℂ) • ((if a.val ≤ 0 then (1 : A05.Operators σ h) - numberOp h ν b else 0) +
+        (if 0 < b.val then numberOp h ν a else 0)) := by
+    by_cases ha : a.val ≤ 0 <;> by_cases hb : b.val ≤ 0
+    all_goals try { omega }
+    all_goals
+      simp only [quarticContraction, seaSubtractedNumber, seaIndicator, ha, hb,
+        show (0 < b.val) ↔ ¬ b.val ≤ 0 by omega, ite_true, ite_false,
+        not_true_eq_false, not_false_eq_true, one_smul, zero_smul, sub_zero, sub_self, zero_mul, mul_zero, one_mul]
+      module
+  have hcount (D : ℤ) (hD : 0 ≤ D) (X : A05.Operators σ h) :
+      (∑ n ∈ Finset.Icc 1 M, if (n : ℤ) ≤ D then X else 0) =
+        ((min (M : ℤ) D : ℤ) : ℂ) • X := by
+    have hf : (Finset.Icc 1 M).filter (fun n : ℕ => (n : ℤ) ≤ D) = Finset.Icc 1 (min M D.toNat) := by
+      ext n
+      simp only [Finset.mem_filter, Finset.mem_Icc, le_min_iff]
+      have hd := Int.toNat_of_nonneg hD
+      omega
+    rw [← Finset.sum_filter, hf, Finset.sum_const]
+    have hc : (Finset.Icc 1 (min M D.toNat)).card = min M D.toNat := by
+      simp
+    rw [hc, ← Nat.cast_smul_eq_nsmul ℂ]
+    change ((min M D.toNat : ℕ) : ℂ) • X = _
+    congr 1
+    have he : ((min M D.toNat : ℕ) : ℤ) = min (M : ℤ) D := by
+      rw [Nat.cast_min, Int.toNat_of_nonneg hD]
+    simpa only [Int.cast_natCast] using congrArg (fun x : ℤ => (x : ℂ)) he
+  have hholes (m : ℤ) (hm : 0 < m) (F : Ch01.Band (2*h) → A05.Operators σ h) :
+      (∑ z ∈ A04.validPairs (2*h) m, if z.1.val ≤ 0 then F z.2 else 0) =
+        ∑ k : Ch01.Band (2*h), if k.val ≤ -m then F k else 0 := by
+    have he : (∑ z ∈ (A04.validPairs (2*h) m).filter (fun z => z.1.val ≤ 0), F z.2) =
+        ∑ k ∈ Finset.univ.filter (fun k : Ch01.Band (2*h) => k.val ≤ -m), F k := by
+      apply Finset.sum_bij (fun z _ => z.2)
+      · intro z hz
+        simp only [Finset.mem_filter] at hz
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+        have ha := (A04.mem_valid_pairs _ _ _ _).mp hz.1
+        omega
+      · intro z hz w hw he
+        apply Prod.ext
+        · apply Subtype.ext
+          have hz' := (A04.mem_valid_pairs _ _ _ _).mp (Finset.mem_filter.mp hz).1
+          have hw' := (A04.mem_valid_pairs _ _ _ _).mp (Finset.mem_filter.mp hw).1
+          have hv := congrArg Subtype.val he
+          omega
+        · exact he
+      · intro k hk
+        have hk' := (Finset.mem_filter.mp hk).2
+        let a : Ch01.Band (2*h) := ⟨k.val + m, by
+          have hb := k.property
+          unfold Ch01.inBandPredicate at hb ⊢
+          omega⟩
+        refine ⟨(a,k), ?_, rfl⟩
+        simp only [Finset.mem_filter, A04.mem_valid_pairs]
+        dsimp [a]
+        constructor <;> omega
+      · intro z hz
+        rfl
+    simpa only [Finset.sum_filter] using he
+  have hparticles (m : ℤ) (hm : 0 < m) (F : Ch01.Band (2*h) → A05.Operators σ h) :
+      (∑ z ∈ A04.validPairs (2*h) m, if 0 < z.2.val then F z.1 else 0) =
+        ∑ k : Ch01.Band (2*h), if m < k.val then F k else 0 := by
+    have he : (∑ z ∈ (A04.validPairs (2*h) m).filter (fun z => 0 < z.2.val), F z.1) =
+        ∑ k ∈ Finset.univ.filter (fun k : Ch01.Band (2*h) => m < k.val), F k := by
+      apply Finset.sum_bij (fun z _ => z.1)
+      · intro z hz
+        simp only [Finset.mem_filter] at hz
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+        have ha := (A04.mem_valid_pairs _ _ _ _).mp hz.1
+        omega
+      · intro z hz w hw he
+        apply Prod.ext
+        · exact he
+        · apply Subtype.ext
+          have hz' := (A04.mem_valid_pairs _ _ _ _).mp (Finset.mem_filter.mp hz).1
+          have hw' := (A04.mem_valid_pairs _ _ _ _).mp (Finset.mem_filter.mp hw).1
+          have hv := congrArg Subtype.val he
+          omega
+      · intro k hk
+        have hk' := (Finset.mem_filter.mp hk).2
+        let b : Ch01.Band (2*h) := ⟨k.val - m, by
+          have hb := k.property
+          unfold Ch01.inBandPredicate at hb ⊢
+          omega⟩
+        refine ⟨(k,b), ?_, rfl⟩
+        simp only [Finset.mem_filter, A04.mem_valid_pairs]
+        dsimp [b]
+        constructor <;> omega
+      · intro z hz
+        rfl
+    simpa only [Finset.sum_filter] using he
+  let f (m : ℤ) : A05.Operators σ h :=
+    ∑ z ∈ A04.validPairs (2*h) m, ∑ w ∈ A04.validPairs (2*h) (-m),
+      quarticSeaWick h ν z.1 z.2 w.1 w.2
+  let D (n : ℕ) : A05.Operators σ h :=
+    (∑ k : Ch01.Band (2*h), if k.val ≤ -(n : ℤ) then (1 : A05.Operators σ h) - numberOp h ν k else 0) +
+    (∑ k : Ch01.Band (2*h), if (n : ℤ) < k.val then numberOp h ν k else 0)
+  have hpos (n : ℕ) (hn : 1 ≤ n) :
+      f (n : ℤ) + f (-(n : ℤ)) =
+        (2 : ℂ) • (A05.rho h ν (n : ℤ) * A05.rho h ν (-(n : ℤ))) - (2 : ℂ) • D n := by
+    have hnz : (n : ℤ) ≠ 0 := by omega
+    have hnpos : 0 < (n : ℤ) := by omega
+    calc
+      _ = A05.rho h ν (n : ℤ) * A05.rho h ν (-(n : ℤ)) +
+          A05.rho h ν (-(n : ℤ)) * A05.rho h ν (n : ℤ) +
+          ∑ z ∈ A04.validPairs (2*h) (n : ℤ),
+            (quarticContraction h ν z.2 z.1 + quarticContraction h ν z.1 z.2) := by
+        dsimp only [f]
+        rw [hraw, hraw, neg_neg, hflip]
+        rw [sea_normal_rho_nonzero h ν _ hnz, sea_normal_rho_nonzero h ν _ (neg_ne_zero.mpr hnz)]
+        rw [Finset.sum_add_distrib]
+        abel
+      _ = (2 : ℂ) • (A05.rho h ν (n : ℤ) * A05.rho h ν (-(n : ℤ))) +
+          ∑ z ∈ A04.validPairs (2*h) (n : ℤ),
+            ((numberOp h ν z.2 - numberOp h ν z.1) +
+              quarticContraction h ν z.2 z.1 + quarticContraction h ν z.1 z.2) := by
+        simp only [Finset.sum_add_distrib]
+        rw [← hedge]
+        simp only [A02.commutator]
+        module
+      _ = _ := by
+        have hs : (∑ z ∈ A04.validPairs (2*h) (n : ℤ),
+            ((numberOp h ν z.2 - numberOp h ν z.1) +
+              quarticContraction h ν z.2 z.1 + quarticContraction h ν z.1 z.2)) =
+            (-2 : ℂ) • D n := by
+          calc
+            _ = ∑ z ∈ A04.validPairs (2*h) (n : ℤ),
+              (-2 : ℂ) • ((if z.1.val ≤ 0 then (1 : A05.Operators σ h) - numberOp h ν z.2 else 0) +
+                (if 0 < z.2.val then numberOp h ν z.1 else 0)) := by
+              apply Finset.sum_congr rfl
+              intro z hz
+              apply hdelta
+              have hb := (A04.mem_valid_pairs _ _ _ _).mp hz
+              omega
+            _ = _ := by
+              rw [← Finset.smul_sum, Finset.sum_add_distrib, hholes _ hnpos (fun k => (1 : A05.Operators σ h) - numberOp h ν k), hparticles _ hnpos (fun k => numberOp h ν k)]
+        rw [hs]
+        module
+  have hzeroCon : (∑ z ∈ A04.validPairs (2*h) 0, quarticContraction h ν z.2 z.1) =
+      ∑ k : Ch01.Band (2*h), quarticContraction h ν k k := by
+    apply Finset.sum_bij (fun z _ => z.1)
+    · intro z hz
+      exact Finset.mem_univ _
+    · intro z hz w hw he
+      apply Prod.ext
+      · exact he
+      · apply Subtype.ext
+        have hz' := (A04.mem_valid_pairs _ _ _ _).mp hz
+        have hw' := (A04.mem_valid_pairs _ _ _ _).mp hw
+        have hh := congrArg Subtype.val he
+        omega
+    · intro k hk
+      refine ⟨(k,k), ?_, rfl⟩
+      rw [A04.mem_valid_pairs]
+      omega
+    · intro z hz
+      have he : z.2 = z.1 := by
+        apply Subtype.ext
+        have hb := (A04.mem_valid_pairs _ _ _ _).mp hz
+        omega
+      rw [he]
+  have hbaseweight (k : Ch01.Band (2*h)) : seaWickWeight h 0 k = 1 := by
+    by_cases hk : k.val ≤ 0
+    · simp [seaWickWeight, hk]
+    · simp [seaWickWeight, hk, min_eq_left (by omega : (0 : ℤ) ≤ k.val-1)]
+  have hbaseterm (k : Ch01.Band (2*h)) : seaWickTerm h 0 ν k =
+      if k.val ≤ 0 then (1 : A05.Operators σ h) - numberOp h ν k else numberOp h ν k := by
+    unfold seaWickTerm
+    simp only [hbaseweight, Int.cast_one, one_smul]
+  have hzterm (k : Ch01.Band (2*h)) : quarticContraction h ν k k = -seaWickTerm h 0 ν k := by
+    by_cases hk : k.val ≤ 0
+    all_goals
+      simp only [quarticContraction, seaSubtractedNumber, seaIndicator,
+        seaWickTerm, hbaseweight, hk, ite_true, ite_false, Int.cast_one,
+        zero_mul, mul_zero,
+        one_smul, zero_smul, sub_self, sub_zero]
+      module
+  have hzraw : f 0 = A05.chargeObservable h ν * A05.chargeObservable h ν - seaWickCorrection h 0 ν := by
+    dsimp only [f]
+    rw [hraw, neg_zero, sea_normal_rho_zero, hzeroCon]
+    simp_rw [hzterm]
+    rw [Finset.sum_neg_distrib]
+    rfl
+  have hterm (k : Ch01.Band (2*h)) :
+      seaWickTerm h M ν k = seaWickTerm h 0 ν k + (2 : ℂ) •
+        (∑ n ∈ Finset.Icc 1 M,
+          ((if k.val ≤ -(n : ℤ) then (1 : A05.Operators σ h) - numberOp h ν k else 0) +
+            (if (n : ℤ) < k.val then numberOp h ν k else 0))) := by
+    by_cases hk : k.val ≤ 0
+    · have hs : (∑ n ∈ Finset.Icc 1 M,
+          ((if k.val ≤ -(n : ℤ) then (1 : A05.Operators σ h) - numberOp h ν k else 0) +
+            (if (n : ℤ) < k.val then numberOp h ν k else 0))) =
+          ∑ n ∈ Finset.Icc 1 M, if (n : ℤ) ≤ -k.val then (1 : A05.Operators σ h) - numberOp h ν k else 0 := by
+        apply Finset.sum_congr rfl
+        intro n hn
+        have hnp := (Finset.mem_Icc.mp hn).1
+        have he : (k.val ≤ -(n : ℤ)) ↔ (n : ℤ) ≤ -k.val := by omega
+        have hf : ¬ (n : ℤ) < k.val := by omega
+        simp only [he, hf, ite_false, add_zero]
+      rw [hs, hcount _ (by omega), hbaseterm]
+      simp only [seaWickTerm, seaWickWeight, hk, ite_true, Int.cast_one,
+        Int.cast_add, Int.cast_mul, Int.cast_ofNat]
+      module
+    · have hs : (∑ n ∈ Finset.Icc 1 M,
+          ((if k.val ≤ -(n : ℤ) then (1 : A05.Operators σ h) - numberOp h ν k else 0) +
+            (if (n : ℤ) < k.val then numberOp h ν k else 0))) =
+          ∑ n ∈ Finset.Icc 1 M, if (n : ℤ) ≤ k.val-1 then numberOp h ν k else 0 := by
+        apply Finset.sum_congr rfl
+        intro n hn
+        have hnp := (Finset.mem_Icc.mp hn).1
+        have he : ((n : ℤ) < k.val) ↔ (n : ℤ) ≤ k.val-1 := by omega
+        have hf : ¬ k.val ≤ -(n : ℤ) := by omega
+        simp only [he, hf, ite_false, zero_add]
+      rw [hs, hcount _ (by omega), hbaseterm]
+      simp only [seaWickTerm, seaWickWeight, hk, ite_false, Int.cast_one,
+        Int.cast_add, Int.cast_mul, Int.cast_ofNat]
+      module
+  have hQ : seaWickCorrection h M ν = seaWickCorrection h 0 ν +
+      (2 : ℂ) • ∑ n ∈ Finset.Icc 1 M, D n := by
+    unfold seaWickCorrection
+    simp_rw [hterm]
+    rw [Finset.sum_add_distrib, ← Finset.smul_sum, Finset.sum_comm]
+    congr 1
+    congr 1
+    apply Finset.sum_congr rfl
+    intro n hn
+    rw [Finset.sum_add_distrib]
+  have hsplit (N : ℕ) :
+      (∑ m ∈ Finset.Icc (-(N : ℤ)) (N : ℤ), f m) =
+        f 0 + ∑ m ∈ Finset.Icc 1 N, (f (m : ℤ) + f (-(m : ℤ))) := by
+    induction N with
+    | zero => simp
+    | succ n ih =>
+      have hi : Finset.Icc (-((n+1 : ℕ) : ℤ)) ((n+1 : ℕ) : ℤ) =
+          insert (-((n+1 : ℕ) : ℤ)) (insert ((n+1 : ℕ) : ℤ) (Finset.Icc (-(n : ℤ)) (n : ℤ))) := by
+        ext x
+        simp only [Finset.mem_Icc, Finset.mem_insert, Nat.cast_add, Nat.cast_one]
+        omega
+      have hn : Finset.Icc 1 (n+1) = insert (n+1) (Finset.Icc 1 n) := by
+        ext x
+        simp only [Finset.mem_Icc, Finset.mem_insert]
+        omega
+      have hp : ((n+1 : ℕ) : ℤ) ∉ Finset.Icc (-(n : ℤ)) (n : ℤ) := by
+        simp only [Finset.mem_Icc, Nat.cast_add, Nat.cast_one]
+        omega
+      have hm : -((n+1 : ℕ) : ℤ) ∉ insert ((n+1 : ℕ) : ℤ) (Finset.Icc (-(n : ℤ)) (n : ℤ)) := by
+        simp only [Finset.mem_Icc, Finset.mem_insert, Nat.cast_add, Nat.cast_one]
+        omega
+      have hnp : n+1 ∉ Finset.Icc 1 n := by simp
+      rw [hi, hn, Finset.sum_insert hm, Finset.sum_insert hp, Finset.sum_insert hnp, ih]
+      abel
+  change (∑ m ∈ Finset.Icc (-(M : ℤ)) (M : ℤ), f m) = _
+  rw [hsplit, hzraw]
+  have hpairs : (∑ n ∈ Finset.Icc 1 M, (f (n : ℤ) + f (-(n : ℤ)))) =
+      (2 : ℂ) • (∑ n ∈ Finset.Icc 1 M,
+        A05.rho h ν (n : ℤ) * A05.rho h ν (-(n : ℤ))) - (2 : ℂ) • ∑ n ∈ Finset.Icc 1 M, D n := by
+    rw [Finset.smul_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro n hn
+    exact hpos n (Finset.mem_Icc.mp hn).1
+  rw [hpairs, hQ]
+  unfold speciesCurrentIntra
+  abel
 
 theorem raw_intra_eq_current_sub_correction (h M : ℕ) (g4 : ℝ)
     (branches : A06.Branches σ) :
@@ -327,12 +765,73 @@ theorem raw_intra_eq_current_sub_correction (h M : ℕ) (g4 : ℝ)
   module
 
 lemma sea_wick_correction_ground_zero (h M : ℕ) (hh : 0 < h) (ν : σ) :
-    seaWickCorrection h M ν (A05.groundKet h (fun _ : σ => 0)) = 0 := by sorry
+    seaWickCorrection h M ν (A05.groundKet h (fun _ : σ => 0)) = 0 := by
+  let : LinearOrder (A05.Mode σ h) := A05.speciesOrder h
+  let : DecidableEq (A05.Mode σ h) := fun a b => (A05.speciesOrder h).toDecidableEq a b
+  have _ := hh
+  have hmem (k : Ch01.Band (2 * h)) :
+      (ν, k) ∈ A05.groundConfiguration h (fun _ : σ => 0) ↔ k.val ≤ 0 := by
+    simp [A05.groundConfiguration, A05.jointConfiguration, Ch07.groundConfiguration]
+  unfold seaWickCorrection
+  rw [LinearMap.sum_apply]
+  apply Finset.sum_eq_zero
+  intro k hk
+  have hn : numberOp h ν k (A05.groundKet h (fun _ : σ => 0)) =
+      (if k.val ≤ 0 then (1 : ℂ) else 0) • A05.groundKet h (fun _ : σ => 0) := by
+    change Ch04.number (ν, k) (A02.ket _) = _
+    simp only [Ch04.number_ket, hmem, A05.groundKet]
+  by_cases hc : k.val ≤ 0
+  · simp only [seaWickTerm, hc, ite_true, LinearMap.smul_apply,
+      LinearMap.sub_apply, Module.End.one_apply, hn, one_smul, sub_self, smul_zero]
+  · simp only [seaWickTerm, hc, ite_false, LinearMap.smul_apply, hn, zero_smul, smul_zero]
+
 
 lemma sea_wick_correction_full_band (h M : ℕ) (hh : 0 < h)
     (hM : h - 1 ≤ M) (ν : σ) :
     seaWickCorrection h M ν =
-      (2 : ℂ) • computationalMomentum h ν - A05.chargeObservable h ν := by sorry
+      (2 : ℂ) • computationalMomentum h ν - A05.chargeObservable h ν := by
+  have hdiag : seaNormalRho h ν 0 =
+      ∑ k : Ch01.Band (2 * h), seaSubtractedNumber h ν k := by
+    unfold seaNormalRho
+    have hz (z : Ch01.Band (2 * h) × Ch01.Band (2 * h))
+        (hz : z ∈ A04.validPairs (2 * h) 0) : z.1 = z.2 := by
+      have he := (A04.mem_valid_pairs (2 * h) 0 z.1 z.2).mp hz
+      apply Subtype.ext
+      omega
+    apply Finset.sum_bij (fun z _ => z.1)
+    · intro z hz
+      exact Finset.mem_univ _
+    · intro z hZ w hw he
+      apply Prod.ext
+      · exact he
+      · exact (hz z hZ).symm.trans (he.trans (hz w hw))
+    · intro k hk
+      refine ⟨(k,k), ?_, rfl⟩
+      apply (A04.mem_valid_pairs (2 * h) 0 k k).mpr
+      simp
+    · intro z hZ
+      rw [hz z hZ]
+      simp only [seaNormalBilinear, seaSubtractedNumber, numberOp, ite_true]
+  rw [← sea_normal_rho_zero, hdiag]
+  unfold seaWickCorrection computationalMomentum
+  rw [Finset.smul_sum, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro k hk
+  have hb := k.property
+  simp only [Ch01.inBandPredicate, Nat.cast_mul, Nat.cast_ofNat] at hb
+  have hMm : (h : ℤ) - 1 ≤ (M : ℤ) := by omega
+  by_cases hc : k.val ≤ 0
+  · have hmin : min (M : ℤ) (-k.val) = -k.val := min_eq_right (by omega)
+    simp only [seaWickTerm, seaWickWeight, seaSubtractedNumber, seaIndicator,
+      hc, ite_true, hmin, one_smul, Int.cast_add, Int.cast_mul, Int.cast_neg,
+      Int.cast_one, Int.cast_ofNat]
+    module
+  · have hmin : min (M : ℤ) (k.val - 1) = k.val - 1 := min_eq_right (by omega)
+    simp only [seaWickTerm, seaWickWeight, seaSubtractedNumber, seaIndicator,
+      hc, ite_false, hmin, zero_smul, sub_zero, Int.cast_add, Int.cast_mul,
+      Int.cast_sub, Int.cast_one, Int.cast_ofNat]
+    module
+
 
 theorem raw_inter_eq_hopping (h M : ℕ) (g2 : ℝ)
     (branches : A06.Branches σ) :

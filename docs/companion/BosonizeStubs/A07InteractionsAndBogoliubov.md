@@ -57,3 +57,8 @@ Phase A finish evidence: `note/webllm/ch17/phaseA-ch17_cycle_a_fb57086e.md`.
 ## Partial Phase B checkpoint
 
 Thirteen proof bodies are implemented; eleven freshly audited theorems use only standard axioms. The two interaction wrappers still depend on unfinished helpers. Five A07 obligations remain; A10/CH17 proof work and Phase C have not started. The combined compiler exits 0 with only five original placeholder warnings. Frozen interfaces and all Core bytes pass strict guards. Candidate source SHA-256: `f229dcf0a706dc337d84b13c0cdae278894f9f43d523e287929d9f1713a70915`. Full status, provenance, remaining goals and resumption instructions: `note/webllm/ch17/phaseB-checkpoint-a07.md`. Work paused when the live five-hour allowance reached 9% remaining, as required by the formalizer usage policy. This checkpoint is not runner acceptance.
+
+
+## 2026-10-14 Phase B continuation checkpoint
+
+15 standard-axiom theorem proofs; 1 original stubs remain; 3 contracts still depend on sorryAx. Source SHA-256: `d38c96716a65de6156d56ea1bfc87b11170ecbac5c601cd24574ed8c0c2d6a44`. Fresh combined compiler exits 0 with only two placeholders across all three modules; A10 separately passes warning-as-error for all declarations. Definitions/interfaces/Core unchanged. This is not runner acceptance. Exact remaining goals, evidence and resumption sequence: `note/webllm/ch17/phaseB-checkpoint-2026-10-14.md`. Phase C remains authorized but unstarted.

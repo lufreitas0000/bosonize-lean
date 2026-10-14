@@ -266,3 +266,8 @@ CH17: **A_complete**. 37 contracts; 3 pending proof modules. Current machine rec
 ### CH17 Phase B partial checkpoint
 
 A07 has 13 implemented bodies, 11 standard-axiom-only theorem proofs, 2 wrappers awaiting helper proofs, and 5 original stubs. A10 (11) and CH17 (8) are unstarted. Definitions/interfaces/Core remain frozen. Resume the saved `codex/ch17-phase-b` worktree after a live allowance check; see `note/webllm/ch17/phaseB-checkpoint-a07.md`. No Phase B batch accepted and no promotion.
+
+
+### 2026-10-14 CH17 B continuation checkpoint
+
+35/37 bodies implemented, 30 standard-axiom theorem proofs. A07 generalquartic and CH17 sharpSugawara remain; A10 all11 complete. FullBacceptance/Cpromotion notdone. Frozenlocks/Core preserved. Resume savedcodex/ch17-phase-b branch afterlivequota check, using note/webllm/ch17/phaseB-checkpoint-2026-10-14.md.

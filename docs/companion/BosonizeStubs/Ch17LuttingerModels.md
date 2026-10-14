@@ -52,3 +52,8 @@ Phase A integrated after user review. Theorems remain unproved.
 
 
 Phase A finish evidence: `note/webllm/ch17/phaseA-ch17_cycle_a_fb57086e.md`.
+
+
+## 2026-10-14 Phase B continuation checkpoint
+
+4 standard-axiom theorem proofs; 1 original stubs remain; 4 contracts still depend on sorryAx. Source SHA-256: `600afba3fa26a451e2d4ce98ee3e9ecb1d76b4f695a0b93a5bbc50b8076ba48c`. Fresh combined compiler exits 0 with only two placeholders across all three modules; A10 separately passes warning-as-error for all declarations. Definitions/interfaces/Core unchanged. This is not runner acceptance. Exact remaining goals, evidence and resumption sequence: `note/webllm/ch17/phaseB-checkpoint-2026-10-14.md`. Phase C remains authorized but unstarted.

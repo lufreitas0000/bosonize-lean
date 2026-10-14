@@ -138,3 +138,12 @@ The first power-intertwining scratch proof encountered the known stored coordina
 | 2026-10-13 | CH16 error eigenvector | Unrestricted CCR would incorrectly ignore finite edges and the right-suffix carrier. | Apply joint CCR on ground budget 0, use ground lowering and cross-species commutation, then isolate the finite mode and weight difference. | Genuine nonzero witnesses and all 19 proofs accepted; Phase C complete. |
 
 | 2026-10-13 | CH17 A07 Phase B, sea-Wick and browser drafts | Browser proofs lacked compiler validation; repeated quartic proof needed noncommutative CAR square/idempotent APIs rather than scalar automation. Five-hour allowance crossed the 10% remaining guard before the general contraction/distance-counting cluster. | Verified four Claude bodies plus seven local independent proofs with standard axioms; two wrappers compile with unfinished dependencies. Preserve exact frozen contracts and resumable isolated checkpoint; stop new proof search, then resume the five remaining sea-Wick obligations before any runner acceptance. |
+
+
+## CH17 continuation discoveries — 2026-10-14
+
+| Date | Module/Context | Obstruction | Pivot/Resolution | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| 2026-10-14 | A07 general quartic ordering | Generic eq_comm rewrote ambient operator equalities and exhausted heartbeat budget; one of16sea cases remains an annihilator-order relation. | Specialized band predicate symmetry and additive normalization close15cases; save exact finalCARgoal and require default resource validation. | Unproved, original stub preserved |
+| 2026-10-14 | CH17 concrete Luttinger witness | Specialized Fin2/h8 Fock instance reduction exhausted elaboration resources. | Theorem-local genericcarrier helper keeps instances opaque and specializes only at the end; exact two-lowering extraction leaves nonzero mode-one action. | Compiler/axiom verified |
+| 2026-10-14 | CH17 sharp Sugawara bridge | Existing Core margin2K+absN≤h does not follow from frozenK+absN<h. | Investigate global finite positive-current identity via full sea-Wick antisymmetry; numerical finite checks are sanity evidence only. | Unproved, frozen statement retained |
