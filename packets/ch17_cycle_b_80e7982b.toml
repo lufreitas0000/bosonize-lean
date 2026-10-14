@@ -1,0 +1,13 @@
+# Automatically prepared start command; scope approved by user finish command.
+version = 1
+id = "ch17_cycle_b_80e7982b"
+phase = "B"
+repo = ".."
+task = "CH17, Phase B. Scope: Finite interaction models, transfer versus pairing conventions, sea-Wick corrections and explicit zero modes. Separate formal perturbative claims from exact identities.\nSources are proposals, not guaranteed truths. Do not invent verification evidence or silently weaken statements.\nProve every placeholder in every requested complete Lean file. Preserve all headers, definitions, imports and context. No new top-level helpers, axioms, sorry/admit/sorryAx/native_decide. Local have/let proofs are allowed. Return the exact JSON envelope from the packet. Report an interface obstruction instead of changing a frozen contract. Every reachable dependency is freshly compiled and every declaration audited; human proof review follows acceptance."
+targets = ["BosonizeStubs/A10DiscreteSchriefferWolff.lean"]
+lean_proofs = ["BosonizeStubs/A10DiscreteSchriefferWolff.lean"]
+context = ["notes/md/ch17_LL_Models.md", "notes/appendices/a07_interactions_and_bogoliubov.md", "notes/appendices/a10_discrete_rg_and_schrieffer_wolff.md", "docs/webllm/generated/ch17_cycle_b_80e7982b_core_api.md", "BosonizeStubs/A07InteractionsAndBogoliubov.lean", "scripts/webllm/verify_phase_b.py", "docs/companion/BosonizeStubs/A10DiscreteSchriefferWolff.md"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/A10DiscreteSchriefferWolff.lean"]]
+timeout = 900
+max_packet_bytes = 200000
