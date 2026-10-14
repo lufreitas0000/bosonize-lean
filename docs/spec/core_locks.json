@@ -23,5 +23,7 @@
   "Bosonize/Core/A05FiniteExponentials.lean": "57d36818adb50f3f981c14191e786efce2d9d1eed872313110f9dd00a392aee5",
   "Bosonize/Core/Ch14Mandelstam.lean": "0d3feed562023e5d8a20027021014cc56512d636b58848fa7a8122b61cc320fc",
   "Bosonize/Core/A06ChiralFields.lean": "77c579ff06238d2801e9861fdf65c5c1efc66fc31d0161efd18a6a386d2fa768",
-  "Bosonize/Core/Ch15DualFields.lean": "30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85"
+  "Bosonize/Core/Ch15DualFields.lean": "30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85",
+  "Bosonize/Core/A07FiniteNormalOrdering.lean": "1056266f85e56868e20ef4769b8a58cfe88533845bd97db91440d6161d500996",
+  "Bosonize/Core/Ch16FieldHamiltonian.lean": "54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787"
 }

@@ -51,6 +51,6 @@ CH15: **C_complete**. 23 contracts; 0 pending proof modules. Current machine rec
 <!-- lean-cycle CH16 -->
 ## Automated CH16 checkpoint
 
-CH16: **B_complete**. 19 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch16.json`.
+CH16: **C_complete**. 19 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch16.json`.
 
 <!-- /lean-cycle CH16 -->

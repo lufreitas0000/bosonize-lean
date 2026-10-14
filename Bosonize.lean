@@ -1,3 +1,5 @@
+import Bosonize.Core.A07FiniteNormalOrdering
+import Bosonize.Core.Ch16FieldHamiltonian
 import Bosonize.Core.A06ChiralFields
 import Bosonize.Core.Ch15DualFields
 import Bosonize.Core.Ch01LatticeBand

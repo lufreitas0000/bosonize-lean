@@ -2,17 +2,91 @@
   "chapter": 16,
   "modules": [
     {
-      "path": "BosonizeStubs/A07FiniteNormalOrdering.lean"
+      "path": "Bosonize/Core/A07FiniteNormalOrdering.lean"
     },
     {
-      "path": "BosonizeStubs/Ch16FieldHamiltonian.lean"
+      "path": "Bosonize/Core/Ch16FieldHamiltonian.lean"
     }
   ],
-  "phase": "B_complete",
+  "phase": "C_complete",
+  "migration": [
+    {
+      "from": "BosonizeStubs/A07FiniteNormalOrdering.lean",
+      "to": "Bosonize/Core/A07FiniteNormalOrdering.lean",
+      "source_sha256": "1056266f85e56868e20ef4769b8a58cfe88533845bd97db91440d6161d500996",
+      "old_imports": [
+        "import Bosonize"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.A06ChiralFields",
+        "import Bosonize.Core.Ch15DualFields",
+        "import Bosonize.Core.Ch01LatticeBand",
+        "import Bosonize.Core.Ch02UmbralCalculus",
+        "import Bosonize.Core.A01FourierCharacters",
+        "import Bosonize.Core.Ch03Fourier",
+        "import Bosonize.Core.A02CARHilbert",
+        "import Bosonize.Core.Ch04CARFock",
+        "import Bosonize.Core.Ch05Fermions",
+        "import Bosonize.Core.Ch06LocalNet",
+        "import Bosonize.Core.Ch06Ext",
+        "import Bosonize.Core.A03EnergyBudgets",
+        "import Bosonize.Core.Ch07VacuumBudget",
+        "import Bosonize.Core.Ch08Boson",
+        "import Bosonize.Core.A05MultiSpecies",
+        "import Bosonize.Core.Ch13KleinFactors",
+        "import Bosonize.Core.A05FiniteExponentials",
+        "import Bosonize.Core.Ch14Mandelstam",
+        "import Bosonize.Core.A04DensityKinematics",
+        "import Bosonize.Core.Ch09DensityModes",
+        "import Bosonize.Core.A04CurrentMargins",
+        "import Bosonize.Core.Ch10Heisenberg",
+        "import Bosonize.Core.A04PartitionCombinatorics",
+        "import Bosonize.Core.Ch11HaldaneCompleteness",
+        "import Bosonize.Core.Ch12Sugawara"
+      ]
+    },
+    {
+      "from": "BosonizeStubs/Ch16FieldHamiltonian.lean",
+      "to": "Bosonize/Core/Ch16FieldHamiltonian.lean",
+      "source_sha256": "54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787",
+      "old_imports": [
+        "import Bosonize",
+        "import BosonizeStubs.A07FiniteNormalOrdering"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.A06ChiralFields",
+        "import Bosonize.Core.Ch15DualFields",
+        "import Bosonize.Core.Ch01LatticeBand",
+        "import Bosonize.Core.Ch02UmbralCalculus",
+        "import Bosonize.Core.A01FourierCharacters",
+        "import Bosonize.Core.Ch03Fourier",
+        "import Bosonize.Core.A02CARHilbert",
+        "import Bosonize.Core.Ch04CARFock",
+        "import Bosonize.Core.Ch05Fermions",
+        "import Bosonize.Core.Ch06LocalNet",
+        "import Bosonize.Core.Ch06Ext",
+        "import Bosonize.Core.A03EnergyBudgets",
+        "import Bosonize.Core.Ch07VacuumBudget",
+        "import Bosonize.Core.Ch08Boson",
+        "import Bosonize.Core.A05MultiSpecies",
+        "import Bosonize.Core.Ch13KleinFactors",
+        "import Bosonize.Core.A05FiniteExponentials",
+        "import Bosonize.Core.Ch14Mandelstam",
+        "import Bosonize.Core.A04DensityKinematics",
+        "import Bosonize.Core.Ch09DensityModes",
+        "import Bosonize.Core.A04CurrentMargins",
+        "import Bosonize.Core.Ch10Heisenberg",
+        "import Bosonize.Core.A04PartitionCombinatorics",
+        "import Bosonize.Core.Ch11HaldaneCompleteness",
+        "import Bosonize.Core.Ch12Sugawara",
+        "import Bosonize.Core.A07FiniteNormalOrdering"
+      ]
+    }
+  ],
   "pending_modules": [],
   "sources": {
-    "BosonizeStubs/A07FiniteNormalOrdering.lean": "0add9f369175f79e96bda84c3ce4580aa4a32f22de7e9836d203246aa5d3be20",
-    "BosonizeStubs/Ch16FieldHamiltonian.lean": "42d8e962071d62d74b444951e37e9e5998e59e92183383260f5024193585fe71"
+    "Bosonize/Core/A07FiniteNormalOrdering.lean": "1056266f85e56868e20ef4769b8a58cfe88533845bd97db91440d6161d500996",
+    "Bosonize/Core/Ch16FieldHamiltonian.lean": "54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787"
   },
   "theorem_contracts": 19
 }

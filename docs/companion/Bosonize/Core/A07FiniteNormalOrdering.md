@@ -54,7 +54,7 @@ sentences describe earlier snapshots and are superseded by the verified Phase B
 support status above. Its proposal language must not be read as current compiler
 evidence. Final Phase C acceptance remains pending.
 
-# BosonizeStubs/A07FiniteNormalOrdering.lean
+# Bosonize/Core/A07FiniteNormalOrdering.lean
 
 **Finite carrier audit.** The `A07.Letter` label has `(branch, m, creator)` and `m ∈ {1,…,M}` by construction. `signedMode` yields `+m` for a creator, `-m` for an annihilator. `gradientCoefficient` is obtained by *expanding the existing A06 forward difference*, not by introducing a spectral derivative. The value of the square is the linear evaluation of the coefficient function on **ordered pairs**, so contractions are not hidden in an inconsistent post-evaluation rewrite. Verify `normal_pair_contraction` by cases on the two creator flags. For the same species, compare the paired mode indices and apply `A06.joint_signed_current_commutator` on the actual input subspace. Across species, use `A05.rho_cross_commute`.
 
@@ -133,3 +133,6 @@ reference prefixes are preserved, declaration mappings and predicted promoted
 hashes are checked, the mathematics matches the proved contracts, and scope
 limitations are explicit. No required findings remain. This review precedes the
 runner's promoted compiler/axiom/CI acceptance and does not replace those gates.
+
+
+Phase C finish evidence: `note/webllm/ch16/phaseC-ch16_cycle_c_004f44cb.md`.
