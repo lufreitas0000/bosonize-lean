@@ -52,3 +52,6 @@ Phase A integrated after user review. Theorems remain unproved.
 
 
 Phase A finish evidence: `note/webllm/ch17/phaseA-ch17_cycle_a_fb57086e.md`.
+
+
+Phase B finish evidence: `note/webllm/ch17/phaseB-ch17_cycle_b_e8f6ec96.md`.
