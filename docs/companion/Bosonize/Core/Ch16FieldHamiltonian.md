@@ -1,14 +1,14 @@
-# Ch16FieldHamiltonian: Phase B complete; Phase C preparation
+# Ch16FieldHamiltonian: Phase C complete and frozen
 
-The accepted Phase B batch proves all thirteen CH16 contracts. The fresh
-combined verifier passed all 48 A07/CH16 declarations with no target warnings,
-placeholders or recovery axioms, and only `propext`, `Classical.choice` and
-`Quot.sound`. This batch was accepted at `3af7420`. Phase C promotion, source hash recording,
-independent pedagogical review and final Core validation remain pending at
-this notebook's preparation time. Those gates must be recorded
-from actual results before a completion claim.
+All 13 proof contracts and 12 data declarations are complete, promoted and frozen.
+Phase A acceptance `b56b47c`, support Phase B `46cab18`, chapter Phase B
+`3af7420`, and Phase C `5fbb9bf` passed the existing runner and were pushed.
+Independent proof, promotion and pedagogical reviews passed. Fresh final checks
+and preservation evidence are recorded in
+[Phase C validation](../../../../note/ch16_phase_c_validation_2026-10-13.md).
+Current complete-source SHA-256: `54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787`.
 
-Future source: [Core CH16](../../../../Bosonize/Core/Ch16FieldHamiltonian.lean).
+Promoted source: [Core CH16](../../../../Bosonize/Core/Ch16FieldHamiltonian.lean).
 Pedagogical mapping: [Chapter 16 constructive realization](../../../../notes/md/ch16_field_Hamiltonian.md#constructive-realization-in-lean).
 A07's finite normal-ordering symbols supply the field construction; this module
 has the exact 12 data declarations and thirteen proof contracts listed below.
@@ -48,19 +48,18 @@ products of reference-mode creators, the full kernel classification, the sine
 formula, dispersion positivity, analytic/Taylor estimates and RG conclusions
 remain outside the proved contract scope.
 
-## Phase C evidence to complete
+## Completed Phase C evidence
 
 The candidate lecture preserves the entire current reference note as an exact
 prefix and appends the constructive explanation; it does not replace historical
 proof proposals. Its source and companion links use the planned Core locations.
 The companion links here use the future `docs/companion/Bosonize/Core/` depth.
-Independent review must verify preservation, hypotheses, signs, normalization,
+Independent review verified preservation, hypotheses, signs, normalization,
 status and the scope distinction for arbitrary reference-mode words.
 
-Record actual accepted Phase B and promotion hashes, import migration and scoped
-lock deltas, post-promotion compiler/axiom output, reviewer identity/verdict,
-final CI and runner completion before replacing these pending status labels.
-No proposed import or frozen-interface change is silently accepted by this prose.
+The final validation records accepted Phase B/promotion hashes, exact import
+and scoped lock deltas, promoted compiler/axiom output, reviewers, CI and workflow completion.
+Only the independently reviewed import/path migration changed the frozen interfaces.
 
 ## Historical Phase A and quota checkpoint record
 
@@ -108,12 +107,12 @@ source bytes, definitions, theorem headers or proof bodies change. Only the two
 interface records migrate, with import/context hashes updated; all 25 prior Core
 complete-source hashes and unrelated interface records stay unchanged.
 
-Predicted promoted source SHA-256, checked after actual promotion: `54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787`.
+Actual promoted source SHA-256, verified against the complete-source lock: `54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787`.
 The initial companion-link review found one old three-level checkpoint link;
 it is corrected to the four-level promoted path. The unsupported numerical
 history phrase was removed, and mathematical delimiters match the existing
-Markdown conventions. Final independent pedagogy review and actual promoted
-compilation/axiom/CI/runner evidence follow before declaring Phase C complete.
+Markdown conventions. Final independent pedagogy review and promoted compilation/axiom/CI/runner
+evidence all passed; actual outputs are saved in the final validation record.
 
 
 ## Browser proof disposition and local verification
@@ -147,3 +146,6 @@ runner's promoted compiler/axiom/CI acceptance and does not replace those gates.
 
 
 Phase C finish evidence: `note/webllm/ch16/phaseC-ch16_cycle_c_004f44cb.md`.
+
+
+Final Phase C completion and reference-preservation record: [validation](../../../../note/ch16_phase_c_validation_2026-10-13.md).

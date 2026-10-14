@@ -41,7 +41,8 @@ Current board snapshot:
 | CH12/A04 — Sugawara energy equivalence | Done | C complete; frozen | 26 complete proofs/5 data declarations, interface `f631d5b`, proofs `3019689`; fresh standard-axiom audits, warning-free builds and independent lecture review. Core now has 703 proved statements in nineteen modules. [Companion](docs/companion/Bosonize/Core/Ch12Sugawara.md). | Next: CH13 with relevant A05 typed Klein/sector support, preserving species twists and exact source/target budgets. |
 | CH13/A05 — Joint species and Klein maps | Done | C complete; frozen | 53 complete theorem proofs,42 data constants; fresh standard-axiom audits, warning-free CI and independently reviewed lectures;21 Core modules/756 proved statements. [Review](note/ch13_phase_a_review_2026-10-11.md). | Next CH14/A05 conditional field support; preserve explicit twists, source/target budgets and residuals. |
 | CH14/A05 — Conditional field criterion and finite exponentials | Done | C complete; frozen | 37 proofs and 20 data declarations; actual phase nilpotency, typed adjoints, holonomy, full ground expansion and cyclic comparison criterion. Independent lecture review passes. | Keep unconditional physical field–vertex comparison outside the verified claim. |
-| CH15/A06 — Dual fields and lattice kernels | Done | C complete; frozen | 23 proved contracts and 15 data declarations; exact source/import migration, independent pedagogical review, fresh standard-axiom audits and CI pass. All 23 prior Core sources remain unchanged; Core now has 25 modules and 816 statements. [Validation](note/ch15_phase_c_validation_2026-10-13.md). | Reuse the frozen finite kernels and qualified actions; CH16 has a separately authorized, independently reviewed Phase A checkpoint; its proof/promotion gates remain incomplete. |
+| CH15/A06 — Dual fields and lattice kernels | Done | C complete; frozen | 23 proved contracts and 15 data declarations; exact source/import migration, independent pedagogical review, fresh standard-axiom audits and CI pass. All 23 prior Core sources remain unchanged; Core now has 25 modules and 816 statements. [Validation](note/ch15_phase_c_validation_2026-10-13.md). | Reuse the frozen finite kernels and qualified actions; CH16/A07 completed its separately authorized A–B–C cycle; see the next card. |
+| CH16/A07 — Normal ordering and field energy | Done | C complete; frozen | 19 proofs and 29 data declarations; exact symbol/Fourier collapse, factor-four energy, qualified errors and nonzero single-excitation witnesses. Independent reviews, fresh standard-axiom audits and CI pass; prior 25 Core sources unchanged. [Validation](note/ch16_phase_c_validation_2026-10-13.md). | Reuse the frozen finite results; CH17 remains unstarted and requires a separately authorized scope. |
 | CH17–CH19/A07–A08 — Interactions, Bogoliubov, states | Backlog | A not started | Exact sea-Wick Q correction; pairing model; weighted polynomial state. | Review finite-action and uncompressed-state interfaces separately. |
 | CH20–CH21/A09–A10 — Formal vertices, duality, spin, leakage, SW | Backlog | A not started | Constructed states, charge maps, projection residuals and coefficient calculus. | Implement exact algebraic targets; keep analytic interpretations separate. |
 
@@ -243,10 +244,13 @@ CH16: **C_complete**. 19 contracts; 0 pending proof modules. Current machine rec
 <!-- /lean-cycle CH16 -->
 
 
-## CH16 local checkpoint — 2026-10-13
+## Historical CH16 local checkpoint — 2026-10-13
 
 Phase A independently reviewed and accepted (19 contracts,29 data); ten local
 proofs compiled with standard axioms, three further bodies dependency-blocked.
 No Phase B batch accepted or Phase C promotion. Quota guard stopped new work
 below10% remaining; [resumption record](note/ch16_quota_checkpoint_2026-10-13.md).
 CH17 remains outside the authorized scope.
+
+
+The historical quota checkpoint is superseded by completed CH16/A07 Phase C. All 19 contracts are proved and frozen; Core now has 27 modules and 835 statements. See the final validation above.

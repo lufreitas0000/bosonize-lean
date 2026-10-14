@@ -158,7 +158,7 @@ At $m=1$ this proves zero error for one first-mode excitation. If the weight dif
 
 These results are exact finite complex algebra. They do not prove the sine characterization or positivity of the dispersion, an analytic limit, the Taylor remainder, RG irrelevance, or a complete error-kernel classification. The original descriptions of those broader ideas remain visible above with this distinction.
 
-The [formal source](../../Bosonize/Core/Ch16FieldHamiltonian.lean) and [companion notebook](../../docs/companion/Bosonize/Core/Ch16FieldHamiltonian.md) record the exact hypotheses, declaration mapping and verification evidence. The proved staging batch passed fresh Phase B compiler and axiom checks; Phase C promotion and the independent review of this explanatory addition are pending at preparation time.
+The [formal source](../../Bosonize/Core/Ch16FieldHamiltonian.lean) and [companion notebook](../../docs/companion/Bosonize/Core/Ch16FieldHamiltonian.md) record the exact hypotheses, declaration mapping and verification evidence. The complete batch passed fresh compiler and axiom checks, independent pedagogical review, and Phase C promotion. [Final validation](../../note/ch16_phase_c_validation_2026-10-13.md) records the actual completion evidence.
 
 
 Independent final pedagogical reviewer `/root/characters` returned PASS for all

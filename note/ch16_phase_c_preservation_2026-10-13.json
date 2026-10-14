@@ -1,0 +1,39 @@
+{
+  "baseline": "c9cc63d4d9f97e78586fdc769556a0bea265e540",
+  "promotion_commit": "5fbb9bf3947ae1b3e245a9f700bb3fcc7a02dc4c",
+  "prior_core_files_preserved": 25,
+  "core_modules": 27,
+  "unrelated_interface_records_unchanged": true,
+  "toolchain_and_dependencies_unchanged": true,
+  "sources": {
+    "Bosonize/Core/A07FiniteNormalOrdering.lean": {
+      "sha256": "1056266f85e56868e20ef4769b8a58cfe88533845bd97db91440d6161d500996",
+      "proof_count": 6,
+      "non_import_source_bytes_preserved": true,
+      "theorem_headers_and_data_hashes_preserved": true
+    },
+    "Bosonize/Core/Ch16FieldHamiltonian.lean": {
+      "sha256": "54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787",
+      "proof_count": 13,
+      "non_import_source_bytes_preserved": true,
+      "theorem_headers_and_data_hashes_preserved": true
+    }
+  },
+  "notes": {
+    "notes/md/ch16_field_Hamiltonian.md": {
+      "original_prefix_bytes": 8965,
+      "original_sha256": "a0d3123f407fe79d7db3a5f993bbc5e6caffdbd17d4070587fe43b5a492fc5ab",
+      "current_sha256": "0660cbf2ea2e78e69b7b9975b84b66fbf7b0d67fee1f9b5f651c0cf79e995592"
+    },
+    "notes/appendices/a06_chiral_fields_and_lattice_kernels.md": {
+      "original_prefix_bytes": 14430,
+      "original_sha256": "4b24518601c34ff8a2b6cf42bb8267200420e15adda4027e74a8694f77e103d8",
+      "current_sha256": "7736f48ae37ab3c5d076b1b65b758b0b230b2cffea86118b960ea0b4bfcfbd9c"
+    }
+  },
+  "math_validation": {
+    "katex": "0.16.22",
+    "fragments": 248,
+    "failures": []
+  }
+}

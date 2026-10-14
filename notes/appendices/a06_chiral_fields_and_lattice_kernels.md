@@ -244,7 +244,7 @@ and [Ch16FieldHamiltonian](../../Bosonize/Core/Ch16FieldHamiltonian.lean).
 The [A07 companion](../../docs/companion/Bosonize/Core/A07FiniteNormalOrdering.md)
 and [CH16 companion](../../docs/companion/Bosonize/Core/Ch16FieldHamiltonian.md)
 record exact declarations and validation. These source links identify the
-planned Core destinations; final Phase C acceptance is recorded separately.
+proved and frozen Core modules; [final Phase C validation](../../note/ch16_phase_c_validation_2026-10-13.md) records acceptance.
 The A07 module here supports this appendix's normal-ordering construction;
 it does not implement the separate interactions appendix numbered A07.
 

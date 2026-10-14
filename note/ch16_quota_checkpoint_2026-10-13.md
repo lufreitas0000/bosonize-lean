@@ -1,4 +1,6 @@
-# CH16 resumable checkpoint — 2026-10-13
+# Historical CH16 resumable checkpoint — 2026-10-13
+
+Superseded: the authorized A–B–C cycle completed at `5fbb9bf`. See [final validation](ch16_phase_c_validation_2026-10-13.md). The following preserves the earlier paused state and resumption instructions.
 
 User scope: repair supplied CH16 drafts and finish A–B–C. The full request is
 not complete. Phase A accepted, merged and pushed at b56b47c; Phase B and C

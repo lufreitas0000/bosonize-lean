@@ -1,13 +1,14 @@
-# A07FiniteNormalOrdering: verified Phase B support, Phase C pending
+# A07FiniteNormalOrdering: Phase C complete and frozen
 
-The six theorem contracts and seventeen data declarations have completed proof
-bodies and fresh Phase B compiler/axiom evidence. A07 acceptance used the existing
-runner at support finish `46cab18`; CH16 acceptance and Phase C are tracked
-separately. This document is prepared for migration, not evidence of final Phase C
-acceptance. The final source hash, promotion guards and independent pedagogical
-review will be recorded by the orchestrator.
+All 6 proof contracts and 17 data declarations are complete, promoted and frozen.
+Phase A acceptance `b56b47c`, support Phase B `46cab18`, chapter Phase B
+`3af7420`, and Phase C `5fbb9bf` passed the existing runner and were pushed.
+Independent proof, promotion and pedagogical reviews passed. Fresh final checks
+and preservation evidence are recorded in
+[Phase C validation](../../../../note/ch16_phase_c_validation_2026-10-13.md).
+Current complete-source SHA-256: `1056266f85e56868e20ef4769b8a58cfe88533845bd97db91440d6161d500996`.
 
-Source after promotion:
+Promoted source:
 [A07FiniteNormalOrdering.lean](../../../../Bosonize/Core/A07FiniteNormalOrdering.lean).
 Pedagogical mapping: supporting portion of
 [Appendix A06](../../../../notes/appendices/a06_chiral_fields_and_lattice_kernels.md#constructive-realization-of-normal-ordering-and-field-energy-in-lean),
@@ -49,10 +50,10 @@ positivity.
 
 ## Historical Phase A and development checkpoint
 
-The record below is preserved verbatim. Its unproved/dependency-blocked status
+The record below is retained as historical evidence; promoted source paths are updated. Its unproved/dependency-blocked status
 sentences describe earlier snapshots and are superseded by the verified Phase B
 support status above. Its proposal language must not be read as current compiler
-evidence. Final Phase C acceptance remains pending.
+evidence. Final Phase C acceptance is complete and recorded above.
 
 # Bosonize/Core/A07FiniteNormalOrdering.lean
 
@@ -97,12 +98,12 @@ source bytes, definitions, theorem headers or proof bodies change. Only the two
 interface records migrate, with import/context hashes updated; all 25 prior Core
 complete-source hashes and unrelated interface records stay unchanged.
 
-Predicted promoted source SHA-256, checked after actual promotion: `1056266f85e56868e20ef4769b8a58cfe88533845bd97db91440d6161d500996`.
+Actual promoted source SHA-256, verified against the complete-source lock: `1056266f85e56868e20ef4769b8a58cfe88533845bd97db91440d6161d500996`.
 The initial companion-link review found one old three-level checkpoint link;
 it is corrected to the four-level promoted path. The unsupported numerical
 history phrase was removed, and mathematical delimiters match the existing
-Markdown conventions. Final independent pedagogy review and actual promoted
-compilation/axiom/CI/runner evidence follow before declaring Phase C complete.
+Markdown conventions. Final independent pedagogy review and promoted compilation/axiom/CI/runner
+evidence all passed; actual outputs are saved in the final validation record.
 
 
 ## Browser proof disposition and local verification
@@ -136,3 +137,6 @@ runner's promoted compiler/axiom/CI acceptance and does not replace those gates.
 
 
 Phase C finish evidence: `note/webllm/ch16/phaseC-ch16_cycle_c_004f44cb.md`.
+
+
+Final Phase C completion and reference-preservation record: [validation](../../../../note/ch16_phase_c_validation_2026-10-13.md).

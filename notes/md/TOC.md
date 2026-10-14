@@ -1,7 +1,7 @@
 # BOSONIZE-LEAN: Master Table of Contents
 
 This document serves as the structural roadmap and index for the `Bosonize-Lean` mathematical reference notes. It outlines the formalization of 1+1D lattice bosonization. The formal architecture distinguishes between three levels of mathematical statements:
-1. **Proposed Finite Targets:** Intended algebraic identities on specified finite budget/CAR carriers. Chapters 1–15 and their implemented supporting portions currently have proved and frozen Core implementations (25 modules, 816 statement interfaces); Chapters 16–21 below remain intended results, not completed Lean proofs.
+1. **Proposed Finite Targets:** Intended algebraic identities on specified finite budget/CAR carriers. Chapters 1–16 and their implemented supporting portions currently have proved and frozen Core implementations (27 modules, 835 statement interfaces); Chapters 17–21 below remain intended results, not completed Lean proofs.
 2. **Specified Algebraic Targets:** Weighted polynomial CCR state construction, charge tensor algebra, coefficientwise Weyl-type vertices, and explicit generator duality. The notes specify their constructions and proof obligations; these are future Lean targets, with no analytic parameter evaluation or automatic finite-CAR realization.
 3. **Conditional Criteria & Physical Context:** Budget leakage requires a nonzero outside component. Continuum KT scaling and thermodynamic Mott gaps remain physical context requiring separate asymptotic constructions. See the [completion ledger](../../note/notes_review_completion_2026-10-09.md) for resolved revisions, scope exclusions and next-phase readiness; the [adaptive roadmap](../../adaptative_roadmap.md) controls cross-chapter discoveries.
 

@@ -127,3 +127,12 @@ The first power-intertwining scratch proof encountered the known stored coordina
 | 2026-10-13 | CH15 Phase C exporter CI | Both promoted modules compiled, but the API exporter and tests still read the removed staging A06 path; CI withheld acceptance. | Resolve exactly one staging/Core A06 path, reject missing/ambiguous layouts, and retain the saved Phase B export as a historical snapshot after promotion. Refresh the packet after the separate workflow repair checkpoint. No Lean or lock changes. | Reviewed repair committed; fresh packet acceptance and all 15 verifier tests passed. |
 
 | 2026-10-13 | CH15 final primary-checkout CI | Runner transaction retained an empty staging directory after promotion, but Git's primary checkout removed it; Lake's staging glob rejected the absent directory. | Track BosonizeStubs/.gitkeep so fresh checkouts retain the valid empty staging directory; no Lean, Lake configuration or lock changes. Repeat primary CI and promoted axioms. | Final primary CI and 38-declaration promoted axiom audit passed. |
+
+
+### 2026-10-13 — resumed CH16 proof and promotion cycle
+
+| Date | Module/Context | Obstruction | Pivot/Resolution | Status |
+| --- | --- | --- | --- | --- |
+| 2026-10-13 | CH16 finite spatial collapse | Direct operator automation obscures the two signed pairings and residue alias bounds. | Sum scalar quadratic coefficients first, use typed divisibility for no-alias orthogonality, retain opposite flags at equal Fin indices, and reindex to positive modes. No definition or statement pivot. | Complete standard-axiom proof; exact factor 2 chiral and factor 4 dual energy. |
+| 2026-10-13 | CH16 enlarged budget proof | Species selectors and Nat-to-Int sums had different syntactic forms after margin translation. | Normalize the actual species selector and cast addition in the local proof; preserve original excursion interface. | Complete, compiler checked and frozen. |
+| 2026-10-13 | CH16 error eigenvector | Unrestricted CCR would incorrectly ignore finite edges and the right-suffix carrier. | Apply joint CCR on ground budget 0, use ground lowering and cross-species commutation, then isolate the finite mode and weight difference. | Genuine nonzero witnesses and all 19 proofs accepted; Phase C complete. |
