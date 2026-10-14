@@ -1,3 +1,6 @@
+import Bosonize.Core.A07InteractionsAndBogoliubov
+import Bosonize.Core.A10DiscreteSchriefferWolff
+import Bosonize.Core.Ch17LuttingerModels
 import Bosonize.Core.A07FiniteNormalOrdering
 import Bosonize.Core.Ch16FieldHamiltonian
 import Bosonize.Core.A06ChiralFields

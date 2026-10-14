@@ -1,48 +1,54 @@
-# Ch17LuttingerModels: Phase B complete; Phase C preparation
+# A10DiscreteSchriefferWolff: Phase B complete; Phase C preparation
 
-Status: 8 proved contracts and 14 complete data declarations in this module.
-All accepted proofs have fresh standard-axiom evidence. Phase B finish `f8bb8f6`:
-[actual runner evidence](../../../../note/webllm/ch17/phaseB-ch17_cycle_b_0ed0c297.md).
-Accepted staging source SHA-256: `d535a4cdd406507170e1b202b59dde26e9f33ca33d5f34492b6414a369e65f2e`.
-Planned promoted source: [Ch17LuttingerModels.lean](../../../../Bosonize/Core/Ch17LuttingerModels.lean).
-Pedagogical mapping: [corresponding reference note](../../../../notes/md/ch17_LL_Models.md).
+Status: 11 proved contracts and 22 complete data declarations in this module.
+All accepted proofs have fresh standard-axiom evidence. Phase B finish `07f9226`:
+[actual runner evidence](../../../../note/webllm/ch17/phaseB-ch17_cycle_b_80e7982b.md).
+Accepted staging source SHA-256: `b77a079f426943fa6fb5609316dfdb645371c88c48be82875ad480094990594c`.
+Planned promoted source: [A10DiscreteSchriefferWolff.lean](../../../../Bosonize/Core/A10DiscreteSchriefferWolff.lean).
+Pedagogical mapping: [corresponding reference note](../../../../notes/appendices/a10_discrete_rg_and_schrieffer_wolff.md).
 The links use the planned `docs/companion/Bosonize/Core/` depth for migration.
 The existing staged source and mathematical interfaces remain authoritative;
 source hashes after import/path migration will be recorded separately.
 
 ## Exact proved declaration mapping
 
-Every row below denotes a complete proof in `Bosonize.Ch17`. Exact
+Every row below denotes a complete proof in `Bosonize.A10`. Exact
 signatures, carrier instances and hypotheses are preserved in the linked source.
 No historical sketch is substituted for its compiler-checked contract.
 
 | Declaration | Realization and dependency scope |
 | --- | --- |
-| `zero_mode_scalar_canonical_mu` | Exact cancellation of linear charges at canonical chemical potential, including h=0 scalar conventions. |
-| `luttinger_chosen_eq_bosonized` | Ambient algebraic equality for the chosen current/pairing model with exact coefficients. |
-| `zero_mode_op_on_budget` | Charge observables act as specified Ns scalars on the actual joint budget. |
-| `free_fermion_eq_sugawara_on_budget` | Full-band quartic antisymmetry cancellation gives a global finite identity; lowering removes modes above K, preserving the sharper frozen margin. |
-| `luttinger_hamiltonian_on_budget` | Combine the free bridge, chosen-model equality and exact zero-mode action. |
-| `luttinger_hamiltonian_canonical_mu_on_budget` | The preceding budget theorem with the proved symmetric zero-mode scalar. |
-| `luttinger_raw_intra_on_budget` | Retain the finite Q subtraction when replacing chosen current intra-branch interaction by raw quartic interaction. |
-| `concrete_luttinger_witness` | h=8,M=K=2,zero charges; two lowering currents isolate a nonzero mode-one ground pair. |
+| `sw_generator_commutator_eq` | Entrywise non-resonant cancellation gives [S1,H0]=−Voff. |
+| `sw_generator_skew_hermitian` | Hermitian Voff and real energy differences give conjugate-transpose S1=−S1. |
+| `sw_2x2_truncation_witness` | Exact matrix commutator and −2 compressed entry; distinct rational truncation value. |
+| `sw_3x3_no_iff_witness` | Nonzero PVQ despite zero compressed correction, with exact generator signs. |
+| `sw_2x2_exact_eigenpair` | Nonzero vector (−2,1) at t=2/3 has eigenvalue −1/3. |
+| `sw_compressed_bch_second_order` | Complementary projector algebra identifies the degree≤2 BCH polynomial compression. |
+| `shell_proj_partition` | Low and exact-energy shell projectors sum to the actual joint-budget projector for K≥1. |
+| `shell_proj_orthogonal` | Disjoint energy predicates give both ordered projector products zero. |
+| `shell_proj_self_adjoint` | Actual coordinate-projector adjoints fix both shell projectors. |
+| `energy_shell_discards_double_mode_one` | CCR, lowering and adjoint/projector norm argument distinguish energy-shell filtering from mode decimation. |
+| `sw_off_zero_implies_effective_exact` | With both off-block products zero, the explicitly chosen zero generator has no correction. |
 
-The sharp bridge preserves `K≤M` and `K+|Ns ν|<h` for the two selected species.
-It does not infer the stronger legacy Core margin `2K+|Ns ν|≤h`. Instead it proves
-quartic physical-creator antisymmetry and pairs all momentum-conserving terms
-in the full-band raw interaction to cancel them. Combining the accepted finite
-correction identity with `Q=2P−N` gives the global finite Sugawara identity.
-Modes above the actual input's total excitation budget vanish by rightmost
-lowering, permitting the cutoff M. Frozen Core is unchanged.
+The shell operators are ambient coordinate projectors in the existing Fock
+space. Their sum is `Ch14.projection h Ns K`, which acts as identity on the
+budget. The generic BCH theorem separately assumes `P+Q=1` on its entire carrier;
+these ambient shell projectors are not silently substituted for that hypothesis.
+Its generator is off-block and the baseline commutes with P. The proved equality
+concerns the explicit degree-zero-through-two polynomial, not an analytic
+exponential rotation or a norm remainder estimate.
 
-The model uses chosen current intra-branch and pairing inter-branch interactions.
-The raw intra-branch theorem subtracts Q; it does not identify raw hopping with
-pairing. Chemical potential cancels the linear zero-mode term exactly. The
-concrete witness is not merely a nonempty budget: a local proof keeps its species
-carrier abstract and applies the two branch lowering currents to isolate a
-nonzero mode-one pair. It then specializes to h=8, M=K=2, zero charges, and the
-actual distinct `Fin 2` branches. No physical-channel equivalence, full spectrum,
-analytic continuum theory, or CH18 diagonalization theorem is asserted.
+The repeated mode-one witness has actual total budget two and is nonzero because
+two lowering currents recover `2 • groundKet`, under `r2 h 2 Ns`. The low-shell
+projection lands in budget one; two further lowerings kill it. Adjointness and
+the projector's self-adjoint idempotence turn this into a zero-norm statement.
+The low-budget-one projector discards the repeated mode-one state, while the
+exact-energy-two shell projector fixes it. Mode-index decimation is a different
+construction. The 2×2 eigenpair theorem
+supplies eigenvalue −1/3 but no lowest-eigenvalue or exact rotation claim. The
+3×3 witness rules out the converse from zero correction to zero coupling.
+Continuous RG flows, lifetimes, analytic remainder bounds and Mott-gap claims
+remain outside this finite module.
 
 ## Verification, review and Phase C boundary
 
@@ -71,7 +77,7 @@ Phase A-only status sentences are dated historical evidence; current proof
 status is the accepted Phase B record above. Its cross-module theory paragraphs
 are retained for provenance rather than treated as this module's declaration map.
 
-# BosonizeStubs/Ch17LuttingerModels.lean
+# Bosonize/Core/A10DiscreteSchriefferWolff.lean
 
 ### 1. Quartic Sea-Wick Ordering and the Finite Diagonal Correction $Q_{M,\nu}$
 On the finite band $\Lambda^* = \mathrm{Band}(2h)$, the Dirac sea is $S_0 = \{k \in \Lambda^* : k \le 0\}$ with indicator $s_k = 1_{k \le 0}$. Defining sea quasiparticle annihilators $q_k = c_k$ ($k > 0$) and $q_k = c_k^\dagger$ ($k \le 0$), every $q_k$ annihilates the Dirac sea ket $\vert{}\Omega\rangle = \vert{}\vec{0}\rangle_0$.
@@ -127,4 +133,7 @@ Phase A integrated after user review. Theorems remain unproved.
 Phase A finish evidence: `note/webllm/ch17/phaseA-ch17_cycle_a_fb57086e.md`.
 
 
-Phase B finish evidence: `note/webllm/ch17/phaseB-ch17_cycle_b_0ed0c297.md`.
+Phase B finish evidence: `note/webllm/ch17/phaseB-ch17_cycle_b_80e7982b.md`.
+
+
+Phase C finish evidence: `note/webllm/ch17/phaseC-ch17_cycle_c_fefac95c.md`.

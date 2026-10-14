@@ -25,5 +25,8 @@
   "Bosonize/Core/A06ChiralFields.lean": "77c579ff06238d2801e9861fdf65c5c1efc66fc31d0161efd18a6a386d2fa768",
   "Bosonize/Core/Ch15DualFields.lean": "30880501f9f71594b9e1cc0af6784428cbc0d48c6e70c8930c5d2c27caa9ff85",
   "Bosonize/Core/A07FiniteNormalOrdering.lean": "1056266f85e56868e20ef4769b8a58cfe88533845bd97db91440d6161d500996",
-  "Bosonize/Core/Ch16FieldHamiltonian.lean": "54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787"
+  "Bosonize/Core/Ch16FieldHamiltonian.lean": "54e045da25fcc31e8e18bce5b81b1318adef6955e38ca357e3b7b6c21887e787",
+  "Bosonize/Core/A07InteractionsAndBogoliubov.lean": "1e96db0038b2ae7f012e16d1f6d5a98b43b33661d31f4220cdf3399530fca59f",
+  "Bosonize/Core/A10DiscreteSchriefferWolff.lean": "7ea9ac1c592eed76fc9349ff63592363c2f9efdb0876dc0c93ddf24e9f74b33f",
+  "Bosonize/Core/Ch17LuttingerModels.lean": "9355fcc40f2ec1e5d9ac5ef07065ee8d03a957d8329ef9d5d528e7f1f2e3223c"
 }

@@ -9774,13 +9774,169 @@
         }
       }
     },
-    "BosonizeStubs/A07InteractionsAndBogoliubov.lean": {
+    "Bosonize/Core/A07InteractionsAndBogoliubov.lean": {
       "commands": [
         {
           "kind": "import",
-          "label": "import Bosonize",
-          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
-          "text": "import Bosonize"
+          "label": "import Bosonize.Core.A07FiniteNormalOrdering",
+          "hash": "1d725b41c1b32d17f306515308234f21789387b3098df3f7a6d932a8c07bfed7",
+          "text": "import Bosonize.Core.A07FiniteNormalOrdering"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch16FieldHamiltonian",
+          "hash": "8edb36728e68b34125d97ad280dd8fff778e399ef69808ef4a26fbc6153e215b",
+          "text": "import Bosonize.Core.Ch16FieldHamiltonian"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A06ChiralFields",
+          "hash": "4dcd65bc84983f38f39a7a8ba7a6e88a71a10b90a15fb4ae5b763fc09e782867",
+          "text": "import Bosonize.Core.A06ChiralFields"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch15DualFields",
+          "hash": "f012a43f732c2522b787285797cddd000f342cd14ce083ec7efc2105dcdf5bcf",
+          "text": "import Bosonize.Core.Ch15DualFields"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch01LatticeBand",
+          "hash": "674d4348afeea192b24e596acabe9ca670af70242ea467a258f0b713ba6070ad",
+          "text": "import Bosonize.Core.Ch01LatticeBand"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch02UmbralCalculus",
+          "hash": "c7ad598233eed5d679425b565fe7259da8d2ea7a6100167f24a1d49f6752b63e",
+          "text": "import Bosonize.Core.Ch02UmbralCalculus"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A01FourierCharacters",
+          "hash": "950283665d6e3ae935a3462f21c373f5a17e62317b15442432273ce68b89042f",
+          "text": "import Bosonize.Core.A01FourierCharacters"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch03Fourier",
+          "hash": "43445ae390599ea8e771da31164a83dd3398ceebb5f9349fc44bc2a59bea9f4c",
+          "text": "import Bosonize.Core.Ch03Fourier"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A02CARHilbert",
+          "hash": "3eee133a9012844898b1904a722bc00d24263d50cda9919da39b14fd9bd49994",
+          "text": "import Bosonize.Core.A02CARHilbert"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch04CARFock",
+          "hash": "572dab5f3c663ecc210e143e90c1b5ffbd723b010980355998d017c9b31336a7",
+          "text": "import Bosonize.Core.Ch04CARFock"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch05Fermions",
+          "hash": "52405ba5ad44991e9da501b44511908fab02649f9d8d18e7d5f53d134c5c2cb7",
+          "text": "import Bosonize.Core.Ch05Fermions"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch06LocalNet",
+          "hash": "f3aa5588d9492180829206f68a6f8747bb537367b2ace3ac768ee631975fa561",
+          "text": "import Bosonize.Core.Ch06LocalNet"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch06Ext",
+          "hash": "cac07e51fae0835795ed450f9fab4a6c5b1da214e153870ca18ebc018ed369f3",
+          "text": "import Bosonize.Core.Ch06Ext"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A03EnergyBudgets",
+          "hash": "2ffe147e93464de6e602325b20a6f7db55acb28f11873fc16ea8febee06b9385",
+          "text": "import Bosonize.Core.A03EnergyBudgets"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch07VacuumBudget",
+          "hash": "8c651675780351509e1ae21a972e5b9c42b26e6656ac3725eab2736353ce8b2b",
+          "text": "import Bosonize.Core.Ch07VacuumBudget"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch08Boson",
+          "hash": "4b8e9aacacd480d6c61437dd6e65f77bd3775a8f6fed89734c8724bc07f02c94",
+          "text": "import Bosonize.Core.Ch08Boson"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A05MultiSpecies",
+          "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",
+          "text": "import Bosonize.Core.A05MultiSpecies"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch13KleinFactors",
+          "hash": "7b3d41cda2e55931231e1178017a8d152c7b182325e78da2adb3d3054d986855",
+          "text": "import Bosonize.Core.Ch13KleinFactors"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A05FiniteExponentials",
+          "hash": "14080500d90e3154894d05c21f74874e0082b0d4c1595e7bf7753dca8e1752bd",
+          "text": "import Bosonize.Core.A05FiniteExponentials"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch14Mandelstam",
+          "hash": "886bf91b6d4ef559b8389c9b47c04208a544963292b465f6b9d34e80feffbc83",
+          "text": "import Bosonize.Core.Ch14Mandelstam"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04DensityKinematics",
+          "hash": "a5d334b333fc14af1a25e4289b2f1fadcf7cd59d3a88b42f25f0267a2b2a7310",
+          "text": "import Bosonize.Core.A04DensityKinematics"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch09DensityModes",
+          "hash": "562ff9528bacf9bb407c415961ca941a9fbf2a252374adaf38fed3dcd4a0e4f8",
+          "text": "import Bosonize.Core.Ch09DensityModes"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04CurrentMargins",
+          "hash": "992c0c060514a94d0df12d88cbfe7e3b6f2b8bbf99c8b443aaec9fbd7947f491",
+          "text": "import Bosonize.Core.A04CurrentMargins"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch10Heisenberg",
+          "hash": "8eea16e134d1a504ebcaa5b2a754a35615d088ca7bee226396f9a4a1cbaa86f5",
+          "text": "import Bosonize.Core.Ch10Heisenberg"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04PartitionCombinatorics",
+          "hash": "92098a14d8b1c0c0a5fd6a416dfdb6125a330f2ffcf1aef9828871cf05099b74",
+          "text": "import Bosonize.Core.A04PartitionCombinatorics"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch11HaldaneCompleteness",
+          "hash": "a4af2350d47ea8cea8b433da154a6dcd4a9992446c540c3fca951c58db6ca360",
+          "text": "import Bosonize.Core.Ch11HaldaneCompleteness"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch12Sugawara",
+          "hash": "cd329528de6836302b13a2facbe6d9416cc90d483321af7e21c55f273dede117",
+          "text": "import Bosonize.Core.Ch12Sugawara"
         },
         {
           "kind": "namespace",
@@ -10039,126 +10195,282 @@
         "Bosonize.A07Interactions.bogoliubov_ccr_on_budget": {
           "kind": "theorem",
           "hash": "7003698e0720d0284ae4671f88d0f1cafbeaf4eb40e0dbc7bb2e844caa77bce4",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "theorem bogoliubov_ccr_on_budget (h M K m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (c s : \u211d) (hcs : c ^ 2 - s ^ 2 = 1) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hmargin : A06.branchMargins h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : A02.commutator (bogoliubovAnnihilator h m c s branches \u03b7) (bogoliubovCreator h m c s branches \u03b7) v = (m : \u2102) \u2022 v"
         },
         "Bosonize.A07Interactions.bogoliubov_creator_adjoint": {
           "kind": "lemma",
           "hash": "1ffb869b25b835dcc6de566b955ebcfa068cdeefd2005fd4691efca0f4059a17",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma bogoliubov_creator_adjoint (h m : \u2115) (c s : \u211d) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) : LinearMap.adjoint (bogoliubovCreator h m c s branches \u03b7) = bogoliubovAnnihilator h m c s branches \u03b7"
         },
         "Bosonize.A07Interactions.bogoliubov_expansion_on_budget": {
           "kind": "theorem",
           "hash": "bbb67a168dcc772a80854e64ad21578a274a906c44376a1c4a3b5eaa615323d7",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "theorem bogoliubov_expansion_on_budget (h M K m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (v1 v2 : \u211d) (hp : HyperbolicParams v1 v2) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : A06.branchMargins h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : dressedModeNumber h m hp.u hp.c hp.s branches v = pairingMode h m v1 v2 branches v + ((2 * hp.u * hp.s ^ 2 * (m : \u211d) : \u211d) : \u2102) \u2022 v"
         },
         "Bosonize.A07Interactions.hopping_mode_kills_ground": {
           "kind": "lemma",
           "hash": "c4b24c1384fee6bea65fe83e95cf2ce4a8ee4cf020bf844d2aff435d946623ae",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma hopping_mode_kills_ground (h m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (branches : A06.Branches \u03c3) : (A05.rho h branches.rightSpecies (m : \u2124) * A05.rho h branches.leftSpecies (-(m : \u2124)) + A05.rho h branches.rightSpecies (-(m : \u2124)) * A05.rho h branches.leftSpecies (m : \u2124)) (A05.groundKet h Ns) = 0"
         },
         "Bosonize.A07Interactions.hopping_mode_self_adjoint": {
           "kind": "lemma",
           "hash": "6d70678d104a3d7338554a98e6b55e8769883d03f4a295a43fdb4d4584f29b6e",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma hopping_mode_self_adjoint (h m : \u2115) (v1 v2 : \u211d) (branches : A06.Branches \u03c3) : LinearMap.adjoint (hoppingMode h m v1 v2 branches) = hoppingMode h m v1 v2 branches"
         },
         "Bosonize.A07Interactions.hyperbolic_params_exist": {
           "kind": "theorem",
           "hash": "262b3618dcd8f1367086c1e092110ee44b869084bb8cba03481084cbc84061b7",
-          "ctx": "af4ea7ea281e8b3ebf853e2e1e98db768ab4a956d2be511629a1c93df8e0d5f4",
+          "ctx": "66be3676bc2add78f988e9a2d443fd049d3f15bdfb120d21f0ca2f310503cff5",
           "text": "theorem hyperbolic_params_exist (v1 v2 : \u211d) (hstab : |v2| < v1) : \u2203 u c s : \u211d, 0 < u \u2227 u ^ 2 = v1 ^ 2 - v2 ^ 2 \u2227 c ^ 2 - s ^ 2 = 1 \u2227 v1 = u * (c ^ 2 + s ^ 2) \u2227 v2 = 2 * u * c * s"
         },
         "Bosonize.A07Interactions.pairing_mode_ground_nonzero": {
           "kind": "lemma",
           "hash": "e01a0b51ace0f53fb7baf7ff23817e9bae3f6c52874e5e3d25e3620bda63d472",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma pairing_mode_ground_nonzero (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (branches : A06.Branches \u03c3) (hmargin : A06.branchMargins h M m Ns branches) : (A05.rho h branches.rightSpecies (m : \u2124) * A05.rho h branches.leftSpecies (m : \u2124) + A05.rho h branches.rightSpecies (-(m : \u2124)) * A05.rho h branches.leftSpecies (-(m : \u2124))) (A05.groundKet h Ns) \u2260 0"
         },
         "Bosonize.A07Interactions.pairing_mode_self_adjoint": {
           "kind": "lemma",
           "hash": "69b54bd2d15c170fa25875f0c70f1721e13ee8262124a018d0e71c0d14841c91",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma pairing_mode_self_adjoint (h m : \u2115) (v1 v2 : \u211d) (branches : A06.Branches \u03c3) : LinearMap.adjoint (pairingMode h m v1 v2 branches) = pairingMode h m v1 v2 branches"
         },
         "Bosonize.A07Interactions.quartic_sea_wick_identity": {
           "kind": "lemma",
           "hash": "28fb523bc5b37916b94e631d731896b4d2b84c5e8cd40785e162699d78ac69f5",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma quartic_sea_wick_identity (h : \u2115) (\u03bd : \u03c3) (m : \u2124) (z w : Ch01.Band (2 * h) \u00d7 Ch01.Band (2 * h)) (hz : z \u2208 A04.validPairs (2 * h) m) (hw : w \u2208 A04.validPairs (2 * h) (-m)) : quarticSeaWick h \u03bd z.1 z.2 w.1 w.2 = seaNormalBilinear h \u03bd z.1 z.2 * seaNormalBilinear h \u03bd w.1 w.2 + if w.2 = z.1 then quarticContraction h \u03bd z.2 w.2 else 0"
         },
         "Bosonize.A07Interactions.quartic_sea_wick_zero_repeated": {
           "kind": "lemma",
           "hash": "9656ad803c5ccc04a3b5f0ed1a269bb4ad2229ea9ed94bad88943de41abb03c0",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma quartic_sea_wick_zero_repeated (h : \u2115) (\u03bd : \u03c3) (k : Ch01.Band (2 * h)) : quarticSeaWick h \u03bd k k k k = 0 \u2227 seaNormalBilinear h \u03bd k k * seaNormalBilinear h \u03bd k k + quarticContraction h \u03bd k k = 0"
         },
         "Bosonize.A07Interactions.raw_inter_eq_hopping": {
           "kind": "theorem",
           "hash": "5715aeda84a09490dc36cd09d8aa1508a3904f41cc328f506d4cfa48b49125bc",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "theorem raw_inter_eq_hopping (h M : \u2115) (g2 : \u211d) (branches : A06.Branches \u03c3) : rawInterBranch h M g2 branches = hoppingInterBranch h M g2 branches"
         },
         "Bosonize.A07Interactions.raw_intra_eq_current_sub_correction": {
           "kind": "theorem",
           "hash": "96e21098a691885ebb957f2e3e606a4d1e76da1d5503406f3337e13c8cdfbedf",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "theorem raw_intra_eq_current_sub_correction (h M : \u2115) (g4 : \u211d) (branches : A06.Branches \u03c3) : rawIntraBranch h M g4 branches = currentIntraBranch h M g4 branches - ((g4 : \u2102) / (2 * ((2 * h : \u2115) : \u2102))) \u2022 (seaWickCorrection h M branches.rightSpecies + seaWickCorrection h M branches.leftSpecies)"
         },
         "Bosonize.A07Interactions.sea_normal_bilinear_diag": {
           "kind": "lemma",
           "hash": "fe8311499c3e921d557d00bdcdd8eefd2491dff3b18eaaf72b000d624781da2e",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma sea_normal_bilinear_diag (h : \u2115) (\u03bd : \u03c3) (k : Ch01.Band (2 * h)) : seaNormalBilinear h \u03bd k k = if k.val \u2264 0 then -(A05.annihilation h \u03bd k * A05.creation h \u03bd k) else A05.creation h \u03bd k * A05.annihilation h \u03bd k"
         },
         "Bosonize.A07Interactions.sea_normal_rho_nonzero": {
           "kind": "lemma",
           "hash": "f3992d46710d593ea58c2626814f860e0c283025e9cceef3c7f89aacad96f7f6",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma sea_normal_rho_nonzero (h : \u2115) (\u03bd : \u03c3) (m : \u2124) (hm : m \u2260 0) : seaNormalRho h \u03bd m = A05.rho h \u03bd m"
         },
         "Bosonize.A07Interactions.sea_normal_rho_zero": {
           "kind": "lemma",
           "hash": "2e66b32dd48298c0ea3d205d56bd39fcaed799c6199c3d79b653fe18aaec0495",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma sea_normal_rho_zero (h : \u2115) (\u03bd : \u03c3) : seaNormalRho h \u03bd 0 = A05.chargeObservable h \u03bd"
         },
         "Bosonize.A07Interactions.sea_wick_correction_full_band": {
           "kind": "lemma",
           "hash": "48b54a254c94d72cb9b0089801b64470b7c04c92604334f582929fbb2d4cd7e8",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma sea_wick_correction_full_band (h M : \u2115) (hh : 0 < h) (hM : h - 1 \u2264 M) (\u03bd : \u03c3) : seaWickCorrection h M \u03bd = (2 : \u2102) \u2022 computationalMomentum h \u03bd - A05.chargeObservable h \u03bd"
         },
         "Bosonize.A07Interactions.sea_wick_correction_ground_zero": {
           "kind": "lemma",
           "hash": "22a22f4d3be0974815c7cea000ec137061e59d3708b7ac222e746480b879039f",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma sea_wick_correction_ground_zero (h M : \u2115) (hh : 0 < h) (\u03bd : \u03c3) : seaWickCorrection h M \u03bd (A05.groundKet h (fun _ : \u03c3 => 0)) = 0"
         },
         "Bosonize.A07Interactions.species_raw_intra_eq_current_sub_correction": {
           "kind": "lemma",
           "hash": "62dc51b8565c0d0ef41d25d6aad7b800f6e5084394e08008b6771a268451d475",
-          "ctx": "aec0969c100a47e3b75daaf1cd1f2a6b53d434d26adb892bd9cf0a82cec5b5ce",
+          "ctx": "3b972d5033c4812bc36401f8e294ee028cc714bf3a9d3d179e0a88f3cb415f01",
           "text": "lemma species_raw_intra_eq_current_sub_correction (h M : \u2115) (\u03bd : \u03c3) : speciesRawIntra h M \u03bd = speciesCurrentIntra h M \u03bd - seaWickCorrection h M \u03bd"
         }
       }
     },
-    "BosonizeStubs/A10DiscreteSchriefferWolff.lean": {
+    "Bosonize/Core/A10DiscreteSchriefferWolff.lean": {
       "commands": [
         {
           "kind": "import",
-          "label": "import Bosonize",
-          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
-          "text": "import Bosonize"
+          "label": "import Bosonize.Core.A07FiniteNormalOrdering",
+          "hash": "1d725b41c1b32d17f306515308234f21789387b3098df3f7a6d932a8c07bfed7",
+          "text": "import Bosonize.Core.A07FiniteNormalOrdering"
         },
         {
           "kind": "import",
-          "label": "import BosonizeStubs.A07InteractionsAndBogoliubov",
-          "hash": "cf3fb1e1a4b9aa49ee9c9e9816f2fa87e39f653b6b6e38424d2a171e9250dc80",
-          "text": "import BosonizeStubs.A07InteractionsAndBogoliubov"
+          "label": "import Bosonize.Core.Ch16FieldHamiltonian",
+          "hash": "8edb36728e68b34125d97ad280dd8fff778e399ef69808ef4a26fbc6153e215b",
+          "text": "import Bosonize.Core.Ch16FieldHamiltonian"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A06ChiralFields",
+          "hash": "4dcd65bc84983f38f39a7a8ba7a6e88a71a10b90a15fb4ae5b763fc09e782867",
+          "text": "import Bosonize.Core.A06ChiralFields"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch15DualFields",
+          "hash": "f012a43f732c2522b787285797cddd000f342cd14ce083ec7efc2105dcdf5bcf",
+          "text": "import Bosonize.Core.Ch15DualFields"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch01LatticeBand",
+          "hash": "674d4348afeea192b24e596acabe9ca670af70242ea467a258f0b713ba6070ad",
+          "text": "import Bosonize.Core.Ch01LatticeBand"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch02UmbralCalculus",
+          "hash": "c7ad598233eed5d679425b565fe7259da8d2ea7a6100167f24a1d49f6752b63e",
+          "text": "import Bosonize.Core.Ch02UmbralCalculus"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A01FourierCharacters",
+          "hash": "950283665d6e3ae935a3462f21c373f5a17e62317b15442432273ce68b89042f",
+          "text": "import Bosonize.Core.A01FourierCharacters"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch03Fourier",
+          "hash": "43445ae390599ea8e771da31164a83dd3398ceebb5f9349fc44bc2a59bea9f4c",
+          "text": "import Bosonize.Core.Ch03Fourier"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A02CARHilbert",
+          "hash": "3eee133a9012844898b1904a722bc00d24263d50cda9919da39b14fd9bd49994",
+          "text": "import Bosonize.Core.A02CARHilbert"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch04CARFock",
+          "hash": "572dab5f3c663ecc210e143e90c1b5ffbd723b010980355998d017c9b31336a7",
+          "text": "import Bosonize.Core.Ch04CARFock"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch05Fermions",
+          "hash": "52405ba5ad44991e9da501b44511908fab02649f9d8d18e7d5f53d134c5c2cb7",
+          "text": "import Bosonize.Core.Ch05Fermions"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch06LocalNet",
+          "hash": "f3aa5588d9492180829206f68a6f8747bb537367b2ace3ac768ee631975fa561",
+          "text": "import Bosonize.Core.Ch06LocalNet"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch06Ext",
+          "hash": "cac07e51fae0835795ed450f9fab4a6c5b1da214e153870ca18ebc018ed369f3",
+          "text": "import Bosonize.Core.Ch06Ext"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A03EnergyBudgets",
+          "hash": "2ffe147e93464de6e602325b20a6f7db55acb28f11873fc16ea8febee06b9385",
+          "text": "import Bosonize.Core.A03EnergyBudgets"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch07VacuumBudget",
+          "hash": "8c651675780351509e1ae21a972e5b9c42b26e6656ac3725eab2736353ce8b2b",
+          "text": "import Bosonize.Core.Ch07VacuumBudget"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch08Boson",
+          "hash": "4b8e9aacacd480d6c61437dd6e65f77bd3775a8f6fed89734c8724bc07f02c94",
+          "text": "import Bosonize.Core.Ch08Boson"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A05MultiSpecies",
+          "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",
+          "text": "import Bosonize.Core.A05MultiSpecies"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch13KleinFactors",
+          "hash": "7b3d41cda2e55931231e1178017a8d152c7b182325e78da2adb3d3054d986855",
+          "text": "import Bosonize.Core.Ch13KleinFactors"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A05FiniteExponentials",
+          "hash": "14080500d90e3154894d05c21f74874e0082b0d4c1595e7bf7753dca8e1752bd",
+          "text": "import Bosonize.Core.A05FiniteExponentials"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch14Mandelstam",
+          "hash": "886bf91b6d4ef559b8389c9b47c04208a544963292b465f6b9d34e80feffbc83",
+          "text": "import Bosonize.Core.Ch14Mandelstam"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04DensityKinematics",
+          "hash": "a5d334b333fc14af1a25e4289b2f1fadcf7cd59d3a88b42f25f0267a2b2a7310",
+          "text": "import Bosonize.Core.A04DensityKinematics"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch09DensityModes",
+          "hash": "562ff9528bacf9bb407c415961ca941a9fbf2a252374adaf38fed3dcd4a0e4f8",
+          "text": "import Bosonize.Core.Ch09DensityModes"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04CurrentMargins",
+          "hash": "992c0c060514a94d0df12d88cbfe7e3b6f2b8bbf99c8b443aaec9fbd7947f491",
+          "text": "import Bosonize.Core.A04CurrentMargins"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch10Heisenberg",
+          "hash": "8eea16e134d1a504ebcaa5b2a754a35615d088ca7bee226396f9a4a1cbaa86f5",
+          "text": "import Bosonize.Core.Ch10Heisenberg"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04PartitionCombinatorics",
+          "hash": "92098a14d8b1c0c0a5fd6a416dfdb6125a330f2ffcf1aef9828871cf05099b74",
+          "text": "import Bosonize.Core.A04PartitionCombinatorics"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch11HaldaneCompleteness",
+          "hash": "a4af2350d47ea8cea8b433da154a6dcd4a9992446c540c3fca951c58db6ca360",
+          "text": "import Bosonize.Core.Ch11HaldaneCompleteness"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch12Sugawara",
+          "hash": "cd329528de6836302b13a2facbe6d9416cc90d483321af7e21c55f273dede117",
+          "text": "import Bosonize.Core.Ch12Sugawara"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A07InteractionsAndBogoliubov",
+          "hash": "18b97ea887123f874311ac707fa689c7ceef8fc7da66337cbf59cebaaaeda33c",
+          "text": "import Bosonize.Core.A07InteractionsAndBogoliubov"
         },
         {
           "kind": "namespace",
@@ -10345,90 +10657,246 @@
         "Bosonize.A10.energy_shell_discards_double_mode_one": {
           "kind": "lemma",
           "hash": "1581e3943e9bc8857a77480434f187b0546be16cec7aa559461dae1a1168851e",
-          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "ctx": "7e3b41a15458b60200c1ced85b706c53ef3fca164abdeee09734473e766bd46c",
           "text": "lemma energy_shell_discards_double_mode_one (h : \u2115) (hh : 2 \u2264 h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (\u03bd : \u03c3) (hR2 : A05.r2 h 2 Ns) : doubleModeOneKet h Ns \u03bd \u2208 A05.jointBudget h Ns 2 \u2227 doubleModeOneKet h Ns \u03bd \u2260 0 \u2227 lowShellProj h Ns 2 (doubleModeOneKet h Ns \u03bd) = 0 \u2227 highShellProj h Ns 2 (doubleModeOneKet h Ns \u03bd) = doubleModeOneKet h Ns \u03bd"
         },
         "Bosonize.A10.shell_proj_orthogonal": {
           "kind": "lemma",
           "hash": "9f262f23be48fa0d44eec9f25d21054115cb425b5f8b7e0da5411c5e947dd98c",
-          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "ctx": "7e3b41a15458b60200c1ced85b706c53ef3fca164abdeee09734473e766bd46c",
           "text": "lemma shell_proj_orthogonal (h K : \u2115) (hK : 1 \u2264 K) (Ns : \u03c3 \u2192 \u2124) : lowShellProj h Ns K * highShellProj h Ns K = 0 \u2227 highShellProj h Ns K * lowShellProj h Ns K = 0"
         },
         "Bosonize.A10.shell_proj_partition": {
           "kind": "lemma",
           "hash": "08560d91f019f61a8b74f95672d75a94548d5b8f5051187770d0eff0591e8234",
-          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "ctx": "7e3b41a15458b60200c1ced85b706c53ef3fca164abdeee09734473e766bd46c",
           "text": "lemma shell_proj_partition (h K : \u2115) (hK : 1 \u2264 K) (Ns : \u03c3 \u2192 \u2124) : lowShellProj h Ns K + highShellProj h Ns K = Ch14.projection h Ns K"
         },
         "Bosonize.A10.shell_proj_self_adjoint": {
           "kind": "lemma",
           "hash": "9a15c9eedae99b61fb9ad6897be063dbbb55a05fc95ba42850d13ed777561884",
-          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "ctx": "7e3b41a15458b60200c1ced85b706c53ef3fca164abdeee09734473e766bd46c",
           "text": "lemma shell_proj_self_adjoint (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : LinearMap.adjoint (lowShellProj h Ns K) = lowShellProj h Ns K \u2227 LinearMap.adjoint (highShellProj h Ns K) = highShellProj h Ns K"
         },
         "Bosonize.A10.sw_2x2_exact_eigenpair": {
           "kind": "theorem",
           "hash": "e1281f2f2d823f85e52d8e6f19f2a34cf1bd2b99d33972a0211b8fc8d91bc7c3",
-          "ctx": "75ddef0672d6a8f0c09bbb9d8aefff7a057071a79a7b109bf87b489134d03194",
+          "ctx": "9682a7ff73de7ad8c4fc680bd46f5e6229b5687d2ed027b75ab2812549eba7ce",
           "text": "theorem sw_2x2_exact_eigenpair : swCounterEigenvector_2x2 \u2260 0 \u2227 (swCounterH0_2x2 + ((2 : \u2102) / 3) \u2022 swCounterV_2x2).mulVec swCounterEigenvector_2x2 = ((-1 : \u2102) / 3) \u2022 swCounterEigenvector_2x2"
         },
         "Bosonize.A10.sw_2x2_truncation_witness": {
           "kind": "theorem",
           "hash": "6df0d1acb2fcd25a4de57a83c75c44c2551628d418795e3c937ada0d322b5542",
-          "ctx": "0b62023f3076d6bbbeb116a4f1b8321670b63aa2d529701438e3b86af93c007a",
+          "ctx": "7cac74776b69fc4dfb22ef5f7b3ffcb832ac499cf65eef6e015a8a4d5a837008",
           "text": "theorem sw_2x2_truncation_witness : swCounterS1_2x2 * swCounterH0_2x2 - swCounterH0_2x2 * swCounterS1_2x2 = -swCounterV_2x2 \u2227 (swCounterP_2x2 * (swCounterS1_2x2 * swCounterV_2x2 - swCounterV_2x2 * swCounterS1_2x2) * swCounterP_2x2) 0 0 = -2 \u2227 ((-((2 : \u211a) / 3) ^ 2 : \u211a) \u2260 (-1 / 3 : \u211a))"
         },
         "Bosonize.A10.sw_3x3_no_iff_witness": {
           "kind": "theorem",
           "hash": "419f8ea59629c42c7bc4aaa9e9a11d7fb739685c34de2dce68cb3a9a626ae680",
-          "ctx": "0b62023f3076d6bbbeb116a4f1b8321670b63aa2d529701438e3b86af93c007a",
+          "ctx": "7cac74776b69fc4dfb22ef5f7b3ffcb832ac499cf65eef6e015a8a4d5a837008",
           "text": "theorem sw_3x3_no_iff_witness : swCounterS1_3x3 * swCounterH0_3x3 - swCounterH0_3x3 * swCounterS1_3x3 = -swCounterV_3x3 \u2227 swCounterP_3x3 * swCounterV_3x3 * swCounterQ_3x3 \u2260 0 \u2227 swCounterP_3x3 * (swCounterS1_3x3 * swCounterV_3x3 - swCounterV_3x3 * swCounterS1_3x3) * swCounterP_3x3 = 0"
         },
         "Bosonize.A10.sw_compressed_bch_second_order": {
           "kind": "theorem",
           "hash": "6d45023392fa8f564b3fa4ce54b637ce022e52ebab5da24080df835def1ea2be",
-          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "ctx": "7e3b41a15458b60200c1ced85b706c53ef3fca164abdeee09734473e766bd46c",
           "text": "theorem sw_compressed_bch_second_order (h : \u2115) (P Q H0 V S1 : A05.Operators \u03c3 h) (t : \u211d) (hP : P * P = P) (hQ : Q * Q = Q) (hPartition : P + Q = 1) (hPQ : P * Q = 0) (hQP : Q * P = 0) (hBaseline : A02.commutator P H0 = 0) (hSpp : P * S1 * P = 0) (hSqq : Q * S1 * Q = 0) (hGenerator : A02.commutator S1 H0 = -offDiagPart h P Q V) : P * bchSecondOrderPolynomial h H0 V S1 t * P = swEffectiveSecondOrder h P H0 V S1 t"
         },
         "Bosonize.A10.sw_generator_commutator_eq": {
           "kind": "theorem",
           "hash": "063f32ac5b53ae71503746e477428900307ccbe18d0570c3a820a54dba08ca9e",
-          "ctx": "0b62023f3076d6bbbeb116a4f1b8321670b63aa2d529701438e3b86af93c007a",
+          "ctx": "7cac74776b69fc4dfb22ef5f7b3ffcb832ac499cf65eef6e015a8a4d5a837008",
           "text": "theorem sw_generator_commutator_eq {\u03b9 : Type*} [Fintype \u03b9] [DecidableEq \u03b9] (inLow : \u03b9 \u2192 Bool) (E : \u03b9 \u2192 \u211d) (Voff : Matrix \u03b9 \u03b9 \u2102) (hBlock : \u2200 i j : \u03b9, inLow i = inLow j \u2192 Voff i j = 0) (hNonRes : nonResonant inLow E Voff) : swGeneratorMatrix inLow E Voff * diagEnergyMatrix E - diagEnergyMatrix E * swGeneratorMatrix inLow E Voff = -Voff"
         },
         "Bosonize.A10.sw_generator_skew_hermitian": {
           "kind": "theorem",
           "hash": "87b323558ca03f713c817bb9032e3090d932f4f0f96d6669321ee1cb0afd2ebf",
-          "ctx": "0b62023f3076d6bbbeb116a4f1b8321670b63aa2d529701438e3b86af93c007a",
+          "ctx": "7cac74776b69fc4dfb22ef5f7b3ffcb832ac499cf65eef6e015a8a4d5a837008",
           "text": "theorem sw_generator_skew_hermitian {\u03b9 : Type*} (inLow : \u03b9 \u2192 Bool) (E : \u03b9 \u2192 \u211d) (Voff : Matrix \u03b9 \u03b9 \u2102) (hHerm : Matrix.conjTranspose Voff = Voff) : Matrix.conjTranspose (swGeneratorMatrix inLow E Voff) = -swGeneratorMatrix inLow E Voff"
         },
         "Bosonize.A10.sw_off_zero_implies_effective_exact": {
           "kind": "theorem",
           "hash": "c61d2c511ee0504d052fae5271d97f7c7acffd80ba74f26a2218a7b0de9a773f",
-          "ctx": "cec525ae2b3cb5f84c89336958984556c0cbeca915a9b68915fd582c9a242ff8",
+          "ctx": "7e3b41a15458b60200c1ced85b706c53ef3fca164abdeee09734473e766bd46c",
           "text": "theorem sw_off_zero_implies_effective_exact (h : \u2115) (P Q H0 V : A05.Operators \u03c3 h) (t : \u211d) (hPVQ : P * V * Q = 0) (hQVP : Q * V * P = 0) : offDiagPart h P Q V = 0 \u2227 swSecondOrderCorrection h P (0 : A05.Operators \u03c3 h) V = 0 \u2227 swEffectiveSecondOrder h P H0 V (0 : A05.Operators \u03c3 h) t = P * H0 * P + (t : \u2102) \u2022 (P * V * P)"
         }
       }
     },
-    "BosonizeStubs/Ch17LuttingerModels.lean": {
+    "Bosonize/Core/Ch17LuttingerModels.lean": {
       "commands": [
         {
           "kind": "import",
-          "label": "import Bosonize",
-          "hash": "c95e2868b300be2098e775b9a1dae0b7050679cde1a0d6e8516c7cf1be7a9875",
-          "text": "import Bosonize"
+          "label": "import Bosonize.Core.A07FiniteNormalOrdering",
+          "hash": "1d725b41c1b32d17f306515308234f21789387b3098df3f7a6d932a8c07bfed7",
+          "text": "import Bosonize.Core.A07FiniteNormalOrdering"
         },
         {
           "kind": "import",
-          "label": "import BosonizeStubs.A07InteractionsAndBogoliubov",
-          "hash": "cf3fb1e1a4b9aa49ee9c9e9816f2fa87e39f653b6b6e38424d2a171e9250dc80",
-          "text": "import BosonizeStubs.A07InteractionsAndBogoliubov"
+          "label": "import Bosonize.Core.Ch16FieldHamiltonian",
+          "hash": "8edb36728e68b34125d97ad280dd8fff778e399ef69808ef4a26fbc6153e215b",
+          "text": "import Bosonize.Core.Ch16FieldHamiltonian"
         },
         {
           "kind": "import",
-          "label": "import BosonizeStubs.A10DiscreteSchriefferWolff",
-          "hash": "88678cfcfa3036bc0c409124b54e8dd56c935c9b09ea524ae4e240add03a1251",
-          "text": "import BosonizeStubs.A10DiscreteSchriefferWolff"
+          "label": "import Bosonize.Core.A06ChiralFields",
+          "hash": "4dcd65bc84983f38f39a7a8ba7a6e88a71a10b90a15fb4ae5b763fc09e782867",
+          "text": "import Bosonize.Core.A06ChiralFields"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch15DualFields",
+          "hash": "f012a43f732c2522b787285797cddd000f342cd14ce083ec7efc2105dcdf5bcf",
+          "text": "import Bosonize.Core.Ch15DualFields"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch01LatticeBand",
+          "hash": "674d4348afeea192b24e596acabe9ca670af70242ea467a258f0b713ba6070ad",
+          "text": "import Bosonize.Core.Ch01LatticeBand"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch02UmbralCalculus",
+          "hash": "c7ad598233eed5d679425b565fe7259da8d2ea7a6100167f24a1d49f6752b63e",
+          "text": "import Bosonize.Core.Ch02UmbralCalculus"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A01FourierCharacters",
+          "hash": "950283665d6e3ae935a3462f21c373f5a17e62317b15442432273ce68b89042f",
+          "text": "import Bosonize.Core.A01FourierCharacters"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch03Fourier",
+          "hash": "43445ae390599ea8e771da31164a83dd3398ceebb5f9349fc44bc2a59bea9f4c",
+          "text": "import Bosonize.Core.Ch03Fourier"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A02CARHilbert",
+          "hash": "3eee133a9012844898b1904a722bc00d24263d50cda9919da39b14fd9bd49994",
+          "text": "import Bosonize.Core.A02CARHilbert"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch04CARFock",
+          "hash": "572dab5f3c663ecc210e143e90c1b5ffbd723b010980355998d017c9b31336a7",
+          "text": "import Bosonize.Core.Ch04CARFock"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch05Fermions",
+          "hash": "52405ba5ad44991e9da501b44511908fab02649f9d8d18e7d5f53d134c5c2cb7",
+          "text": "import Bosonize.Core.Ch05Fermions"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch06LocalNet",
+          "hash": "f3aa5588d9492180829206f68a6f8747bb537367b2ace3ac768ee631975fa561",
+          "text": "import Bosonize.Core.Ch06LocalNet"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch06Ext",
+          "hash": "cac07e51fae0835795ed450f9fab4a6c5b1da214e153870ca18ebc018ed369f3",
+          "text": "import Bosonize.Core.Ch06Ext"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A03EnergyBudgets",
+          "hash": "2ffe147e93464de6e602325b20a6f7db55acb28f11873fc16ea8febee06b9385",
+          "text": "import Bosonize.Core.A03EnergyBudgets"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch07VacuumBudget",
+          "hash": "8c651675780351509e1ae21a972e5b9c42b26e6656ac3725eab2736353ce8b2b",
+          "text": "import Bosonize.Core.Ch07VacuumBudget"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch08Boson",
+          "hash": "4b8e9aacacd480d6c61437dd6e65f77bd3775a8f6fed89734c8724bc07f02c94",
+          "text": "import Bosonize.Core.Ch08Boson"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A05MultiSpecies",
+          "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",
+          "text": "import Bosonize.Core.A05MultiSpecies"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch13KleinFactors",
+          "hash": "7b3d41cda2e55931231e1178017a8d152c7b182325e78da2adb3d3054d986855",
+          "text": "import Bosonize.Core.Ch13KleinFactors"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A05FiniteExponentials",
+          "hash": "14080500d90e3154894d05c21f74874e0082b0d4c1595e7bf7753dca8e1752bd",
+          "text": "import Bosonize.Core.A05FiniteExponentials"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch14Mandelstam",
+          "hash": "886bf91b6d4ef559b8389c9b47c04208a544963292b465f6b9d34e80feffbc83",
+          "text": "import Bosonize.Core.Ch14Mandelstam"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04DensityKinematics",
+          "hash": "a5d334b333fc14af1a25e4289b2f1fadcf7cd59d3a88b42f25f0267a2b2a7310",
+          "text": "import Bosonize.Core.A04DensityKinematics"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch09DensityModes",
+          "hash": "562ff9528bacf9bb407c415961ca941a9fbf2a252374adaf38fed3dcd4a0e4f8",
+          "text": "import Bosonize.Core.Ch09DensityModes"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04CurrentMargins",
+          "hash": "992c0c060514a94d0df12d88cbfe7e3b6f2b8bbf99c8b443aaec9fbd7947f491",
+          "text": "import Bosonize.Core.A04CurrentMargins"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch10Heisenberg",
+          "hash": "8eea16e134d1a504ebcaa5b2a754a35615d088ca7bee226396f9a4a1cbaa86f5",
+          "text": "import Bosonize.Core.Ch10Heisenberg"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A04PartitionCombinatorics",
+          "hash": "92098a14d8b1c0c0a5fd6a416dfdb6125a330f2ffcf1aef9828871cf05099b74",
+          "text": "import Bosonize.Core.A04PartitionCombinatorics"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch11HaldaneCompleteness",
+          "hash": "a4af2350d47ea8cea8b433da154a6dcd4a9992446c540c3fca951c58db6ca360",
+          "text": "import Bosonize.Core.Ch11HaldaneCompleteness"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch12Sugawara",
+          "hash": "cd329528de6836302b13a2facbe6d9416cc90d483321af7e21c55f273dede117",
+          "text": "import Bosonize.Core.Ch12Sugawara"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A07InteractionsAndBogoliubov",
+          "hash": "18b97ea887123f874311ac707fa689c7ceef8fc7da66337cbf59cebaaaeda33c",
+          "text": "import Bosonize.Core.A07InteractionsAndBogoliubov"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A10DiscreteSchriefferWolff",
+          "hash": "a2c37eec528d6d2080efc10de7291b7482fde1825a2a84cc3268d7495425a4a1",
+          "text": "import Bosonize.Core.A10DiscreteSchriefferWolff"
         },
         {
           "kind": "namespace",
@@ -10567,49 +11035,49 @@
         "Bosonize.Ch17.concrete_luttinger_witness": {
           "kind": "theorem",
           "hash": "d6a71fad64a0686ef9e4e65308030fa34219dfd32d37e5035f981a67d884182c",
-          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "ctx": "49ef0ffb2e80d351c0e69f63739adad1b7431782dbc0becb2afb9c250d187bf5",
           "text": "theorem concrete_luttinger_witness : let Ns : Fin 2 \u2192 \u2124 := fun _ => 0 A05.admissible 8 Ns \u2227 A06.branchMargins 8 2 2 Ns Ch16.standardBranches \u2227 sugawaraMargin 8 2 2 Ns Ch16.standardBranches \u2227 A05.groundKet 8 Ns \u2208 A05.jointBudget 8 Ns 2 \u2227 A05.groundKet 8 Ns \u2260 0 \u2227 luttingerBosonizedHamiltonian 8 2 1 (6 * Real.pi) (6 * Real.pi) (canonicalMu 8 1) Ch16.standardBranches (A05.groundKet 8 Ns) \u2260 0"
         },
         "Bosonize.Ch17.free_fermion_eq_sugawara_on_budget": {
           "kind": "theorem",
           "hash": "5cfff56cd3c39e999bee2f08f3d7e3bb5cf077a8fc15bba13759ae6043436cbe",
-          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "ctx": "49ef0ffb2e80d351c0e69f63739adad1b7431782dbc0becb2afb9c250d187bf5",
           "text": "theorem free_fermion_eq_sugawara_on_budget (h M K : \u2115) (hh : 0 < h) (vF : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hSug : sugawaraMargin h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : freeFermionKinetic h vF branches v = freeSugawaraKinetic h M vF branches v"
         },
         "Bosonize.Ch17.luttinger_chosen_eq_bosonized": {
           "kind": "theorem",
           "hash": "8ef423eb9b880dfd2f5db39d3557c60efa62cf81f0f8fc6281890573a9fffb99",
-          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "ctx": "49ef0ffb2e80d351c0e69f63739adad1b7431782dbc0becb2afb9c250d187bf5",
           "text": "theorem luttinger_chosen_eq_bosonized (h M : \u2115) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) : luttingerChosenModel h M vF g4 g2 mu branches = luttingerBosonizedHamiltonian h M vF g4 g2 mu branches"
         },
         "Bosonize.Ch17.luttinger_hamiltonian_canonical_mu_on_budget": {
           "kind": "theorem",
           "hash": "f43e03b72864570db6eab022f41f2262b2e4c2ad83f00cc80aee7dde3b4987ff",
-          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "ctx": "49ef0ffb2e80d351c0e69f63739adad1b7431782dbc0becb2afb9c250d187bf5",
           "text": "theorem luttinger_hamiltonian_canonical_mu_on_budget (h M K : \u2115) (hh : 0 < h) (vF g4 g2 : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hSug : sugawaraMargin h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : luttingerFermionChosenModel h M vF g4 g2 (canonicalMu h vF) branches v = luttingerOscillatorOp h M vF g4 g2 branches v + (symmetricZeroModeScalar h vF g4 g2 branches Ns : \u2102) \u2022 v"
         },
         "Bosonize.Ch17.luttinger_hamiltonian_on_budget": {
           "kind": "theorem",
           "hash": "53b663f8781fe70500c992d4e74e5b7f71bf67fe45b06ee69ad9a4680db3491f",
-          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "ctx": "49ef0ffb2e80d351c0e69f63739adad1b7431782dbc0becb2afb9c250d187bf5",
           "text": "theorem luttinger_hamiltonian_on_budget (h M K : \u2115) (hh : 0 < h) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hSug : sugawaraMargin h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : luttingerFermionChosenModel h M vF g4 g2 mu branches v = luttingerOscillatorOp h M vF g4 g2 branches v + (zeroModeEnergyScalar h vF g4 g2 mu branches Ns : \u2102) \u2022 v"
         },
         "Bosonize.Ch17.luttinger_raw_intra_on_budget": {
           "kind": "theorem",
           "hash": "6947f701eb84ae4bf8beb0d722d3e5f3ad8d8dc1c8798c3865baf25dceee92cf",
-          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "ctx": "49ef0ffb2e80d351c0e69f63739adad1b7431782dbc0becb2afb9c250d187bf5",
           "text": "theorem luttinger_raw_intra_on_budget (h M K : \u2115) (hh : 0 < h) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hSug : sugawaraMargin h M K Ns branches) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : (freeFermionKinetic h vF branches + A07Interactions.rawIntraBranch h M g4 branches + A07Interactions.pairingInterBranch h M g2 branches - chemicalPotentialOp h mu branches) v = luttingerOscillatorOp h M vF g4 g2 branches v + (zeroModeEnergyScalar h vF g4 g2 mu branches Ns : \u2102) \u2022 v - (((g4 : \u2102) / (2 * ((2 * h : \u2115) : \u2102))) \u2022 (A07Interactions.seaWickCorrection h M branches.rightSpecies + A07Interactions.seaWickCorrection h M branches.leftSpecies)) v"
         },
         "Bosonize.Ch17.zero_mode_op_on_budget": {
           "kind": "lemma",
           "hash": "ab5e250e6b4b11815bcc50bc1238f16aac6bf097c233bebf9c5c9fa10edf54ad",
-          "ctx": "328224ad79153bf2fb643d55ad6a0d0a2a1f9799aebfa0c63739a318faa56e7a",
+          "ctx": "49ef0ffb2e80d351c0e69f63739adad1b7431782dbc0becb2afb9c250d187bf5",
           "text": "lemma zero_mode_op_on_budget (h K : \u2115) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : zeroModeEnergyOp h vF g4 g2 mu branches v = (zeroModeEnergyScalar h vF g4 g2 mu branches Ns : \u2102) \u2022 v"
         },
         "Bosonize.Ch17.zero_mode_scalar_canonical_mu": {
           "kind": "lemma",
           "hash": "b4c84751e2abc6ff07d0cd539154540e7b3921d85f35977453d072719caba6a2",
-          "ctx": "e6822ede3769c0760f558a98a402c89901aebd46cbf8f26e185fd4592e90a7f0",
+          "ctx": "74a0be551469cb69a3ba058894d140c04e7156dc63fe846c32e1b368b74816c8",
           "text": "lemma zero_mode_scalar_canonical_mu {\u03c3 : Type*} (h : \u2115) (vF g4 g2 : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : zeroModeEnergyScalar h vF g4 g2 (canonicalMu h vF) branches Ns = symmetricZeroModeScalar h vF g4 g2 branches Ns"
         }
       }

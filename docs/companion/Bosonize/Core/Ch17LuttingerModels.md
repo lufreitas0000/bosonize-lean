@@ -1,66 +1,48 @@
-# A07InteractionsAndBogoliubov: Phase B complete; Phase C preparation
+# Ch17LuttingerModels: Phase B complete; Phase C preparation
 
-Status: 18 proved contracts and 34 complete data declarations in this module.
-All accepted proofs have fresh standard-axiom evidence. Phase B finish `85ab5af`:
-[actual runner evidence](../../../../note/webllm/ch17/phaseB-ch17_cycle_b_e8f6ec96.md).
-Accepted staging source SHA-256: `6fb81eaa54ad1b4604a379f69a4462d799a8d31df62df1cb0870602723f19d03`.
-Planned promoted source: [A07InteractionsAndBogoliubov.lean](../../../../Bosonize/Core/A07InteractionsAndBogoliubov.lean).
-Pedagogical mapping: [corresponding reference note](../../../../notes/appendices/a07_interactions_and_bogoliubov.md).
+Status: 8 proved contracts and 14 complete data declarations in this module.
+All accepted proofs have fresh standard-axiom evidence. Phase B finish `f8bb8f6`:
+[actual runner evidence](../../../../note/webllm/ch17/phaseB-ch17_cycle_b_0ed0c297.md).
+Accepted staging source SHA-256: `d535a4cdd406507170e1b202b59dde26e9f33ca33d5f34492b6414a369e65f2e`.
+Planned promoted source: [Ch17LuttingerModels.lean](../../../../Bosonize/Core/Ch17LuttingerModels.lean).
+Pedagogical mapping: [corresponding reference note](../../../../notes/md/ch17_LL_Models.md).
 The links use the planned `docs/companion/Bosonize/Core/` depth for migration.
 The existing staged source and mathematical interfaces remain authoritative;
 source hashes after import/path migration will be recorded separately.
 
 ## Exact proved declaration mapping
 
-Every row below denotes a complete proof in `Bosonize.A07Interactions`. Exact
+Every row below denotes a complete proof in `Bosonize.Ch17`. Exact
 signatures, carrier instances and hypotheses are preserved in the linked source.
 No historical sketch is substituted for its compiler-checked contract.
 
 | Declaration | Realization and dependency scope |
 | --- | --- |
-| `hyperbolic_params_exist` | Construct positive square-root parameters under abs(v2)<v1; exact scalar identities. |
-| `sea_normal_bilinear_diag` | CAR diagonal sea ordering, including occupied sea labels. |
-| `sea_normal_rho_nonzero` | Nonzero transfers have distinct band endpoints; sea subtraction vanishes. |
-| `sea_normal_rho_zero` | Zero transfer is charge: diagonal reindexing and occupation/sea counts. |
-| `quartic_sea_wick_identity` | Stable sea-word ordering and exact CAR contraction with valid nonwrapping pairs. |
-| `quartic_sea_wick_zero_repeated` | Repeated-index nilpotence and the matching contraction identity. |
-| `species_raw_intra_eq_current_sub_correction` | Regroup signed transfers; retain finite edge commutators; count accessible distances. |
-| `raw_intra_eq_current_sub_correction` | Sum the two species with the exact negative Q correction and g4/(2L). |
-| `sea_wick_correction_ground_zero` | Actual zero-charge ground occupations annihilate each correction summand. |
-| `sea_wick_correction_full_band` | Centered-band bounds saturate minima for M≥h−1; Q=2P−N. |
-| `raw_inter_eq_hopping` | Zero transfer plus paired signed modes gives hopping, without substituting pairing. |
-| `hopping_mode_kills_ground` | Rightmost lowering and distinct-species commuting kill the ground. |
-| `pairing_mode_ground_nonzero` | Two restricted CCR substitutions recover a nonzero multiple of the ground. |
-| `hopping_mode_self_adjoint` | Actual adjoint reverses products and exchanges hopping summands. |
-| `pairing_mode_self_adjoint` | Actual adjoint plus global cross-species commuting restores pairing order. |
-| `bogoliubov_creator_adjoint` | Real scalars and current adjoints give the stated annihilator. |
-| `bogoliubov_expansion_on_budget` | Four ordered pairings yield the positive additive constant 2u s²m on the input budget. |
-| `bogoliubov_ccr_on_budget` | Both branch margins give [annihilator,creator]=m on the same input when c²−s²=1. |
+| `zero_mode_scalar_canonical_mu` | Exact cancellation of linear charges at canonical chemical potential, including h=0 scalar conventions. |
+| `luttinger_chosen_eq_bosonized` | Ambient algebraic equality for the chosen current/pairing model with exact coefficients. |
+| `zero_mode_op_on_budget` | Charge observables act as specified Ns scalars on the actual joint budget. |
+| `free_fermion_eq_sugawara_on_budget` | Full-band quartic antisymmetry cancellation gives a global finite identity; lowering removes modes above K, preserving the sharper frozen margin. |
+| `luttinger_hamiltonian_on_budget` | Combine the free bridge, chosen-model equality and exact zero-mode action. |
+| `luttinger_hamiltonian_canonical_mu_on_budget` | The preceding budget theorem with the proved symmetric zero-mode scalar. |
+| `luttinger_raw_intra_on_budget` | Retain the finite Q subtraction when replacing chosen current intra-branch interaction by raw quartic interaction. |
+| `concrete_luttinger_witness` | h=8,M=K=2,zero charges; two lowering currents isolate a nonzero mode-one ground pair. |
 
-The carrier is the existing finite multispecies occupation Fock space with
-ambient endomorphisms. Sea ordering operates on ordered syntax, not on arbitrary
-post-evaluation operator representatives. `validPairs` uses actual signed band
-labels with no modular wrap. Raw intra-branch interaction differs from the chosen
-current interaction by its exact one-body correction; raw opposite-transfer
-inter-branch interaction gives hopping. Pairing is a distinct chosen model.
-Restricted Bogoliubov results retain both branch margins
-`2M+K+|Ns ν|≤h`, the same input budget, product order, and the additive constant.
-No global scalar CCR or unitary implementation of an infinite Bogoliubov transform
-is claimed.
+The sharp bridge preserves `K≤M` and `K+|Ns ν|<h` for the two selected species.
+It does not infer the stronger legacy Core margin `2K+|Ns ν|≤h`. Instead it proves
+quartic physical-creator antisymmetry and pairs all momentum-conserving terms
+in the full-band raw interaction to cancel them. Combining the accepted finite
+correction identity with `Q=2P−N` gives the global finite Sugawara identity.
+Modes above the actual input's total excitation budget vanish by rightmost
+lowering, permitting the cutoff M. Frozen Core is unchanged.
 
-### Quartic resource wrapper audit
-
-`quartic_sea_wick_identity` uses a theorem-local `run_tac` wrapper around ordinary
-CAR tactics inside `as_aux_lemma`. It temporarily sets the elaborator context's
-`maxHeartbeats` to `800000000` internal units (800,000 public heartbeat units),
-saves the initial heartbeat counter and restores it in `finally`. The generated
-proof term still passes the ordinary Lean kernel and standard-axiom audit.
-The wrapper introduces no axiom, `sorryAx`, `native_decide`, linter suppression,
-new public source-level declaration, or changed frozen header/context. `characters` reviewed
-the mechanism and CAR proof; primary inspected restoration and repeated default
-module compilation and the full warning-as-error 107-name audit. This resource
-adjustment is recorded explicitly rather than described as an unadjusted
-individual-tactic heartbeat bound.
+The model uses chosen current intra-branch and pairing inter-branch interactions.
+The raw intra-branch theorem subtracts Q; it does not identify raw hopping with
+pairing. Chemical potential cancels the linear zero-mode term exactly. The
+concrete witness is not merely a nonempty budget: a local proof keeps its species
+carrier abstract and applies the two branch lowering currents to isolate a
+nonzero mode-one pair. It then specializes to h=8, M=K=2, zero charges, and the
+actual distinct `Fin 2` branches. No physical-channel equivalence, full spectrum,
+analytic continuum theory, or CH18 diagonalization theorem is asserted.
 
 ## Verification, review and Phase C boundary
 
@@ -89,7 +71,7 @@ Phase A-only status sentences are dated historical evidence; current proof
 status is the accepted Phase B record above. Its cross-module theory paragraphs
 are retained for provenance rather than treated as this module's declaration map.
 
-# BosonizeStubs/A07InteractionsAndBogoliubov.lean
+# Bosonize/Core/Ch17LuttingerModels.lean
 
 ### 1. Quartic Sea-Wick Ordering and the Finite Diagonal Correction $Q_{M,\nu}$
 On the finite band $\Lambda^* = \mathrm{Band}(2h)$, the Dirac sea is $S_0 = \{k \in \Lambda^* : k \le 0\}$ with indicator $s_k = 1_{k \le 0}$. Defining sea quasiparticle annihilators $q_k = c_k$ ($k > 0$) and $q_k = c_k^\dagger$ ($k \le 0$), every $q_k$ annihilates the Dirac sea ket $\vert{}\Omega\rangle = \vert{}\vec{0}\rangle_0$.
@@ -145,4 +127,7 @@ Phase A integrated after user review. Theorems remain unproved.
 Phase A finish evidence: `note/webllm/ch17/phaseA-ch17_cycle_a_fb57086e.md`.
 
 
-Phase B finish evidence: `note/webllm/ch17/phaseB-ch17_cycle_b_e8f6ec96.md`.
+Phase B finish evidence: `note/webllm/ch17/phaseB-ch17_cycle_b_0ed0c297.md`.
+
+
+Phase C finish evidence: `note/webllm/ch17/phaseC-ch17_cycle_c_fefac95c.md`.

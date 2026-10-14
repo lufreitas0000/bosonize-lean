@@ -2,21 +2,140 @@
   "chapter": 17,
   "modules": [
     {
-      "path": "BosonizeStubs/A07InteractionsAndBogoliubov.lean"
+      "path": "Bosonize/Core/A07InteractionsAndBogoliubov.lean"
     },
     {
-      "path": "BosonizeStubs/A10DiscreteSchriefferWolff.lean"
+      "path": "Bosonize/Core/A10DiscreteSchriefferWolff.lean"
     },
     {
-      "path": "BosonizeStubs/Ch17LuttingerModels.lean"
+      "path": "Bosonize/Core/Ch17LuttingerModels.lean"
     }
   ],
-  "phase": "B_complete",
+  "phase": "C_complete",
+  "migration": [
+    {
+      "from": "BosonizeStubs/A07InteractionsAndBogoliubov.lean",
+      "to": "Bosonize/Core/A07InteractionsAndBogoliubov.lean",
+      "source_sha256": "1e96db0038b2ae7f012e16d1f6d5a98b43b33661d31f4220cdf3399530fca59f",
+      "old_imports": [
+        "import Bosonize"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.A07FiniteNormalOrdering",
+        "import Bosonize.Core.Ch16FieldHamiltonian",
+        "import Bosonize.Core.A06ChiralFields",
+        "import Bosonize.Core.Ch15DualFields",
+        "import Bosonize.Core.Ch01LatticeBand",
+        "import Bosonize.Core.Ch02UmbralCalculus",
+        "import Bosonize.Core.A01FourierCharacters",
+        "import Bosonize.Core.Ch03Fourier",
+        "import Bosonize.Core.A02CARHilbert",
+        "import Bosonize.Core.Ch04CARFock",
+        "import Bosonize.Core.Ch05Fermions",
+        "import Bosonize.Core.Ch06LocalNet",
+        "import Bosonize.Core.Ch06Ext",
+        "import Bosonize.Core.A03EnergyBudgets",
+        "import Bosonize.Core.Ch07VacuumBudget",
+        "import Bosonize.Core.Ch08Boson",
+        "import Bosonize.Core.A05MultiSpecies",
+        "import Bosonize.Core.Ch13KleinFactors",
+        "import Bosonize.Core.A05FiniteExponentials",
+        "import Bosonize.Core.Ch14Mandelstam",
+        "import Bosonize.Core.A04DensityKinematics",
+        "import Bosonize.Core.Ch09DensityModes",
+        "import Bosonize.Core.A04CurrentMargins",
+        "import Bosonize.Core.Ch10Heisenberg",
+        "import Bosonize.Core.A04PartitionCombinatorics",
+        "import Bosonize.Core.Ch11HaldaneCompleteness",
+        "import Bosonize.Core.Ch12Sugawara"
+      ]
+    },
+    {
+      "from": "BosonizeStubs/A10DiscreteSchriefferWolff.lean",
+      "to": "Bosonize/Core/A10DiscreteSchriefferWolff.lean",
+      "source_sha256": "7ea9ac1c592eed76fc9349ff63592363c2f9efdb0876dc0c93ddf24e9f74b33f",
+      "old_imports": [
+        "import Bosonize",
+        "import BosonizeStubs.A07InteractionsAndBogoliubov"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.A07FiniteNormalOrdering",
+        "import Bosonize.Core.Ch16FieldHamiltonian",
+        "import Bosonize.Core.A06ChiralFields",
+        "import Bosonize.Core.Ch15DualFields",
+        "import Bosonize.Core.Ch01LatticeBand",
+        "import Bosonize.Core.Ch02UmbralCalculus",
+        "import Bosonize.Core.A01FourierCharacters",
+        "import Bosonize.Core.Ch03Fourier",
+        "import Bosonize.Core.A02CARHilbert",
+        "import Bosonize.Core.Ch04CARFock",
+        "import Bosonize.Core.Ch05Fermions",
+        "import Bosonize.Core.Ch06LocalNet",
+        "import Bosonize.Core.Ch06Ext",
+        "import Bosonize.Core.A03EnergyBudgets",
+        "import Bosonize.Core.Ch07VacuumBudget",
+        "import Bosonize.Core.Ch08Boson",
+        "import Bosonize.Core.A05MultiSpecies",
+        "import Bosonize.Core.Ch13KleinFactors",
+        "import Bosonize.Core.A05FiniteExponentials",
+        "import Bosonize.Core.Ch14Mandelstam",
+        "import Bosonize.Core.A04DensityKinematics",
+        "import Bosonize.Core.Ch09DensityModes",
+        "import Bosonize.Core.A04CurrentMargins",
+        "import Bosonize.Core.Ch10Heisenberg",
+        "import Bosonize.Core.A04PartitionCombinatorics",
+        "import Bosonize.Core.Ch11HaldaneCompleteness",
+        "import Bosonize.Core.Ch12Sugawara",
+        "import Bosonize.Core.A07InteractionsAndBogoliubov"
+      ]
+    },
+    {
+      "from": "BosonizeStubs/Ch17LuttingerModels.lean",
+      "to": "Bosonize/Core/Ch17LuttingerModels.lean",
+      "source_sha256": "9355fcc40f2ec1e5d9ac5ef07065ee8d03a957d8329ef9d5d528e7f1f2e3223c",
+      "old_imports": [
+        "import Bosonize",
+        "import BosonizeStubs.A07InteractionsAndBogoliubov",
+        "import BosonizeStubs.A10DiscreteSchriefferWolff"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.A07FiniteNormalOrdering",
+        "import Bosonize.Core.Ch16FieldHamiltonian",
+        "import Bosonize.Core.A06ChiralFields",
+        "import Bosonize.Core.Ch15DualFields",
+        "import Bosonize.Core.Ch01LatticeBand",
+        "import Bosonize.Core.Ch02UmbralCalculus",
+        "import Bosonize.Core.A01FourierCharacters",
+        "import Bosonize.Core.Ch03Fourier",
+        "import Bosonize.Core.A02CARHilbert",
+        "import Bosonize.Core.Ch04CARFock",
+        "import Bosonize.Core.Ch05Fermions",
+        "import Bosonize.Core.Ch06LocalNet",
+        "import Bosonize.Core.Ch06Ext",
+        "import Bosonize.Core.A03EnergyBudgets",
+        "import Bosonize.Core.Ch07VacuumBudget",
+        "import Bosonize.Core.Ch08Boson",
+        "import Bosonize.Core.A05MultiSpecies",
+        "import Bosonize.Core.Ch13KleinFactors",
+        "import Bosonize.Core.A05FiniteExponentials",
+        "import Bosonize.Core.Ch14Mandelstam",
+        "import Bosonize.Core.A04DensityKinematics",
+        "import Bosonize.Core.Ch09DensityModes",
+        "import Bosonize.Core.A04CurrentMargins",
+        "import Bosonize.Core.Ch10Heisenberg",
+        "import Bosonize.Core.A04PartitionCombinatorics",
+        "import Bosonize.Core.Ch11HaldaneCompleteness",
+        "import Bosonize.Core.Ch12Sugawara",
+        "import Bosonize.Core.A07InteractionsAndBogoliubov",
+        "import Bosonize.Core.A10DiscreteSchriefferWolff"
+      ]
+    }
+  ],
   "pending_modules": [],
   "sources": {
-    "BosonizeStubs/A07InteractionsAndBogoliubov.lean": "6fb81eaa54ad1b4604a379f69a4462d799a8d31df62df1cb0870602723f19d03",
-    "BosonizeStubs/A10DiscreteSchriefferWolff.lean": "b77a079f426943fa6fb5609316dfdb645371c88c48be82875ad480094990594c",
-    "BosonizeStubs/Ch17LuttingerModels.lean": "d535a4cdd406507170e1b202b59dde26e9f33ca33d5f34492b6414a369e65f2e"
+    "Bosonize/Core/A07InteractionsAndBogoliubov.lean": "1e96db0038b2ae7f012e16d1f6d5a98b43b33661d31f4220cdf3399530fca59f",
+    "Bosonize/Core/A10DiscreteSchriefferWolff.lean": "7ea9ac1c592eed76fc9349ff63592363c2f9efdb0876dc0c93ddf24e9f74b33f",
+    "Bosonize/Core/Ch17LuttingerModels.lean": "9355fcc40f2ec1e5d9ac5ef07065ee8d03a957d8329ef9d5d528e7f1f2e3223c"
   },
   "theorem_contracts": 37
 }
