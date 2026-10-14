@@ -34,7 +34,7 @@ The four user-supplied Claude candidates from attachment 898ba9d9-956d-4b85-9b44
 
 Strict stub guard against the committed packet baseline passes: 872 statements and 867 frozen commands. Core guard passes for all 27 Core source files. Whole Phase B warning-as-error verification and runner acceptance have NOT been attempted because five A07 stubs remain. A10 and CH17 are untouched Phase A stubs (11 and 8 obligations respectively). No Phase C work occurred.
 
-Compiler and axiom evidence: `phaseB-checkpoint-a07-compiler.log`. Original exploratory logs, snapshots and proof fragments remain under the candidate worktree's scratch directory and are copied to the flat packet folder with a local-phaseB- prefix.
+Compiler and axiom evidence is embedded below. Original exploratory logs, snapshots and proof fragments remain under the candidate worktree's scratch directory and are copied to the flat packet folder with a local-phaseB- prefix.
 
 ## Remaining A07 obligations and exact next actions
 
@@ -49,3 +49,43 @@ No mathematical defect was established in these contracts; proof infrastructure 
 ## Usage pause
 
 Live allowance reported 91% used in the five-hour window (9% remaining), 46% weekly used (54% remaining). The formalizer policy requires stopping new proof work below 10% five-hour or 5% weekly remaining. All agents stopped new proof search and saved their work. Reported five-hour reset: October 14, 2026 at 01:45:22 America/Fortaleza. No reset credit was spent and no automatic wakeup was scheduled. On resumption first recheck usage, primary main/packet identity, candidate checkpoint and strict locks; do not discard this branch or begin from the original placeholders.
+
+## Fresh combined compiler and axiom output
+
+```text
+/home/lucas/Projects/.packets/worktrees/ch17-phase-b/scratch/checkpoint-audit.lean:274:6: warning: declaration uses `sorry`
+/home/lucas/Projects/.packets/worktrees/ch17-phase-b/scratch/checkpoint-audit.lean:277:6: warning: declaration uses `sorry`
+/home/lucas/Projects/.packets/worktrees/ch17-phase-b/scratch/checkpoint-audit.lean:313:6: warning: declaration uses `sorry`
+/home/lucas/Projects/.packets/worktrees/ch17-phase-b/scratch/checkpoint-audit.lean:329:6: warning: declaration uses `sorry`
+/home/lucas/Projects/.packets/worktrees/ch17-phase-b/scratch/checkpoint-audit.lean:332:6: warning: declaration uses `sorry`
+'Bosonize.A07Interactions.hyperbolic_params_exist' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.sea_normal_bilinear_diag' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.sea_normal_rho_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.sea_normal_rho_zero' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.quartic_sea_wick_identity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.quartic_sea_wick_zero_repeated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.species_raw_intra_eq_current_sub_correction' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'Bosonize.A07Interactions.raw_intra_eq_current_sub_correction' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'Bosonize.A07Interactions.sea_wick_correction_ground_zero' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'Bosonize.A07Interactions.sea_wick_correction_full_band' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'Bosonize.A07Interactions.raw_inter_eq_hopping' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.hopping_mode_kills_ground' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.pairing_mode_ground_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.hopping_mode_self_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.pairing_mode_self_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.bogoliubov_creator_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.bogoliubov_expansion_on_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bosonize.A07Interactions.bogoliubov_ccr_on_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
