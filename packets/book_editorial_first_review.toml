@@ -1,0 +1,18 @@
+version = 1
+id = "book-editorial-first-review"
+repo = ".."
+phase = "C"
+timeout = 120
+max_packet_bytes = 180000
+task = """
+Perform the first global editorial proof-read defined in docs/editorial/FIRST_PASS_BRIEF.md.
+Read STYLE_AND_SCOPE.md first, then the published sources listed in source_inventory.json.
+This is one bounded review session, not a chapter rewrite or Lean Phase C promotion.
+Write ONLY docs/editorial/first_review.md, using the seven required headings and source anchors.
+Read the full published chapter text from the repository: do not review only this prompt.
+No installation, Lean compilation, extra reports, external agent calls, PR creation or source edits.
+Run python3 scripts/verify_editorial_report.py on your report before finishing.
+"""
+targets = ["docs/editorial/first_review.md"]
+context = ["docs/editorial/STYLE_AND_SCOPE.md", "docs/editorial/FIRST_PASS_BRIEF.md", "docs/editorial/source_inventory.json", "notes/latex/main.tex", "notes/latex/frontmatter/notation.tex", "notes/latex/bibliography.tex", "docs/webllm/JULES_REVISION_PLAN.md"]
+verify = [["python3", "scripts/verify_editorial_report.py"]]
