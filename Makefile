@@ -45,7 +45,8 @@ help:
 	@echo 'verify-c PROPOSAL=docs/webllm/drafts/task.md (Markdown structure only)'
 	@echo 'audit-data / audit-axioms TARGETS="path/to/Module.lean ..." (fresh import-based axiom output)'
 	@echo 'test-webllm (verifier regression tests)'
-	@echo 'Automated cycle: make lean-start-phaseB 15 / make lean-finish-phaseB 15 (also A/C)'
+	@echo 'Automated cycle: make lean-start-phaseB 18 / make lean-finish-phaseB 18 (also A/C)'
+	@echo 'Per-theorem route (run in the hub): make api-prove-file FILE=BosonizeStubs/X.lean; make api-assemble FILE=... CHAPTER=N'
 verify-a:
 	@test -n "$(PROPOSAL)" || { echo 'Set PROPOSAL=path.md'; exit 2; }
 	@python3 scripts/webllm/verify_phase_a.py "$(PROPOSAL)"

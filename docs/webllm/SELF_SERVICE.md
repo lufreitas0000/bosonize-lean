@@ -37,34 +37,45 @@ make lean-finish-phaseC 16
 `make lean-start-phaseA CHAPTER=16` is equivalent to the positional form.
 Run one cycle command at a time. Supported chapter presets are 15–21.
 
-## Start now: CH15 Phase B
+## Start now: CH18 Phase B
 
-CH15 Phase A is already integrated and frozen. Its 16 A06 support contracts and
-seven CH15 contracts still need proofs. Start here:
+CH15–17 are complete and promoted. CH18 Phase A is frozen (34 theorem
+contracts) and Phase B was started on 2026-10-15. Two equivalent routes produce
+the Phase B response; finishing is the same.
+
+**Browser route:** `make lean-start-phaseB 18` prints the packet; send it,
+review and download the response.
+
+**API/agent route (from the hub):** proofs are produced one theorem at a time and
+accumulate as verified fragments (each compiled with only the standard axioms):
 
 ```bash
-make lean-start-phaseB 15
+make api-prove-file FILE=BosonizeStubs/Ch18Bogoliubov.lean   # OpenAI pools → Jules → Gemini fallback
+make jules-collect                                          # verify finished Jules sessions
+make api-theorem FILE=BosonizeStubs/Ch18Bogoliubov.lean NAME=concrete_bogoliubov_witness CONJUNCTS=1 ALIAS=api-pro
+make api-assemble FILE=BosonizeStubs/Ch18Bogoliubov.lean CHAPTER=18   # delivers response.json
 ```
 
-After reviewing/downloading the response:
+Status: 33 of 34 theorems proved; `concrete_bogoliubov_witness` has 11 of 12
+parts proved (part 8 pending). Then, for either route:
 
 ```bash
-make lean-finish-phaseB 15
+make lean-finish-phaseB 18
 ```
 
-The first B request selects A06 automatically. After acceptance, another
-`make lean-start-phaseB 15` selects CH15 automatically. Once both batches are
-complete, the runner directs you to `make lean-start-phaseC 15`. CH16 Phase A
-starts only after CH15 is promoted/frozen.
+Finish runs the full Phase B verifier, CI, locks and evidence recording, exactly
+as for a browser response. Afterwards the runner directs you to
+`make lean-start-phaseC 18`. Tracked non-blocking review items are in
+[review_warnings.md](review_warnings.md).
 
 ## Stable files; no intermediate-name bookkeeping
 
-For CH15 B, the convenient location is always:
+For CH18 B, the convenient location is always:
 
 ```text
-/home/lucas/Projects/.packets/current/ch15/phaseB/packet.md
-/home/lucas/Projects/.packets/current/ch15/phaseB/response.json
-/home/lucas/Projects/.packets/current/ch15/phaseB/feedback.md
+/home/lucas/Projects/.packets/current/ch18/phaseB/packet.md
+/home/lucas/Projects/.packets/current/ch18/phaseB/response.json
+/home/lucas/Projects/.packets/current/ch18/phaseB/feedback.md
 ```
 
 Replace only the chapter number and phase letter when opening another phase.
