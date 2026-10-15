@@ -11081,6 +11081,408 @@
           "text": "lemma zero_mode_scalar_canonical_mu {\u03c3 : Type*} (h : \u2115) (vF g4 g2 : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : zeroModeEnergyScalar h vF g4 g2 (canonicalMu h vF) branches Ns = symmetricZeroModeScalar h vF g4 g2 branches Ns"
         }
       }
+    },
+    "BosonizeStubs/Ch18Bogoliubov.lean": {
+      "commands": [
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.A07InteractionsAndBogoliubov",
+          "hash": "18b97ea887123f874311ac707fa689c7ceef8fc7da66337cbf59cebaaaeda33c",
+          "text": "import Bosonize.Core.A07InteractionsAndBogoliubov"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch16FieldHamiltonian",
+          "hash": "8edb36728e68b34125d97ad280dd8fff778e399ef69808ef4a26fbc6153e215b",
+          "text": "import Bosonize.Core.Ch16FieldHamiltonian"
+        },
+        {
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch17LuttingerModels",
+          "hash": "8d50a8080a7fb9df29e69a9200c7a70bb844143ce88777d2b210691c2743836d",
+          "text": "import Bosonize.Core.Ch17LuttingerModels"
+        },
+        {
+          "kind": "namespace",
+          "label": "namespace Bosonize.Ch18",
+          "hash": "68d799f4685ff67f46ec529104c65179ba04339995c6692cd18ed02a84b4bb2a",
+          "text": "namespace Bosonize.Ch18"
+        },
+        {
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "kind": "section",
+          "label": "section Scalars",
+          "hash": "8913899710be798e01e0c72e8f4df8345336e786104c6aa6a77c6db31679b256",
+          "text": "section Scalars"
+        },
+        {
+          "kind": "structure",
+          "label": "structure Bosonize.Ch18.HyperbolicPair",
+          "hash": "8dabb4ee155db655b9f1a3a22a044352070dc8f7cf5d44ce448cfccdce106a7d",
+          "text": "structure HyperbolicPair where\n  c : \u211d\n  s : \u211d\n  hyperbolic_id : c ^ 2 - s ^ 2 = 1"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.HyperbolicPair.ofParams",
+          "hash": "dbacca28b94fbd975012026ae226b11860568930410e80ce8dc7389741a6fcc3",
+          "text": "def HyperbolicPair.ofParams {v1 v2 : \u211d}\n    (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : HyperbolicPair where\n  c := hp.c\n  s := hp.s\n  hyperbolic_id := hp.hyperbolic_id"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.luttingerG",
+          "hash": "2f15b5c77502c008306889ee31648faf68d96d35bd7194e629ea77bc33f1c2a3",
+          "text": "def luttingerG (hp : HyperbolicPair) : \u211d :=\n  (hp.c - hp.s) ^ 2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.luttingerGInv",
+          "hash": "15ad45fcd8fd1150b74f8277bedcefea78be1526df18ed4dbc187df489618ca3",
+          "text": "def luttingerGInv (hp : HyperbolicPair) : \u211d :=\n  (hp.c + hp.s) ^ 2"
+        },
+        {
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.Ch18.LuttingerParams",
+          "hash": "8273c280977ea309f841d7b2028e0862ea3d5f0442cc8798491b8df7c9f39e94",
+          "text": "abbrev LuttingerParams (v1 v2 : \u211d) := Bosonize.A07Interactions.HyperbolicParams v1 v2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.LuttingerParams.toHyperbolicPair",
+          "hash": "c5d31ae6ca5861eab67b70284b7310d48c17f6e3823f7dcc1ca142ea09134216",
+          "text": "def LuttingerParams.toHyperbolicPair {v1 v2 : \u211d} (lp : LuttingerParams v1 v2) :\n    HyperbolicPair :=\n  HyperbolicPair.ofParams lp"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.vacuumShiftScalar",
+          "hash": "67ddf81ae9e931638434d5ba54ed8e16690ebc18f3f3cc69c4591a9fc8cce1ba",
+          "text": "noncomputable def vacuumShiftScalar (h M : \u2115) (u s : \u211d) : \u211d :=\n  ((2 * Real.pi) / ((2 * h : \u2115) : \u211d)) *\n    \u2211 m \u2208 Finset.Icc 1 M, (2 * u * s ^ 2 * (m : \u211d))"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteV1",
+          "hash": "03b68dd7840d75a2e821073abe5794814a83e2c89e80cf863faada1808151ad9",
+          "text": "def concreteV1 : \u211d := 17"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteV2",
+          "hash": "fc7d5bb808ffe367ad98d4009e4aa7661e20fabbf40ea6ae28a6a3a96e0a6db4",
+          "text": "def concreteV2 : \u211d := 15"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteVF",
+          "hash": "31dc1b17f8aff454ead44f97a8b16eadbcdb5ac3e2a9841737df3027d3fdd16b",
+          "text": "noncomputable def concreteVF : \u211d := 1"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteG4",
+          "hash": "223a62f5f58714f269e614044d998aa34e643483d059b3d278392db808aa7198",
+          "text": "noncomputable def concreteG4 : \u211d := 32 * Real.pi"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteG2",
+          "hash": "d60680e55ebe85930c2d11c7a57bf96c4b36cd98f44eb6483a676d118458e98d",
+          "text": "noncomputable def concreteG2 : \u211d := 30 * Real.pi"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteCarrierH",
+          "hash": "31d0c0f275d75580b73ab93ecd760bdf5653c711b65b3fcb4788ff32dc83a19f",
+          "text": "def concreteCarrierH : \u2115 := 8"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteCutoff",
+          "hash": "e5409500b90e40a851ae37590a4cbb7731d939ef42c5b523ebe6ed74f733fb8f",
+          "text": "def concreteCutoff : \u2115 := 2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteBudget",
+          "hash": "88ac7c71eb9d43101bc295aa73f6c775590ab3204cb39b55590263654b74c361",
+          "text": "def concreteBudget : \u2115 := 2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteMode",
+          "hash": "f4b84e7bc6f922c8a1bc3f35da758a04202f63b83cc4db3bc1af4352dd8a3af6",
+          "text": "def concreteMode : \u2115 := 2"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteNs",
+          "hash": "1ccb5d69f3ed7178ebb426caaf65ac38076f9d47ac9a4758de3a596cd613bcc8",
+          "text": "def concreteNs : Fin 2 \u2192 \u2124 := fun _ => 0"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteBranches",
+          "hash": "b5ed58b86d1da19168a50e6aa16bb75d5e17afbc5f2c69800f68ea523b3c24eb",
+          "text": "def concreteBranches : Bosonize.A06.Branches (Fin 2) :=\n  Bosonize.Ch16.standardBranches"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concreteParams",
+          "hash": "1ad8bddfd652b03a9300750beda85b164e62488adcfe56e107e0fcb538a28137",
+          "text": "noncomputable def concreteParams : Bosonize.A07Interactions.HyperbolicParams concreteV1 concreteV2 where\n  u := 8\n  c := 5 / 4\n  s := 3 / 4\n  u_pos := by\n    norm_num\n  c_pos := by\n    norm_num\n  u_sq := by\n    norm_num [concreteV1, concreteV2]\n  hyperbolic_id := by\n    norm_num\n  match_v1 := by\n    norm_num [concreteV1]\n  match_v2 := by\n    norm_num [concreteV2]"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.concretePair",
+          "hash": "dce4058f9122b431c0757ef098084ee268592eece6bb98a4873df9ffb9f95451",
+          "text": "noncomputable def concretePair : HyperbolicPair :=\n  HyperbolicPair.ofParams concreteParams"
+        },
+        {
+          "kind": "end",
+          "label": "end Scalars",
+          "hash": "1a4396dea081cc4717e10cc5a6fd55c2f007347191dc48cf8918a09924be5efc",
+          "text": "end Scalars"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
+          "text": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]"
+        },
+        {
+          "kind": "section",
+          "label": "section Operators",
+          "hash": "360982167605d0d058a7b4670418ee41ec73264894be0cf9044992bcecf54d86",
+          "text": "section Operators"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch18.dressedOscillatorOp",
+          "hash": "e4fc41f81c84fb84ff8cb76df488516dabb574c5331814e1fef872f1401e00df",
+          "text": "noncomputable def dressedOscillatorOp (h M : \u2115) (u c s : \u211d)\n    (branches : Bosonize.A06.Branches \u03c3) : Bosonize.A05.Operators \u03c3 h :=\n  ((((2 * Real.pi : \u211d) : \u2102) / ((2 * h : \u2115) : \u2102))) \u2022\n    \u2211 m \u2208 Finset.Icc 1 M, Bosonize.A07Interactions.dressedModeNumber h m u c s branches"
+        },
+        {
+          "kind": "end",
+          "label": "end Operators",
+          "hash": "b41c19c025f6092ea0754c015c94d9268e8d4b7a49d43aeef8e86cb4afad418f",
+          "text": "end Operators"
+        },
+        {
+          "kind": "end",
+          "label": "end Bosonize.Ch18",
+          "hash": "448e45409c893c1615d328dc29122ba4fb9f0b196c933cdba49f529f5560a8dd",
+          "text": "end Bosonize.Ch18"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.Ch18.HyperbolicPair.c_add_s_ne_zero": {
+          "kind": "lemma",
+          "hash": "39caf3c53ca629775b42f198b6101bd3be54880400d8000116a04c6501b15dd9",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "lemma HyperbolicPair.c_add_s_ne_zero (hp : HyperbolicPair) : hp.c + hp.s \u2260 0"
+        },
+        "Bosonize.Ch18.HyperbolicPair.c_sub_s_ne_zero": {
+          "kind": "lemma",
+          "hash": "5f5987ea155196e661cb76feea3cf5e88d7d2e2f0c5f314857ddbffc125aa897",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "lemma HyperbolicPair.c_sub_s_ne_zero (hp : HyperbolicPair) : hp.c - hp.s \u2260 0"
+        },
+        "Bosonize.Ch18.HyperbolicPair.inverse_combination": {
+          "kind": "theorem",
+          "hash": "35e76d97099ffda5b7ff2f800ec0e910eaf877273144515ba336ab91a537f0c9",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem HyperbolicPair.inverse_combination {E : Type*} [AddCommGroup E] [Module \u2102 E] (hp : HyperbolicPair) (X Y : E) : (hp.c : \u2102) \u2022 ((hp.c : \u2102) \u2022 X + (hp.s : \u2102) \u2022 Y) - (hp.s : \u2102) \u2022 ((hp.c : \u2102) \u2022 Y + (hp.s : \u2102) \u2022 X) = X"
+        },
+        "Bosonize.Ch18.HyperbolicPair.mul_eq_one": {
+          "kind": "lemma",
+          "hash": "167e31dd76ed22f48a98a9248fe407bdeb417e3a929770383e64e91bf5290994",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "lemma HyperbolicPair.mul_eq_one (hp : HyperbolicPair) : (hp.c - hp.s) * (hp.c + hp.s) = 1"
+        },
+        "Bosonize.Ch18.bogoliubov_annihilator_inverse_left": {
+          "kind": "theorem",
+          "hash": "105eb366cd479c38b14d7a0e1191372ab97a9f29cf0ff75fc08c5816ff9af588",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem bogoliubov_annihilator_inverse_left (h m : \u2115) (hp : HyperbolicPair) (branches : Bosonize.A06.Branches \u03c3) : Bosonize.A05.rho h branches.leftSpecies (-(m : \u2124)) = (hp.c : \u2102) \u2022 Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .left - (hp.s : \u2102) \u2022 Bosonize.A07Interactions.bogoliubovCreator h m hp.c hp.s branches .right"
+        },
+        "Bosonize.Ch18.bogoliubov_annihilator_inverse_right": {
+          "kind": "theorem",
+          "hash": "82bf9173b7ee827bf6f8f76271f85e5563d303b8debcda870e6064ab0455b095",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem bogoliubov_annihilator_inverse_right (h m : \u2115) (hp : HyperbolicPair) (branches : Bosonize.A06.Branches \u03c3) : Bosonize.A05.rho h branches.rightSpecies (-(m : \u2124)) = (hp.c : \u2102) \u2022 Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .right - (hp.s : \u2102) \u2022 Bosonize.A07Interactions.bogoliubovCreator h m hp.c hp.s branches .left"
+        },
+        "Bosonize.Ch18.bogoliubov_creator_inverse_left": {
+          "kind": "theorem",
+          "hash": "43bdcd9e13f772481b4aa40fa87d79bee49a8699e9975a49f628691be8bcb9bf",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem bogoliubov_creator_inverse_left (h m : \u2115) (hp : HyperbolicPair) (branches : Bosonize.A06.Branches \u03c3) : Bosonize.A05.rho h branches.leftSpecies (m : \u2124) = (hp.c : \u2102) \u2022 Bosonize.A07Interactions.bogoliubovCreator h m hp.c hp.s branches .left - (hp.s : \u2102) \u2022 Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .right"
+        },
+        "Bosonize.Ch18.bogoliubov_creator_inverse_right": {
+          "kind": "theorem",
+          "hash": "86f1bc27ab7e73cf044497c6c148d2a9d953e21445ee1f85b325a074e2781adb",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem bogoliubov_creator_inverse_right (h m : \u2115) (hp : HyperbolicPair) (branches : Bosonize.A06.Branches \u03c3) : Bosonize.A05.rho h branches.rightSpecies (m : \u2124) = (hp.c : \u2102) \u2022 Bosonize.A07Interactions.bogoliubovCreator h m hp.c hp.s branches .right - (hp.s : \u2102) \u2022 Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .left"
+        },
+        "Bosonize.Ch18.bogoliubov_cross_annihilator_annihilator_on_budget": {
+          "kind": "theorem",
+          "hash": "e101333c4bf20695ae647491cb49178c8f1dc7c927b8acafaca5f9e70969208c",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem bogoliubov_cross_annihilator_annihilator_on_budget (h M K m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (c s : \u211d) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : Bosonize.A06.branchMargins h M K Ns branches) (v : Bosonize.A05.FockSpace \u03c3 h) (hv : v \u2208 Bosonize.A05.jointBudget h Ns K) : Bosonize.A02.commutator (Bosonize.A07Interactions.bogoliubovAnnihilator h m c s branches .right) (Bosonize.A07Interactions.bogoliubovAnnihilator h m c s branches .left) v = 0"
+        },
+        "Bosonize.Ch18.bogoliubov_cross_annihilator_creator": {
+          "kind": "theorem",
+          "hash": "33a664f9d646eab1f937cd79343fee0036249d23c65d35165b9af0efd9b44d74",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem bogoliubov_cross_annihilator_creator (h m : \u2115) (c s : \u211d) (branches : Bosonize.A06.Branches \u03c3) (\u03b7 : Bosonize.A06.Orientation) : Bosonize.A02.commutator (Bosonize.A07Interactions.bogoliubovAnnihilator h m c s branches \u03b7) (Bosonize.A07Interactions.bogoliubovCreator h m c s branches (Bosonize.A07Interactions.oppositeOrientation \u03b7)) = 0"
+        },
+        "Bosonize.Ch18.bogoliubov_cross_creator_creator_on_budget": {
+          "kind": "theorem",
+          "hash": "542fc1910860d3f9119912e239f62d42d9368b4f6ce9c7e6c252beeaef0d62e1",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem bogoliubov_cross_creator_creator_on_budget (h M K m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) (c s : \u211d) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : Bosonize.A06.branchMargins h M K Ns branches) (v : Bosonize.A05.FockSpace \u03c3 h) (hv : v \u2208 Bosonize.A05.jointBudget h Ns K) : Bosonize.A02.commutator (Bosonize.A07Interactions.bogoliubovCreator h m c s branches .right) (Bosonize.A07Interactions.bogoliubovCreator h m c s branches .left) v = 0"
+        },
+        "Bosonize.Ch18.concreteParams_s_ne_zero": {
+          "kind": "theorem",
+          "hash": "f32feeaffdf5b9eef1ffcc88ada001ead48bcf908532e04119962a2659716ce9",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem concreteParams_s_ne_zero : concreteParams.s \u2260 0"
+        },
+        "Bosonize.Ch18.concrete_bogoliubov_witness": {
+          "kind": "theorem",
+          "hash": "c9181f0990cfc8fea178b11b7e8f56fff5022afb7bf9141462d533b6feeec8d5",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem concrete_bogoliubov_witness : Bosonize.A05.admissible concreteCarrierH concreteNs \u2227 Bosonize.A06.branchMargins concreteCarrierH concreteCutoff concreteBudget concreteNs concreteBranches \u2227 Bosonize.Ch17.sugawaraMargin concreteCarrierH concreteCutoff concreteBudget concreteNs concreteBranches \u2227 concreteParams.s \u2260 0 \u2227 Bosonize.A05.groundKet concreteCarrierH concreteNs \u2208 Bosonize.A05.jointBudget concreteCarrierH concreteNs concreteBudget \u2227 Bosonize.A05.groundKet concreteCarrierH concreteNs \u2260 0 \u2227 Bosonize.A07Interactions.bogoliubovAnnihilator concreteCarrierH concreteMode concreteParams.c concreteParams.s concreteBranches .right (Bosonize.A05.groundKet concreteCarrierH concreteNs) \u2260 0 \u2227 Bosonize.A07Interactions.dressedModeNumber concreteCarrierH concreteMode concreteParams.u concreteParams.c concreteParams.s concreteBranches (Bosonize.A05.groundKet concreteCarrierH concreteNs) \u2260 0 \u2227 vacuumShiftScalar concreteCarrierH concreteCutoff concreteParams.u concreteParams.s \u2260 0 \u2227 vacuumShiftScalar concreteCarrierH concreteCutoff concreteParams.u concreteParams.s = 27 * Real.pi / 8 \u2227 luttingerG concretePair = 1 / 4 \u2227 2 * concreteParams.u * concreteParams.s ^ 2 = 9"
+        },
+        "Bosonize.Ch18.concrete_velocity_match": {
+          "kind": "theorem",
+          "hash": "c0e2e099402ae2ebb48dae4eae6f619bbcc668228f9819bbc2c5e70f0733bc58",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem concrete_velocity_match : concreteV1 = Bosonize.Ch17.v1Velocity concreteVF concreteG4 \u2227 concreteV2 = Bosonize.Ch17.v2Velocity concreteG2"
+        },
+        "Bosonize.Ch18.dressed_annihilator_ground_left": {
+          "kind": "theorem",
+          "hash": "e64b0389f525b46531cef5b76d8d7a9325214e2bcdf78939f3e798770c68058d",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem dressed_annihilator_ground_left (h m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) : Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .left (Bosonize.A05.groundKet h Ns) = (hp.s : \u2102) \u2022 Bosonize.Ch16.excitedKet h Ns branches .right m"
+        },
+        "Bosonize.Ch18.dressed_annihilator_ground_left_ne_zero": {
+          "kind": "theorem",
+          "hash": "7fc6427a67e16a32c4dae27eda5c1eba76a78299bd603b4785794d8d9d00c3f3",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem dressed_annihilator_ground_left_ne_zero (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) (hs : hp.s \u2260 0) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.marginAt h M m Ns (Bosonize.A06.speciesOf branches .right)) : Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .left (Bosonize.A05.groundKet h Ns) \u2260 0"
+        },
+        "Bosonize.Ch18.dressed_annihilator_ground_right": {
+          "kind": "theorem",
+          "hash": "73eb1ee293fc063b89dde034b52a0fa5ebdde7bcd45a8f5e7ddbc01b66c5c112",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem dressed_annihilator_ground_right (h m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) : Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .right (Bosonize.A05.groundKet h Ns) = (hp.s : \u2102) \u2022 Bosonize.Ch16.excitedKet h Ns branches .left m"
+        },
+        "Bosonize.Ch18.dressed_annihilator_ground_right_ne_zero": {
+          "kind": "theorem",
+          "hash": "79fd5d604d6e5a79aac9ef8504d30b27cd6d2205b418ebac4ebe361c19a8eda4",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem dressed_annihilator_ground_right_ne_zero (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) (hs : hp.s \u2260 0) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.marginAt h M m Ns (Bosonize.A06.speciesOf branches .left)) : Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .right (Bosonize.A05.groundKet h Ns) \u2260 0"
+        },
+        "Bosonize.Ch18.hyperbolic_coeff_eq_luttinger": {
+          "kind": "theorem",
+          "hash": "b2ca28b37a56a5e1682eca5dcf0fa8bd5971787ade3e0b00ec730e6c94ba4a7e",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem hyperbolic_coeff_eq_luttinger (hp : HyperbolicPair) : hp.c ^ 2 + hp.s ^ 2 = (luttingerG hp + (luttingerG hp)\u207b\u00b9) / 2"
+        },
+        "Bosonize.Ch18.hyperbolic_params_nonempty": {
+          "kind": "theorem",
+          "hash": "a3a68a746c841d1699bef7a89c0b04711579890e4f93cf133fe0ea3b9b4cd2e6",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem hyperbolic_params_nonempty (v1 v2 : \u211d) (hstab : |v2| < v1) : Nonempty (Bosonize.A07Interactions.HyperbolicParams v1 v2)"
+        },
+        "Bosonize.Ch18.luttingerGInv_eq_inv": {
+          "kind": "theorem",
+          "hash": "3c6f0259bacab4ee5d8694b5d9436ee50e8baefda83a8351b272628ef07a1861",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem luttingerGInv_eq_inv (hp : HyperbolicPair) : luttingerGInv hp = (luttingerG hp)\u207b\u00b9"
+        },
+        "Bosonize.Ch18.luttingerGInv_mul_u_of_params": {
+          "kind": "theorem",
+          "hash": "ae43aaef0f767352ba1ca965a31cd31ec378283abf94601a3dadfaf9352155a3",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem luttingerGInv_mul_u_of_params {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : luttingerGInv (HyperbolicPair.ofParams hp) * hp.u = v1 + v2"
+        },
+        "Bosonize.Ch18.luttingerGInv_pos_of_params": {
+          "kind": "theorem",
+          "hash": "7c13542320333febb3afe4bfc3c4db8488905e20aadcec5b3e9a7004a0b8f84b",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem luttingerGInv_pos_of_params {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : 0 < luttingerGInv (HyperbolicPair.ofParams hp)"
+        },
+        "Bosonize.Ch18.luttingerG_eq_sqrt_of_params": {
+          "kind": "theorem",
+          "hash": "c138a9e73f9fd2c67caae57a713ec0302d2bef471cb1e352e22f1ca4c1bdb20e",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem luttingerG_eq_sqrt_of_params {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : luttingerG (HyperbolicPair.ofParams hp) = Real.sqrt ((v1 - v2) / (v1 + v2))"
+        },
+        "Bosonize.Ch18.luttingerG_mul_inv": {
+          "kind": "theorem",
+          "hash": "8ce569d059900a24c2390e9da8326b896eb5b6d7101eb8f10fb1044d55aaacf5",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem luttingerG_mul_inv (hp : HyperbolicPair) : luttingerG hp * luttingerGInv hp = 1"
+        },
+        "Bosonize.Ch18.luttingerG_mul_u_of_params": {
+          "kind": "theorem",
+          "hash": "b1f0f313f4a11a2e6a611309524a73a643f08ab0effd7c08051232b151630fda",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem luttingerG_mul_u_of_params {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : luttingerG (HyperbolicPair.ofParams hp) * hp.u = v1 - v2"
+        },
+        "Bosonize.Ch18.luttingerG_pos_of_params": {
+          "kind": "theorem",
+          "hash": "750cb6f59633b4cc98630eecff64dc2d9842bd0204f3348282e80b4aa3cfee71",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem luttingerG_pos_of_params {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : 0 < luttingerG (HyperbolicPair.ofParams hp)"
+        },
+        "Bosonize.Ch18.luttinger_hamiltonian_dressed_on_budget": {
+          "kind": "theorem",
+          "hash": "9cf647bb855bae4fb40c01b2b827ec41042d279237363acbe76c37510d3a4f87",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem luttinger_hamiltonian_dressed_on_budget (h M K : \u2115) (hh : 0 < h) (vF g4 g2 mu : \u211d) {v1 v2 : \u211d} (hv1 : v1 = Bosonize.Ch17.v1Velocity vF g4) (hv2 : v2 = Bosonize.Ch17.v2Velocity g2) (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hSug : Bosonize.Ch17.sugawaraMargin h M K Ns branches) (hmargin : Bosonize.A06.branchMargins h M K Ns branches) (v : Bosonize.A05.FockSpace \u03c3 h) (hv : v \u2208 Bosonize.A05.jointBudget h Ns K) : Bosonize.Ch17.luttingerFermionChosenModel h M vF g4 g2 mu branches v = (dressedOscillatorOp h M hp.u hp.c hp.s branches) v + (((Bosonize.Ch17.zeroModeEnergyScalar h vF g4 g2 mu branches Ns - vacuumShiftScalar h M hp.u hp.s : \u211d) : \u2102)) \u2022 v"
+        },
+        "Bosonize.Ch18.luttinger_oscillator_dressed_on_budget": {
+          "kind": "theorem",
+          "hash": "526434883cca8822df52d69a2ba05c3a605043ddfdd67d00a5f71abc7452630b",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem luttinger_oscillator_dressed_on_budget (h M K : \u2115) (hh : 0 < h) (vF g4 g2 : \u211d) {v1 v2 : \u211d} (hv1 : v1 = Bosonize.Ch17.v1Velocity vF g4) (hv2 : v2 = Bosonize.Ch17.v2Velocity g2) (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : Bosonize.A06.branchMargins h M K Ns branches) (v : Bosonize.A05.FockSpace \u03c3 h) (hv : v \u2208 Bosonize.A05.jointBudget h Ns K) : Bosonize.Ch17.luttingerOscillatorOp h M vF g4 g2 branches v = (dressedOscillatorOp h M hp.u hp.c hp.s branches) v - (((vacuumShiftScalar h M hp.u hp.s : \u211d) : \u2102)) \u2022 v"
+        },
+        "Bosonize.Ch18.no_common_bare_dressed_vacuum": {
+          "kind": "theorem",
+          "hash": "520096e1a4cb8b4f15601485e7e9d2cbef9f2c26e634ef27d79f32d741f92f6b",
+          "ctx": "908afcdc3f3851d0c85ff72554e72a30eebb33fdf0c48554c3407f30303d3037",
+          "text": "theorem no_common_bare_dressed_vacuum (h M K m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hcut : m \u2264 M) {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) (hs : hp.s \u2260 0) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hmargin : Bosonize.A06.branchMargins h M K Ns branches) (\u03c8 : Bosonize.A05.FockSpace \u03c3 h) (h\u03c8 : \u03c8 \u2260 0) (h\u03c8budget : \u03c8 \u2208 Bosonize.A05.jointBudget h Ns K) (hbareR : Bosonize.A05.rho h branches.rightSpecies (-(m : \u2124)) \u03c8 = 0) (hbareL : Bosonize.A05.rho h branches.leftSpecies (-(m : \u2124)) \u03c8 = 0) (hdressR : Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .right \u03c8 = 0) (hdressL : Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches .left \u03c8 = 0) : False"
+        },
+        "Bosonize.Ch18.tanh_relation_of_params": {
+          "kind": "theorem",
+          "hash": "cf3f97dcea523195b3cb6b61038cb4f341786b6056920bdf7188b5338d8a2267",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem tanh_relation_of_params {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : v2 * (hp.c ^ 2 + hp.s ^ 2) = v1 * (2 * hp.c * hp.s)"
+        },
+        "Bosonize.Ch18.u_lt_v1_of_v2_ne_zero": {
+          "kind": "theorem",
+          "hash": "a7af4d281798c6249ddfc7cb6d7f099c28c215104f919f1f26d5b76e9c274431",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem u_lt_v1_of_v2_ne_zero {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) (hv1 : 0 < v1) (hv2 : v2 \u2260 0) : hp.u < v1"
+        },
+        "Bosonize.Ch18.v2_eq_zero_iff_s_eq_zero": {
+          "kind": "theorem",
+          "hash": "7dda7e908e6cd882853985a8c7daae8e9166345e777dce51cedfc9d31aecc13d",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem v2_eq_zero_iff_s_eq_zero {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : v2 = 0 \u2194 hp.s = 0"
+        },
+        "Bosonize.Ch18.vacuum_shift_prefactor_of_params": {
+          "kind": "theorem",
+          "hash": "d790e43b7a4a98fef96325c5ea538da44e9c34553d9697c6875ec315db7968f7",
+          "ctx": "9a94067c3600965578a735b2eebdc49fb5719fc1e762cb4492163eed01d3e8a1",
+          "text": "theorem vacuum_shift_prefactor_of_params {v1 v2 : \u211d} (hp : Bosonize.A07Interactions.HyperbolicParams v1 v2) : 2 * hp.u * hp.s ^ 2 = v1 - hp.u"
+        }
+      }
     }
   },
   "version": 2
