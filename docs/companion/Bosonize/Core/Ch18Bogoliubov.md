@@ -1,4 +1,4 @@
-# BosonizeStubs/Ch18Bogoliubov.lean: Phase B complete; Phase C preparation
+# Bosonize/Core/Ch18Bogoliubov.lean: Phase B complete; Phase C preparation
 
 Status: 34 proved contracts and 21 complete data declarations in this module (55 freshly audited declarations total).
 All accepted proofs have fresh standard-axiom evidence (`propext`, `Classical.choice`, `Quot.sound`).
@@ -9,7 +9,7 @@ Pedagogical mapping: [corresponding reference note](../../../../notes/md/ch18_bo
 
 ## Exact proved declaration mapping
 
-Every row below denotes a complete theorem proof in `Bosonize.Ch18`. Exact signatures, carrier instances, and hypotheses are preserved in the staging source `BosonizeStubs/Ch18Bogoliubov.lean`.
+Every row below denotes a complete theorem proof in `Bosonize.Ch18`. Exact signatures, carrier instances, and hypotheses are preserved in the staging source `Bosonize/Core/Ch18Bogoliubov.lean`.
 
 | Declaration | Realization and dependency scope |
 | --- | --- |
@@ -57,7 +57,7 @@ The non-vacuous witness $(17, 15, 8, 5/4, 3/4)$ with $h = 8, M = 2, K = 2, Ns = 
 
 ## Verification, review and Phase C boundary
 
-Phase B completed with all 34 theorems proved and 21 data declarations (55 total declarations audited) under `warning-as-error` in `BosonizeStubs/Ch18Bogoliubov.lean`.
+Phase B completed with all 34 theorems proved and 21 data declarations (55 total declarations audited) under `warning-as-error` in `Bosonize/Core/Ch18Bogoliubov.lean`.
 All 55 declarations depend exclusively on standard Lean axioms `propext`, `Classical.choice`, and `Quot.sound` (or no axioms).
 The Phase B CI run passed 69 statement-guard tests, 15 artifact/proof tests, Core build (3415 jobs), staging build (3417 jobs), 906 statements and 977 frozen commands verified in `stub_lock`, and 30 complete Core files in `core_lock`.
 Independent review trail:
@@ -100,3 +100,6 @@ Phase A finish evidence: `note/webllm/ch18/phaseA-ch18_cycle_a_6c99dd27.md`.
 
 
 Phase B finish evidence: `note/webllm/ch18/phaseB-ch18_cycle_b_0648ad0f.md`.
+
+
+Phase C finish evidence: `note/webllm/ch18/phaseC-ch18_cycle_c_864a75c9.md`.

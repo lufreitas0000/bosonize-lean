@@ -1,3 +1,4 @@
+import Bosonize.Core.Ch18Bogoliubov
 import Bosonize.Core.A07InteractionsAndBogoliubov
 import Bosonize.Core.A10DiscreteSchriefferWolff
 import Bosonize.Core.Ch17LuttingerModels

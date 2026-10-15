@@ -11082,7 +11082,7 @@
         }
       }
     },
-    "BosonizeStubs/Ch18Bogoliubov.lean": {
+    "Bosonize/Core/Ch18Bogoliubov.lean": {
       "commands": [
         {
           "kind": "import",

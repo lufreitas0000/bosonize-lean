@@ -2,13 +2,30 @@
   "chapter": 18,
   "modules": [
     {
-      "path": "BosonizeStubs/Ch18Bogoliubov.lean"
+      "path": "Bosonize/Core/Ch18Bogoliubov.lean"
     }
   ],
-  "phase": "B_complete",
+  "phase": "C_complete",
+  "migration": [
+    {
+      "from": "BosonizeStubs/Ch18Bogoliubov.lean",
+      "to": "Bosonize/Core/Ch18Bogoliubov.lean",
+      "source_sha256": "b55da072fac73055173cd65e584751caabdd02f2473648725b09e11c6fbc314b",
+      "old_imports": [
+        "import Bosonize.Core.A07InteractionsAndBogoliubov",
+        "import Bosonize.Core.Ch16FieldHamiltonian",
+        "import Bosonize.Core.Ch17LuttingerModels"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.A07InteractionsAndBogoliubov",
+        "import Bosonize.Core.Ch16FieldHamiltonian",
+        "import Bosonize.Core.Ch17LuttingerModels"
+      ]
+    }
+  ],
   "pending_modules": [],
   "sources": {
-    "BosonizeStubs/Ch18Bogoliubov.lean": "b55da072fac73055173cd65e584751caabdd02f2473648725b09e11c6fbc314b"
+    "Bosonize/Core/Ch18Bogoliubov.lean": "b55da072fac73055173cd65e584751caabdd02f2473648725b09e11c6fbc314b"
   },
   "theorem_contracts": 34
 }
