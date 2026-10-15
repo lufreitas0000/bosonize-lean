@@ -58,20 +58,23 @@ Formalize as a theorem in the real numbers: `∀ v1 v2 : ℝ, v1 > |v2| → ∃ 
 **Auxiliary Lemmas:** Basic inequalities for real numbers, specifically relating squares and absolute values.
 **Strategy:** Construct $u=\sqrt{v_1^2-v_2^2}$, $c=\sqrt{(v_1+u)/(2u)}$, $s=v_2/(2uc)$. Under `v1 > |v2|`, prove u>0 and c>0 before division, then prove the matching equations. This covers either sign of v2 and v2=0. Downstream operator lemmas use those equations without unfolding square roots.
 
-Squaring an identity to obtain $(c^2-s^2)^2=1$ does not select c²−s²=+1. Supply its sign or make the desired identity a structure field. If scalars are complex, c²−s²=1 alone does not give a star-preserving transform; require real/self-adjoint scalars or use the appropriate conjugate relations.
+Squaring an identity to obtain $(c^2-s^2)^2=1$ does not select c²−s²=+1. Supply its sign or make the desired identity a structure field. If scalars are complex, c²−s²=1 alone does not give a star-preserving transform; require real/self-adjoint scalars or use the appropriate conjugate relations. In the verified implementation, `Bosonize.A07Interactions.HyperbolicParams` bundles $u, c, s$ with $u > 0, c > 0, u^2 = v_1^2 - v_2^2, c^2 - s^2 = 1, v_1 = u(c^2 + s^2), v_2 = 2ucs$, and `Bosonize.Ch18.hyperbolic_params_nonempty` establishes its nonemptiness under $|v_2| < v_1$.
 
 **Theorem (Bogoliubov Transformation):**
 For the plus-sign transform written in chapter 18,
 $$
  \tilde C_R=cC_R+sA_L,\quad \tilde C_L=cC_L+sA_R,
 $$
-with adjoints tilde A, direct expansion gives
+with Hilbert space adjoints $\tilde A_\eta = \tilde C_\eta^\dagger$ proved in `Bosonize.A07Interactions.bogoliubov_creator_adjoint` (ledger item c07), direct expansion gives
 $$
  u(\tilde C_R\tilde A_R+\tilde C_L\tilde A_L)
  =u(c^2+s^2)(C_RA_R+C_LA_L)
  +2ucs(C_RC_L+A_RA_L)+2us^2mI.
 $$
 Thus v1=u(c²+s²), v2=2ucs for this direction of the plus-sign transform, and a vacuum constant must be subtracted to match H_pair. Other transformation directions can yield a minus sign; state the direction before choosing 2cs. The original matching signs cannot be adopted without this expansion.
+
+Summed over modes $m \in \{1,\dots,M\}$, the scalar normal-ordering shift takes the closed form $\Delta E_{\mathrm{vac}} = \frac{2\pi}{2h}(v_1 - u)\frac{M(M+1)}{2}$ (`vacuumShiftScalar`), derived using $2us^2 = v_1 - u$ (`vacuum_shift_prefactor_of_params`), with $\Delta E_{\mathrm{vac}} \ge 0$ and $\Delta E_{\mathrm{vac}} > 0 \iff v_2 \ne 0$.
+The dimensionless interaction parameter $g := (c - s)^2 = \sqrt{(v_1 - v_2)/(v_1 + v_2)}$ satisfies $g \cdot g^{-1} = 1$, $g \cdot u = v_1 - v_2$, $g^{-1} \cdot u = v_1 + v_2$, with physical repulsion corresponding to $g < 1 \iff v_2 > 0$ as a derived remark.
 
 *Lean 4 Proof Strategy:*
 Formalize the substitution of the Bogoliubov transformed operators $\tilde C_ν$ and $\tilde A_ν$ into the target diagonalized Hamiltonian to recover the original $H_{\mathrm{pair}}$.
@@ -87,8 +90,11 @@ Define the "restricted action regime" as a specific subspace `V_m` of the Fock s
 **Auxiliary Lemmas:** The raw commutator $[ \tilde A_ν, \tilde C_ν ]$ expands to `mI + E_{boundary}`, where $E_{\mathrm{boundary}}$ are the error terms near the cutoff. A separate lemma showing $E_{\mathrm{boundary}}|\psi\rangle=0$ for strictly bounded states $|\psi\rangle$.
 **Strategy:** Expand the commutator linearly. Apply the boundary lemma to annihilate the anomalous terms on the restricted subspace.
 
-For v1>0 and v2≠0, u=√(v1²−v2²)<v1. Repulsive g2 alone does not guarantee a speed larger than the bare vF; the g4 contribution also matters. Correct the physical corollary accordingly.
+In the verified implementation, the inverse two-by-two scalar transformation is global linear algebra: on any complex vector space, `HyperbolicPair.inverse_combination` proves $c(cX + sY) - s(cY + sX) = X$. Consequently, the four inverse transforms $\rho_{m,R} = c \tilde C_R - s \tilde A_L$, $\rho_{m,L} = c \tilde C_L - s \tilde A_R$, $\rho_{-m,R} = c \tilde A_R - s \tilde C_L$, and $\rho_{-m,L} = c \tilde A_L - s \tilde C_R$ (`bogoliubov_creator_inverse_right/left`, `bogoliubov_annihilator_inverse_right/left`) and the cross-branch commutator $[\tilde A_\eta, \tilde C_{\bar\eta}] = 0$ (`bogoliubov_cross_annihilator_creator`) are **global operator theorems** on all finite-Fock endomorphisms.
 
+In contrast, same-branch CCR $[\tilde A_\nu, \tilde C_\nu] v = m v$ (`bogoliubov_ccr_on_budget`), cross-branch commutators $[\tilde C_R, \tilde C_L] v = 0$, $[\tilde A_R, \tilde A_L] v = 0$ (`bogoliubov_cross_creator_creator_on_budget`, `bogoliubov_cross_annihilator_annihilator_on_budget`), and the Hamiltonian diagonalization identities are **budget-restricted action theorems** on $\mathcal{B}_{K, \vec{N}}$ under branch margins $2M + K + |N_\nu| \le h$. Neither proves a unitary implementer or an algebra automorphism of all finite-Fock endomorphisms. The boundary commutator operators must still be present outside the permitted inputs.
+
+For $v_1>0$ and $v_2\ne0$, $u=\sqrt{v_1^2-v_2^2}<v_1$ (`u_lt_v1_of_v2_ne_zero`). Repulsive $g_2$ alone does not guarantee a speed larger than the bare $v_F$; the $g_4$ contribution also matters. The physical corollary is therefore stated as $u < v_1$, not $u > v_F$.
 
 ## Constructive realization in Lean
 
@@ -103,16 +109,21 @@ $$
 u=\sqrt{v_1^2-v_2^2},\qquad
 c=\sqrt{\frac{v_1+u}{2u}},\qquad s=\frac{v_2}{2uc}.
 $$
-It proves positivity of $u$ and of the constructed $c$ before division, and establishes the matching equations and $c^2-s^2=1$ for either sign of $v_2$, including zero. The exported existence theorem concludes $u>0$ and the matching equations; positivity of the constructed $c$ is established internally in its proof. It does not return a value of the stronger hyperbolic parameter package, which also requires $c>0$. Operator expansion assumes that package separately.
+It proves positivity of $u$ and of the constructed $c$ before division, and establishes the matching equations and $c^2-s^2=1$ for either sign of $v_2$, including zero (`hyperbolic_params_exist`). In `BosonizeStubs/Ch18Bogoliubov.lean`, the structure `HyperbolicPair` bundles $c^2 - s^2 = 1$, and `hyperbolic_params_nonempty` establishes that `HyperbolicParams v1 v2` is non-empty for $|v_2| < v_1$. The exported theory establishes $g \cdot g^{-1} = 1$, $g \cdot u = v_1 - v_2$, $g^{-1} \cdot u = v_1 + v_2$, $g = \sqrt{(v_1 - v_2)/(v_1 + v_2)}$, $u < v_1$ for $v_2 \ne 0$, $v_2 = 0 \iff s = 0$, and $2us^2 = v_1 - u$.
 
 For $v\in\mathcal B_{\vec N,K}$, $h>0$, $1\le m\le M$, and
 $$
 2M+K+|N_R|\le h,\qquad 2M+K+|N_L|\le h,
 $$
-the plus-sign creators and their actual adjoints satisfy
+the plus-sign creators and their actual adjoints (`bogoliubov_creator_adjoint`) satisfy
 $$
 u(\widetilde C_R\widetilde A_R+\widetilde C_L\widetilde A_L)v
 =H_{\mathrm{pair},m}v+2us^2m\,v,
 \qquad [\widetilde A_\nu,\widetilde C_\nu]v=m\,v.
 $$
-Expansion retains the exact ambient commutators until evaluating them on the permitted input. The two same-species commutators supply the constant, and $c^2-s^2=1$ gives the restricted CCR. Subtracting $2us^2mI$ recovers the pairing mode. These action identities retain boundary effects elsewhere; they establish neither a unitary implementer, a global finite CCR algebra automorphism, nor a dressed-vacuum or spectral diagonalization theorem. Earlier strategy paragraphs remain explanatory proposals alongside this realized construction.
+The operator theorems are stated for `A05.FockSpace σ h` over any finite, linearly ordered species type $\sigma$ with distinct branches `branches : A06.Branches σ`. Only the concrete witness specializes to $\sigma = \mathrm{Fin}\; 2$ with `standardBranches`.
+Summing over $m \in \{1,\dots,M\}$ yields the finite dressed oscillator sum identity `luttinger_oscillator_dressed_on_budget`, and combining with zero modes evaluates the complete Hamiltonian on `A05.jointBudget` (`luttinger_hamiltonian_dressed_on_budget`).
+The inverse transforms and $[\tilde A_\eta, \tilde C_{\bar\eta}] = 0$ hold globally, whereas same-branch CCR, cross-branch creator/annihilator commutators, and the Hamiltonian identities hold on budget vectors.
+On the sector ground ket $|\vec{N}\rangle_0$, the dressed annihilators produce explicit opposite-branch excitations $\tilde A_R |\vec{N}\rangle_0 = s \cdot \text{excitedKet}_L(m)$, which are non-zero when $s \ne 0$ (`dressed_annihilator_ground_right_ne_zero`). Consequently, no non-zero budget state is annihilated by both bare and dressed modes (`no_common_bare_dressed_vacuum`).
+The concrete witness `concrete_bogoliubov_witness` evaluates all properties at $(v_1, v_2, u, c, s) = (17, 15, 8, 5/4, 3/4)$ with $h = 8, M = 2, K = 2, Ns = 0, s = 3/4 \ne 0, g = 1/4, 2us^2 = 9, \Delta E_{\mathrm{vac}} = 27\pi/8 \ne 0$.
+These action identities retain boundary effects elsewhere; they establish neither a unitary implementer, a global finite CCR algebra automorphism, nor an interacting dressed vacuum vector. Earlier strategy paragraphs remain explanatory proposals alongside this realized construction.
