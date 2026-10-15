@@ -17,7 +17,9 @@ mathematical review happen locally afterward. Do not claim human approval.
 """
 targets = ["notes/md/ch18_bogoliubov.md", "docs/companion/Bosonize/Core/Ch18Bogoliubov.md"]
 context = ["Bosonize/Core/Ch18Bogoliubov.lean", "docs/webllm/chapters/ch18.json", "note/ch18_and_orchestration_audit_2026-10-15.md"]
-locked = ["Bosonize/Core/Ch18Bogoliubov.lean", "docs/spec/stub_locks.v2.json", "docs/spec/core_locks.json"]
+# The ingest whitelist preserves every non-target file. Lock manifests are
+# checked by the verifiers; embedding the 774 KB manifest would waste context.
+locked = ["Bosonize/Core/Ch18Bogoliubov.lean"]
 verify = [
   ["python3", "/home/lucas/Projects/scripts/verify_document.py", "notes/md/ch18_bogoliubov.md", "docs/companion/Bosonize/Core/Ch18Bogoliubov.md"],
   ["python3", "scripts/guards/stub_lock.py", "--check", "--strict"],
