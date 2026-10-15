@@ -1,6 +1,6 @@
 [
   {
-    "file": "notes/latex/chapters/sections/ch19_finite_comparison.tex",
+    "file": "notes/latex/chapters/sections/19.4.tex",
     "required": [
       "\\\\section\\{",
       "\\\\label\\{sec:ch19-finite-comparison\\}"

@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "route": "explicit user-requested manuscript import",
+  "status": "compiled manuscript drafts; independent mathematical review pending",
+  "lean_status": "CH19/A08 Phase B accepted; CH20–21 chapter Lean unimplemented",
+  "imported_at": "2026-10-15T23:27:53.093920+00:00",
+  "sections": [
+    {
+      "number": "19.1",
+      "id": "ch19-scope",
+      "title": "Finite expectations and abstract states",
+      "download": "ch19_scope_expanded.tex",
+      "packet_id": "book-ch19-scope-20261015T163828Z-9148ea34",
+      "original_sha256": "b64d5274ae90599aa7ec8767722f8a27fc4f8619c790635cc239387add19656f",
+      "template_sha256": "31d09a9dd2b9946182fdbd093603ba23c73a79362a484cec43c59426a467976d",
+      "target": "notes/latex/chapters/sections/19.1.tex",
+      "body_sha256": "e09e3acc3ba141626ec838f4225b257153df096186760f511ae40c5e65c820aa",
+      "format_adjustments": []
+    },
+    {
+      "number": "19.2",
+      "id": "ch19-mode-correlators",
+      "title": "Ordered mode contractions",
+      "download": "ch19_mode_correlators.tex",
+      "packet_id": "draft-ch19-mode-correlators-836398a558b7",
+      "original_sha256": "8aa0137dc5916035340810d3a292a6465ade6f200a82072dbe31538779701708",
+      "template_sha256": "573f2b0ce3cf6bada002c60e0ca58ec7131d79f1d7b82195155fed435ff4a5d8",
+      "target": "notes/latex/chapters/sections/19.2.tex",
+      "body_sha256": "ce4b43d5b94f0aa67b5b41bab7a85959ec77ce8da743017cf083505343b9a0b5",
+      "format_adjustments": []
+    },
+    {
+      "number": "19.3",
+      "id": "ch19-spatial-correlators",
+      "title": "Finite spatial correlation kernels",
+      "download": "ch19_spatial_correlators.tex",
+      "packet_id": "draft-ch19-spatial-correlators-51a92665e948",
+      "original_sha256": "95cb7660573d7c401f88e34bbcfb4af8a4156b7de7f23e2d02e7158ce077bbda",
+      "template_sha256": "d75d6f7d0aca6f8336d2db3ec97af1ade1d5fe9a16047712d24fbd63983de409",
+      "target": "notes/latex/chapters/sections/19.3.tex",
+      "body_sha256": "fa0b8a29814d32086ea7da2843afd8dd6aaba127c863295fca83abd8d6ea464b",
+      "format_adjustments": []
+    },
+    {
+      "number": "19.4",
+      "id": "ch19-finite-comparison",
+      "title": "Finite-Fock comparison and limitations",
+      "download": "ch19_finite_comparison.tex",
+      "packet_id": "draft-ch19-finite-comparison-027a3b557f30",
+      "original_sha256": "9e848c1c4deafb81ab50e0890320291af90c8bb4c0674dd00dc44a6d6f5e0a82",
+      "template_sha256": "c76d892d080aedc6b23a73244b2ce2e776692de66163bed9c3332939583ffc8a",
+      "target": "notes/latex/chapters/sections/19.4.tex",
+      "body_sha256": "261269343791f9e4a94ae497fae04f8796bf5e3a150896f48a568feee35ce0ee",
+      "format_adjustments": [
+        "Restored missing final newline after end{document}; body unchanged"
+      ]
+    },
+    {
+      "number": "20.1",
+      "id": "ch20-projected-products",
+      "title": "Exact finite CAR products",
+      "download": "ch20_projected_products.tex",
+      "packet_id": "draft-ch20-projected-products-5136b8e19b36",
+      "original_sha256": "ca598c0129702e5db1e98946de574599b6b5abf18a4de829d944a1aa34e0f20b",
+      "template_sha256": "6a2d0b822fcfe3053540448b6f1df4a29d73475324401ef6741784b5e4b123cb",
+      "target": "notes/latex/chapters/sections/20.1.tex",
+      "body_sha256": "3b6cec0a9cce7b616d7921eb6bbfb8e6e94aba078a0b3a3e25d3848b4e82b21e",
+      "format_adjustments": []
+    },
+    {
+      "number": "20.2",
+      "id": "ch20-formal-vertices",
+      "title": "Formal vertices and coefficientwise correlators",
+      "download": "ch20_formal_vertices.tex",
+      "packet_id": "draft-ch20-formal-vertices-d00ef04fd889",
+      "original_sha256": "6334e8cda33dbe4a57ecb42cfea1f254e1deff2eae30506501855094e07bb95b",
+      "template_sha256": "7f60f94f03a8fff4264192df72325bc21440366dbe597465af7f51bc6590d996",
+      "target": "notes/latex/chapters/sections/20.2.tex",
+      "body_sha256": "d5e2bdd2f0e1c7a39486e4dc2be9f63c534052bd6f07857aefa280d6ce4fd88f",
+      "format_adjustments": []
+    },
+    {
+      "number": "20.3",
+      "id": "ch20-model-duality",
+      "title": "Algebraic model duality and state transport",
+      "download": "ch20_model_duality.tex",
+      "packet_id": "draft-ch20-model-duality-7683b6493967",
+      "original_sha256": "4a70e385c5620f01871153ab3691e12964db5b9a0a6ce598ac2cb64cecf1d38b",
+      "template_sha256": "109bb27a51405e4711a29cd47ba862b8e226b3b9d1bb46d6e69c30c3020f8694",
+      "target": "notes/latex/chapters/sections/20.3.tex",
+      "body_sha256": "b828b53fead82b5c979eef281028ed3543444577b361d450ece96135b1cd9d56",
+      "format_adjustments": []
+    },
+    {
+      "number": "21.1",
+      "id": "ch21-spin-charge",
+      "title": "Spinful species, currents and the parity sublattice",
+      "download": "ch21_spin_charge.tex",
+      "packet_id": "draft-ch21-spin-charge-9c14ed11e6f2",
+      "original_sha256": "54f6913a2d2661d250616d248b1f7c27f6100d629b5530a3ba2371417618fc78",
+      "template_sha256": "097d19c1fe99e19a94872437a5647826925a61d369a3c1658474478ff8a6868c",
+      "target": "notes/latex/chapters/sections/21.1.tex",
+      "body_sha256": "f70d1f4047de23b37f6a12f121422bf1b415ae118c733f45c0d85e2ef65e92b0",
+      "format_adjustments": []
+    },
+    {
+      "number": "21.2",
+      "id": "ch21-singlet-pair",
+      "title": "The spin-singlet pair and its two charge channels",
+      "download": "ch21_singlet_pair.tex",
+      "packet_id": "draft-ch21-singlet-pair-4a8100ff1bac",
+      "original_sha256": "35fe34e771c3bf1b44f9d6575a65bc920775d742fb23bbe2f653378c6268c4ca",
+      "template_sha256": "f2481cff391366b4794d9b8522020aeed1c5d40914e2848b837a6cee2a9aab29",
+      "target": "notes/latex/chapters/sections/21.2.tex",
+      "body_sha256": "6d32c8991455636950d2c1e99ab83baa4e17abf2e8183f7edf077bbc7e38de96",
+      "format_adjustments": []
+    },
+    {
+      "number": "21.3",
+      "id": "ch21-umklapp",
+      "title": "Umklapp scattering, charge shifts and leakage",
+      "download": "ch21_umklapp.tex",
+      "packet_id": "draft-ch21-umklapp-28e581faf59a",
+      "original_sha256": "9dfd3ea37f197db38f192ad60ce3ce41e853f765faec90ca62a8159cf8613405",
+      "template_sha256": "2e5e483a491198c07f9ef0d20349fea2678b4f94efee97fba344cd8686676502",
+      "target": "notes/latex/chapters/sections/21.3.tex",
+      "body_sha256": "50285d4a45ebf16d4951de689bae04e29dc5cf70e21cc0c28d1a30b2740d545c",
+      "format_adjustments": []
+    },
+    {
+      "number": "21.4",
+      "id": "ch21-finite-effective",
+      "title": "Finite energy-shell projection and effective Hamiltonians",
+      "download": "ch21_finite_effective.tex",
+      "packet_id": "draft-ch21-finite-effective-d0f5f8637c85",
+      "original_sha256": "b10165b7af31072f19f00f12a6c4934ec7d09cfba844dc0e3bb4188370703661",
+      "template_sha256": "b921106f14caab2aba9e9f5d44423637f7d738bf805fe0deabf464ea68f04bca",
+      "target": "notes/latex/chapters/sections/21.4.tex",
+      "body_sha256": "4fe44afacec436492a4427b8f019dd41a6f0ae03f945872cf1bb24c4b27eaa42",
+      "format_adjustments": []
+    }
+  ]
+}

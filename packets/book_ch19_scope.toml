@@ -18,10 +18,10 @@ Start with a section heading and label sec:ch19-scope. Use distinct notation for
 finite expectations and abstract omega. Return ONE complete standalone .tex file
 from response-template.tex, changing only the marked body. No JSON or ZIP.
 """
-targets = ["notes/latex/chapters/sections/ch19_scope.tex"]
+targets = ["notes/latex/chapters/sections/19.1.tex"]
 context = ["notes/latex/plan/WRITING_POLICY.md", "notes/latex/plan/sections.json", "notes/latex/plan/ch19_notation.json", "notes/latex/preamble.tex", "notes/latex/bibliography.tex", "notes/md/ch19_correlations.md", "notes/appendices/a08_states_and_correlations.md", "BosonizeStubs/Ch19Correlations.lean", "BosonizeStubs/A08OscillatorStates.lean", "docs/companion/BosonizeStubs/Ch19Correlations.md", "docs/webllm/chapters/ch19.json"]
 locked = ["BosonizeStubs/Ch19Correlations.lean", "BosonizeStubs/A08OscillatorStates.lean"]
-verify = [["python3", "/home/lucas/Projects/scripts/verify_document.py", "notes/latex/chapters/sections/ch19_scope.tex", "--root", "notes/latex", "--main", "main.tex", "--included", "chapters/sections/ch19_scope.tex", "--notation", "notes/latex/plan/ch19_notation.json", "--artifacts", ".book-artifacts/ch19-scope"]]
+verify = [["python3", "/home/lucas/Projects/scripts/verify_document.py", "notes/latex/chapters/sections/19.1.tex", "--root", "notes/latex", "--main", "main.tex", "--included", "chapters/sections/19.1.tex", "--notation", "notes/latex/plan/ch19_notation.json", "--artifacts", ".book-artifacts/ch19-scope"]]
 timeout = 300
 max_packet_bytes = 350000
 

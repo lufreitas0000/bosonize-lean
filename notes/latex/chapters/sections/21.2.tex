@@ -1,0 +1,631 @@
+\section{The Spin-Singlet Cooper Pair and Its Two Charge Channels}
+\label{sec:ch21-singlet-pair}
+
+\subsection*{Why one singlet operator has two different targets}
+
+A spin-singlet Cooper pair is often represented by a single compact field
+expression.  In a finite fermionic Hilbert space, however, we must first ask a
+more elementary question: \emph{which occupation-number sectors does this
+operator connect?}  For a pair assembled from a right mover and a left mover,
+the two antisymmetrized spin assignments remove particles from different
+species.  Although they carry the same \emph{total} charge and spin, they do
+not have the same four-component charge vector.  Their operators therefore
+have different target spaces when the finite energy budgets are treated as
+typed linear maps.  Their relative fermionic signs must also be calculated,
+not discarded under the phrase ``the Klein factors cancel.''
+
+We continue with the ordered four-species CAR carrier of
+Section~\ref{sec:ch21-spin-charge}.  Set
+\begin{equation}
+ L=2h,\quad h\in\mathbb N_{>0},\qquad
+ \mathcal B_L=\{1-h,2-h,\ldots,h\},\qquad
+ \Lambda_L=\mathbb Z/L\mathbb Z,\qquad
+ \zeta=e^{2\pi i/L}.
+ \label{eq:ch21-pair-setting}
+\end{equation}
+Every one of the four species
+\(\mathcal C=\{L,R\}\times\{\uparrow,\downarrow\}\) has these \(L\)
+momentum modes; the lexicographic occupation order is
+\begin{equation}
+ L\uparrow<L\downarrow<R\uparrow<R\downarrow,
+ \quad\text{then increasing momentum within each species}.
+ \label{eq:ch21-pair-order}
+\end{equation}
+We retain the positive-mode cutoff notation \(1\leq m\leq M\) for later
+current or oscillator expansions, but the exact CAR identities in this
+section require no such cutoff.  All site labels \(x\) are periodic lattice
+positions, represented by integers modulo \(L\).  With periodic Fourier
+orientation fixed as in Section~\ref{sec:ch21-spin-charge}, the finite site
+annihilator is
+\begin{equation}
+ c_{\alpha,x}=\frac1{\sqrt L}\sum_{k\in\mathcal B_L}
+        \zeta^{kx}c_{\alpha,k},\qquad
+ c_{\alpha,x}^{\dagger}=\frac1{\sqrt L}\sum_{k\in\mathcal B_L}
+        \zeta^{-kx}c_{\alpha,k}^{\dagger}.
+ \label{eq:ch21-pair-site-field}
+\end{equation}
+These are genuine operators on the finite occupation Fock space
+\(\mathcal H_L\), not formal vertex exponentials.  Orthogonality of the
+finite characters and the momentum CAR give
+\(\{c_{\alpha,x},c_{\beta,y}^{\dagger}\}
+=\delta_{\alpha\beta}\delta_{xy}I\) and
+\(\{c_{\alpha,x},c_{\beta,y}\}=0\).
+Indeed, the first anticommutator is
+\(L^{-1}\delta_{\alpha\beta}\sum_{k\in\mathcal B_L}
+\zeta^{k(x-y)}I\), which is the stated periodic Kronecker delta.
+There is no non-wrapping current approximation in this step.
+
+\begin{definition}[Annihilating spin-singlet pair]
+\label{def:ch21-singlet}
+The ordered, spin-antisymmetric two-fermion operator is
+\begin{equation}
+ \begin{split}
+ O_{SSC}(x)&=A_1(x)-A_2(x),\\
+ A_1(x)&=c_{R\uparrow,x}\,c_{L\downarrow,x},\\
+ A_2(x)&=c_{R\downarrow,x}\,c_{L\uparrow,x}.
+ \end{split}
+ \label{eq:ch21-singlet-def}
+\end{equation}
+The rightmost field acts first.  In particular, \(A_1\) annihilates an
+\(L\downarrow\) particle before an \(R\uparrow\) particle; \(A_2\)
+annihilates an \(L\uparrow\) particle before an \(R\downarrow\) particle.
+\end{definition}
+
+The minus sign in \eqref{eq:ch21-singlet-def} is the antisymmetric spin
+contraction \(\sum_{\sigma,\tau}\epsilon_{\sigma\tau}
+ c_{R\sigma,x}c_{L\tau,x}\), with
+\(\epsilon_{\uparrow\downarrow}=1\) and
+\(\epsilon_{\downarrow\uparrow}=-1\).  For \(U\in SU(2)\), the elementary
+identity \(U^{T}\epsilon U=(\det U)\epsilon=\epsilon\) shows that this
+contraction is a spin scalar when both spin labels transform by the same
+matrix.  This representation-theoretic assertion does \emph{not} say that
+the Hamiltonian possesses spin-rotation symmetry.  It also does not
+eliminate the antisymmetric CAR ordering.  For example, taking the adjoint
+and reordering the fermions gives
+\begin{equation}
+ O_{SSC}(x)^\dagger
+  =-c_{R\uparrow,x}^\dagger c_{L\downarrow,x}^\dagger
+    -c_{L\uparrow,x}^\dagger c_{R\downarrow,x}^\dagger.
+ \label{eq:ch21-singlet-adjoint}
+\end{equation}
+Thus the annihilating convention here differs by an overall sign upon
+adjunction from a frequently written spin-singlet \emph{creation} convention.
+
+\subsection*{Four-component charge shifts and the common total quantum numbers}
+
+Let \(\widehat N_\alpha=\sum_{k\in\mathcal B_L}
+ c_{\alpha,k}^\dagger c_{\alpha,k}-hI\) be the relative species charge;
+write \(\mathbf N\in\mathbb Z^{\mathcal C}\) for its simultaneous
+eigenvalues, and \(e_\alpha\) for the unit charge vector in species
+\(\alpha\).  Only admissible components \(-h\leq N_\alpha\leq h\)
+occur on the finite carrier.  The \(c_{\alpha,k}\) preserve neither
+\(\mathbf N\) nor the energy budget, but their \emph{charge shifts} are
+exact on the entire ambient finite Fock space.
+
+\begin{lemma}[Exact species shifts of the two singlet channels]
+\label{lem:ch21-singlet-shifts}
+For every \(\gamma\in\mathcal C\) and every \(x\in\Lambda_L\),
+\begin{align}
+ [\widehat N_\gamma,A_1(x)]
+   &=-(\delta_{\gamma,R\uparrow}+\delta_{\gamma,L\downarrow})A_1(x),
+   \label{eq:ch21-pair-shift-one}\\
+ [\widehat N_\gamma,A_2(x)]
+   &=-(\delta_{\gamma,R\downarrow}+\delta_{\gamma,L\uparrow})A_2(x).
+   \label{eq:ch21-pair-shift-two}
+\end{align}
+Consequently, if \(\mathcal H_{\mathbf N}\subseteq\mathcal H_L\)
+is the full joint eigenspace of species charges \(\mathbf N\), then
+\begin{equation}
+ A_j(x)\mathcal H_{\mathbf N}\subseteq\mathcal H_{\mathbf T_j},
+ \qquad\begin{cases}
+ \mathbf T_1=\mathbf N-e_{L\downarrow}-e_{R\uparrow},\\
+ \mathbf T_2=\mathbf N-e_{L\uparrow}-e_{R\downarrow}.
+ \end{cases}
+ \label{eq:ch21-pair-targets}
+\end{equation}
+These two targets are distinct integer vectors.  Their charge eigenspaces
+are orthogonal, including when one of the eigenspaces is zero.
+\end{lemma}
+
+\begin{proof}
+The CAR imply
+\([c_{\gamma,k}^\dagger c_{\gamma,k},c_{\beta,q}]
+=-\delta_{\gamma\beta}\delta_{kq}c_{\beta,q}\).
+Summing over \(k\), subtracting the scalar sea occupation \(hI\), and
+then using \eqref{eq:ch21-pair-site-field} gives
+\([\widehat N_\gamma,c_{\beta,x}]
+=-\delta_{\gamma\beta}c_{\beta,x}\).
+For any operators \(D,X,Y\), the identity
+\([D,XY]=[D,X]Y+X[D,Y]\) holds without a commutativity
+assumption.  Apply it to the \emph{ordered} words \(A_1,A_2\) to obtain
+\eqref{eq:ch21-pair-shift-one}--\eqref{eq:ch21-pair-shift-two}.
+If \(\widehat N_\gamma\psi=N_\gamma\psi\), then
+\(\widehat N_\gamma A_j\psi=(N_\gamma+\Delta_{j,\gamma})A_j\psi\),
+which gives \eqref{eq:ch21-pair-targets}.  Its two shift vectors are
+different because, for instance, their \(L\uparrow\) components are
+\(0\) and \(-1\).  Finally, distinct eigenspaces of a self-adjoint
+operator are orthogonal: if \(\widehat N_\gamma u=au\) and
+\(\widehat N_\gamma v=bv\), then
+\(a\langle u,v\rangle=\langle\widehat N_\gamma u,v\rangle
+=\langle u,\widehat N_\gamma v\rangle=b\langle u,v\rangle\).
+Choose a component for which \(a\ne b\).
+\end{proof}
+
+It is instructive to express these shifts using the raw charge and spin
+labels of Section~\ref{sec:ch21-spin-charge}:
+\(Q_{\eta,c}=N_{\eta\uparrow}+N_{\eta\downarrow}\) and
+\(Q_{\eta,s}=N_{\eta\uparrow}-N_{\eta\downarrow}\).
+\begin{center}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & $\Delta Q_{R,c}$ & $\Delta Q_{R,s}$
+ & $\Delta Q_{L,c}$ & $\Delta Q_{L,s}$
+ & $\Delta Q_{\mathrm{tot},c}$ & $\Delta Q_{\mathrm{tot},s}$\\
+\midrule
+$A_1$ & $-1$ & $-1$ & $-1$ & $+1$ & $-2$ & $0$\\
+$A_2$ & $-1$ & $+1$ & $-1$ & $-1$ & $-2$ & $0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The common total \(\Delta Q_{\mathrm{tot},c}=-2\) and
+\(\Delta Q_{\mathrm{tot},s}=0\) do not identify the two targets.  In
+particular, the chirality-resolved spin shifts differ, and each branch
+continues to obey the integer parity constraint
+\(Q_{\eta,c}\equiv Q_{\eta,s}\pmod 2\).  Forgetting chirality-resolved
+charges before projecting would erase information needed to determine the
+correct codomain.
+
+\subsection*{The signed Klein factors are ordered charge-shift maps}
+
+A Klein factor is sometimes introduced as an anticommuting symbol attached
+to each fermion field.  On the finite occupation representation, the source
+of its sign is more concrete: removing a fermion requires commuting it past
+all occupied modes that precede it in the fixed species--momentum order.
+The signed factor is consequently a \emph{charge-dependent map}, not an
+arbitrary numerical phase assigned to each species.
+
+For each admissible integer vector \(\mathbf N\), write
+\(\Omega_{\mathbf N}\) for the normalized charge-sector ground ket, with
+species \(\alpha\) filled at
+\(\{1-h,\ldots,N_\alpha\}\).  Its number of particles of species
+\(\alpha\) is \(h+N_\alpha\).  Assume below that a named annihilation is
+possible, namely \(N_\alpha\geq1-h\), and that all indicated lowered
+charge vectors remain admissible.  In Chapter~\ref{ch:car_fock}'s
+occupation action, the annihilator of the \emph{top occupied momentum}
+\(k=N_\alpha\) has preceding-occupation exponent
+\begin{equation}
+ \begin{split}
+ E_h(\mathbf N,\alpha)
+   &=\sum_{\beta<\alpha}(h+N_\beta)
+       +(h+N_\alpha-1),\\
+ \kappa_h(\mathbf N,\alpha)
+   &=(-1)^{E_h(\mathbf N,\alpha)}\in\{+1,-1\}.
+ \end{split}
+ \label{eq:ch21-pair-klein-phase}
+\end{equation}
+The first term counts occupied modes in preceding species; the second
+counts those below the occupied top mode within species \(\alpha\).
+The signed finite Klein kernel constructed in Core Chapter~13
+reproduces precisely this phase on sector ground states, under the
+charge and budget margins stated for that construction.
+
+To keep the zero-mode notation transparent, denote by \(F_\alpha\) the
+\emph{typed sector shift} whose ground-state action is
+\begin{equation}
+ F_\alpha\Omega_{\mathbf N}
+  =\kappa_h(\mathbf N,\alpha)\,
+    \Omega_{\mathbf N-e_\alpha}.
+ \label{eq:ch21-pair-klein-action}
+\end{equation}
+This notation describes the Core Klein action on admissible ground
+states; extending it to particular non-ground budgets requires the
+corresponding finite kernel theorem.  It is not an assertion that one
+bounded lowering operator acts isometrically on every charge sector,
+including the empty boundary sector.  Define also the diagonal site phase
+\(Z_{\alpha,x}\Omega_{\mathbf N}=\zeta^{xN_\alpha}
+\Omega_{\mathbf N}\).  Since lowering species \(\beta\ne\alpha\)
+does not change \(N_\alpha\), the ground-state actions of
+\(Z_{\alpha,x}\) and \(F_\beta\) commute for distinct species.
+
+\begin{proposition}[Two different signed zero-mode products]
+\label{prop:ch21-two-klein-products}
+With \(\mathbf T_1,\mathbf T_2\) as in
+\eqref{eq:ch21-pair-targets}, the two ordered zero-mode combinations are
+\begin{align}
+ \mathcal K_1(x)&=
+ F_{R\uparrow}F_{L\downarrow}
+ Z_{R\uparrow,x}Z_{L\downarrow,x}:
+  \mathbf N\longrightarrow\mathbf T_1,
+ \label{eq:ch21-klein-one}\\
+ \mathcal K_2(x)&=
+ F_{R\downarrow}F_{L\uparrow}
+ Z_{R\downarrow,x}Z_{L\uparrow,x}:
+  \mathbf N\longrightarrow\mathbf T_2.
+ \label{eq:ch21-klein-two}
+\end{align}
+On an admissible sector ground ket, the actions are
+\begin{equation}
+ \mathcal K_j(x)\Omega_{\mathbf N}
+  =\zeta^{x(N_{a_j}+N_{b_j})}
+    \kappa_h(\mathbf N-e_{b_j},a_j)
+    \kappa_h(\mathbf N,b_j)\,\Omega_{\mathbf T_j},
+ \label{eq:ch21-klein-channel-ground}
+\end{equation}
+where \((a_1,b_1)=(R\uparrow,L\downarrow)\) and
+\((a_2,b_2)=(R\downarrow,L\uparrow)\).
+The rightmost \(F_{b_j}\) acts first; in particular the second
+Klein phase must be evaluated on \(\mathbf N-e_{b_j}\), not on
+\(\mathbf N\).
+\end{proposition}
+
+\begin{proof}
+Act with the rightmost diagonal \(Z\) operators on
+\(\Omega_{\mathbf N}\); their product is
+\(\zeta^{x(N_{a_j}+N_{b_j})}\).  Next \(F_{b_j}\) lowers
+\(\mathbf N\) to \(\mathbf N-e_{b_j}\) with phase
+\(\kappa_h(\mathbf N,b_j)\).  Finally \(F_{a_j}\) acts on that
+\emph{intermediate} charge vector, giving
+\(\kappa_h(\mathbf N-e_{b_j},a_j)\).
+This proves \eqref{eq:ch21-klein-channel-ground}.
+Notice that in our fixed ordering both \(b_1<a_1\) and
+\(b_2<a_2\).  Hence
+\(E_h(\mathbf N-e_b,a)=E_h(\mathbf N,a)-1\) whenever
+\(b<a\) and \(a\ne b\).  Reversing the two shifts changes their
+relative sign, which is the finite occupation-string origin of the
+fermionic cross-species anticommutation.  No freedom to suppress that
+sign has been introduced.
+\end{proof}
+
+The \(Z\) factors specify zero-mode phases, not the full oscillator
+content of the site fields.  The formulas above are \emph{not} a
+factorization theorem expressing \(c_{a,x}c_{b,x}\) on every budget
+as a product of two compressed bosonic exponentials.  Such a statement
+requires the single-field identifications, a common domain of composition,
+and control of intermediate projection remainders.
+
+\begin{lemma}[Matching the ordered CAR action on sector grounds]
+\label{lem:ch21-pair-ground-action}
+For distinct species \(a,b\), assume that the charge-sector ground
+\(\Omega_{\mathbf N}\) and both lowerings are admissible.  Let
+\(k_b=N_b\) and \(k_a=N_a\) denote the occupied top momenta in
+\(\mathcal B_L\).  Then
+\begin{equation}
+ c_{a,k_a}c_{b,k_b}\Omega_{\mathbf N}
+  =\kappa_h(\mathbf N-e_b,a)\kappa_h(\mathbf N,b)
+      \Omega_{\mathbf N-e_b-e_a},
+ \label{eq:ch21-pair-ordered-top}
+\end{equation}
+and, for the site fields,
+\begin{equation}
+ \big\langle\Omega_{\mathbf N-e_b-e_a},
+  c_{a,x}c_{b,x}\Omega_{\mathbf N}\big\rangle
+   =\frac{\zeta^{x(N_a+N_b)}}{L}
+     \kappa_h(\mathbf N-e_b,a)\kappa_h(\mathbf N,b).
+ \label{eq:ch21-pair-channel-coefficient}
+\end{equation}
+The right-hand side is \(L^{-1}\) times the corresponding
+zero-mode matrix coefficient in \eqref{eq:ch21-klein-channel-ground}.
+\end{lemma}
+
+\begin{proof}
+For a ground configuration, deleting its top occupied momentum
+\(k_b=N_b\) leaves the ground configuration of charge
+\(\mathbf N-e_b\); the occupation-basis annihilation rule gives the
+phase \(\kappa_h(\mathbf N,b)\).  Deleting \(k_a=N_a\) from this
+intermediate ground gives the second phase
+\(\kappa_h(\mathbf N-e_b,a)\), proving
+\eqref{eq:ch21-pair-ordered-top}.
+To compute the matrix element for site annihilators, expand both
+finite Fourier sums in \eqref{eq:ch21-pair-site-field}.
+The target ket is the \emph{ground} configuration at
+\(\mathbf N-e_a-e_b\).  Removing any momentum other than the
+occupied top mode of species \(b\) leaves a different occupation
+configuration, and removal of a non-top momentum of species \(a\)
+likewise cannot produce the target ground.  Orthogonality of
+occupation kets therefore selects the unique summand
+\((k_a,k_b)=(N_a,N_b)\).  Its two Fourier amplitudes multiply to
+\(L^{-1}\zeta^{x(N_a+N_b)}\), while its CAR sign is the product
+already obtained.  No current-CCR or energy-margin hypothesis enters
+this matrix coefficient; it is an exact finite-CAR statement.
+\end{proof}
+
+\subsection*{A finite sign calculation: both Klein phases matter}
+
+\begin{example}[Four species, \(L=4\), and two opposite singlet coefficients]
+\label{ex:ch21-pair-sign}
+Take \(h=2\), \(L=4\), \(x=1\), \(\zeta=i\), and the zero-charge sea
+\(\Omega_{\mathbf0}\).  Each of the four species occupies momenta
+\(\{-1,0\}\), ordered as in \eqref{eq:ch21-pair-order}.
+Both singlet channels remove the top momentum \(k=0\) from their
+respective species.
+
+For channel 1, annihilating the rightmost \(L\downarrow\) field
+encounters \(2+1=3\) preceding occupied modes, hence contributes
+\(-1\).  In the intermediate state, annihilating \(R\uparrow\) at
+\(k=0\) encounters \(2+1+1=4\) preceding modes, hence contributes
+\(+1\).  Thus
+\begin{equation}
+ \kappa_2(\mathbf0,L\downarrow)=-1,\quad
+ \kappa_2(-e_{L\downarrow},R\uparrow)=+1,\quad
+ \langle\Omega_{\mathbf T_1},A_1(1)\Omega_{\mathbf0}\rangle=-\tfrac14.
+ \label{eq:ch21-pair-example-one}
+\end{equation}
+For channel 2, removing \(L\uparrow\) at \(k=0\) encounters one
+preceding occupied mode and contributes \(-1\).  Removing
+\(R\downarrow\) at \(k=0\) from the intermediate configuration
+encounters \(1+2+2+1=6\) preceding modes and contributes \(+1\).
+Therefore
+\begin{equation}
+ \kappa_2(\mathbf0,L\uparrow)=-1,\quad
+ \kappa_2(-e_{L\uparrow},R\downarrow)=+1,\quad
+ \langle\Omega_{\mathbf T_2},A_2(1)\Omega_{\mathbf0}\rangle=-\tfrac14.
+ \label{eq:ch21-pair-example-two}
+\end{equation}
+The Fourier phase is \(\zeta^{(0+0)x}=1\) in both cases, and each
+pair contributes the normalization \(1/L=1/4\).  In the \emph{singlet
+operator} the second channel is subtracted.  Accordingly,
+\begin{equation}
+ \boxed{\quad
+ \langle\Omega_{\mathbf T_1},O_{SSC}(1)\Omega_{\mathbf0}\rangle
+   =-\tfrac14,\qquad
+ \langle\Omega_{\mathbf T_2},O_{SSC}(1)\Omega_{\mathbf0}\rangle
+   =+\tfrac14.\quad}
+ \label{eq:ch21-pair-example-final}
+\end{equation}
+There is no contradiction in the opposite signs: the target kets
+belong to different, mutually orthogonal charge sectors.  Their
+amplitudes must not be summed as if they were two contributions to
+the same basis coefficient.
+\end{example}
+
+The sign pattern has a useful exact generalization.  With
+\(\mathbf N=\mathbf0\) and arbitrary \(h\geq1\), the channel-1
+preceding exponents are \(2h-1\) for \(L\downarrow\) and
+\(3h-2\) for \(R\uparrow\) after the first removal.  Channel 2 has
+exponents \(h-1\) for \(L\uparrow\) and \(4h-2\) for
+\(R\downarrow\) after the first removal.  Therefore
+\begin{equation}
+ \kappa_h(-e_{L\downarrow},R\uparrow)
+ \kappa_h(\mathbf0,L\downarrow)
+ =\kappa_h(-e_{L\uparrow},R\downarrow)
+ \kappa_h(\mathbf0,L\uparrow)=(-1)^{h+1}.
+ \label{eq:ch21-pair-general-sign}
+\end{equation}
+At \(\mathbf N=\mathbf0\) the ground-to-ground coefficients are
+\(\pm(-1)^{h+1}/L\) in the two mutually orthogonal targets,
+with the overall negative sign applied to channel 2.
+
+\subsection*{Typed finite budgets, the direct-sum target, and exact residuals}
+
+The finite-field product is an ambient endomorphism on \(\mathcal H_L\),
+so \(A_1-A_2\) is well defined there.  Trouble arises only if each
+annihilator is first compressed to a map between \emph{different}
+charge-sector energy budgets and these maps are then subtracted as if their
+codomains agreed.  The remedy is to specify each intermediate space,
+calculate its omitted component, and embed both final targets into the
+same Hilbert space.
+
+Let \(\mathcal E(S)\) be the nonnegative integer grading relative to
+the ground configuration of the charge sector of \(S\), as in
+Chapter~\ref{ch:vacuum_budget}.  For admissible \(\mathbf N\) and
+\(J\in\mathbb N\), define the coordinate budget
+\begin{equation}
+ V_{\mathbf N,J}
+  =\operatorname{span}\{\,|S\rangle:\mathbf N(S)=\mathbf N,
+                          \ \mathcal E(S)\leq J\,\}
+  \subseteq\mathcal H_L.
+ \label{eq:ch21-pair-budget}
+\end{equation}
+Let \(i_{\mathbf N,J}:V_{\mathbf N,J}\hookrightarrow\mathcal H_L\)
+be inclusion, \(p_{\mathbf N,J}=i_{\mathbf N,J}^\dagger\) its
+orthogonal component projection, and
+\(P_{\mathbf N,J}=i_{\mathbf N,J}p_{\mathbf N,J}\) the ambient
+orthogonal projector.  A cutoff \(J\) is an excitation-energy budget,
+not a bound on the scalar product \(\langle\psi,H\psi\rangle\).
+
+For \(j=1,2\), retain the ordered pair \((a_j,b_j)\) above and choose
+\emph{independent} source, intermediate, and target cutoffs
+\(J_s,J_{m,j},J_{t,j}\in\mathbb N\).  Define
+\begin{equation}
+ \begin{aligned}
+ V_s&=V_{\mathbf N,J_s},\\
+ \mathbf M_j&=\mathbf N-e_{b_j},
+    &V_{m,j}&=V_{\mathbf M_j,J_{m,j}},\\
+ \mathbf T_j&=\mathbf N-e_{b_j}-e_{a_j},
+    &V_{t,j}&=V_{\mathbf T_j,J_{t,j}}.
+ \end{aligned}
+ \label{eq:ch21-pair-three-spaces}
+\end{equation}
+If any shifted charge vector is not admissible, its corresponding
+budget is interpreted as the zero subspace of \(\mathcal H_L\).
+Write \(i_s,p_{m,j},i_{m,j},p_{t,j}\) for the associated inclusion
+and coordinate projections.  Finally form the \emph{orthogonal sum}
+\begin{equation}
+ W=V_{t,1}\oplus V_{t,2},\qquad
+ j_j:V_{t,j}\longrightarrow W,\qquad
+ p_W:\mathcal H_L\longrightarrow W.
+ \label{eq:ch21-pair-common-target}
+\end{equation}
+Here \(W\) is identified isometrically with the subspace
+\(V_{t,1}+V_{t,2}\subseteq\mathcal H_L\); the sum is orthogonal by
+Lemma~\ref{lem:ch21-singlet-shifts}.  Thus each \(j_j\) is the
+canonical inclusion of one target into the common codomain.
+
+\begin{theorem}[Exact two-channel projected singlet identity]
+\label{thm:ch21-pair-projected}
+For every finite \(L=2h\), site \(x\), admissible source charge,
+and chosen nonnegative cutoffs, define the typed field maps
+\begin{equation}
+ \begin{aligned}
+ B_{b,j}&=p_{m,j}c_{b_j,x}i_s:
+                  V_s\longrightarrow V_{m,j},\\
+ B_{a,j}&=p_{t,j}c_{a_j,x}i_{m,j}:
+                  V_{m,j}\longrightarrow V_{t,j},\\
+ \mathcal R_j&=p_{t,j}c_{a_j,x}
+       (I-P_{m,j})c_{b_j,x}i_s:
+                  V_s\longrightarrow V_{t,j},\\
+ P_{m,j}&=i_{m,j}p_{m,j}:
+                  \mathcal H_L\longrightarrow\mathcal H_L.
+ \end{aligned}
+ \label{eq:ch21-pair-typed-maps}
+\end{equation}
+Then, as an equality of linear maps \(V_s\longrightarrow W\),
+\begin{equation}
+ \boxed{\displaystyle
+ p_W O_{SSC}(x)i_s
+  =j_1\!\left(B_{a,1}\circ B_{b,1}+\mathcal R_1\right)
+   -j_2\!\left(B_{a,2}\circ B_{b,2}+\mathcal R_2\right).}
+ \label{eq:ch21-pair-typed-identity}
+\end{equation}
+No intermediate or final cutoff inequality is required.  In
+particular, \(\mathcal R_1\) and \(\mathcal R_2\) are separately
+specified, and neither is silently set to zero.
+\end{theorem}
+
+\begin{proof}
+Fix a channel \(j\).  The insertion of the ambient orthogonal
+identity \(I=P_{m,j}+(I-P_{m,j})\) \emph{between the two site
+annihilators} is exact:
+\begin{equation}
+ \begin{aligned}
+ p_{t,j}c_{a_j,x}c_{b_j,x}i_s
+ &=p_{t,j}c_{a_j,x}
+       P_{m,j}c_{b_j,x}i_s
+   +p_{t,j}c_{a_j,x}(I-P_{m,j})c_{b_j,x}i_s\\
+ &=\bigl(p_{t,j}c_{a_j,x}i_{m,j}\bigr)
+       \bigl(p_{m,j}c_{b_j,x}i_s\bigr)
+      +\mathcal R_j\\
+ &=B_{a,j}\circ B_{b,j}+\mathcal R_j.
+ \end{aligned}
+ \label{eq:ch21-pair-insert-projection}
+\end{equation}
+This equality holds inside \(\operatorname{Hom}(V_s,V_{t,j})\).
+By Lemma~\ref{lem:ch21-singlet-shifts}, the image of
+\(c_{a_j,x}c_{b_j,x}i_s\) lies entirely in the
+\emph{full} charge sector \(\mathcal H_{\mathbf T_j}\).
+Since \(V_{t,1}\) and \(V_{t,2}\) occupy different charge sectors,
+projecting the channel-\(j\) image to \(W\) yields precisely
+\(j_jp_{t,j}c_{a_j,x}c_{b_j,x}i_s\); the projection to the other
+target is zero.  Inserting the two channel identities
+\eqref{eq:ch21-pair-insert-projection} into
+\(p_W(A_1-A_2)i_s\) proves
+\eqref{eq:ch21-pair-typed-identity}.  The two terms are subtracted
+\emph{after} composition with \(j_1\) and \(j_2\), so their
+codomain is genuinely the same \(W\).  This completes the proof.
+\end{proof}
+
+The theorem is a finite-Fock identity, not an approximate bosonization
+formula.  Both residuals represent concrete vectors that passed through
+the \emph{complement} of the selected intermediate energy budget before
+being annihilated by the second field.  In particular,
+\begin{equation}
+ \mathcal R_j=0
+ \quad\Longleftrightarrow\quad
+ p_{t,j}c_{a_j,x}(I-P_{m,j})c_{b_j,x}i_s=0.
+ \label{eq:ch21-pair-residual-criterion}
+\end{equation}
+The stronger range condition
+\((I-P_{m,j})c_{b_j,x}i_s=0\) suffices, but is not necessary:
+the second field and final projection can remove all discarded
+components even when the intermediate field leaves the budget.  A
+single-field bosonization candidate from Core Chapter~14 may replace
+\(B_{a,j}\) or \(B_{b,j}\) only after its \emph{individual}
+finite-budget identity and margins have been established.  A verified product of independently
+compressed candidates is not automatically the compressed physical
+product: precisely the \(\mathcal R_j\) term measures the difference.
+
+\begin{example}[A nonzero intermediate-projection residual]
+\label{ex:ch21-pair-residual}
+Return to \(h=2\), \(L=4\), \(x=1\), source charge
+\(\mathbf N=\mathbf0\) and source budget \(J_s=0\).  In channel 1,
+take \(J_{m,1}=0\) but \(J_{t,1}=1\).  Starting from the sea
+\(\Omega_{\mathbf0}\), remove momentum \(k=-1\), rather than the
+top momentum \(k=0\), in species \(L\downarrow\).  The resulting
+species occupation is \(\{0\}\), whereas the ground occupation of
+relative charge \(-1\) is \(\{-1\}\).  It therefore has one unit
+of excitation energy and is annihilated by the intermediate projection
+\(P_{m,1}\).
+
+Next remove the top momentum \(k=0\) in species \(R\uparrow\).
+The final occupation ket \(\Xi\) has charge
+\(\mathbf T_1=-e_{L\downarrow}-e_{R\uparrow}\), one excitation
+unit in \(L\downarrow\), and zero excitation in every other
+species, so \(\Xi\in V_{t,1}\).  No other momentum pair
+produces this exact configuration.  The preceding counts are \(2\)
+for the first \(L\downarrow\) removal and \(4\) for the
+\(R\uparrow\) removal; both CAR signs are positive.  The two
+Fourier factors contribute
+\(L^{-1}\zeta^{-1}=(-i)/4\).  Consequently,
+\begin{equation}
+ \left\langle\Xi,\mathcal R_1\Omega_{\mathbf0}\right\rangle
+     =-\frac{i}{4}\ne0,\qquad
+ \left\langle\Xi,(B_{a,1}\circ B_{b,1})
+          \Omega_{\mathbf0}\right\rangle=0.
+ \label{eq:ch21-pair-residual-witness}
+\end{equation}
+Thus even a source \emph{ground state} does not make a truncated
+intermediate projection exact for an arbitrary final cutoff.  Taking
+\(J_{m,1}=1\) retains the displayed intermediate ket, but that alone
+is not a proof that the entire residual vanishes for all source
+vectors and all final cutoffs.
+\end{example}
+
+\begin{remark}[An enlarged final codomain]
+\label{rem:ch21-pair-enlarged-target}
+Equation~\eqref{eq:ch21-pair-typed-identity} uses \(W\) \emph{equal to}
+the indicated two-budget orthogonal sum.  If \(W'\) is any larger
+closed subspace containing \(W\), with inclusion
+\(\iota:W\hookrightarrow W'\), its orthogonal projection satisfies
+\begin{equation}
+ p_{W'}O_{SSC}(x)i_s
+  =\iota\,p_WO_{SSC}(x)i_s
+     +p_{W'}(I-P_W)O_{SSC}(x)i_s.
+ \label{eq:ch21-pair-larger-target}
+\end{equation}
+The last term includes whatever part of either channel lies in the
+larger target outside the two selected budgets; it must be retained.
+It vanishes if \(W'=W\), or under an independently proved range
+condition.  Thus merely saying that \(W'\) ``contains both target
+budgets'' is insufficient to infer the same two-term formula.
+\end{remark}
+
+\subsection*{What is established, and what remains conditional}
+
+We have derived three logically separate statements.  First,
+\eqref{eq:ch21-pair-shift-one}--\eqref{eq:ch21-pair-targets} are exact
+species-charge selection rules in the full finite CAR algebra.  They
+show why the singlet has two, rather than one, typed charge channels.
+Second, \eqref{eq:ch21-pair-klein-phase}--\eqref{eq:ch21-pair-general-sign}
+compute their ordered fermionic phases on charge-sector ground kets;
+these phases are the ground-state content of the finite signed Klein
+construction.  Third, \eqref{eq:ch21-pair-typed-identity} is an exact
+linear-map identity on arbitrary finite coordinate budgets, and
+Example~\ref{ex:ch21-pair-residual} shows why its two residuals cannot
+in general be omitted.
+
+In a charge/spin collective-field description, one may substitute the
+algebraic inverse currents
+\(\rho_{\eta\uparrow}=(R^c_\eta+R^s_\eta)/2\) and
+\(\rho_{\eta\downarrow}=(R^c_\eta-R^s_\eta)/2\) into candidate
+oscillator phases.  That substitution is \emph{not} by itself a proof
+that compressed exponentials factor into a single common charge factor
+and a common spin factor.  The two singlet channels have different
+Klein products, different charge-sector targets, and potentially
+different intermediate-budget errors.  Any such rewriting must specify
+the uncompressed algebra in which exponentials are defined, prove the
+required commutation and ordering identities, and establish their
+compatibility with projection.  The formal series of
+Section~\ref{sec:ch20-formal-vertices} likewise cannot be evaluated
+at a numerical parameter or identified with finite-CAR expectations
+without further arguments.
+
+No thermodynamic-limit correlation exponent, spectral gap, or
+interacting-state identification follows from the operator identities
+of this section.  The exact CAR results used here rest on the
+previously constructed finite carrier and its supported Klein and
+coordinate-projection results; the spinful Chapter~21 implementations
+and the present manuscript remain to be independently formalized,
+compiled against the full book, and reviewed.  In the next section,
+Umklapp scattering changes four species charges at once, making the
+same sector-typing and projection questions essential rather than
+merely notational.

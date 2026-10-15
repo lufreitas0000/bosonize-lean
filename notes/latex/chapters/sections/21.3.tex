@@ -1,0 +1,546 @@
+\section{Umklapp Scattering, Charge-Sector Leakage, and Finite Projection}
+\label{sec:ch21-umklapp}
+
+\subsection*{From a four-fermion process to a precise invariance question}
+
+In the preceding sections the charge and spin currents were built from four
+ordered fermion species, and the spin-singlet pair was found to have two
+separate species-charge targets.  We now confront a related question for a
+Hamiltonian rather than an order parameter: \emph{does a chosen finite
+low-energy space remain invariant under a local interaction?}  An answer
+requires more than the name ``Umklapp.''  It requires an ordered CAR word,
+an explicit charge shift, and a state on which the operator acts nontrivially
+\emph{outside} the chosen space.  Pauli exclusion can make a seemingly
+outward process vanish; the opposite process may remain nonzero while staying
+inside the permitted charge box.
+
+The discussion is entirely on a finite lattice and uses the occupation
+representation from Chapter~\ref{ch:car_fock}.  We prove exact selection rules,
+self-adjointness, and a conditional failure of invariance.  These statements
+do not imply a thermodynamic charge gap or establish continuum renormalization
+group equations.  For physical motivation and conventional bosonized models,
+see, for example, \cite{giamarchi2004,gogolin1998}; our claims below are
+finite algebraic statements with their hypotheses displayed.
+
+As in Sections~\ref{sec:ch21-spin-charge} and
+\ref{sec:ch21-singlet-pair}, choose \(h\in\mathbb N_{>0}\) and set
+\begin{equation}
+  L=2h,\qquad \mathcal B_L=(-h,h]\cap\mathbb Z
+       =\{1-h,\ldots,h\},\qquad
+  \Lambda_L=\mathbb Z/L\mathbb Z,\qquad \zeta=e^{2\pi i/L}.
+  \label{eq:ch21-u-band}
+\end{equation}
+The four species have the fixed occupation ordering
+\begin{equation}
+ L\uparrow<L\downarrow<R\uparrow<R\downarrow,
+ \quad\text{with increasing momentum inside each species}.
+ \label{eq:ch21-u-order}
+\end{equation}
+For \(\alpha\in\mathcal C=\{L,R\}\times\{\uparrow,\downarrow\}\),
+let \(c_{\alpha,k}\) satisfy the finite canonical anticommutation relations
+(CAR).  We use periodic position fields in the Fourier convention
+\begin{equation}
+ c_{\alpha,x}=\frac1{\sqrt L}\sum_{k\in\mathcal B_L}
+                \zeta^{kx}c_{\alpha,k},\qquad
+ c_{\alpha,x}^{\dagger}=\frac1{\sqrt L}\sum_{k\in\mathcal B_L}
+                \zeta^{-kx}c_{\alpha,k}^{\dagger}.
+ \label{eq:ch21-u-site-fields}
+\end{equation}
+The positive-mode cutoff, if density excitations are considered separately,
+is denoted \(M\) (with \(1\leq m\leq M\)); no density-mode or
+current-CCR cutoff enters the CAR calculation in this section.
+
+\subsection*{The ordered Umklapp word and its Hermitian Hamiltonian}
+
+\begin{definition}[Finite-site Umklapp interaction]
+\label{def:ch21-u-word}
+Define the ordered product
+\begin{equation}
+  O_U(x)=c_{L\uparrow,x}^{\dagger}
+         c_{L\downarrow,x}^{\dagger}
+         c_{R\downarrow,x}c_{R\uparrow,x},
+       \qquad x\in\Lambda_L.
+  \label{eq:ch21-u-word}
+\end{equation}
+For a \emph{real} coupling \(g_U\in\mathbb R\), set
+\begin{equation}
+ H_U=\frac{g_U}{L}\sum_{x\in\Lambda_L}
+           \bigl(O_U(x)+O_U(x)^\dagger\bigr).
+ \label{eq:ch21-u-hamiltonian}
+\end{equation}
+Products act from right to left: the right-up and right-down particles
+are removed, in that order, before the left-down and left-up particles are
+created.  The factor \(1/L\) in \eqref{eq:ch21-u-hamiltonian} is fixed
+throughout, including the finite coefficient examples below.
+\end{definition}
+
+In the finite Fock representation these are bounded operators on the
+same Hilbert space \(\mathcal H_L\), so no operator-domain problem arises.
+The adjoint reverses \emph{the order} of the four factors:
+\begin{equation}
+ O_U(x)^\dagger
+  =c_{R\uparrow,x}^\dagger c_{R\downarrow,x}^\dagger
+    c_{L\downarrow,x}c_{L\uparrow,x}.
+ \label{eq:ch21-u-adjoint}
+\end{equation}
+It is not permissible to reorder these odd operators without keeping
+the resulting CAR signs.
+
+\begin{proposition}[Self-adjointness]
+\label{prop:ch21-u-selfadjoint}
+For every \(h>0\) and real \(g_U\), the operator \(H_U\) in
+\eqref{eq:ch21-u-hamiltonian} satisfies \(H_U^\dagger=H_U\).
+\end{proposition}
+\begin{proof}
+Write \(A=\sum_xO_U(x)\).  Since the sum is finite,
+\(A^\dagger=\sum_xO_U(x)^\dagger\); hence
+\[
+ H_U^\dagger
+ =\overline{\frac{g_U}{L}}(A^\dagger+A)
+ =\frac{g_U}{L}(A+A^\dagger)=H_U.
+\]
+The middle equality uses the reality of \(g_U\).  No commutation
+between \(A\) and \(A^\dagger\) was assumed.
+\end{proof}
+
+An Umklapp word is a possible lattice process rather than a statement of
+its nonzero action on all states.  Its momentum-space expansion follows
+exactly from \eqref{eq:ch21-u-site-fields}:
+\begin{align}
+ O_U(x)=\frac1{L^2}\!
+ \sum_{k_1,k_2,k_3,k_4\in\mathcal B_L}
+ &\zeta^{(-k_1-k_2+k_3+k_4)x}\,
+ c_{L\uparrow,k_1}^\dagger c_{L\downarrow,k_2}^\dagger
+ c_{R\downarrow,k_3}c_{R\uparrow,k_4}.
+ \label{eq:ch21-u-fourier-expansion}
+\end{align}
+Summation over \(x\) retains precisely those ordered words satisfying
+\(k_1+k_2-k_3-k_4\equiv0\pmod L\).  Thus momentum is conserved
+\emph{modulo} the reciprocal-lattice period, rather than as an
+unrestricted equality between the chosen integer representatives.
+This distinction will be essential for the explicit witness.
+
+\subsection*{Charge shifts and the surviving conservation laws}
+
+The relative species number operators are
+\begin{equation}
+ \widehat N_\alpha=\sum_{k\in\mathcal B_L}
+     c_{\alpha,k}^\dagger c_{\alpha,k}-hI,
+ \qquad \alpha\in\mathcal C.
+ \label{eq:ch21-u-relative-charge}
+\end{equation}
+They have integer eigenvalues \(-h,\ldots,h\) on the finite Fock space.
+Let \(e_\alpha\) denote a basis vector in the four-dimensional
+species-charge lattice.  With the order \eqref{eq:ch21-u-order} we define
+\begin{equation}
+ \Delta\mathbf N
+  =e_{L\uparrow}+e_{L\downarrow}
+     -e_{R\uparrow}-e_{R\downarrow}
+  =(+1,+1,-1,-1).
+ \label{eq:ch21-u-charge-vector}
+\end{equation}
+Every \emph{species} shift has magnitude one, whereas each chiral
+\emph{branch total} changes by two.
+
+\begin{lemma}[One-particle charge commutators]
+\label{lem:ch21-u-fundamental-commutators}
+For any species \(\gamma,\beta\), momentum \(q\in\mathcal B_L\), and
+site \(x\),
+\begin{align}
+ [\widehat N_\gamma,c_{\beta,q}]
+   &=-\delta_{\gamma\beta}c_{\beta,q},&
+ [\widehat N_\gamma,c_{\beta,q}^\dagger]
+   &=\delta_{\gamma\beta}c_{\beta,q}^\dagger,
+ \label{eq:ch21-u-elementary-commutators}\\
+ [\widehat N_\gamma,c_{\beta,x}]
+   &=-\delta_{\gamma\beta}c_{\beta,x},&
+ [\widehat N_\gamma,c_{\beta,x}^\dagger]
+   &=\delta_{\gamma\beta}c_{\beta,x}^\dagger.
+ \label{eq:ch21-u-site-commutators}
+\end{align}
+\end{lemma}
+\begin{proof}
+The CAR imply, for individual modes \(i,j\),
+\[
+ [c_i^\dagger c_i,c_j]
+   =c_i^\dagger\{c_i,c_j\}-\{c_i^\dagger,c_j\}c_i
+   =-\delta_{ij}c_j,
+\]
+and similarly \([c_i^\dagger c_i,c_j^\dagger]=\delta_{ij}c_j^\dagger\).
+Summing over the momenta of species \(\gamma\) proves
+\eqref{eq:ch21-u-elementary-commutators}; the scalar sea subtraction
+commutes with everything.  Fourier linearity gives
+\eqref{eq:ch21-u-site-commutators}.
+\end{proof}
+
+\begin{theorem}[Exact four-species Umklapp selection rule]
+\label{thm:ch21-u-charge-shift}
+For every \(x\) and species \(\gamma\),
+\begin{align}
+ [\widehat N_\gamma,O_U(x)]
+   &=\Delta N_\gamma\,O_U(x),
+ \label{eq:ch21-u-commutator}\\
+ [\widehat N_\gamma,O_U(x)^\dagger]
+   &=-\Delta N_\gamma\,O_U(x)^\dagger.
+ \label{eq:ch21-u-adjoint-commutator}
+\end{align}
+Consequently, if \(\mathcal H_{\mathbf N}\) is the simultaneous
+relative-charge eigenspace of \(\mathbf N\in\mathbb Z^{\mathcal C}\), then
+\begin{equation}
+ O_U(x)\mathcal H_{\mathbf N}\subseteq
+     \mathcal H_{\mathbf N+\Delta\mathbf N},\qquad
+ O_U(x)^\dagger\mathcal H_{\mathbf N}\subseteq
+     \mathcal H_{\mathbf N-\Delta\mathbf N}.
+ \label{eq:ch21-u-charge-targets}
+\end{equation}
+If a listed charge is outside the allowed finite range, its eigenspace
+is understood to be zero.  The total relative particle number and the
+spin imbalance satisfy
+\begin{equation}
+ \left[\sum_{\alpha\in\mathcal C}\widehat N_\alpha,H_U\right]=0,
+ \qquad
+ [\widehat S,H_U]=0,
+ \quad \widehat S=\sum_{\eta=L,R}
+        (\widehat N_{\eta\uparrow}-\widehat N_{\eta\downarrow}).
+ \label{eq:ch21-u-conserved-totals}
+\end{equation}
+By contrast, \(H_U\) need not conserve each species charge or the
+separate left/right branch charge.
+\end{theorem}
+\begin{proof}
+For arbitrary operators, the commutator is a derivation:
+\([D,AB]=[D,A]B+A[D,B]\).  Expanding the ordered word gives
+\begin{align*}
+ [\widehat N_\gamma,O_U(x)]={}&
+   [\widehat N_\gamma,c_{L\uparrow,x}^\dagger]
+           c_{L\downarrow,x}^\dagger c_{R\downarrow,x}c_{R\uparrow,x}
+ +c_{L\uparrow,x}^\dagger
+   [\widehat N_\gamma,c_{L\downarrow,x}^\dagger]
+           c_{R\downarrow,x}c_{R\uparrow,x}\\
+ &+c_{L\uparrow,x}^\dagger c_{L\downarrow,x}^\dagger
+   [\widehat N_\gamma,c_{R\downarrow,x}]c_{R\uparrow,x}
+ +c_{L\uparrow,x}^\dagger c_{L\downarrow,x}^\dagger
+   c_{R\downarrow,x}[\widehat N_\gamma,c_{R\uparrow,x}].
+\end{align*}
+Lemma~\ref{lem:ch21-u-fundamental-commutators} reduces the coefficient
+to
+\(\delta_{\gamma,L\uparrow}+\delta_{\gamma,L\downarrow}
+-\delta_{\gamma,R\downarrow}-\delta_{\gamma,R\uparrow}\), which is
+exactly \(\Delta N_\gamma\).  Taking adjoints of the operator
+commutator, using self-adjointness of \(\widehat N_\gamma\), gives
+\eqref{eq:ch21-u-adjoint-commutator}.  For
+\(\widehat N_\gamma\psi=N_\gamma\psi\),
+\[
+ \widehat N_\gamma O_U(x)\psi
+  =(N_\gamma+\Delta N_\gamma)O_U(x)\psi,
+\]
+proving the first inclusion in \eqref{eq:ch21-u-charge-targets};
+the second is identical with the opposite shift.  Finally the
+coefficients of the total-number commutator sum to \(1+1-1-1=0\),
+while those of \(\widehat S\) sum to \((1-1)+(-1+1)=0\).
+The identities persist under the finite site sum and the adjoint.
+\end{proof}
+
+Writing \(\widehat Q_c^\eta=\widehat N_{\eta\uparrow}
+ +\widehat N_{\eta\downarrow}\) and
+\(\widehat Q_s^\eta=\widehat N_{\eta\uparrow}
+ -\widehat N_{\eta\downarrow}\) as in \S\,21.1, the same computation
+immediately gives
+\begin{equation}
+ [\widehat Q_c^L,O_U]=2O_U,\qquad
+ [\widehat Q_c^R,O_U]=-2O_U,\qquad
+ [\widehat Q_s^L,O_U]=[\widehat Q_s^R,O_U]=0.
+ \label{eq:ch21-u-branch-shifts}
+\end{equation}
+Here \(O_U\) denotes either the fixed-site word or its outward site sum.
+These equations describe an interbranch transfer of two particles,
+not the creation or destruction of total electric charge.
+
+\begin{corollary}[Vanishing same-sector compression]
+\label{cor:ch21-u-sector-compression}
+For any admissible charge vector \(\mathbf N\) and any two nonnegative
+energy cutoffs \(K,K'\),
+\begin{equation}
+ P_{\mathbf N,K}\,H_U\,P_{\mathbf N,K'}=0.
+ \label{eq:ch21-u-zero-compression}
+\end{equation}
+\end{corollary}
+\begin{proof}
+Both projected source and projected target are contained in
+\(\mathcal H_{\mathbf N}\).  Theorem~\ref{thm:ch21-u-charge-shift}
+places the two summands of \(H_U\) in
+\(\mathcal H_{\mathbf N+\Delta\mathbf N}\) and
+\(\mathcal H_{\mathbf N-\Delta\mathbf N}\), respectively.  Neither
+charge vector equals \(\mathbf N\), and joint eigenspaces with
+different charge labels are orthogonal.  The left projection therefore
+kills both contributions, independently of \(K,K'\).
+\end{proof}
+
+\subsection*{Charge boxes, projections, and a conditional leakage theorem}
+
+A single-charge-sector projection is not the same as a charge
+\emph{box}, which admits several sectors but limits their extent.
+To define the latter without using an informal inequality between
+vectors, let \(S\subseteq\mathcal C\times\mathcal B_L\) be an
+occupation configuration.  Its relative charge vector is
+\(\mathbf N(S)\), and its nonnegative integer excitation energy
+\(\mathcal E(S)\) is measured above the ground configuration of the
+\emph{same} charge vector, as in Chapter~\ref{ch:vacuum_budget}.
+
+\begin{definition}[Per-species charge box and budget]
+\label{def:ch21-u-charge-box}
+Given bounds \(B_\alpha\in\mathbb N\) and an energy budget
+\(K\in\mathbb N\), let
+\begin{equation}
+ \mathcal B_{K,\mathbf B}
+   =\operatorname{span}\Bigl\{|S\rangle:\;
+       |N_\alpha(S)|\le B_\alpha\ \text{for all }\alpha,
+       \quad\mathcal E(S)\le K\Bigr\}
+       \subseteq\mathcal H_L,
+ \label{eq:ch21-u-box}
+\end{equation}
+and let \(P_{K,\mathbf B}\) be its orthogonal coordinate projection.
+The charge bounds and the energy cutoff play logically distinct roles.
+A box may be proper even when the energy cutoff is large enough to
+include every state whose charge vector satisfies the bounds.
+\end{definition}
+
+\begin{theorem}[Conditional outward leakage]
+\label{thm:ch21-u-leakage}
+Assume \(h\ge1\), \(g_U\in\mathbb R\setminus\{0\}\), and
+\(\psi\in\mathcal B_{K,\mathbf B}\) has definite charge
+\(\mathbf N\), i.e.\ \(\widehat N_\alpha\psi=N_\alpha\psi\)
+for all \(\alpha\).  Suppose
+\begin{equation}
+  \sum_{x\in\Lambda_L}O_U(x)\psi\ne0,
+  \qquad
+  \exists\alpha\in\mathcal C:\quad
+      |N_\alpha+\Delta N_\alpha|>B_\alpha.
+ \label{eq:ch21-u-leakage-hypotheses}
+\end{equation}
+Then \(H_U\psi\notin\mathcal B_{K,\mathbf B}\), and the ambient
+Hamiltonian does not preserve this budget.  In addition,
+\begin{equation}
+ [P_{K,\mathbf B},H_U]\ne0.
+ \label{eq:ch21-u-projector-noncommute}
+\end{equation}
+An analogous conclusion holds for a nonzero adjoint (inward) site sum
+whose target \(\mathbf N-\Delta\mathbf N\) violates a charge bound.
+\end{theorem}
+\begin{proof}
+For any \(\mathbf T\), denote the orthogonal full-charge-sector
+projection by \(\Pi_{\mathbf T}\).  Distinct sectors are orthogonal
+because the \(\widehat N_\alpha\) are commuting self-adjoint matrices.
+The two shifts in \eqref{eq:ch21-u-charge-targets} differ, hence
+\begin{equation}
+ \Pi_{\mathbf N+\Delta\mathbf N}H_U\psi
+   =\frac{g_U}{L}\sum_xO_U(x)\psi\ne0.
+ \label{eq:ch21-u-projected-outward}
+\end{equation}
+The adjoint contribution has charge \(\mathbf N-\Delta\mathbf N\)
+and cannot cancel the displayed component.  By the second hypothesis,
+\(\mathcal B_{K,\mathbf B}\) has no vector in the charge sector
+\(\mathbf N+\Delta\mathbf N\).  Equation
+\eqref{eq:ch21-u-projected-outward} therefore exhibits a nonzero
+component of \((I-P_{K,\mathbf B})H_U\psi\).
+Since \(P_{K,\mathbf B}\psi=\psi\), we also have
+\[
+ [P_{K,\mathbf B},H_U]\psi
+  =P_{K,\mathbf B}H_U\psi-H_UP_{K,\mathbf B}\psi
+  =-(I-P_{K,\mathbf B})H_U\psi\ne0.
+\]
+The proof for the opposite shift exchanges \(O_U\) with \(O_U^\dagger\).
+\end{proof}
+
+The same elementary argument detects \emph{energy} leakage: it suffices
+to exhibit an occupation ket \(|T\rangle\) excluded by the energy
+cutoff for which \(\langle T,H_U\psi\rangle\ne0\).
+The charge-box hypothesis in Theorem~\ref{thm:ch21-u-leakage} is a
+convenient sufficient condition, not a necessary condition for
+non-invariance.  Conversely, \(H_U\psi\ne0\) by itself is
+\emph{not} a leakage certificate.  The latter distinction will be
+visible in the second finite example.
+
+\subsection*{An explicit outward witness: the sign and the Fourier coefficient}
+
+The next calculation checks every part of the leakage hypothesis with
+a concrete occupation configuration.  It also illustrates why a
+fermionic sign cannot be inferred from charge conservation alone.
+
+\begin{theorem}[Zero-charge sea leaves every zero-charge box]
+\label{thm:ch21-u-zero-box-witness}
+For every \(h\ge1\), write \(L=2h\).  In each species fill the sea
+momenta \(\{1-h,\ldots,0\}\), and let \(\Omega\) be the corresponding
+normalized, ordered occupation ket.  Define \(T\) by removing
+momentum \(1-h\) from \(R\uparrow\) and \(R\downarrow\), and
+inserting momentum \(1\) in \(L\uparrow\) and \(L\downarrow\).
+Then
+\begin{equation}
+ \langle T,H_U\Omega\rangle=-\frac{g_U}{L^2}.
+ \label{eq:ch21-u-witness-coefficient}
+\end{equation}
+If \(g_U\ne0\), the zero-charge sea \(\Omega\) belongs to
+\(\mathcal B_{0,\mathbf0}\), but
+\(H_U\Omega\notin\mathcal B_{K,\mathbf0}\) for \emph{every}
+\(K\ge0\).  Thus \(H_U\) does not preserve the zero-charge budget
+and does not commute with its projector.
+\end{theorem}
+\begin{proof}
+Let \(S_0\) be the set of \(4h\) occupied species-momentum modes
+constituting \(\Omega\).  The target configuration is
+\[
+ T=\bigl(S_0\setminus\{(R\uparrow,1-h),(R\downarrow,1-h)\}\bigr)
+     \cup\{(L\uparrow,1),(L\downarrow,1)\}.
+\]
+For \(h\ge1\), the removed momenta lie in the sea and the inserted
+momentum \(1\) lies in the band but outside the sea.  Therefore no
+Pauli factor kills this particular word.  The relative-charge vector
+of \(T\) is \(\Delta\mathbf N=(1,1,-1,-1)\), whereas
+\(\mathbf N(\Omega)=\mathbf0\).
+
+For an occupied mode \(i\), annihilation contributes the sign
+\((-1)^{\#\{j\in S:j<i\}}\), and creation at an unoccupied mode
+contributes the corresponding sign of the updated configuration.
+The ordered word \eqref{eq:ch21-u-word} acts from right to left.
+The number of occupied modes \emph{preceding} each operation, after
+all previous operations have been made, is
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Operation & Preceding occupied modes & Sign \\
+\midrule
+\(c_{R\uparrow,1-h}\) & \(2h\) & \((-1)^{2h}\) \\
+\(c_{R\downarrow,1-h}\) & \(3h-1\) & \((-1)^{3h-1}\) \\
+\(c_{L\downarrow,1}^\dagger\) & \(2h\) & \((-1)^{2h}\) \\
+\(c_{L\uparrow,1}^\dagger\) & \(h\) & \((-1)^h\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+For example, the first removal has the two filled left species before
+it; after that removal the right-down species has \(2h+(h-1)\)
+occupied modes before its lowest sea momentum.  The insertion in
+left-down sees all \(h\) left-up and its own \(h\) filled sea modes,
+while the final insertion in left-up sees its original \(h\) sea modes.
+The exponent is \(2h+(3h-1)+2h+h=8h-1\), an odd integer.
+Thus the selected momentum word produces \(-|T\rangle\).
+
+In \eqref{eq:ch21-u-fourier-expansion}, the four momenta are
+\(k_1=k_2=1\) and \(k_3=k_4=1-h\).  Their Fourier phase is
+\[
+ \zeta^{(-1-1+(1-h)+(1-h))x}
+    =\zeta^{-2hx}=\zeta^{-Lx}=1
+       \quad(x\in\Lambda_L).
+\]
+Each site word has scalar Fourier normalization \(L^{-2}\).
+The four changed occupations uniquely fix the four participating
+momenta: another term in the momentum sum cannot produce \(|T\rangle\)
+from \(|\Omega\rangle\).  The adjoint word changes the charge by
+\(-\Delta\mathbf N\), hence also cannot contribute to this target.
+The \(L\) equal site contributions multiplied by the Hamiltonian
+prefactor \(g_U/L\) therefore give
+\[
+ \langle T,H_U\Omega\rangle
+  =\frac{g_U}{L}\,L\,\frac{-1}{L^2}
+  =-\frac{g_U}{L^2}.
+\]
+This is nonzero when \(g_U\ne0\), and \(|T\rangle\) is orthogonal
+to every zero-species-charge box.  Theorem~\ref{thm:ch21-u-leakage}
+then proves the final assertions.  No frozen-margin assumption for
+finite density currents has been used.
+\end{proof}
+
+\begin{example}[Four-site value]
+\label{ex:ch21-u-four-site}
+At \(h=2\), \(L=4\), \(\zeta=i\), and \(g_U=1\),
+the sea fills \(\{-1,0\}\) in every species.  The witness target
+fills \(\{-1,0,1\}\) in each left species and \(\{0\}\) in
+each right species.  Equation~\eqref{eq:ch21-u-witness-coefficient}
+gives the exact matrix element
+\[
+ \langle T,H_U\Omega\rangle=-\frac1{16}.
+\]
+The charge vector \((1,1,-1,-1)\) already suffices to exclude this
+ket from the zero-charge box, independently of the excitation budget.
+\end{example}
+
+\subsection*{Why a nonzero action need not leak: a Pauli-blocked counterexample}
+
+\begin{example}[Only the inward channel survives]
+\label{ex:ch21-u-inward-only}
+Take \(h=2\), \(L=4\), and \(g_U\ne0\).  Choose a normalized occupation
+ket \(|S\rangle\) with both left species \emph{fully} occupied,
+\(\{-1,0,1,2\}\), and both right species occupied only at \(\{-1\}\).
+Its relative charges are
+\[
+  \mathbf N(S)=(2,2,-1,-1).
+\]
+Use the proper charge box with bounds
+\(\mathbf B=(2,2,1,1)\) in the species order
+\((L\uparrow,L\downarrow,R\uparrow,R\downarrow)\), and the energy
+cutoff \(K=16\).  The unprojected outward sum annihilates \(|S\rangle\):
+\[
+ O_U(x)|S\rangle=0\qquad\text{for every }x,
+\]
+because it would attempt to create a fermion in an already full
+left species.  On the other hand, the adjoint sum is nonzero and
+shifts the charges to \((1,1,0,0)\), which obey the same bounds.
+
+To exhibit a coefficient, let \(|T'\rangle\) be the occupation ket with
+left species \(\{0,1,2\}\), right-up \(\{-1,2\}\), and
+right-down \(\{-1,0\}\).  The adjoint word removes \(-1\) from
+each left species and inserts \(2\) in right-up and \(0\) in
+right-down.  Its right-to-left CAR preceding counts are
+\(0,3,8,7\), with an even sum \(18\), so the sign is positive.
+The Fourier phase is \(\zeta^{(-1-1-2-0)x}=\zeta^{-4x}=1\).
+Exactly as in the preceding proof,
+\begin{equation}
+ \langle T',H_U S\rangle=\frac{g_U}{16}\ne0.
+ \label{eq:ch21-u-inward-coefficient}
+\end{equation}
+For this four-site band, the excitation energy above a fixed-number
+sector ground is at most \(n(4-n)\le4\) for a species with \(n\)
+occupied modes; summing four species gives \(\mathcal E\le16\).
+Thus \emph{every} ket generated from \(|S\rangle\) by the adjoint
+Umklapp term belongs to \(\mathcal B_{16,\mathbf B}\).  We have
+\(H_U|S\rangle\ne0\) but \((I-P_{16,\mathbf B})H_U|S\rangle=0\).
+This proves only that \emph{this state} does not leak; it does not
+establish invariance of the whole box under \(H_U\).
+\end{example}
+
+\subsection*{What finite leakage does, and does not, establish}
+
+The exact conclusions of this section can now be separated.  The CAR
+calculation proves a four-species selection rule and identifies precisely
+which charge sectors an Umklapp interaction couples.  Same-sector
+first-order compression vanishes, but a charge-bounded or energy-bounded
+subspace can fail to be invariant, as witnessed by a nonzero
+\emph{outside} matrix element.  The finite compression
+\(P_{K,\mathbf B}H_UP_{K,\mathbf B}\) remains a legitimate Hermitian
+matrix on the retained carrier; it is simply not the restriction of an
+invariant ambient dynamics when the leakage is nonzero.
+
+The finite energy-shell machinery of Appendix A10 can subsequently be
+used to organize perturbative block reduction.  Its quadratic
+Schrieffer--Wolff/Baker--Campbell--Hausdorff identities concern stated
+projectors and polynomial coefficients through a fixed order; they do
+not automatically provide an analytic conjugation, error estimate, or
+RG semigroup.  In particular, removing a shell of \emph{total excitation
+energy} is not identical to removing a particular Fourier momentum
+mode.  The shell-compression formalism must be instantiated with its
+projector and block-diagonality hypotheses before being applied to
+\(H_U\).
+
+Finally, a Mott gap would require a spectral statement for a specified
+many-body Hamiltonian, and a physically meaningful thermodynamic claim
+would require a controlled sequence of systems as \(L\to\infty\),
+with a specified density, coupling scaling, and limiting observable.
+Likewise the Kosterlitz--Thouless flow equations belong to a
+separately constructed continuum effective theory; the presence of a
+nonzero finite matrix element \(-g_U/L^2\) neither derives their beta
+functions nor proves gap formation.  Any proposed use of bosonized
+charge vertices also requires care with the distinction between a
+finite-CAR operator, an abstract oscillator representation, and a
+coefficientwise formal series.  Chapter~21 remains unimplemented in
+Lean at the time of this draft: prior Core support for CAR, charge
+sectors and finite projections is not a verification of the new
+Umklapp theorems.

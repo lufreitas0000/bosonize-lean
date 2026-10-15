@@ -57,7 +57,16 @@ duplicate labels, target inclusion and task-specific notation rules. The origina
 standalone download remains archived. Independent mathematical/editorial review
 and explicit human approval precede integration. The author cannot self-approve.
 
-## Current writing priority
+## Current manuscript and section identifiers
+
+The supplied CH19–21 drafts are now in the master as numbered section files:
+19.1–19.4, 20.1–20.3 and 21.1–21.4. Use numeric identifiers in task menus and
+filenames, while retaining descriptive book headings and stable semantic labels.
+These are manuscript drafts with independent mathematical/editorial review pending.
+The user-requested batch import does not imply a passing independent review or
+change any Lean status. A later Jules revision round is planned, not dispatched.
+
+## Original writing priority (historical)
 
 Write the chapters that have no LaTeX draft yet, starting with CH19. CH12–18 have
 private local drafts awaiting separate review/integration; preserve them. CH01–11

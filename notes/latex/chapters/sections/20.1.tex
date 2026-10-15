@@ -1,0 +1,672 @@
+\section{Exact Finite CAR Products: Density Waves and Pairing}
+\label{sec:ch20-projected-products}
+
+A single fermion field changes particle number by one.  A charge-density-wave
+(CDW) operator, by contrast, removes a left-moving fermion and creates a
+right-moving fermion; a superconducting (SC) pair-annihilation operator removes
+one fermion of each chirality.  Both are products of two fields.  This simple
+observation raises a question which does not arise for a single field:
+\emph{what happens between the first operation and the second when our
+calculation is confined to an energy-budget subspace?}
+
+The full finite fermionic Fock space has an unambiguous answer: multiply the
+operators in their stated order.  Budget restrictions introduce a different
+operation, however.  The product of \emph{individually projected} fields
+passes through a selected intermediate subspace, whereas a projection of the
+\emph{full product} allows intermediate states to leave that subspace and
+return before the final projection.  Those discarded paths form an explicit
+remainder.  Keeping the remainder is the purpose of this section.  The
+construction also provides a convenient setting in which to check chirality,
+charge labels, Fourier phases, and fermionic signs before introducing the
+formal vertex operators of Section~\ref{sec:ch20-formal-vertices}.
+
+Throughout this section, all identities concerning finite fermion operators
+are elementary statements on a finite-dimensional Hilbert space; their
+application to the chapter's proposed bosonization dictionary remains a
+separate mathematical verification task.  In particular, no new Chapter~20
+Lean theorem is being claimed here.
+
+\subsection{The ambient finite-CAR system}
+\label{subsec:ch20-ambient}
+
+Fix an integer \(h\geq 1\) and put \(L=2h\).  The spatial lattice is
+\(\mathbb Z/L\mathbb Z\), represented by integers \(x\) modulo \(L\); the
+centered momentum band is
+\begin{equation}
+  \mathcal B_L=\{-h+1,-h+2,\ldots,h\},\qquad
+  \zeta=\exp(2\pi i/L).
+  \label{eq:ch20-band}
+\end{equation}
+There are two distinct species, called right and left and denoted
+\(R\) and \(L\) in subscripts.  The letter \(L\) without a subscript
+continues to mean lattice length.  We order the single-particle orbitals
+\emph{first by species} \(R<L\), then by increasing momentum within each
+species.  This order fixes the occupation-basis signs and is not a harmless
+convention if intermediate formulas are compared term by term.
+
+Let
+\(\mathcal F=\bigwedge(\mathbb C^{\{R,L\}\times\mathcal B_L})\)
+be the fermionic Fock Hilbert space.  Its mode annihilators and creators
+\(a_{\nu k}\) and \(a_{\nu k}^{\dagger}\) obey the canonical
+anticommutation relations (CAR)
+\begin{align}
+ \{a_{\nu k},a_{\eta q}\}&=0,
+ &\{a_{\nu k}^{\dagger},a_{\eta q}^{\dagger}\}&=0,
+ &\{a_{\nu k},a_{\eta q}^{\dagger}\}&=
+             \delta_{\nu\eta}\delta_{kq}I.
+ \label{eq:ch20-car}
+\end{align}
+Here \(\{A,B\}=AB+BA\), and the rightmost factor acts first.  The
+periodic-twist fields used in the calculations below are
+\begin{equation}
+ c_{\nu,x}=\frac1{\sqrt L}\sum_{k\in\mathcal B_L}
+       \zeta^{kx}a_{\nu k},\qquad
+ c_{\nu,x}^{\dagger}=\frac1{\sqrt L}\sum_{k\in\mathcal B_L}
+       \zeta^{-kx}a_{\nu k}^{\dagger}.
+ \label{eq:ch20-fields}
+\end{equation}
+Thus the annihilation field carries a \emph{positive} Fourier exponent,
+whereas the creator carries its complex conjugate.  Both species use this
+same computational band; the left-moving physical branch is encoded by the
+branch identification rather than by reversing the exponent in
+\eqref{eq:ch20-fields}.  In particular, a continuum oscillation
+\(e^{\pm2ik_Fx}\) has \emph{not} been inserted by hand.  Formula
+\eqref{eq:ch20-fields} is the periodic-twist specialization of the
+finite fields from Chapter~14; a general boundary twist contributes
+additional factors and is not covered by the phase formulas derived below.
+
+For later comparison with positive-frequency currents, we reserve
+\(M\in\mathbb N\) for an optional mode cutoff with labels
+\(m=1,\ldots,M\) (an empty set when \(M=0\)).  The finite-CAR fields
+\eqref{eq:ch20-fields} sum over the \emph{whole} band \(\mathcal B_L\);
+there is no cutoff \(M\) in their definition or in the exact product
+identities of this section.  Restrictions on \(M\) needed for a particular
+non-wrapping current representation must be imposed in that representation.
+
+\begin{definition}[Finite CDW and pair-annihilation words]
+\label{def:ch20-order-words}
+At a lattice site \(x\), define bounded endomorphisms of \(\mathcal F\) by
+\begin{equation}
+  O_{\mathrm{CDW}}(x)=c_{R,x}^{\dagger}c_{L,x},\qquad
+  O_{\mathrm{SC}}(x)=c_{R,x}c_{L,x}.
+  \label{eq:ch20-order-words}
+\end{equation}
+The order of the factors in each definition is part of the definition.
+\(O_{\mathrm{SC}}\) annihilates a pair; its adjoint
+\(O_{\mathrm{SC}}^{\dagger}=c_{L,x}^{\dagger}c_{R,x}^{\dagger}\)
+creates a pair in the reversed order dictated by the adjoint.
+\end{definition}
+
+Both operators are \emph{even CAR words}: a fermionic parity transformation
+changes the sign of each field but not of their product.  Evenness does not
+mean charge neutrality.  The CDW operator is neutral only with respect to
+the \emph{total} charge, whereas the SC operator lowers it by two.
+
+To state this exactly, let
+\begin{equation}
+  \widehat n_{\nu}=\sum_{k\in\mathcal B_L}
+     a_{\nu k}^{\dagger}a_{\nu k},\qquad
+  Q_{\nu}=\widehat n_{\nu}-hI,
+ \label{eq:ch20-charges}
+\end{equation}
+so that the reference half-filled sea carries zero relative charge
+\(Q_R=Q_L=0\).  For a charge label
+\(N=(N_R,N_L)\in\mathbb Z^2\), let
+\(e_R=(1,0)\) and \(e_L=(0,1)\).
+
+\begin{proposition}[Exact charge shifts]
+\label{prop:ch20-charge-shifts}
+For either \(\nu\in\{R,L\}\), the following operator identities hold on
+\emph{all} of \(\mathcal F\):
+\begin{align}
+ [Q_{\nu},O_{\mathrm{CDW}}(x)]
+   &=\bigl(\delta_{\nu R}-\delta_{\nu L}\bigr)
+                       O_{\mathrm{CDW}}(x),
+ \label{eq:ch20-cdw-charge}\\
+ [Q_{\nu},O_{\mathrm{SC}}(x)]
+   &=-\bigl(\delta_{\nu R}+\delta_{\nu L}\bigr)
+                       O_{\mathrm{SC}}(x).
+ \label{eq:ch20-sc-charge}
+\end{align}
+Consequently, with \(Q_{\mathrm{tot}}=Q_R+Q_L\),
+\([Q_{\mathrm{tot}},O_{\mathrm{CDW}}]=0\) and
+\([Q_{\mathrm{tot}},O_{\mathrm{SC}}]=-2O_{\mathrm{SC}}\).
+\end{proposition}
+\begin{proof}
+For a single orbital \(j=(\eta,q)\), the CAR imply
+\([a_j^{\dagger}a_j,a_i]=-\delta_{ji}a_i\) and
+\([a_j^{\dagger}a_j,a_i^{\dagger}]=\delta_{ji}a_i^{\dagger}\).
+For example,
+\(a_j^{\dagger}a_ja_i-a_i a_j^{\dagger}a_j
+ =-a_j^{\dagger}a_i a_j-(\delta_{ij}-a_j^{\dagger}a_i)a_j
+ =-\delta_{ij}a_j\), which equals \(-\delta_{ij}a_i\).
+Summing over \(q\) and using the linear Fourier transforms gives
+\begin{equation}
+ [Q_\nu,c_{\eta,x}]=-\delta_{\nu\eta}c_{\eta,x},
+ \qquad
+ [Q_\nu,c_{\eta,x}^{\dagger}]
+       =\delta_{\nu\eta}c_{\eta,x}^{\dagger}.
+ \label{eq:ch20-single-charge}
+\end{equation}
+The scalar \(-hI\) commutes with every operator.  Finally apply the
+commutator product rule \([Q,AB]=[Q,A]B+A[Q,B]\) to each ordered
+product in \eqref{eq:ch20-order-words}; summing the two charge identities
+proves the final assertions.
+\end{proof}
+
+In particular, the source, intermediate and target charges for our two
+products are forced by the operators, not chosen independently:
+\begin{equation}
+\begin{aligned}
+ N_s=N\quad&\xrightarrow{\ c_{L,x}\ }
+       N_m=N-e_L\\[-2pt]
+       &\xrightarrow{\ c_{R,x}^{\dagger}\ }
+       N_t^{\mathrm{CDW}}=N+e_R-e_L,\\[3pt]
+ N_s=N\quad&\xrightarrow{\ c_{L,x}\ }
+       N_m=N-e_L\\[-2pt]
+       &\xrightarrow{\ c_{R,x}\ }
+       N_t^{\mathrm{SC}}=N-e_R-e_L.
+\end{aligned}
+\label{eq:ch20-charge-arrows}
+\end{equation}
+The arrows are drawn in \emph{time-of-application order}, from right to
+left in the written CAR word.  Because \(c_R\) and \(c_L\)
+anticommute, reversing their positions introduces a minus sign even
+though the charge shift is unchanged.
+
+\subsection{Three budget carriers, not one}
+\label{subsec:ch20-budget}
+
+For each admissible charge \(N_\nu\in[-h,h]\cap\mathbb Z\), the
+\emph{sector ground occupation} fills momenta
+\(\{-h+1,\ldots,N_\nu\}\) for species \(\nu\); if
+\(N_\nu=-h\) the set is empty.  Write \(|\Omega_N\rangle\) for the
+normalized occupation ket obtained by creating all these particles in
+the fixed \(R<L\), increasing-momentum order.  Thus
+\begin{equation}
+  Q_\nu|\Omega_N\rangle=N_\nu|\Omega_N\rangle.
+ \label{eq:ch20-ground-charge}
+\end{equation}
+An occupation configuration \(S=(S_R,S_L)\) in this sector has a
+nonnegative integer excitation grade
+\begin{equation}
+ E_N(S)=\sum_{\nu=R,L}\left(
+      \sum_{k\in S_\nu}k
+      -\sum_{k=-h+1}^{N_\nu}k\right).
+ \label{eq:ch20-excitation}
+\end{equation}
+Indeed, among subsets of \(\mathcal B_L\) of cardinality \(h+N_\nu\),
+the lowest \(h+N_\nu\) momenta minimize the sum.  Equivalently,
+\(E_N(S)\) counts the net upward displacement of particles relative to
+the sector ground.  The same grading underlies the budget spaces of
+Chapter~\ref{ch:vacuum_budget}; in the present finite-dimensional carrier
+it can be read directly from occupation kets.
+
+For \(K\in\mathbb N\), define the cutoff carrier
+\begin{equation}
+ V_{N,K}=\operatorname{span}\{\,|S\rangle:
+       Q_\nu|S\rangle=N_\nu|S\rangle\ (\nu=R,L),
+       \ E_N(S)\leq K\,\}\ \subseteq\mathcal F.
+ \label{eq:ch20-budget-carrier}
+\end{equation}
+For an inadmissible charge we take \(V_{N,K}=\{0\}\).  Each such space
+has the inner product inherited from \(\mathcal F\).  Denote its
+isometric inclusion by \(i_{N,K}:V_{N,K}\hookrightarrow\mathcal F\)
+and its orthogonal projection by
+\(p_{N,K}:\mathcal F\to V_{N,K}\).  The associated ambient
+projection is
+\begin{equation}
+ P_{N,K}=i_{N,K}p_{N,K},\quad
+ P_{N,K}^{2}=P_{N,K}=P_{N,K}^{\dagger},\quad
+ p_{N,K}i_{N,K}=I_{V_{N,K}}.
+ \label{eq:ch20-typed-projections}
+\end{equation}
+The notation distinguishes an endomorphism of the ambient Fock space
+from a map between two \emph{different} budget carriers.  These are not
+interchangeable objects, even if they happen to have the same dimension.
+
+Choose three cutoff integers \(K_s,K_m,K_t\geq0\).  In the formulas
+below, the abbreviations
+\begin{equation}
+\begin{gathered}
+ V_s=V_{N,K_s},\qquad V_m=V_{N-e_L,K_m},\\
+ V_t^{J}=V_{N_t^{J},K_t},\qquad
+ i_s=i_{N,K_s},\quad i_m=i_{N-e_L,K_m},\quad
+ p_m=p_{N-e_L,K_m},\quad P_m=i_mp_m
+\end{gathered}
+\label{eq:ch20-three-carriers}
+\end{equation}
+are \emph{typed} by the charge labels in
+\eqref{eq:ch20-charge-arrows}; the target projection is written
+\(p_t^J=p_{N_t^J,K_t}\).  No condition such as
+\(K_s=K_m=K_t\) is imposed.  The intermediate cutoff is a separate
+choice and must not be silently identified with the target cutoff.
+
+\begin{definition}[Restricted one-field arrows]
+\label{def:ch20-field-arrows}
+Set
+\begin{equation}
+ B_L=p_m c_{L,x}i_s:V_s\longrightarrow V_m,
+ \label{eq:ch20-BL}
+\end{equation}
+and define the second arrows, with the indicated \emph{different targets},
+by
+\begin{align}
+ B_R^{\mathrm{CDW},\dagger}
+   &=p_t^{\mathrm{CDW}}c_{R,x}^{\dagger}i_m:
+         V_m\longrightarrow V_t^{\mathrm{CDW}},
+ \label{eq:ch20-BR-CDW}\\
+ B_R^{\mathrm{SC}}
+   &=p_t^{\mathrm{SC}}c_{R,x}i_m:
+         V_m\longrightarrow V_t^{\mathrm{SC}}.
+ \label{eq:ch20-BR-SC}
+\end{align}
+The dagger in \(B_R^{\mathrm{CDW},\dagger}\) refers to the underlying
+ambient creator.  It does \emph{not} purport to take the adjoint of
+\(B_L\), nor of a field with unrelated source or target data.
+\end{definition}
+
+There is a genuine Hilbert-adjoint statement behind the creator notation.
+Define the oppositely directed map
+\(D_R=p_m c_{R,x}i_{N_t^{\mathrm{CDW}},K_t}:
+V_t^{\mathrm{CDW}}\to V_m\).  Then
+\begin{equation}
+ D_R^{\dagger}
+   =p_t^{\mathrm{CDW}}c_{R,x}^{\dagger}i_m
+   =B_R^{\mathrm{CDW},\dagger}.
+ \label{eq:ch20-reversed-adjoint}
+\end{equation}
+To verify this rather than infer it from notation, take
+\(u\in V_m\) and \(v\in V_t^{\mathrm{CDW}}\):
+\begin{align*}
+ \langle D_Rv,u\rangle_{V_m}
+ &=\langle c_{R,x}i_tv,i_mu\rangle_{\mathcal F}\\
+ &=\langle i_tv,c_{R,x}^{\dagger}i_mu\rangle_{\mathcal F}
+  =\langle v,p_t^{\mathrm{CDW}}c_{R,x}^{\dagger}i_mu\rangle_{V_t^{\mathrm{CDW}}}.
+\end{align*}
+Here \(i_t=i_{N_t^{\mathrm{CDW}},K_t}\) in this display.
+Thus the adjoint reverses \emph{both} the charge data and the cutoffs.
+This is the precise finite Hilbert-space meaning of Chapter~14's
+budget-adjoint construction.
+
+\begin{theorem}[Two-field projection insertion and retained residual]
+\label{thm:ch20-projection-residual}
+For every admissible or inadmissible \(N\), every choice of
+\(K_s,K_m,K_t\geq0\), and every \(x\in\mathbb Z\), the following
+identities of linear maps hold with the indicated source and target:
+\begin{align}
+ p_t^{\mathrm{CDW}}O_{\mathrm{CDW}}(x)i_s
+ &=B_R^{\mathrm{CDW},\dagger}\circ B_L
+   +\mathcal R_{\mathrm{CDW}}^{smt}(x),
+ &V_s&\longrightarrow V_t^{\mathrm{CDW}},
+ \label{eq:ch20-cdw-residual}\\
+ p_t^{\mathrm{SC}}O_{\mathrm{SC}}(x)i_s
+ &=B_R^{\mathrm{SC}}\circ B_L
+   +\mathcal R_{\mathrm{SC}}^{smt}(x),
+ &V_s&\longrightarrow V_t^{\mathrm{SC}},
+ \label{eq:ch20-sc-residual}
+\end{align}
+where the \emph{uncompressed intermediate excursions} are
+\begin{align}
+ \mathcal R_{\mathrm{CDW}}^{smt}(x)
+   &=p_t^{\mathrm{CDW}}c_{R,x}^{\dagger}(I_{\mathcal F}-P_m)
+                                   c_{L,x}i_s,
+ \label{eq:ch20-cdw-R}\\
+ \mathcal R_{\mathrm{SC}}^{smt}(x)
+   &=p_t^{\mathrm{SC}}c_{R,x}(I_{\mathcal F}-P_m)
+                                   c_{L,x}i_s.
+ \label{eq:ch20-sc-R}
+\end{align}
+In particular, the factorization into the two projected single fields
+is exact \emph{if and only if} the corresponding displayed residual map
+vanishes.  No such vanishing is assumed in the identities.
+\end{theorem}
+
+\begin{proof}
+The ambient projection satisfies the tautological decomposition
+\(I_{\mathcal F}=P_m+(I_{\mathcal F}-P_m)\).
+Insert it between the two factors of the CDW word:
+\begin{align*}
+ p_t^{\mathrm{CDW}}c_{R,x}^{\dagger}c_{L,x}i_s
+ & =p_t^{\mathrm{CDW}}c_{R,x}^{\dagger}P_m c_{L,x}i_s
+   +p_t^{\mathrm{CDW}}c_{R,x}^{\dagger}
+                        (I_{\mathcal F}-P_m)c_{L,x}i_s\\
+ & =\bigl(p_t^{\mathrm{CDW}}c_{R,x}^{\dagger}i_m\bigr)
+    \circ\bigl(p_m c_{L,x}i_s\bigr)
+   +\mathcal R_{\mathrm{CDW}}^{smt}(x),
+\end{align*}
+where the second equality uses \(P_m=i_mp_m\).  This is
+\eqref{eq:ch20-cdw-residual}.  Replace the first creator by
+\(c_{R,x}\) to obtain \eqref{eq:ch20-sc-residual}.  All expressions
+are maps between the spaces explicitly shown in
+\eqref{eq:ch20-three-carriers}; the proof makes no assumption about
+how many intermediate excitations a field can generate.
+Finally, subtract the factored term from either equality: it vanishes
+exactly when its residual does.
+\end{proof}
+
+An immediate \emph{sufficient}, though not necessary, vanishing
+criterion is
+\begin{equation}
+ (I_{\mathcal F}-P_m)c_{L,x}i_s=0,
+ \quad\text{equivalently}\quad
+ c_{L,x}(V_s)\subseteq i_m(V_m).
+ \label{eq:ch20-safe-intermediate}
+\end{equation}
+This is the strongest, easiest-to-check form of an intermediate
+\emph{range condition}: every state produced by the first field already
+lies in the proposed intermediate budget.  A weaker possibility is that
+the second field and final projection kill all excluded states:
+\(p_t^J c_{R,x}^{\sharp}(I-P_m)c_{L,x}i_s=0\), where
+\(c_{R,x}^{\sharp}=c_{R,x}^{\dagger}\) for CDW and
+\(c_{R,x}^{\sharp}=c_{R,x}\) for SC.  Such a cancellation is about the
+\emph{complete} product, and cannot be inferred by checking each factor
+in isolation.
+
+\begin{remark}[Why an intermediate projection changes multiplication]
+\label{rem:ch20-not-multiplicative}
+Compression \(A\mapsto p A i\) is linear, but generally not
+multiplicative.  An intermediate state can lie outside \(V_m\) and still
+be mapped into \(V_t^J\) by the second field.  Inserting \(P_m\)
+deletes that route.  Even a correct identity for each \emph{one-field}
+projected map therefore does not license multiplying those identities
+and discarding \(\mathcal R_J^{smt}\).  In particular, Chapter~14's
+finite Taylor candidates, if separately shown to equal the appropriate
+individual projected fields under its conditional cyclic criterion,
+still require the present residual and the actual transition cutoffs when
+composed.  No factorization, commutation, or Baker--Campbell--Hausdorff
+identity for \emph{compressed exponentials} follows from
+\eqref{eq:ch20-cdw-residual}--\eqref{eq:ch20-sc-residual}.
+\end{remark}
+
+\subsection{Charge phases and the ordered Klein signs}
+\label{subsec:ch20-klein}
+
+The operator identities above require no vacuum or special reference
+state.  It is nevertheless useful to compute the matrix elements between
+\emph{sector ground kets}, both as a stringent sign check and as the
+zero-excitation portion of a possible order-parameter dictionary.  We now
+assume the periodic twist in \eqref{eq:ch20-fields} and the fixed
+occupation ordering \(R<L\).
+
+The normalized occupation ket at charge \(N\) contains exactly
+\(h+N_\nu\) particles of species \(\nu\).  In the occupation basis,
+annihilation of an occupied orbital contributes \((-1)^n\), with \(n\)
+the number of occupied orbitals preceding it; creation of an unoccupied
+orbital obeys the same sign rule.  Define the signed Klein coefficient for
+removal of the \emph{highest occupied} orbital of a species by
+\begin{equation}
+ \begin{aligned}
+ P_R(N)&=(-1)^{h+N_R-1},\\
+ P_L(N)&=(-1)^{(h+N_R)+(h+N_L-1)}.
+ \end{aligned}
+ \label{eq:ch20-klein-phases}
+\end{equation}
+Equivalently,
+\begin{equation}
+ P_\nu(N)=(-1)^{\displaystyle
+     \sum_{\eta<\nu}(h+N_\eta)+h+N_\nu-1},
+ \label{eq:ch20-klein-general}
+\end{equation}
+where \(\eta<\nu\) refers to the fixed species ordering and
+\((-1)^n\) is defined for every integer \(n\) by its parity.
+The formula is the charge-sector sign convention of Chapter~13,
+not an independently adjustable choice of relative Klein phases.
+
+For removal of the last occupied momentum \(k=N_\nu\), the annihilation
+field supplies the Fourier coefficient \(L^{-1/2}\zeta^{N_\nu x}\).
+For addition of the first unoccupied momentum \(k=N_R+1\), the creator
+supplies \(L^{-1/2}\zeta^{-(N_R+1)x}\).  The creation sign equals
+\(P_R(N+e_R)\): it counts \(h+N_R\) occupied right orbitals
+\emph{before} the new particle is added.  This shifted argument matters.
+Likewise, after the left annihilation in an SC product the right removal
+sign is \(P_R(N-e_L)\); no factor may be moved past the other without
+recomputing its source label.
+
+\begin{proposition}[Exact sector-ground matrix elements]
+\label{prop:ch20-ground-coeff}
+Let \(-h\leq N_R,N_L\leq h\), and let
+\(\langle\Omega_{N'}|A|\Omega_N\rangle\) denote the finite-Fock
+Hilbert-space matrix element.  If \(N_L>-h\) and \(N_R<h\), then
+\begin{align}
+ &\langle\Omega_{N+e_R-e_L}|
+                O_{\mathrm{CDW}}(x)|\Omega_N\rangle\\
+ &\hspace{1cm}=\frac1L
+     \zeta^{(N_L-N_R-1)x}
+     P_L(N)P_R(N-e_L+e_R).
+ \label{eq:ch20-cdw-ground}
+\end{align}
+If \(N_L>-h\) and \(N_R>-h\), then
+\begin{align}
+ &\langle\Omega_{N-e_R-e_L}|
+                O_{\mathrm{SC}}(x)|\Omega_N\rangle\\
+ &\hspace{1cm}=\frac1L
+     \zeta^{(N_R+N_L)x}
+     P_L(N)P_R(N-e_L).
+ \label{eq:ch20-sc-ground}
+\end{align}
+If a required removal or creation is Pauli-forbidden at the corresponding
+empty or full boundary, the respective ground-to-ground matrix element is
+zero.  The nonzero coefficients above have modulus \(1/L\).
+\end{proposition}
+\begin{proof}
+Expand the product using \eqref{eq:ch20-fields}:
+\begin{align*}
+ O_{\mathrm{CDW}}(x)
+  &=\frac1L\sum_{p,q\in\mathcal B_L}
+      \zeta^{(-p+q)x}a_{Rp}^{\dagger}a_{Lq},\\
+ O_{\mathrm{SC}}(x)
+  &=\frac1L\sum_{p,q\in\mathcal B_L}
+      \zeta^{(p+q)x}a_{Rp}a_{Lq}.
+\end{align*}
+In the CDW case the target ket contains precisely the occupied left
+orbitals \(-h+1,\ldots,N_L-1\); hence the \emph{only} term that
+can connect the two specified ground configurations has \(q=N_L\).
+Similarly, the target right orbitals are \(-h+1,\ldots,N_R+1\),
+which forces \(p=N_R+1\).  The left field acts first, giving
+\(P_L(N)\).  The right creator then adds the first empty right
+orbital to the intermediate state \(N-e_L\), with sign
+\((-1)^{h+N_R}=P_R(N-e_L+e_R)\).  The two Fourier characters
+multiply to \(\zeta^{(N_L-N_R-1)x}\).  All other terms are either
+zero by Pauli exclusion or produce an occupation ket orthogonal to
+the stated target ground.
+
+For SC the target has one fewer particle of each species.  Its ground
+occupation forces \(q=N_L\) and \(p=N_R\).  Acting first with the
+left field yields \(P_L(N)\); the subsequent right removal sees the
+charge \(N-e_L\), and gives \(P_R(N-e_L)\).  Its Fourier factor is
+\(\zeta^{(N_L+N_R)x}\).  The asserted boundary cases follow because
+a missing highest occupied momentum cannot be annihilated, and a full
+right band offers no unoccupied orbital for CDW creation.  Because
+\(|\zeta|=|P_\nu|=1\), the modulus of each allowed matrix element
+is \(1/L\).
+\end{proof}
+
+It is helpful to separate the phase coming from the \emph{source
+occupation} from the signed shift.  For these ground matrix elements
+write
+\begin{align}
+ \chi_{\mathrm{CDW}}(N,x)&=\zeta^{(N_L-N_R-1)x},
+ &\kappa_{\mathrm{CDW}}(N)
+   &=P_L(N)P_R(N-e_L+e_R),
+ \label{eq:ch20-cdw-chi-kappa}\\
+ \chi_{\mathrm{SC}}(N,x)&=\zeta^{(N_R+N_L)x},
+ &\kappa_{\mathrm{SC}}(N)
+   &=P_L(N)P_R(N-e_L).
+ \label{eq:ch20-sc-chi-kappa}
+\end{align}
+The scalar \(\chi_J(N,x)\) acts on the \emph{source} charge label
+before either shift is performed.  The left removal acts first in
+both products.  Its Klein sign is evaluated at \(N\); the next
+Klein sign uses the appropriate shifted charge.  These functions are
+\emph{matrix-element coefficients}; they are not an assertion that
+\(O_J\) equals a charge shift multiplied by a scalar on arbitrary
+excited states.  Excited states require the full CAR word and, when
+budget-restricted, its residual.
+
+\subsection{A four-site calculation: the residual is genuinely present}
+\label{subsec:ch20-four-site}
+
+\begin{example}[Both order parameters and a missed intermediate path]
+\label{ex:ch20-four-site}
+Take \(h=2\), hence \(L=4\),
+\(\mathcal B_4=\{-1,0,1,2\}\),
+\(\zeta=i\), and \(x=1\).  For compactness write
+\(|R\{\ldots\};L\{\ldots\}\rangle\) for the normalized occupation
+ket with the indicated occupied momenta, in the \(R<L\) ordering.
+
+\emph{First: the CDW ground coefficient.}
+The source at \(N=(0,0)\) is
+\[
+ |\Omega_{(0,0)}\rangle
+  =|R\{-1,0\};L\{-1,0\}\rangle.
+\]
+After a left removal and right creation the target sector is
+\(N_t=(1,-1)\), with ground
+\[
+ |\Omega_{(1,-1)}\rangle
+  =|R\{-1,0,1\};L\{-1\}\rangle.
+\]
+Only \(a_{R,1}^{\dagger}a_{L,0}\) connects these two ground kets.
+The Fourier product is \(\zeta^{-1}= -i\), the left removal sign is
+\(P_L(0,0)=(-1)^3=-1\), and the right creation sign is
+\(P_R(1,-1)=(-1)^2=+1\).  Therefore
+\begin{equation}
+ \langle\Omega_{(1,-1)}|
+    O_{\mathrm{CDW}}(1)|\Omega_{(0,0)}\rangle
+ =\frac14(-i)(-1)(+1)=\frac{i}{4}.
+ \label{eq:ch20-four-cdw}
+\end{equation}
+
+\emph{Second: the SC ground coefficient.}
+Choose the source \(N=(1,0)\):
+\[
+ |\Omega_{(1,0)}\rangle
+   =|R\{-1,0,1\};L\{-1,0\}\rangle.
+\]
+The target charge is \((0,-1)\), with ground
+\( |\Omega_{(0,-1)}\rangle
+   =|R\{-1,0\};L\{-1\}\rangle\).
+Only \(a_{R,1}a_{L,0}\) connects these states.  Its Fourier
+character is \(\zeta^{1+0}=i\), and the two successive signs are
+\(P_L(1,0)=+1\) and \(P_R(1,-1)=+1\).  It follows that
+\begin{equation}
+ \langle\Omega_{(0,-1)}|
+    O_{\mathrm{SC}}(1)|\Omega_{(1,0)}\rangle
+ =\frac{i}{4}.
+ \label{eq:ch20-four-sc}
+\end{equation}
+These two coefficients are exact finite-Fock numbers, not
+large-system approximations or formal vertex-state evaluations.
+
+\emph{Third: a discarded intermediate excitation survives the
+second field.}
+Return to the CDW source \(N=(0,0)\) and select
+\(K_s=K_m=0\), \(K_t=1\).  The intermediate charge is
+\(N_m=(0,-1)\) and its zero-budget state has occupied orbitals
+\(R\{-1,0\},L\{-1\}\).  Consider instead the term in which
+\(c_{L,1}\) removes the \emph{left} particle at \(q=-1\):
+\[
+ |R\{-1,0\};L\{-1,0\}\rangle
+ \xrightarrow{\ a_{L,-1}\ }
+ |R\{-1,0\};L\{0\}\rangle.
+\]
+The latter configuration has the correct intermediate \emph{charge}
+\((0,-1)\), but its left particle occupies \(0\) rather than \(-1\).
+By \eqref{eq:ch20-excitation} it has excitation \(E_{N_m}=1\), and
+is therefore killed by \(P_m=P_{(0,-1),0}\).  The right creator can
+nevertheless add \(p=1\):
+\[
+ |R\{-1,0\};L\{0\}\rangle
+ \xrightarrow{\ a_{R,1}^{\dagger}\ }
+ |R\{-1,0,1\};L\{0\}\rangle.
+\]
+This final state belongs to \(V_{(1,-1),1}\), having left excitation
+one and right excitation zero.  With the stated ordering, both mode
+operations have occupation sign \(+1\); their Fourier factors are
+\(\zeta^{-1}=-i\) for the left annihilator and
+\(\zeta^{-1}=-i\) for the right creator.  No other excluded
+intermediate path contributes to this final occupation ket.  Hence
+\begin{equation}
+ \begin{aligned}
+ &\mathcal R_{\mathrm{CDW}}^{smt}(1)
+                |\Omega_{(0,0)}\rangle\\
+ &\qquad=-\frac14
+      |R\{-1,0,1\};L\{0\}\rangle\ne0
+       \quad (K_s=K_m=0,\ K_t=1).
+ \end{aligned}
+ \label{eq:ch20-four-residual}
+\end{equation}
+In particular, equating the projected product with
+\(B_R^{\mathrm{CDW},\dagger}B_L\) in this example would
+be \emph{false}, despite the fact that both constituent fields and
+all three projections are correctly defined.
+
+If we change only the \emph{target} cutoff to \(K_t=0\), the state
+on the right of \eqref{eq:ch20-four-residual} is also discarded.
+There is then no surviving excluded path from this source ground to
+the target ground, and
+\begin{equation}
+ \mathcal R_{\mathrm{CDW}}^{smt}(1)
+      |\Omega_{(0,0)}\rangle=0
+ \qquad(K_s=K_m=K_t=0).
+ \label{eq:ch20-four-residual-zero}
+\end{equation}
+The restricted, ground-to-ground equality here is a property of the
+\emph{final projection} and this source ket; it does not turn
+\(\mathcal R_{\mathrm{CDW}}^{smt}\) into the zero operator for
+arbitrary larger budgets.
+\end{example}
+
+The example illustrates two conceptually different uses of a cutoff.
+The intermediate budget \(K_m=0\) declares an excited left-hole state
+inadmissible \emph{before} the second field acts.  The target budget
+\(K_t=1\) still accepts its eventual image.  This mismatch creates the
+nonzero remainder; it is not an error in the CAR algebra or the Fourier
+normalization.  Conversely, if one is interested only in a particular
+ground-to-ground coefficient, orthogonality of the untouched left
+occupation can eliminate the excluded paths \emph{after} the full
+product.  Neither conclusion justifies a blanket rule that energy-budget
+projection commutes with multiplication.
+
+\subsection{What these exact results do and do not provide}
+\label{subsec:ch20-scope}
+
+The finite CAR construction now supplies three distinct pieces of data:
+a globally defined even word \(O_J(x)\); a collection of typed maps
+\(V_s\to V_t^J\) with explicit intermediate remainder
+\(\mathcal R_J^{smt}\); and a charge-ground scalar coefficient with
+specified Fourier and Klein ordering.  These statements require no
+choice of finite interacting vacuum and no canonical-commutation
+relations for compressed density modes.
+
+For a normalized \(\psi\in\mathcal F\), an observable expectation such
+as \(\langle\psi,O_J(x)^{\dagger}O_J(y)\psi\rangle\) is an ordinary
+finite Hilbert-space number.  A density matrix \(\rho\geq0\),
+\(\operatorname{Tr}\rho=1\), similarly defines
+\(\operatorname{Tr}(\rho O_J(x)^{\dagger}O_J(y))\).  These should
+not be identified without a comparison theorem with the abstract
+positive functional on the \emph{uncompressed} oscillator algebra
+discussed in Chapter~\ref{ch:correlations} and the construction
+underlying Section~\ref{sec:ch20-formal-vertices}.  In particular,
+a formal vertex correlator evaluated coefficientwise in a power-series
+parameter is not automatically the finite-CAR expectation just defined.
+
+A proposed Mattis--Mandelstam description may eventually replace a
+single projected field by a finite polynomial or oscillator expression,
+but Chapter~14's conditional criterion must first be checked for the
+\emph{specified source and target cutoffs}.  The exact product theorem
+then retains \(\mathcal R_J^{smt}\) unless an explicit range or
+final-projection annihilation argument removes it.  This distinction is
+especially important for later pairing, duality and spinful/Umklapp
+constructions: a scalar agreement on sector grounds does not certify an
+operator identity on all excited budget states.
+
+Finally, the sign and phase conventions fixed here are provisional
+cross-chapter conventions: \(R<L\), common positive-exponent finite
+annihilation Fourier transform, left field acting first, source charge
+phases, and separate cutoffs for each arrow.  Their compatibility with
+future chapter integrations must be reviewed against the actual committed
+interfaces.  Neither a thermodynamic limit nor continuum scaling,
+spectral equivalence or a finite interacting-state identification has
+been established in this section.

@@ -315,3 +315,19 @@ CH18: **C_complete**. 34 contracts; 0 pending proof modules. Current machine rec
 CH19: **B_complete**. 62 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch19.json`.
 
 <!-- /lean-cycle CH19 -->
+
+
+## Manuscript import checkpoint — October 15, 2026
+
+All eleven user-supplied CH19–21 LaTeX sections are integrated as manuscript
+drafts, numbered 19.1–19.4, 20.1–20.3 and 21.1–21.4. The source manifest is
+`notes/latex/plan/imported_sections.json`. The master includes the entire batch;
+publication checks verify inclusion, references, citations and labels. No Lean
+source, lock or phase status changes in this step. CH12–18 private LaTeX drafts
+remain outside the published book. Independent mathematical/editorial review and
+full reference-coverage reconciliation remain open.
+
+Next revision round is **planned only** in `docs/webllm/JULES_REVISION_PLAN.md`:
+pilot CH01–03 as a bundle, CH07–08 as a pair, and use one chapter per task for the
+more technical chapters, with only relevant appendix context and explicit owners
+for material moved into the main text. No Jules/API tasks have been dispatched.

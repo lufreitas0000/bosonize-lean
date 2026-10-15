@@ -1,0 +1,416 @@
+\section{Mode Contractions in the Abstract State}
+\label{sec:ch19-mode-correlators}
+
+The preceding section constructed a normalized positive functional on an
+\emph{uncompressed} oscillator algebra. We now ask a more concrete question:
+what does that state predict for the product of two density modes? A
+Bogoliubov transformation mixes an oscillator's creation operator on one
+branch with an annihilation operator on the opposite branch. Consequently,
+even if the transformed (dressed) modes define a vacuum, the original
+(\emph{bare}) modes need not annihilate it. The outcome is a nonzero
+correlation between pairs of bare operators. This is the elementary
+algebraic mechanism behind the mode contractions derived below.
+
+There is a crucial choice before computing anything: does the observable
+contain $AB$ or $BA$? These are different measurements whenever $A$ and
+$B$ do not commute, and a state is a \emph{linear}, not a multiplicative,
+evaluator. In particular, exchanging the order of a bosonic creation and
+annihilation mode changes its vacuum expectation by their scalar
+commutator. We therefore compute \emph{ordered} contractions first; the
+symmetrized combinations will be identified only afterward. This section
+works solely in the abstract oscillator functional of
+Section~\ref{sec:ch19-scope}. It does not evaluate a ground-state vector
+or density matrix in the finite fermionic energy-budget space.
+
+\subsection{Mode labels, hypotheses, and the vacuum rule}
+
+Fix a nonnegative integer $M$. The set of positive mode labels is
+\[
+  \mathcal{I}_M=\{1,2,\ldots,M\},
+  \qquad \nu\in\{R,L\}.
+\]
+When $M=0$ the statements about individual modes are empty; whenever we
+choose a particular mode below we assume $M\geq1$. The formalized index
+$i\in\operatorname{Fin}(M)$ corresponds to $m=i+1$, so every oscillator
+weight $m$ is strictly positive. The lattice length $L$ is reserved for
+the spatial Fourier sums of the next section (in the supplied finite-lattice
+implementation $L=2h$); it is \emph{not} the dimension of the oscillator
+polynomial carrier. The mode algebra considered here has $2M$ oscillator
+species but admits arbitrarily high occupation in each species.
+
+Write $C_{\nu m}$ for the bare creation generator and
+$A_{\nu m}:=C_{\nu m}^{*}$ for its adjoint, the annihilation generator.
+We use the density-mode correspondence of the source convention,
+\[
+  \rho_{m,\nu}=C_{\nu m},\qquad
+  \rho_{-m,\nu}=A_{\nu m}\quad(m\in\mathcal I_M).
+\]
+The exact uncompressed canonical commutation relations (CCR) are
+\begin{align}
+ [A_{\nu m},C_{\mu n}]&=m\,\delta_{\nu\mu}\delta_{mn}\,I,
+   \label{eq:ch19-modes-ccr}\\
+ [A_{\nu m},A_{\mu n}]&=0,\qquad
+ [C_{\nu m},C_{\mu n}]=0.
+\end{align}
+Here $\delta_{mn}$ is one if $m=n$ and zero otherwise. Operators on
+different branches commute, but, as we shall see, they can still have
+nonzero expectations of their products in a correlated state.
+
+Let $\omega_0$ denote the polynomial vacuum functional defined in
+Section~\ref{sec:ch19-scope}. In its explicit polynomial representation,
+$C_{\nu m}$ multiplies by the variable $X_{\nu m}$, while
+$A_{\nu m}=m\,\partial/\partial X_{\nu m}$. The vacuum is the
+constant polynomial $1$. Therefore
+\begin{align}
+ A_{\nu m}1&=0,
+ &C_{\nu m}1&=X_{\nu m},
+ &A_{\nu m}X_{\mu n}
+   &=m\delta_{\nu\mu}\delta_{mn}\,1.
+\end{align}
+Applying the operators from right to left, then extracting the vacuum
+coefficient, yields
+\begin{align}
+ \omega_0(A_{\nu m}C_{\mu n})
+   &=m\delta_{\nu\mu}\delta_{mn},
+   &\omega_0(C_{\nu m}A_{\mu n})&=0,
+     \label{eq:ch19-free-two-orders}\\
+ \omega_0(A_{\nu m}A_{\mu n})&=0,
+   &\omega_0(C_{\nu m}C_{\mu n})&=0.
+     \label{eq:ch19-free-like-pairs}
+\end{align}
+For example, $A_{\nu m}C_{\nu m}1=m1$, whereas
+$C_{\nu m}A_{\nu m}1=0$. This two-line calculation is the source of
+the distinction between the $c^2$ and $s^2$ contractions. The identities
+are exact on the uncompressed polynomial carrier: no top-occupation
+boundary has been discarded.
+
+Let $c,s\in\mathbb R$ satisfy
+\begin{equation}
+  c^2-s^2=1.
+  \label{eq:ch19-hyperbolic-condition}
+\end{equation}
+This is the \emph{real hyperbolic-pair} hypothesis of Chapter~18; it
+includes the choice $c=1,s=0$. No sign condition on $s$ is necessary.
+The Bogoliubov generator map $\beta=\beta_{c,s}$ acts by
+\begin{align}
+ \beta(C_{Rm})&=cC_{Rm}+sA_{Lm},
+ &\beta(A_{Rm})&=cA_{Rm}+sC_{Lm},\label{eq:ch19-beta-right}\\
+ \beta(C_{Lm})&=cC_{Lm}+sA_{Rm},
+ &\beta(A_{Lm})&=cA_{Lm}+sC_{Rm}.
+ \label{eq:ch19-beta-left}
+\end{align}
+Because the coefficients are real, the second column of each line is
+the adjoint of the first. Because $c^2-s^2=1$, applying the same map
+with $s$ replaced by $-s$ gives its inverse. For example,
+\[
+ \beta^{-1}(C_{Rm})=cC_{Rm}-sA_{Lm},\qquad
+ \beta^{-1}(A_{Rm})=cA_{Rm}-sC_{Lm}.
+\]
+The other branch follows by interchanging $R$ and $L$. These identities
+are a special case of the invertible generator transformation established
+in Chapter~18 and in the supplied A08 development.
+
+The \emph{dressed} modes are $\widetilde C_{\nu m}=\beta(C_{\nu m})$
+and $\widetilde A_{\nu m}=\beta(A_{\nu m})$. As established in the
+preceding section, the dressed state is the \emph{inverse pullback}
+\begin{equation}
+  \omega_P(B)=\omega_0\bigl(\beta^{-1}(B)\bigr),
+  \qquad B\in\mathfrak A_{\mathrm{CCR}}.
+  \label{eq:ch19-pullback}
+\end{equation}
+This direction is essential. In fact,
+$\omega_P(B\widetilde A_{\nu m})=0$ and
+$\omega_P(\widetilde C_{\nu m}B)=0$ for every polynomial observable
+$B$, since applying $\beta^{-1}$ reduces these expressions to the
+undressed vacuum rules. The shorthand $\omega_{\widetilde\Omega}$ in
+the original chapter notes refers to this same abstract functional;
+we use $\omega_P$ consistently here. In particular, the equations below
+are not assertions about finite-CAR expectations
+$\langle\Psi,B\Psi\rangle$ or $\operatorname{Tr}(\varrho B)$.
+
+\subsection{Same-branch contractions: why both orders survive}
+
+\begin{theorem}[Both ordered right- and left-branch contractions]
+\label{thm:ch19-mode-same-branch}
+For any $M\in\mathbb N$, real $c,s$ satisfying
+\eqref{eq:ch19-hyperbolic-condition}, $m,n\in\mathcal I_M$, and
+$\nu\in\{R,L\}$, the functional~\eqref{eq:ch19-pullback} obeys
+\begin{align}
+ \omega_P(C_{\nu m}A_{\nu n})
+   &=m\delta_{mn}s^2,
+   \label{eq:ch19-mode-CA}\\
+ \omega_P(A_{\nu m}C_{\nu n})
+   &=m\delta_{mn}c^2,
+   \label{eq:ch19-mode-AC}\\
+ \omega_P(C_{\nu m}C_{\nu n})
+   &=0,\qquad
+ \omega_P(A_{\nu m}A_{\nu n})=0.
+ \label{eq:ch19-mode-like}
+\end{align}
+All products are written in their actual evaluation order.
+\end{theorem}
+
+\begin{proof}
+It suffices to treat the right branch; the opposite-branch exchange
+$R\leftrightarrow L$ preserves the CCR and the transformation.
+Multiplicativity of the \emph{algebra map} $\beta^{-1}$ (not of the
+state $\omega_0$) gives
+\begin{align*}
+ \omega_P(C_{Rm}A_{Rn})
+ &=\omega_0\bigl[(cC_{Rm}-sA_{Lm})
+                     (cA_{Rn}-sC_{Ln})\bigr]\\
+ &=c^2\omega_0(C_{Rm}A_{Rn})
+   -cs\omega_0(C_{Rm}C_{Ln})\\
+ &\quad-cs\omega_0(A_{Lm}A_{Rn})
+   +s^2\omega_0(A_{Lm}C_{Ln})\\
+ &=s^2m\delta_{mn}.
+\end{align*}
+Every vanishing term has been removed using
+\eqref{eq:ch19-free-two-orders}--\eqref{eq:ch19-free-like-pairs}.
+For the reversed product the expansion is different:
+\begin{align*}
+ \omega_P(A_{Rm}C_{Rn})
+ &=\omega_0\bigl[(cA_{Rm}-sC_{Lm})
+                     (cC_{Rn}-sA_{Ln})\bigr]\\
+ &=c^2\omega_0(A_{Rm}C_{Rn})
+   -cs\omega_0(A_{Rm}A_{Ln})\\
+ &\quad-cs\omega_0(C_{Lm}C_{Rn})
+   +s^2\omega_0(C_{Lm}A_{Ln})\\
+ &=c^2m\delta_{mn}.
+\end{align*}
+The $CC$ product is likewise mapped to
+\begin{align*}
+ \omega_0[(cC_{Rm}-sA_{Lm})(cC_{Rn}-sA_{Ln})]
+ &=c^2\omega_0(C_{Rm}C_{Rn})\\
+ &\quad-cs\omega_0(C_{Rm}A_{Ln})
+   -cs\omega_0(A_{Lm}C_{Rn})\\
+ &\quad+s^2\omega_0(A_{Lm}A_{Ln})=0,
+\end{align*}
+since in the potentially surviving $AC$ term the branches differ.
+The $AA$ identity follows by adjunction or by the same four-term
+expansion. Nothing in the proof requires a finite-dimensional
+representation of the CCR.
+\end{proof}
+
+Subtracting the first contraction from the second gives the exact
+commutator check
+\begin{equation}
+ \omega_P(A_{\nu m}C_{\nu n})
+ -\omega_P(C_{\nu n}A_{\nu m})
+ =m\delta_{mn}(c^2-s^2)=m\delta_{mn}.
+ \label{eq:ch19-mode-commutator-check}
+\end{equation}
+The right-hand side is fixed by the algebra, independently of the
+chosen state. Thus the coefficient $s^2$ cannot simply replace
+$c^2$ in the reversed contraction. More physically, even in a free
+vacuum an annihilator followed by a creator can produce a nonzero
+fluctuation: the creator first excites the vacuum, then the annihilator
+returns it to the vacuum.
+
+\subsection{Cross-branch contractions and the sign of the mixing}
+
+The transformation also couples opposite branches. Correlation does not
+require a nonzero cross-branch commutator: here the $R$ and $L$
+oscillators commute, but $\omega_P$ is not a product state of the
+\emph{bare} right- and left-branch vacuum functionals. The distinction
+between algebraic commutativity and statistical independence is
+important in interpreting a Bogoliubov-transformed ground state.
+
+\begin{theorem}[Opposite-branch anomalous contractions]
+\label{thm:ch19-mode-cross-branch}
+Under the hypotheses of Theorem~\ref{thm:ch19-mode-same-branch},
+\begin{align}
+ \omega_P(C_{Rm}C_{Ln})
+   &=-m\delta_{mn}cs,
+   \label{eq:ch19-cross-CC}\\
+ \omega_P(A_{Rm}A_{Ln})
+   &=-m\delta_{mn}cs,
+   \label{eq:ch19-cross-AA}\\
+ \omega_P(C_{Rm}A_{Ln})
+   &=0,\qquad
+ \omega_P(A_{Rm}C_{Ln})=0.
+   \label{eq:ch19-cross-mixed}
+\end{align}
+The same results hold after exchanging $R$ and $L$.
+\end{theorem}
+
+\begin{proof}
+Consider first the product of two creators. Applying the inverse
+transformation and expanding without commuting factors gives
+\begin{align*}
+ \omega_P(C_{Rm}C_{Ln})
+ &=\omega_0\bigl[(cC_{Rm}-sA_{Lm})
+                     (cC_{Ln}-sA_{Rn})\bigr]\\
+ &=c^2\omega_0(C_{Rm}C_{Ln})
+   -cs\omega_0(C_{Rm}A_{Rn})\\
+ &\quad-cs\omega_0(A_{Lm}C_{Ln})
+   +s^2\omega_0(A_{Lm}A_{Rn})\\
+ &=-cs\,m\delta_{mn}.
+\end{align*}
+The single surviving term has precisely the minus sign introduced
+by $\beta^{-1}$; using the forward map instead would reverse this
+sign and would describe a different state.
+For two annihilators the analogous computation is
+\begin{align*}
+ \omega_P(A_{Rm}A_{Ln})
+ &=\omega_0\bigl[(cA_{Rm}-sC_{Lm})
+                     (cA_{Ln}-sC_{Rn})\bigr]\\
+ &=c^2\omega_0(A_{Rm}A_{Ln})
+   -cs\omega_0(A_{Rm}C_{Rn})\\
+ &\quad-cs\omega_0(C_{Lm}A_{Ln})
+   +s^2\omega_0(C_{Lm}C_{Rn})\\
+ &=-cs\,m\delta_{mn}.
+\end{align*}
+Finally, the mixed-branch product becomes
+\begin{align*}
+ \omega_P(C_{Rm}A_{Ln})
+ &=c^2\omega_0(C_{Rm}A_{Ln})
+   -cs\omega_0(C_{Rm}C_{Rn})\\
+ &\quad-cs\omega_0(A_{Lm}A_{Ln})
+   +s^2\omega_0(A_{Lm}C_{Rn})=0.
+\end{align*}
+The other mixed-branch contraction vanishes by the same vacuum
+identities. Exchanges of branches are permitted because they commute
+in the CCR algebra. This completes the proof.
+\end{proof}
+
+These cross-branch quantities are often called \emph{anomalous}
+contractions: they pair two creators or two annihilators, which would
+have zero expectation in the undressed polynomial vacuum. Their
+nonzero value in $\omega_P$ encodes the pair mixing; the sign records
+our choice of the inverse-pullback convention and the sign of $s$.
+
+\subsection{Ordered versus symmetrized expectations}
+
+For any two algebra elements $B,D$, introduce their symmetrized
+product $\{B,D\}:=BD+DB$. The ordered and symmetrized functionals
+measure different algebra elements:
+\[
+ \omega_P(BD)
+ =\frac12\omega_P(\{B,D\})
+  +\frac12\omega_P([B,D]).
+\]
+For one right- or left-branch creator/annihilator pair, the previous
+theorem implies
+\begin{equation}
+ \frac12\omega_P(\{A_{\nu m},C_{\nu n}\})
+   =\frac{m\delta_{mn}}2(c^2+s^2).
+ \label{eq:ch19-mode-anticommutator}
+\end{equation}
+The antisymmetric half is
+$\frac12\omega_P([A_{\nu m},C_{\nu n}])=
+\frac12m\delta_{mn}$. Thus symmetrization keeps the sum of the
+fluctuations but suppresses the information about which ordered
+product carried the vacuum term. The anomalous $CC$ and $AA$
+contractions do not have this ordering ambiguity across branches:
+the corresponding generators commute.
+
+It is useful to express these coefficients in the parameter convention
+introduced in Chapter~18. Put
+\begin{equation}
+ g=(c-s)^2>0,\qquad g^{-1}=(c+s)^2.
+ \label{eq:ch19-mode-g}
+\end{equation}
+The inverse equality follows from $(c-s)(c+s)=1$. Hence
+\begin{align}
+ c^2+s^2&=\frac{g+g^{-1}}2,
+ & c^2&=\frac{g+g^{-1}+2}{4},
+ & s^2&=\frac{g+g^{-1}-2}{4},\\
+ cs&=\frac{g^{-1}-g}{4}.
+ \label{eq:ch19-mode-g-coefficients}
+\end{align}
+In particular,
+\begin{align*}
+ \frac12\omega_P(\{A_{\nu m},C_{\nu n}\})
+   &=\frac{m\delta_{mn}}4(g+g^{-1}),\\
+ \omega_P(C_{Rm}C_{Ln})
+   &=-\frac{m\delta_{mn}}4(g^{-1}-g).
+\end{align*}
+The coupling $g$ here is a \emph{hyperbolic/Luttinger parameter}; it
+is not the Umklapp coupling $g_U$ used in a later chapter.
+These finite algebraic identities do not invoke a continuum limit.
+
+\subsection{Worked example: two modes and a squeezed combination}
+
+Choose $M=2$ and the real hyperbolic pair
+\[
+ c=\frac53,\qquad s=\frac43,\qquad
+ c^2-s^2=\frac{25-16}{9}=1,
+ \qquad g=(c-s)^2=\frac19.
+\]
+At $m=n=1$ the right-branch ordered contractions are
+\[
+ \omega_P(C_{R1}A_{R1})=\frac{16}{9},\qquad
+ \omega_P(A_{R1}C_{R1})=\frac{25}{9}.
+\]
+Their difference is exactly $1$, as required by the uncompressed
+commutator. The cross-branch anomalous contractions are
+\[
+ \omega_P(C_{R1}C_{L1})
+ =\omega_P(A_{R1}A_{L1})=-\frac{20}{9}.
+\]
+For comparison, mode orthogonality yields
+$\omega_P(C_{R1}A_{R2})=\omega_P(C_{R1}C_{L2})=0$.
+At the second mode the nonzero contractions simply acquire the
+weight $m=2$:
+\[
+ \omega_P(C_{R2}A_{R2})=\frac{32}{9},\quad
+ \omega_P(A_{R2}C_{R2})=\frac{50}{9},\quad
+ \omega_P(C_{R2}C_{L2})=-\frac{40}{9}.
+\]
+
+There is also an instructive positive quadratic observable. Fix one
+mode $m$ and define $Y_m=C_{Rm}+A_{Lm}$. Its adjoint is
+$Y_m^*=A_{Rm}+C_{Lm}$. Expanding $Y_m^*Y_m$ in precisely this order,
+\begin{align*}
+ \omega_P(Y_m^*Y_m)
+ &=\omega_P(A_{Rm}C_{Rm})
+   +\omega_P(A_{Rm}A_{Lm})\\
+ &\quad+\omega_P(C_{Lm}C_{Rm})
+   +\omega_P(C_{Lm}A_{Lm})\\
+ &=m(c^2-2cs+s^2)=m(c-s)^2=mg.
+\end{align*}
+In our numerical example, $\omega_P(Y_1^*Y_1)=1/9>0$.
+Although individual contributions include negative cross-branch
+correlations, the positive functional still gives a nonnegative
+expectation to an element of the form $Y^*Y$. This calculation makes
+the underlying tradeoff visible: the state can encode correlations
+that are simple in the full oscillator representation, while a
+finite energy-budget compression cannot be assumed to preserve these
+CCR-based manipulations without additional boundary analysis.
+
+\subsection{Free-pair limit and exact scope of the result}
+
+The supplied implementation chooses the free hyperbolic pair
+$(c,s)=(1,0)$, so $\beta$ and $\beta^{-1}$ are the identity and
+$\omega_P=\omega_0$. The complete nonzero two-point data then reduce
+to
+\begin{equation}
+ \omega_0(A_{\nu m}C_{\mu n})
+ =m\delta_{\nu\mu}\delta_{mn},
+ \label{eq:ch19-mode-free-limit}
+\end{equation}
+while $\omega_0(C_{\nu m}A_{\mu n})=0$ and all $CC$, $AA$
+and opposite-branch contractions vanish. Thus the normal-ordered
+free-vacuum occupation is zero, but the reverse-ordered vacuum
+fluctuation is \emph{not} zero. Omitting it would make the subsequent
+spatial density correlator incorrect already in the free theory.
+
+All results in this section are \emph{exact algebraic evaluations} for
+finitely many positive mode labels in the positive abstract state
+$\omega_P$. They follow from the polynomial vacuum rules, the real
+hyperbolic condition, and the inverse Bogoliubov pullback. In the
+supplied Lean sources these evaluations correspond to the same-branch
+and cross-branch contraction theorems in
+	exttt{BosonizeStubs/Ch19Correlations.lean}, together with its separate
+vanishing lemmas. Their acceptance in the Chapter~19/A08
+Phase~B development does not constitute promotion to the frozen Core.
+
+The next section will combine the ordered contractions with a
+\emph{specified} finite Fourier orientation and normalization to
+construct spatial density kernels. That step must retain both the
+$c^2$ and $s^2$ terms; replacing the ordered product by a cosine-only
+symmetrization changes the observable. A further, independent task is
+to compare these abstract values with expectations in a constructed
+finite fermionic ground state, including any projection or boundary
+residuals. No such equality is assumed here.

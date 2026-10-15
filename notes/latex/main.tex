@@ -26,6 +26,15 @@ In traditional condensed matter physics and quantum field theory, bosonization i
 
 The research program documented here resolves these issues by developing bosonization as a system of \emph{exact algebraic theorems} on strictly finite lattices, finite-dimensional CAR Fock spaces, and graded polynomial algebras. Every theorem, lemma, and proposition appearing in Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} and Appendices~\ref{app:fourier_characters} through~\ref{app:density_partitions} has been fully formalized and verified by the Lean 4 interactive theorem prover without placeholders, unproved assertions, or non-standard axioms.
 
+The later Chapters~\ref{ch:correlations}--\ref{ch:spinful} are manuscript
+drafts awaiting independent mathematical and editorial review. Chapter~19 uses
+the accepted Phase-B CH19/A08 development, whose Core promotion remains open.
+Chapters~20 and~21 do not yet have implemented chapter Lean modules. Their
+mathematical derivations, formal-series constructions and finite comparisons
+must therefore be read with the scope and limitations stated in those chapters;
+compilation of this book does not certify their mathematics. Chapters~12--18
+have separate private drafts and are not included in this edition.
+
 Unlike formal code repositories or proof scripts, these lecture notes are designed to be read as a standalone mathematical book. The exposition employs standard mathematical language and rigorous prose. At the same time, dedicated \emph{Formalization Notes} explain the constructive mathematical insights that emerge when physical heuristics are translated into verified code.
 
 \tableofcontents
@@ -53,7 +62,8 @@ Unlike formal code repositories or proof scripts, these lecture notes are design
 
 \part{Outlook: The Bosonization Dictionary and Interactions}
 
-\chapter{The Forward Research Roadmap}
+\chapter*{The Forward Research Roadmap}
+\addcontentsline{toc}{chapter}{The Forward Research Roadmap}
 \label{ch:roadmap}
 
 Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} establish the complete, verified algebraic foundation of lattice bosonization: from discrete spatial geometry, Fourier transforms, and CAR Fock spaces, to the exact Heisenberg Kac--Moody current algebra and Haldane completeness on the whole energy budget $B(N, K)$.
@@ -65,15 +75,31 @@ The subsequent chapters of the ongoing research program extend this foundation t
     \item \textbf{Chapter 14 (The Projected Mattis--Mandelstam Formula):} Defines exact finite vertex operators via nilpotent polynomial exponentials and establishes the conditional cyclic-span criterion.
     \item \textbf{Chapters 15--16 (Dual Fields and Lattice Hamiltonians):} Formulates Hermitian phase and density fields $\phi(x), \theta(x)$ and computes the spatial collapse of lattice gradients and dispersion errors.
     \item \textbf{Chapters 17--18 (Interactions and Bogoliubov Transformations):} Analyzes forward scattering, the Luttinger liquid Hamiltonian, and the exact canonical Bogoliubov transformation on budget vectors.
-    \item \textbf{Chapters 19--21 (Correlations, Duality, and Spinful Systems):} Evaluates exact real-space correlation functions, establishes model duality between CDW and superconductivity, and formalizes spin-charge separation on parity-constrained sublattices.
+    \item \textbf{Chapters 19--21 (Correlations, Duality, and Spinful Systems):} Develops correlation functions, explicitly specified algebraic model duality, and spinful finite constructions. CH19 Phase B is accepted; CH20--21 remain manuscript/interface drafts rather than completed Lean chapters.
 \end{itemize}
 
-% CH19 is included only after its first section has been reviewed and integrated.
+% Manuscript drafts imported from individually supplied standalone sections.
 % CH12--18 private drafts remain outside the published master pending review.
-\InputIfFileExists{chapters/sections/ch19_scope.tex}{\setcounter{chapter}{18}\chapter{States and Correlations}\label{ch:correlations}}{}
-\InputIfFileExists{chapters/sections/ch19_mode_correlators.tex}{}{}
-\InputIfFileExists{chapters/sections/ch19_spatial_correlators.tex}{}{}
-\InputIfFileExists{chapters/sections/ch19_finite_comparison.tex}{}{}
+\setcounter{chapter}{18}
+\chapter{States and Correlations}
+\label{ch:correlations}
+\input{chapters/sections/19.1.tex}
+\input{chapters/sections/19.2.tex}
+\input{chapters/sections/19.3.tex}
+\input{chapters/sections/19.4.tex}
+
+\chapter{Projected Order Parameters, Formal Vertices, and Model Duality}
+\label{ch:order-parameters}
+\input{chapters/sections/20.1.tex}
+\input{chapters/sections/20.2.tex}
+\input{chapters/sections/20.3.tex}
+
+\chapter{Spinful Systems, Sector Leakage, and Effective Hamiltonians}
+\label{ch:spinful}
+\input{chapters/sections/21.1.tex}
+\input{chapters/sections/21.2.tex}
+\input{chapters/sections/21.3.tex}
+\input{chapters/sections/21.4.tex}
 
 \appendix
 \part{Supporting Mathematical Appendices}

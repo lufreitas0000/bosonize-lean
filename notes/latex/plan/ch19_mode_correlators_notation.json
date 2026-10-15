@@ -1,6 +1,6 @@
 [
   {
-    "file": "notes/latex/chapters/sections/ch19_mode_correlators.tex",
+    "file": "notes/latex/chapters/sections/19.2.tex",
     "required": [
       "\\\\section\\{",
       "\\\\label\\{sec:ch19-mode-correlators\\}"

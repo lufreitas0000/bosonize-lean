@@ -1,0 +1,714 @@
+\section{Spinful Species, Raw Currents, and the Parity Sublattice}
+\label{sec:ch21-spin-charge}
+
+\subsection*{From two chiral branches to four fermion species}
+
+For spinless fermions, the two chiral branches carry separate density
+fluctuations.  Adding an electron spin label produces four branches, but it
+also raises a question which is invisible if one starts immediately with
+continuum ``charge'' and ``spin'' fields: \emph{which pairs of charge and spin
+quantum numbers actually describe finite fermionic states?}  A second question
+concerns the familiar claim of spin--charge separation.  The operator algebra
+will separate into simple linear combinations, whereas commutation on a
+finite energy budget and factorization of the state space require distinct
+arguments.  We first formulate these questions entirely in the finite CAR
+(carrier) representation, before using any oscillator interpretation.
+
+Fix an integer $h\geq 1$, and write
+\begin{equation}
+  L=2h,\qquad
+  \mathcal B_L=(-h,h]\cap\mathbb Z=\{1-h,\ldots,h\},\qquad
+  \Lambda_L=\mathbb Z/L\mathbb Z.
+  \label{eq:ch21-finite-band}
+\end{equation}
+Thus $L$ is the number of lattice sites and also the number of allowed
+momenta per species.  We reserve $M\geq 1$ for a \emph{positive-mode cutoff}:
+when a collection of modes is considered, $1\leq m\leq M$; an individual
+signed density shift $m$ may instead be any integer.  The Fourier root and
+orientation are fixed by
+\begin{equation}
+  \zeta=\exp(2\pi i/L),\qquad
+  c_{\alpha,x}=\frac{1}{\sqrt L}
+     \sum_{k\in\mathcal B_L}\zeta^{kx}c_{\alpha,k},
+  \qquad x\in\Lambda_L.
+  \label{eq:ch21-fourier-orientation}
+\end{equation}
+We use periodic boundary conditions.  The inverse transform carries
+$\zeta^{-kx}$.  The finite \emph{non-wrapping} density modes below must not be
+silently identified with the complete spatial Fourier coefficients of
+$c_{\alpha,x}^{\dagger}c_{\alpha,x}$: the latter also contain momenta
+wrapped across the ends of $\mathcal B_L$ (see Chapter~\ref{ch:density_modes}).
+
+\begin{definition}[Ordered spinful CAR carrier]
+\label{def:ch21-species}
+Let
+\begin{equation}
+  \mathcal C=\{L,R\}\times\{\uparrow,\downarrow\}.
+  \label{eq:ch21-species}
+\end{equation}
+The chiral label is $\eta\in\{L,R\}$ and the spin label is
+$\sigma\in\{\uparrow,\downarrow\}$.  For explicit sign computations we
+choose once and for all the total order
+\begin{equation}
+  (L,\uparrow)<(L,\downarrow)<(R,\uparrow)<(R,\downarrow),
+  \label{eq:ch21-species-order}
+\end{equation}
+followed by increasing momentum within each species.  The one-particle mode
+set is $\mathcal I=\mathcal C\times\mathcal B_L$.  The fermionic Hilbert
+space has the orthonormal occupation basis
+\begin{equation}
+  \mathcal H_L=\ell^2\!\bigl(\mathcal P(\mathcal I)\bigr),
+  \quad |S\rangle,\ S\subseteq\mathcal I,
+  \qquad \dim\mathcal H_L=2^{4L}.
+\end{equation}
+For $i\in\mathcal I$ write $c_i$ and $c_i^\dagger$ for the
+annihilation and creation maps.  With $\{A,B\}=AB+BA$ they obey
+\begin{equation}
+ \{c_i,c_j\}=\{c_i^\dagger,c_j^\dagger\}=0,
+ \qquad \{c_i,c_j^\dagger\}=\delta_{ij}I.
+ \label{eq:ch21-four-species-car}
+\end{equation}
+\end{definition}
+
+The order in \eqref{eq:ch21-species-order} is not a spin anisotropy.  It is a
+convention needed to assign signs to occupation kets, CAR words and, later,
+Klein operators.  To see the mechanism, put
+$\epsilon(i,S)=(-1)^{\#\{j\in S:j<i\}}$.  Then
+\begin{align}
+ c_i|S\rangle
+   &=\begin{cases}\epsilon(i,S)|S\setminus\{i\}\rangle,&i\in S,\\
+                     0,&i\notin S,\end{cases}\label{eq:ch21-ann-action}\\
+ c_i^\dagger|S\rangle
+   &=\begin{cases}\epsilon(i,S)|S\cup\{i\}\rangle,&i\notin S,\\
+                     0,&i\in S.\end{cases}\label{eq:ch21-cre-action}
+\end{align}
+These formulas reproduce the CAR: for $i\ne j$ the two possible orders
+of inserting or deleting distinct occupied modes have opposite signs,
+whereas for $i=j$ exactly one of $c_ic_i^\dagger$ and
+$c_i^\dagger c_i$ acts as the identity on each basis ket.
+The construction and its general CAR proof were established in
+Chapter~\ref{ch:car_fock}; its multispecies version and the canonical
+occupation tensor coordinates are supplied by the Core A05 module.
+This matters because fermion operators of different species
+\emph{anticommute}, even though the corresponding even density operators
+will commute.
+
+Let $n_{\alpha,k}=c_{\alpha,k}^\dagger c_{\alpha,k}$ and define the
+sea-subtracted species-charge observable
+\begin{equation}
+  \widehat N_\alpha=\sum_{k\in\mathcal B_L}n_{\alpha,k}-hI,
+  \qquad \alpha\in\mathcal C.
+  \label{eq:ch21-relative-species-charge}
+\end{equation}
+Here the reference sea occupies the $h$ momenta $k\leq 0$ in every
+species.  Its relative charges vanish; an occupation configuration has
+$N_\alpha\in[-h,h]\cap\mathbb Z$.  This subtraction is essential when
+talking about zero modes: $\sum_k n_{\alpha,k}$ counts \emph{absolute}
+particles, while $\widehat N_\alpha$ counts the integer charge relative
+to the chosen sea.
+
+For an admissible vector of species charges
+$\mathbf N=(N_\alpha)_{\alpha\in\mathcal C}$ and an integer $K\geq0$, let
+\begin{equation}
+ \mathcal B_{\mathbf N,K}
+  =\operatorname{span}\Bigl\{|S\rangle:
+     N_\alpha(S)=N_\alpha\ \text{for all }\alpha,
+     \ \mathcal E(S)=\sum_{\alpha\in\mathcal C}\mathcal E_\alpha(S)
+          \leq K\Bigr\}.
+ \label{eq:ch21-joint-budget}
+\end{equation}
+Each $\mathcal E_\alpha$ is the nonnegative, integer excitation grading
+\emph{above the ground configuration of its own charge sector}, constructed
+in Chapter~\ref{ch:vacuum_budget}.  Equation
+\eqref{eq:ch21-joint-budget} defines a coordinate subspace, not an
+operator-order inequality of the form $H\psi\leq K\psi$.
+We write $P_{\mathbf N,K}$ for its orthogonal projection.  The budget
+constrains the \emph{sum} of the four excitation energies; it does not
+place a separate independent cutoff $K$ on every species.
+
+\subsection*{Raw currents and their exact inverse}
+
+For $m\in\mathbb Z$ and $\alpha\in\mathcal C$, define the ordered
+non-wrapping density operator
+\begin{equation}
+  \rho_{\alpha,m}
+   =\sum_{\substack{k\in\mathcal B_L\\k+m\in\mathcal B_L}}
+        c_{\alpha,k+m}^{\dagger}c_{\alpha,k}.
+  \label{eq:ch21-species-density}
+\end{equation}
+The sign convention is deliberate: $m>0$ raises the momentum and the
+excitation grading, and
+$\rho_{\alpha,m}^{\dagger}=\rho_{\alpha,-m}$.  Since
+$\rho_{\alpha,m}$ is even in fermion operators, the global CAR imply
+\begin{equation}
+ [\rho_{\alpha,m},\rho_{\beta,n}]=0\quad(\alpha\ne\beta).
+ \label{eq:ch21-cross-species-density}
+\end{equation}
+For example, moving a two-fermion word for $\rho_{\alpha,m}$ past
+one for $\rho_{\beta,n}$ entails four minus signs.  No energy budget is
+needed for \eqref{eq:ch21-cross-species-density}.
+
+\begin{definition}[Unnormalized charge and spin currents]
+\label{def:ch21-raw-currents}
+At each chirality $\eta$ put
+\begin{align}
+ R^c_{\eta,m}&=\rho_{(\eta,\uparrow),m}
+                 +\rho_{(\eta,\downarrow),m},
+     \label{eq:ch21-raw-charge}\\
+ R^s_{\eta,m}&=\rho_{(\eta,\uparrow),m}
+                 -\rho_{(\eta,\downarrow),m}.
+     \label{eq:ch21-raw-spin}
+\end{align}
+Here $R^{c,s}$ denotes a \emph{raw current}, not the right-moving
+chirality $R$.  Neither current contains a factor $1/\sqrt2$.
+\end{definition}
+
+The change of variables is algebraically invertible over $\mathbb C$:
+\begin{equation}
+ \begin{pmatrix}R^c_{\eta,m}\\R^s_{\eta,m}\end{pmatrix}
+ =\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+   \begin{pmatrix}\rho_{(\eta,\uparrow),m}\\
+                   \rho_{(\eta,\downarrow),m}\end{pmatrix},
+ \qquad
+ \begin{pmatrix}\rho_{(\eta,\uparrow),m}\\
+                   \rho_{(\eta,\downarrow),m}\end{pmatrix}
+ =\frac12\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+   \begin{pmatrix}R^c_{\eta,m}\\R^s_{\eta,m}\end{pmatrix}.
+ \label{eq:ch21-raw-inverse}
+\end{equation}
+Indeed, the square of the displayed integer matrix is $2I$.
+Taking adjoints and using that its entries are real proves
+$(R^{c,s}_{\eta,m})^\dagger=R^{c,s}_{\eta,-m}$.  The factors
+$1/2$ in the inverse are harmless for operators over $\mathbb C$;
+their meaning for \emph{integer charge eigenvalues} will be quite
+different.
+
+\subsection*{The edge obstruction and the finite common-margin theorem}
+
+A tempting argument says that up- and down-spin densities commute and
+therefore so do the charge and spin currents.  The conclusion does
+\emph{not} follow.  The two same-spin commutators still remain, and a
+finite band has edge-dependent corrections to the usual current algebra.
+Define
+\begin{equation}
+ E_{\eta,\sigma}(m,n)
+  =[\rho_{(\eta,\sigma),m},\rho_{(\eta,\sigma),n}].
+ \label{eq:ch21-edge-operator}
+\end{equation}
+These are genuine finite-dimensional operators, not a priori scalar
+multiples of the identity.
+
+\begin{proposition}[Global mixed-current identity]
+\label{prop:ch21-global-edge}
+For every $m,n\in\mathbb Z$ and either chirality $\eta$,
+\begin{align}
+ [R^c_{\eta,m},R^s_{\eta,n}]
+   &=E_{\eta,\uparrow}(m,n)-E_{\eta,\downarrow}(m,n),
+       \label{eq:ch21-mixed-edge}\\
+ [R^c_{\eta,m},R^c_{\eta,n}]
+   &=[R^s_{\eta,m},R^s_{\eta,n}]
+     =E_{\eta,\uparrow}(m,n)+E_{\eta,\downarrow}(m,n).
+       \label{eq:ch21-self-edge}
+\end{align}
+If $\eta\ne\eta'$, every commutator between
+$R^a_{\eta,m}$ and $R^b_{\eta',n}$ vanishes for
+$a,b\in\{c,s\}$, as an identity on all of $\mathcal H_L$.
+\end{proposition}
+\begin{proof}
+Use bilinearity of $[A,B]=AB-BA$.  For instance, suppressing
+$\eta,m,n$ when unambiguous,
+\begin{align*}
+ [R^c_m,R^s_n]
+  &=[\rho_{\uparrow,m}+\rho_{\downarrow,m},
+      \rho_{\uparrow,n}-\rho_{\downarrow,n}]\\
+  &=[\rho_{\uparrow,m},\rho_{\uparrow,n}]
+    -[\rho_{\uparrow,m},\rho_{\downarrow,n}]
+    +[\rho_{\downarrow,m},\rho_{\uparrow,n}]
+    -[\rho_{\downarrow,m},\rho_{\downarrow,n}].
+\end{align*}
+The middle two terms vanish by
+\eqref{eq:ch21-cross-species-density}, giving
+\eqref{eq:ch21-mixed-edge}.  With two plus signs, or two minus signs,
+the same expansion gives \eqref{eq:ch21-self-edge}.  For different
+chiralities all four species in the expansion are distinct, so again
+every constituent commutator vanishes.  No rearrangement of fermionic
+\emph{odd} factors was used.
+\end{proof}
+
+The single-species Schwinger coefficient in the convention of this book is
+\begin{equation}
+ \kappa(m,n)=
+ \begin{cases}-m,&m+n=0,\\0,&m+n\ne0.\end{cases}
+ \label{eq:ch21-schwinger-coefficient}
+\end{equation}
+It is the coefficient of a commutator acting on an appropriate budget,
+not a globally valid nonzero scalar CCR on the finite Fock space.  The
+origin of this distinction is the exact diagonal edge formula and the
+frozen-margin theorem of Chapters~\ref{ch:heisenberg_algebra} and
+\ref{ch:vacuum_budget}; their multispecies current version is provided
+in the Core A06 support module.
+
+\begin{theorem}[Raw charge/spin current algebra on a common budget]
+\label{thm:ch21-budget-ccr}
+Assume $h>0$, $K\geq0$, and an admissible charge vector
+$\mathbf N$.  Fix $\eta\in\{L,R\}$ and $m,n\in\mathbb Z$.
+Suppose \emph{both} spin species at that chirality satisfy
+\begin{equation}
+ \begin{split}
+ |m|+|n|+K+|N_{(\eta,\uparrow)}|&\leq h,\\
+ |m|+|n|+K+|N_{(\eta,\downarrow)}|&\leq h.
+ \end{split}
+ \label{eq:ch21-common-margin}
+\end{equation}
+For every $v\in\mathcal B_{\mathbf N,K}$, with the commutators
+formed in the \emph{ambient} finite CAR representation,
+\begin{align}
+ [R^c_{\eta,m},R^s_{\eta,n}]v&=0,
+   \label{eq:ch21-cross-ccr-budget}\\
+ [R^c_{\eta,m},R^c_{\eta,n}]v
+   &=[R^s_{\eta,m},R^s_{\eta,n}]v
+     =2\kappa(m,n)v.
+   \label{eq:ch21-self-ccr-budget}
+\end{align}
+In particular, if $m\geq1$ and
+$2m+K+\max_{\sigma}|N_{(\eta,\sigma)}|\leq h$, then
+\begin{equation}
+ [R^c_{\eta,-m},R^c_{\eta,m}]v
+   =[R^s_{\eta,-m},R^s_{\eta,m}]v=2m\,v,
+ \qquad [R^c_{\eta,-m},R^s_{\eta,m}]v=0.
+ \label{eq:ch21-two-m}
+\end{equation}
+\end{theorem}
+\begin{proof}
+The established single-species signed-current theorem states that,
+under the corresponding margin in \eqref{eq:ch21-common-margin},
+\begin{equation*}
+ E_{\eta,\sigma}(m,n)v=\kappa(m,n)v
+ \qquad(\sigma=\uparrow,\downarrow).
+\end{equation*}
+The same vector $v$ belongs to the joint budget, so each of these
+identities applies \emph{to that vector}; the two separate conditions
+are needed because the relative species charges can differ.  Substitute
+them into \eqref{eq:ch21-mixed-edge} to obtain
+$(\kappa-\kappa)v=0$.  Substituting into
+\eqref{eq:ch21-self-edge} gives $(\kappa+\kappa)v=2\kappa v$.
+Finally, taking the ordered pair of signed shifts $(-m,m)$ gives
+$\kappa(-m,m)=m$ and $|{-m}|+|m|=2m$.
+This proves all statements without postulating a finite-dimensional
+Heisenberg representation.
+\end{proof}
+
+For all $1\leq m,n\leq M$, the simple \emph{sufficient} uniform
+condition
+\begin{equation}
+ 2M+K+\max_{\substack{\eta\in\{L,R\}\\
+                         \sigma\in\{\uparrow,\downarrow\}}}
+                   |N_{(\eta,\sigma)}|\leq h
+ \label{eq:ch21-uniform-margin}
+\end{equation}
+allows the theorem to be applied to every pair of shifts among
+$\{-M,\ldots,M\}$ at both chiralities.  It is not claimed to be
+necessary.  In particular, a proof involving a \emph{product of several
+currents} must additionally account for the intermediate excursions;
+checking a one-commutator bound does not certify a whole word.
+
+\begin{example}[The first nontrivial charge/spin oscillator]
+\label{ex:ch21-first-mode}
+Take $h=2$, so $L=4$ and
+$\mathcal B_L=\{-1,0,1,2\}$, with all species charges zero and
+$K=0$.  The ground ket $\Omega$ occupies $-1$ and $0$ in each
+species.  For a fixed chirality and spin, the only unblocked
+$m=1$ hop from this ground configuration is $0\to1$; write
+$|e_\sigma\rangle=\rho_{(\eta,\sigma),1}\Omega$.
+The CAR sign formula gives
+\begin{equation*}
+ \rho_{(\eta,\sigma),-1}\Omega=0,
+ \qquad \rho_{(\eta,\sigma),-1}|e_\sigma\rangle=\Omega,
+ \qquad \langle e_\uparrow,e_\downarrow\rangle=0.
+\end{equation*}
+Thus $R^c_{\eta,1}\Omega=|e_\uparrow\rangle+|e_\downarrow\rangle$
+whereas $R^s_{\eta,1}\Omega=|e_\uparrow\rangle-|e_\downarrow\rangle$.
+Their squared norms are both $2$, and direct application gives
+\begin{equation}
+ [R^c_{\eta,-1},R^c_{\eta,1}]\Omega=2\Omega,
+ \quad [R^s_{\eta,-1},R^s_{\eta,1}]\Omega=2\Omega,
+ \quad [R^c_{\eta,-1},R^s_{\eta,1}]\Omega=0.
+ \label{eq:ch21-example-two}
+\end{equation}
+The bounds hold because $2(1)+0+0\leq h$.  Notice that the
+\emph{positive} shift creates an excitation in either spin species:
+the relative plus or minus sign distinguishes charge and spin
+combinations, while both retain the raw normalization $2m$.
+\end{example}
+
+The budget hypothesis is substantive.  For example, keep one chirality,
+put its up-spin species into the \emph{completely filled} band, its
+down-spin species into the sea ground, and leave the other two species
+in their sea grounds.  Every nonzero-momentum density hop annihilates
+the full up-spin band, whereas the down-spin sector obeys
+$[\rho_{\downarrow,-1},\rho_{\downarrow,1}]\Omega_\downarrow
+ =\Omega_\downarrow$ for $h\geq2$.  Consequently on the resulting
+nonzero product ket $v$,
+\begin{equation}
+  [R^c_{\eta,-1},R^s_{\eta,1}]v=-v\ne0.
+  \label{eq:ch21-off-margin-example}
+\end{equation}
+The up-spin relative charge is $h$, so the common bound fails.
+This is a direct counterexample to unrestricted global spin/charge
+commutation on the finite CAR carrier.
+
+There is another important boundary effect even \emph{inside} the
+regime of Theorem~\ref{thm:ch21-budget-ccr}.  Set
+$P=P_{\mathbf N,K}$, $Q=I-P$, and let $A,B$ be any ambient maps.
+Insertion of $I=P+Q$ gives the exact identity
+\begin{equation}
+ [PAP,PBP]
+   =P[A,B]P-PAQBP+PBQAP.
+ \label{eq:ch21-compression-residual}
+\end{equation}
+Here the left side contains \emph{compressed} operators, unlike the
+ambient commutators of the theorem.  In the preceding $K=0$ example,
+$P$ has rank one, $PR^{c}_{\eta,\pm1}P=0$ and therefore the
+compressed commutator is zero, although
+$P[R^c_{\eta,-1},R^c_{\eta,1}]P=2P$.  The difference is precisely
+supplied by the excursions through $Q\mathcal H_L$.  This example
+makes concrete why no finite-dimensional compression can realize a
+nonzero scalar CCR as an identity on its entire range: taking the
+trace of $[A,B]=\lambda I$ in finite dimension would give
+$0=\lambda\dim\mathcal H$.
+
+\subsection*{Integer zero modes and the parity sublattice}
+
+The same linear transformation must now be applied to the integer
+\emph{zero-mode} charges, not to oscillator operators.  For each
+chirality, define the commuting self-adjoint observables
+\begin{equation}
+ \widehat Q_{c,\eta}=\widehat N_{(\eta,\uparrow)}
+                         +\widehat N_{(\eta,\downarrow)},
+ \qquad
+ \widehat Q_{s,\eta}=\widehat N_{(\eta,\uparrow)}
+                         -\widehat N_{(\eta,\downarrow)}.
+ \label{eq:ch21-zero-modes}
+\end{equation}
+They are called charge and spin zero modes in \emph{raw integer units};
+$Q_s$ is twice the $S^z$ polarization in the usual spin-$\tfrac12$
+normalization.  On $\mathcal B_{\mathbf N,K}$ their eigenvalues are
+\begin{equation}
+ Q_{c,\eta}=N_{(\eta,\uparrow)}+N_{(\eta,\downarrow)},
+ \qquad
+ Q_{s,\eta}=N_{(\eta,\uparrow)}-N_{(\eta,\downarrow)}.
+ \label{eq:ch21-zero-eigenvalues}
+\end{equation}
+This follows immediately from the diagonal species-charge observable
+and its established action on a fixed sector.
+
+\begin{proposition}[Parity sublattice and integral inverse]
+\label{prop:ch21-parity-lattice}
+Consider the map of integer charge lattices
+\begin{equation}
+ T:\mathbb Z^2\longrightarrow\mathbb Z^2,
+ \qquad T(a,b)=(a+b,a-b).
+ \label{eq:ch21-parity-map}
+\end{equation}
+Its image is exactly the index-two subgroup
+\begin{equation}
+ \Lambda_{c,s}
+ =\{(q_c,q_s)\in\mathbb Z^2:q_c\equiv q_s\pmod2\}.
+ \label{eq:ch21-parity-sublattice}
+\end{equation}
+On that subgroup $T$ is a bijection, with inverse
+\begin{equation}
+ T^{-1}(q_c,q_s)
+ =\left(\frac{q_c+q_s}{2},\frac{q_c-q_s}{2}\right).
+ \label{eq:ch21-parity-inverse}
+\end{equation}
+The inclusion $\Lambda_{c,s}\subsetneq\mathbb Z^2$ is proper;
+for example, $(1,0)\notin\Lambda_{c,s}$.
+\end{proposition}
+\begin{proof}
+For $a,b\in\mathbb Z$,
+$T(a,b)_c-T(a,b)_s=(a+b)-(a-b)=2b$;
+hence both coordinates have the same parity.  Conversely, assume
+$q_c\equiv q_s\pmod2$.  Then $(q_c-q_s)/2$ is an integer, and
+$q_c+q_s=(q_c-q_s)+2q_s$ is also even.  Therefore the two coordinates
+in \eqref{eq:ch21-parity-inverse} are integers.  Applying $T$
+to that pair yields
+\begin{equation*}
+  \left(\frac{q_c+q_s}{2}+\frac{q_c-q_s}{2},
+        \frac{q_c+q_s}{2}-\frac{q_c-q_s}{2}\right)=(q_c,q_s).
+\end{equation*}
+Applying the proposed inverse to $T(a,b)$ returns $(a,b)$ in the
+same way.  This proves injectivity, surjectivity onto the displayed
+image, and the inverse formula.  Finally $1-0$ is odd, so $(1,0)$
+is excluded.  Equivalently, the integer matrix for $T$ has determinant
+$-2$; its image has index two and is not all of $\mathbb Z^2$.
+\end{proof}
+
+For the full four-species problem, the proposition applies
+\emph{separately} at $\eta=L$ and $\eta=R$.  In other words, the
+physical integer labels belong to
+$\Lambda_{c,s}^{(L)}\times\Lambda_{c,s}^{(R)}$, with additional
+finite-band charge bounds inherited from $-h\leq N_\alpha\leq h$.
+A single parity statement for the \emph{sum} of the two chiralities
+would be weaker and would not recover both independent species-charge
+pairs.  The parity rule does not project out fermionic states: it is an
+arithmetic description of the image of the existing species labels
+under a non-unimodular change of coordinates.
+
+\begin{example}[An allowed zero mode and a forbidden formal label]
+Take $h=2$ and one chirality with
+$N_\uparrow=2$ and $N_\downarrow=-1$.  The raw labels are
+$(Q_c,Q_s)=(1,3)$.  They have equal parity, and
+\eqref{eq:ch21-parity-inverse} recovers
+$(N_\uparrow,N_\downarrow)=(2,-1)$.  By contrast, a hypothetical
+$(Q_c,Q_s)=(1,0)$ would give
+$(N_\uparrow,N_\downarrow)=(1/2,1/2)$; it is a perfectly reasonable
+point of $\mathbb R^2$ but not a finite fermionic charge sector.
+This is why replacing integer charges by two unconstrained
+independent bosonic zero modes changes the state-label set.
+\end{example}
+
+\subsection*{What factorizes, and what does not}
+
+Because the one-particle labels of different species are disjoint, the
+occupation basis gives a unitary \emph{ordered} identification of the
+unrestricted finite Hilbert space with the tensor product of the four
+single-species occupation spaces.  For odd CAR operators the ordering
+requires fermionic parity strings; for even density operators their
+action can be taken on the corresponding tensor factor.  This
+occupation-space factorization is a theorem of the finite CAR
+construction, but it is \emph{not} a factorization into independent
+charge and spin zero-mode lattices.
+
+To make the energy restriction explicit, denote by
+$\mathcal H_{\alpha,N_\alpha}^{(e)}$ the subspace of a single
+species with relative charge $N_\alpha$ and excitation energy exactly
+$e\in\mathbb N$.  Regrouping the occupation basis of
+\eqref{eq:ch21-joint-budget} yields the canonical graded-vector-space
+identification
+\begin{equation}
+ \mathcal B_{\mathbf N,K}\ \simeq\!
+ \bigoplus_{\substack{(e_\alpha)_{\alpha\in\mathcal C}\in\mathbb N^4\\
+                    \sum_\alpha e_\alpha\leq K}}
+ \bigotimes_{\alpha\in\mathcal C}
+       \mathcal H_{\alpha,N_\alpha}^{(e_\alpha)}.
+ \label{eq:ch21-budget-energy-sum}
+\end{equation}
+The direct sum is orthogonal, and any zero-dimensional energy-grade
+factor contributes nothing.  To prove the identity, map an occupation
+ket to the ordered tensor product of its four restrictions to species.
+This is a bijection of orthonormal bases; by definition of the total
+excitation grading, the ket belongs to the budget precisely when the
+four resulting grades have sum at most $K$.  Linearity proves the
+claimed unitary identification.  No statement about charge/spin
+\emph{oscillator} tensor factors is required for this proof.
+
+In general,
+\begin{equation}
+  \mathcal B_{\mathbf N,K}
+  \not\simeq_{\mathrm{natural}}
+  \bigotimes_{\alpha\in\mathcal C}
+      \Bigl(\bigoplus_{e=0}^{K}
+             \mathcal H_{\alpha,N_\alpha}^{(e)}\Bigr),
+ \label{eq:ch21-not-product-cutoff}
+\end{equation}
+where the notation emphasizes that the \emph{natural inclusion} of
+the left-hand space into the right-hand tensor product is generally
+strict; it is not a statement that abstract finite-dimensional vector
+spaces could never have accidentally equal dimensions.  For example,
+at $K=1$ a state with one energy-one excitation in each of two
+species lies in the product of separate $K=1$ cuts, but has total
+energy two and is absent from the joint budget.  In particular, a
+putative $\mathcal B_{c,K}\otimes\mathcal B_{s,K}$ cannot be inferred
+from a change of current variables, even before addressing the parity
+sublattice.
+
+\subsection*{Exchange-symmetric quadratic couplings}
+
+We now isolate the precise sense in which spin and charge \emph{do}
+separate algebraically.  Let $X_\uparrow,X_\downarrow$ and
+$Y_\uparrow,Y_\downarrow$ be operators on a common vector space.
+They may be density modes at different chiralities or momenta, and
+we do \emph{not} assume that $X$ and $Y$ commute.  Introduce the raw
+combinations $X_c=X_\uparrow+X_\downarrow$,
+$X_s=X_\uparrow-X_\downarrow$, and similarly for $Y$.
+
+\begin{proposition}[Ordered quadratic block identity]
+\label{prop:ch21-quadratic-block}
+For arbitrary $a,b\in\mathbb C$,
+\begin{align}
+ &a(X_\uparrow Y_\uparrow+X_\downarrow Y_\downarrow)
+  +b(X_\uparrow Y_\downarrow+X_\downarrow Y_\uparrow)
+ \notag\\
+ &\hspace{1.5cm}=
+  \frac{a+b}{2}\,X_cY_c+
+  \frac{a-b}{2}\,X_sY_s.
+ \label{eq:ch21-quadratic-block}
+\end{align}
+Thus a quadratic coupling matrix of the exchange-symmetric form
+$\begin{psmallmatrix}a&b\\b&a\end{psmallmatrix}$ is block diagonal
+in the raw charge/spin variables, with the coefficients displayed
+above.  The statement preserves the product order throughout.
+\end{proposition}
+\begin{proof}
+Expanding only by distributivity,
+\begin{align*}
+ X_cY_c&=X_\uparrow Y_\uparrow+X_\uparrow Y_\downarrow
+          +X_\downarrow Y_\uparrow+X_\downarrow Y_\downarrow,\\
+ X_sY_s&=X_\uparrow Y_\uparrow-X_\uparrow Y_\downarrow
+          -X_\downarrow Y_\uparrow+X_\downarrow Y_\downarrow.
+\end{align*}
+The coefficients of the two same-spin terms become
+$((a+b)+(a-b))/2=a$; those of the cross-spin terms become
+$((a+b)-(a-b))/2=b$.  At no point do we commute an $X$ past a $Y$.
+Equivalently, the change-of-basis matrix in
+\eqref{eq:ch21-raw-inverse} diagonalizes
+$\begin{psmallmatrix}a&b\\b&a\end{psmallmatrix}$ over
+$\mathbb C$, but the explicit expansion shows that the matrix
+argument remains valid for noncommutative operator entries.
+\end{proof}
+
+For a quadratic current Hamiltonian built as a sum of such ordered
+bilinears, with an exchange-symmetric spin matrix \emph{for each}
+choice of chirality and momentum labels, the proposition may be
+applied term by term.  One obtains a charge-current part and a
+spin-current part with no mixed bilinear.  Hermiticity of the
+Hamiltonian requires the usual conjugate/reversed-index conditions
+on its coefficients separately; spin exchange symmetry alone is not
+an adjointness hypothesis.
+
+The hypothesis is also necessary to inspect rather than assume.
+For instance, a spin-dependent diagonal coupling with coefficients
+$a_\uparrow\ne a_\downarrow$ becomes
+\begin{equation}
+ a_\uparrow X_\uparrow Y_\uparrow
+ +a_\downarrow X_\downarrow Y_\downarrow
+ =\frac{a_\uparrow+a_\downarrow}{4}(X_cY_c+X_sY_s)
+  +\frac{a_\uparrow-a_\downarrow}{4}(X_cY_s+X_sY_c).
+ \label{eq:ch21-asymmetry-mixes}
+\end{equation}
+The last two terms mix charge and spin.  Even when
+\eqref{eq:ch21-quadratic-block} holds, it implies neither global
+commutation of its finite-CAR charge and spin Hamiltonian parts nor a
+unitary factorization of a \emph{compressed} Hamiltonian.  Global
+current commutators retain the edge difference of
+\eqref{eq:ch21-mixed-edge}; products require further excursion
+bounds, and compressions retain the residual terms of
+\eqref{eq:ch21-compression-residual}.  Nonquadratic interactions,
+including the operators considered in later sections, are not
+covered by this proposition.
+
+\subsection*{Do the charge and spin modes have different velocities?}
+
+A quadratic block decomposition permits distinct effective mode
+velocities but does not \emph{force} them.  To state the condition
+without presupposing a continuum limit, consider for each formal
+charge/spin oscillator block $\nu\in\{c,s\}$ the stable two-chirality
+pairing Hamiltonian
+\begin{equation}
+ H_{\nu,m}
+ =m\Bigl[v_{1,\nu}
+   (a_{R,\nu}^{\dagger}a_{R,\nu}
+    +a_{L,\nu}^{\dagger}a_{L,\nu})
+  +v_{2,\nu}(a_{R,\nu}^{\dagger}a_{L,\nu}^{\dagger}
+                         +a_{R,\nu}a_{L,\nu})\Bigr],
+ \quad m\geq1.
+ \label{eq:ch21-pairing-hamiltonian}
+\end{equation}
+Here the $a$'s satisfy exact CCR on an \emph{abstract oscillator
+carrier}; this is a model for the budget-stable current algebra, not
+a global canonical representation by the finite-dimensional CAR
+operators.  Assume real coefficients and
+$v_{1,\nu}>|v_{2,\nu}|$.  Using the CCR gives
+\begin{equation}
+ \left[\begin{pmatrix}a_{R,\nu}\\a_{L,\nu}^{\dagger}\end{pmatrix},
+                  H_{\nu,m}\right]
+ =m\begin{pmatrix}
+  v_{1,\nu}&v_{2,\nu}\\-v_{2,\nu}&-v_{1,\nu}
+ \end{pmatrix}
+ \begin{pmatrix}a_{R,\nu}\\a_{L,\nu}^{\dagger}\end{pmatrix}.
+ \label{eq:ch21-bogoliubov-dynamic}
+\end{equation}
+The characteristic polynomial of this $2\times2$ matrix is
+$\lambda^2-(v_{1,\nu}^2-v_{2,\nu}^2)$; therefore its positive
+frequency, divided by $m$, is
+\begin{equation}
+ u_\nu=\sqrt{v_{1,\nu}^2-v_{2,\nu}^2}>0.
+ \label{eq:ch21-block-speed}
+\end{equation}
+This is an exact calculation \emph{within the stated quadratic CCR
+model}.  It follows that
+\begin{equation}
+ u_c\ne u_s
+ \quad\Longleftrightarrow\quad
+ v_{1,c}^2-v_{2,c}^2\ne v_{1,s}^2-v_{2,s}^2,
+ \label{eq:ch21-speed-nondegeneracy}
+\end{equation}
+provided both radicands are strictly positive.  The equivalence
+uses only injectivity of the positive square root.  Its reverse
+implication would require re-examination without stability and
+positivity.
+
+If one parametrizes a block by real hyperbolic numbers
+$c_\nu,s_\nu$ satisfying $c_\nu^2-s_\nu^2=1$, then one may use
+\begin{equation}
+ v_{1,\nu}=u_\nu(c_\nu^2+s_\nu^2),\qquad
+ v_{2,\nu}=2u_\nu c_\nu s_\nu,\qquad
+ g_\nu=(c_\nu-s_\nu)^2,\qquad
+ g_\nu^{-1}=(c_\nu+s_\nu)^2.
+ \label{eq:ch21-hyperbolic-parameters}
+\end{equation}
+The last identity follows by multiplication of the two squares and
+$c_\nu^2-s_\nu^2=1$.  The symbol $g_\nu$ denotes a quadratic-model
+Luttinger parameter, \emph{not} the real Umklapp coupling $g_U$
+used later.  We also reserve $K$ exclusively for the finite energy
+budget, not for the Luttinger parameter.
+
+\begin{example}[Exchange symmetry without velocity separation]
+\label{ex:ch21-equal-speeds}
+Start with a spin-independent free linearized model of velocity
+$v>0$.  Its spin-exchange-symmetric quadratic coupling has no
+up/down mixing, $b=0$, and the same diagonal coefficient $a=v$
+for both spins.  Equation~\eqref{eq:ch21-quadratic-block} gives
+$\tfrac v2 X_cY_c+\tfrac v2 X_sY_s$; it \emph{does} have charge
+and spin blocks.  After consistent canonical oscillator
+normalization, both blocks have
+\begin{equation*}
+  v_{1,c}=v_{1,s}=v,\qquad v_{2,c}=v_{2,s}=0,
+  \qquad u_c=u_s=v,
+  \qquad c_c=c_s=1,\quad s_c=s_s=0.
+\end{equation*}
+Hence symmetry and even a quadratic charge/spin decomposition do not
+imply unequal propagation speeds.  For contrast, the stable parameter
+choices $(v_{1,c},v_{2,c})=(17,15)$ and
+$(v_{1,s},v_{2,s})=(5,0)$ give $u_c=8$ and $u_s=5$.
+The latter distinction comes from the \emph{parameters}, not merely
+from the existence of the charge/spin basis.
+\end{example}
+
+\begin{remark}[Mathematical and formalization scope]
+\label{rem:ch21-formalization-scope}
+Three separate conclusions have been established in this section.
+The four-species CAR and the global density identities concern the
+\emph{entire finite Fock carrier}; the coefficient $2m$ and mixed
+current cancellation concern the \emph{ambient action on specified
+frozen-margin budget vectors}; and the dispersion computation
+concerns a \emph{specified abstract quadratic CCR model}.  None
+alone identifies its oscillator vacuum with a finite interacting
+fermionic ground state, proves a thermodynamic limit, or provides a
+spectral gap.  A charge/spin oscillator tensor-product description
+would also have to respect the parity lattice and the total-energy
+cutoff.  Such a construction is not inferred here.
+
+The finite multispecies CAR and its support results are present in
+the supplied Core modules, but the Chapter~21 spin/charge statements
+as a combined Lean development are \emph{not yet implemented or
+verified}.  The explicit conventions to reconcile at whole-book
+integration are the momentum/Fourier orientation, sea subtraction for
+zero modes, raw-versus-normalized current factors, ambient-versus-
+compressed products, and the inherited sign order
+\eqref{eq:ch21-species-order}.  For physical background on the
+charge/spin description of one-dimensional fermions, see
+\cite{giamarchi2004,gogolin1998,vondelft1998}; these references
+are context rather than certificates for the finite margin theorem.
+\end{remark}

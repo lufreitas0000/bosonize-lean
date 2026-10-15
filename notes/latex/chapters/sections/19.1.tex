@@ -1,0 +1,693 @@
+\section{Scope, finite expectations, and abstract state functionals}
+\label{sec:ch19-scope}
+
+A correlation function is an expectation of an \emph{ordered product} of
+observables.  In elementary quantum mechanics this usually means inserting
+operators between a normalized vector and its adjoint, or taking their trace
+against a density matrix.  For the bosonization problem developed here, that
+familiar operation must be distinguished from the evaluation of words in an
+\emph{abstract} canonical-commutation-relation (CCR) algebra.  The distinction
+is essential: the finite fermionic Hilbert space has genuine normalized states,
+but it cannot carry nonzero scalar CCR as identities of all its operators.
+Conversely, the uncompressed oscillator algebra admits an exactly positive,
+Gaussian vacuum functional, but the construction of this functional does not
+identify it with any finite-band fermionic ground state.
+
+The prerequisites are the finite CAR representation and occupation-state
+inner product of Chapter~\ref{ch:car_fock}, the finite energy budgets of
+Chapter~\ref{ch:vacuum_budget}, and the polynomial oscillator construction of
+Chapter~\ref{ch:boson_fock}.  We use the dressed-mode transformation from
+Chapter~18, with real parameters obeying $c^2-s^2=1$.  No infinite-volume
+limit, Hilbert-space completion of the polynomial oscillator carrier, or
+identification of finite fermionic and abstract bosonic expectations is assumed.
+The aim of this section is to construct and distinguish the two kinds of
+state evaluation.  Ordered mode contractions, their spatial Fourier sums,
+and quantitative comparisons between the models are treated subsequently.
+For the usual physical context of bosonized correlators, see
+\cite{giamarchi2004,vondelft1998}; the exact finite hypotheses used below
+are those of the present construction rather than consequences of continuum
+bosonization prescriptions.
+
+\subsection{Expectations in a finite quantum system}
+
+Let $\mathcal H_{\mathrm{fin}}$ be a nonzero, finite-dimensional complex
+Hilbert space.  We use the convention that $\langle\phi,\psi\rangle$ is
+conjugate-linear in its first argument and linear in its second.  Its
+observable algebra is $\mathcal B(\mathcal H_{\mathrm{fin}})$, the algebra of
+all linear operators on this space, with the Hilbert adjoint $X^\dagger$.
+A \emph{normalized vector state} is specified by
+$\psi\in\mathcal H_{\mathrm{fin}}$ with $\langle\psi,\psi\rangle=1$:
+\begin{equation}
+  \langle X\rangle_{\psi,\mathrm{fin}}
+   :=\langle\psi,X\psi\rangle,
+  \qquad X\in\mathcal B(\mathcal H_{\mathrm{fin}}).
+  \label{eq:ch19-vector-expectation}
+\end{equation}
+More generally, a \emph{density matrix} is an operator $\Gamma$ satisfying
+$\Gamma=\Gamma^\dagger$, $\langle v,\Gamma v\rangle\geq0$ for all $v$,
+and $\operatorname{Tr}\Gamma=1$.  Its expectation is
+\begin{equation}
+  \langle X\rangle_{\Gamma,\mathrm{fin}}
+     :=\operatorname{Tr}(\Gamma X).
+  \label{eq:ch19-density-expectation}
+\end{equation}
+The pure state in \eqref{eq:ch19-vector-expectation} is recovered by taking
+$\Gamma=|\psi\rangle\langle\psi|$.  Both functionals are complex-linear,
+normalized, and positive: for example,
+\begin{align}
+  \langle I\rangle_{\Gamma,\mathrm{fin}}&=1,\\
+  \langle X^\dagger X\rangle_{\psi,\mathrm{fin}}
+    &=\|X\psi\|^2\geq0,\\
+  \langle X^\dagger X\rangle_{\Gamma,\mathrm{fin}}
+    &=\operatorname{Tr}\bigl((X\Gamma^{1/2})^\dagger
+                                  X\Gamma^{1/2}\bigr)\geq0.
+  \label{eq:ch19-finite-positivity}
+\end{align}
+In particular, a state is a linear functional, \emph{not} generally a
+multiplicative map: the number $\langle XY\rangle$ cannot be replaced by
+$\langle X\rangle\langle Y\rangle$ without an additional hypothesis.
+Moreover, the order of $X$ and $Y$ matters if they do not commute.
+
+A self-adjoint finite Hamiltonian $H_{\mathrm{fin}}$ has a smallest
+eigenvalue $E_0$ and at least one normalized eigenvector $\psi_0$ with
+$H_{\mathrm{fin}}\psi_0=E_0\psi_0$.  Its ground expectation is therefore
+well-defined by \eqref{eq:ch19-vector-expectation}; any positive trace-one
+matrix supported on the ground eigenspace also defines a ground-state
+expectation.  This elementary existence result does \emph{not} say that the
+same vector is killed by operators obtained by compressing a Bogoliubov
+transformation.  The latter is an independent, potentially inconsistent set
+of equations.
+
+In the finite CAR setting of the earlier chapters,
+$\mathcal H_{\mathrm{fin}}$ may be the occupation Fock space of a finite
+momentum band, or an energy-budget subspace with compressed operators.
+Whenever we write a finite expectation we specify its vector or density
+matrix and the operators acting on the corresponding space.  In particular,
+these brackets will never denote the abstract oscillator functional
+$\omega_P$ defined below.
+
+\subsection{Why an exact scalar CCR cannot hold on a finite space}
+
+\begin{proposition}[Trace obstruction to finite-dimensional scalar CCR]
+\label{prop:ch19-trace-obstruction}
+Let $\mathcal H$ be a nonzero finite-dimensional complex vector space,
+$A,C\in\operatorname{End}_{\mathbb C}(\mathcal H)$, and
+$\lambda\in\mathbb C$.  If
+\begin{equation}
+  [A,C]:=AC-CA=\lambda I_{\mathcal H},
+  \label{eq:ch19-claimed-finite-ccr}
+\end{equation}
+then $\lambda=0$.  In particular, $[A,C]=mI$ is impossible for a
+positive integer $m$.
+\end{proposition}
+\begin{proof}
+Writing $d=\dim_{\mathbb C}\mathcal H>0$ and using cyclicity of the
+ordinary matrix trace, we obtain
+\[
+ \operatorname{Tr}[A,C]
+   =\operatorname{Tr}(AC)-\operatorname{Tr}(CA)=0.
+\]
+On the other hand, \eqref{eq:ch19-claimed-finite-ccr} gives
+$\operatorname{Tr}[A,C]=\lambda\operatorname{Tr}I=\lambda d$.
+Since the coefficient field has characteristic zero and $d>0$,
+$\lambda=0$.
+\end{proof}
+
+It is important to state exactly what the obstruction excludes.  Finite
+fermionic density operators can have precisely computed commutators on
+selected states, sectors, or energy budgets, and these calculations may
+reproduce the expected central term on those states.  What cannot hold is
+a nonzero \emph{scalar operator identity on the entire finite space}.
+Compression need not preserve a CCR: if $P$ is a finite-rank orthogonal
+projection in an ambient representation, $A_P=PAP|_{P\mathcal H}$, and
+$C_P=PCP|_{P\mathcal H}$, then on a common domain on which all products
+make sense,
+\begin{equation}
+ [A_P,C_P]
+ =\left(P[A,C]P-PA(I-P)CP+PC(I-P)AP\right)|_{P\mathcal H}.
+ \label{eq:ch19-compression-remainder}
+\end{equation}
+The last two terms are boundary contributions: they retain the excursions
+outside the projected space that are lost when operators are multiplied
+after compression.  Even if $[A,C]=mI$ in the ambient algebra, the
+compressed commutator cannot equal $mI_{P\mathcal H}$ for $m>0$ and
+$0<\operatorname{rank}P<\infty$.  For the finite CAR densities considered
+earlier, the analogous residuals must be estimated under their actual
+band, margin, and excursion hypotheses; they are not removed by simply
+calling the finite currents ``bosons.''
+
+\subsection{An uncompressed CCR algebra and its polynomial vacuum}
+
+\paragraph{Why an uncompressed description is necessary.}
+In the harmonic oscillator of undergraduate quantum mechanics, the raising
+operator can be applied repeatedly:
+$|0\rangle,|1\rangle,|2\rangle,\ldots$.  Even one oscillator has no
+largest occupation number.  The algebraic model below retains precisely this
+feature without first introducing an infinite series or a Hilbert-space
+completion.  We shall work with a \emph{finite set of oscillator modes}, but
+allow polynomials of \emph{arbitrarily large finite degree} in their creation
+operators.  ``Uncompressed'' therefore refers to the absence of a degree or
+energy cutoff, \emph{not} to infinitely many momentum labels, infinite
+lattice size, or an implicit thermodynamic limit.
+
+This distinction matters because a finite-dimensional truncation can retain
+many low-occupation matrix elements of an oscillator and still fail its
+operator commutation relations.  The trace obstruction just proved applies
+to the truncated matrices, whereas the uncompressed differential operators
+below act on an infinite-dimensional vector space.  Our goal is to establish
+an exact algebraic setting for the CCR before assigning expectations to
+operator products.
+
+\paragraph{Three objects that should not be confused.}
+We shall use three elementary notions from algebra.  An \emph{algebra} over
+$\mathbb C$ is a complex vector space with an associative, bilinear product;
+we require a multiplicative identity $I$.  For example, matrices form an
+algebra under matrix multiplication, while polynomials form an algebra under
+ordinary multiplication.  An element of an algebra need not yet be a
+concrete linear operator.  A \emph{representation} supplies that extra step:
+it is a map taking abstract algebra elements to operators while respecting
+sums, scalar multiplication, products, and the identity.  In particular,
+representation of a product is composition, so the rightmost operator acts
+first.
+
+The \emph{carrier} of a mathematical structure means the underlying set or
+vector space on which its operations are defined.  Here there are two
+relevant carriers: the vector space of formal operator expressions forming
+the abstract algebra, and the polynomial vector space on which these
+expressions will act.  We will call the latter the \emph{representation
+carrier} $\mathcal P_M$.  Neither word denotes a spatial lattice, a
+single-particle momentum band, or a finite-particle Fock space.  The term
+\emph{ambient} likewise means ``the larger space or algebra before a
+specified restriction.''  In this construction the ambient word algebra
+precedes imposition of the CCR, while the uncompressed polynomial space is
+ambient to its finite-degree subspaces.  The two uses will always be
+identified by their symbols.
+
+\paragraph{Free words and the relations we wish to impose.}
+Fix an integer $M\geq1$ and the finite set of mode labels
+\[
+  \mathcal I_M=\{(\nu,m):\nu\in\{R,L\},\;1\leq m\leq M\}.
+\]
+For each $j=(\nu,m)$ introduce two \emph{formal symbols}: $A_j$, intended
+for annihilation, and $C_j$, intended for creation.  Before any relations
+have been imposed, an expression such as $A_j C_k A_\ell$ is simply an
+ordered \emph{word}; it is not yet a matrix or differential operator.
+Consider all finite complex linear combinations of such words, including
+the empty word $I$.  Their multiplication is concatenation followed by
+linear extension.  This is the \emph{free unital algebra}, which we denote
+by $\mathfrak F_M$.  In $\mathfrak F_M$ the words $A_jC_k$ and $C_kA_j$
+are distinct, just as two products of noncommuting quantum observables
+must be kept in their stated order.
+
+The word algebra also has an \emph{involution}, denoted by $*$: it exchanges
+$A_j$ with $C_j$, conjugates complex coefficients, and reverses every
+word.  More explicitly,
+\begin{equation}
+ (A_j)^*=C_j,\qquad (C_j)^*=A_j,\qquad
+ (\lambda u+\mu v)^*=\overline\lambda u^*+
+       \overline\mu v^*,\qquad (uv)^*=v^*u^*.
+ \label{eq:ch19-free-star}
+\end{equation}
+This is the algebraic counterpart of the Hilbert-space adjoint.  It becomes
+an actual adjoint relation only after we construct a suitable inner product
+and representation.
+
+The canonical commutation relations should hold \emph{as algebraic
+equalities}, independently of any particular vector.  For clarity define
+the desired relation expressions
+\begin{align}
+ r^{AC}_{jk}&:=A_jC_k-C_kA_j-\delta_{jk}m_j I,\nonumber\\
+ r^{AA}_{jk}&:=A_jA_k-A_kA_j,\qquad
+ r^{CC}_{jk}:=C_jC_k-C_kC_j,
+ \label{eq:ch19-relation-expressions}
+\end{align}
+where $j=(\nu,m_j)$ and $\delta_{jk}=1$ exactly when both the branch and
+the positive mode index agree.  The expressions $r^{AC}_{jk}$,
+$r^{AA}_{jk}$, and $r^{CC}_{jk}$ are generally \emph{not zero in the
+free algebra}.  They are the relations that we now impose.
+
+\paragraph{What an ideal and a quotient do.}
+An \emph{ideal} $\mathfrak J$ of an algebra is a linear subspace that is
+closed under multiplication by arbitrary algebra elements on the left
+\emph{and} on the right: if $r\in\mathfrak J$ and $u,v\in\mathfrak F_M$,
+then $urv\in\mathfrak J$.  This two-sided requirement is crucial for
+operator algebra.  If $A_jC_k-C_kA_j=\delta_{jk}m_j I$, the same equality
+must remain valid when inserted inside a longer word, for example after
+multiplying by $C_\ell$ on the left and $A_p$ on the right.
+
+Let $\mathfrak J_{\mathrm{CCR}}$ be the smallest two-sided ideal
+containing all the expressions in
+\eqref{eq:ch19-relation-expressions} and their involutions.  Thus its
+elements are finite linear combinations of expressions $urv$ built from
+these relations (including their stars).  The inclusion of involutions
+makes the ideal \emph{$*$-stable}: $r\in\mathfrak J_{\mathrm{CCR}}$
+implies $r^*\in\mathfrak J_{\mathrm{CCR}}$.  This ensures that taking
+adjoints is compatible with the equations being imposed.
+
+The \emph{quotient algebra}
+\begin{equation}
+ \mathfrak A_{\mathrm{CCR}}(M)
+   :=\mathfrak F_M/\mathfrak J_{\mathrm{CCR}}
+ \label{eq:ch19-ccr-quotient}
+\end{equation}
+identifies two word expressions $u$ and $v$ when
+$u-v\in\mathfrak J_{\mathrm{CCR}}$.  We are not setting every word to
+zero; only expressions implied by the selected relations become zero.
+For instance, in the quotient $A_jC_j=C_jA_j+m_j I$, but neither
+$A_jC_j$ nor $C_jA_j$ is required to vanish.  This is a systematic way
+to turn formal commutation rules into exact identities, while preserving
+the order of all remaining products.
+
+The resulting unital $*$-algebra is characterized by
+\begin{align}
+ [A_{\nu m},C_{\eta n}]
+   &=\delta_{\nu\eta}\delta_{mn}\,mI,\nonumber\\
+ [A_{\nu m},A_{\eta n}]&=0,
+ \qquad [C_{\nu m},C_{\eta n}]=0.
+ \label{eq:ch19-abstract-ccr}
+\end{align}
+These equalities hold in $\mathfrak A_{\mathrm{CCR}}(M)$ for \emph{all}
+finite words, not merely after taking a vacuum expectation.
+One must still check that the quotient has not collapsed to the zero
+algebra (equivalently, that $I$ has not been identified with zero), and
+that it admits a \emph{positive} evaluation.  Both will follow from a
+concrete polynomial representation.
+
+\paragraph{From abstract words to an explicit representation carrier.}
+The variables $X_j$ introduced next are \emph{commuting polynomial
+variables}, unlike the noncommuting $A_j,C_j$ in $\mathfrak F_M$.
+The purpose of the representation is not to equate these two algebras:
+it sends the abstract generators to \emph{operators on polynomials}.
+Creation becomes multiplication by a variable, whereas annihilation
+becomes differentiation.  Even though the polynomial variables commute,
+multiplication and differentiation generally do not, which is precisely
+how the CCR arise.  A representation satisfying the relations annihilates
+every element of $\mathfrak J_{\mathrm{CCR}}$ and therefore gives a
+well-defined action of the quotient on its carrier.
+
+Let $\mathcal P_M=\mathbb C[X_j:j\in\mathcal I_M]$, the space of
+polynomials in commuting indeterminates.  For a multi-index
+$\alpha=(\alpha_j)_{j\in\mathcal I_M}$ with $\alpha_j\in\mathbb N$,
+write $X^\alpha=\prod_jX_j^{\alpha_j}$.  Give this vector space the
+Hermitian form
+\begin{equation}
+ \langle X^\alpha,X^\beta\rangle_{\mathcal P}
+ =\delta_{\alpha\beta}
+     \prod_{(\nu,m)\in\mathcal I_M}\alpha_{\nu m}!\,
+                                           m^{\alpha_{\nu m}}.
+ \label{eq:ch19-polynomial-gram}
+\end{equation}
+Every weight in the product is strictly positive.  Thus if
+$p=\sum_\alpha p_\alpha X^\alpha$ is nonzero, then
+\begin{equation}
+ \|p\|_{\mathcal P}^2
+ =\sum_\alpha |p_\alpha|^2
+    \prod_{(\nu,m)}\alpha_{\nu m}!\,m^{\alpha_{\nu m}}>0.
+ \label{eq:ch19-polynomial-norm}
+\end{equation}
+Only finitely many terms occur in each polynomial; no completion or
+convergence of infinite sums is involved.  Define linear operators on
+$\mathcal P_M$ by
+\begin{equation}
+  \pi(C_{\nu m})p=X_{\nu m}p,
+  \qquad
+  \pi(A_{\nu m})p=m\frac{\partial p}{\partial X_{\nu m}}.
+  \label{eq:ch19-polynomial-representation}
+\end{equation}
+They are adjoint on this polynomial pre-Hilbert space.  To verify this
+without appealing to an infinite-dimensional operator theorem, fix
+$j=(\nu,m)$ and monomials $X^\alpha,X^\beta$.  The only potentially
+nonzero matrix element of $\pi(A_j)$ from $X^\alpha$ to $X^\beta$ occurs
+when $\alpha=\beta+e_j$.  In that case,
+\[
+ \langle X^\beta,\pi(A_j)X^\alpha\rangle_{\mathcal P}
+   =m\alpha_j\,\|X^\beta\|_{\mathcal P}^2
+   =\|X^\alpha\|_{\mathcal P}^2
+   =\langle\pi(C_j)X^\beta,X^\alpha\rangle_{\mathcal P}.
+\]
+Thus $\pi(A_j)^\dagger=\pi(C_j)$ in the algebraic sense that these
+pairings agree on every pair of polynomials.  The elementary identity
+$\partial_{X_j}(X_kp)-X_k\partial_{X_j}p=\delta_{jk}p$ gives
+\[
+ [\pi(A_{\nu m}),\pi(C_{\eta n})]
+     =\delta_{\nu\eta}\delta_{mn}\,mI_{\mathcal P_M},
+\]
+and the two homogeneous commutators vanish.  Because the CCR hold on every polynomial, the representation of the free
+word algebra sends each relation expression, including its left and
+right multiples, to zero.  It therefore factors through the quotient,
+with the unit represented by the nonzero identity on $\mathcal P_M$.
+In particular, the quotient is not the zero algebra.  Faithfulness of
+the representation is not needed to establish this conclusion.
+
+\paragraph{One-mode calculation: where the missing top level goes.}
+For a single fixed label $j=(\nu,m)$, suppress the subscripts and consider
+$A=m\,d/dX$ and $C$ acting by multiplication by $X$.  On every monomial
+$X^n$, $n\geq0$,
+\begin{align}
+ AC\,X^n&=m(n+1)X^n, & CA\,X^n&=mnX^n,\\
+ [A,C]X^n&=mX^n.&&
+ \label{eq:ch19-one-mode-ccr}
+\end{align}
+Thus the commutator is exactly $mI$ on the entire polynomial carrier,
+including the vacuum $1=X^0$.  Repeated creation yields
+$C^n1=X^n$ and
+\begin{equation}
+ \|C^n1\|_{\mathcal P}^2=n!\,m^n,
+ \qquad n=0,1,2,\ldots .
+ \label{eq:ch19-one-mode-norms}
+\end{equation}
+No polynomial has infinite degree, but for \emph{every} $n$ there is a
+nonzero vector of degree $n$.  This is the elementary reason that the
+representation space has infinite dimension even when only one mode is
+considered.
+
+For comparison, keep only $1,X,\ldots,X^N$ and \emph{compress} both
+operators to that $(N+1)$-dimensional subspace.  The derivative still
+lowers degree, but the compressed creator kills $X^N$ because $X^{N+1}$
+has been discarded.  Consequently the compressed commutator has action
+\begin{equation}
+ [A_N,C_N]X^n=
+ \begin{cases}
+ mX^n,&0\leq n<N,\\
+ -mN X^N,&n=N.
+ \end{cases}
+ \label{eq:ch19-top-degree-defect}
+\end{equation}
+The failure of $mI$ is concentrated at the top degree, and the trace is
+$mN-mN=0$, exactly as required by
+Proposition~\ref{prop:ch19-trace-obstruction}.  This example exhibits
+both the usefulness and the limitation of an energy cutoff: low-degree
+vectors may obey the expected commutator while the global finite matrix
+identity is impossible.  The trace obstruction does not apply to
+$\mathcal P_M$ itself, since it is infinite-dimensional; moreover, the
+algebraic multiplication and differentiation maps are not being asserted
+to be bounded operators on a Hilbert completion.
+
+\begin{definition}[Polynomial vacuum functional]
+\label{def:ch19-polynomial-vacuum}
+For $a\in\mathfrak A_{\mathrm{CCR}}(M)$ set
+\begin{equation}
+   \omega_0(a):=\langle1,\pi(a)1\rangle_{\mathcal P}.
+   \label{eq:ch19-omega-zero}
+\end{equation}
+The vector $1$ is the constant polynomial, of norm one.
+\end{definition}
+
+\begin{proposition}[Normalization, positivity, and vacuum orientation]
+\label{prop:ch19-polynomial-state}
+The linear functional $\omega_0$ satisfies
+\begin{align}
+ \omega_0(I)&=1,\qquad
+ \omega_0(a^*a)=\|\pi(a)1\|_{\mathcal P}^2\geq0,
+ \label{eq:ch19-omega0-positive}\\
+ \omega_0(aA_{\nu m})&=0,\qquad
+ \omega_0(C_{\nu m}a)=0
+ \quad\text{for every }a\in\mathfrak A_{\mathrm{CCR}}(M).
+ \label{eq:ch19-omega0-annihilation}
+\end{align}
+In particular, the state is not a multiplicative algebra homomorphism.
+\end{proposition}
+\begin{proof}
+Linearity and normalization follow from the polynomial representation
+and $\|1\|_{\mathcal P}=1$.  Algebraic adjointness gives
+$\langle1,\pi(a^*a)1\rangle_{\mathcal P}
+ =\langle\pi(a)1,\pi(a)1\rangle_{\mathcal P}$,
+which proves positivity.  For the first vanishing equation,
+$\pi(A_{\nu m})1=0$; the corresponding operator occurs on the
+\emph{right} of the product, so it acts first.  For the second,
+adjointness gives
+\[
+ \langle1,\pi(C_{\nu m})\pi(a)1\rangle_{\mathcal P}
+ =\langle\pi(A_{\nu m})1,\pi(a)1\rangle_{\mathcal P}=0.
+\]
+Finally, for any $m\geq1$,
+\[
+ \omega_0(A_{\nu m})=\omega_0(C_{\nu m})=0,
+ \quad\omega_0(A_{\nu m}C_{\nu m})=m,
+ \quad\omega_0(C_{\nu m}A_{\nu m})=0.
+\]
+The nonzero two-point expectation is inconsistent with
+multiplicativity of a map having zero one-point values.
+\end{proof}
+
+The polynomial realization also explains the term \emph{Gaussian} or
+\emph{quasi-free}.  Expectations of any finite word reduce by successively
+commuting annihilators past creators, until a rightmost annihilator or a
+leftmost creator kills the vacuum expectation.  The recursion expresses
+even moments as sums of pairings of generators, while odd moments vanish.
+Equivalently, all higher truncated moments beyond degree two vanish in this
+algebraic oscillator state.  This is a statement about finite polynomial
+words; no analytic generating-function convergence has been assumed.
+
+\subsection{Dressing the vacuum by a Bogoliubov automorphism}
+
+Let $P$ stand for real transformation parameters $(c,s)$ satisfying
+\begin{equation}
+ c,s\in\mathbb R,\qquad c^2-s^2=1.
+ \label{eq:ch19-hyperbolic}
+\end{equation}
+The larger Luttinger-parameter record used in the preceding chapter can
+provide such a pair, but no separate value of a Luttinger parameter is
+needed for the present construction.  Write $\bar R=L$, $\bar L=R$.
+Define on the generators
+\begin{align}
+ \beta_P(C_{\nu m})&=cC_{\nu m}+sA_{\bar\nu m},
+ \label{eq:ch19-bogoliubov-creator}\\
+ \beta_P(A_{\nu m})&=cA_{\nu m}+sC_{\bar\nu m}.
+ \label{eq:ch19-bogoliubov-annihilator}
+\end{align}
+The parameters are real, so these formulas preserve the involution.
+Their mixed commutator is multiplied by $c^2-s^2=1$; their
+same-type commutators still vanish (the cross-orientation terms cancel).
+Thus $\beta_P$ preserves the defining relations
+\eqref{eq:ch19-abstract-ccr} and extends to a star-algebra
+automorphism of $\mathfrak A_{\mathrm{CCR}}(M)$.  Direct substitution
+shows that
+\begin{equation}
+ \beta_P^{-1}=\beta_{(c,-s)}.
+ \label{eq:ch19-inverse-beta}
+\end{equation}
+We call $\widetilde A_{\nu m}:=\beta_P(A_{\nu m})$ and
+$\widetilde C_{\nu m}:=\beta_P(C_{\nu m})$ the \emph{dressed}
+generators.  Notice that a Bogoliubov transformation of abstract
+CCR generators is not, by itself, a unitary transformation on the
+finite CAR Hilbert space.
+
+\begin{definition}[Dressed abstract state]
+\label{def:ch19-dressed-functional}
+The dressed oscillator state is the linear functional
+\begin{equation}
+  \boxed{\displaystyle
+  \omega_P:=\omega_0\circ\beta_P^{-1}}
+  \quad\text{on }\mathfrak A_{\mathrm{CCR}}(M).
+  \label{eq:ch19-dressed-state}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Positive dressed vacuum]
+\label{prop:ch19-dressed-positive}
+Under \eqref{eq:ch19-hyperbolic}, $\omega_P$ is normalized and
+positive, and for every $a\in\mathfrak A_{\mathrm{CCR}}(M)$,
+\begin{equation}
+ \omega_P(a\widetilde A_{\nu m})=0,
+ \qquad
+ \omega_P(\widetilde C_{\nu m}a)=0.
+ \label{eq:ch19-dressed-annihilation}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Because $\beta_P^{-1}$ is a unital star-algebra automorphism,
+\[
+ \omega_P(I)=\omega_0(I)=1,\qquad
+ \omega_P(a^*a)
+ =\omega_0\!\left((\beta_P^{-1}a)^*\beta_P^{-1}a\right)\geq0.
+\]
+For the first annihilation identity, multiplicativity of the
+\emph{automorphism}, not of the state, gives
+\begin{align*}
+ \omega_P(a\widetilde A_{\nu m})
+ &=\omega_0\!\left(\beta_P^{-1}(a)
+                      \beta_P^{-1}(\beta_P(A_{\nu m}))\right)\\
+ &=\omega_0(\beta_P^{-1}(a)A_{\nu m})=0.
+\end{align*}
+Similarly,
+$\omega_P(\widetilde C_{\nu m}a)
+ =\omega_0(C_{\nu m}\beta_P^{-1}(a))=0$.
+The direction of the pullback is therefore necessary:
+using $\omega_0\circ\beta_P$ instead would not, in general, yield the
+vacuum annihilated by the dressed lowering generators just defined.
+\end{proof}
+
+The familiar undressed case is $c=1$, $s=0$, for which
+$\beta_P=\mathrm{id}$ and $\omega_P=\omega_0$.  A nonzero value of $s$
+changes the covariance of the bare modes, not the abstract CCR
+itself.  The dressed functional is again quasi-free because substituting
+linear combinations of $A$ and $C$ into any finite word preserves the
+finite-word Gaussian reduction described above.  Nevertheless, it is not
+an ordinary matrix trace on $\mathcal H_{\mathrm{fin}}$, and it must not
+be denoted by $\langle\cdot\rangle_{\psi,\mathrm{fin}}$.
+
+\paragraph{Relation to the accepted Lean construction.}
+The implementation in \texttt{A08Oscillator}\allowbreak\texttt{States.lean}
+represents the \emph{free} word algebra by
+\texttt{OscAlgebra M}, the polynomials by \texttt{OscPoly M},
+and the creators and annihilators by \texttt{oscCreation} and
+\texttt{osc}\allowbreak\texttt{Annihilation}.  The functionals \texttt{omega0} and
+\texttt{omegaP} are complex-linear maps on that free-word carrier,
+with $\texttt{omegaP}=\texttt{omega0}\circ
+\texttt{bogoliubovMap}(c,-s)$.  Theorems such as
+\texttt{omega0\_}\allowbreak\texttt{gramSum}, \texttt{omegaP\_}\allowbreak\texttt{gramSum},
+\texttt{omegaP\_ccr\_}\allowbreak\texttt{descends} and its homogeneous-relation variants
+establish positivity of finite word combinations and invariance under
+insertion of the CCR relations; \texttt{omegaP\_comp\_}\allowbreak\texttt{bogoliubovMap}
+and the dressed annihilation theorems fix the orientation of the
+pullback.  The quotient $\mathfrak A_{\mathrm{CCR}}(M)$ above is a
+mathematical presentation of the relation algebra, \emph{not} a
+separately instantiated Lean quotient type in A08.  In that
+implementation, the ambient \texttt{FreeAlgebra} remains the carrier of
+\texttt{omega0} and \texttt{omegaP}.  The explicit theorems showing
+that their values are unchanged when any defining relation is inserted
+between arbitrary words justify descending these functionals to the
+corresponding relation quotient.  This distinction between a
+\emph{presented quotient} and an \emph{evaluation proved to respect its
+relations} is a genuine interface distinction, not merely a matter of
+notation.
+Likewise, the implementation's \texttt{B\_complete} status records
+acceptance of that development; it is not promotion to the frozen Core.
+
+\subsection{Worked finite example: compression can destroy the dressed vacuum}
+
+We now return to an ordinary three-dimensional Hilbert space.  The
+example makes the separation of \eqref{eq:ch19-density-expectation}
+and \eqref{eq:ch19-dressed-state} concrete.  Retain the two modes
+$(R,1)$ and $(L,1)$, but project the polynomial carrier to total
+degree at most one:
+\[
+ \mathcal H_{\leq1}
+  :=\operatorname{span}_{\mathbb C}\{|0\rangle,|R\rangle,|L\rangle\}
+  =\operatorname{span}_{\mathbb C}\{1,X_R,X_L\}.
+\]
+For $m=1$ the Gram weights in \eqref{eq:ch19-polynomial-gram}
+make the displayed ordered basis orthonormal.  Let $D_R,D_L$ be the
+compressed derivatives and $\widehat X_R,\widehat X_L$ the compressed
+multiplication operators.  Consider the compressed dressed annihilators
+\begin{equation}
+ Q_R=cD_R+s\widehat X_L,
+ \qquad Q_L=cD_L+s\widehat X_R.
+ \label{eq:ch19-finite-Q-def}
+\end{equation}
+Their matrices, with columns representing the action on basis vectors,
+are
+\begin{equation}
+ Q_R=\begin{pmatrix}
+ 0&c&0\\ 0&0&0\\ s&0&0
+ \end{pmatrix},\qquad
+ Q_L=\begin{pmatrix}
+ 0&0&c\\ s&0&0\\ 0&0&0
+ \end{pmatrix}.
+ \label{eq:ch19-finite-Q-matrices}
+\end{equation}
+For real $c,s$, direct multiplication gives
+\begin{equation}
+ H_Q:=Q_R^\dagger Q_R+Q_L^\dagger Q_L
+   =\operatorname{diag}(2s^2,c^2,c^2).
+ \label{eq:ch19-compressed-gram}
+\end{equation}
+Choose the admissible hyperbolic parameters $c=5/3$, $s=4/3$.
+Then $c^2-s^2=1$ but
+\begin{equation}
+ H_Q=\operatorname{diag}\!\left(\frac{32}{9},
+                                    \frac{25}{9},\frac{25}{9}\right)
+ \succeq\frac{25}{9}I.
+ \label{eq:ch19-compressed-witness}
+\end{equation}
+For every $v\in\mathcal H_{\leq1}$,
+\begin{equation}
+ \|Q_Rv\|^2+\|Q_Lv\|^2
+ =\langle v,H_Qv\rangle
+ \geq\frac{25}{9}\|v\|^2.
+ \label{eq:ch19-compressed-coercivity}
+\end{equation}
+Therefore $\ker Q_R\cap\ker Q_L=\{0\}$.  There is no normalized
+vector $\psi$ satisfying both $Q_R\psi=Q_L\psi=0$.
+
+The density-matrix formulation gives the same obstruction without
+assuming that the state is pure.  If $\Gamma\geq0$ has trace one, then
+\begin{equation}
+ \operatorname{Tr}(\Gamma H_Q)
+ \geq\frac{25}{9}\operatorname{Tr}\Gamma
+ =\frac{25}{9}>0.
+ \label{eq:ch19-no-compressed-vacuum}
+\end{equation}
+In fact
+$\operatorname{Tr}(\Gamma Q_\nu^\dagger Q_\nu)
+ =\|Q_\nu\Gamma^{1/2}\|_{\mathrm{HS}}^2$;
+vanishing for both $\nu=R,L$ would force the support of $\Gamma$
+into their common kernel, hence $\Gamma=0$, a contradiction.  The
+accepted A08 result \texttt{compressed\_no\_vacuum\_density}
+proves the stronger algebraic impossibility of a trace-one matrix
+satisfying $Q_R\Gamma=Q_L\Gamma=0$, without even requiring positivity.
+
+Yet $H_Q$ is a perfectly valid finite self-adjoint Hamiltonian.  Its
+ground energy is $25/9$, with ground eigenspace
+$\operatorname{span}\{|R\rangle,|L\rangle\}$.  The density matrix
+\begin{equation}
+ \Gamma_{\mathrm{gs}}
+  =\frac12\bigl(|R\rangle\langle R|
+                   +|L\rangle\langle L|\bigr)
+  =\operatorname{diag}\!\left(0,\frac12,\frac12\right)
+ \label{eq:ch19-finite-ground-density}
+\end{equation}
+is positive and normalized, and satisfies
+$\langle H_Q\rangle_{\Gamma_{\mathrm{gs}},\mathrm{fin}}=25/9$.
+It is a genuine ground state but is \emph{not} a joint annihilation
+vacuum.  By contrast, when $s=0$ the vector $|0\rangle$ belongs to
+$\ker Q_R\cap\ker Q_L$.  Thus the obstruction in this example is
+specific to the nonzero-mixing case; it does not say that every finite
+Hamiltonian lacks a ground vector, nor that every compressed annihilator
+family has trivial common kernel.
+
+The same conclusion arises in a less artificial setting from the
+finite-Fock analysis of the accepted Chapter~19 implementation.
+There, under the explicitly required positivity of the band parameter,
+admissibility of the chosen charge sector, positive mode indices inside
+the cutoff, and both branch-margin hypotheses, the finite undressed
+ground ket need not be the interacting dressed vacuum when $s\ne0$.
+The theorem \texttt{ground\_not\_dressed\_vacuum} supplies a concrete
+witness.  It does not construct a different finite interacting ground
+state; that would require a specified finite Hamiltonian and its own
+spectral analysis.  The three-dimensional model above is a diagnostic
+counterexample, not a substitute for that analysis.
+
+\subsection{What is established, and what remains to be compared}
+
+There are therefore two well-defined, but mathematically different,
+evaluation procedures:
+\begin{equation}
+ \underbrace{\langle X\rangle_{\psi,\mathrm{fin}}
+ \quad\text{or}\quad
+ \langle X\rangle_{\Gamma,\mathrm{fin}}}_{
+ \substack{\text{finite CAR or finite}\text{ compressed Hamiltonian model}}}
+ \qquad\text{versus}\qquad
+ \underbrace{\omega_P(a)}_{
+ \substack{\text{uncompressed abstract}\text{ CCR polynomial model}}}.
+ \label{eq:ch19-two-state-layers}
+\end{equation}
+The first evaluates operators on a specified finite Hilbert space.
+The second evaluates elements of an uncompressed relation algebra and
+is positive by its polynomial construction and inverse Bogoliubov
+pullback.  Both are normalized positive \emph{linear} functionals;
+their domains, operator relations, and vacuum conditions differ.
+There is no canonical equality between them.
+
+An actual comparison would require, at minimum, a specified map taking
+chosen abstract observables into finite-CAR observables (or a common
+comparison algebra), a chosen finite state, the precise mode and energy
+budgets, and an estimate of the errors caused by projection and finite
+band edges.  Pointwise identities on a controlled excitation sector do
+not automatically extend to all operator products; any estimate must
+keep track of the excursions of intermediate states.  Subsequent
+sections first compute ordered contractions using $\omega_P$, then
+construct their finite spatial kernels, and finally address which
+finite-Fock comparisons the available hypotheses justify.  No continuum
+power-law or physical finite-ground-state equality is claimed here.

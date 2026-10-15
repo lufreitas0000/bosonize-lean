@@ -377,7 +377,12 @@
       "markdown": [
         "notes/md/ch19_correlations.md"
       ],
-      "latex": [],
+      "latex": [
+        "notes/latex/chapters/sections/19.1.tex",
+        "notes/latex/chapters/sections/19.2.tex",
+        "notes/latex/chapters/sections/19.3.tex",
+        "notes/latex/chapters/sections/19.4.tex"
+      ],
       "lean": [
         "BosonizeStubs/Ch19Correlations.lean"
       ],
@@ -388,12 +393,18 @@
         "19.3 Real-Space Spatial Correlators",
         "19.4 Technical Notes for the Lean 4 Formalization"
       ],
-      "writing_status": "unwritten LaTeX; current priority",
+      "writing_status": "integrated manuscript draft; independent review pending",
       "writing_tasks": [
         "packets/book_ch19_scope.toml",
         "packets/book_ch19_mode_correlators.toml",
         "packets/book_ch19_spatial_correlators.toml",
         "packets/book_ch19_finite_comparison.toml"
+      ],
+      "section_numbers": [
+        "19.1",
+        "19.2",
+        "19.3",
+        "19.4"
       ]
     },
     {
@@ -402,7 +413,11 @@
       "markdown": [
         "notes/md/ch20_CDW.md"
       ],
-      "latex": [],
+      "latex": [
+        "notes/latex/chapters/sections/20.1.tex",
+        "notes/latex/chapters/sections/20.2.tex",
+        "notes/latex/chapters/sections/20.3.tex"
+      ],
       "lean": [],
       "sections": [
         "Chapter 20: Projected Order Parameters, Formal Vertex Correlators, and Model Duality",
@@ -410,7 +425,12 @@
         "20.2 Constructed Formal Vertices and Exact Formal Correlators",
         "20.3 Explicit Algebraic Model Duality"
       ],
-      "writing_status": "unwritten LaTeX; current priority"
+      "writing_status": "integrated manuscript draft; independent review pending",
+      "section_numbers": [
+        "20.1",
+        "20.2",
+        "20.3"
+      ]
     },
     {
       "chapter": 21,
@@ -418,7 +438,12 @@
       "markdown": [
         "notes/md/ch21_spinful_models.md"
       ],
-      "latex": [],
+      "latex": [
+        "notes/latex/chapters/sections/21.1.tex",
+        "notes/latex/chapters/sections/21.2.tex",
+        "notes/latex/chapters/sections/21.3.tex",
+        "notes/latex/chapters/sections/21.4.tex"
+      ],
       "lean": [],
       "sections": [
         "Chapter 21: Gaps & Spin-1/2 Generalizations",
@@ -427,7 +452,13 @@
         "21.3 Umklapp Scattering, Sector Leakage, and Discrete RG",
         "21.4 Technical Notes for the Lean 4 Formalization"
       ],
-      "writing_status": "unwritten LaTeX; current priority"
+      "writing_status": "integrated manuscript draft; independent review pending",
+      "section_numbers": [
+        "21.1",
+        "21.2",
+        "21.3",
+        "21.4"
+      ]
     }
   ]
 }

@@ -5,11 +5,19 @@ on:
     paths:
       - 'notes/latex/**'
       - '.github/workflows/latex.yml'
+      - 'scripts/check_book_sources.py'
+      - 'scripts/check_book_log.py'
   pull_request:
     paths:
       - 'notes/latex/**'
       - '.github/workflows/latex.yml'
+      - 'scripts/check_book_sources.py'
+      - 'scripts/check_book_log.py'
   workflow_dispatch:
+
+concurrency:
+  group: latex-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -32,6 +40,12 @@ jobs:
           Path('book-build.json').write_text(json.dumps({'source_sha': sha, 'run_id': os.environ['GITHUB_RUN_ID']}, indent=2) + chr(10))
           PYCODE
 
+      - name: Test publication source checks
+        run: python3 -m unittest discover -s scripts -p test_book_sources.py
+
+      - name: Verify imported sections are included in the actual master
+        run: python3 scripts/check_book_sources.py --receipt book-build.json
+
       - name: Compile LaTeX Document
         uses: xu-cheng/latex-action@v3
         with:
@@ -43,6 +57,19 @@ jobs:
 
       - name: Reject unresolved references and duplicate labels
         run: python3 scripts/check_book_log.py notes/latex/main.log
+
+      - name: Bind publication receipt to the compiled PDF
+        run: |
+          python3 - <<'PYCODE'
+          import hashlib, json
+          from pathlib import Path
+          path = Path('book-build.json')
+          receipt = json.loads(path.read_text())
+          pdf = Path('notes/latex/main.pdf').read_bytes()
+          receipt['pdf_sha256'] = hashlib.sha256(pdf).hexdigest()
+          receipt['pdf_bytes'] = len(pdf)
+          path.write_text(json.dumps(receipt, indent=2) + chr(10))
+          PYCODE
 
       - name: Upload PDF Artifact (CI Archive)
         uses: actions/upload-artifact@v4

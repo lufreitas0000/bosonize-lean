@@ -1,0 +1,511 @@
+\section{Finite Spatial Correlation Kernels}
+\label{sec:ch19-spatial-correlators}
+
+A density mode is a useful algebraic coordinate, but a physical density is
+usually discussed at a \emph{site}.  To pass from the ordered mode
+contractions of Section~\ref{sec:ch19-mode-correlators} to an observable
+at two positions, we must reconstruct the spatial field by a finite Fourier
+sum.  This operation appears innocuous: multiply each mode by a phase and
+sum.  Yet the order of the two resulting fields matters, because each field
+contains both creation and annihilation generators.  Reversing their product
+changes the answer by an exact canonical commutator.
+
+The question of this section is therefore deliberately finite and precise:
+\emph{given the positive abstract CCR functional constructed in
+Section~\ref{sec:ch19-scope}, what complex number does it assign to the
+ordered product of two spatial density operators?}  We will first derive
+that number, then separate its symmetric (fluctuation) and antisymmetric
+(commutator) contributions.  Only afterward will we interpret positivity
+and evaluate a concrete lattice example.  Neither this reconstruction nor
+the finite Fourier calculation identifies the abstract functional with a
+ground-state expectation on a compressed fermionic energy-budget space.
+
+\subsection{A finite lattice and its Fourier phases}
+
+In the source implementation, the lattice length is \emph{even}:
+\begin{equation}
+ L=2h,\qquad h\in\mathbb N,\quad h>0,\qquad
+ \Lambda_L=\mathbb Z/L\mathbb Z.
+ \label{eq:ch19-spatial-lattice}
+\end{equation}
+A point $x\in\Lambda_L$ is a residue class, represented when necessary
+by its unique integer $x_0\in\{0,\ldots,L-1\}$.  Choose the canonical
+primitive $L$th root
+\begin{equation}
+ \zeta=\exp(2\pi i/L),\qquad \zeta^L=1,
+ \quad |\zeta|=1.
+ \label{eq:ch19-spatial-zeta}
+\end{equation}
+More generally, every result written in terms of residue-class
+characters holds when $\zeta$ is \emph{any} primitive $L$th root.
+The word \emph{primitive} means that $\zeta^k\ne1$ for
+$1\leq k<L$: the powers of $\zeta$ distinguish the $L$ sites.
+The source also proves some intermediate algebraic identities for a
+merely nonzero complex number $\zeta$.  That weaker hypothesis suffices
+for powers involving the chosen representatives $x_0,y_0$, but the
+periodic character interpretation and the Hermiticity arguments below
+use the root-of-unity condition.
+
+For $m\in\mathbb Z$ define the character
+\begin{equation}
+ \chi_m(x):=\zeta^{m x_0}.
+ \label{eq:ch19-spatial-character}
+\end{equation}
+This is well defined on residue classes because replacing $x_0$ by
+$x_0+kL$ leaves its value unchanged.  Moreover,
+\begin{equation}
+ \chi_m(x+y)=\chi_m(x)\chi_m(y),\qquad
+ \chi_{-m}(x)=\overline{\chi_m(x)}=\chi_m(x)^{-1},\qquad
+ \chi_m(x-y)=\chi_m(x)\chi_{-m}(y).
+ \label{eq:ch19-spatial-character-laws}
+\end{equation}
+The last identity is the step that turns a double Fourier sum into a
+function of the \emph{separation} $x-y$, rather than of the two
+positions independently.  Notice that the separation belongs to
+$\Lambda_L$; no choice of an infinite-lattice coordinate is needed.
+
+Fix a positive-mode cutoff $M\in\mathbb N$ and retain the indices
+$m\in\{1,\ldots,M\}$.  The source algebraic theorem allows $M=0$
+(the sum is then empty), and does not assume $M<L/2$.  If one wants
+these labels to represent distinct nonzero lattice frequencies away
+from the Nyquist mode, the extra condition $M<h$ is natural, but it is
+\emph{not a hypothesis} of the abstract kernel identity.  For $M\geq L$
+some characters repeat even though the abstract oscillator generators
+remain distinct.  The number of modes $M$ is also not an occupation
+cutoff: each mode still acts on the uncompressed polynomial carrier.
+
+\subsection{The spatial density as a Hermitian algebra element}
+
+Let $C_{Rm}$ and $A_{Rm}=C_{Rm}^{*}$ denote the right-branch bare
+oscillator generators, with exact uncompressed CCR
+\begin{equation}
+ [A_{Rm},C_{Rn}]=m\delta_{mn}I,\qquad
+ [A_{Rm},A_{Rn}]=[C_{Rm},C_{Rn}]=0.
+ \label{eq:ch19-spatial-ccr}
+\end{equation}
+We identify the positive- and negative-index density modes as
+$\rho_{m,R}=C_{Rm}$ and $\rho_{-m,R}=A_{Rm}$, respectively.
+Define the right-branch \emph{oscillatory density} by
+\begin{equation}
+ \rho_R(x):=\frac1L\sum_{m=1}^{M}
+ \bigl(\chi_{-m}(x)C_{Rm}+\chi_m(x)A_{Rm}\bigr).
+ \label{eq:ch19-spatial-rho}
+\end{equation}
+It contains no charge zero mode.  This convention uses $1/L$ rather
+than $1/\sqrt L$; the normalizations of the Fourier transform and of
+the oscillator weights should not be silently combined.  In
+particular, the cutoff $M$ labels a selected collection of oscillatory
+modes and does not turn \eqref{eq:ch19-spatial-rho} into a claim about
+the full microscopic lattice density.
+
+Why is this definition an observable rather than an arbitrary complex
+combination?  The conjugate character multiplies the adjoint operator:
+\begin{align*}
+ \rho_R(x)^*
+ &=\frac1L\sum_{m=1}^{M}
+   \bigl(\overline{\chi_{-m}(x)}A_{Rm}
+        +\overline{\chi_m(x)}C_{Rm}\bigr)\\
+ &=\frac1L\sum_{m=1}^{M}
+   \bigl(\chi_m(x)A_{Rm}+\chi_{-m}(x)C_{Rm}\bigr)
+ =\rho_R(x).
+\end{align*}
+The reality of $1/L$ and the unit modulus of $\zeta$ were used here.
+This simple check will be essential when we deduce positive
+semidefiniteness of the correlation matrix; a generic nonzero
+complex $\zeta$ would not justify the same argument.
+
+Let $P=(c,s)$ be a real hyperbolic pair,
+\begin{equation}
+ c,s\in\mathbb R,\qquad c^2-s^2=1.
+ \label{eq:ch19-spatial-hyperbolic}
+\end{equation}
+We evaluate in the normalized positive \emph{abstract} functional
+$\omega_P=\omega_0\circ\beta_{c,s}^{-1}$ of the preceding sections.
+Its mode contractions, in the exact source ordering, are
+\begin{align}
+ \omega_P(C_{Rm}A_{Rn})&=m\delta_{mn}s^2,
+ &\omega_P(A_{Rm}C_{Rn})&=m\delta_{mn}c^2,
+ \label{eq:ch19-spatial-input-contractions}\\
+ \omega_P(C_{Rm}C_{Rn})&=0,
+ &\omega_P(A_{Rm}A_{Rn})&=0.
+ \label{eq:ch19-spatial-input-zeros}
+\end{align}
+These are recalled as \emph{inputs}; their Bogoliubov derivation is not
+repeated here.  The notation $\omega_P$ is deliberately distinct from
+a finite-Fock vector expectation $\langle\Psi,\cdot\,\Psi\rangle$
+or a density-matrix expectation $\operatorname{Tr}(\varrho\,\cdot)$.
+
+\subsection{The exact ordered two-point kernel}
+
+\begin{theorem}[Ordered spatial density kernel]
+\label{thm:ch19-spatial-ordered}
+Assume \eqref{eq:ch19-spatial-lattice}--\eqref{eq:ch19-spatial-hyperbolic}
+and a nonnegative integer cutoff $M$.  For every $x,y\in\Lambda_L$,
+the ordered correlation
+$D_P(x,y):=\omega_P\bigl(\rho_R(x)\rho_R(y)\bigr)$ equals
+\begin{equation}
+ \boxed{\displaystyle
+ D_P(x,y)=\frac1{L^2}\sum_{m=1}^{M}m
+ \bigl(s^2\chi_{-m}(x-y)+c^2\chi_m(x-y)\bigr).}
+ \label{eq:ch19-spatial-ordered}
+\end{equation}
+For the canonical root $\zeta=e^{2\pi i/L}$, the characters
+in this formula are the exponentials
+$\chi_{\pm m}(x-y)=e^{\pm2\pi i m(x_0-y_0)/L}$.
+The value is independent of the chosen representatives.
+\end{theorem}
+
+\begin{proof}
+Write $u_m(x)=\chi_{-m}(x)$ and $v_m(x)=\chi_m(x)$.
+Expanding the product of the two finite sums \emph{before}
+applying the functional gives
+\begin{align*}
+ L^2\rho_R(x)\rho_R(y)
+ &=\sum_{m=1}^{M}\sum_{n=1}^{M}
+  \bigl[u_m(x)u_n(y)C_{Rm}C_{Rn}\\
+ &\qquad+u_m(x)v_n(y)C_{Rm}A_{Rn}\\
+ &\qquad+v_m(x)u_n(y)A_{Rm}C_{Rn}\\
+ &\qquad+v_m(x)v_n(y)A_{Rm}A_{Rn}\bigr].
+\end{align*}
+Because the sum is finite and $\omega_P$ is complex linear,
+we may evaluate its four kinds of terms individually.  The $CC$
+and $AA$ contributions vanish by
+\eqref{eq:ch19-spatial-input-zeros}; the remaining two retain their
+original order:
+\begin{align*}
+ L^2D_P(x,y)
+ &=\sum_{m,n=1}^{M}u_m(x)v_n(y)
+       \underbrace{\omega_P(C_{Rm}A_{Rn})}_{m\delta_{mn}s^2}\\
+ &\qquad+\sum_{m,n=1}^{M}v_m(x)u_n(y)
+       \underbrace{\omega_P(A_{Rm}C_{Rn})}_{m\delta_{mn}c^2}\\
+ &=\sum_{m=1}^{M}m
+  \bigl(s^2\chi_{-m}(x)\chi_m(y)
+       +c^2\chi_m(x)\chi_{-m}(y)\bigr).
+\end{align*}
+The Kronecker delta removed one summation index.  Finally, the
+character multiplication law
+\eqref{eq:ch19-spatial-character-laws} replaces each product of two
+phases by the corresponding character of $x-y$.  Dividing by $L^2$
+proves the claim.  No infinite sum, reordering limit, or continuum
+approximation enters the calculation.
+\end{proof}
+
+The notation $D_P(x,y)$ emphasizes the parameter dependence.  The
+original chapter notes also call this quantity $D_c(x,y)$; that
+subscript should not be misread as dependence on $c$ alone, since
+both $c^2$ and $s^2$ occur.  The \emph{ordered} kernel is generally
+complex for $x\neq y$.  Replacing the two exponentials immediately by
+a cosine would discard its antisymmetric part and calculate a
+different observable.
+
+\subsection{The state-independent commutator and the symmetrized kernel}
+
+For two algebra elements, write
+$[B,C]=BC-CB$ and $\{B,C\}=BC+CB$.  By linearity,
+\begin{equation}
+ D_P(x,y)=\frac12\omega_P(\{\rho_R(x),\rho_R(y)\})
+          +\frac12\omega_P([\rho_R(x),\rho_R(y)]).
+ \label{eq:ch19-spatial-decomposition}
+\end{equation}
+The first term describes symmetric two-point fluctuations, while the
+second remembers the operator ordering.  They are not interchangeable.
+
+\begin{proposition}[Exact density commutator]
+\label{prop:ch19-spatial-commutator}
+Under the hypotheses of Theorem~\ref{thm:ch19-spatial-ordered},
+\begin{align}
+ [\rho_R(x),\rho_R(y)]
+ &=\frac1{L^2}\sum_{m=1}^{M}m
+   \bigl(\chi_m(x-y)-\chi_{-m}(x-y)\bigr)I,
+ \label{eq:ch19-spatial-commutator}\\
+ D_P(x,y)-D_P(y,x)
+ &=\frac{2i}{L^2}\sum_{m=1}^{M}m
+   \sin\!\left(\frac{2\pi m(x_0-y_0)}L\right)
+ \label{eq:ch19-spatial-commutator-sine}
+\end{align}
+for the canonical root in the second line.  In particular, this
+commutator expectation is independent of $c,s$ and of the chosen
+normalized state on the exact CCR algebra.
+\end{proposition}
+
+\begin{proof}
+The equal-sign generator commutators vanish.  In the expansion of
+the commutator of the two sums, only the mixed terms survive:
+\begin{align*}
+ L^2[\rho_R(x),\rho_R(y)]
+ &=\sum_{m,n=1}^{M}\bigl[
+  \chi_{-m}(x)\chi_n(y)[C_{Rm},A_{Rn}]\\
+ &\hspace{49mm}+
+  \chi_m(x)\chi_{-n}(y)[A_{Rm},C_{Rn}]\bigr].
+\end{align*}
+By \eqref{eq:ch19-spatial-ccr},
+$[C_{Rm},A_{Rn}]=-m\delta_{mn}I$ and
+$[A_{Rm},C_{Rn}]=m\delta_{mn}I$.  Collapsing the deltas and using
+\eqref{eq:ch19-spatial-character-laws} gives the first equation.
+Applying $\omega_P(I)=1$ yields the second after
+$e^{i\theta}-e^{-i\theta}=2i\sin\theta$.
+Alternatively, subtracting \eqref{eq:ch19-spatial-ordered} with
+$x,y$ interchanged produces the same expression because
+$c^2-s^2=1$.  The direct CCR calculation demonstrates the stronger
+fact: the commutator is already a scalar multiple of the unit
+\emph{before} a state is chosen.
+\end{proof}
+
+\begin{proposition}[Symmetrized density correlation]
+\label{prop:ch19-spatial-symmetrized}
+Let
+$S_P(x,y):=\tfrac12\omega_P(\{\rho_R(x),\rho_R(y)\})$.
+Then for the canonical root
+\begin{equation}
+ \boxed{\displaystyle
+ S_P(x,y)=\frac{c^2+s^2}{L^2}
+ \sum_{m=1}^{M}m\cos\!\left(\frac{2\pi m(x_0-y_0)}L\right).}
+ \label{eq:ch19-spatial-symmetrized}
+\end{equation}
+Set $g=(c-s)^2>0$, so $g^{-1}=(c+s)^2$.  Equivalently,
+\begin{equation}
+ c^2+s^2=\frac{g+g^{-1}}2,
+ \qquad
+ S_P(x,y)=\frac{g+g^{-1}}{2L^2}
+ \sum_{m=1}^{M}m\cos\!\left(\frac{2\pi m(x_0-y_0)}L\right).
+ \label{eq:ch19-spatial-symmetrized-g}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Write $d=x_0-y_0$ and $\theta_m=2\pi md/L$.
+The ordered formula takes the form
+\begin{align*}
+ D_P(x,y)
+ &=\frac1{L^2}\sum_{m=1}^{M}m
+   \left[s^2(\cos\theta_m-i\sin\theta_m)
+        +c^2(\cos\theta_m+i\sin\theta_m)\right]\\
+ &=\frac1{L^2}\sum_{m=1}^{M}m
+   \left[(c^2+s^2)\cos\theta_m+i(c^2-s^2)\sin\theta_m\right]\\
+ &=S_P(x,y)+\frac{i}{L^2}\sum_{m=1}^{M}m\sin\theta_m.
+\end{align*}
+The last term changes sign when $x$ and $y$ are exchanged,
+whereas the first does not.  Their half-sum proves
+\eqref{eq:ch19-spatial-symmetrized}, and the half-difference
+agrees with Proposition~\ref{prop:ch19-spatial-commutator}.
+Finally, $(c-s)(c+s)=1$ gives
+$g^{-1}=(c+s)^2$ and hence
+$g+g^{-1}=2(c^2+s^2)$.
+\end{proof}
+
+The decomposition is particularly transparent:
+\begin{equation}
+ \boxed{\displaystyle
+ D_P(x,y)=S_P(x,y)
+  +\frac{i}{L^2}\sum_{m=1}^{M}m
+    \sin\!\left(\frac{2\pi m(x_0-y_0)}L\right).}
+ \label{eq:ch19-spatial-ordered-realimag}
+\end{equation}
+The imaginary, antisymmetric contribution is fixed by the CCR; the
+interaction-dependent parameter $g$ affects the real symmetric part.
+This is an \emph{exact finite-mode} separation, not an assertion that
+the imaginary part becomes negligible at large distance or large $L$.
+
+\subsection{Coincident points, positivity, and what positivity means}
+
+\begin{theorem}[Diagonal evaluation and positivity]
+\label{thm:ch19-spatial-diagonal}
+Under the hypotheses of Theorem~\ref{thm:ch19-spatial-ordered},
+for every $x\in\Lambda_L$,
+\begin{equation}
+ \boxed{\displaystyle
+ D_P(x,x)=\frac{c^2+s^2}{L^2}\frac{M(M+1)}2
+           =\frac{g+g^{-1}}{2L^2}\frac{M(M+1)}2.}
+ \label{eq:ch19-spatial-diagonal}
+\end{equation}
+This value is real and nonnegative.  It is strictly positive when
+$M\geq1$ (and $h>0$, as assumed), whereas $M=0$ gives zero.
+\end{theorem}
+
+\begin{proof}
+At $x=y$, every character in \eqref{eq:ch19-spatial-ordered}
+is $\chi_{\pm m}(0)=1$, so
+\[
+ D_P(x,x)=\frac{c^2+s^2}{L^2}\sum_{m=1}^{M}m.
+\]
+The elementary identity $\sum_{m=1}^{M}m=M(M+1)/2$ proves the
+formula, including the empty-sum case.  Since $c^2-s^2=1$,
+\[
+ c^2+s^2=1+2s^2\geq1.
+\]
+The denominator $L^2$ is positive for $h>0$.  Therefore the right
+side is strictly positive precisely when the cutoff contains at least
+one positive mode.  No restriction such as $M<h$ is used.
+\end{proof}
+
+This diagonal is the second moment of the Hermitian oscillatory
+density in the abstract state:
+$D_P(x,x)=\omega_P(\rho_R(x)^*\rho_R(x))$.
+Its finiteness results from the \emph{mode cutoff} $M$, not from a
+finite-dimensional oscillator representation.  Increasing $M$ at
+fixed $L$ makes the diagonal grow quadratically; thus its finite
+value does not, by itself, define a cutoff-independent continuum
+coincident-point observable.
+
+There is a stronger, more useful positivity statement than
+$D_P(x,x)\geq0$.  A complex two-point function is a
+\emph{positive-semidefinite kernel} if for any finite collection of
+sites $x_1,\ldots,x_N$ and complex numbers $z_1,\ldots,z_N$,
+\begin{equation}
+ \sum_{a,b=1}^{N}\overline{z_a}\,D_P(x_a,x_b)\,z_b\geq0.
+ \label{eq:ch19-spatial-psd}
+\end{equation}
+This inequality is an inequality of \emph{real} numbers: its left
+side is automatically real.
+
+\begin{proposition}[Positive-semidefinite ordered kernel]
+\label{prop:ch19-spatial-psd}
+The kernel $D_P$ of Theorem~\ref{thm:ch19-spatial-ordered} satisfies
+\eqref{eq:ch19-spatial-psd}; it is also Hermitian,
+$D_P(y,x)=\overline{D_P(x,y)}$.
+\end{proposition}
+
+\begin{proof}
+For the chosen sites and coefficients, set
+$B=\sum_{b=1}^{N}z_b\rho_R(x_b)$.
+Each density is self-adjoint, so
+$B^*=\sum_{a=1}^{N}\overline{z_a}\rho_R(x_a)$.
+Consequently,
+\begin{align*}
+ \sum_{a,b}\overline{z_a}D_P(x_a,x_b)z_b
+ &=\omega_P\!\left(
+    \sum_{a,b}\overline{z_a}z_b\rho_R(x_a)\rho_R(x_b)
+    \right)\\
+ &=\omega_P(B^*B)\geq0,
+\end{align*}
+by positivity of the abstract functional.  Hermiticity follows
+from either $\omega_P(B^*)=\overline{\omega_P(B)}$ or the explicit
+formula \eqref{eq:ch19-spatial-ordered} and
+$\chi_{-m}(d)=\overline{\chi_m(d)}$.
+\end{proof}
+
+Equivalently, \eqref{eq:ch19-spatial-ordered} expresses the matrix
+$D_P(x_a,x_b)$ as a sum of rank-one Hermitian matrices with
+nonnegative weights $ms^2/L^2$ and $mc^2/L^2$.  This gives a second
+way to see positivity and shows its rank is at most $2M$, possibly
+less because lattice Fourier characters can coincide.  Positive
+semidefiniteness does \emph{not} mean that an off-diagonal entry is
+real or positive: in general $D_P(x,y)$ is complex, and even its
+symmetrized value $S_P(x,y)$ may be negative.
+
+\subsection{Worked finite example: eight sites and two positive modes}
+
+Take an eight-site periodic lattice and two abstract positive modes,
+\begin{equation}
+ L=8,\quad h=4,\quad M=2,\quad
+ \zeta=e^{i\pi/4},\qquad c=\frac53,\quad s=\frac43.
+ \label{eq:ch19-spatial-example-data}
+\end{equation}
+These choices satisfy $c^2-s^2=1$ and
+$g=(c-s)^2=1/9$.  The two retained frequencies are distinct and
+below the Nyquist mode $m=h=4$.  The normalized density at $x=0$
+is explicitly
+\[
+ \rho_R(0)=\frac18(C_{R1}+A_{R1}+C_{R2}+A_{R2}),
+\]
+while at $x=1$ the corresponding four generators are weighted by
+$\zeta^{-1},\zeta,\zeta^{-2},\zeta^2$, respectively.  Only the
+pairings of opposite adjoint type and equal mode index survive when
+the two densities are multiplied and evaluated.
+
+For the separation $d=x_0-y_0$, the ordered kernel becomes
+\begin{align}
+ D_P(d)
+ &=\frac1{64}\sum_{m=1}^{2}m
+   \left(\frac{16}{9}e^{-i m\pi d/4}
+        +\frac{25}{9}e^{i m\pi d/4}\right)\notag\\
+ &=\frac1{576}\left[
+  41\left(\cos\frac{\pi d}{4}
+            +2\cos\frac{\pi d}{2}\right)
+  +9i\left(\sin\frac{\pi d}{4}
+            +2\sin\frac{\pi d}{2}\right)\right].
+ \label{eq:ch19-spatial-example-finite}
+\end{align}
+In particular,
+\begin{align}
+ D_P(0)&=\frac{41}{192},
+ \label{eq:ch19-spatial-example-diagonal}\\
+ D_P(1)&=\frac{41\sqrt2}{1152}
+          +i\,\frac{\sqrt2+4}{128},
+ \label{eq:ch19-spatial-example-d1}\\
+ D_P(-1)&=\frac{41\sqrt2}{1152}
+          -i\,\frac{\sqrt2+4}{128}.
+ \label{eq:ch19-spatial-example-dminus1}
+\end{align}
+Thus the finite example checks all three operations independently:
+\begin{align*}
+ S_P(1)&=\frac{D_P(1)+D_P(-1)}2
+       =\frac{41\sqrt2}{1152},\\
+ \omega_P([\rho_R(1),\rho_R(0)])
+ &=D_P(1)-D_P(-1)
+   =i\,\frac{\sqrt2+4}{64}.
+\end{align*}
+The commutator is independent of $c,s$: evaluating the same expression
+with the free pair $(c,s)=(1,0)$ gives the \emph{same} imaginary
+difference, although its real symmetric part changes.
+For example, in that free pair,
+\begin{equation}
+ D_0(1)=\frac{\sqrt2}{128}
+          +i\,\frac{\sqrt2+4}{128},
+ \qquad D_0(0)=\frac3{64}.
+ \label{eq:ch19-spatial-example-free}
+\end{equation}
+Both states obey the same exact CCR; only their fluctuation
+covariances differ.
+
+For completeness, the $2\times2$ matrix associated with the sites
+$0$ and $1$ is
+\[
+ \begin{pmatrix}
+  41/192&D_P(-1)\\
+  D_P(1)&41/192
+ \end{pmatrix}.
+\]
+It is Hermitian and positive semidefinite by
+Proposition~\ref{prop:ch19-spatial-psd}, even though the entries
+$D_P(\pm1)$ are not real.  This is the correct interpretation of
+positive spatial correlations in a noncommutative theory.
+
+\subsection{What has, and has not, been established}
+
+The passage from Section~\ref{sec:ch19-mode-correlators} to this
+section is an exact finite Fourier reconstruction within the
+\emph{abstract, uncompressed} CCR algebra.  The main formula is
+valid for every integer $M\geq0$ and every pair of lattice sites,
+under the stated root-of-unity and hyperbolic-pair conditions.
+The commutator kernel depends only on the CCR and the chosen Fourier
+normalization.  The symmetric kernel depends on the squeezing
+parameter through $c^2+s^2=(g+g^{-1})/2$.  The diagonal is finite at
+each cutoff and positive when $M\geq1$, and the full ordered kernel
+is positive semidefinite in the sense of quadratic forms.
+
+Three distinct extrapolations require additional work.  First,
+a finite periodic character sum is not a proof of an infinite-volume
+power law: any such statement needs a specified limit of $L$, $M$,
+separations, and operator normalization.  Second, because the
+oscillator carrier is uncompressed, the kernel is not automatically
+a correlator of compressed finite-CAR density matrices; the next
+comparison section must explicitly track maps and boundary
+remainders.  Third, the oscillatory density used here omits a charge
+zero mode, so the result should not be presented as the complete
+microscopic density--density function without supplying that missing
+sector and its cross terms.  These are limitations of the identified
+observable, not failures of the finite algebraic calculation.
+
+The corresponding statements in the supplied
+\texttt{BosonizeStubs/Ch19Correlations.lean} snapshot are:
+\begin{itemize}
+ \item \texttt{ordered\_density\_kernel} and
+       \texttt{ordered\_density\_kernel\_lattice};
+ \item \texttt{density\_commutator\_expectation};
+ \item \texttt{symmetrized\_density\_kernel};
+ \item \texttt{density\_kernel\_diagonal\_pos}.
+\end{itemize}
+Their Phase~B status is not Core promotion, and standalone LaTeX
+compilation does not replace independent mathematical review or
+whole-book integration.

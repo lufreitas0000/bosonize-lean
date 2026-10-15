@@ -1,0 +1,631 @@
+\section{Finite Energy-Shell Projection and Effective Hamiltonians}
+\label{sec:ch21-finite-effective}
+
+The preceding sections built finite operators before asking which states they
+preserve.  In particular, the Umklapp word has a definite change of four
+species charges, but this selection rule is not a spectral statement, and its
+nonzero action need not preserve a chosen finite-energy carrier.  We now face
+a different, constructive question: \emph{if we intentionally retain only a
+low-energy part of a finite Hilbert space, what operator describes its
+interaction with the discarded states?}  Simply deleting the discarded
+states removes the very virtual excursions that can modify low-energy
+matrix elements.  A finite Schrieffer--Wolff transformation supplies a
+controlled algebraic answer through second order in a coupling parameter.
+
+This section develops the method rather than presupposing familiarity with
+renormalization.  The starting objects are ordinary finite-dimensional
+Hilbert spaces, orthogonal projections and matrix commutators.  We shall
+separate (i) exact partition identities, (ii) a solvable non-resonant matrix
+equation, (iii) an \emph{exact identity between polynomials of degree two},
+and (iv) approximation of an analytic unitary rotation.  Their hypotheses
+are different.  In particular, none of these steps by itself constructs a
+charge gap or a continuum renormalization-group (RG) flow.
+
+\subsection{What does an energy shell discard?}
+\label{subsec:ch21-energy-shell}
+
+Fix a finite lattice of length $L=2h$ with $h\in\mathbb N_{>0}$, a
+positive-mode cutoff $M\geq1$, a set of species labels (in this chapter,
+$\{R,L\}\times\{\uparrow,\downarrow\}$), and an admissible integer
+species-charge vector $\boldsymbol N$.  The finite CAR Fock carrier will be
+denoted $\mathcal F_L$.  We use the occupation-space excitation grading
+$\mathsf E\colon\{\text{occupation configurations}\}\to\mathbb N_0$,
+relative to the specified charge-sector ground configuration.  The
+charge-sector \emph{budget} is the span
+\begin{equation}
+\mathcal B_{\boldsymbol N,K}
+ :=\operatorname{span}\bigl\{\lvert A\rangle:
+ \boldsymbol N(A)=\boldsymbol N,\ \mathsf E(A)\leq K\bigr\}
+ \subseteq\mathcal F_L,
+\label{eq:ch21-budget-definition}
+\end{equation}
+where $K\in\mathbb N_0$.  We emphasize that \eqref{eq:ch21-budget-definition}
+is a span of occupation kets selected by a scalar \emph{grade}; it is not
+a vector inequality of the form $H\psi\leq K\psi$.  The allowed grades,
+charges and finite-volume margins are those of the earlier energy-budget
+construction (see Chapter~\ref{ch:vacuum_budget}).
+
+For $K\geq1$, let $\Pi_{\boldsymbol N,K}$ be the orthogonal coordinate
+projection onto this budget and define the two \emph{ambient} projections
+\begin{align}
+P&:=\Pi_{\boldsymbol N,K-1},\\
+Q&:=\Pi_{\boldsymbol N,K}-\Pi_{\boldsymbol N,K-1}
+  =\operatorname{proj}_{\mathcal H_{\boldsymbol N,K}},\qquad
+\mathcal H_{\boldsymbol N,K}:=
+ \operatorname{span}\{\lvert A\rangle:\boldsymbol N(A)=\boldsymbol N,
+                                  \mathsf E(A)=K\}.
+\label{eq:ch21-shell-projections}
+\end{align}
+Both projections act on $\mathcal F_L$, even though their ranges are
+subspaces of $\mathcal B_{\boldsymbol N,K}$.  Their defining coordinate
+supports are disjoint.
+
+\begin{proposition}[Exact finite shell partition]
+\label{prop:ch21-shell-partition}
+For $K\geq1$ the ambient projections satisfy
+\begin{equation}
+ P^2=P=P^\dagger,\quad Q^2=Q=Q^\dagger,
+ \quad PQ=QP=0,\quad P+Q=\Pi_{\boldsymbol N,K}.
+\label{eq:ch21-ambient-partition}
+\end{equation}
+Consequently, with $\mathcal H:=\mathcal B_{\boldsymbol N,K}$ as the
+\emph{new carrier}, the restricted operators obey $P+Q=I_{\mathcal H}$
+and give the orthogonal decomposition
+$\mathcal H=\operatorname{ran}P\oplus\operatorname{ran}Q$.
+\end{proposition}
+\begin{proof}
+In the orthonormal occupation basis, every coordinate projector acts as
+identity on a selected ket and as zero on the others.  Its square therefore
+equals itself, and its matrix is real diagonal, hence self-adjoint.  The
+supports $\mathsf E\leq K-1$ and $\mathsf E=K$ are disjoint: applying
+$PQ$ or $QP$ to each basis ket gives zero.  Their union is exactly the
+support $\mathsf E\leq K$, within the fixed charge sector.  Thus their
+sum equals $\Pi_{\boldsymbol N,K}$ on every occupation ket, proving
+\eqref{eq:ch21-ambient-partition}.  This last projection is the identity
+\emph{only after} restricting the carrier to its range.  Orthogonality and
+direct-sum decomposition follow by writing every $\psi\in\mathcal H$ as
+$\psi=P\psi+Q\psi$ and observing that the ranges intersect trivially.
+\end{proof}
+
+\begin{example}[Removing energy two is not removing mode two]
+\label{ex:ch21-shell-versus-mode}
+Consider the polynomial oscillator carrier with two positive modes,
+$X_1$ and $X_2$, weighted by energies $1$ and $2$, respectively.  For
+$M\geq2$, the illustrative filtered monomial basis at budget two is
+\begin{equation}
+ \mathcal B_2^{\mathrm{osc}}
+  =\operatorname{span}\{1,X_1,X_1^2,X_2\},\qquad
+ \mathcal B_1^{\mathrm{osc}}=\operatorname{span}\{1,X_1\}.
+\label{eq:ch21-osc-shell-example}
+\end{equation}
+The shell removed by $P$ is
+$\operatorname{span}\{X_1^2,X_2\}$.  Deleting the \emph{mode} $X_2$
+instead would retain $X_1^2$ and yield
+$\operatorname{span}\{1,X_1,X_1^2\}$.  These are distinct projections.
+Their difference persists in a concrete finite-Fock realization: under
+the charge-admissibility and frozen-margin hypotheses required for the
+repeated positive mode-one density excitation, the vector
+$\rho_{1,\nu}^{\,2}\lvert\boldsymbol N\rangle_0$ is nonzero, has
+excitation grade two, is killed by the budget-one projector, and is
+fixed by the exact-grade-two shell projector.  Here $\rho_{1,\nu}$
+uses the convention that positive $m$ raises the excitation grade.
+The needed nonvanishing is a finite CAR/current statement, not an
+assumption that the polynomial oscillator is literally the full Fock
+carrier.  The supporting Core A10 result gives this witness with
+$h\geq2$ and its stated admissibility/margin conditions.
+\end{example}
+
+The letter $K$ will continue to denote the \emph{energy budget}, not a
+Luttinger parameter.  The shell splitting does not assert that its
+grade is the interacting Hamiltonian's spectrum: the grade is a basis
+filtration fixed in advance.  A Hamiltonian may mix these spaces, which
+is precisely why an effective Hamiltonian is needed.
+
+\subsection{Block matrices and the denominator hypothesis}
+\label{subsec:ch21-block-setup}
+
+Work now on an arbitrary finite-dimensional complex Hilbert space
+$\mathcal H=\mathcal P\oplus\mathcal Q$, with orthogonal projections
+$P$ and $Q=I_{\mathcal H}-P$.  This could be the restricted budget
+carrier from Proposition~\ref{prop:ch21-shell-partition}; alternatively it
+could be a different explicitly selected finite spectral window.  Let
+\begin{equation}
+H(t)=H_0+tV,\qquad H_0^\dagger=H_0,\quad V^\dagger=V,
+\quad t\in\mathbb R,\quad [P,H_0]=0.
+\label{eq:ch21-H-perturbation}
+\end{equation}
+The last hypothesis means that $H_0$ preserves $\mathcal P$ and
+$\mathcal Q$.  It is not automatic for a chosen interacting baseline.
+In particular, an interbranch pairing term can mix bare Haldane
+partitions: one must diagonalize the proposed $H_0$ on an appropriate
+carrier or use a baseline, such as the free Sugawara Hamiltonian, for
+which the requisite invariance actually holds.
+
+Insert $I=P+Q$ to write each operator in a $2\times2$ array of blocks:
+\begin{equation}
+H_0=\begin{pmatrix}A&0\\0&D\end{pmatrix},\qquad
+V=\begin{pmatrix}V_{PP}&B\\B^\dagger&V_{QQ}\end{pmatrix},
+\quad A=PH_0P\big|_{\mathcal P},\quad D=QH_0Q\big|_{\mathcal Q},
+\label{eq:ch21-block-matrices}
+\end{equation}
+where $B=PVQ\colon\mathcal Q\to\mathcal P$.  Define
+\begin{equation}
+ V_{\mathrm d}:=PVP+QVQ,\qquad
+ V_{\mathrm o}:=PVQ+QVP,\qquad V=V_{\mathrm d}+V_{\mathrm o}.
+\label{eq:ch21-diag-offdiag}
+\end{equation}
+The subscripts refer to this \emph{chosen decomposition}, not to
+momentum conservation or locality.  A block-off-diagonal perturbation
+moves a state between retained and discarded sectors.  Its second-order
+virtual excursion may start and end in $\mathcal P$ even when the first
+order transition does not stay there.
+
+Because $H_0$ is self-adjoint and preserves the two summands, we may
+choose an orthonormal eigenbasis
+$\{\lvert\lambda\rangle\}_{\lambda\in I_P}$ of $A$ and
+$\{\lvert\mu\rangle\}_{\mu\in I_Q}$ of $D$,
+with \emph{real} eigenvalues $E_\lambda$ and $E_\mu$.  No relation between
+the two eigenvalue sets has yet been assumed.  A virtual transition
+requires an energy denominator; it is therefore necessary to state the
+non-resonance condition rather than dividing by a possibly zero number.
+
+\begin{definition}[Coupling-wise non-resonance]
+\label{def:ch21-coupling-nonresonance}
+The pair $(H_0,V)$ is \emph{non-resonant across $P/Q$ on its nonzero
+couplings} if
+\begin{equation}
+ \langle\lambda\lvert V\rvert\mu\rangle\ne0
+ \quad\Longrightarrow\quad E_\lambda\ne E_\mu,
+ \qquad \lambda\in I_P,\ \mu\in I_Q.
+\label{eq:ch21-nonresonance}
+\end{equation}
+Degenerate pairs with zero cross-block matrix element are allowed.
+\end{definition}
+
+The stronger assumption
+$\operatorname{spec}(A)\cap\operatorname{spec}(D)=\varnothing$
+guarantees invertibility of the Sylvester operator introduced below.
+The weaker, coupling-wise assumption is sufficient for \emph{existence}
+of the particular solution used in this section, but not generally for
+uniqueness.  Since there are finitely many coupled pairs, its nonzero
+energy differences have a strictly positive minimum when any such
+pairs exist; that finite number need not remain bounded away from zero
+as $L$ or the budget varies.
+
+\subsection{Solving the Sylvester equation}
+\label{subsec:ch21-sylvester}
+
+We seek a first-order change of basis generated by an anti-Hermitian,
+block-off-diagonal operator $S_1$:
+\begin{equation}
+ S_1^\dagger=-S_1,\qquad PS_1P=QS_1Q=0,
+ \qquad [S_1,H_0]=-V_{\mathrm o}.
+\label{eq:ch21-generator-equation}
+\end{equation}
+Anti-Hermiticity ensures $e^{tS_1}$ is unitary for real $t$, while the
+commutator condition cancels the first-order coupling between
+$\mathcal P$ and $\mathcal Q$.  It is important that the commutator is
+ordered $[S_1,H_0]=S_1H_0-H_0S_1$; reversing it reverses the
+energy-denominator sign.
+
+Write
+$S_1=\bigl(\begin{smallmatrix}0&X\\-X^\dagger&0\end{smallmatrix}\bigr)$,
+where $X:\mathcal Q\to\mathcal P$.  Multiplying the block matrices in
+\eqref{eq:ch21-block-matrices} gives
+\begin{equation}
+ [S_1,H_0]_{PQ}=XD-AX=-B
+ \quad\Longleftrightarrow\quad AX-XD=B.
+\label{eq:ch21-sylvester}
+\end{equation}
+This is a \emph{Sylvester equation}: a linear equation for an unknown
+operator $X$ in which fixed operators multiply it on the left and right.
+It is not a division by the matrix $A-D$, since the matrices can act on
+different spaces and need not commute.
+
+\begin{theorem}[Finite non-resonant Schrieffer--Wolff generator]
+\label{thm:ch21-sw-generator}
+Under \eqref{eq:ch21-H-perturbation} and
+Definition~\ref{def:ch21-coupling-nonresonance}, define the
+cross-block matrix entries
+\begin{equation}
+\langle\lambda\lvert X\rvert\mu\rangle:=
+\begin{cases}
+\displaystyle\frac{\langle\lambda\lvert V\rvert\mu\rangle}
+ {E_\lambda-E_\mu}, &
+       \langle\lambda\lvert V\rvert\mu\rangle\ne0,\\[6pt]
+0,&\langle\lambda\lvert V\rvert\mu\rangle=0,
+\end{cases}
+\qquad \lambda\in I_P,\ \mu\in I_Q.
+\label{eq:ch21-X-entries}
+\end{equation}
+Then $S_1=\bigl(\begin{smallmatrix}0&X\\-X^\dagger&0\end{smallmatrix}\bigr)$
+is anti-Hermitian, block-off-diagonal, and solves
+$[S_1,H_0]=-V_{\mathrm o}$.  The zero choice on uncoupled pairs remains
+well defined even when their energies coincide.
+\end{theorem}
+\begin{proof}
+The denominator is nonzero in the first case by
+\eqref{eq:ch21-nonresonance}; the second case involves no division.
+In the chosen eigenbases,
+\begin{align*}
+\langle\lambda\lvert AX-XD\rvert\mu\rangle
+ &=(E_\lambda-E_\mu)
+     \langle\lambda\lvert X\rvert\mu\rangle\\
+ &=\langle\lambda\lvert V\rvert\mu\rangle,
+\end{align*}
+including when the matrix element of $V$ is zero.  Thus $AX-XD=B$
+entrywise.  The opposite off-diagonal block of
+$[S_1,H_0]$ is the adjoint of the first block, because
+$S_1^\dagger=-S_1$ and $H_0^\dagger=H_0$ make $[S_1,H_0]$ Hermitian.
+More explicitly, the opposite entry is
+\begin{equation*}
+ \langle\mu\lvert S_1\rvert\lambda\rangle
+ =-\overline{\langle\lambda\lvert S_1\rvert\mu\rangle}
+ =\frac{\langle\mu\lvert V\rvert\lambda\rangle}{E_\mu-E_\lambda}
+\end{equation*}
+when coupled, and zero otherwise.  Both diagonal blocks of
+$[S_1,H_0]$ vanish because $H_0$ is block diagonal and $S_1$ is
+off diagonal.  Collecting the four blocks proves the commutator
+equation; the displayed block form proves anti-Hermiticity directly.
+\end{proof}
+
+\begin{remark}[Why the solution need not be unique]
+If $E_\lambda=E_\mu$ for an uncoupled cross-block pair, the
+corresponding entry of the homogeneous equation
+$AX-XD=0$ is unconstrained.  Setting it to zero is a convenient,
+explicit choice, not a uniqueness theorem.  If the spectra of $A$ and
+$D$ are disjoint, the homogeneous equation has only the zero solution,
+and the constructed $X$ is unique.
+\end{remark}
+
+\subsection{The ordered second-order transformation}
+\label{subsec:ch21-sw-bch}
+
+For any finite matrices $S$ and $T$, write
+$\operatorname{ad}_S(T):=[S,T]$ and
+$\operatorname{ad}_S^j(T)$ for its $j$-fold iteration.  We rotate the
+Hamiltonian according to
+\begin{equation}
+ \widetilde H(t):=e^{tS_1}(H_0+tV)e^{-tS_1}.
+\label{eq:ch21-sw-rotated}
+\end{equation}
+The orientation is fixed: we conjugate by $e^{+tS_1}$ on the left.
+The finite-matrix exponential exists for every real $t$ and the
+rotated Hamiltonian is self-adjoint and isospectral to $H(t)$, even
+though the compression $P\widetilde H(t)P$ need not reproduce the exact
+low-energy spectrum at a finite, non-small $t$.
+
+To obtain the perturbative expansion, differentiate
+$e^{tS_1}Te^{-tS_1}$ at $t=0$.  Its successive derivatives are
+$\operatorname{ad}_{S_1}^j(T)$.  Hence the ordered polynomial through
+degree two is
+\begin{align}
+B_2(t):={}&H_0+t\bigl(V+[S_1,H_0]\bigr)\notag\\
+ &+t^2\left([S_1,V]
+        +\frac12[S_1,[S_1,H_0]]\right).
+\label{eq:ch21-bch-two-polynomial}
+\end{align}
+The equality between $B_2$ and the Taylor polynomial is a finite
+algebraic fact, irrespective of whether $t$ is small.  The claim that
+it approximates $\widetilde H(t)$ needs a separate remainder statement.
+
+\begin{theorem}[Exact compressed degree-two identity]
+\label{thm:ch21-sw-compressed}
+Assume that $P,Q$ are complementary orthogonal projections on
+$\mathcal H$, $H_0$ commutes with $P$, and $S_1$ obeys
+\eqref{eq:ch21-generator-equation}.  Then, as an \emph{exact polynomial
+identity} on $\mathcal P=\operatorname{ran}P$,
+\begin{equation}
+ P B_2(t)P
+ =PH_0P+tPVP+\frac{t^2}{2}P[S_1,V]P.
+\label{eq:ch21-sw-polynomial}
+\end{equation}
+The right-hand side is the second-order Schrieffer--Wolff effective
+Hamiltonian, denoted $H_{\mathrm{eff}}^{[2]}(t)$.  No exponential
+appears in the asserted equality.
+\end{theorem}
+\begin{proof}
+Substitute $[S_1,H_0]=-V_{\mathrm o}$ into
+\eqref{eq:ch21-bch-two-polynomial}.  The first-order coefficient is
+$V-V_{\mathrm o}=V_{\mathrm d}$; in particular,
+$PV_{\mathrm d}P=PVP$.  For the second-order term,
+\begin{align*}
+[S_1,V]+\tfrac12[S_1,[S_1,H_0]]
+ &= [S_1,V]-\tfrac12[S_1,V_{\mathrm o}]\\
+ &= [S_1,V_{\mathrm d}]+\tfrac12[S_1,V_{\mathrm o}].
+\end{align*}
+A product of an off-diagonal and a diagonal block operator is
+off-diagonal, so $P[S_1,V_{\mathrm d}]P=0$.  Therefore the compressed
+coefficient becomes
+$\tfrac12P[S_1,V_{\mathrm o}]P$.  Moreover,
+$P[S_1,V]P=P[S_1,V_{\mathrm o}]P$ by the same block argument.
+The constant term is $PH_0P$, yielding exactly
+\eqref{eq:ch21-sw-polynomial}.  Every equality used here is an
+ordinary finite-matrix identity, with no perturbative limiting
+argument.
+\end{proof}
+
+\begin{proposition}[Intermediate-state formula]
+\label{prop:ch21-sw-intermediate}
+For $\lambda,\lambda'\in I_P$ the second-order correction has matrix
+entries
+\begin{equation}
+\begin{aligned}
+\langle\lambda\lvert W^{(2)}\rvert\lambda'\rangle
+  &=\frac12\sum_{\substack{\mu\in I_Q\\
+       V_{\lambda\mu}V_{\mu\lambda'}\ne0}}
+  V_{\lambda\mu}V_{\mu\lambda'}
+  \left(\frac{1}{E_\lambda-E_\mu}
+        +\frac{1}{E_{\lambda'}-E_\mu}\right),\\
+W^{(2)}&:=\frac12P[S_1,V]P,
+\qquad V_{ab}:=\langle a\lvert V\rvert b\rangle.
+\end{aligned}
+\label{eq:ch21-sw-intermediate-sum}
+\end{equation}
+Only nonzero coupled terms are included in the displayed sum, so its
+denominators are defined under \eqref{eq:ch21-nonresonance}.  In
+particular,
+\begin{equation}
+\langle\lambda\lvert W^{(2)}\rvert\lambda\rangle
+ =\sum_{\substack{\mu\in I_Q\\V_{\lambda\mu}\ne0}}
+ \frac{|V_{\lambda\mu}|^2}{E_\lambda-E_\mu}.
+\label{eq:ch21-sw-diagonal-shift}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Since $S_1$ is off diagonal, the $PP$ block of $S_1V$ is
+$S_{1,PQ}V_{QP}$ and that of $VS_1$ is $V_{PQ}S_{1,QP}$.
+Insert the orthonormal resolution $I_{\mathcal Q}=\sum_{\mu\in I_Q}
+\lvert\mu\rangle\langle\mu\rvert$ to get
+\begin{equation*}
+\langle\lambda\lvert[S_1,V]\rvert\lambda'\rangle
+=\sum_{\mu\in I_Q}\bigl((S_1)_{\lambda\mu}
+ V_{\mu\lambda'}-V_{\lambda\mu}(S_1)_{\mu\lambda'}\bigr).
+\end{equation*}
+Theorem~\ref{thm:ch21-sw-generator} gives
+$(S_1)_{\lambda\mu}=V_{\lambda\mu}/(E_\lambda-E_\mu)$
+on coupled pairs and
+$(S_1)_{\mu\lambda'}=-V_{\mu\lambda'}/(E_{\lambda'}-E_\mu)$.
+Terms with vanishing couplings contribute zero by definition.  This
+yields \eqref{eq:ch21-sw-intermediate-sum}.  Taking
+$\lambda'=\lambda$ and using Hermiticity of $V$ proves
+\eqref{eq:ch21-sw-diagonal-shift}.
+\end{proof}
+
+The denominator in \eqref{eq:ch21-sw-diagonal-shift} explains the
+physical interpretation: the retained state makes a virtual excursion
+to a discarded eigenstate and returns.  In a strictly ordered baseline
+spectrum $E_\lambda<E_\mu$ for every coupled pair, each diagonal
+second-order shift is nonpositive.  Without that ordering, cancellations
+are possible.  Thus even the \emph{sign} of the correction is not
+determined by the mere existence of a $P/Q$ splitting.
+
+\subsection{What is the remainder, exactly?}
+\label{subsec:ch21-sw-remainder}
+
+There are two different uses of the notation $O(t^3)$.  In a formal
+power series ring $\operatorname{End}(\mathcal H)[[t]]$, the statement
+\begin{equation}
+P\widetilde H(t)P\equiv H_{\mathrm{eff}}^{[2]}(t)
+ \pmod{t^3}
+\label{eq:ch21-sw-formal-mod}
+\end{equation}
+means \emph{coefficientwise} equality in degrees zero, one and two.
+It does not evaluate an operator at a numerical $t$, and it does not
+by itself bound the discarded terms.  For the finite analytic
+exponential we can additionally obtain an explicit bound; this is
+an elementary finite-matrix consequence, stated here separately from
+the supplied A10 Lean theorem.
+
+\begin{proposition}[Finite analytic Taylor remainder]
+\label{prop:ch21-sw-analytic-remainder}
+Under the hypotheses of Theorem~\ref{thm:ch21-sw-compressed}, for real
+$t$ let
+\begin{equation}
+ R_3(t):=\widetilde H(t)-B_2(t).
+\label{eq:ch21-rem-definition}
+\end{equation}
+Then the exact compressed analytic Hamiltonian obeys
+\begin{equation}
+ P\widetilde H(t)P=H_{\mathrm{eff}}^{[2]}(t)+PR_3(t)P,
+\label{eq:ch21-sw-exact-plus-remainder}
+\end{equation}
+where, writing $\mathcal U_r(T)=e^{rS_1}Te^{-rS_1}$,
+\begin{align}
+R_3(t)={}&\frac{t^3}{2}\int_0^1(1-u)^2
+  \mathcal U_{ut}\bigl(\operatorname{ad}_{S_1}^3(H_0)\bigr)\,du\notag\\
+ &+t^3\int_0^1(1-u)
+  \mathcal U_{ut}\bigl(\operatorname{ad}_{S_1}^2(V)\bigr)\,du.
+\label{eq:ch21-sw-integral-remainder}
+\end{align}
+For the operator norm, using $S_1^\dagger=-S_1$,
+\begin{equation}
+\|PR_3(t)P\|\leq\|R_3(t)\|
+\leq |t|^3\left(
+\frac{\|\operatorname{ad}_{S_1}^3(H_0)\|}{6}
++\frac{\|\operatorname{ad}_{S_1}^2(V)\|}{2}\right).
+\label{eq:ch21-sw-norm-bound}
+\end{equation}
+The bound is finite-volume and its constant depends on the chosen
+carrier, $H_0,V$ and the selected generator $S_1$.
+\end{proposition}
+\begin{proof}
+For a fixed $T$, put $F_T(t)=e^{tS_1}Te^{-tS_1}$.
+Differentiating the matrix exponential gives
+$F_T^{(j)}(r)=\mathcal U_r(\operatorname{ad}_{S_1}^jT)$.
+Taylor's theorem with integral remainder through order two for
+$F_{H_0}$ gives
+\begin{equation*}
+F_{H_0}(t)=H_0+t\operatorname{ad}_{S_1}(H_0)
++\frac{t^2}{2}\operatorname{ad}_{S_1}^2(H_0)
++\frac{t^3}{2}\int_0^1(1-u)^2
+  \mathcal U_{ut}(\operatorname{ad}_{S_1}^3H_0)\,du.
+\end{equation*}
+Taylor's theorem through order one for $F_V$ gives
+\begin{equation*}
+F_V(t)=V+t\operatorname{ad}_{S_1}(V)
++t^2\int_0^1(1-u)
+ \mathcal U_{ut}(\operatorname{ad}_{S_1}^2V)\,du.
+\end{equation*}
+Add $F_{H_0}(t)+tF_V(t)$ and compare with
+\eqref{eq:ch21-bch-two-polynomial}; this proves
+\eqref{eq:ch21-sw-integral-remainder} and then
+\eqref{eq:ch21-sw-exact-plus-remainder}.
+For real $t$ and $u$, $e^{utS_1}$ is unitary, so
+$\|\mathcal U_{ut}(T)\|=\|T\|$.  Apply the triangle inequality and
+$\int_0^1(1-u)^2du=1/3$ and
+$\int_0^1(1-u)du=1/2$ to obtain
+\eqref{eq:ch21-sw-norm-bound}.  Finally, orthogonal projections are
+contractions, hence $\|PR_3P\|\leq\|R_3\|$.
+\end{proof}
+
+\begin{remark}[A finite error is not a uniform scaling estimate]
+The right side of \eqref{eq:ch21-sw-norm-bound} may increase with
+lattice size or as the non-resonant denominators become small.  It is
+a genuine estimate at fixed finite carrier, but not a proof of an
+$L\to\infty$ limit or a scale-independent perturbative expansion.
+The coefficientwise polynomial result of the supplied Core A10 module
+should not be reported as formal verification of this analytic bound.
+\end{remark}
+
+\subsection{A two-level calculation, including what fails at finite coupling}
+\label{subsec:ch21-two-level}
+
+\begin{example}[Explicit Schrieffer--Wolff rotation]
+\label{ex:ch21-sw-two-level}
+Let $\mathcal H=\mathbb C^2$, $P=\operatorname{diag}(1,0)$ and
+$Q=\operatorname{diag}(0,1)$.  Take
+\begin{equation}
+ H_0=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad
+ V=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\label{eq:ch21-sw-2x2-input}
+\end{equation}
+The low state has energy zero and the high state energy one.  The
+Sylvester denominator is $0-1=-1$, so
+\begin{equation}
+ S_1=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+ [S_1,H_0]=-V,
+ \quad[S_1,V]=\begin{pmatrix}-2&0\\0&2\end{pmatrix}.
+\label{eq:ch21-sw-2x2-generator}
+\end{equation}
+The effective Hamiltonian is therefore the scalar operator
+\begin{equation}
+ H_{\mathrm{eff}}^{[2]}(t)=-t^2 P
+ \quad\text{on }\operatorname{ran}P.
+\label{eq:ch21-sw-2x2-effective}
+\end{equation}
+We can test exactly which part of this assertion is an approximation.
+Since $S_1^2=-I$, the rotation is
+\begin{equation}
+ e^{tS_1}=\begin{pmatrix}\cos t&-\sin t\\
+                                   \sin t&\cos t\end{pmatrix}.
+\end{equation}
+Direct multiplication gives the \emph{exact} compressed entry
+\begin{align}
+ (P\widetilde H(t)P)_{11}
+ &=\sin^2t-t\sin(2t)
+   =-t^2+t^4+O(t^6),
+\label{eq:ch21-sw-2x2-rotated}\end{align}
+and the off-diagonal entry
+\begin{equation}
+ (\widetilde H(t))_{12}
+ =t\cos(2t)-\tfrac12\sin(2t)
+ =-\tfrac43t^3+O(t^5).
+\label{eq:ch21-sw-2x2-off}
+\end{equation}
+Thus the first-order mixing is canceled but the chosen rotation is
+not an exact block diagonalization for arbitrary $t$.  Independently,
+the exact eigenvalues of $H_0+tV$ are
+\begin{equation}
+ E_\pm(t)=\frac{1\pm\sqrt{1+4t^2}}2.
+\label{eq:ch21-sw-2x2-eigvals}
+\end{equation}
+At $t=2/3$, the lower eigenvalue is $-1/3$ (with eigenvector
+$(-2,1)$), whereas \eqref{eq:ch21-sw-2x2-effective} gives $-4/9$.
+The two values differ because a second-order effective operator is
+not an exact finite-coupling spectral identification.
+\end{example}
+
+The same caution applies when the quadratic correction happens to
+vanish.  A nonzero perturbation can couple retained and discarded
+states through \emph{different} intermediate energies with cancelling
+denominators.
+
+\begin{example}[Zero second-order correction with nonzero leakage]
+\label{ex:ch21-sw-three-level}
+Take $\mathcal P=\operatorname{span}\{e_1\}$,
+$\mathcal Q=\operatorname{span}\{e_2,e_3\}$ and
+\begin{equation}
+ H_0=\operatorname{diag}(0,-1,1),\quad
+ V=\begin{pmatrix}0&1&1\\1&0&0\\1&0&0\end{pmatrix},\quad
+ S_1=\begin{pmatrix}0&1&-1\\-1&0&0\\1&0&0\end{pmatrix}.
+\label{eq:ch21-sw-three-input}
+\end{equation}
+Here $PVQ\ne0$ and $[S_1,H_0]=-V$, but
+\begin{equation}
+\langle e_1\lvert W^{(2)}\rvert e_1\rangle
+ =\frac{|V_{12}|^2}{0-(-1)}
+  +\frac{|V_{13}|^2}{0-1}=1-1=0.
+\label{eq:ch21-sw-three-cancel}
+\end{equation}
+A vanishing compressed second-order commutator therefore does
+\emph{not} imply $PVQ=QVP=0$.  Conversely, if both off-block
+couplings vanish, choosing $S_1=0$ gives the exact identity-rotation
+compression $P(H_0+tV)P=PH_0P+tPVP$ and zero correction.  That
+forward implication does not require a non-resonance hypothesis.
+\end{example}
+
+\subsection{Scope of the finite construction and the remaining chapter obligations}
+\label{subsec:ch21-effective-scope}
+
+The discrete procedure has three mathematically independent inputs:
+(i) a precisely selected coordinate budget and its orthogonal shell,
+(ii) an invariant baseline $H_0$ and a cross-block perturbation $V$,
+and (iii) control of coupled energy denominators.  Earlier sections
+provided exact finite CAR words, charge-selection rules, and conditional
+leakage witnesses for spinful perturbations.  Those statements do not
+by themselves furnish the spectral decomposition, denominator bounds,
+or block invariance needed to insert a particular interacting
+Hamiltonian into the Schrieffer--Wolff theorem.
+
+The supplied \texttt{Bosonize.Core.A10DiscreteSchriefferWolff} support
+module has a more specific verified scope.  It contains proved
+finite-matrix statements for the non-resonant commutator equation and
+skew-Hermiticity of the constructed generator, the two- and three-level
+matrix witnesses, the compressed \emph{degree-two BCH polynomial}
+identity, ambient shell-projector partition/orthogonality/adjointness,
+and a nonzero repeated-mode-one shell witness.  The projector identity
+in that module is $P+Q=\Pi_{\boldsymbol N,K}$ on the ambient Fock
+carrier, while the generic compressed BCH theorem assumes $P+Q=I$
+on its whole carrier.  Restricting to
+$\mathcal B_{\boldsymbol N,K}$ and transferring an actual model's
+operators and hypotheses is a separate bridge, not established merely
+by placing the two statements next to each other.  The A10 module's
+Phase B proofs do not constitute Lean verification of the present
+Chapter 21 manuscript.
+
+The remaining constructive tasks include proving, for any chosen
+spinful Hamiltonian, that its finite blocks act on the proposed
+carriers; checking charge-sector and energy-margin constraints at
+each intermediate application; constructing a valid $H_0$ and its
+adapted eigenbasis or another certified Sylvester solver; and proving
+any claimed uniform denominator or remainder bounds.  The
+coupling-wise condition is conditional, and a vanishing second-order
+term is not a substitute for checking it.  Furthermore, a Mott or
+spin gap would require an independently defined spectral gap and a
+proof of its behavior under relevant size or coupling limits.
+A continuum RG flow requires a scale-changing construction and a
+comparison between effective theories at successive scales; energy
+shell projection at one finite $K$ is not such a construction.
+Finally, an isolated finite Hermitian Hamiltonian has a real discrete
+spectrum, so scattering lifetimes or dissipative flow cannot be
+inferred solely from the matrix identities above.
+
+What has been established here is therefore deliberately narrower
+and more precise: a well-defined \emph{finite energy-shell filter}, a
+non-resonant \emph{first-order unitary generator}, an exact
+\emph{second-order compressed polynomial identity}, and a finite
+analytic remainder estimate with explicit hypotheses.  These results
+provide the operator-level starting point for a future controlled
+effective-Hamiltonian analysis, without prematurely identifying its
+outcome with a charge gap or a continuum renormalization-group law.
