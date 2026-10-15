@@ -1,0 +1,4 @@
+# Reviewed guidance for CH19 Phase A (merged by the cycle runner at start).
+task = """Use docs/webllm/guidance/ch19_phase_a_sources.md as reviewed guidance (claims ledger, convention flags, review of earlier drafts, recommended scope D1-D5). Two modules: BosonizeStubs/A08OscillatorStates.lean (namespace Bosonize.A08) then BosonizeStubs/Ch19Correlations.lean (namespace Bosonize.Ch19). Construct the states; never take states, adjoints or CCRs as hypotheses. The dressed state is omega0 composed with the Bogoliubov map with -s. Keep the ordered (complex) kernel. Do not identify the formal state with a finite-Fock density matrix beyond the stated scalar equality at s = 0. Include s != 0 witnesses. Never name the Luttinger parameter K."""
+context = ["docs/webllm/guidance/ch19_phase_a_sources.md"]
+max_packet_bytes = 400000
