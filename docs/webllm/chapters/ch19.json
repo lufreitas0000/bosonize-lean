@@ -8,13 +8,11 @@
       "path": "BosonizeStubs/Ch19Correlations.lean"
     }
   ],
-  "phase": "B_in_progress",
-  "pending_modules": [
-    "BosonizeStubs/Ch19Correlations.lean"
-  ],
+  "phase": "B_complete",
+  "pending_modules": [],
   "sources": {
     "BosonizeStubs/A08OscillatorStates.lean": "ed3ef9f87c9be26460004fd52efbdd7f0a2490b544c990cc89e6178f0a97ee35",
-    "BosonizeStubs/Ch19Correlations.lean": "3f9526f37685ac07035fd3adf5745317b5c830519bc7b3d436dc97b9d122b657"
+    "BosonizeStubs/Ch19Correlations.lean": "cc2eee0d9a5c53cf9a9e7b9a48998fd8de90d4b17f8359003b957bb7214e1687"
   },
   "theorem_contracts": 62
 }
