@@ -136,3 +136,9 @@ The first power-intertwining scratch proof encountered the known stored coordina
 | 2026-10-13 | CH16 finite spatial collapse | Direct operator automation obscures the two signed pairings and residue alias bounds. | Sum scalar quadratic coefficients first, use typed divisibility for no-alias orthogonality, retain opposite flags at equal Fin indices, and reindex to positive modes. No definition or statement pivot. | Complete standard-axiom proof; exact factor 2 chiral and factor 4 dual energy. |
 | 2026-10-13 | CH16 enlarged budget proof | Species selectors and Nat-to-Int sums had different syntactic forms after margin translation. | Normalize the actual species selector and cast addition in the local proof; preserve original excursion interface. | Complete, compiler checked and frozen. |
 | 2026-10-13 | CH16 error eigenvector | Unrestricted CCR would incorrectly ignore finite edges and the right-suffix carrier. | Apply joint CCR on ground budget 0, use ground lowering and cross-species commutation, then isolate the finite mode and weight difference. | Genuine nonzero witnesses and all 19 proofs accepted; Phase C complete. |
+
+## 2026-10-15 branch consolidation
+
+| Date | Module/Context | Obstruction | Pivot/Resolution | Status |
+| --- | --- | --- | --- | --- |
+| 2026-10-15 | CH17 B/C historical branches | Four unique checkpoint commits; normal merge would resurrect moved stubs and conflict with accepted Core companions/roadmap. | Preserve both tips as merge parents using the current main tree as authoritative. Old source and review material remains accessible through Git history; no Core or lock changes. | Consolidation authorized; superseded checkpoints |
