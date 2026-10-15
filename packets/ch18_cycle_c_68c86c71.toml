@@ -1,0 +1,13 @@
+# Automatically prepared start command; scope approved by user finish command.
+version = 1
+id = "ch18_cycle_c_68c86c71"
+phase = "C"
+repo = ".."
+task = "CH18, Phase C. Scope: Budget-dependent pairing and Bogoliubov identities, vacuum shifts and explicit witnesses. Distinguish finite ground states from an assumed global CCR vacuum.\nSources are proposals, not guaranteed truths. Do not invent verification evidence or silently weaken statements.\nReturn a Markdown synchronization/review candidate with ## Proved scope, ## Evidence, ## Pedagogical changes, ## Remaining limitations. Cite supplied evidence files, preserve source theory and distinguish exact proved results from conditional, formal or analytic claims. Do not invent passed tests. Do not move Lean files or alter locks. Human review and local promotion remain separate gates.\nReturn ALL listed Markdown files completely: the audit artifact, chapter/appendix lecture notes and companions. Preserve the existing reference material, including content for later chapters in shared appendices; update only this chapter's constructive realization and verified scope. The runner will migrate companion paths during Core promotion. No placeholder prose or invented evidence."
+targets = ["docs/webllm/drafts/ch18_cycle_c_68c86c71.md", "notes/md/ch18_bogoliubov.md", "notes/appendices/a07_interactions_and_bogoliubov.md", "docs/companion/BosonizeStubs/Ch18Bogoliubov.md"]
+lean_proofs = []
+context = ["notes/md/ch18_bogoliubov.md", "notes/appendices/a07_interactions_and_bogoliubov.md", "docs/webllm/generated/ch18_cycle_c_68c86c71_core_api.md", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/Ch18Bogoliubov.lean", "note/webllm/ch18/phaseB-ch18_cycle_b_0648ad0f.md", "scripts/webllm/verify_phase_c.py"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/Ch18Bogoliubov.lean"], ["python3", "scripts/webllm/verify_phase_c.py", "docs/webllm/drafts/ch18_cycle_c_68c86c71.md"]]
+timeout = 900
+max_packet_bytes = 200000
