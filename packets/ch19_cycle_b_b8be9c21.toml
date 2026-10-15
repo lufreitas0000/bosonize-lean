@@ -1,0 +1,13 @@
+# Automatically prepared start command; scope approved by user finish command.
+version = 1
+id = "ch19_cycle_b_b8be9c21"
+phase = "B"
+repo = ".."
+task = "CH19, Phase B. Scope: Constructed states, positivity, normalization and both ordered contractions. Do not identify formal states with finite Fock density matrices without proof.\nSources are proposals, not guaranteed truths. Do not invent verification evidence or silently weaken statements.\nProve every placeholder in every requested complete Lean file. Preserve all headers, definitions, imports and context. No new top-level helpers, axioms, sorry/admit/sorryAx/native_decide. Local have/let proofs are allowed. Return the exact JSON envelope from the packet. Report an interface obstruction instead of changing a frozen contract. Every reachable dependency is freshly compiled and every declaration audited; human proof review follows acceptance."
+targets = ["BosonizeStubs/Ch19Correlations.lean"]
+lean_proofs = ["BosonizeStubs/Ch19Correlations.lean"]
+context = ["notes/md/ch19_correlations.md", "notes/appendices/a08_states_and_correlations.md", "docs/webllm/generated/ch19_cycle_b_b8be9c21_core_api.md", "BosonizeStubs/A08OscillatorStates.lean", "scripts/webllm/verify_phase_b.py", "docs/companion/BosonizeStubs/Ch19Correlations.md"]
+locked = ["docs/spec/core_locks.json", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]
+verify = [["python3", "scripts/webllm/verify_phase_b.py", "BosonizeStubs/Ch19Correlations.lean"]]
+timeout = 900
+max_packet_bytes = 200000
