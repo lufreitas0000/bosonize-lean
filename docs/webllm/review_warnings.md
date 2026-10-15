@@ -13,7 +13,7 @@ Non-blocking findings from independent reviews. Each one is either resolved by a
 | CH18-N12 | CH18 A | `hm` unused in the cross commutator budget lemmas | — | accepted (Core signature consistency) | accepted |
 | CH18-N13 | CH18 A | Source map should cite `A07Interactions.bogoliubov_creator_adjoint` for c07 | — | CH18 Phase C | open |
 | CH18-N14 | CH18 A | Design/Review prose says "every operator theorem is budgeted"; the inverse transforms and `bogoliubov_cross_annihilator_creator` are global, and `inverse_combination` is carrier-generic | — | CH18 Phase C (pedagogical sync) | open |
-| CH18-N15 | CH18 A | Companion notebook lacks tasks for `tanh_relation_of_params`, `luttingerG_eq_sqrt_of_params`, `luttingerGInv_eq_inv`, `hyperbolic_coeff_eq_luttinger`, `inverse_combination`, `bogoliubov_cross_annihilator_annihilator_on_budget` | Phase B tracking | CH18 Phase B start (companion update) | open |
+| CH18-N15 | CH18 A | Companion notebook lacks tasks for `tanh_relation_of_params`, `luttingerG_eq_sqrt_of_params`, `luttingerGInv_eq_inv`, `hyperbolic_coeff_eq_luttinger`, `inverse_combination`, `bogoliubov_cross_annihilator_annihilator_on_budget` | Phase B tracking | CH18 Phase B start (companion update) | resolved 2026-10-15 (companion tasks added) |
 | CH18-T1 | CH18 sources | Transcript defects: GIA22:67 garbled; ML (4.7)–(4.13) missing; ML:1401, 1407, 1413 garbled exponents | anything citing those equations | before citing (check PDFs) | open |
 
 Review trail for CH18 Phase A:
