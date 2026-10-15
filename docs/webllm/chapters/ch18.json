@@ -5,12 +5,10 @@
       "path": "BosonizeStubs/Ch18Bogoliubov.lean"
     }
   ],
-  "phase": "A_complete",
-  "pending_modules": [
-    "BosonizeStubs/Ch18Bogoliubov.lean"
-  ],
+  "phase": "B_complete",
+  "pending_modules": [],
   "sources": {
-    "BosonizeStubs/Ch18Bogoliubov.lean": "22ac24a6a9f90d31cb0dcfc2bdb1acd600932103936c4dfc0ca7433d8eb25d0e"
+    "BosonizeStubs/Ch18Bogoliubov.lean": "b55da072fac73055173cd65e584751caabdd02f2473648725b09e11c6fbc314b"
   },
   "theorem_contracts": 34
 }

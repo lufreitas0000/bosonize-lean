@@ -28,3 +28,6 @@ Phase A integrated after user review. Theorems remain unproved.
 
 
 Phase A finish evidence: `note/webllm/ch18/phaseA-ch18_cycle_a_6c99dd27.md`.
+
+
+Phase B finish evidence: `note/webllm/ch18/phaseB-ch18_cycle_b_0648ad0f.md`.
