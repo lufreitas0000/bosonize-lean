@@ -1,0 +1,21 @@
+{
+  "chapter": 19,
+  "modules": [
+    {
+      "path": "BosonizeStubs/A08OscillatorStates.lean"
+    },
+    {
+      "path": "BosonizeStubs/Ch19Correlations.lean"
+    }
+  ],
+  "phase": "A_complete",
+  "pending_modules": [
+    "BosonizeStubs/A08OscillatorStates.lean",
+    "BosonizeStubs/Ch19Correlations.lean"
+  ],
+  "sources": {
+    "BosonizeStubs/A08OscillatorStates.lean": "0ee3f0a5b676f795b0aefa9f23c5e774e5025c39fcd5979b4eddac2d73dadca4",
+    "BosonizeStubs/Ch19Correlations.lean": "3f9526f37685ac07035fd3adf5745317b5c830519bc7b3d436dc97b9d122b657"
+  },
+  "theorem_contracts": 62
+}

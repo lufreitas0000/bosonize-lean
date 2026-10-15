@@ -270,3 +270,10 @@ CH17: **C_complete**. 37 contracts; 0 pending proof modules. Current machine rec
 CH18: **C_complete**. 34 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch18.json`.
 
 <!-- /lean-cycle CH18 -->
+
+<!-- lean-cycle CH19 -->
+## Automated CH19 checkpoint
+
+CH19: **A_complete**. 62 contracts; 2 pending proof modules. Current machine record: `docs/webllm/chapters/ch19.json`.
+
+<!-- /lean-cycle CH19 -->
