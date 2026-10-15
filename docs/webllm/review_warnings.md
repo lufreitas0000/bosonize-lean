@@ -14,6 +14,8 @@ Non-blocking findings from independent reviews. Each one is either resolved by a
 | CH18-N13 | CH18 A | Source map should cite `A07Interactions.bogoliubov_creator_adjoint` for c07 | — | CH18 Phase C | resolved 2026-10-15 (cited in notes and companion) |
 | CH18-N14 | CH18 A | Design/Review prose says "every operator theorem is budgeted"; the inverse transforms and `bogoliubov_cross_annihilator_creator` are global, and `inverse_combination` is carrier-generic | — | CH18 Phase C (pedagogical sync) | resolved 2026-10-15 (global vs budget classification in notes) |
 | CH18-N15 | CH18 A | Companion notebook lacks tasks for `tanh_relation_of_params`, `luttingerG_eq_sqrt_of_params`, `luttingerGInv_eq_inv`, `hyperbolic_coeff_eq_luttinger`, `inverse_combination`, `bogoliubov_cross_annihilator_annihilator_on_budget` | Phase B tracking | CH18 Phase B start (companion update) | resolved 2026-10-15 (companion tasks added) |
+| CH19-N2 | CH19 A | Contraction table only for the right branch; general-ν same-branch and (ν, opposite ν) cross tables incl. A_ν C_η = 0 verified true but not stated | CH20b (Gaussian moments; may use omegaP_comp_bogoliubovMap instead) | CH20b Phase A (additive lemmas) | open |
+| CH19-G1 | CH19 sources | Guidance D4 item 10 / ledger c15 omit ζ ≠ 0 (statements fixed in the frozen interface) | future drafters reading the guidance | now | resolved 2026-10-15 (guidance patched) |
 | CH18-T1 | CH18 sources | Transcript defects: GIA22:67 garbled; ML (4.7)–(4.13) missing; ML:1401, 1407, 1413 garbled exponents | anything citing those equations | before citing (check PDFs) | open |
 
 Review trail for CH18 Phase A:
@@ -23,3 +25,11 @@ Review trail for CH18 Phase A:
 - Reviewer 1 round 2: PASS.
 
 Records are under hub `.agentctl/reviews/`, mirrored in `docs/webllm/reviews/ch18_phase_a/`.
+
+Review trail for CH19 Phase A:
+- Drafter: Antigravity subagent (pro) from docs/webllm/guidance/ch19_phase_a_sources.md.
+- Reviewer 1: FAIL (B1: diagonal kernel theorems false at ζ = 0).
+- Reviewer 2: adjudication, CHANGES_REQUIRED (B1; real unused hypotheses in four ground_* lemmas; CCR descent for [A,A], [C,C]).
+- Revision round 2; Reviewer 1 round 2: PASS. Frozen by `lean-finish-phaseA 19`.
+
+Records: docs/webllm/reviews/ch19_phase_a/.

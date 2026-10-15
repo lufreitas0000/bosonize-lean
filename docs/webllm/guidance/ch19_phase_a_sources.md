@@ -266,8 +266,8 @@ def freePair : Ch18.HyperbolicPair := ⟨1, 0, by norm_num⟩
 8. `symmetrized_density_kernel (hζ) : (D(x,y)+D(y,x))/2 = densityKernel h M ζ q q d` with `q = (Ch18.luttingerG hp + (Ch18.luttingerG hp)⁻¹)/4`.
 9. `s_sq_eq_luttinger : hp.s^2 = (g + g⁻¹ - 2)/4`; `c_sq_eq_luttinger : hp.c^2 = (g + g⁻¹ + 2)/4`.
 10. Diagonal:
-    - `density_kernel_diagonal : D(x,x) = (((hp.c^2+hp.s^2) * (M*(M+1)/2 : ℝ) / ((2*h : ℕ) : ℝ)^2 : ℝ) : ℂ)`;
-    - `density_kernel_diagonal_pos (hh : 0 < h) (hM : 1 ≤ M) : 0 < (D(x,x)).re`.
+    - `density_kernel_diagonal (hζ : ζ ≠ 0) : D(x,x) = (((hp.c^2+hp.s^2) * (M*(M+1)/2 : ℝ) / ((2*h : ℕ) : ℝ)^2 : ℝ) : ℂ)`;
+    - `density_kernel_diagonal_pos (hζ : ζ ≠ 0) (hh : 0 < h) (hM : 1 ≤ M) : 0 < (D(x,x)).re`.
 11. `ordered_density_free (hs : hp.s = 0) (hζ) : D(x,y) = densityKernel h M ζ 1 0 d`.
 
 **Finite Fock layer** (`hh : 0 < h`, `hN : A05.admissible h Ns`, `branches`, r := `branches.rightSpecies`):
