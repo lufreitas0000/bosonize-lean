@@ -74,3 +74,4 @@ LEAN_CYCLE_REPO := $(CURDIR)
 # Standalone clones retain ordinary build/CI commands when the hub is unavailable.
 LEAN_CYCLE_HUB ?= $(abspath $(shell git rev-parse --git-common-dir)/../../..)
 -include $(LEAN_CYCLE_HUB)/scripts/lean_cycle.mk
+-include $(LEAN_CYCLE_HUB)/scripts/work.mk

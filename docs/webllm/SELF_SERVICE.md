@@ -37,45 +37,34 @@ make lean-finish-phaseC 16
 `make lean-start-phaseA CHAPTER=16` is equivalent to the positional form.
 Run one cycle command at a time. Supported chapter presets are 15–21.
 
-## Start now: CH18 Phase B
+## Current checkpoint and optional check-before-finish
 
-CH15–17 are complete and promoted. CH18 Phase A is frozen (34 theorem
-contracts) and Phase B was started on 2026-10-15. Two equivalent routes produce
-the Phase B response; finishing is the same.
-
-**Browser route:** `make lean-start-phaseB 18` prints the packet; send it,
-review and download the response.
-
-**API/agent route (from the hub):** proofs are produced one theorem at a time and
-accumulate as verified fragments (each compiled with only the standard axioms):
+CH18 is promoted. CH19/A08 has 62 proved contracts accepted in Phase B; Phase C
+is waiting. CH20–21 remain reviewed drafts, not completed proofs. Use `make work`
+for a local menu, or start/check/finish CH19 C explicitly:
 
 ```bash
-make api-prove-file FILE=BosonizeStubs/Ch18Bogoliubov.lean   # OpenAI pools → Jules → Gemini fallback
-make jules-collect                                          # verify finished Jules sessions
-make api-theorem FILE=BosonizeStubs/Ch18Bogoliubov.lean NAME=concrete_bogoliubov_witness CONJUNCTS=1 ALIAS=api-pro
-make api-assemble FILE=BosonizeStubs/Ch18Bogoliubov.lean CHAPTER=18   # delivers response.json
+make lean-start-phaseC 19
+# Send packet.md to your chosen chatbot; download the complete response.
+make lean-check 19 LEAN_PHASE=C
+# Fix failures with feedback.md; repeat check. After the required review:
+make lean-finish-phaseC 19
 ```
 
-Status: 33 of 34 theorems proved; `concrete_bogoliubov_witness` has 11 of 12
-parts proved (part 8 pending). Then, for either route:
-
-```bash
-make lean-finish-phaseB 18
-```
-
-Finish runs the full Phase B verifier, CI, locks and evidence recording, exactly
-as for a browser response. Afterwards the runner directs you to
-`make lean-start-phaseC 18`. Tracked non-blocking review items are in
-[review_warnings.md](review_warnings.md).
+Check does not approve, merge or push. Finish is the explicit approval and
+phase-integration action. API/Jules authors may also supply candidates; transport
+never replaces the verification/independent-review gates. See workspace
+`orchestrator/docs/HUMAN_WORKFLOW.md` for generic document tasks and switching
+resources. No live authoring is triggered by opening the menu.
 
 ## Stable files; no intermediate-name bookkeeping
 
-For CH18 B, the convenient location is always:
+For CH19, the real flat inbox is:
 
 ```text
-/home/lucas/Projects/.packets/current/ch18/phaseB/packet.md
-/home/lucas/Projects/.packets/current/ch18/phaseB/response.json
-/home/lucas/Projects/.packets/current/ch18/phaseB/feedback.md
+/home/lucas/Projects/.packets/bosonize-lean/ch19/packet.md
+/home/lucas/Projects/.packets/bosonize-lean/ch19/response.json
+/home/lucas/Projects/.packets/bosonize-lean/ch19/feedback.md
 ```
 
 Replace only the chapter number and phase letter when opening another phase.

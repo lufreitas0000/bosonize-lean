@@ -1,0 +1,27 @@
+version = 1
+id = "ch18-documentation"
+repo = ".."
+phase = "B"
+task = """
+Repair only the CH18 pedagogical Markdown and its companion, using the supplied
+audit. Qualify strict vacuum-shift positivity with a positive retained-mode cutoff
+and positive lattice half-length. Correct the commutator transcription and retain
+the precise no-common-bare-and-dressed-vacuum scope. Reconcile stale companion
+status with the supplied C_complete chapter record. Preserve source theory,
+formulas, exact hypotheses and existing references. Distinguish proved Core
+contracts from additional prose derivations. Do not change Lean, imports, locks,
+other chapters, LaTeX, or make new claims of global CCR/finite dressed vacua.
+Return both requested complete files in the exact JSON envelope. A human browser,
+API model or Jules worker may author the candidate; verification and independent
+mathematical review happen locally afterward. Do not claim human approval.
+"""
+targets = ["notes/md/ch18_bogoliubov.md", "docs/companion/Bosonize/Core/Ch18Bogoliubov.md"]
+context = ["Bosonize/Core/Ch18Bogoliubov.lean", "docs/webllm/chapters/ch18.json", "note/ch18_and_orchestration_audit_2026-10-15.md"]
+locked = ["Bosonize/Core/Ch18Bogoliubov.lean", "docs/spec/stub_locks.v2.json", "docs/spec/core_locks.json"]
+verify = [
+  ["python3", "/home/lucas/Projects/scripts/verify_document.py", "notes/md/ch18_bogoliubov.md", "docs/companion/Bosonize/Core/Ch18Bogoliubov.md"],
+  ["python3", "scripts/guards/stub_lock.py", "--check", "--strict"],
+  ["python3", "scripts/guards/core_lock.py"]
+]
+timeout = 180
+max_packet_bytes = 180000
