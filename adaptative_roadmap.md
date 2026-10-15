@@ -4,6 +4,12 @@ Updated: 2026-10-15. **Current sprint:** the user authorized I0–I2 infrastruct
 
 This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures. The requested execution policy for the next implementation is external-first (Jules and account-eligible OpenAI API), with no default Antigravity author/reviewer or desktop-subagent fallback. Skills/rules and the direct judge entrypoints now enforce that default policy within the controller; the desktop account itself remains outside its control.
 
+Current document sprint (2026-10-15): native single-file LaTeX handoff and arrow-key
+operator workflow implemented; write unwritten CH19 first. Preserve existing
+CH01–18 text/drafts for later Jules revision/review. The four-section CH19 queue
+and remaining acceptance gates are in [LaTeX workflow](docs/webllm/LATEX_WORKFLOW.md).
+This is writing infrastructure, not CH19 promotion or new mathematical acceptance.
+
 ## Baseline and mathematical scope
 
 At reviewed commit `05c25e4`, CH01–CH18 and their implemented support are promoted into 31 frozen Core modules. CH19/A08 has 62 proved contracts and Phase B acceptance; Phase C was started but is unfinished. CH20 has a reviewed 48-contract Phase A draft, and CH21 a reviewed 47-contract draft, according to saved review records; neither has a chapter acceptance record. CH20's dependent formal-vertex/state work (CH20b) is a separate missing package. Thus 21 planned chapter notes do not mean 21 completed Lean chapters.

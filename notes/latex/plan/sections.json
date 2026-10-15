@@ -1,0 +1,433 @@
+{
+  "purpose": "Navigational inventory; not proof or literature coverage certification",
+  "chapters": [
+    {
+      "chapter": 1,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch01_lattice_band_geometry.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch01_lattice_band.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch01LatticeBand.lean"
+      ],
+      "sections": [
+        "Introduction and Discrete Setting",
+        "The Spatial Lattice",
+        "The Momentum Band and Nyquist Asymmetry",
+        "Quotient Projections and the Centered Section",
+        "Transported Band Arithmetic and Umklapp Wrapping",
+        "The Exceptional Nyquist Mode",
+        "Chapter Summary and Literature Comparison"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 2,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch02_umbral_calculus.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch02_umbral_calculus.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch02UmbralCalculus.lean"
+      ],
+      "sections": [
+        "Introduction and Discrete Differential Structure",
+        "The Coordinate Domain and the Operator Algebra",
+        "Discrete Leibniz Rules",
+        "Discrete Summation by Parts on Periodic Lattices",
+        "Newton Binomial Expansions and Falling Factorials",
+        "The Umbral Intertwining Isomorphism",
+        "The Discrete Heisenberg Pair and the No-Go Theorem",
+        "Chapter Summary and Literature Comparison"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 3,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch03_fourier.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch03_fourier.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch03Fourier.lean"
+      ],
+      "sections": [
+        "Introduction and Algebraic Setting",
+        "Generic Character Algebra over Fields",
+        "The Unscaled Analysis and Synthesis Transforms",
+        "Dual Character Orthogonality and Algebraic Inversion",
+        "Unitary Fourier Transform in the Hilbert Setting",
+        "Diagonalization of Difference Operators and Exact Dispersion",
+        "Chapter Summary and Literature Comparison"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 4,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch04_CAR_Fock_space.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch04_car_fock.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch04CARFock.lean"
+      ],
+      "sections": [
+        "Introduction and Abstract Setting",
+        "The Two-Tiered CAR Hierarchy: Algebraic vs.\\ Hilbert Setting",
+        "The Concrete Occupation Fock Space",
+        "Exact Fermionic Sign Mechanics",
+        "Creation and Annihilation Operators on Fock Space",
+        "The Global Fermion Parity Operator",
+        "Chapter Summary and Literature Comparison"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 5,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch05_fermions_lattice_band.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch05_fermions.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch05Fermions.lean"
+      ],
+      "sections": [
+        "Introduction and Physical Framework",
+        "Spatial Fermions via the Unitary Fourier Transform",
+        "Exact Position CAR Inheritance",
+        "Operator Fourier Inversion",
+        "Conservation of Total Particle Number",
+        "The Dirac Fermi Sea and Linearized Hamiltonians",
+        "Chapter Summary and Literature Comparison"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 6,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch06_lattice_AQFT_net.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch06_lattice_aqft_net.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch06Ext.lean",
+        "Bosonize/Core/Ch06LocalNet.lean"
+      ],
+      "sections": [
+        "Introduction to Lattice AQFT and Algebraic Preliminaries",
+        "The Local Net of Observable Algebras",
+        "The Haag--Kastler Axioms as Proved Theorems",
+        "Global Algebra Irreducibility",
+        "Boundary Extensions: Holonomy, Twists, and Spatial Transport",
+        "Chapter Summary and Literature Comparison"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 7,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch07_vacuum_budget_space.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch07_vacuum_budget.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch07VacuumBudget.lean"
+      ],
+      "sections": [
+        "Introduction and the Energy Budget Philosophy",
+        "Admissible Charge Sectors and Sector Grounds",
+        "Integer Energy Grading and Observables",
+        "The Rank Formula and Ground State Uniqueness",
+        "The Frozen Margins Theorem",
+        "Energy Budget Subspaces and Filtered Operators",
+        "Chapter Summary and Literature Comparison"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 8,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch08_boson.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch08_boson_fock.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch08Boson.lean"
+      ],
+      "sections": [
+        "Introduction and the Algebraic Oscillator Approach",
+        "The Polynomial Carrier and the Haldane Inner Product",
+        "The Exact Ambient Canonical Commutation Relations",
+        "Energy Filtration and Finite Carrier Spaces",
+        "Exact Nilpotent Exponentials and the Baker--Campbell--Hausdorff Formula",
+        "Wick's Theorem and Vacuum Polynomial Recurrence",
+        "Chapter Summary and Literature Comparison"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 9,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch09_density_modes.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch09_density_modes.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch09DensityModes.lean"
+      ],
+      "sections": [
+        "Introduction and the Bridge to Bosonic Currents",
+        "Non-Wrapping Momentum Kinematics and Valid Pairs",
+        "Raw and Normal-Ordered Density Operators",
+        "Exact Kinematic Lemmas and Global Commutativity",
+        "Charge Conservation and Energy Grading",
+        "Exact Vacuum Norm and Linear Independence",
+        "Spatial Density Fourier Expansion and Wrap Remainders"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 10,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch10_Heisenberg_algebra.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch10_heisenberg_algebra.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch10Heisenberg.lean"
+      ],
+      "sections": [
+        "Introduction and the Algebraic Origin of the Schwinger Anomaly",
+        "The Exact Diagonal Edge Formula on Fock Space",
+        "Regime M1: The Diagonal Buffer Zone and the Schwinger Term",
+        "Regime M2: Off-Diagonal Suppression and Pauli Blocking",
+        "Word-Excursion Tracking in Composed Products"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 11,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch11_Haldane_completeness.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch11_haldane_completeness.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch11HaldaneCompleteness.lean"
+      ],
+      "sections": [
+        "Introduction and the Completeness Problem",
+        "Fermionic Coordinates and the Rectangle Bijection (Regime R1)",
+        "Bosonic Partition States",
+        "Regime R2: The Hall--Gram Matrix and Bosonic Orthogonality",
+        "Haldane Completeness and the Whole Budget Basis",
+        "Pedagogical Synthesis and Discussion"
+      ],
+      "writing_status": "published draft; revise later via Jules"
+    },
+    {
+      "chapter": 12,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch12_Sugawara_construction.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch12_sugawara.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch12Sugawara.lean"
+      ],
+      "sections": [
+        "Private local draft exists; sections withheld pending review"
+      ],
+      "writing_status": "private LaTeX draft; review/integration later"
+    },
+    {
+      "chapter": 13,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch13_Klein_factors.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch13_klein_factors.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch13KleinFactors.lean"
+      ],
+      "sections": [
+        "Private local draft exists; sections withheld pending review"
+      ],
+      "writing_status": "private LaTeX draft; review/integration later"
+    },
+    {
+      "chapter": 14,
+      "status": "promoted (roadmap; see Core)",
+      "markdown": [
+        "notes/md/ch14_Mattis_Mandelstam_formula.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch14_mandelstam.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch14Mandelstam.lean"
+      ],
+      "sections": [
+        "Private local draft exists; sections withheld pending review"
+      ],
+      "writing_status": "private LaTeX draft; review/integration later"
+    },
+    {
+      "chapter": 15,
+      "status": "C_complete",
+      "markdown": [
+        "notes/md/ch15_dual_fields.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch15_dual_fields.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch15DualFields.lean"
+      ],
+      "sections": [
+        "Private local draft exists; sections withheld pending review"
+      ],
+      "writing_status": "private LaTeX draft; review/integration later"
+    },
+    {
+      "chapter": 16,
+      "status": "C_complete",
+      "markdown": [
+        "notes/md/ch16_field_Hamiltonian.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch16_field_hamiltonian.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch16FieldHamiltonian.lean"
+      ],
+      "sections": [
+        "Private local draft exists; sections withheld pending review"
+      ],
+      "writing_status": "private LaTeX draft; review/integration later"
+    },
+    {
+      "chapter": 17,
+      "status": "C_complete",
+      "markdown": [
+        "notes/md/ch17_LL_Models.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch17_luttinger_models.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch17LuttingerModels.lean"
+      ],
+      "sections": [
+        "Private local draft exists; sections withheld pending review"
+      ],
+      "writing_status": "private LaTeX draft; review/integration later"
+    },
+    {
+      "chapter": 18,
+      "status": "C_complete",
+      "markdown": [
+        "notes/md/ch18_bogoliubov.md"
+      ],
+      "latex": [
+        "notes/latex/chapters/ch18_bogoliubov.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/Ch18Bogoliubov.lean"
+      ],
+      "sections": [
+        "Private local draft exists; sections withheld pending review"
+      ],
+      "writing_status": "private LaTeX draft; review/integration later"
+    },
+    {
+      "chapter": 19,
+      "status": "B_complete",
+      "markdown": [
+        "notes/md/ch19_correlations.md"
+      ],
+      "latex": [],
+      "lean": [
+        "BosonizeStubs/Ch19Correlations.lean"
+      ],
+      "sections": [
+        "Chapter 19: Exact Correlation Functions",
+        "19.1 The Interacting Vacuum and Algebraic States",
+        "19.2 Algebraic Evaluation of the Mode Correlators",
+        "19.3 Real-Space Spatial Correlators",
+        "19.4 Technical Notes for the Lean 4 Formalization"
+      ],
+      "writing_status": "unwritten LaTeX; current priority",
+      "writing_tasks": [
+        "packets/book_ch19_scope.toml",
+        "packets/book_ch19_mode_correlators.toml",
+        "packets/book_ch19_spatial_correlators.toml",
+        "packets/book_ch19_finite_comparison.toml"
+      ]
+    },
+    {
+      "chapter": 20,
+      "status": "draft/pending (see roadmap)",
+      "markdown": [
+        "notes/md/ch20_CDW.md"
+      ],
+      "latex": [],
+      "lean": [],
+      "sections": [
+        "Chapter 20: Projected Order Parameters, Formal Vertex Correlators, and Model Duality",
+        "20.1 Exact Finite CAR Products",
+        "20.2 Constructed Formal Vertices and Exact Formal Correlators",
+        "20.3 Explicit Algebraic Model Duality"
+      ],
+      "writing_status": "unwritten LaTeX; current priority"
+    },
+    {
+      "chapter": 21,
+      "status": "draft/pending (see roadmap)",
+      "markdown": [
+        "notes/md/ch21_spinful_models.md"
+      ],
+      "latex": [],
+      "lean": [],
+      "sections": [
+        "Chapter 21: Gaps & Spin-1/2 Generalizations",
+        "21.1 The Spinful Index Set and Parity Sublattice",
+        "21.2 The Spin-Singlet Cooper Pair",
+        "21.3 Umklapp Scattering, Sector Leakage, and Discrete RG",
+        "21.4 Technical Notes for the Lean 4 Formalization"
+      ],
+      "writing_status": "unwritten LaTeX; current priority"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+version = 1
+id = "book-ch19-scope"
+repo = ".."
+phase = "B"
+task = """
+Write the FIRST section of the currently unwritten Chapter 19, States and
+Correlations: Scope, finite expectations, and abstract state functionals.
+Explain from undergraduate QM why finite vector/density expectations and the
+abstract CCR quasi-free functional must be distinguished. Construct the relevant
+objects in readable mathematical prose, with exact hypotheses and a worked finite
+example, and state the trace obstruction to global nonzero scalar CCR. Use the
+accepted CH19/A08 implementation for actual claims; its B_complete status is not
+Core promotion. Later CH19 sections will cover contractions, spatial correlators
+and comparison limitations. Give prerequisites explicitly; do not duplicate or
+rewrite CH01–18. Preserve source information and product order. The chapter's
+Markdown, companion and Lean are supplied for context, not as targets.
+Start with a section heading and label sec:ch19-scope. Use distinct notation for
+finite expectations and abstract omega. Return ONE complete standalone .tex file
+from response-template.tex, changing only the marked body. No JSON or ZIP.
+"""
+targets = ["notes/latex/chapters/sections/ch19_scope.tex"]
+context = ["notes/latex/plan/WRITING_POLICY.md", "notes/latex/plan/sections.json", "notes/latex/plan/ch19_notation.json", "notes/latex/preamble.tex", "notes/latex/bibliography.tex", "notes/md/ch19_correlations.md", "notes/appendices/a08_states_and_correlations.md", "BosonizeStubs/Ch19Correlations.lean", "BosonizeStubs/A08OscillatorStates.lean", "docs/companion/BosonizeStubs/Ch19Correlations.md", "docs/webllm/chapters/ch19.json"]
+locked = ["BosonizeStubs/Ch19Correlations.lean", "BosonizeStubs/A08OscillatorStates.lean"]
+verify = [["python3", "/home/lucas/Projects/scripts/verify_document.py", "notes/latex/chapters/sections/ch19_scope.tex", "--root", "notes/latex", "--main", "main.tex", "--included", "chapters/sections/ch19_scope.tex", "--notation", "notes/latex/plan/ch19_notation.json", "--artifacts", ".book-artifacts/ch19-scope"]]
+timeout = 300
+max_packet_bytes = 350000
+
+[document]
+format = "latex-standalone"
+preamble = "notes/latex/preamble.tex"
+bibliography = "notes/latex/bibliography.tex"
+chapter = 19
+root = "notes/latex"
+main = "main.tex"

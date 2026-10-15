@@ -38,3 +38,8 @@ Thumbs.db
 *.synctex.gz
 *.toc
 notes/latex/*.pdf
+
+# Private document-verification artifacts (published PDF is produced by CI)
+.book-artifacts/
+notes/latex/build-info.tex
+book-build.json

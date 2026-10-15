@@ -6,7 +6,7 @@
 \Large Exact Foundations, Algebraic Quantum Field Theory, and Haldane Completeness}
 \author{\textbf{Bosonize-Lean Project}\\
 \normalsize Formally Verified Lattice AQFT Monograph}
-\date{\today}
+\date{\today\\\small Source revision: \texttt{\BuildRevision}}
 
 \begin{document}
 
@@ -67,6 +67,13 @@ The subsequent chapters of the ongoing research program extend this foundation t
     \item \textbf{Chapters 17--18 (Interactions and Bogoliubov Transformations):} Analyzes forward scattering, the Luttinger liquid Hamiltonian, and the exact canonical Bogoliubov transformation on budget vectors.
     \item \textbf{Chapters 19--21 (Correlations, Duality, and Spinful Systems):} Evaluates exact real-space correlation functions, establishes model duality between CDW and superconductivity, and formalizes spin-charge separation on parity-constrained sublattices.
 \end{itemize}
+
+% CH19 is included only after its first section has been reviewed and integrated.
+% CH12--18 private drafts remain outside the published master pending review.
+\InputIfFileExists{chapters/sections/ch19_scope.tex}{\setcounter{chapter}{18}\chapter{States and Correlations}\label{ch:correlations}}{}
+\InputIfFileExists{chapters/sections/ch19_mode_correlators.tex}{}{}
+\InputIfFileExists{chapters/sections/ch19_spatial_correlators.tex}{}{}
+\InputIfFileExists{chapters/sections/ch19_finite_comparison.tex}{}{}
 
 \appendix
 \part{Supporting Mathematical Appendices}

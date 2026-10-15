@@ -1,0 +1,13 @@
+[
+  {
+    "file": "notes/latex/chapters/sections/ch19_spatial_correlators.tex",
+    "required": [
+      "\\\\section\\{",
+      "\\\\label\\{sec:ch19-spatial-correlators\\}"
+    ],
+    "forbidden": [
+      "Replace with the requested section",
+      "\\\\(?:newcommand|renewcommand|documentclass|usepackage)\\b"
+    ]
+  }
+]

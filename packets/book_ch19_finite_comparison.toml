@@ -1,0 +1,19 @@
+version = 1
+repo = ".."
+phase = "B"
+locked = ["BosonizeStubs/Ch19Correlations.lean", "BosonizeStubs/A08OscillatorStates.lean"]
+timeout = 300
+max_packet_bytes = 350000
+id = "book-ch19-finite-comparison"
+task = "Write exactly one section of Chapter 19: Finite-Fock expectations and comparison limits.\nExplain and prove the finite-Fock ground/current evaluations, the free-state\ncomparison and its restrictions, and the non-dressed-vacuum witness from the\nsupplied CH19 proofs. Construct the finite objects and show a nontrivial example.\nDistinguish the actual bare-ground comparison from the abstract interacting\nquasi-free functional. Conclude with precise limitations and prerequisites for\nfuture order-parameter chapters. Do not broaden to a general interacting\nfinite-ground-state comparison or claim CH20/21 completed.\nAll prior section context files must already be integrated. Follow WRITING_POLICY.md.\nStart with a section heading and label sec:ch19-finite-comparison.\nReturn ONE complete standalone .tex file from response-template.tex; edit only its body. No JSON or ZIP."
+targets = ["notes/latex/chapters/sections/ch19_finite_comparison.tex"]
+context = ["notes/latex/plan/WRITING_POLICY.md", "notes/latex/plan/sections.json", "notes/latex/preamble.tex", "notes/latex/bibliography.tex", "notes/md/ch19_correlations.md", "notes/appendices/a08_states_and_correlations.md", "BosonizeStubs/Ch19Correlations.lean", "BosonizeStubs/A08OscillatorStates.lean", "docs/companion/BosonizeStubs/Ch19Correlations.md", "docs/webllm/chapters/ch19.json", "notes/latex/chapters/sections/ch19_scope.tex", "notes/latex/chapters/sections/ch19_mode_correlators.tex", "notes/latex/chapters/sections/ch19_spatial_correlators.tex", "notes/latex/plan/ch19_finite_comparison_notation.json"]
+verify = [["python3", "/home/lucas/Projects/scripts/verify_document.py", "notes/latex/chapters/sections/ch19_finite_comparison.tex", "--root", "notes/latex", "--main", "main.tex", "--included", "chapters/sections/ch19_finite_comparison.tex", "--notation", "notes/latex/plan/ch19_finite_comparison_notation.json", "--artifacts", ".book-artifacts/book-ch19-finite-comparison"]]
+
+[document]
+format = "latex-standalone"
+preamble = "notes/latex/preamble.tex"
+bibliography = "notes/latex/bibliography.tex"
+chapter = 19
+root = "notes/latex"
+main = "main.tex"

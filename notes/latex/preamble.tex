@@ -43,3 +43,7 @@
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{note}[theorem]{Note}
+
+% CI supplies a revision stamp; local builds remain reproducible without it.
+\InputIfFileExists{build-info.tex}{}{}
+\providecommand{\BuildRevision}{local-development}

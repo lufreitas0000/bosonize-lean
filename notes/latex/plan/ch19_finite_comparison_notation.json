@@ -1,0 +1,13 @@
+[
+  {
+    "file": "notes/latex/chapters/sections/ch19_finite_comparison.tex",
+    "required": [
+      "\\\\section\\{",
+      "\\\\label\\{sec:ch19-finite-comparison\\}"
+    ],
+    "forbidden": [
+      "Replace with the requested section",
+      "\\\\(?:newcommand|renewcommand|documentclass|usepackage)\\b"
+    ]
+  }
+]

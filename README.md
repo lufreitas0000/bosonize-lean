@@ -3,7 +3,7 @@
 [![Build LaTeX Monograph](https://github.com/lufreitas0000/bosonize-lean/actions/workflows/latex.yml/badge.svg)](https://github.com/lufreitas0000/bosonize-lean/actions/workflows/latex.yml)
 [![Download Monograph PDF](https://img.shields.io/badge/PDF-Download%20Monograph-blue?logo=adobe-acrobat-reader)](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf)
 
-> **Pedagogical Monograph Available**: A complete 99-page mathematical monograph translating the findings of Chapters 1–11 and Appendices A01–A04 into plain LaTeX is continuously built. Download the latest uncompressed PDF directly: [**`bosonize-monograph.pdf`**](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf).
+> **Working monograph**: The published PDF currently contains CH01–11 and A01–A04. CH12–18 have local drafts awaiting review/integration; new writing starts with CH19. The PDF is a developing manuscript, not the completed 21-chapter book. Download [**bosonize-monograph.pdf**](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf); [build provenance](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/book-build.json) records its source revision.
 
 Bosonize-Lean develops exact algebraic statements for 1+1-dimensional lattice bosonization. The program uses finite-dimensional CAR/budget spaces and polynomial or explicitly specified algebraic carriers. Formal series, where selected, are interpreted coefficientwise; analytic limits, Hilbert completions and topological interpretations require separate constructions.
 

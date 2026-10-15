@@ -21,6 +21,17 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Record source revision
+        run: |
+          python3 - <<'PYCODE'
+          import json, os
+          from pathlib import Path
+          sha = os.environ['GITHUB_SHA']
+          slash = chr(92)
+          Path('notes/latex/build-info.tex').write_text(f'{slash}newcommand{{{slash}BuildRevision}}{{{sha[:12]}}}' + chr(10))
+          Path('book-build.json').write_text(json.dumps({'source_sha': sha, 'run_id': os.environ['GITHUB_RUN_ID']}, indent=2) + chr(10))
+          PYCODE
+
       - name: Compile LaTeX Document
         uses: xu-cheng/latex-action@v3
         with:
@@ -28,13 +39,19 @@ jobs:
           working_directory: notes/latex
           latexmk_use_lualatex: false
           latexmk_use_xelatex: false
-          args: "-pdf -interaction=nonstopmode -halt-on-error"
+          args: "-pdf -no-shell-escape -interaction=nonstopmode -halt-on-error"
+
+      - name: Reject unresolved references and duplicate labels
+        run: python3 scripts/check_book_log.py notes/latex/main.log
 
       - name: Upload PDF Artifact (CI Archive)
         uses: actions/upload-artifact@v4
         with:
           name: bosonize-latex-monograph
-          path: notes/latex/main.pdf
+          path: |
+            notes/latex/main.pdf
+            notes/latex/main.log
+            book-build.json
           if-no-files-found: error
 
       - name: Publish Direct PDF to Latest Release
@@ -45,10 +62,10 @@ jobs:
           cp notes/latex/main.pdf bosonize-monograph.pdf
           if gh release view latest >/dev/null 2>&1; then
             echo "Updating existing release..."
-            gh release upload latest bosonize-monograph.pdf --clobber
+            gh release upload latest bosonize-monograph.pdf book-build.json --clobber
           else
             echo "Creating initial release..."
-            gh release create latest bosonize-monograph.pdf \
+            gh release create latest bosonize-monograph.pdf book-build.json \
               --title "Bosonize-Lean Monograph (Latest Build)" \
-              --notes "Continuous automated build of the Bosonize-Lean LaTeX monograph (Chapters 1–11 and Appendices A01–A04). Direct download of the uncompressed PDF is available below."
+              --notes "Working manuscript compiled from main. Only chapters included in the master are present; Lean completion does not imply book completion. book-build.json identifies the source revision."
           fi

@@ -1,0 +1,7 @@
+[
+  {
+    "file": "notes/latex/chapters/sections/ch19_scope.tex",
+    "required": ["\\\\section\\{", "\\\\label\\{sec:ch19-scope\\}"],
+    "forbidden": ["Replace with the requested section", "\\\\(?:newcommand|renewcommand|documentclass|usepackage)\\b"]
+  }
+]
