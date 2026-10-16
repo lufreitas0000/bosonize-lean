@@ -3,16 +3,7 @@
 
 \subsection*{From two chiral branches to four fermion species}
 
-For spinless fermions, the two chiral branches carry separate density
-fluctuations.  Adding an electron spin label produces four branches, but it
-also raises a question which is invisible if one starts immediately with
-continuum ``charge'' and ``spin'' fields: \emph{which pairs of charge and spin
-quantum numbers actually describe finite fermionic states?}  A second question
-concerns the familiar claim of spin--charge separation.  The operator algebra
-will separate into simple linear combinations, whereas commutation on a
-finite energy budget and factorization of the state space require distinct
-arguments.  We first formulate these questions entirely in the finite CAR
-(carrier) representation, before using any oscillator interpretation.
+We follow the standard bosonization program by introducing spin as an additional fermion species, producing four branches. Keeping the lattice size and energy restrictions explicit allows us to examine questions that are often invisible when starting immediately with continuum charge and spin fields. In particular, we must ask: \emph{which pairs of charge and spin quantum numbers actually describe finite fermionic states?} We must also examine the familiar claim of spin--charge separation. Although the operator algebra separates into simple linear combinations, checking commutation on a finite energy budget and identifying state-space factorization require distinct algebraic steps. We first formulate these questions entirely in the finite CAR (carrier) representation, explicitly defining our species order and raw-current conventions, before considering any formal oscillator models.
 
 Fix an integer $h\geq 1$, and write
 \begin{equation}
@@ -128,7 +119,7 @@ place a separate independent cutoff $K$ on every species.
 
 \subsection*{Raw currents and their exact inverse}
 
-For $m\in\mathbb Z$ and $\alpha\in\mathcal C$, define the ordered
+With the species order fixed, we can now assemble density modes. For $m\in\mathbb Z$ and $\alpha\in\mathcal C$, define the ordered
 non-wrapping density operator
 \begin{equation}
   \rho_{\alpha,m}
@@ -163,7 +154,7 @@ Here $R^{c,s}$ denotes a \emph{raw current}, not the right-moving
 chirality $R$.  Neither current contains a factor $1/\sqrt2$.
 \end{definition}
 
-The change of variables is algebraically invertible over $\mathbb C$:
+This definition establishes the raw unnormalized conventions $R^c$ and $R^s$ used in this text. The change of variables is algebraically invertible over $\mathbb C$:
 \begin{equation}
  \begin{pmatrix}R^c_{\eta,m}\\R^s_{\eta,m}\end{pmatrix}
  =\begin{pmatrix}1&1\\1&-1\end{pmatrix}
@@ -185,11 +176,11 @@ different.
 
 \subsection*{The edge obstruction and the finite common-margin theorem}
 
-A tempting argument says that up- and down-spin densities commute and
-therefore so do the charge and spin currents.  The conclusion does
-\emph{not} follow.  The two same-spin commutators still remain, and a
-finite band has edge-dependent corrections to the usual current algebra.
-Define
+A tempting heuristic argument suggests that up- and down-spin densities commute and
+therefore so do the charge and spin currents. The exact conclusion on a finite carrier does
+\emph{not} follow so simply. The two same-spin commutators still remain, and a
+finite band inherently produces edge-dependent corrections to the usual current algebra. To analyze this, we
+define
 \begin{equation}
  E_{\eta,\sigma}(m,n)
   =[\rho_{(\eta,\sigma),m},\rho_{(\eta,\sigma),n}].
@@ -235,7 +226,7 @@ every constituent commutator vanishes.  No rearrangement of fermionic
 \emph{odd} factors was used.
 \end{proof}
 
-The single-species Schwinger coefficient in the convention of this book is
+The resulting single-species Schwinger coefficient in the convention of this book is
 \begin{equation}
  \kappa(m,n)=
  \begin{cases}-m,&m+n=0,\\0,&m+n\ne0.\end{cases}
@@ -341,7 +332,7 @@ the relative plus or minus sign distinguishes charge and spin
 combinations, while both retain the raw normalization $2m$.
 \end{example}
 
-The budget hypothesis is substantive.  For example, keep one chirality,
+The conditional budget hypothesis is substantive and cannot be omitted. For example, keep one chirality,
 put its up-spin species into the \emph{completely filled} band, its
 down-spin species into the sea ground, and leave the other two species
 in their sea grounds.  Every nonzero-momentum density hop annihilates
@@ -379,8 +370,8 @@ $0=\lambda\dim\mathcal H$.
 
 \subsection*{Integer zero modes and the parity sublattice}
 
-The same linear transformation must now be applied to the integer
-\emph{zero-mode} charges, not to oscillator operators.  For each
+Having examined the oscillator-like currents, the same linear transformation must now be applied to the integer
+\emph{zero-mode} charges. For each
 chirality, define the commuting self-adjoint observables
 \begin{equation}
  \widehat Q_{c,\eta}=\widehat N_{(\eta,\uparrow)}

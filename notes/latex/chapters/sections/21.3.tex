@@ -3,16 +3,7 @@
 
 \subsection*{From a four-fermion process to a precise invariance question}
 
-In the preceding sections the charge and spin currents were built from four
-ordered fermion species, and the spin-singlet pair was found to have two
-separate species-charge targets.  We now confront a related question for a
-Hamiltonian rather than an order parameter: \emph{does a chosen finite
-low-energy space remain invariant under a local interaction?}  An answer
-requires more than the name ``Umklapp.''  It requires an ordered CAR word,
-an explicit charge shift, and a state on which the operator acts nontrivially
-\emph{outside} the chosen space.  Pauli exclusion can make a seemingly
-outward process vanish; the opposite process may remain nonzero while staying
-inside the permitted charge box.
+In the preceding sections, the charge and spin currents were explicitly built from four ordered fermion species, and the spin-singlet pair was shown to have two separate species-charge targets. We now confront a related question for an interacting Hamiltonian rather than an order parameter: \emph{does a chosen finite low-energy subspace remain invariant under a local interaction?} Answering this requires more than heuristically naming a process ``Umklapp.'' It requires a precisely ordered CAR word, an explicit calculation of the charge shift, and a concrete state on which the operator acts nontrivially \emph{outside} the chosen budget space. Pauli exclusion can cause a seemingly outward process to vanish, while the opposite process may remain nonzero while safely staying inside the permitted finite charge box.
 
 The discussion is entirely on a finite lattice and uses the occupation
 representation from Chapter~\ref{ch:car_fock}.  We prove exact selection rules,
@@ -509,26 +500,9 @@ establish invariance of the whole box under \(H_U\).
 
 \subsection*{What finite leakage does, and does not, establish}
 
-The exact conclusions of this section can now be separated.  The CAR
-calculation proves a four-species selection rule and identifies precisely
-which charge sectors an Umklapp interaction couples.  Same-sector
-first-order compression vanishes, but a charge-bounded or energy-bounded
-subspace can fail to be invariant, as witnessed by a nonzero
-\emph{outside} matrix element.  The finite compression
-\(P_{K,\mathbf B}H_UP_{K,\mathbf B}\) remains a legitimate Hermitian
-matrix on the retained carrier; it is simply not the restriction of an
-invariant ambient dynamics when the leakage is nonzero.
+The exact conclusions of this section concerning finite leakage can now be isolated. The CAR calculation proves a rigorous four-species selection rule and identifies precisely which charge sectors an Umklapp interaction couples. While same-sector first-order compression vanishes, a charge-bounded or energy-bounded subspace can fail to be dynamically invariant, as witnessed by a nonzero \emph{outside} matrix element. Although the finite compression \(P_{K,\mathbf B}H_UP_{K,\mathbf B}\) remains a well-defined Hermitian matrix on the retained carrier, it must not be confused with the exact restriction of an invariant ambient dynamics when this finite leakage is nonzero.
 
-The finite energy-shell machinery of Appendix A10 can subsequently be
-used to organize perturbative block reduction.  Its quadratic
-Schrieffer--Wolff/Baker--Campbell--Hausdorff identities concern stated
-projectors and polynomial coefficients through a fixed order; they do
-not automatically provide an analytic conjugation, error estimate, or
-RG semigroup.  In particular, removing a shell of \emph{total excitation
-energy} is not identical to removing a particular Fourier momentum
-mode.  The shell-compression formalism must be instantiated with its
-projector and block-diagonality hypotheses before being applied to
-\(H_U\).
+The finite energy-shell machinery of Appendix A10 can subsequently be used to organize perturbative block reduction. However, its exact quadratic Schrieffer--Wolff identities concern specified projectors and polynomial coefficients through a fixed order; they do not automatically supply an analytic conjugation, an unbounded error estimate, or a continuum renormalization group (RG) semigroup. In particular, algebraically removing a shell of \emph{total excitation energy} is not identical to integrating out a particular Fourier momentum mode. The finite SW identities must be carefully distinguished from these continuum constructions and must be instantiated with explicit projector and block-diagonality hypotheses before application to \(H_U\).
 
 Finally, a Mott gap would require a spectral statement for a specified
 many-body Hamiltonian, and a physically meaningful thermodynamic claim
