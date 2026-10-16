@@ -1,0 +1,200 @@
+\chapter[Algebraic States and Formal Correlations]{Algebraic States, Correlations, and Formal Vertices}
+\label{app:states_correlations}
+
+\section{Status and scope}
+
+This appendix records the proposed uncompressed oscillator and charge-algebra
+constructions used by Chapter~\ref{ch:correlations}. Some related declarations
+are present in the CH19 staging files, and the CH19 proof batch is recorded as
+Phase-B complete; neither fact is Core promotion. The constructions and
+derivations below are therefore mathematical manuscript material, not a claim
+that the current Lean Core certifies an abstract state, every displayed
+correlator, or a comparison with finite CAR states. The distinction between
+the two carriers is part of the result's meaning.
+
+\section{Polynomial oscillator carrier and its vacuum functional}
+
+Fix a finite set of positive modes $1\leq m\leq M$ and two branches
+$\nu\in\{R,L\}$. Let $\mathcal P=\mathbb C[X_{\nu m}]$ be the polynomial
+algebra in these variables. Creation acts by multiplication,
+$C_{\nu m}p=X_{\nu m}p$, while annihilation acts by
+$A_{\nu m}p=m\,\partial p/\partial X_{\nu m}$. On monomials define
+\begin{equation}
+ \langle X^\alpha,X^\beta\rangle
+ =\delta_{\alpha,\beta}\prod_{\nu,m}\alpha_{\nu m}!
+                                      m^{\alpha_{\nu m}}.
+ \label{eq:a08-polynomial-gram}
+\end{equation}
+Every diagonal weight is positive, so this is a positive definite Hermitian
+form on the polynomial carrier. Directly comparing the coefficient of each
+monomial shows $A_{\nu m}^*=C_{\nu m}$ on polynomials. Differentiating a
+monomial also gives
+\begin{equation}
+ [A_{\nu m},C_{\eta n}]
+   =\delta_{\nu\eta}\delta_{mn}mI,
+ \qquad [A_{\nu m},A_{\eta n}]=[C_{\nu m},C_{\eta n}]=0.
+ \label{eq:a08-polynomial-ccr}
+\end{equation}
+Thus finitely many modes generate an infinite-dimensional polynomial space;
+there is no energy compression in this construction.
+
+Let $\mathbf 1$ denote the constant polynomial. For a represented word $a$
+define $\omega_0(a)=\langle\mathbf 1,a\mathbf 1\rangle$. The vacuum has unit
+norm. For any polynomial operator $T$ in the represented generators,
+\begin{equation}
+ \omega_0(T^*T)=\langle T\mathbf 1,T\mathbf 1\rangle\geq0.
+ \label{eq:a08-vacuum-positive}
+\end{equation}
+The same calculation shows why this is a positive functional on the represented
+algebra. To define it on a quotient by CCR relations, one must additionally
+show that the representation annihilates the relation ideal; this is a
+well-definedness obligation, not a consequence of writing the CCR symbols.
+
+\section{Dressing and the abstract state}
+
+For real $c,s$ with $c^2-s^2=1$, define a modewise transformation by
+\begin{equation}
+ \beta(C_R)=cC_R+sA_L,\qquad
+ \beta(C_L)=cC_L+sA_R,\qquad
+ \beta(A_\nu)=\beta(C_\nu)^*.
+ \label{eq:a08-beta}
+\end{equation}
+The inverse is obtained by replacing $s$ by $-s$. If this map preserves the
+algebra relations and star operation, the dressed functional is
+\begin{equation}
+ \omega_P(a)=\omega_0(\beta^{-1}(a)).
+ \label{eq:a08-dressed-state}
+\end{equation}
+It is normalized and positive because $\beta^{-1}$ is a unital star
+automorphism: $\omega_P(a^*a)=\omega_0(\beta^{-1}(a)^*\beta^{-1}(a))\geq0$.
+The inverse in~\eqref{eq:a08-dressed-state} fixes the state convention; changing
+the pullback direction changes which dressed operators annihilate the vacuum.
+
+\section{Both ordered contractions}
+
+Writing $C_R,A_R$ for one fixed mode and suppressing its index, the inverse
+transform is $\beta^{-1}(C_R)=cC_R-sA_L$ and
+$\beta^{-1}(A_R)=cA_R-sC_L$. In the product vacuum, different branches
+factor and $A\mathbf1=0$. Using $A_RC_R\mathbf1=m\mathbf1$ gives
+\begin{equation}
+ \omega_P(C_RA_R)=ms^2,\qquad
+ \omega_P(A_RC_R)=mc^2.
+ \label{eq:a08-bare-contractions}
+\end{equation}
+The second ordered contraction retains its $mc^2$ term even at $s=0$; it is
+the CCR contribution. For
+\begin{equation}
+ \rho_R(x)=L^{-1}\sum_{m=1}^M
+   \left(\zeta^{-mx}C_{Rm}+\zeta^{mx}A_{Rm}\right),
+ \qquad \zeta=e^{2\pi i/L},
+\end{equation}
+expansion of the ordered product and mode orthogonality then yields
+\begin{equation}
+ \omega_P(\rho_R(x)\rho_R(y))
+ =L^{-2}\sum_{m=1}^M m\left(
+   s^2\zeta^{-m(x-y)}+c^2\zeta^{m(x-y)}\right).
+ \label{eq:a08-density-kernel}
+\end{equation}
+This kernel is generally complex. Replacing it by a cosine would describe a
+symmetrized expression and discard the ordering information.
+
+\section{Formal vertices and coefficientwise evaluation}
+
+Let $\mathcal A[[t]]$ be the formal power series algebra over the oscillator
+and charge algebra, with central $t=t^*$. For $X\in\mathcal A$, define
+\begin{equation}
+ \exp_{\mathrm{form}}(itX)=\sum_{n\geq0}\frac{(itX)^n}{n!}.
+ \label{eq:a08-formal-exp}
+\end{equation}
+Each coefficient is a finite algebraic expression. Extend a state coefficient
+by coefficient to a map into $\mathbb C[[t]]$; this is a formal evaluator,
+not an ordinary complex-valued positive state on all series, and it does not
+permit setting $t=1$ without convergence information.
+
+With opposite spatial orientations for the two branches, let $Q_R(x),Q_L(x)$
+be the corresponding finite Hermitian current sums, and put
+\begin{equation}
+ X_{\mathrm{CDW}}=(c-s)(Q_R+Q_L),\qquad
+ X_{\mathrm{SC}}=(c+s)(Q_R-Q_L).
+\end{equation}
+Let $K_J(x)$ be the specified charge-shift and source-phase factor for
+$J\in\{\mathrm{CDW},\mathrm{SC}\}$. The Weyl-type formal vertex is
+\begin{equation}
+ W_J(P,t,x)=L^{-1}K_J(x)
+                 \exp_{\mathrm{form}}(itX_J(P,x)).
+ \label{eq:a08-vertex}
+\end{equation}
+The order of $K_J$ and the exponential is part of the definition. These
+vertices are not the finite projected Mattis--Mandelstam maps of
+Chapter~\ref{ch:mandelstam}, nor are they silently normal-ordered
+exponentials.
+
+For $D_1(x,y)=\sum_{m=1}^M[1-\cos(2\pi m(x-y)/L)]/m$, the opposite
+orientations cancel the two chiral scalar commutators. The polynomial vacuum
+moment calculation gives variances $4gD_1$ and $4g^{-1}D_1$ for the respective
+field differences. To see how the Gaussian factor follows, write
+$Y_J=X_J(y)-X_J(x)$ and $V_J=\omega_{P,N}(Y_J^2)$. The vacuum is annihilated
+by each $A_{\nu m}$, so in expanding a word in $Y_J$ one moves annihilators
+to the right; each commutation contributes its scalar CCR term. Pairing the
+leftmost factor with each of the remaining $2n-1$ factors gives
+\[
+ \omega_{P,N}(Y_J^{2n})=(2n-1)!!\,V_J^n,\qquad
+ \omega_{P,N}(Y_J^{2n+1})=0.
+\]
+Therefore
+\[
+ \omega_{P,N}(\exp_{\mathrm{form}}(itY_J))
+ =\sum_{n\geq0}\frac{(-1)^n V_J^n t^{2n}}{2^n n!}
+ =\operatorname{Exp}_{\mathrm{form}}(-V_Jt^2/2).
+\]
+Substituting $V_{\mathrm{CDW}}=4gD_1$ and
+$V_{\mathrm{SC}}=4g^{-1}D_1$, and multiplying the ordered charge phases,
+gives the proposed coefficientwise identities
+\begin{align}
+ \omega_{P,N}(W_{\mathrm{CDW}}(t,x)^*W_{\mathrm{CDW}}(t,y))
+ &=L^{-2}\zeta^{(N_L-N_R-1)(y-x)}
+       \operatorname{Exp}_{\mathrm{form}}(-2gD_1(x,y)t^2),\\
+ \omega_{P,N}(W_{\mathrm{SC}}(t,x)^*W_{\mathrm{SC}}(t,y))
+ &=L^{-2}\zeta^{(N_R+N_L)(y-x)}
+       \operatorname{Exp}_{\mathrm{form}}(-2g^{-1}D_1(x,y)t^2).
+ \label{eq:a08-formal-correlators}
+\end{align}
+This calculation is coefficientwise: for each power of $t$, only finitely
+many contractions enter. It establishes formal identities only: no analytic evaluation
+at $t=1$, continuum power law, or finite-CAR comparison follows.
+
+\section{Why compression does not inherit the abstract vacuum}
+
+Compressing operators to a finite-dimensional subspace changes their products:
+in general $PAP\,PCP\ne PACP$. In particular, a dressed annihilator assembled
+from compressed creation and annihilation operators need not have a common
+kernel. A useful finite warning is the two-mode total-degree-at-most-one slice
+with basis $(1,X_R,X_L)$. For $c=5/3$, $s=4/3$, the compressed combinations
+$Q_R=cD_R+s\widetilde X_L$ and $Q_L=cD_L+s\widetilde X_R$ give
+\begin{equation}
+ Q_R^*Q_R+Q_L^*Q_L=\operatorname{diag}(32/9,25/9,25/9).
+ \label{eq:a08-compressed-matrix}
+\end{equation}
+The diagonal entries are positive, so the common kernel is zero: if both
+$Q_Rv=0$ and $Q_Lv=0$, taking the inner product of~\eqref{eq:a08-compressed-matrix}
+with $v$ forces $v=0$. This rules out a normalized vacuum satisfying those
+two compressed annihilation equations on this slice. It does not rule out a
+ground state for a separately defined finite Hamiltonian.
+
+For clarity, the matrix statement can be checked directly. On the ordered basis
+$(1,X_R,X_L)$, compression of multiplication discards degree-two terms, so
+$Q_R1=sX_L$, $Q_RX_R=c$, $Q_RX_L=0$; similarly
+$Q_L1=sX_R$, $Q_LX_R=0$, and $Q_LX_L=c$. Thus the squared norms of the three
+columns of $Q_R$ are $(s^2,c^2,0)$ and those of $Q_L$ are $(s^2,0,c^2)$.
+Their sum is diagonal with entries $(2s^2,c^2,c^2)=(32/9,25/9,25/9)$ for the
+chosen parameters. Positivity of all three entries proves the common-kernel
+claim without a spectral theorem.
+
+\begin{remark}[Formalization boundary]
+The polynomial model, charge lattice, state pullback, coefficientwise
+correlators, and the compressed finite example have distinct carriers and
+proof obligations. The CH19 staging status does not establish that every
+construction here has passed Core promotion. Power-law asymptotics, analytic
+exponentials, and equality with finite fermionic expectations remain separate
+problems.
+\end{remark}

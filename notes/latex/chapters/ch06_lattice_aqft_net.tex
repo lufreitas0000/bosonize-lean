@@ -12,7 +12,7 @@ In continuum spacetime, establishing the existence of a local net that satisfies
     \item All the Haag--Kastler axioms---including isotony, additivity, twisted locality, and global irreducibility---are established as rigorous constructive theorems.
 \end{enumerate}
 
-\paragraph{Algebraic Primer for Physicists.}
+\begin{remark}[Algebraic Primer for Physicists]
 To ensure the mathematical terminology is completely transparent to readers from both mathematics and theoretical physics, we review the essential algebraic concepts used in this chapter:
 \begin{itemize}
     \item \textbf{Endomorphism Algebra $\mathrm{End}_{\mathbb{C}}(V)$:} For a complex vector space $V$, $\mathrm{End}_{\mathbb{C}}(V)$ is the associative algebra of all linear maps from $V$ to $V$. When $V = \mathcal{F}(L)$ has finite dimension $2^L$, $\mathrm{End}_{\mathbb{C}}(V)$ is simply the algebra of $2^L \times 2^L$ complex matrices $\mathrm{Mat}_{2^L \times 2^L}(\mathbb{C})$.
@@ -21,10 +21,11 @@ To ensure the mathematical terminology is completely transparent to readers from
     \item \textbf{Generated Subalgebra $\mathrm{AlgGen}_{\mathbb{C}}(\mathcal{S})$:} For any subset of operators $\mathcal{S} \subseteq \mathrm{End}_{\mathbb{C}}(V)$, $\mathrm{AlgGen}_{\mathbb{C}}(\mathcal{S})$ denotes the smallest unital complex subalgebra containing $\mathcal{S}$. It consists of all finite complex linear combinations of finite products (words) of operators in $\mathcal{S}$ and the identity $I$.
     \item \textbf{Automorphism:} An invertible linear map $\alpha : \mathcal{A} \to \mathcal{A}$ preserving algebraic multiplication: $\alpha(A B) = \alpha(A) \alpha(B)$. It is a $*$-automorphism if it also preserves the adjoint: $\alpha(A^\dagger) = (\alpha(A))^\dagger$.
 \end{itemize}
+\end{remark}
 
 \section{The Local Net of Observable Algebras}
 
-Let $\Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L = 2h$ be the discrete spatial lattice, and let $\mathcal{F}(L)$ be the fermionic Fock space of dimension $2^L$. The ambient operator algebra is the finite-dimensional $C^*$-algebra $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$.
+Let $\Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L = 2h$ be the discrete spatial lattice, and let $\mathcal{F}(L)$ be the fermionic Fock space of dimension $2^L$. The ambient operator algebra is the finite-dimensional $C^*$-algebra $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$; all fermionic fields and macroscopic operators introduced below act on $\mathcal{F}(L)$ unless a different domain is stated.
 
 \begin{definition}[Local Generating Sets and Local Algebras]
 For any spatial subset (region) $I \subseteq \Lambda$:
@@ -50,7 +51,7 @@ For any spatial subset (region) $I \subseteq \Lambda$:
 Fermionic operators change sign under a $2\pi$ spatial rotation, corresponding to the global fermion parity symmetry.
 
 \begin{definition}[Parity Automorphism]
-Let $\Gamma$ be the global fermion parity operator from Chapter~\ref{ch:car_fock}, satisfying $\Gamma^\dagger = \Gamma$, $\Gamma^2 = I$, and $\Gamma \psi_x \Gamma = -\psi_x$, $\Gamma \psi_x^\dagger \Gamma = -\psi_x^\dagger$ for all $x \in \Lambda$. The \emph{parity automorphism} $\alpha : \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L)) \to \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ is defined by:
+Let $\Gamma \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ be the global fermion parity operator from Chapter~\ref{ch:car_fock}, satisfying $\Gamma^\dagger = \Gamma$, $\Gamma^2 = I$, and $\Gamma \psi_x \Gamma = -\psi_x$, $\Gamma \psi_x^\dagger \Gamma = -\psi_x^\dagger$ for all $x \in \Lambda$. The \emph{parity automorphism} $\alpha : \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L)) \to \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ is defined by:
 \begin{equation}
 \alpha(A) \coloneqq \Gamma A \Gamma.
 \end{equation}
@@ -92,15 +93,11 @@ Consequently, the homogeneous subspace $\mathfrak{A}_\sigma(I)$ is precisely the
 \end{lemma}
 
 \begin{proof}
-By definition of the automorphism $\alpha$ on products:
-\[
-\alpha(O(w)) = \Gamma O(a_1) \cdots O(a_m) \Gamma = (\Gamma O(a_1) \Gamma) \cdots (\Gamma O(a_m) \Gamma).
-\]
-Since each letter is either $\psi_x$ or $\psi_x^\dagger$, $\Gamma O(a_k) \Gamma = - O(a_k)$. Therefore:
-\[
-\alpha(O(w)) = (-1)^m O(a_1) \cdots O(a_m) = (-1)^m O(w).
-\]
-Because the subalgebra $\mathfrak{A}(I)$ is spanned by all words supported in $I$, applying the parity projections $P_\pm$ shows that $\mathfrak{A}_\sigma(I)$ is spanned by words with $|w| \equiv \sigma \pmod 2$.
+Inserting $\Gamma^2=I$ between consecutive letters expresses $\alpha(O(w))$ as the product of the parity conjugates of its $m$ letters. Each conjugation contributes $-1$, hence
+\begin{equation}
+\alpha(O(w))=(-1)^m O(w).
+\end{equation}
+Since $\mathfrak{A}(I)$ is spanned by supported words, the parity projections $P_\pm$ show that $\mathfrak{A}_\sigma(I)$ is spanned by words with $|w|\equiv\sigma\pmod 2$.
 \end{proof}
 
 \section{The Haag--Kastler Axioms as Proved Theorems}
@@ -140,15 +137,11 @@ A B = (-1)^{\sigma \cdot \tau} B A.
 By Lemma~\ref{lem:word_parity}, it suffices by linearity to verify the identity when $A = O(w_1)$ and $B = O(w_2)$ are words supported in $I$ and $J$, respectively, with lengths $|w_1| = m \equiv \sigma \pmod 2$ and $|w_2| = n \equiv \tau \pmod 2$.
 
 Let $w_1 = [a_1, \dots, a_m]$ and $w_2 = [b_1, \dots, b_n]$. For any letter $a_k$ (at site $x \in I$) and $b_\ell$ (at site $y \in J$), because $I \cap J = \emptyset$, we have $x \neq y$.
-By Theorem~\ref{thm:spatial_car} (spatial CAR), distinct-site fermionic operators anticommute unconditionally:
-\[
-\{ O(a_k), O(b_\ell) \} = 0 \iff O(a_k) O(b_\ell) = - O(b_\ell) O(a_k).
-\]
-To commute the word $O(w_1)$ past $O(w_2)$, each of the $m$ letters of $w_1$ must be permuted past each of the $n$ letters of $w_2$. This requires exactly $m \cdot n$ adjacent transpositions of distinct-site operators. Each transposition contributes a factor of $-1$:
-\[
-O(w_1) O(w_2) = (-1)^{m \cdot n} O(w_2) O(w_1).
-\]
-Since $m \equiv \sigma \pmod 2$ and $n \equiv \tau \pmod 2$, we have $(-1)^{m \cdot n} = (-1)^{\sigma \cdot \tau}$. Extending by linearity to all elements in $\mathfrak{A}_\sigma(I)$ and $\mathfrak{A}_\tau(J)$ completes the proof.
+By Theorem~\ref{thm:spatial_car}, every letter supported in $I$ anticommutes with every letter supported in $J$. Commuting a word of length $m$ past a word of length $n$ therefore incurs exactly $mn$ minus signs, so
+\begin{equation}
+O(w_1)O(w_2)=(-1)^{mn}O(w_2)O(w_1)=(-1)^{\sigma\tau}O(w_2)O(w_1),
+\end{equation}
+where $m\equiv\sigma$ and $n\equiv\tau$ modulo $2$. Linearity completes the proof.
 \end{proof}
 
 \begin{corollary}[Strict Locality of Physical Observables]
@@ -163,8 +156,9 @@ Let $I, J \subseteq \Lambda$ be disjoint regions. For any physical (even) observ
 Since $A$ and $B$ are even, $\sigma = 0$ and $\tau = 0$, so $\sigma \cdot \tau = 0$. Theorem~\ref{thm:twisted_locality} immediately yields $A B = (-1)^0 B A = B A$, so $[A, B] = 0$.
 \end{proof}
 
-\paragraph{Physical Context for Locality.}
+\begin{remark}[Physical Context for Locality]
 Corollary~\ref{cor:observable_locality} is the discrete lattice realization of Einstein causality: measurements performed in spatially disjoint regions commute and cannot interfere with one another. This graded commutation structure explains why only even operators qualify as physical observables. Fermionic fields $\psi_x$ are unobservable directly; only their even bilinears $\psi_x^\dagger \psi_x$, $\psi_x^\dagger \psi_y$ generate physically measurable gauge-invariant observables.
+\end{remark}
 
 \section{Global Algebra Irreducibility}
 
@@ -183,32 +177,36 @@ The operator space $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ is spanned by the
 \begin{enumerate}
     \item By Theorem~\ref{thm:op_fourier_inversion} (operator Fourier inversion), each momentum mode generator $c_k$ and $c_k^\dagger$ is a linear combination of spatial operators $\{\psi_x, \psi_x^\dagger \mid x \in \Lambda\}$. Therefore, $c_k \in \mathfrak{A}(\Lambda)$ and $c_k^\dagger \in \mathfrak{A}(\Lambda)$ for all $k \in \Lambda^*$.
     \item The orthogonal projection onto the empty vacuum state $|\emptyset\rangle$ is constructed as:
-    \[
+    \begin{equation}
     P_\emptyset \coloneqq \prod_{k \in \Lambda^*} (I - c_k^\dagger c_k) = |\emptyset\rangle\langle\emptyset|.
-    \]
+    \end{equation}
     Since each $c_k^\dagger c_k \in \mathfrak{A}(\Lambda)$, $P_\emptyset \in \mathfrak{A}(\Lambda)$.
-    \item For any configuration $S \subseteq \Lambda^*$, let $C(S) \coloneqq \prod_{k \in S}^\downarrow c_k^\dagger$ (ordered descendingly) and $A(T) \coloneqq \prod_{p \in T}^\uparrow c_p$ (ordered ascendingly). Then:
-    \[
-    |S\rangle = \eta(S) C(S) |\emptyset\rangle, \qquad \langle T| = \eta(T) \langle\emptyset| A(T),
-    \]
-    for appropriate phase signs $\eta(S), \eta(T) \in \{+1, -1\}$.
-    \item Multiplying these operators:
-    \[
-    C(S) P_\emptyset A(T) = C(S) |\emptyset\rangle \langle\emptyset| A(T) = \eta(S) \eta(T) |S\rangle\langle T|.
-    \]
-    Since $C(S), P_\emptyset, A(T) \in \mathfrak{A}(\Lambda)$, their product belongs to $\mathfrak{A}(\Lambda)$, and hence $|S\rangle\langle T| \in \mathfrak{A}(\Lambda)$.
+    \item For configurations $S,T\subseteq\Lambda^*$, let $C(S)=\prod_{k\in S}^{\downarrow}c_k^\dagger$ be the descending creation string and $A(T)=\prod_{p\in T}^{\uparrow}c_p$ the ascending annihilation string. The ordered occupation basis fixes signs $\eta(S),\eta(T)\in\{+1,-1\}$ with $C(S)|\emptyset\rangle=\eta(S)|S\rangle$ and $\langle\emptyset|A(T)=\eta(T)\langle T|$, so $C(S)P_\emptyset A(T)=\eta(S)\eta(T)|S\rangle\langle T|$. Rescaling by this sign shows each matrix unit lies in $\mathfrak{A}(\Lambda)$.
 \end{enumerate}
 Because the matrix units span $\mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$, we conclude $\mathfrak{A}(\Lambda) = \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$.
 \end{proof}
 
-\begin{remark}[Formalization Note]
-In the verified Lean~4 core, the proof of global irreducibility avoids non-constructive dimension counting arguments. Instead, the rank-one matrix units $|S\rangle\langle T|$ are constructed explicitly via ordered creation/annihilation words and the vacuum projector $P_\emptyset$.
+\begin{remark}[Explicit Matrix Units]
+The construction above establishes global irreducibility directly: ordered creation and annihilation strings together with the vacuum projector produce every rank-one matrix unit. This explicit algebraic argument does not rely on an abstract dimension-counting step.
 \end{remark}
 
 \section{Boundary Extensions: Holonomy, Twists, and Spatial Transport}
 \label{sec:boundary_extensions}
 
 In physical systems on a spatial ring, fermions may acquire a non-trivial boundary phase upon traversing the circle. This occurs in the presence of an Aharonov--Bohm magnetic flux through the ring, or when mapping 1D spin chains to fermions via Jordan--Wigner transformations.
+
+The point of this extension is to distinguish local physics from the global
+choice of how a wavefunction closes around the ring. A particle transported
+once around the circle may return with phase $\tau$, even though the local
+CAR relations at neighboring sites are unchanged. For a charged particle,
+this phase records the flux through the ring; in a Jordan--Wigner map it
+can encode the fermion-parity-dependent boundary condition. The corresponding
+allowed momenta are shifted, so the twist changes momentum quantization and
+the phase accumulated by a full circuit. It does not change the finite
+one-particle space or create a new local degree of freedom. We track the
+phase explicitly because later spatial translations and bosonic fields
+must reproduce the same winding when their position coordinate is advanced
+by one full circumference.
 
 \subsection{Distinction Between Dual Space Modes and the Momentum Band}
 
@@ -245,19 +243,20 @@ Standard physical cases are:
 \end{definition}
 
 \begin{definition}[Lifted Twisted Spatial Fields]
-For an integer coordinate $n \in \mathbb{Z}$, let $n = w L + x_{\mathrm{val}}$ be the unique Euclidean division with winding number $w \in \mathbb{Z}$ and residue $x_{\mathrm{val}} \in \{0, \dots, L-1\}$.
+For an integer coordinate $n \in \mathbb{Z}$, let $n = w L + x$ be the unique Euclidean division with winding number $w \in \mathbb{Z}$ and residue $x \in \{0, \dots, L-1\}$. In formulas for Fourier characters we write $x$ in place of this residue, as established in Chapter~\ref{ch:fourier}.
 The lifted twisted fermion field on $\mathbb{Z}$ associated with boundary datum $b = (r, \tau)$ is defined by:
 \begin{equation}
-\psi_b(n) \coloneqq r^n\, \psi_{x_{\mathrm{val}}}.
+\psi_b(n) \coloneqq r^n\, \psi_x.
 \end{equation}
 Shifting by a full circuit of length $L$ incurs the seam holonomy phase:
 \begin{equation}
-\psi_b(n + L) = r^{n+L} \psi_{x_{\mathrm{val}}} = r^L (r^n \psi_{x_{\mathrm{val}}}) = \tau\, \psi_b(n).
+\psi_b(n + L) = r^{n+L} \psi_x = r^L (r^n \psi_x) = \tau\, \psi_b(n).
 \end{equation}
 \end{definition}
 
 \begin{theorem}[Spatial Translation Unitary and Holonomy Action]
 \label{thm:twisted_transport}
+The translation theorem packages spatial covariance into one unitary on Fock space. On a one-particle momentum state, translating by $m$ sites multiplies the wave by its momentum phase; the boundary twist contributes the additional phase $r^{-m}$. Second quantization applies this phase to each occupied mode, so a full circuit records the boundary holonomy as a gauge rotation by total particle number.
 For each spatial shift $m \in \mathbb{Z}$ and boundary datum $b = (r, \tau)$, there exists a unitary operator $T_b(m) \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ acting on momentum basis states $|S\rangle$ by:
 \begin{equation}
 T_b(m) |S\rangle \coloneqq r^{-m \#S} \zeta^{-m \sum_{k \in S} k} |S\rangle,
@@ -268,42 +267,30 @@ T_b(m) \psi_b(n) T_b(m)^\dagger = \psi_b(n + m).
 \end{equation}
 In particular, a full circuit translation $m = L$ evaluates to the total charge gauge transformation:
 \begin{equation}
-T_b(L) = \tau^{-\hat{N}_{\mathrm{tot}}}.
+T_b(L) = \tau^{-N_{\mathrm{tot}}}.
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-We evaluate the conjugation action of $T_b(m)$ on the momentum modes $c_k$:
-\begin{enumerate}
-    \item On basis state $|S\rangle$, $c_k$ lowers particle number by $1$ and momentum by $k$:
-    \[
-    T_b(m) c_k T_b(m)^\dagger |S\rangle = T_b(m) c_k \left( r^{m \#S} \zeta^{m \sum_{p \in S} p} |S\rangle \right).
-    \]
-    If $k \in S$, $c_k |S\rangle = \epsilon(k, S) |S \setminus \{k\}\rangle$. Then:
-    \begin{align*}
-    T_b(m) c_k |S\rangle &= r^{-m (\#S - 1)} \zeta^{-m (\sum_{p \in S} p - k)} \epsilon(k, S) |S \setminus \{k\}\rangle \\
-    &= r^m \zeta^{m k} \left( r^{-m \#S} \zeta^{-m \sum_{p \in S} p} c_k |S\rangle \right).
-    \end{align*}
-    Thus $T_b(m) c_k T_b(m)^\dagger = r^m \zeta^{m k} c_k$.
-    \item Now apply this to the lifted spatial field $\psi_b(n) = r^n \psi_{x_{\mathrm{val}}} = \frac{r^n}{\sqrt{L}} \sum_k \zeta^{k n} c_k$:
-    \begin{align*}
-    T_b(m) \psi_b(n) T_b(m)^\dagger &= \frac{r^n}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k n} \left( T_b(m) c_k T_b(m)^\dagger \right) \\
-    &= \frac{r^n}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k n} \left( r^m \zeta^{m k} c_k \right) \\
-    &= \frac{r^{n+m}}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k (n+m)} c_k = \psi_b(n + m).
-    \end{align*}
-    \item For a full circuit translation $m = L$, since $\zeta = e^{2\pi i / L}$, we have $\zeta^L = 1$, so $\zeta^{-L \sum k} = 1$. The unitary evaluates to:
-    \[
-    T_b(L) |S\rangle = r^{-L \#S} |S\rangle = (r^L)^{-\#S} |S\rangle = \tau^{-\#S} |S\rangle.
-    \]
-    Since $\tau^{-\#S} = \tau^{-(\#S - h) - h} = \tau^{-h} \tau^{-\hat{N}}$, up to the central ground phase this is the global gauge transformation $\tau^{-\hat{N}_{\mathrm{tot}}}$.
-\end{enumerate}
+The momentum-basis action of $T_b(m)$ gives directly
+\begin{equation}
+T_b(m)c_kT_b(m)^\dagger=r^m\zeta^{mk}c_k.
+\end{equation}
+Using $\psi_b(n)=\frac{r^n}{\sqrt L}\sum_{k\in\Lambda^*}\zeta^{kn}c_k$, we obtain
+\begin{equation}
+T_b(m)\psi_b(n)T_b(m)^\dagger=\frac{r^n}{\sqrt L}\sum_k\zeta^{kn}r^m\zeta^{mk}c_k=\psi_b(n+m).
+\end{equation}
+For $m=L$, $\zeta^L=1$ and $r^L=\tau$, so $T_b(L)|S\rangle=\tau^{-\#S}|S\rangle$. Since $N_{\mathrm{tot}}\in\mathrm{End}_{\mathbb C}(\mathcal F(L))$ has eigenvalue $\#S$ on $|S\rangle$, this is precisely
+\begin{equation}
+T_b(L)=\tau^{-N_{\mathrm{tot}}}.
+\end{equation}
 \end{proof}
 
 \begin{corollary}[Jordan--Wigner Sector Dictionary]
 \label{cor:jw_dictionary}
-When mapping a 1D spin-$1/2$ chain with periodic boundary conditions to lattice fermions via the Jordan--Wigner transformation, the effective boundary condition for the fermions depends dynamically on the total particle number:
+Here the total particle number is the operator $N_{\mathrm{tot}}=\sum_{k\in\Lambda^*}c_k^\dagger c_k\in\mathrm{End}_{\mathbb C}(\mathcal F(L))$. When mapping a 1D spin-$1/2$ chain with periodic boundary conditions to lattice fermions via the Jordan--Wigner transformation, the effective boundary condition for the fermions depends dynamically on the total particle number:
 \begin{equation}
-\tau_{\mathrm{eff}} = - (-1)^{\hat{N}_{\mathrm{tot}}}.
+\tau_{\mathrm{eff}} = - (-1)^{N_{\mathrm{tot}}}.
 \end{equation}
 Consequently:
 \begin{itemize}
@@ -312,8 +299,9 @@ Consequently:
 \end{itemize}
 \end{corollary}
 
-\paragraph{Physical Context for the Sector Dictionary.}
-Corollary~\ref{cor:jw_dictionary} explains why a complete formalization of 1D quantum field theories must accommodate general boundary holonomies. When solving the 1D quantum Ising or XY spin chain in a transverse field (Lieb, Schultz, and Mattis~\cite{lieb1961}), the Hamiltonian decomposes into two uncoupled parity blocks: the even-fermion parity block (which feels antiperiodic boundary conditions) and the odd-fermion parity block (which feels periodic boundary conditions). Accommodating arbitrary holonomies $\tau \in U(1)$ is therefore not a mathematical luxury, but a physical necessity for diagonalizing interacting quantum spin models.
+\begin{remark}[Physical Context for the Sector Dictionary]
+Corollary~\ref{cor:jw_dictionary} explains why analyses of one-dimensional quantum field theories must accommodate general boundary holonomies. When solving the 1D quantum Ising or XY spin chain in a transverse field (Lieb, Schultz, and Mattis~\cite{lieb1961}), the Hamiltonian decomposes into two uncoupled parity blocks: the even-fermion parity block (which feels antiperiodic boundary conditions) and the odd-fermion parity block (which feels periodic boundary conditions). Accommodating arbitrary holonomies $\tau \in U(1)$ is therefore not a mathematical luxury, but a physical necessity for diagonalizing interacting quantum spin models.
+\end{remark}
 
 \section{Chapter Summary and Literature Comparison}
 
@@ -327,7 +315,8 @@ In this chapter, we formulated and proved the Haag--Kastler axioms of Algebraic 
     \item Formulated boundary extensions: explicitly distinguished dual space modes from shifted physical wavenumbers $p_{\mathrm{phys}} = \frac{2\pi(k+\beta)}{L}$, defined the boundary datum $b = (r, \tau)$, proved the covariance of spatial translation unitaries $T_b(m) \psi_b(n) T_b(m)^\dagger = \psi_b(n+m)$, and contextualized the Jordan--Wigner sector dictionary.
 \end{itemize}
 
-\paragraph{Comparison with Standard Continuum Literature.}
+\begin{remark}[Comparison with Standard Continuum Literature]
 In continuum AQFT (Haag~\cite{haag1996}), local nets $\mathfrak{A}(O)$ are assigned to open diamond regions in continuous Minkowski spacetime. Proving that an interacting continuum model satisfies the Haag--Kastler axioms requires profound functional analysis (e.g., Glimm--Jaffe constructive quantum field theory, Tomita--Takesaki modular theory, and Bisognano--Wichmann bisector theorems). 
 
 On the discrete lattice, as demonstrated in this chapter, all Haag--Kastler axioms become constructive algebraic theorems on finite-dimensional matrices. By establishing strict locality and global irreducibility at the lattice level, we ensure that the bosonization dictionary developed in Chapters~\ref{ch:heisenberg_algebra} and~\ref{ch:haldane_completeness} is mathematically watertight before taking continuum approximations.
+\end{remark}

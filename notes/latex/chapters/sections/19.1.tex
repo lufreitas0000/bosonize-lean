@@ -527,33 +527,18 @@ finite-word Gaussian reduction described above.  Nevertheless, it is not
 an ordinary matrix trace on $\mathcal H_{\mathrm{fin}}$, and it must not
 be denoted by $\langle\cdot\rangle_{\psi,\mathrm{fin}}$.
 
-\paragraph{Relation to the accepted Lean construction.}
-The implementation in \texttt{A08Oscillator}\allowbreak\texttt{States.lean}
-represents the \emph{free} word algebra by
-\texttt{OscAlgebra M}, the polynomials by \texttt{OscPoly M},
-and the creators and annihilators by \texttt{oscCreation} and
-\texttt{osc}\allowbreak\texttt{Annihilation}.  The functionals \texttt{omega0} and
-\texttt{omegaP} are complex-linear maps on that free-word carrier,
-with $\texttt{omegaP}=\texttt{omega0}\circ
-\texttt{bogoliubovMap}(c,-s)$.  Theorems such as
-\texttt{omega0\_}\allowbreak\texttt{gramSum}, \texttt{omegaP\_}\allowbreak\texttt{gramSum},
-\texttt{omegaP\_ccr\_}\allowbreak\texttt{descends} and its homogeneous-relation variants
-establish positivity of finite word combinations and invariance under
-insertion of the CCR relations; \texttt{omegaP\_comp\_}\allowbreak\texttt{bogoliubovMap}
-and the dressed annihilation theorems fix the orientation of the
-pullback.  The quotient $\mathfrak A_{\mathrm{CCR}}(M)$ above is a
-mathematical presentation of the relation algebra, \emph{not} a
-separately instantiated Lean quotient type in A08.  In that
-implementation, the ambient \texttt{FreeAlgebra} remains the carrier of
-\texttt{omega0} and \texttt{omegaP}.  The explicit theorems showing
-that their values are unchanged when any defining relation is inserted
-between arbitrary words justify descending these functionals to the
-corresponding relation quotient.  This distinction between a
-\emph{presented quotient} and an \emph{evaluation proved to respect its
-relations} is a genuine interface distinction, not merely a matter of
-notation.
-Likewise, the implementation's \texttt{B\_complete} status records
-acceptance of that development; it is not promotion to the frozen Core.
+\paragraph{Formal realization and the relation quotient.}
+The finite formal treatment uses a free word algebra as the carrier for
+the vacuum and dressed linear functionals. Positivity is proved for finite
+word combinations, and each functional is shown to be invariant when a
+defining CCR relation is inserted between arbitrary words. This proves
+that its values descend to the corresponding presented relation quotient;
+the argument does not require the quotient itself to be chosen as the
+initial carrier. The pullback defining the dressed state is taken in the
+order specified above, which fixes both its covariance and its annihilated
+generators. These are the precise finite algebraic claims established
+here; they do not imply that an arbitrary compressed finite-CAR state is
+the same functional.
 
 \subsection{Worked finite example: compression can destroy the dressed vacuum}
 

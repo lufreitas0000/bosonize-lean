@@ -5,49 +5,83 @@
 
 The discrete Fourier transform is the central kinematic bridge of quantum field theory on a lattice. It connects the spatial coordinate representation on the periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ to the dual momentum representation on the centered band $\Lambda^* = \{-h+1, \dots, h\}$ (for even $L = 2h$).
 
-In standard physics presentations, the Fourier transform is defined immediately on complex functions using transcendental exponentials $e^{2\pi i k x / L}$ and the unitary normalization factor $1/\sqrt{L}$. While physically standard, this conflates two distinct mathematical layers:
-\begin{enumerate}
-    \item \textbf{The algebraic character layer:} Character orthogonality and algebraic Fourier inversion require only a commutative field $K$ containing a primitive $L$-th root of unity $\zeta$, and the invertibility of the lattice size ($L \cdot 1_K \neq 0$, meaning the characteristic of $K$ does not divide $L$). Square roots, analytic limits, and metric structures are completely unnecessary at this level.
-    \item \textbf{The Hilbert unitary layer:} To make the Fourier transform an exact isometry that preserves Canonical Anticommutation Relations (CAR) between position and momentum fermions without spurious factors of $\sqrt{L}$, we instantiate $K = \mathbb{C}$ and introduce the metric normalization $a = 1/\sqrt{L}$.
-\end{enumerate}
+In standard physics presentations, the Fourier transform is often introduced on complex functions with exponential characters and the unitary factor $1/\sqrt{L}$. It is useful to separate the algebraic character identities from the Hilbert-space normalization. The former require a field $K$ containing a primitive $L$-th root of unity $\zeta$; two-sided inversion additionally requires $L\cdot1_K\ne0$. The unitary transform is the further specialization to $K=\mathbb C$.
 
-In this chapter, we develop both layers in full mathematical rigor, following the verified constructive formalization.
+The field condition cannot in general be replaced by an arbitrary commutative ring, even when the root has exact order and $L$ is a unit. For example, let $L=2$ and $R=\mathbb Z/15\mathbb Z$. The element $\zeta=4$ has exact multiplicative order two, since $4\not\equiv1\pmod{15}$ and $4^2\equiv1\pmod{15}$. Moreover, $2\cdot8\equiv1\pmod{15}$, so $L$ is invertible in $R$. Yet the nontrivial character sum is
+\begin{equation}
+\sum_{x=0}^{1}\zeta^x=1+4=5\not\equiv0\pmod{15}.
+\end{equation}
+Here $\zeta-1=3$ is a zero divisor, and $(\zeta-1)(1+\zeta)=0$ does not force $1+\zeta=0$. Thus exact order and invertibility of $L$ alone do not guarantee character cancellation over rings with zero divisors.
+
+The geometric-sum argument does work over a field: every nonzero $1-\zeta^m$ is invertible for a nontrivial frequency. For a general commutative ring, it suffices instead to require each such factor to be a unit; inversion further requires $L\cdot1_R$ to be a unit. We use fields for the general algebraic theory below.
 
 \section{Generic Character Algebra over Fields}
 
 \begin{definition}[Primitive Root of Unity]
-Let $K$ be a commutative field, and let $L \ge 1$ be a positive integer. An element $\zeta \in K$ is a primitive $L$-th root of unity if:
+Let $K$ be a field and $L\ge1$. An element $\zeta\in K$ is a primitive $L$-th root of unity when
 \begin{equation}
-\zeta^L = 1, \qquad \text{and} \qquad \zeta^m \neq 1 \quad \text{for all } m \in \{1, 2, \dots, L-1\}.
+\zeta^L=1,\qquad \zeta^m\ne1\quad(1\le m<L).
 \end{equation}
+For $K=\mathbb C$, the canonical choice is $\zeta_{\mathrm{can}}=\exp(2\pi i/L)$.
 \end{definition}
 
-When $K = \mathbb{C}$, the canonical primitive $L$-th root of unity is:
-\begin{equation}
-\zeta_{\mathrm{can}} \coloneqq \exp\left(\frac{2\pi i}{L}\right).
-\end{equation}
+The characters are defined in three related forms. The integer pairing makes no quotient choices, the residue character descends to residue classes, and the band character uses the centered momentum representatives of Chapter~\ref{ch:lattice_band}.
 
-\begin{definition}[Representative-Independent Character]
-For any momentum mode $k \in \Lambda^*$ and spatial site $x \in \Lambda$, let $x_{\mathrm{val}} \in \{0, 1, \dots, L-1\}$ denote the unique unsigned residue of $x$. The discrete Fourier character is defined by:
+\begin{definition}[Three-Tier Character]
+For $k,x\in\mathbb Z$, the integer character pairing is
 \begin{equation}
-\chi(k, x) \coloneqq \zeta^{k \cdot x_{\mathrm{val}}}.
+\chi_{\mathbb Z}(k,x)\coloneqq\zeta^{kx}.
 \end{equation}
+For residue classes $k,x\in\mathbb Z/L\mathbb Z$, with canonical representatives $k_{\mathrm{val}},x_{\mathrm{val}}\in\{0,\ldots,L-1\}$, define
+\begin{equation}
+\chi_{\mathrm{res}}(k,x)\coloneqq\chi_{\mathbb Z}(k_{\mathrm{val}},x_{\mathrm{val}}).
+\end{equation}
+For a band mode $k\in\Lambda^*$ and a site $x\in\Lambda$, define
+\begin{equation}
+\chi(k,x)\coloneqq\chi_{\mathrm{band}}(k,x)\coloneqq\chi_{\mathbb Z}(k,x_{\mathrm{val}})
+=\chi_{\mathrm{res}}(\pi(k),x),
+\end{equation}
+where $\pi:\Lambda^*\to\mathbb Z/L\mathbb Z$ is the canonical projection. We use $\chi$ for the band character henceforth.
 \end{definition}
 
 \begin{lemma}[Representative Independence]
 \label{lem:rep_independence}
-For any integer $k \in \mathbb{Z}$ and any integer representative $\tilde{x} \in \mathbb{Z}$ of $x$ (so that $\tilde{x} \equiv x_{\mathrm{val}} \pmod L$):
+For $k\in\mathbb Z$ and any representative $\widetilde{x}=x_{\mathrm{val}}+mL$ of $x\in\Lambda$,
 \begin{equation}
-\zeta^{k \tilde{x}} = \zeta^{k \cdot x_{\mathrm{val}}} = \chi(k, x).
+\zeta^{k\widetilde{x}}=\zeta^{k(x_{\mathrm{val}}+mL)}=\zeta^{kx_{\mathrm{val}}}(\zeta^{kL})^m
+=\zeta^{kx_{\mathrm{val}}}(\zeta^L)^{km}=\zeta^{kx_{\mathrm{val}}}=\chi(k,x).
 \end{equation}
-In particular, $\chi$ depends only on the quotient residue class $x \in \mathbb{Z}/L\mathbb{Z}$.
+The integer character is also independent of both residue representatives: for $s,t\in\mathbb Z$,
+\begin{equation}
+\chi_{\mathbb Z}(k+sL,x+tL)=\chi_{\mathbb Z}(k,x),
+\end{equation}
+since $(k+sL)(x+tL)-kx$ is an integer multiple of $L$.
 \end{lemma}
 
 \begin{proof}
-Since $\tilde{x} \equiv x_{\mathrm{val}} \pmod L$, there exists $m \in \mathbb{Z}$ such that $\tilde{x} = x_{\mathrm{val}} + m L$. Therefore:
-\[
-\zeta^{k \tilde{x}} = \zeta^{k (x_{\mathrm{val}} + m L)} = \zeta^{k x_{\mathrm{val}}} \cdot (\zeta^L)^{k m} = \zeta^{k x_{\mathrm{val}}} \cdot 1^{k m} = \zeta^{k x_{\mathrm{val}}}.
-\]
+The first equality follows from $\zeta^L=1$ and $\widetilde{x}=x_{\mathrm{val}}+mL$. For the simultaneous shift, the exponent changes by $L(kt+sx+stL)$, so the character is unchanged.
+\end{proof}
+
+\begin{theorem}[Character Homomorphism Laws]
+\label{thm:character_homomorphisms}
+For residue classes $k,p,x,y\in\mathbb Z/L\mathbb Z$ and band modes $u,v\in\Lambda^*$ with sites $x,y\in\Lambda$,
+\begin{align}
+\chi_{\mathrm{res}}(k,x+y)&=\chi_{\mathrm{res}}(k,x)\chi_{\mathrm{res}}(k,y),\\
+\chi_{\mathrm{res}}(k+p,x)&=\chi_{\mathrm{res}}(k,x)\chi_{\mathrm{res}}(p,x),\\
+\chi_{\mathrm{res}}(-k,x)&=\chi_{\mathrm{res}}(k,x)^{-1}=\chi_{\mathrm{res}}(k,-x),\\
+\chi(u\oplus v,x)&=\chi(u,x)\chi(v,x).
+\end{align}
+When $K=\mathbb C$ and $|\zeta|=1$, $\overline{\chi(k,x)}=\chi(-k,x)$.
+\end{theorem}
+
+\begin{proof}
+The first three identities follow from exponent addition and representative independence. For band addition, Theorem~\ref{thm:wrap_lemma} gives $k\oplus p=k+p-wL$ for some integer $w$, so
+\begin{equation}
+\chi(k\oplus p,x)=\zeta^{(k+p-wL)x_{\mathrm{val}}}
+=\zeta^{kx_{\mathrm{val}}}\zeta^{px_{\mathrm{val}}}(\zeta^L)^{-wx_{\mathrm{val}}}
+=\chi(k,x)\chi(p,x).
+\end{equation}
+For $K=\mathbb C$ and $|\zeta|=1$, conjugation sends $\zeta$ to $\zeta^{-1}$, giving the stated conjugation law.
 \end{proof}
 
 \section{The Unscaled Analysis and Synthesis Transforms}
@@ -59,7 +93,7 @@ Because the spatial lattice $\Lambda$ and the momentum band $\Lambda^*$ are dist
 \end{itemize}
 
 \begin{definition}[Analysis and Synthesis Transforms]
-We define the $K$-linear transforms:
+We define the $K$-linear maps $S\in\operatorname{Hom}_K(K^\Lambda,K^{\Lambda^*})$ and $T\in\operatorname{Hom}_K(K^{\Lambda^*},K^\Lambda)$:
 \begin{enumerate}
     \item \textbf{Analysis Transform $S : K^\Lambda \to K^{\Lambda^*}$:}
     \begin{equation}
@@ -72,7 +106,7 @@ We define the $K$-linear transforms:
 \end{enumerate}
 \end{definition}
 
-Note that $\chi(-k, x) = \zeta^{-k x_{\mathrm{val}}} = (\zeta^{k x_{\mathrm{val}}})^{-1} = \chi(k, x)^{-1}$. By Lemma~\ref{lem:rep_independence}, evaluating at $-k \in \mathbb{Z}$ agrees with evaluating at the transported band negation $\ominus k \in \Lambda^*$, ensuring algebraic consistency even when $-k \notin \Lambda^*$.
+Note that $\chi(-k, x) = \zeta^{-k x} = (\zeta^{kx})^{-1} = \chi(k, x)^{-1}$. By Lemma~\ref{lem:rep_independence}, evaluating at $-k \in \mathbb{Z}$ agrees with evaluating at the transported band negation $\ominus k \in \Lambda^*$, ensuring algebraic consistency even when $-k \notin \Lambda^*$.
 
 \section{Dual Character Orthogonality and Algebraic Inversion}
 
@@ -92,9 +126,9 @@ L \cdot 1_K, & \text{if } m \equiv 0 \pmod L, \\
 \begin{proof}
 If $m \equiv 0 \pmod L$, then $\zeta^m = 1$, giving $\sum_{x=0}^{L-1} 1 = L \cdot 1_K$.
 If $m \not\equiv 0 \pmod L$, then $\zeta^m \neq 1$. Telescoping yields:
-\[
+\begin{equation}
 (1 - \zeta^m) \sum_{x=0}^{L-1} \zeta^{m x} = 1 - \zeta^{m L} = 1 - 1 = 0.
-\]
+\end{equation}
 Because $K$ is a field and $(1 - \zeta^m) \neq 0$, dividing by $(1 - \zeta^m)$ proves the sum is $0$.
 \end{proof}
 
@@ -114,8 +148,8 @@ Let $K$ be a field with a primitive $L$-th root of unity $\zeta$.
 \end{theorem}
 
 \begin{proof}
-For spatial orthogonality, $\chi(k, x) \chi(-p, x) = \zeta^{(k-p) x_{\mathrm{val}}}$. By Lemma~\ref{lem:geom_sum}, the sum equals $L \cdot 1_K$ if $k - p \equiv 0 \pmod L$, and $0$ otherwise. Because $k, p \in \Lambda^*$, their difference satisfies $-L < k - p < L$. The only multiple of $L$ in this range is $0$, which implies $k = p$. Thus the sum is $(L \cdot 1_K) \delta_{k, p}$.
-Momentum orthogonality follows similarly: $\sum_{k \in \Lambda^*} \zeta^{k (x_{\mathrm{val}} - y_{\mathrm{val}})}$. Translating the sum over the centered band $\Lambda^* = \{-h+1, \dots, h\}$ to $\{0, \dots, L-1\}$ introduces an overall phase factor $\zeta^{(-h+1)(x_{\mathrm{val}} - y_{\mathrm{val}})}$ that is non-zero in $K$, leaving the sum proportional to $(L \cdot 1_K) \delta_{x, y}$.
+For spatial orthogonality, $\chi(k,x)\chi(-p,x)=\zeta^{(k-p)x}$. The geometric sum is $L\cdot1_K$ when $k-p\equiv0\pmod L$, and zero otherwise. Since $-L<k-p<L$, this congruence forces $k=p$, giving $(L\cdot1_K)\delta_{k,p}$.
+Momentum orthogonality follows similarly: $\sum_{k \in \Lambda^*} \zeta^{k (x-y)}$. Translating the sum over the centered band $\Lambda^* = \{-h+1, \dots, h\}$ to $\{0, \dots, L-1\}$ introduces an overall phase factor $\zeta^{(-h+1)(x-y)}$ that is non-zero in $K$, leaving the sum proportional to $(L \cdot 1_K) \delta_{x, y}$.
 \end{proof}
 
 \begin{theorem}[Two-Sided Algebraic Inversion]
@@ -129,13 +163,13 @@ Consequently, both $S$ and $T$ are vector space isomorphisms.
 \end{theorem}
 
 \begin{proof}
-Let $f \in K^\Lambda$ and evaluate $(T(S f))(x)$:
-\begin{align*}
-(T(S f))(x) &= \sum_{k \in \Lambda^*} (S f)(k)\, \chi(k, x) = \sum_{k \in \Lambda^*} \left( \sum_{y \in \Lambda} f(y)\, \chi(-k, y) \right) \chi(k, x) \\
-&= \sum_{y \in \Lambda} f(y) \left( \sum_{k \in \Lambda^*} \chi(k, x)\, \chi(-k, y) \right).
-\end{align*}
-By Theorem~\ref{thm:fourier_orthogonality}(2), the inner sum is $(L \cdot 1_K) \delta_{x, y}$. Thus $(T(S f))(x) = (L \cdot 1_K) f(x)$.
-Similarly, $(S(T g))(k) = (L \cdot 1_K) g(k)$ follows from spatial orthogonality.
+For $f\in K^\Lambda$,
+\begin{align}
+(T(Sf))(x)&=\sum_{k\in\Lambda^*}\sum_{y\in\Lambda}f(y)\chi(-k,y)\chi(k,x)
+=\sum_{y\in\Lambda}f(y)\left[\sum_{k\in\Lambda^*}\chi(k,x)\chi(-k,y)\right]\\
+&=(L\cdot1_K)f(x),
+\end{align}
+by momentum orthogonality. The corresponding expansion of $S(Tg)$ and spatial orthogonality give $(S(Tg))(k)=(L\cdot1_K)g(k)$.
 \end{proof}
 
 \section{Unitary Fourier Transform in the Hilbert Setting}
@@ -165,17 +199,17 @@ Its inverse is $U^{-1} = \frac{1}{\sqrt{L}} T$.
 \end{theorem}
 
 \begin{proof}
-We evaluate the adjoint directly:
-\begin{align*}
-\langle S f, g \rangle_{\mathrm{mom}} &= \sum_{k \in \Lambda^*} \overline{(S f)(k)}\, g(k) = \sum_{k \in \Lambda^*} \left( \sum_{x \in \Lambda} \overline{f(x)}\, \overline{\chi(-k, x)} \right) g(k) \\
-&= \sum_{x \in \Lambda} \overline{f(x)} \left( \sum_{k \in \Lambda^*} g(k)\, \chi(k, x) \right) = \sum_{x \in \Lambda} \overline{f(x)}\, (T g)(x) = \langle f, T g \rangle_{\mathrm{pos}},
-\end{align*}
-using $\overline{\chi(-k, x)} = \chi(k, x)$. Thus $S^\dagger = T$.
-Scaling by $a = 1/\sqrt{L} \in \mathbb{R}$:
-\[
-U^\dagger = (a S)^\dagger = a S^\dagger = a T = U^{-1}.
-\]
-Then $\langle U f_1, U f_2 \rangle_{\mathrm{mom}} = \langle f_1, U^\dagger U f_2 \rangle_{\mathrm{pos}} = \langle f_1, f_2 \rangle_{\mathrm{pos}}$, proving that $U$ is a unitary isometry.
+Using $\overline{\chi(-k,x)}=\chi(k,x)$, for $f\in\mathbb C^\Lambda$ and $g\in\mathbb C^{\Lambda^*}$,
+\begin{align}
+\langle Sf,g\rangle_{\mathrm{mom}}
+&=\sum_{k\in\Lambda^*}\sum_{x\in\Lambda}\overline{f(x)}\chi(k,x)g(k)
+=\sum_{x\in\Lambda}\overline{f(x)}(Tg)(x)
+=\langle f,Tg\rangle_{\mathrm{pos}},\\
+U^\dagger&=\left(\frac1{\sqrt L}S\right)^\dagger
+=\frac1{\sqrt L}S^\dagger
+=\frac1{\sqrt L}T=U^{-1}.
+\end{align}
+Thus $U$ is unitary, and the stated Plancherel identity follows.
 \end{proof}
 
 \section{Diagonalization of Difference Operators and Exact Dispersion}
@@ -184,7 +218,7 @@ We now connect the Fourier transform to the discrete difference operators of Cha
 
 \begin{theorem}[Diagonal Action on Characters]
 \label{thm:diagonal_dispersion}
-Let $\chi_k(x) \coloneqq \chi(k, x)$ denote the Fourier character as a spatial function.
+Let $K$ be a field with a primitive $L$-th root $\zeta$, and let $k\in\Lambda^*$. On $K^\Lambda$, the shift and difference operators satisfy $E,\Delta,\nabla\in\operatorname{End}_K(K^\Lambda)$. Write $\chi_k\in K^\Lambda$ for the function $\chi_k(x)\coloneqq\chi(k,x)$.
 \begin{enumerate}
     \item The shift operator $E$ acts diagonally:
     \begin{equation}
@@ -195,9 +229,9 @@ Let $\chi_k(x) \coloneqq \chi(k, x)$ denote the Fourier character as a spatial f
     (\Delta \chi_k)(x) &= (\zeta^k - 1) \chi_k(x), \\
     (\nabla \chi_k)(x) &= (1 - \zeta^{-k}) \chi_k(x).
     \end{align}
-    \item The discrete Laplacian acts diagonally with eigenvalue $\lambda_k = \zeta^k + \zeta^{-k} - 2$:
+    \item Over any field $K$ containing $\zeta$, the discrete Laplacian acts diagonally with the algebraic eigenvalue $\lambda_k=\zeta^k+\zeta^{-k}-2$:
     \begin{equation}
-    (\Delta\nabla \chi_k)(x) = (\zeta^k + \zeta^{-k} - 2) \chi_k(x).
+    (\Delta\nabla \chi_k)(x)=\lambda_k\chi_k(x),\qquad \lambda_k=\zeta^k+\zeta^{-k}-2.
     \end{equation}
 \end{enumerate}
 \end{theorem}
@@ -205,12 +239,12 @@ Let $\chi_k(x) \coloneqq \chi(k, x)$ denote the Fourier character as a spatial f
 \begin{proof}
 Evaluating the definitions:
 \begin{enumerate}
-    \item $(E \chi_k)(x) = \chi_k(x+1) = \zeta^{k (x_{\mathrm{val}}+1)} = \zeta^k \zeta^{k x_{\mathrm{val}}} = \zeta^k \chi_k(x)$ by Lemma~\ref{lem:rep_independence}.
+    \item $(E \chi_k)(x) = \chi_k(x+1) = \zeta^{k (x+1)} = \zeta^k \zeta^{k x} = \zeta^k \chi_k(x)$ by Lemma~\ref{lem:rep_independence}.
     \item $(\Delta \chi_k)(x) = (E - I)\chi_k(x) = (\zeta^k - 1)\chi_k(x)$, and $(\nabla \chi_k)(x) = (I - E^{-1})\chi_k(x) = (1 - \zeta^{-k})\chi_k(x)$.
     \item Composing the two differences:
-    \[
+    \begin{equation}
     \Delta(\nabla \chi_k) = (\zeta^k - 1)(1 - \zeta^{-k})\chi_k = (\zeta^k - 1 - 1 + \zeta^{-k})\chi_k = (\zeta^k + \zeta^{-k} - 2)\chi_k.
-    \]
+    \end{equation}
 \end{enumerate}
 \end{proof}
 
@@ -223,16 +257,16 @@ Under the canonical root $\zeta = e^{2\pi i / L}$, the Laplacian eigenvalue eval
 
 \begin{proof}
 Using Euler's formula with angle $\theta = \frac{2\pi k}{L}$:
-\[
+\begin{equation}
 \zeta^k + \zeta^{-k} = e^{i\theta} + e^{-i\theta} = 2 \cos\theta.
-\]
+\end{equation}
 Using the trigonometric identity $\cos\theta = 1 - 2 \sin^2(\theta/2)$:
-\[
+\begin{equation}
 \zeta^k + \zeta^{-k} - 2 = 2 \cos\left(\frac{2\pi k}{L}\right) - 2 = 2 \left( 1 - 2 \sin^2\left(\frac{\pi k}{L}\right) \right) - 2 = -4 \sin^2\left(\frac{\pi k}{L}\right).
-\]
+\end{equation}
 \end{proof}
 
-\paragraph{Formal Correctness vs.\ Physical Implications: Trigonometric Truncation vs.\ Continuum Dispersion.}
+\begin{remark}[Formal Correctness vs.\ Physical Implications: Trigonometric Truncation vs.\ Continuum Dispersion]
 In continuum physics, the spatial kinetic operator is $-\partial_x^2$, whose Fourier transform yields the quadratic dispersion $p_{\mathrm{phys}}^2 = (2\pi k / L)^2$. In the long-wavelength continuum limit where the mode index is small compared to the lattice size ($|k| \ll L$), we approximate $\sin(\pi k / L) \approx \frac{\pi k}{L}$, and the exact lattice dispersion becomes:
 \begin{equation}
 -4 \sin^2\left(\frac{\pi k}{L}\right) \approx -4 \left(\frac{\pi k}{L}\right)^2 = -\left(\frac{2\pi k}{L}\right)^2 = -p_{\mathrm{phys}}^2,
@@ -240,6 +274,7 @@ In continuum physics, the spatial kinetic operator is $-\partial_x^2$, whose Fou
 recovering the continuous kinetic Laplacian $-\partial_x^2$. 
 
 On the discrete lattice, the trigonometric dispersion $-4 \sin^2(\pi k / L)$ is bounded between $-4$ and $0$ for all modes in the Brillouin zone. High-momentum modes near the Brillouin zone edge do not diverge quadratically; their energy saturates at $-4$. This natural trigonometric bending provides an intrinsic, exact ultraviolet regularization that eliminates divergences without needing arbitrary momentum cutoffs.
+\end{remark}
 
 \section{Chapter Summary and Literature Comparison}
 
@@ -254,4 +289,4 @@ In this chapter, we developed the finite Fourier transform bridging spatial and 
 \paragraph{Comparison with Standard Continuum Literature.}
 In standard condensed matter treatments of 1D systems, such as Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the Fourier transform is formulated with continuous plane waves $e^{i k x}$, integrating over a continuous wire $[0, \mathcal{L}]$. Field commutators are delta functions $[\psi(x), \psi^\dagger(y)] = \delta(x-y)$, which are singular distributions requiring smearing with test functions.
 
-In our constructive framework, all transforms are finite sums over the discrete group $\Lambda$. Kronecker deltas $\delta_{x, y}$ replace Dirac delta distributions, characters $\chi(k, x)$ are finite algebraic roots of unity, and the Fourier transform is a strictly unitary operator on finite-dimensional spaces. This ensures that when we construct spatial fermionic operators in Chapter~\ref{ch:fermions}, the CAR relations are preserved exactly with zero distribution-theoretic artifacts.
+In this finite-lattice framework, all transforms are finite sums over the discrete group $\Lambda$. Kronecker deltas $\delta_{x, y}$ replace Dirac delta distributions, characters $\chi(k, x)$ are finite algebraic roots of unity, and the Fourier transform is a strictly unitary operator on finite-dimensional spaces. This ensures that when we construct spatial fermionic operators in Chapter~\ref{ch:fermions}, the CAR relations are preserved exactly with zero distribution-theoretic artifacts.

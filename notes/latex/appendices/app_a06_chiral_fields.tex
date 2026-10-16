@@ -1,0 +1,362 @@
+\chapter{Chiral Fields and Lattice Kernels}
+\label{app:chiral_fields}
+
+\section{Introduction and Scope}
+
+This appendix provides the foundational discrete kinematic and algebraic apparatus supporting the theory of dual fields in Chapter~\ref{ch:dual_fields} and the field Hamiltonian in Chapter~\ref{ch:field_hamiltonian}.
+
+In traditional continuum quantum field theory, chiral fields $\varphi_R(x)$ and $\varphi_L(x)$ are treated as formal operator-valued distributions on the circle, where differentiation $\partial_x$ and normal ordering $:\!\dots\!:$ are manipulated symbolically. On a discrete periodic lattice $\Lambda = \mathbb{Z}/(2h)\mathbb{Z}$, every object must be constructed as a genuine bounded operator on a finite-dimensional Hilbert space, and every identity must hold as an exact theorem of finite algebra.
+
+Here, we present the complete mathematical construction across four integrated layers:
+\begin{enumerate}
+    \item \textbf{Discrete Characters and Operator Difference Calculus:} Representative-independent characters on the cyclic group $\mathbb{Z}/(2h)\mathbb{Z}$ and the exact telescoping of periodic differences without assuming operator commutativity.
+    \item \textbf{Multispecies Fock Net and Current Transport:} The linear tensor-product embedding that transports the single-species Kac--Moody algebra of Chapter~\ref{ch:heisenberg_algebra} to the shared multi-species energy budget.
+    \item \textbf{Chiral Fluctuation Fields and Kernel Properties:} The oriented chiral field expansion, its genuine Hilbert-space self-adjointness, its exact discrete gradient, and the finite Dirichlet delta kernel.
+    \item \textbf{Ordered Quadratic Symbols and Finite Normal Ordering:} The symbol algebra on finite current letters, the pair contraction formula, and the algebraic decomposition of the dual-field gradient square.
+\end{enumerate}
+
+\section{Discrete Periodic Characters and Difference Calculus}
+
+Let $h \ge 1$ be the half-chain length ($L = 2h$), and let $\zeta \in \mathbb{C}$ be a primitive $(2h)$-th root of unity (\texttt{IsPrimitiveRoot} $\zeta$ \texttt{(2*h)}).
+
+\begin{definition}[Lattice Characters]
+For integer momentum index $k \in \mathbb{Z}$ and discrete site $x \in \mathbb{Z}/(2h)\mathbb{Z}$, the \emph{lattice character} $\chi_k(x) \in \mathbb{C}$ is defined by:
+\begin{equation}
+\chi_k(x) \coloneqq \zeta^{k \cdot \mathrm{val}(x)},
+\end{equation}
+where $\mathrm{val}(x) \in \{0, 1, \dots, 2h-1\}$ is the canonical non-negative integer representative of the residue class $x$.
+\end{definition}
+
+Because $\zeta^{2h} = 1$, the character $\chi_k(x)$ is independent of the chosen representative modulo $2h$: for any integer $\widetilde{x} \equiv \mathrm{val}(x) \pmod{2h}$, $\zeta^{k \widetilde{x}} = \chi_k(x)$.
+
+\begin{lemma}[Lattice Character Shift]
+\label{lem:app_lattice_character_shift}
+For any momentum $k \in \mathbb{Z}$ and site $x \in \mathbb{Z}/(2h)\mathbb{Z}$:
+\begin{equation}
+\chi_k(x + 1) = \zeta^k\, \chi_k(x).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $\pi : \mathbb{Z} \to \mathbb{Z}/(2h)\mathbb{Z}$ denote the quotient map. By Lemma~\ref{lem:a01_rep_independence}, $\chi_k(x)$ is the evaluation of the residue character on $k \bmod 2h$ and $x$. By the homomorphism property of characters on abelian groups (Appendix~\ref{app:fourier_characters}):
+\[
+\chi_k(x + 1) = \chi_k(x) \cdot \chi_k(1) = \chi_k(x) \cdot \zeta^{k \cdot 1} = \zeta^k\, \chi_k(x).
+\]
+\end{proof}
+
+\begin{lemma}[Lattice Character Conjugation]
+\label{lem:app_lattice_character_conj}
+For any $k \in \mathbb{Z}$ and site $x \in \mathbb{Z}/(2h)\mathbb{Z}$:
+\begin{equation}
+\left( \chi_k(x) \right)^* = \chi_{-k}(x).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Because $\zeta$ is a root of unity, $|\zeta| = 1$, so $\zeta^* = \zeta^{-1}$. Therefore $(\zeta^{k x})^* = (\zeta^*)^{k x} = \zeta^{-k x} = \chi_{-k}(x)$.
+\end{proof}
+
+\begin{lemma}[Integer Lift Periodicity]
+\label{lem:app_integer_lift_periodic}
+For any function $f : \mathbb{Z}/(2h)\mathbb{Z} \to V$ landing in any carrier set $V$, the integer lift $\widetilde{f} : \mathbb{Z} \to V$ defined by $\widetilde{f}(x) \coloneqq f(x \bmod 2h)$ is strictly periodic with period $2h$:
+\begin{equation}
+\widetilde{f}(x + 2h) = \widetilde{f}(x) \quad \text{for all } x \in \mathbb{Z}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Immediate because $(x + 2h) \equiv x \pmod{2h}$ in $\mathbb{Z}/(2h)\mathbb{Z}$.
+\end{proof}
+
+Next, we establish discrete difference calculus for operator-valued functions.
+
+\begin{definition}[Operator Forward Difference]
+For an additive group $V$ and a function $f : \mathbb{Z}/(2h)\mathbb{Z} \to V$, the \emph{forward difference} $\Delta f : \mathbb{Z}/(2h)\mathbb{Z} \to V$ is defined by:
+\begin{equation}
+(\Delta f)(x) \coloneqq f(x + 1) - f(x).
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Additivity and Scalar Compatibility]
+\label{lem:app_forward_diff_linearity}
+The forward difference operator $\Delta$ is additive and commutes with complex scalar multiplication:
+\begin{align}
+\Delta (f + g)(x) &= (\Delta f)(x) + (\Delta g)(x), \\
+\Delta (a \cdot f)(x) &= a \cdot (\Delta f)(x) \quad (a \in \mathbb{C}).
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Immediate by expanding subtraction in the additive group $V$.
+\end{proof}
+
+\begin{lemma}[Zero Sum of Periodic Differences]
+\label{lem:app_forward_diff_sum_zero}
+Let $h \ge 1$. For any function $f : \mathbb{Z}/(2h)\mathbb{Z} \to V$ landing in an additive abelian group $V$:
+\begin{equation}
+\sum_{x \in \mathbb{Z}/(2h)\mathbb{Z}} (\Delta f)(x) = 0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expanding the forward difference:
+\[
+\sum_{x \in \mathbb{Z}/(2h)\mathbb{Z}} (\Delta f)(x) = \sum_{x \in \mathbb{Z}/(2h)\mathbb{Z}} f(x + 1) - \sum_{x \in \mathbb{Z}/(2h)\mathbb{Z}} f(x).
+\]
+The map $\tau : \mathbb{Z}/(2h)\mathbb{Z} \to \mathbb{Z}/(2h)\mathbb{Z}$ given by $\tau(x) = x + 1$ is a bijection of the finite index set, with inverse $\tau^{-1}(y) = y - 1$. Reindexing the first sum by $\tau$ yields $\sum_x f(x+1) = \sum_x f(x)$. Subtracting the identical sums gives zero.
+\end{proof}
+
+Notice that Lemma~\ref{lem:app_forward_diff_sum_zero} requires only the additive structure of $V$; it does not require commutativity of multiplication, and holds for endomorphism-valued fields $V = \operatorname{End}_{\mathbb{C}}(\mathcal{H})$.
+
+\section{Multispecies Fock Net and Current Transport}
+
+Let $\sigma$ be a finite, linearly ordered set of fermion species labels. The multispecies Fock space $\mathcal{H}_\sigma(h)$ is the finite-dimensional Hilbert space spanned by orthonormal occupation kets $|S\rangle$, where $S \subseteq \sigma \times \Lambda^*$ denotes the set of occupied modes across all species (Chapter~\ref{ch:car_fock}).
+
+For each species $\nu \in \sigma$, an occupation configuration $S$ defines a single-species configuration $S_\nu \coloneqq \{ k \in \Lambda^* \mid (\nu, k) \in S \}$, with relative charge $N_\nu \coloneqq \mathcal{N}(S_\nu) \in \mathbb{Z}$ and excitation energy $e(S_\nu) \ge 0$ (Chapter~\ref{ch:vacuum_budget}).
+
+\begin{definition}[Joint Energy Budget]
+For a sector charge vector $\vec{N} = (N_\nu)_{\nu \in \sigma}$ and energy cutoff $K \ge 0$, the \emph{joint energy budget} $B(h, \vec{N}, K) \subset \mathcal{H}_\sigma(h)$ is defined as the coordinate subspace:
+\begin{equation}
+B(h, \vec{N}, K) \coloneqq \operatorname{span}_{\mathbb{C}} \left\{ |S\rangle \;\middle|\; \forall \nu \in \sigma, \mathcal{N}(S_\nu) = N_\nu \quad \text{and} \quad \sum_{\nu \in \sigma} e(S_\nu) \le K \right\}.
+\end{equation}
+\end{definition}
+
+In Chapter~\ref{ch:heisenberg_algebra}, the Heisenberg Kac--Moody algebra was proved for a \emph{single} species on its single-species budget $\mathcal{B}(N, K)$. To apply this result to our multi-species setup, we must transport the single-species theorem to the joint budget.
+
+\begin{theorem}[Joint Signed Current Commutator]
+\label{thm:app_joint_signed_current_commutator}
+Let $h \ge 1$, $K \ge 0$, and let $\nu \in \sigma$. For any integer transfers $m, n \in \mathbb{Z}$ satisfying the margin condition:
+\begin{equation}
+|m| + |n| + K + |N_\nu| \le h,
+\end{equation}
+the density modes of species $\nu$ satisfy the exact commutator on all vectors $v \in B(h, \vec{N}, K)$:
+\begin{equation}
+[\rho_\nu(m), \rho_\nu(n)] v = \mathcal{S}(m, n) v,
+\end{equation}
+where $\mathcal{S}(m, n) \coloneqq -m$ if $m + n = 0$, and $\mathcal{S}(m, n) \coloneqq 0$ if $m + n \neq 0$.
+\end{theorem}
+
+\begin{proof}
+By linearity, it suffices to prove the identity on the occupation kets $|S\rangle$ spanning $B(h, \vec{N}, K)$:
+\begin{enumerate}
+    \item Because $e(S_\eta) \ge 0$ for all species $\eta \in \sigma$, the excitation of the selected species $\nu$ is bounded by the total excitation:
+    \[
+    e(S_\nu) \le \sum_{\eta \in \sigma} e(S_\eta) \le K.
+    \]
+    Therefore, the single-species component ket $|S_\nu\rangle$ belongs to the single-species fixed budget $\mathcal{B}(N_\nu, K)$.
+    \item Define the linear tensor insertion map $T_\nu : \mathcal{H}(h) \to \mathcal{H}_\sigma(h)$ that maps a single-species state $u$ to the joint state where species $\nu$ has state $u$ and all other species $\eta \neq \nu$ remain in their fixed configuration $|S_\eta\rangle$.
+    \item By the multi-species density mode definition (Chapter~\ref{ch:density_modes}), $\rho_\nu(p) T_\nu(u) = T_\nu(\rho(p) u)$. Therefore:
+    \[
+    [\rho_\nu(m), \rho_\nu(n)] |S\rangle = [\rho_\nu(m), \rho_\nu(n)] T_\nu(|S_\nu\rangle) = T_\nu\left( [\rho(m), \rho(n)] |S_\nu\rangle \right).
+    \]
+    \item Applying the single-species Kac--Moody theorem (Theorem~\ref{thm:kac_moody}) on $|S_\nu\rangle \in \mathcal{B}(N_\nu, K)$ yields $[\rho(m), \rho(n)] |S_\nu\rangle = \mathcal{S}(m, n) |S_\nu\rangle$.
+    \item Transporting back through $T_\nu$ gives $T_\nu(\mathcal{S}(m, n) |S_\nu\rangle) = \mathcal{S}(m, n) T_\nu(|S_\nu\rangle) = \mathcal{S}(m, n) |S\rangle$.
+\end{enumerate}
+Induction on the subspace span extends the result to all $v \in B(h, \vec{N}, K)$.
+\end{proof}
+
+\begin{lemma}[Global Cross-Species Commutation]
+\label{lem:app_chiral_cross_commute}
+For distinct species labels $\nu \neq \nu'$ in $\sigma$, the density modes commute globally on the entire Fock space $\mathcal{H}_\sigma(h)$:
+\begin{equation}
+[\rho_\nu(m), \rho_{\nu'}(n)] = 0 \quad \text{for all } m, n \in \mathbb{Z}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By the CAR bilinear commutator identity (Chapter~\ref{ch:density_modes}), $\rho_\nu(m)$ and $\rho_{\nu'}(n)$ are second quantizations of operators acting on disjoint one-particle subspaces $\ell^2(\{\nu\} \times \Lambda^*)$ and $\ell^2(\{\nu'\} \times \Lambda^*)$. Distinct species creation and annihilation operators anticommute, causing all bilinear cross-commutators to vanish identically.
+\end{proof}
+
+\section{Chiral Fluctuation Fields and Kernel Properties}
+
+Let $\nu_R \neq \nu_L$ be distinct species branches in $\sigma$. The oriented chiral fluctuation fields $\varphi_\eta(x)$ are defined as in Definition~\ref{def:chiral_fluctuation_field}:
+\begin{equation}
+\varphi_\eta(x) \coloneqq \sum_{m=1}^M \frac{i}{m} \left( \chi_{\mathrm{sgn}(\eta) m}(x)\, \rho_{\nu_\eta}(-m) - \chi_{-\mathrm{sgn}(\eta) m}(x)\, \rho_{\nu_\eta}(m) \right).
+\end{equation}
+
+\begin{lemma}[Exact Chiral Forward Difference Expansion]
+\label{lem:app_chiral_forward_diff}
+Under $h \ge 1, M \ge 1$ and primitive root $\zeta$, the forward difference $(\Delta \varphi_\eta)(x)$ evaluates to:
+\begin{equation}
+(\Delta \varphi_\eta)(x) = \sum_{m=1}^M \frac{i}{m} \left[ (\zeta^{\mathrm{sgn}(\eta) m} - 1) \chi_{\mathrm{sgn}(\eta) m}(x) \rho_{\nu_\eta}(-m) - (\zeta^{-\mathrm{sgn}(\eta) m} - 1) \chi_{-\mathrm{sgn}(\eta) m}(x) \rho_{\nu_\eta}(m) \right].
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Apply the forward difference $\Delta$ directly to the finite sum defining $\varphi_\eta(x)$. By Lemma~\ref{lem:app_forward_diff_linearity}, $\Delta$ distributes over the sum and scalar factors. By Lemma~\ref{lem:app_lattice_character_shift}:
+\[
+\Delta \chi_k(x) = \chi_k(x+1) - \chi_k(x) = (\zeta^k - 1) \chi_k(x).
+\]
+Substituting $k = \pm \mathrm{sgn}(\eta) m$ gives the expansion.
+\end{proof}
+
+\begin{theorem}[Chiral Same-Branch Commutator on Budget]
+\label{thm:app_chiral_same_commutator}
+Let $h \ge 1$, $1 \le M$ with $2M < 2h$, and let $\zeta$ be a primitive $(2h)$-th root of unity. If the branch margin condition $2M + K + |N_{\nu_\eta}| \le h$ holds, then for any $v \in B(h, \vec{N}, K)$:
+\begin{equation}
+[\varphi_\eta(x), \varphi_\eta(y)] v = \mathrm{sgn}(\eta)\, S_M(x, y)\, v,
+\end{equation}
+where $S_M(x, y)$ is the discrete skew kernel (Definition~\ref{def:skew_kernel}).
+\end{theorem}
+
+\begin{proof}
+Expand $[\varphi_\eta(x), \varphi_\eta(y)] v$ as a double sum $\sum_{m, n = 1}^M$ of commutators of current operators.
+For each pair of modes $(m, n) \in \{1, \dots, M\}^2$, Theorem~\ref{thm:app_joint_signed_current_commutator} evaluates the current commutators on $v$:
+\begin{enumerate}
+    \item Terms $[\rho(-m), \rho(-n)]$ and $[\rho(m), \rho(n)]$ have non-zero momentum sum $(\pm m \pm n \neq 0)$, so their Schwinger coefficients vanish identically.
+    \item Terms $[\rho(-m), \rho(n)]$ and $[\rho(m), \rho(-n)]$ vanish unless $m = n$.
+    \item When $m = n$, $[\rho(-m), \rho(m)] v = m v$ and $[\rho(m), \rho(-m)] v = -m v$.
+    \item The coefficient product is $(i/m)(i/m) = -1/m^2$. Combining with the current commutator signs:
+    \[
+    \left( \frac{i}{m} \right)^2 \left( - \chi_{s m}(x) \chi_{-s m}(y) (-m) - \chi_{-s m}(x) \chi_{s m}(y) (m) \right) = \frac{\chi_{s m}(x - y) - \chi_{-s m}(x - y)}{m},
+    \]
+    where $s = \mathrm{sgn}(\eta) \in \{+1, -1\}$.
+    \item When $s = +1$ ($\eta = R$), this is precisely $+S_M(x, y)$. When $s = -1$ ($\eta = L$), the characters swap, giving $-S_M(x, y)$.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[Finite Dirichlet Delta Kernel]
+For $h \ge 1, M \ge 1$ and primitive root $\zeta$, the \emph{finite Dirichlet delta kernel} is defined by:
+\begin{equation}
+\delta_M(x, y) \coloneqq \frac{1}{2h} \sum_{m = -M}^M \chi_m(x - y).
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Dirichlet Diagonal Value]
+\label{lem:app_dirichlet_diagonal}
+For any site $x \in \mathbb{Z}/(2h)\mathbb{Z}$:
+\begin{equation}
+\delta_M(x, x) = \frac{2M + 1}{2h}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At $y = x$, $x - y = 0$, so $\chi_m(0) = \zeta^0 = 1$ for all $m$. The index set $\{-M, \dots, M\}$ contains exactly $2M + 1$ integers. Therefore $\delta_M(x, x) = \frac{1}{2h} \sum_{m=-M}^M 1 = \frac{2M+1}{2h}$.
+\end{proof}
+
+\begin{lemma}[Dirichlet Spatial Sum]
+\label{lem:app_dirichlet_spatial_sum}
+Let $h \ge 1$, $1 \le M$ with $2M < 2h$, and let $\zeta$ be a primitive $(2h)$-th root of unity. Then for any fixed site $x \in \mathbb{Z}/(2h)\mathbb{Z}$:
+\begin{equation}
+\sum_{y \in \mathbb{Z}/(2h)\mathbb{Z}} \delta_M(x, y) = 1.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Exchange the finite sums over $y$ and $m$:
+\[
+\sum_{y \in \Lambda} \delta_M(x, y) = \frac{1}{2h} \sum_{m = -M}^M \left( \sum_{y \in \Lambda} \chi_m(x - y) \right).
+\]
+Reindexing $y \mapsto x - y$, the inner sum is $\sum_{z \in \Lambda} \chi_m(z)$. By character orthogonality (Appendix~\ref{app:fourier_characters}), this sum equals $2h$ if $m \equiv 0 \pmod{2h}$, and $0$ otherwise.
+Since $m \in \{-M, \dots, M\}$ and $2M < 2h$, $|m| \le M < h < 2h$. The only multiple of $2h$ in this interval is $m = 0$. Therefore, the sum over $m$ has only one non-zero term ($m = 0$):
+\[
+\sum_{y \in \Lambda} \delta_M(x, y) = \frac{1}{2h} \cdot (2h) = 1.
+\]
+\end{proof}
+
+\begin{lemma}[Telescoping of Skew Kernel]
+\label{lem:app_skew_kernel_diff_sum_zero}
+For any $x \in \mathbb{Z}/(2h)\mathbb{Z}$:
+\begin{equation}
+\sum_{y \in \mathbb{Z}/(2h)\mathbb{Z}} (\Delta_y S_M)(x, y) = 0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Immediate by applying Lemma~\ref{lem:app_forward_diff_sum_zero} to the function $y \mapsto S_M(x, y)$.
+\end{proof}
+
+\begin{lemma}[Non-Vacuous Budget Witness]
+\label{lem:app_admissible_ground_nonzero}
+For any admissible sector charge vector $\vec{N}$ ($|N_\nu| \le h$ for all $\nu$), the sector ground state $|N\rangle_0$ satisfies:
+\begin{equation}
+|N\rangle_0 \in B(h, \vec{N}, K) \quad \text{and} \quad |N\rangle_0 \neq 0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The ground ket $|N\rangle_0$ is an element of the orthonormal Fock basis, so $\||N\rangle_0\| = 1 \neq 0$. Its excitation energy is zero, so $0 \le K$, establishing membership in $B(h, \vec{N}, K)$.
+\end{proof}
+
+\begin{proposition}[Concrete Two-Branch Witness]
+\label{prop:concrete_two_branch_parameters}
+There exist explicit parameters:
+\begin{equation}
+h = 4, \quad M = 1, \quad K = 0, \quad \sigma = \operatorname{Fin}(2), \quad \vec{N} = \vec{0},
+\end{equation}
+such that $0 < h$, $1 \le M$, $2M < 2h$, $\vec{N}$ is admissible, all branch margins hold ($2M + K + |N_\nu| = 2 \cdot 1 + 0 + 0 = 2 \le 4$), and $|0\rangle_0 \in B(4, \vec{0}, 0)$ with $|0\rangle_0 \neq 0$.
+\end{proposition}
+
+\begin{proof}
+Immediate arithmetic: $2M = 2 < 8 = 2h$, and the branch margin is
+$2\le4$. The listed parameters therefore satisfy the hypotheses.
+\end{proof}
+
+\section{Finite Normal Ordering and Ordered Quadratic Symbols}
+
+We conclude by formalizing the ordered quadratic symbol algebra supporting Chapter~\ref{ch:field_hamiltonian}.
+
+\begin{lemma}[Additivity and Scalar Linearity of Normal Evaluation]
+\label{lem:app_normal_eval_linear}
+The normal evaluation map $\mathcal{N} : \mathrm{QuadraticSymbol}(M) \to \operatorname{End}_{\mathbb{C}}(\mathcal{H}_\sigma(h))$ satisfies:
+\begin{align}
+\mathcal{N}(Q_1 + Q_2) &= \mathcal{N}(Q_1) + \mathcal{N}(Q_2), \\
+\mathcal{N}(a \cdot Q) &= a \cdot \mathcal{N}(Q) \quad (a \in \mathbb{C}).
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Immediate from the definition $\mathcal{N}(Q) = \sum_{p, q} Q(p, q) \mathbf{N}(p, q)$ by distributing the finite sum and scalar coefficients.
+\end{proof}
+
+\begin{lemma}[Pair Contraction Formula]
+\label{lem:app_pair_contraction}
+Let $p, q \in \mathrm{Letter}(M)$. The difference between the normal-ordered pair operator $\mathbf{N}(p, q)$ and the raw product operator $\mathbf{R}(p, q) \coloneqq \rho(p) \rho(q)$ is:
+\begin{equation}
+\mathbf{N}(p, q) - \mathbf{R}(p, q) = \begin{cases} [\rho(q), \rho(p)], & \text{if } p \text{ is an annihilator and } q \text{ is a creator}, \\ 0, & \text{otherwise}. \end{cases}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By definition, if $p$ is an annihilator and $q$ is a creator, $\mathbf{N}(p, q) = \rho(q) \rho(p)$, so $\mathbf{N}(p, q) - \mathbf{R}(p, q) = \rho(q) \rho(p) - \rho(p) \rho(q) = [\rho(q), \rho(p)]$. In all other cases, $\mathbf{N}(p, q) = \mathbf{R}(p, q)$, giving zero.
+\end{proof}
+
+\begin{lemma}[Contraction on the Joint Budget]
+\label{lem:app_contraction_on_budget}
+Let $p, q \in \mathrm{Letter}(M)$ have the same branch index ($p.1 = q.1$). If $p$ is an annihilator and $q$ is a creator, then under the branch margin condition, for any $v \in B(h, \vec{N}, K)$:
+\begin{equation}
+(\mathbf{N}(p, q) - \mathbf{R}(p, q)) v = \begin{cases} -m\, v, & \text{if } \mathrm{natMode}(p) = \mathrm{natMode}(q) = m, \\ 0, & \text{otherwise}. \end{cases}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:app_pair_contraction}, the difference is $[\rho(q), \rho(p)] v$. Here $q$ represents $\rho(m)$ and $p$ represents $\rho(-n)$ with $m, n \ge 1$. By Theorem~\ref{thm:app_joint_signed_current_commutator}, $[\rho(m), \rho(-n)] v = \mathcal{S}(m, -n) v$. Since $m - n = 0 \iff m = n$, the Schwinger coefficient evaluates to $-m$ when $m = n$, and $0$ otherwise.
+\end{proof}
+
+\begin{lemma}[Chiral Gradient Representation]
+\label{lem:app_chiral_gradient_representation}
+For each chirality $\eta \in \{R, L\}$ and site $x \in \mathbb{Z}/(2h)\mathbb{Z}$:
+\begin{equation}
+\sum_{p \in \mathrm{Letter}(M)} c_\eta(x, p)\, \rho(p) = (\Delta \varphi_\eta)(x).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The letters $p = (\mathrm{branch}, i, \mathrm{creator})$ with $\mathrm{branch} = \eta$ bijectively index the terms in the expansion of Lemma~\ref{lem:app_chiral_forward_diff} via $m = i + 1 \in \{1, \dots, M\}$. Summing over creator flags matches the two terms at each mode $m$.
+\end{proof}
+
+\begin{lemma}[Dual Square Chiral Decomposition]
+\label{lem:app_dual_square_chiral_decomposition}
+For all $x \in \mathbb{Z}/(2h)\mathbb{Z}$, the quadratic symbol for the sum of dual squares decomposes into:
+\begin{equation}
+Q_{\mathrm{dual}}(x) = 2 \left( Q_R(x) + Q_L(x) \right).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Proved in Lemma~\ref{lem:field_chiral_separation} by expanding $(a+b)^2 + (a-b)^2 = 2(a^2 + b^2)$ for the scalar gradient coefficients.
+\end{proof}
+
+\begin{remark}[Formalization Note]
+The formal statement and proof use the finite mathematical carriers and hypotheses specified in this chapter. The result is an exact algebraic or combinatorial claim within that scope; it does not presume an analytic limit or a stronger continuum identity.
+\end{remark}

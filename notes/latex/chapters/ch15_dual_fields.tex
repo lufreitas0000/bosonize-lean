@@ -1,0 +1,272 @@
+\chapter{Dual Fields and Lattice Kernels}
+\label{ch:dual_fields}
+
+\section{Introduction: Continuous Intuition and Discrete Orientation}
+
+In continuous quantum field theory, the bosonization dictionary expresses one-dimensional Dirac fermions in terms of a pair of dual, canonically conjugate scalar fields $\phi(x)$ and $\theta(x)$. Physically, $\phi(x)$ represents the collective phase or spatial displacement field, whose spatial derivative is proportional to the local fermion charge density, while $\theta(x)$ is the dual phase field, whose derivative generates the physical current. In the continuum limit, these fields satisfy the equal-time canonical commutation relations:
+\begin{equation}
+[\phi(x), \phi(y)] = 0, \qquad [\theta(x), \theta(y)] = 0, \qquad [\phi(x), \theta(y)] = 2i C(x - y),
+\end{equation}
+where $C(x - y)$ is a non-trivial distribution satisfying the differential relation $\partial_y C(x - y) = \pi \delta(x - y)$.
+
+When attempting to realize these relations on a discrete periodic lattice $\Lambda = \mathbb{Z}/(2h)\mathbb{Z}$ ($h \ge 1$, $L = 2h$), a severe structural obstruction immediately arises if one treats left- and right-moving chiral components symmetrically. If the two chiral species branches $\varphi_1$ and $\varphi_2$ are defined with identical spatial mode conventions, their commutators have identical signs:
+\begin{equation}
+[\varphi_1(x), \varphi_1(y)] = C(x, y), \qquad [\varphi_2(x), \varphi_2(y)] = C(x, y), \qquad [\varphi_1(x), \varphi_2(y)] = 0.
+\end{equation}
+Defining naive macroscopic fields by $\phi_{\mathrm{naive}} = \varphi_1 + \varphi_2$ and $\theta_{\mathrm{naive}} = \varphi_1 - \varphi_2$, a straightforward bilinearity expansion gives:
+\begin{align}
+[\phi_{\mathrm{naive}}(x), \phi_{\mathrm{naive}}(y)] &= C(x, y) + C(x, y) = 2C(x, y) \neq 0, \\
+[\theta_{\mathrm{naive}}(x), \theta_{\mathrm{naive}}(y)] &= C(x, y) + C(x, y) = 2C(x, y) \neq 0, \\
+[\phi_{\mathrm{naive}}(x), \theta_{\mathrm{naive}}(y)] &= C(x, y) - C(x, y) = 0.
+\end{align}
+This is precisely the opposite of what physical bosonization demands: the self-commutators fail to cancel, while the mixed commutator vanishes identically!
+
+To resolve this contradiction constructively without altering the established single-species Kac--Moody current algebra, we must introduce an explicit \emph{chirality orientation} $\eta \in \{+1, -1\}$ (or $\eta \in \{R, L\}$) that reverses the spatial character of the mode expansion while preserving the standard current operator definitions.
+
+\section{Oriented Chiral Fluctuation Fields and Exact Hermiticity}
+
+Let $h \ge 1$ denote the half-lattice size, so that $L = 2h$, and let $\Lambda = \mathbb{Z}/(2h)\mathbb{Z}$ be the periodic lattice of sites $x$. Let $\zeta \in \mathbb{C}$ be a primitive $(2h)$-th root of unity. The discrete spatial character corresponding to momentum index $k \in \mathbb{Z}$ at site $x \in \Lambda$ is defined by:
+\begin{equation}
+\chi_k(x) \coloneqq \zeta^{k x},
+\end{equation}
+Here $\chi_k$ is understood as the usual character on $\Lambda$, well-defined because $\zeta^{2h}=1$.
+
+We fix an integer mode cutoff $M \ge 1$ satisfying the strict no-aliasing condition:
+\begin{equation}
+2M < 2h \iff M \le h - 1.
+\end{equation}
+Let $\sigma$ be a finite linearly ordered type of fermion species, and let $\nu_R, \nu_L \in \sigma$ be two distinct species labels representing the right-moving and left-moving branches ($\nu_R \neq \nu_L$).
+
+\begin{definition}[Oriented Chiral Fluctuation Fields]
+\label{def:chiral_fluctuation_field}
+For each chirality orientation $\eta \in \{R, L\}$ with signed orientation:
+\begin{equation}
+\mathrm{sgn}(R) \coloneqq +1, \qquad \mathrm{sgn}(L) \coloneqq -1,
+\end{equation}
+and associated species branch $\nu_\eta \in \{\nu_R, \nu_L\}$, the \emph{oriented chiral fluctuation field} $\varphi_\eta(x) \in \operatorname{End}_{\mathbb{C}}(\mathcal{H}_\sigma(h))$ is the bounded linear operator on the multispecies Fock space defined by the finite sum:
+\begin{equation}
+\varphi_\eta(x) \coloneqq \sum_{m=1}^M \frac{i}{m} \left( \chi_{\mathrm{sgn}(\eta) m}(x)\, \rho_{\nu_\eta}(-m) - \chi_{-\mathrm{sgn}(\eta) m}(x)\, \rho_{\nu_\eta}(m) \right),
+\end{equation}
+where $\rho_{\nu_\eta}(m)$ is the second-quantized density mode of species $\nu_\eta$ with momentum transfer $m \in \mathbb{Z}$.
+\end{definition}
+
+Notice that $m$ ranges strictly over the positive integer interval $\{1, \dots, M\}$; in particular, denominators $m$ are non-zero, and the zero mode $m = 0$ is excluded.
+
+\begin{definition}[The Macroscopic Dual Fields]
+\label{def:dual_fields}
+The macroscopic \emph{phase field} $\phi(x)$ and \emph{dual phase field} $\theta(x)$ are the ambient endomorphisms on the multispecies Fock space $\mathcal{H}_\sigma(h)$ defined by:
+\begin{align}
+\phi(x) &\coloneqq \varphi_R(x) + \varphi_L(x), \\
+\theta(x) &\coloneqq \varphi_R(x) - \varphi_L(x).
+\end{align}
+\end{definition}
+
+In traditional physics texts, fields like $\phi(x)$ and $\theta(x)$ are declared Hermitian without qualification. On a finite Hilbert space, self-adjointness must be verified via the genuine conjugate-linear adjoint map.
+
+\begin{lemma}[Exact Hermiticity of Dual Fields]
+\label{lem:dual_fields_hermitian}
+Let $h \ge 1$, $M \ge 1$, and let $\zeta \in \mathbb{C}$ be a primitive $(2h)$-th root of unity. For every lattice site $x \in \mathbb{Z}/(2h)\mathbb{Z}$, the chiral fields and the dual fields are self-adjoint operators on $\mathcal{H}_\sigma(h)$:
+\begin{equation}
+\varphi_\eta(x)^\dagger = \varphi_\eta(x) \quad (\eta \in \{R, L\}), \qquad \phi(x)^\dagger = \phi(x), \qquad \theta(x)^\dagger = \theta(x).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $s=\operatorname{sgn}(\eta)$. Applying the conjugate-linear Hilbert adjoint to the finite sum, with $(i/m)^*=-i/m$, $(\chi_{sm}(x))^*=\chi_{-sm}(x)$, and $(\rho_{\nu_\eta}(-m))^\dagger=\rho_{\nu_\eta}(m)$, exchanges the positive- and negative-mode terms and restores $\varphi_\eta(x)$. Thus each chiral field is self-adjoint, and so are their sum $\phi(x)$ and difference $\theta(x)$.
+\end{proof}
+
+\begin{remark}[Finite-space meaning of adjointness]
+These identities follow from the conjugate-linear Hilbert-space adjoint on the finite Fock space and the exact adjoint relation of each density mode. Self-adjointness is therefore a property of the defined operators, not an imposed involution convention.
+\end{remark}
+
+\section{Exact Field Commutators on the Energy Budget}
+
+We now evaluate the algebraic commutators of the dual fields. The operators $\phi(x)$ and $\theta(x)$ act globally on the full $2^{2h \cdot |\sigma|}$-dimensional Fock space $\mathcal{H}_\sigma(h)$. However, as established in Chapter~\ref{ch:heisenberg_algebra}, the density commutators evaluate to central scalars only when restricted to the energy budget subspace.
+
+Recall from Chapters~\ref{ch:vacuum_budget} and~\ref{ch:klein_factors} that for a vector of sector charges $\vec{N} = (N_\nu)_{\nu \in \sigma}$ and energy cutoff $K \ge 0$, the joint energy budget $B(h, \vec{N}, K) \subset \mathcal{H}_\sigma(h)$ is the subspace spanned by multi-species occupation kets $|S\rangle$ whose individual species charges match $\vec{N}$ and whose \emph{total} excitation energy satisfies:
+\begin{equation}
+\sum_{\nu \in \sigma} e(S_\nu) \le K.
+\end{equation}
+For each branch $\nu \in \{\nu_R, \nu_L\}$, the sufficient margin condition is:
+\begin{equation}
+2M + K + |N_\nu| \le h.
+\end{equation}
+
+\begin{definition}[The Finite Discrete Skew Kernel]
+\label{def:skew_kernel}
+For $h \ge 1$, $M \ge 1$, and primitive $(2h)$-th root $\zeta \in \mathbb{C}$, the \emph{discrete skew kernel} $S_M : \Lambda \times \Lambda \to \mathbb{C}$ is defined by:
+\begin{equation}
+S_M(x, y) \coloneqq \sum_{m=1}^M \frac{\chi_m(x - y) - \chi_{-m}(x - y)}{m}.
+\end{equation}
+\end{definition}
+
+The field commutators below reduce to two facts about the density modes. First, a single species obeys its Kac--Moody relation on a sufficiently small energy budget. Second, density modes belonging to distinct species commute. The first statement is a budget-local consequence of Chapter~\ref{ch:heisenberg_algebra}; the margin condition ensures that every intermediate state produced by the two current operators remains inside the range where that theorem applies. The second follows because each density mode is an even fermionic bilinear supported on its own species.
+
+\begin{lemma}[Signed density commutator on the joint budget]
+\label{lem:dual_signed_current_budget}
+Fix a species $\nu\in\sigma$ and integers $m,n$. If
+\begin{equation}
+|m|+|n|+K+|N_\nu|\le h,
+\end{equation}
+then on every $v\in B(h,\vec N,K)$,
+\begin{equation}
+[\rho_\nu(m),\rho_\nu(n)]v=\begin{cases}-m v,&m+n=0,\\0,&m+n\ne0.\end{cases}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+It suffices to take an occupation basis vector $|S\rangle$ in the joint budget. Its $\nu$ component has excitation at most the total excitation $K$, so it lies in the single-species budget of charge $N_\nu$ and cutoff $K$. The density modes act only on that component and leave the other species configurations fixed. The Chapter~\ref{ch:heisenberg_algebra} current relation therefore gives the displayed scalar commutator on $|S\rangle$. Linearity extends it to the whole joint budget.
+\end{proof}
+
+\begin{lemma}[Commutation between distinct species]
+\label{lem:dual_cross_species_commute}
+If $\nu\ne\nu'$, then $[\rho_\nu(m),\rho_{\nu'}(n)]=0$ on the full Fock space, for all integer momenta $m,n$.
+\end{lemma}
+
+\begin{proof}
+Each density mode is a sum of bilinears $c^\dagger_{\nu,k}c_{\nu,k+m}$. Moving one such even bilinear past a bilinear of a distinct species exchanges fermionic operators an even number of times, so the signs cancel. Thus the bilinears commute term by term, and so do their finite sums.
+\end{proof}
+
+\begin{lemma}[Chiral commutator on the energy budget]
+\label{lem:dual_chiral_commutator}
+If $2M+K+|N_{\nu_\eta}|\le h$, then for every $v\in B(h,\vec N,K)$,
+\begin{equation}
+[\varphi_\eta(x),\varphi_\eta(y)]v=\operatorname{sgn}(\eta)S_M(x,y)v.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expand both fields as finite sums. Terms with two positive or two negative current indices have zero central term. A mixed pair contributes only when its two mode numbers agree; the signed current relation then gives $m$ or $-m$. Multiplying by the field coefficients $i/m$ leaves $\bigl(\chi_m(x-y)-\chi_{-m}(x-y)\bigr)/m$ for the right branch. The left orientation exchanges the two characters and reverses the sign. Summing over $1\le m\le M$ gives the result. The stated margin implies the current-commutator margin for every pair because $|m|+|n|\le2M$.
+\end{proof}
+
+Notice that $S_M(x, y)$ is manifestly antisymmetric under site exchange: $S_M(y, x) = -S_M(x, y)$, and vanishes on the diagonal: $S_M(x, x) = 0$.
+
+\begin{theorem}[Vanishing of Dual Field Self-Commutators on Budget]
+\label{thm:field_self_commutators}
+Let $h \ge 1$, $M \ge 1$ with $2M < 2h$, and let $\zeta$ be a primitive $(2h)$-th root of unity. Let $\vec{N} = (N_\nu)$ be sector charges satisfying the branch margin conditions:
+\begin{equation}
+2M + K + |N_{\nu_R}| \le h \quad \text{and} \quad 2M + K + |N_{\nu_L}| \le h.
+\end{equation}
+Then for all lattice sites $x, y \in \mathbb{Z}/(2h)\mathbb{Z}$ and any vector $v \in B(h, \vec{N}, K)$ in the joint budget:
+\begin{equation}
+[\phi(x), \phi(y)] v = 0, \qquad [\theta(x), \theta(y)] v = 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By bilinearity, the self-commutators are sums of the two same-branch terms and cross-species terms. Lemma~\ref{lem:dual_cross_species_commute} makes the latter vanish identically, while Lemma~\ref{lem:dual_chiral_commutator} evaluates the same-branch terms as $+S_M(x,y)$ and $-S_M(x,y)$ on the stated budget. Their sum and difference therefore both cancel:
+\begin{align}
+[\phi(x),\phi(y)]v &= \bigl(S_M(x,y)-S_M(x,y)\bigr)v=0, \\
+[\theta(x),\theta(y)]v &= \bigl(S_M(x,y)-S_M(x,y)\bigr)v=0.
+\end{align}
+\end{proof}
+
+\begin{theorem}[Mixed Field Commutator on Budget]
+\label{thm:mixed_field_commutator}
+Under the same hypotheses as Theorem~\ref{thm:field_self_commutators}, the mixed commutator of $\phi(x)$ and $\theta(y)$ on the budget subspace evaluates to:
+\begin{equation}
+[\phi(x), \theta(y)] v = 2 S_M(x, y) v \quad \text{for all } v \in B(h, \vec{N}, K).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By bilinearity, the mixed commutator is the difference of the same-branch evaluations plus cross-species terms. The cross terms vanish by Lemma~\ref{lem:dual_cross_species_commute}; the two branch contributions have opposite signs by Lemma~\ref{lem:dual_chiral_commutator}, hence
+\begin{equation}
+[\phi(x),\theta(y)]v=\bigl(S_M(x,y)-(-S_M(x,y))\bigr)v=2S_M(x,y)v.
+\end{equation}
+\end{proof}
+
+\begin{remark}[Trigonometric Form vs.\ Exact Algebraic Form]
+When $\zeta$ is chosen as the canonical complex exponential root $\zeta = \exp(2\pi i / (2h))$, the character difference simplifies via Euler's formula:
+\begin{equation}
+\chi_m(x - y) - \chi_{-m}(x - y) = \zeta^{m(x-y)} - \zeta^{-m(x-y)} = 2i \sin\left(\frac{2\pi m (x - y)}{2h}\right).
+\end{equation}
+In this case, the skew kernel takes the familiar form:
+\begin{equation}
+S_M(x, y) = 2i \sum_{m=1}^M \frac{1}{m} \sin\left(\frac{2\pi m (x - y)}{2h}\right) \eqqcolon i C(x, y),
+\end{equation}
+which yields $[\phi(x), \theta(y)] v = 2i C(x, y) v$, matching the heuristic continuum literature. The finite identities of Theorems~\ref{thm:field_self_commutators} and~\ref{thm:mixed_field_commutator} are algebraic for an \emph{arbitrary} primitive root $\zeta$; the trigonometric expression is only an evaluation for the canonical complex root, not an analytic limit.
+\end{remark}
+
+\begin{remark}[Scope of the finite commutator identities]
+The commutator identities hold for both branches on the same input vector in the stated joint budget. Their scalar values follow from the branchwise current relations and the vanishing cross-species commutators; they make no global CCR assertion on the full finite-dimensional operator algebra.
+\end{remark}
+
+\section{Exact Discrete Gradients and the Zero-Mode Obstruction}
+
+In continuum bosonization, one takes the spatial derivative of the dual field to obtain the Schwinger anomaly: $[\phi(x), \partial_y \theta(y)] = 2\pi i \delta(x - y)$. On our discrete periodic lattice, differentiation is replaced by the exact forward difference operator $\Delta$.
+
+\begin{definition}[Forward Difference]
+For any operator-valued function $f : \mathbb{Z}/(2h)\mathbb{Z} \to \operatorname{End}_{\mathbb{C}}(\mathcal{H})$, the \emph{discrete forward difference} $\Delta f$ is defined by:
+\begin{equation}
+(\Delta f)(y) \coloneqq f(y + 1) - f(y).
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Exact Mixed Gradient Commutator on Budget]
+\label{lem:mixed_gradient_commutator}
+Under the hypotheses of Theorem~\ref{thm:field_self_commutators}, the commutator with the discrete forward difference satisfies:
+\begin{equation}
+[\phi(x), (\Delta \theta)(y)] v = 2 (\Delta_y S_M)(x, y) v \quad \text{for all } v \in B(h, \vec{N}, K),
+\end{equation}
+where $(\Delta_y S_M)(x, y) \coloneqq S_M(x, y + 1) - S_M(x, y)$.
+\end{lemma}
+
+\begin{proof}
+By linearity and Theorem~\ref{thm:mixed_field_commutator}, applying the forward difference in the second variable gives directly $[\phi(x), (\Delta\theta)(y)]v=2\bigl(S_M(x,y+1)-S_M(x,y)\bigr)v=2(\Delta_y S_M)(x,y)v$.
+\end{proof}
+
+Could one hope that, in analogy with the continuum formula, $2 (\Delta_y S_M)(x, y)$ equals an exact multiple of the lattice delta function? Recall the definition of the band-limited Dirichlet delta kernel:
+\begin{equation}
+\delta_M(x, y) \coloneqq \frac{1}{2h} \sum_{m = -M}^M \chi_m(x - y).
+\end{equation}
+When $2M < 2h$, the kernel has total spatial sum $\sum_{y \in \Lambda} \delta_M(x, y) = 1$: in its Fourier expansion, every nonzero mode sums to zero and only the uniform mode $m=0$ remains.
+
+The following fundamental theorem proves that an exact lattice equation $[\phi(x), \Delta_y \theta(y)] = c \delta_M(x, y) I$ is strictly impossible for any non-zero scalar $c \neq 0$.
+
+\begin{theorem}[Periodic Zero-Mode Obstruction on the Ground State]
+\label{thm:zero_mode_obstruction}
+Let $h \ge 1$, $1 \le M$ with $2M < 2h$, and let $\zeta$ be a primitive $(2h)$-th root of unity. Let $\vec{N}$ be an admissible sector charge vector, and let $|N\rangle_0$ be the non-zero sector ground state. Then for any complex constant $c \in \mathbb{C}$ with $c \neq 0$, it is impossible that:
+\begin{equation}
+\forall y \in \mathbb{Z}/(2h)\mathbb{Z}, \quad [\phi(x), (\Delta \theta)(y)] |N\rangle_0 = c\, \delta_M(x, y)\, |N\rangle_0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+If the asserted identity held for every $y$, sum it over the periodic lattice. The left side is the sum of a forward difference and vanishes by telescoping, while $\sum_{y\in\Lambda}\delta_M(x,y)=1$ because only the uniform Fourier mode survives. Thus $0=c|N\rangle_0$, impossible since the sector ground state is nonzero and $c\ne0$.
+\end{proof}
+
+\begin{remark}[Physical Significance of the Zero-Mode Obstruction]
+\label{rem:zero_mode_significance}
+The zero-mode obstruction is not a mathematical defect of the discrete formulation, but an exact manifestation of lattice topology. On a compact periodic chain, the spatial integral of any derivative must vanish: $\oint dx\, \partial_x f(x) = 0$. Consequently, any fluctuation-field commutator $[\phi(x), \partial_y \theta(y)]$ must strictly have zero spatial average.
+
+In contrast, the continuum Dirac delta function $\delta(x - y)$ (or the band-limited kernel $\delta_M$) integrates to $1$ because it contains the uniform zero mode $m = 0$. The difference between the true gradient commutator $2\Delta_y S_M(x, y)$ and the naive delta function is precisely the subtraction of the zero mode. Constructive lattice bosonization requires retaining the exact differentiated kernel $\Delta_y S_M$ rather than falsely asserting exact proportionality to $\delta_M$.
+\end{remark}
+
+\begin{example}[A finite witness for the zero-mode obstruction]
+Take $h=4$, $M=1$, $K=0$, two branches, and zero charge in each branch. The margin condition reads $2M+K+|N_\nu|=2\le h$, so the first current commutator is valid on the nonzero sector ground state. Yet a periodic spatial derivative has zero average, whereas the band-limited delta kernel has average one. Therefore no nonzero scalar multiple of that delta kernel can equal the derivative commutator at every pair of sites. This small admissible instance makes the obstruction concrete: it comes from the missing uniform mode, not from a failure of the finite current algebra.
+\end{example}
+
+\begin{remark}[Nonzero ground-state witness]
+The contradiction uses a nonzero sector ground state, so it cannot hold vacuously. The example above supplies an explicit admissible choice of cutoff, charge, and branches.
+\end{remark}
+
+\section{Chapter Summary: What the Finite Fields Establish}
+This chapter built Hermitian right- and left-moving fluctuation fields from
+the finite density modes, combined them into phase fields $\phi$ and
+$\theta$, and computed their commutators on explicitly stated energy
+budgets. The current algebra supplies the same oscillator mechanism that
+underlies continuum bosonization, while the finite margins identify exactly
+which states are protected from band-edge effects. Taking a discrete
+gradient gives the exact differentiated skew kernel. Its spatial average
+vanishes, so it cannot equal a nonzero multiple of the normalized
+band-limited delta kernel: the uniform Fourier component is absent from a
+derivative.
+
+The result is a finite-lattice counterpart of the familiar continuum
+current and dual-field relations. It preserves the physical oscillator
+picture but makes its domain and zero-mode limitation explicit. In
+particular, these finite commutator identities do not by themselves prove
+an unrestricted continuum field identity or remove the need to handle
+global charge separately. The next step is to use this distinction when
+constructing field operators and Hamiltonians.

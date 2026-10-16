@@ -11,6 +11,8 @@ Furthermore, pairing the momentum operator $P = -i \partial_x$ with the position
 
 On a discrete spatial lattice, such as the periodic circular chain $\Lambda = \mathbb{Z}/L\mathbb{Z}$ introduced in Chapter~\ref{ch:lattice_band}, infinitesimal derivatives do not exist. Instead, calculus must be formulated through finite differences. Umbral calculus provides the rigorous algebraic framework that replaces differential operators with finite differences without loss of algebraic structure. 
 
+The basic example is the forward difference $\Delta f(X)=f(X+1)-f(X)$. It is exact at finite spacing, so product rules contain a correction term. This is the algebraic feature that later matters when we derive lattice currents and conservation identities.
+
 In this chapter, we develop the exact theory of discrete difference operators. We establish that:
 \begin{enumerate}
     \item Finite differences satisfy exact non-infinitesimal Leibniz identities over arbitrary commutative rings.
@@ -81,14 +83,14 @@ Consequently, for any function $f \in R^S$ and point $x \in S$:
 
 \begin{proof}
 Expanding the composition directly in the ring of endomorphisms:
-\[
+\begin{equation}
 \Delta \circ \nabla = (E - I)(I - E^{-1}) = E \cdot I - E \cdot E^{-1} - I \cdot I + I \cdot E^{-1} = E - I - I + E^{-1} = E + E^{-1} - 2I.
-\]
+\end{equation}
 Similarly, $\nabla \circ \Delta = (I - E^{-1})(E - I) = E - I - I + E^{-1}$. Evaluating on $f$ at point $x$ yields $f(x+1) + f(x-1) - 2f(x)$.
 \end{proof}
 
-\begin{remark}[Formalization Note]
-In the verified Lean~4 core, difference operators are defined as bundled linear maps over general commutative rings. Because no division by a lattice spacing $a$ is required, the operator algebra is valid over rings of any characteristic, including $\mathbb{Z}$.
+\begin{remark}[Algebraic scope]
+Because the definition uses no division by a lattice spacing $a$, the difference operators and their identities are defined over any commutative ring with unit, including $\mathbb{Z}$. No topological completeness or field axioms are needed; the identities follow from ring operations and the shift maps on the chosen coordinate domain.
 \end{remark}
 
 \section{Discrete Leibniz Rules}
@@ -109,30 +111,38 @@ Alternatively, expressed in fully expanded form:
 \end{theorem}
 
 \begin{proof}
-Evaluate the left-hand side at an arbitrary coordinate $x \in S$:
-\[
-(\Delta(f g))(x) = (f g)(x+1) - (f g)(x) = f(x+1) g(x+1) - f(x) g(x).
-\]
-To prove~\eqref{eq:leibniz_1}, add and subtract $f(x+1) g(x)$:
-\begin{align*}
-(\Delta(f g))(x) &= f(x+1) g(x+1) - f(x+1) g(x) + f(x+1) g(x) - f(x) g(x) \\
-&= f(x+1) [g(x+1) - g(x)] + [f(x+1) - f(x)] g(x) \\
-&= (E f)(x) (\Delta g)(x) + (\Delta f)(x) g(x).
-\end{align*}
-To obtain~\eqref{eq:leibniz_symmetric}, substitute $(E f)(x) = f(x) + (\Delta f)(x)$:
-\begin{align*}
-(\Delta(f g))(x) &= [f(x) + (\Delta f)(x)] (\Delta g)(x) + (\Delta f)(x) g(x) \\
-&= f(x)(\Delta g)(x) + (\Delta f)(x) g(x) + (\Delta f)(x)(\Delta g)(x).
-\end{align*}
-Identity~\eqref{eq:leibniz_2} follows by symmetry under swapping $f$ and $g$.
+At an arbitrary $x\in S$, expand the difference and add and subtract the cross-term $f(x+1)g(x)$:
+\begin{align}
+(\Delta(fg))(x)
+&=f(x+1)g(x+1)-f(x)g(x) \\
+&=f(x+1)\bigl(g(x+1)-g(x)\bigr)+\bigl(f(x+1)-f(x)\bigr)g(x) \\
+&=(Ef)(x)(\Delta g)(x)+(\Delta f)(x)g(x).
+\end{align}
+This proves~\eqref{eq:leibniz_1}. Substituting $(Ef)(x)=f(x)+(\Delta f)(x)$ gives the factored symmetric form
+\begin{equation}
+(\Delta(fg))(x)=f(x)(\Delta g)(x)+(\Delta f)(x)g(x)+(\Delta f)(x)(\Delta g)(x).
+\end{equation}
+Commutativity of $R$ gives~\eqref{eq:leibniz_2} by swapping $f$ and $g$ in the first identity.
 \end{proof}
 
-\paragraph{Formal Correctness vs.\ Physical Implications: Umbral Cross-Term.}
+\begin{remark}[Formal Correctness vs.\ Physical Implications: Umbral Cross-Term]
 The quadratic cross-term $(\Delta f)(\Delta g)$ in~\eqref{eq:leibniz_symmetric} is the hallmark of discrete lattice calculus. Reintroducing the lattice spacing $a$, let $\Delta_a f(x) = \frac{f(x+a) - f(x)}{a}$. The discrete Leibniz rule becomes:
-\[
+\begin{equation}
 \Delta_a(f g)(x) = (\Delta_a f)(x) g(x) + f(x) (\Delta_a g)(x) + a (\Delta_a f)(x) (\Delta_a g)(x).
-\]
-In the continuum limit $a \to 0$, the cross-term is of order $\mathcal{O}(a)$ and vanishes, recovering the standard continuum product rule. On a discrete lattice, however, this cross-term is non-zero and exact. Ignoring this term leads to spurious violations of conservation laws and gauge invariance in discrete field theories.
+\end{equation}
+For example, with unit spacing and $f(x)=g(x)=x$, the exact identity gives
+$\Delta(x^2)=2x+1$; the continuum-style expression
+$x\,\Delta x+(\Delta x)\,x$ gives only $2x$ and misses the finite correction.
+The same issue appears with a link-covariant difference. If $U(x)$ is the
+parallel-transport phase from $x+1$ back to $x$, the product of fields with
+charges $q_1$ and $q_2$ is transported with $U(x)^{q_1+q_2}$. Its exact
+product rule splits into two terms only when one factor is evaluated at the
+shifted site and transported along the link. Dropping the lattice correction
+can therefore spoil the cancellations used to establish a discrete continuity
+equation or gauge covariance. The point is not that every discretization
+violates a conservation law, but that the exact product rule must match the
+chosen lattice transport.
+\end{remark}
 
 \section{Discrete Summation by Parts on Periodic Lattices}
 
@@ -152,18 +162,18 @@ That is, the backward difference $\nabla$ is the exact formal negative adjoint o
 
 \begin{proof}
 Expand the left-hand sum:
-\[
+\begin{equation}
 \sum_{x \in \Lambda} (\Delta f)(x)\, g(x) = \sum_{x \in \Lambda} [f(x+1) - f(x)]\, g(x) = \sum_{x \in \Lambda} f(x+1) g(x) - \sum_{x \in \Lambda} f(x) g(x).
-\]
+\end{equation}
 In the first sum, perform the change of summation variable $y = x+1$. Because translation by $1$ is a bijection of the finite cyclic group $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the sum over $y$ runs over all of $\Lambda$, and $x = y-1$:
-\[
+\begin{equation}
 \sum_{x \in \Lambda} f(x+1) g(x) = \sum_{y \in \Lambda} f(y) g(y-1) = \sum_{x \in \Lambda} f(x) g(x-1).
-\]
+\end{equation}
 Recombining the two sums:
-\begin{align*}
+\begin{align}
 \sum_{x \in \Lambda} (\Delta f)(x)\, g(x) &= \sum_{x \in \Lambda} f(x) g(x-1) - \sum_{x \in \Lambda} f(x) g(x) \\
 &= - \sum_{x \in \Lambda} f(x) [g(x) - g(x-1)] = - \sum_{x \in \Lambda} f(x) (\nabla g)(x).
-\end{align*}
+\end{align}
 \end{proof}
 
 \begin{corollary}[Self-Adjointness of the Discrete Laplacian]
@@ -175,14 +185,19 @@ The discrete Laplacian $\Delta\nabla$ is formally self-adjoint under periodic la
 
 \begin{proof}
 Apply Theorem~\ref{thm:summation_by_parts} twice:
-\[
+\begin{equation}
 \langle \Delta\nabla f, g \rangle = \langle \Delta(\nabla f), g \rangle = - \langle \nabla f, \nabla g \rangle = \langle f, \Delta(\nabla g) \rangle = \langle f, \Delta\nabla g \rangle.
-\]
+\end{equation}
 \end{proof}
 
 \section{Newton Binomial Expansions and Falling Factorials}
 
 In continuous analysis, Taylor series express translations through powers of the derivative: $e^{t \partial_x} f(x) = \sum_{n=0}^\infty \frac{t^n}{n!} f^{(n)}(x)$. In discrete calculus, the shift operator $E = I + \Delta$ yields an exact terminating polynomial expansion without convergence issues.
+
+The falling-factorial basis is introduced here because it is the polynomial
+basis naturally lowered by a finite difference. The next theorem uses that
+property to make the difference operator act just as simply as differentiation
+acts on ordinary monomials.
 
 \begin{definition}[Falling Factorials]
 For an indeterminate $X$ and an integer $n \in \mathbb{N}$:
@@ -232,26 +247,51 @@ It suffices to evaluate both sides on the basis monomials $X^n$ for $n \in \math
 \begin{enumerate}
     \item For $n = 0$: $D(1) = 0$, so $\Phi(D(1)) = 0$. On the other hand, $\Phi(1) = 1$, so $\Delta_{\mathrm{poly}}(\Phi(1)) = 1 - 1 = 0$.
     \item For $n \ge 1$: $D(X^n) = n X^{n-1}$, so:
-    \[
+    \begin{equation}
     \Phi(D(X^n)) = \Phi(n X^{n-1}) = n \Phi(X^{n-1}) = n X^{\underline{n-1}}.
-    \]
+    \end{equation}
     Now apply $\Delta_{\mathrm{poly}}$ to $\Phi(X^n) = X^{\underline{n}}$:
-    \[
+    \begin{equation}
     \Delta_{\mathrm{poly}}(X^{\underline{n}}) = (X+1)^{\underline{n}} - X^{\underline{n}}.
-    \]
-    Factoring the falling factorials:
-    \begin{align*}
-    (X+1)^{\underline{n}} &= (X+1) X (X-1) \cdots (X - n + 2), \\
-    X^{\underline{n}} &= X (X-1) \cdots (X - n + 2) (X - n + 1).
-    \end{align*}
-    The product of the first $n-1$ factors is $X^{\underline{n-1}}$. Factoring this out:
-    \[
-    (X+1)^{\underline{n}} - X^{\underline{n}} = X^{\underline{n-1}} \big[ (X+1) - (X - n + 1) \big] = X^{\underline{n-1}} [1 + n - 1] = n X^{\underline{n-1}}.
-    \]
+    \end{equation}
+    Factoring out the common product $X^{\underline{n-1}}$ gives
+    \begin{equation}
+    (X+1)^{\underline{n}}-X^{\underline{n}}
+    =X^{\underline{n-1}}\bigl[(X+1)-(X-n+1)\bigr]
+    =nX^{\underline{n-1}}.
+    \end{equation}
     Therefore $\Delta_{\mathrm{poly}}(\Phi(X^n)) = n X^{\underline{n-1}} = \Phi(D(X^n))$.
 \end{enumerate}
 This establishes $\Phi \circ D = \Delta_{\mathrm{poly}} \circ \Phi$ on all polynomials.
 \end{proof}
+
+\paragraph{Change of Basis and Bernoulli Operators.}
+The monomial and falling-factorial bases are related by Stirling numbers. With
+$s(n,k)$ the signed Stirling numbers of the first kind and $S(n,k)$ those of
+the second kind,
+\begin{equation}
+X^{\underline n}=\sum_{k=0}^n s(n,k)X^k,
+\qquad
+X^n=\sum_{k=0}^n S(n,k)X^{\underline k}.
+\end{equation}
+These triangular identities describe the change of basis; they are not
+additional hypotheses in the intertwining theorem.
+
+There is also a useful formal-operator viewpoint. On polynomials,
+$E=e^D$ because the exponential series terminates on each polynomial, and
+therefore $\Delta=e^D-I$. The inverse ratio is the Bernoulli generating
+function:
+\begin{equation}
+\frac{D}{\Delta}=\frac{D}{e^D-1}
+=\sum_{n=0}^{\infty}\frac{B_n}{n!}D^n,
+\end{equation}
+where $B_n$ are the Bernoulli numbers with the convention
+$B_1=-\tfrac12$. This is a formal power-series identity around $D=0$; it is
+not a convergent operator identity on an arbitrary function space. When
+applied to sufficiently smooth functions and integrated over an interval, its
+boundary corrections give the Euler--Maclaurin summation formula. Thus Stirling
+numbers encode the basis change, while Bernoulli numbers encode the formal
+derivative-to-difference correction.
 
 \section{The Discrete Heisenberg Pair and the No-Go Theorem}
 
@@ -275,30 +315,17 @@ On the function module $R^\mathbb{Z}$, the forward difference $\Delta$ and the o
 \end{theorem}
 
 \begin{proof}
-Let $f : \mathbb{Z} \to R$ be an arbitrary function and evaluate both compositions at coordinate $x \in \mathbb{Z}$:
-\begin{enumerate}
-    \item First evaluate $(\Delta(\beta f))(x)$:
-    \begin{align*}
-    (\Delta(\beta f))(x) &= (\beta f)(x+1) - (\beta f)(x) \\
-    &= (x+1) f((x+1) - 1) - x f(x-1) \\
-    &= (x+1) f(x) - x f(x-1).
-    \end{align*}
-    \item Next evaluate $(\beta(\Delta f))(x)$:
-    \begin{align*}
-    (\beta(\Delta f))(x) &= x (\Delta f)(x-1) \\
-    &= x \big( f((x-1)+1) - f(x-1) \big) \\
-    &= x f(x) - x f(x-1).
-    \end{align*}
-    \item Subtracting the second equation from the first:
-    \[
-    (\Delta(\beta f))(x) - (\beta(\Delta f))(x) = \big[ (x+1) f(x) - x f(x-1) \big] - \big[ x f(x) - x f(x-1) \big].
-    \]
-    The terms involving $f(x-1)$ cancel identically:
-    \[
-    (x+1 - x) f(x) = 1 \cdot f(x) = f(x) = (I f)(x).
-    \]
-\end{enumerate}
-Since this holds for every $f$ and every $x$, we conclude $[\Delta, \beta] = I$.
+For $f:\mathbb{Z}\to R$ and $x\in\mathbb{Z}$, the two compositions act as
+\begin{align}
+(\Delta(\beta f))(x)&=(x+1)f(x)-xf(x-1),\\
+(\beta(\Delta f))(x)&=xf(x)-xf(x-1).
+\end{align}
+Subtracting cancels the $xf(x-1)$ terms and leaves
+\begin{equation}
+(\Delta(\beta f))(x)-(\beta(\Delta f))(x)
+=((x+1)-x)f(x)=f(x)=(If)(x).
+\end{equation}
+Since this holds for every $f$ and $x$, $[\Delta,\beta]=I$.
 \end{proof}
 
 A natural question arises: can such an exact Heisenberg pair $[A, B] = I$ be realized on a finite spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, where functions form a finite-dimensional vector space $R^L$? The following classical theorem shows this is impossible.
@@ -315,18 +342,18 @@ Let $K$ be any field of characteristic zero (such as $\mathbb{Q}$, $\mathbb{R}$,
 Suppose for contradiction that such matrices $A, B$ exist. We take the matrix trace $\mathrm{Tr} : \mathrm{Mat}_{n \times n}(K) \to K$ of both sides of the equation $[A, B] = I_n$.
 
 By the cyclic invariance and linearity of the matrix trace:
-\[
+\begin{equation}
 \mathrm{Tr}([A, B]) = \mathrm{Tr}(A B - B A) = \mathrm{Tr}(A B) - \mathrm{Tr}(B A) = 0.
-\]
+\end{equation}
 On the other hand, the trace of the $n \times n$ identity matrix $I_n$ is:
-\[
+\begin{equation}
 \mathrm{Tr}(I_n) = \sum_{i=1}^n 1_K = n \cdot 1_K.
-\]
+\end{equation}
 Equating the two traces yields $0 = n \cdot 1_K$.
 Because $K$ has characteristic zero and $n \ge 1$, $n \cdot 1_K \neq 0$ in $K$. This contradiction shows that no such matrices exist.
 \end{proof}
 
-\paragraph{Formal Correctness vs.\ Physical Implications: Resolution of the CCR Obstruction.}
+\begin{remark}[Formal Correctness vs.\ Physical Implications: Resolution of the CCR Obstruction]
 Theorem~\ref{thm:no_go} explains why quantum canonical commutation relations cannot be realized by finite-dimensional single-particle matrices. On a finite periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the space of single-particle wavefunctions has dimension $L < \infty$, so single-particle position and momentum operators cannot satisfy $[P, X] = -i I$.
 
 In condensed matter physics, this obstruction is frequently bypassed by asserting infinite-dimensional Hilbert spaces or imposing periodic boundary conditions with discontinuous sawtooth position operators. In our constructive program, the obstruction is resolved through \emph{bosonization}:
@@ -335,8 +362,7 @@ In condensed matter physics, this obstruction is frequently bypassed by assertin
     \item Instead, it emerges in second quantization on the graded Umbral polynomial Fock layer (Chapter~\ref{ch:boson_fock}) and as an exact Kac--Moody current algebra on finite energy budget subspaces (Chapters~\ref{ch:heisenberg_algebra} and~\ref{ch:haldane_completeness}).
 \end{itemize}
 
-\begin{remark}[Formalization Note]
-In the verified Lean~4 core, the proof of Theorem~\ref{thm:no_go} is formalized by exhibiting the trace map on matrices over fields of characteristic zero. This formal check guarantees that attempts to realize single-particle CCR on finite lattices are mathematically excluded, providing strict justification for the energy budget regularization introduced in Chapter~\ref{ch:vacuum_budget}.
+The exact algebraic trace map excludes a finite-dimensional single-particle realization of the canonical commutation relation over a field of characteristic zero. This trace obstruction gives a strict mathematical reason to formulate the later bosonic relations on second-quantized, finite-energy subspaces: the energy budget regularization retains finite carriers while avoiding the impossible finite-dimensional single-particle CCR.
 \end{remark}
 
 \section{Chapter Summary and Literature Comparison}

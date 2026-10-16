@@ -3,7 +3,7 @@
 
 \section{Introduction and Discrete Setting}
 
-In relativistic quantum field theory in $1+1$ dimensions, continuous spacetime coordinates and infinite-dimensional momentum representations frequently introduce severe infrared and ultraviolet divergences. In the constructivist and algebraic program developed in this monograph, all continuum divergences are eliminated at the foundation by formulating the theory on a strictly finite, discrete spatial manifold and its exact Fourier-dual momentum space.
+In $1+1$-dimensional field theory, continuum descriptions can produce ultraviolet and infrared divergences, as well as infinite mode sums that require separate regularization. Here we begin with a finite periodic chain and its exact Fourier-dual momentum band. The resulting operators and sums are finite, and the algebraic constraints imposed by periodicity can be handled before any continuum limit is considered.
 
 Throughout this chapter, let $L \in \mathbb{N}$ denote the number of spatial lattice sites, assuming $L \ge 1$. While general difference calculus and Fourier transforms can be formulated for arbitrary positive integers $L$, the construction of half-filled Dirac seas and fermionic Fock spaces from Chapter~\ref{ch:fermions} onward strictly requires an even lattice length:
 \begin{equation}
@@ -25,8 +25,8 @@ Elements $x, y \in \Lambda$ represent discrete spatial positions. Periodic bound
 
 Because $L \ge 1$, the spatial lattice $\Lambda$ is a finite commutative ring of cardinality $\#\Lambda = L$, endowed with canonical addition and multiplication inherited from $\mathbb{Z}$.
 
-\begin{remark}[Formalization Note]
-In constructive formalizations of mathematics, algebraic structures must carry computational and decidable content. The spatial lattice $\Lambda$ is realized directly via the cyclic quotient type with an explicit hypothesis of strict positivity ($L > 0$), preventing degenerate structures associated with modulo-zero division. Periodic boundary conditions require no auxiliary topological constraints; they are enforced by the quotient equality $x + L = x$.
+\begin{remark}[Finite-Lattice Remark]
+The quotient description makes periodicity exact: adding $L$ to an integer representative leaves its site unchanged. Since $L$ is positive, this finite ring has exactly $L$ sites, and all position labels and translations are interpreted within it.
 \end{remark}
 
 \paragraph{Formal Correctness vs.\ Physical Implications: Discrete Chains vs.\ Continuum Circles.}
@@ -63,10 +63,10 @@ The choice of inequalities $-L < 2k \le L$ is subtle and fundamental:
 \paragraph{Formal Correctness vs.\ Physical Implications: Brillouin Zone Boundaries.}
 In standard solid-state physics textbooks (such as Ashcroft and Mermin or Kittel), the first Brillouin zone is customarily drawn as the symmetric interval $[-\pi/a, \pi/a]$, or $[-h, h]$ in mode units. However, on an even lattice of $L = 2h$ sites, the modes $k = -h$ and $k = +h$ represent the \emph{same} physical wave on the lattice, since $e^{i (-h) (2\pi x / 2h)} = e^{-i \pi x} = (-1)^x = e^{i \pi x} = e^{i (+h) (2\pi x / 2h)}$.
 Including both $-h$ and $+h$ yields $2h+1$ modes, which violates the fundamental dimension theorem $\dim(\ell^2(\Lambda)) = \dim(\ell^2(\Lambda^*)) = L$. Physics literature often circumvents this by assigning fractional weights $1/2$ to the boundary modes or passing implicitly to the thermodynamic limit. 
-For an exact, kernel-checked algebraic formalization, exact finite dimensionality is strictly required: the discrete Fourier transform must be a bijective isometry between two spaces of identical dimension $L$. Retaining the positive Nyquist mode $+h$ while excluding $-h$ preserves exact cardinality $\#\Lambda^* = L$ while avoiding duplicate periodic modes.
+The discrete Fourier transform pairs spaces of the same finite dimension $L$. Retaining the positive Nyquist mode $+h$ while excluding $-h$ gives exactly $\#\Lambda^* = L$ distinct periodic modes.
 
-\begin{remark}[Formalization Note]
-While $\Lambda^*$ is defined as an abstract comprehension over $\mathbb{Z}$, constructive computation requires a decidable finite set. In formal practice, $\Lambda^*$ is constructed by filtering the bounded finite set $\mathbb{Z} \cap [-L, L]$ with the decidable predicate $-L < 2k \le L$, establishing the finite type instance without invoking non-constructive choice principles.
+\begin{remark}[Finite-Lattice Remark]
+The band is an explicitly bounded set of integer modes, with exactly one representative of each residue class modulo $L$. Its asymmetric endpoints record the single positive Nyquist mode on an even lattice.
 \end{remark}
 
 \section{Quotient Projections and the Centered Section}
@@ -121,16 +121,7 @@ We verify both statements directly from the definitions:
     \end{itemize}
     In both branches, $r(x) \in \Lambda^*$ and $\pi(r(x)) = x$.
     
-    \item Let $k \in \Lambda^*$. Then $-L < 2k \le L$. Consider the difference $k - r(\pi(k))$. Since $\pi(r(\pi(k))) = \pi(k)$ by part (1), both $k$ and $r(\pi(k))$ project to the same residue class under $\pi$. Therefore, their difference is an integer multiple of $L$:
-    \[
-    k - r(\pi(k)) = m L \quad \text{for some } m \in \mathbb{Z}.
-    \]
-    However, both $k$ and $r(\pi(k))$ satisfy the band bounds:
-    \[
-    -\frac{L}{2} < k \le \frac{L}{2} \quad \text{and} \quad -\frac{L}{2} < r(\pi(k)) \le \frac{L}{2}.
-    \]
-    Subtracting these inequalities yields $-L < k - r(\pi(k)) < L$.
-    The only integer multiple of $L$ strictly between $-L$ and $L$ is $0$. Hence $m = 0$, which proves $r(\pi(k)) = k$.
+    \item Let $k\in\Lambda^*$. By part (1), $k$ and $r(\pi(k))$ have the same image under $\pi$, so their difference is an integer multiple of $L$. Since both lie in the band $(-L/2,L/2]$, their difference has absolute value strictly less than $L$. The only such multiple is zero, hence $r(\pi(k))=k$.
 \end{enumerate}
 \end{proof}
 
@@ -141,8 +132,8 @@ The restriction of the canonical projection $\pi|_{\Lambda^*} : \Lambda^* \to \L
 \end{equation}
 \end{corollary}
 
-\begin{remark}[Formalization Note]
-In the formalized proof, rather than carrying out tedious case analysis on the numerical boundaries of the unsigned residue $x_{\mathrm{val}}$, the proof of injectivity and two-sided inversion is established algebraically via the division theorem: any two elements of $\Lambda^*$ with the same quotient image have a difference divisible by $L$; because the diameter of $\Lambda^*$ is strictly less than $2L$, this difference must vanish identically. This algebraic argument avoids dependent type casework and simplifies proof maintenance.
+\begin{remark}[Finite-Lattice Remark]
+For injectivity, take any $k_1,k_2\in\Lambda^*$ with $\pi(k_1)=\pi(k_2)$. Their difference is an integer multiple of $L$. Both lie in $(-L/2,L/2]$, so the diameter of the band is strictly less than $L$ and $|k_1-k_2|<L$. The difference must therefore be zero. Thus $k_1=k_2$, and the section identities give the asserted inversion.
 \end{remark}
 
 \section{Transported Band Arithmetic and Umklapp Wrapping}
@@ -158,6 +149,10 @@ k \oplus p &\coloneqq r(\pi(k) + \pi(p)), \\
 \ominus k &\coloneqq r(-\pi(k)).
 \end{align}
 \end{definition}
+
+\begin{remark}[Notation in later chapters]
+The symbols $\oplus$ and $\ominus$ emphasize that these operations are transported from the quotient group to the chosen momentum band. In subsequent chapters, standard $+$ and $-$ symbols will denote these band operations when their domain is clear, reducing notational overhead.
+\end{remark}
 
 Because $(\pi, r)$ is a bijection between $\Lambda^*$ and the abelian group $\Lambda$, $(\Lambda^*, \oplus, \ominus, 0)$ forms a finite abelian group isomorphic to $\mathbb{Z}/L\mathbb{Z}$, with neutral element $0 = r(\pi(0))$.
 
@@ -181,26 +176,8 @@ w = \begin{cases}
 \end{theorem}
 
 \begin{proof}
-Let $s = k + p \in \mathbb{Z}$. Since $k, p \in \Lambda^*$, we have $-L < 2k \le L$ and $-L < 2p \le L$. Adding these inequalities gives:
-\[
--2L < 2(k+p) \le 2L \implies -L < s \le L.
-\]
-By definition of band addition, $\pi(k \oplus p) = \pi(r(\pi(k) + \pi(p))) = \pi(k) + \pi(p) = \pi(s)$. Thus $s$ and $k \oplus p$ project to the same element in $\Lambda$, meaning $s - (k \oplus p)$ is an integer multiple of $L$:
-\[
-s - (k \oplus p) = w L \quad \text{for some } w \in \mathbb{Z}.
-\]
-Since $-L < s \le L$ and $-L/2 < k \oplus p \le L/2$, we obtain bounds on $w$:
-\[
--L - \frac{L}{2} < s - (k \oplus p) < L - \left(-\frac{L}{2}\right) \implies -\frac{3L}{2} < wL < \frac{3L}{2}.
-\]
-Dividing by $L > 0$ yields $-\frac{3}{2} < w < \frac{3}{2}$. Because $w \in \mathbb{Z}$, the only possible values are $w \in \{-1, 0, 1\}$.
-
-Testing the three ranges:
-\begin{itemize}
-    \item If $2s > L$, choose candidate $s' = s - L$. Then $2s' = 2s - 2L > L - 2L = -L$, and $2s' \le 2L - 2L = 0 \le L$. Thus $s' \in \Lambda^*$ and $\pi(s') = \pi(s)$. By uniqueness of the centered representative in $\Lambda^*$, $k \oplus p = s - L$, so $w = 1$.
-    \item If $-L < 2s \le L$, then $s$ already belongs to $\Lambda^*$. Uniqueness gives $k \oplus p = s$, so $w = 0$.
-    \item If $2s \le -L$, choose candidate $s' = s + L$. Then $2s' \le -L + 2L = L$, and $2s' > -2L + 2L = 0 > -L$. Thus $s' \in \Lambda^*$ and $\pi(s') = \pi(s)$. Uniqueness implies $k \oplus p = s + L$, so $w = -1$.
-\end{itemize}
+Let $s=k+p$. Since $k,p\in\Lambda^*$, their band bounds give $-L<s\le L$. By definition, $k\oplus p$ and $s$ have the same image under $\pi$, so $s-(k\oplus p)=wL$ for some integer $w$. The bounds $-L<s\le L$ and $-L/2<k\oplus p\le L/2$ imply $-3L/2<s-(k\oplus p)<3L/2$, hence $-3/2<w<3/2$. Therefore $w\in\{-1,0,1\}$.
+By the defining property of the centered lift, $k\oplus p=r(\pi(s))$ is the unique element of $\Lambda^*$ with quotient image $\pi(s)$. Thus the integer $w$ above is uniquely determined by $s-(k\oplus p)=wL$. Its value must be one of $-1,0,1$, as established by the bounds.
 Uniqueness of $w$ follows since $(w_1 - w_2) L = 0$ implies $w_1 = w_2$ when $L > 0$.
 \end{proof}
 
@@ -227,37 +204,37 @@ Let $L = 2h$ with $h \ge 1$.
 Let $L = 2h$.
 \begin{enumerate}
     \item For the mode $k = L/2 = h$, ordinary negation yields $-k = -h = -L/2$. In the quotient ring $\Lambda = \mathbb{Z}/L\mathbb{Z}$:
-    \[
+    \begin{equation}
     -\pi(L/2) = \pi(-L/2) = \pi(-L/2 + L) = \pi(L/2).
-    \]
+    \end{equation}
     Applying the section $r$, we have:
-    \[
+    \begin{equation}
     \ominus (L/2) = r(-\pi(L/2)) = r(\pi(L/2)) = L/2,
-    \]
+    \end{equation}
     by Lemma~\ref{lem:section_identities}(2). Hence $\ominus(L/2) = L/2$.
 
     \item Suppose $k \in \Lambda^*$ with $k \neq L/2$. Since $k \in \{-h+1, \dots, h\}$ and $k \neq h$, we must have:
-    \[
+    \begin{equation}
     -h+1 \le k \le h-1 \implies -(h-1) \le -k \le h-1.
-    \]
+    \end{equation}
     Multiplying by $2$:
-    \[
+    \begin{equation}
     -2h < -2(h-1) \le 2(-k) \le 2(h-1) < 2h = L.
-    \]
+    \end{equation}
     Thus $-k$ satisfies the strict bounds $-L < 2(-k) \le L$, establishing that the integer $-k$ is already in $\Lambda^*$. By Lemma~\ref{lem:section_identities}(2), $r(\pi(-k)) = -k$. Therefore:
-    \[
+    \begin{equation}
     \ominus k = r(-\pi(k)) = r(\pi(-k)) = -k.
-    \]
+    \end{equation}
 \end{enumerate}
 \end{proof}
 
-\begin{remark}[Formalization Note]
-In physical literature, authors often assume $\ominus k = -k$ for all momenta without addressing the boundary mode, causing subtle inconsistencies in Fourier inversion and Bogoliubov transformations at the Nyquist frequency. The constructive formalization in Lean 4 guarantees that all transformations and commutators account for the single exceptional point $k = L/2$. Specifically:
+\begin{remark}[Finite-Lattice Remark]
+The distinction between band negation and ordinary integer negation matters at the boundary: the positive Nyquist mode is self-inverse, while ordinary negation would leave the chosen band. This exact accounting is important in Fourier inversion and in transformations involving paired modes. Specifically:
 \begin{itemize}
     \item The pair $(k, \ominus k)$ contains two distinct modes for all $k \notin \{0, L/2\}$.
     \item The fixed points of the negation involution $k \mapsto \ominus k$ on $\Lambda^*$ are precisely the two zero-energy/boundary modes: $k = 0$ and $k = L/2$.
 \end{itemize}
-This exact accounting ensures that no double-counting or missing modes occur when partitioning momentum sums into pairs $(k, -k)$ in later chapters.
+This exact accounting ensures that no modes are double-counted or omitted when momentum sums are partitioned into pairs in later chapters.
 \end{remark}
 
 \section{Chapter Summary and Literature Comparison}
@@ -274,10 +251,10 @@ In this opening chapter, we established the discrete spatial and momentum geomet
 \paragraph{Comparison with Standard Continuum Literature.}
 In standard condensed matter bosonization texts, such as Giamarchi~\cite{giamarchi2004}, Gogolin, Nersesyan, and Tsvelik~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the spatial circle is typically taken as a continuous interval $[0, \mathcal{L}]$ with periodic boundary conditions, leading to an infinite set of discrete momentum modes $k_n = \frac{2\pi n}{\mathcal{L}}$ ($n \in \mathbb{Z}$). In that setting, there is no upper momentum cutoff, Umklapp scattering is treated as an extrinsic perturbation or ignored in low-energy Tomonaga--Luttinger models, and the Fermi sea has infinite depth.
 
-By contrast, our constructive formulation models the physical lattice from the outset. As emphasized by Haldane~\cite{haldane1981}, the lattice acts as an intrinsic ultraviolet regulator. The asymmetric Brillouin zone $\Lambda^*$ is the unique choice that simultaneously achieves:
+By contrast, our finite-lattice formulation models the physical lattice from the outset. As emphasized by Haldane~\cite{haldane1981}, the lattice acts as an intrinsic ultraviolet regulator. The asymmetric Brillouin zone $\Lambda^*$ is the unique choice that simultaneously achieves:
 \begin{enumerate}
     \item Exact finite dimension: $\dim(\ell^2(\Lambda)) = \dim(\ell^2(\Lambda^*)) = L$.
     \item Absence of duplicate physical modes.
-    \item Decidable, constructive arithmetic without boundary ambiguities.
+    \item Unambiguous arithmetic at the band boundaries.
 \end{enumerate}
 In later chapters (specifically Chapter~\ref{ch:heisenberg_algebra} and Chapter~\ref{ch:haldane_completeness}), we will demonstrate that when particle excitations are restricted to an energy budget margin $2M + K + |N| \le h$, the Umklapp wrapping $w$ vanishes identically ($w = 0$), and the exact lattice dynamics reproduces the continuum current algebra of Giamarchi~\cite{giamarchi2004} and von Delft--Schoeller~\cite{vondelft1998} with zero error.

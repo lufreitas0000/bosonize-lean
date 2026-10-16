@@ -1,0 +1,180 @@
+\chapter{The Bogoliubov Transformation}
+\label{ch:bogoliubov}
+
+\section{The quadratic model and the diagonalization problem}
+
+Chapter~\ref{ch:luttinger_models} introduced a quadratic pairing model for the two chiral density currents. For a retained mode $m\geq1$, write
+\begin{equation}
+  \mathcal M_m(v_1,v_2)
+  =v_1\bigl(\rho_{m,R}\rho_{-m,R}+\rho_{m,L}\rho_{-m,L}\bigr)
+   +v_2\bigl(\rho_{m,R}\rho_{m,L}+\rho_{-m,R}\rho_{-m,L}\bigr).
+  \label{eq:ch18-pairing-mode}
+\end{equation}
+The first line counts right- and left-moving density excitations. The second creates or removes them in pairs. It is this second term that couples the two branches and prevents the displayed variables from being independent oscillator modes.
+
+The pairing model is distinct from the raw opposite-transfer interaction of Chapter~\ref{ch:luttinger_models}. The latter has the number-conserving hopping form $\rho_{m,R}\rho_{-m,L}+\rho_{-m,R}\rho_{m,L}$. Replacing hopping by pairing is a choice of model, not a change of notation.
+
+The finite band has no nonzero scalar canonical commutator on its whole Fock space: for finite-dimensional operators $A,C$, $\operatorname{Tr}[A,C]=0$, whereas $\operatorname{Tr}(mI)=m\dim\mathcal H\ne0$ for $m\ne0$. The current commutator can nevertheless take its central value on vectors kept sufficiently far from the band edges. For modes $1\leq m\leq M$, the sufficient branch-margin condition used below is
+\begin{equation}
+  2M+K+|N_\nu|\leq h,\qquad \nu\in\{R,L\},
+  \label{eq:ch18-branch-margin}
+\end{equation}
+where $L=2h$ is the lattice size and $B(\vec N,K)$ is the joint charge and total-excitation budget. The band uses genuine, non-wrapping integer transfers. Outside this controlled margin, finite-band edge contributions may prevent a current commutator from reducing to its central scalar value; the margin is sufficient, not a characterization of every state where the scalar value happens to hold.
+
+Our goal is to choose new linear combinations of creation and annihilation currents that remove the pairing terms. The transformation and its inverse will be global identities of finite operators. The scalar commutator and the Hamiltonian identity will instead be statements about their action on vectors in $B(\vec N,K)$.
+
+\section{Stability, hyperbolic mixing, and the Luttinger parameter}
+
+The mixing is real precisely in the stable regime
+\begin{equation}
+  v_1>|v_2|.
+  \label{eq:ch18-stability}
+\end{equation}
+Under this condition set $u=\sqrt{v_1^2-v_2^2}>0$. The positive mixing coefficient and its signed partner are
+\begin{equation}
+  c=\sqrt{\frac{v_1+u}{2u}}>0,
+  \qquad s=\frac{v_2}{2uc}.
+  \label{eq:ch18-hyperbolic-params}
+\end{equation}
+These choices give
+\begin{equation}
+  c^2-s^2=1,\qquad v_1=u(c^2+s^2),\qquad v_2=2ucs.
+  \label{eq:ch18-matching}
+\end{equation}
+\label{thm:hyperbolic_params_exist}
+Indeed, $c^2=(v_1+u)/(2u)$ and $s^2=(v_1-u)/(2u)$, so their difference is one and their sum gives the first velocity matching identity. The definition of $s$ gives the second. Conversely, any solution with $u>0$ and $c>0$ must have these values: $u$ is fixed by its positive square root, $c$ by the positive square root in~\eqref{eq:ch18-hyperbolic-params}, and then $s$ by $v_2=2ucs$. Thus the parameters exist uniquely with the stated sign convention. One may write $c=\cosh\xi$, $s=\sinh\xi$ as a mnemonic, but the argument uses only~\eqref{eq:ch18-matching}.
+
+The dimensionless Luttinger parameter is
+\begin{equation}
+  g=(c-s)^2>0.
+  \label{eq:ch18-g}
+\end{equation}
+Since $(c-s)(c+s)=1$, its inverse is $g^{-1}=(c+s)^2$, and the matching relations imply
+\begin{equation}
+  gu=v_1-v_2,\qquad g^{-1}u=v_1+v_2,
+  \qquad g=\sqrt{\frac{v_1-v_2}{v_1+v_2}},
+  \qquad 2us^2=v_1-u.
+  \label{eq:ch18-useful-invariants}
+\end{equation}
+\label{prop:luttinger_invariants}
+In particular, $g=1$ if and only if $v_2=0$, equivalently $s=0$. This means there is no inter-branch Bogoliubov mixing. It does not require the intra-branch coupling $g_4$ to vanish: for the Chapter 17 convention $v_1=v_F+g_4/(2\pi)$ and $v_2=g_2/(2\pi)$, a nonzero $g_4$ can remain. Statements identifying the sign of $g_2$ with attraction or repulsion depend on the physical convention for the chosen pairing current.
+
+The three identities in~\eqref{eq:ch18-useful-invariants} are the only parameter relations needed in the diagonalization. The first two compare the scaled branch weights; the last supplies the scalar correction produced when the annihilator and creator are put in the chosen order.
+
+\section{Dressed currents and their global inverse}
+
+For each positive mode $m$, let $C_{m,\nu}=\rho_{m,\nu}$ and $A_{m,\nu}=\rho_{-m,\nu}$. The transformed currents are
+\begin{align}
+  \widetilde C_{m,R}&=cC_{m,R}+sA_{m,L}, &
+  \widetilde C_{m,L}&=cC_{m,L}+sA_{m,R},\label{eq:ch18-dressed-creators}\\
+  \widetilde A_{m,R}&=cA_{m,R}+sC_{m,L}, &
+  \widetilde A_{m,L}&=cA_{m,L}+sC_{m,R}.
+  \label{eq:ch18-dressed-annihilators}
+\end{align}
+The coefficient matrix has determinant $c^2-s^2=1$. Consequently, it can be inverted without any current commutator or budget assumption:
+\begin{align}
+  C_{m,R}&=c\widetilde C_{m,R}-s\widetilde A_{m,L}, &
+  C_{m,L}&=c\widetilde C_{m,L}-s\widetilde A_{m,R},\label{eq:ch18-inverse-creators}\\
+  A_{m,R}&=c\widetilde A_{m,R}-s\widetilde C_{m,L}, &
+  A_{m,L}&=c\widetilde A_{m,L}-s\widetilde C_{m,R}.
+  \label{eq:ch18-inverse-annihilators}
+\end{align}
+\label{thm:global_inversion}
+These are ambient operator identities on the full finite Fock space. The adjoint relations $C_{m,\nu}^\dagger=A_{m,\nu}$ and real $c,s$ also give $\widetilde C_{m,\nu}^\dagger=\widetilde A_{m,\nu}$.
+
+The cross-branch annihilator--creator commutator vanishes globally, $[\widetilde A_{m,\nu},\widetilde C_{m,\bar\nu}]=0$: after expansion, the same-branch terms have equal mode signs and vanish by antisymmetry, while currents on different branches commute. By contrast, the same-branch scalar commutator is not a global identity in this finite representation. Its preservation is the next, budget-dependent step.
+
+\section{Current algebra and the diagonalization identity}
+
+Under the margin~\eqref{eq:ch18-branch-margin}, the finite current algebra gives $[A_{m,\nu},C_{m,\nu}]\psi=m\psi$ for $\psi\in B(\vec N,K)$ and $1\leq m\leq M$. Expanding the dressed commutators, the cross-branch terms cancel and the same-branch terms combine with $c^2-s^2=1$. Thus, mode by mode,
+\begin{equation}
+  [\widetilde A_{m,\nu},\widetilde C_{m,\nu}]\psi=m\psi,
+  \qquad
+  [\widetilde C_{m,R},\widetilde C_{m,L}]\psi
+  =[\widetilde A_{m,R},\widetilde A_{m,L}]\psi=0.
+  \label{eq:ch18-budget-ccr}
+\end{equation}
+\label{thm:bogoliubov_ccr_budget}
+These statements concern each fixed mode and the indicated same-mode pairings. They do not assert a two-index relation for arbitrary unequal mode indices.
+
+We now use this restricted algebra to compare the bare quadratic mode with its dressed counterpart. Define
+\begin{equation}
+  D_m=\widetilde C_{m,R}\widetilde A_{m,R}
+      +\widetilde C_{m,L}\widetilde A_{m,L}.
+\end{equation}
+Before applying any scalar commutator, direct multiplication and cross-branch commutativity give the ambient identity
+\begin{align}
+ D_m={}&(c^2+s^2)(C_{m,R}A_{m,R}+C_{m,L}A_{m,L})\notag\\
+ &+2cs(C_{m,R}C_{m,L}+A_{m,R}A_{m,L})\notag\\
+ &+s^2\bigl([A_{m,R},C_{m,R}]+[A_{m,L},C_{m,L}]\bigr).
+ \label{eq:ch18-product-expansion}
+\end{align}
+The last line is still an operator expression on the whole Fock space. Only when it acts on a vector satisfying the branch margin may both commutators there be replaced by $m$ times that vector. Using~\eqref{eq:ch18-matching}, for every $\psi\in B(\vec N,K)$ we obtain
+\begin{equation}
+  uD_m\psi=\mathcal M_m(v_1,v_2)\psi+2us^2m\,\psi.
+  \label{eq:ch18-mode-diagonalization}
+\end{equation}
+This is the central calculation: the mixed pair terms acquire exactly the coefficient $v_2$, the number terms acquire $v_1$, and the reversal of order contributes the scalar $2us^2m$.
+
+Summing the modes through $M$ gives an identity of maps from the budget into the ambient finite Fock space. Set
+\begin{equation}
+  \mathcal H_{\mathrm{dressed}}=\frac{2\pi u}{L}
+    \sum_{m=1}^M D_m,
+  \qquad
+  \Delta E=\frac{2\pi}{L}(v_1-u)\frac{M(M+1)}{2},
+  \qquad L=2h.
+  \label{eq:ch18-dressed-hamiltonian}
+\end{equation}
+Here $\Delta E$ is a normal-ordering scalar. The formula follows from $2us^2=v_1-u$ and $\sum_{m=1}^M m=M(M+1)/2$. It is nonnegative in the stable regime and positive when $v_2\ne0$ and $M>0$.
+
+Writing $H_{\mathrm{osc}}=(2\pi/L)\sum_{m=1}^M\mathcal M_m(v_1,v_2)$, equation~\eqref{eq:ch18-mode-diagonalization} yields
+\begin{equation}
+  H_{\mathrm{osc}}\psi=(\mathcal H_{\mathrm{dressed}}-\Delta E)\psi,
+  \qquad \psi\in B(\vec N,K).
+  \label{eq:ch18-oscillator-identity}
+\end{equation}
+\label{thm:oscillator_dressed_budget}
+Under the additional Sugawara margin of Chapter~\ref{ch:luttinger_models}, the full Hamiltonian has the corresponding action identity
+\begin{equation}
+  H_{\mathrm{Lutt}}\psi=
+  \bigl(\mathcal H_{\mathrm{dressed}}+E_{\mathrm{zero}}(\mu)-\Delta E\bigr)\psi,
+  \qquad \psi\in B(\vec N,K).
+  \label{eq:ch18-full-hamiltonian-identity}
+\end{equation}
+\label{thm:luttinger_hamiltonian_dressed_budget}
+The charge-dependent term $E_{\mathrm{zero}}(\mu)$ is defined in Chapter~\ref{ch:luttinger_models}; at its canonical chemical potential it is $\frac{\pi v_1}{L}(N_R^2+N_L^2)+\frac{g_2}{L}N_RN_L$. Neither identity says that the budget is invariant under either Hamiltonian, or that the dressed number operators have a joint eigenbasis on it. Their values lie in the ambient Fock space, and the image can leave the original budget.
+
+\section{Ground-state action and what it establishes}
+
+On a sector ground ket $|\vec N\rangle_0$, each bare lowering current annihilates the state. The dressed lowering formulas therefore reduce directly to
+\begin{equation}
+  \widetilde A_{m,R}|\vec N\rangle_0
+    =s\,\rho_{m,L}|\vec N\rangle_0,
+  \qquad
+  \widetilde A_{m,L}|\vec N\rangle_0
+    =s\,\rho_{m,R}|\vec N\rangle_0.
+  \label{eq:ch18-ground-action}
+\end{equation}
+\label{thm:ground_action}
+For $s\ne0$, the right-hand side is nonzero under the corresponding current-creation margin. More precisely, the first action is nonzero if $1\leq m\leq M$ and $2M+m+|N_L|\leq h$; the second is nonzero if $1\leq m\leq M$ and $2M+m+|N_R|\leq h$. A simultaneous assertion requires both margins. The excited states have norm $\sqrt m$ under these hypotheses.
+
+\phantomsection\label{thm:no_common_vacuum}
+There is also a precise common-vacuum obstruction. If $s\ne0$, $1\leq m\leq M$, and the branch margins hold, no nonzero $\psi\in B(\vec N,K)$ can be annihilated by both bare lowering currents and both dressed lowering currents for that mode. For example, bare right annihilation together with dressed right annihilation forces $\rho_{m,L}\psi=0$. Combined with bare left annihilation, this makes $[\rho_{m,L},\rho_{-m,L}]\psi=0$, whereas the margin evaluates it as $-m\psi$. Hence $\psi=0$.
+
+This rules out a common bare and dressed vacuum in the protected sector; it does not rule out every dressed vacuum in the finite Fock space. In fact, the completely empty occupation ket is annihilated by all nonzero transfer currents and hence by all the dressed lowering currents. It lies outside the protected-current regime. Whether a finite interacting Hamiltonian has a particular ground vector is a separate spectral question. A finite Taylor expansion of a formal Gaussian does not by itself answer that question.
+
+\section{A worked example and the bridge to Chapter 19}
+
+Choose $h=8$, $M=2$, $K=2$, $N_R=N_L=0$, $v_F=1$, $g_4=32\pi$, and $g_2=30\pi$. Then $v_1=17$, $v_2=15$, and the stability condition holds. The unique parameters are
+\begin{equation}
+  u=8,\qquad c=\frac54,\qquad s=\frac34,\qquad g=\frac14.
+\end{equation}
+The branch margin is $2M+K=6\leq8$. On the bare sector ground, equation~\eqref{eq:ch18-ground-action} gives $\widetilde A_{2,R}|\vec0\rangle_0=\frac34\rho_{2,L}|\vec0\rangle_0\ne0$. The normal-ordering scalar is
+\begin{equation}
+  \Delta E=\frac{2\pi}{16}(17-8)\frac{2\cdot3}{2}
+  =\frac{27\pi}{8}.
+\end{equation}
+
+The same example shows why the scope of~\eqref{eq:ch18-oscillator-identity} matters. The pairing term $\rho_{2,R}\rho_{2,L}$ creates total bare excitation energy $4$ from the sector ground, which is outside $B(\vec0,2)$. Thus the pairing Hamiltonian need not preserve the input budget or each bare energy shell, even though its action agrees there with the dressed expression.
+
+Chapter~19 uses the dressed modes to define abstract state functionals and their correlations. Those functionals belong to the uncompressed oscillator algebra. Chapter 18 supplies finite operator identities on budget inputs; it does not identify an abstract Gaussian functional with a ground ket of the finite CAR Hamiltonian. Keeping these constructions distinct lets the correlation theory proceed without claiming a finite spectral result that has not been proved.

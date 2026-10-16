@@ -1,0 +1,57 @@
+\chapter[An Algebraic Charge-Lattice Duality]{A Proposed Algebraic Charge-Lattice Duality}
+\label{app:duality_spin_umklapp}
+
+The main text develops the parity-constrained charge--spin labels in
+Section~\ref{sec:ch21-spin-charge} and the finite CAR charge shifts and
+leakage witnesses in Section~\ref{sec:ch21-umklapp}. This appendix is
+reserved for a separate, more abstract question: how a proposed involution
+can exchange charge-density-wave and superconducting vertex expressions in
+a formal star-algebra model. The duality is supplementary to the finite CAR
+argument and does not assert a finite-Fock-space equivalence.
+
+\section{The proposed involution and its scope}
+
+Consider the involution on charge labels
+\begin{equation}
+ (N_R,N_L)\longmapsto(N_R,-N_L).
+ \label{eq:a09-charge-duality}
+\end{equation}
+In the specified formal model it is implemented on finite-support basis
+vectors by a permutation. Conjugation sends $N_L$ to $-N_L$ and $Z_L(x)$ to
+$Z_L(x)^*$. With a fixed ordering $R<L$ and the associated signs in the
+Klein shifts, the proposed generator identities are $DF_R=F_R$ and
+$DF_L=-F_L^*$. The minus sign is required for compatibility with the
+adjoint relations.
+
+Suppose also that the oscillator map negates the right generators and fixes
+the left generators, and that the parameter involution is
+$P^*=(u,c,-s,g^{-1},g)$. Extending these assignments to a star-algebra map
+requires checking every defining relation and the star operation. On the
+specified Klein products and dressed fields, the intended identities are
+\begin{align}
+ DK_{\mathrm{CDW}}(x)&=\zeta^xK_{\mathrm{SC}}(x)^*,&
+ DK_{\mathrm{SC}}(x)&=\zeta^xK_{\mathrm{CDW}}(x)^*,\
+ DX_{\mathrm{CDW}}(P,x)&=-X_{\mathrm{SC}}(P^*,x),&
+ DX_{\mathrm{SC}}(P,x)&=-X_{\mathrm{CDW}}(P^*,x).
+ \label{eq:a09-duality-generators}
+\end{align}
+Consequently, the formal vertices are expected to satisfy
+\begin{align}
+ DW_{\mathrm{CDW}}(P,t,x)
+   &=\zeta^xW_{\mathrm{SC}}(P^*,t,x)^*,\
+ DW_{\mathrm{SC}}(P,t,x)
+   &=\zeta^xW_{\mathrm{CDW}}(P^*,t,x)^*.
+ \label{eq:a09-duality-vertices}
+\end{align}
+The phase $\zeta^x$ comes from the source character and the shifted Klein
+ordering; it cannot be discarded as an unspecified proportionality
+constant.
+
+To establish these identities, one must first verify the involution on
+generators and charge basis vectors, extend it to products and
+formal-series coefficients, and then apply it to the ordered
+Klein--vertex products. This is a proposed algebraic construction, not a
+completed proof in the current Lean Core. In particular, it does not yet
+give a finite CAR map, an intertwining of finite energy budgets, or spectral
+equivalence between the two physical systems. Those statements require
+additional definitions and separate proofs.

@@ -588,21 +588,19 @@ by themselves furnish the spectral decomposition, denominator bounds,
 or block invariance needed to insert a particular interacting
 Hamiltonian into the Schrieffer--Wolff theorem.
 
-The supplied \texttt{Bosonize.Core.A10DiscreteSchriefferWolff} support
-module has a more specific verified scope.  It contains proved
-finite-matrix statements for the non-resonant commutator equation and
-skew-Hermiticity of the constructed generator, the two- and three-level
-matrix witnesses, the compressed \emph{degree-two BCH polynomial}
-identity, ambient shell-projector partition/orthogonality/adjointness,
-and a nonzero repeated-mode-one shell witness.  The projector identity
-in that module is $P+Q=\Pi_{\boldsymbol N,K}$ on the ambient Fock
-carrier, while the generic compressed BCH theorem assumes $P+Q=I$
-on its whole carrier.  Restricting to
+The separately verified finite support results cover the non-resonant
+commutator equation and skew-Hermiticity of the constructed generator,
+two- and three-level matrix witnesses, the compressed \emph{degree-two
+BCH polynomial} identity, the decomposition of shell projections and
+their orthogonality and adjoint properties, and a nonzero repeated-mode-one
+shell witness. One projector identity is $P+Q=\Pi_{\boldsymbol N,K}$ on the
+ambient Fock carrier, whereas the generic compressed BCH theorem assumes
+$P+Q=I$ on its whole carrier. Restricting to
 $\mathcal B_{\boldsymbol N,K}$ and transferring an actual model's
 operators and hypotheses is a separate bridge, not established merely
-by placing the two statements next to each other.  The A10 module's
-Phase B proofs do not constitute Lean verification of the present
-Chapter 21 manuscript.
+by placing the two statements next to each other.  These finite support
+proofs do not constitute formal verification of the present Chapter~21
+manuscript.
 
 The remaining constructive tasks include proving, for any chosen
 spinful Hamiltonian, that its finite blocks act on the proposed

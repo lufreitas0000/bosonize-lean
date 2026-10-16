@@ -19,6 +19,10 @@ Typical physical realizations of $\iota$ include:
 
 \section{The Two-Tiered CAR Hierarchy: Algebraic vs.\ Hilbert Setting}
 
+An algebra is a vector space equipped with a compatible multiplication; an operator algebra is a collection of linear maps closed under addition, scalar multiplication, and composition. To build the CAR algebra abstractly, start with all finite words in symbols $c_i,c_i^\dagger$, including the empty word $1$. Linear combinations of these words form the free associative algebra: before imposing relations, distinct words are independent formal expressions. The CAR relations generate a two-sided ideal, consisting of sums of those relations multiplied on the left and right by arbitrary words. Quotienting by this ideal identifies expressions that the CAR require to be equal. The resulting abstract algebra records only the relations, not a choice of matrices or Hilbert space.
+
+An algebra representation is a multiplication-preserving linear map from that abstract quotient into $\operatorname{End}(V)$, the space of linear maps $V\to V$ under composition. Its image is the span of the represented words. This distinction matters: an abstract relation is universal, while a representation can have extra identities if its image has a kernel. In the occupation representation below, $V$ is the fermionic Fock space, naturally identified with the exterior algebra $\Lambda^*(\mathbb{C}^d)$. A basis wedge $e_{i_1}\wedge\cdots\wedge e_{i_r}$ records occupied modes. Permuting its factors acts by the sign of the corresponding permutation in $S_r$; antisymmetry of the exterior product is precisely the source of the fermionic exchange signs.
+
 To separate pure algebraic identities from metric and inner-product properties, we distinguish between two tiers of CAR representations.
 
 \begin{definition}[Algebraic CAR Representation — Tier 1]
@@ -55,24 +59,17 @@ Let $(c, c^\dagger)$ be an Algebraic CAR representation on $V$.
 \begin{proof}
 We verify each algebraic identity:
 \begin{enumerate}
-    \item We expand the commutator $[c_a^\dagger c_b, c_c^\dagger c_d] = c_a^\dagger c_b c_c^\dagger c_d - c_c^\dagger c_d c_a^\dagger c_b$. 
-    Using $c_b c_c^\dagger = \delta_{b, c} I - c_c^\dagger c_b$ on the first term:
-    \[
-    c_a^\dagger c_b c_c^\dagger c_d = c_a^\dagger (\delta_{b, c} I - c_c^\dagger c_b) c_d = \delta_{b, c} c_a^\dagger c_d - c_a^\dagger c_c^\dagger c_b c_d.
-    \]
-    Using $c_c^\dagger c_a^\dagger = - c_a^\dagger c_c^\dagger$ and $c_d c_b = - c_b c_d$ on the second term:
-    \[
-    c_c^\dagger c_d c_a^\dagger c_b = c_c^\dagger (\delta_{a, d} I - c_a^\dagger c_d) c_b = \delta_{a, d} c_c^\dagger c_b - c_c^\dagger c_a^\dagger c_d c_b = \delta_{a, d} c_c^\dagger c_b - (-c_a^\dagger c_c^\dagger)(-c_b c_d).
-    \]
-    Subtracting the two expressions, the quartic products $-c_a^\dagger c_c^\dagger c_b c_d$ cancel identically, leaving:
-    \[
-    [c_a^\dagger c_b, c_c^\dagger c_d] = \delta_{b, c} c_a^\dagger c_d - \delta_{a, d} c_c^\dagger c_b.
-    \]
-    
+    \item Expanding the commutator and applying $c_b c_c^\dagger=\delta_{b,c}I-c_c^\dagger c_b$ and $c_d c_a^\dagger=\delta_{a,d}I-c_a^\dagger c_d$ gives
+    \begin{equation}
+    [c_a^\dagger c_b,c_c^\dagger c_d]
+    =\delta_{b,c}c_a^\dagger c_d-\delta_{a,d}c_c^\dagger c_b
+    -c_a^\dagger c_c^\dagger c_b c_d+c_c^\dagger c_a^\dagger c_d c_b.
+    \end{equation}
+    The CAR relations $\{c_a^\dagger,c_c^\dagger\}=0$ and $\{c_b,c_d\}=0$ turn the last quartic term into $+c_a^\dagger c_c^\dagger c_b c_d$, which cancels the preceding $-c_a^\dagger c_c^\dagger c_b c_d$. This leaves the claimed bilinear identity.
     \item Setting $a = b = i$ and $c = j$ in the bilinear identity gives $[n_i, c_j^\dagger c_d] = \delta_{i, j} c_i^\dagger c_d - \delta_{i, d} c_j^\dagger c_i$. Contracting with a test state or using $\{c_i, c_j^\dagger\} = \delta_{i,j}$:
-    \[
+    \begin{equation}
     n_i c_j^\dagger = c_i^\dagger c_i c_j^\dagger = c_i^\dagger (\delta_{i, j} I - c_j^\dagger c_i) = \delta_{i, j} c_j^\dagger - c_i^\dagger c_j^\dagger c_i = \delta_{i, j} c_j^\dagger + c_j^\dagger c_i^\dagger c_i = \delta_{i, j} c_j^\dagger + c_j^\dagger n_i,
-    \]
+    \end{equation}
     which gives $[n_i, c_j^\dagger] = \delta_{i, j} c_j^\dagger$. The annihilation commutator follows analogously.
     
     \item For idempotence: $n_i^2 = c_i^\dagger c_i c_i^\dagger c_i = c_i^\dagger (I - c_i^\dagger c_i) c_i = c_i^\dagger c_i - (c_i^\dagger)^2 c_i^2$. Since $(c_i^\dagger)^2 = 0$, $n_i^2 = n_i$. Finally, $[n_i, n_j] = [c_i^\dagger c_i, c_j^\dagger c_j] = \delta_{i, j} c_i^\dagger c_j - \delta_{i, j} c_j^\dagger c_i = 0$.
@@ -87,6 +84,18 @@ c_i^\dagger = (c_i)^\dagger \quad \text{for all } i \in \iota,
 where $(A)^\dagger$ denotes the unique Hilbert space adjoint satisfying $\langle u, A v \rangle = \langle A^\dagger u, v \rangle$.
 \end{definition}
 
+The anticommutator equations above have two related roles. First, they define
+the abstract CAR $*$-algebra: finite words in the generators are identified
+whenever the relations require them to be equal, and the involution exchanges
+$c_i$ with $c_i^\dagger$. Second, a representation of this algebra on a
+Hilbert space assigns concrete operators to those generators. In that
+representation the displayed CAR equations still hold, while the additional
+condition $c_i^\dagger=(c_i)^\dagger_{\!H}$ says that the algebraic
+involution is realized by the Hilbert-space adjoint. Thus the algebraic
+relations define the abstract object and are also obeyed by its physical
+Fock representation; adjoint compatibility is the extra Hilbert-space
+requirement.
+
 \paragraph{Bra-Ket Matrix Elements and Operator Notation.}
 In Dirac bra-ket notation, for any states $|u\rangle, |v\rangle \in V$ and linear operator $A \in \mathrm{End}_{\mathbb{C}}(V)$, the matrix element is written using vertical bars:
 \begin{equation}
@@ -94,8 +103,8 @@ In Dirac bra-ket notation, for any states $|u\rangle, |v\rangle \in V$ and linea
 \end{equation}
 This notation is completely rigorous: the placement of the operator between the bra and ket reflects the self-adjointness of the inner product pairing, meaning that acting forward on the ket with $A$ is identical to acting backward on the bra with $A^\dagger$.
 
-\begin{remark}[Formalization Note]
-In the verified Lean formalization (\texttt{Bosonize.A02}), the separation between \texttt{AlgebraicCAR} and \texttt{CAR} is strictly maintained. Adjoint compatibility is an independent geometric axiom: if $(c, c^\dagger)$ is an algebraic CAR pair and $S$ is an invertible non-unitary operator, the similarity transform $\tilde{c}_i \coloneqq S c_i S^{-1}$ and $\tilde{c}_i^\dagger \coloneqq S c_i^\dagger S^{-1}$ preserves all anticommutators, but $\tilde{c}_i^\dagger \neq (\tilde{c}_i)^\dagger$. Thus, adjointness is an essential condition that fixes the physical Hilbert space metric.
+\begin{remark}[Scope of the finite statements]
+Each result below is stated on its specified finite carrier and under its displayed hypotheses. The algebraic and combinatorial identities are exact on those carriers; they do not require an analytic limit or assert a stronger continuum identity.
 \end{remark}
 
 \section{The Concrete Occupation Fock Space}
@@ -167,9 +176,9 @@ The preceding set $\{k \in S \cup \{j\} \mid k < i\}$ is the disjoint union of $
 \paragraph{Pedagogical Context and Physical Interpretation of Fermionic Signs.}
 Why are fermionic signs $\epsilon(i, S)$ necessary, and how do they ensure anticommutation?
 In quantum mechanics, multi-particle wavefunctions for fermions must be completely antisymmetric under particle exchange: $\Psi(x_1, x_2) = - \Psi(x_2, x_1)$. When formulating this on an occupation basis $|S\rangle$, each state is conceptually an ordered product of creation operators acting on the vacuum:
-\[
+\begin{equation}
 |S\rangle = c_{i_k}^\dagger \cdots c_{i_2}^\dagger c_{i_1}^\dagger |\emptyset\rangle \quad \text{with } i_1 < i_2 < \dots < i_k.
-\]
+\end{equation}
 When an additional fermion is created at mode $j \notin S$, the operator $c_j^\dagger$ must be commuted past all existing particles with modes $p < j$ to reach its canonical position in the ordered product. Since adjacent fermionic operators anticommute ($\{c_p^\dagger, c_j^\dagger\} = 0$), each permutation past an occupied mode contributes a factor of $(-1)$. Therefore, the insertion of particle $j$ incurs the phase $(-1)^{\sigma(j, S)} = \epsilon(j, S)$.
 
 When two operations are performed sequentially, say creating mode $j$ and then creating mode $i$ (with $j < i$), two distinct orderings are possible:
@@ -208,7 +217,7 @@ Figure~\ref{fig:sign_mechanics} illustrates this asymmetric count shift visually
     \draw[->, blue!80!black, thick] (3.5, 1.2) -- (3.5, 0.6) 
         node[midway, left=2pt] {Insert $j$: phase $(-1)^{\sigma(j, S)}$};
         
-    \node[draw, rounded corners, fill=yellow!10, text width=12cm, align=left] at (5.5, -3.2) {
+    \node[draw, rounded corners, fill=yellow!10, text width=12cm, align=left] at (5.5, -5.05) {
         \textbf{Sequential Orderings ($j < i$):}\\
         $\bullet$ \textbf{Case 1 ($j$ then $i$):} Adding $j$ increases the count preceding $i$ by $1$ because $j < i$:\\
         \hspace*{1.5cm} $\sigma(i, S \cup \{j\}) = \sigma(i, S) + 1 \implies \text{Phase} = \epsilon(j, S) \cdot [-\epsilon(i, S)]$.\\
@@ -241,23 +250,12 @@ For any distinct modes $i \neq j$ in $\iota$:
 \end{theorem}
 
 \begin{proof}
-Because $\iota$ is linearly ordered and $i \neq j$, either $j < i$ or $i < j$.
-\begin{enumerate}
-    \item Suppose $j < i$. By Lemma~\ref{lem:atomic_counts}(1):
-    \[
-    \sigma(i, S \cup \{j\}) = \sigma(i, S) + 1 \implies \epsilon(i, S \cup \{j\}) = (-1)^{\sigma(i, S)+1} = - \epsilon(i, S).
-    \]
-    On the other hand, since $i > j$, inserting $i$ does not affect the count of elements preceding $j$:
-    \[
-    \sigma(j, S \cup \{i\}) = \sigma(j, S) \implies \epsilon(j, S \cup \{i\}) = \epsilon(j, S).
-    \]
-    Therefore:
-    \[
-    \epsilon(j, S) \epsilon(i, S \cup \{j\}) = \epsilon(j, S) (-\epsilon(i, S)) = - \epsilon(i, S) \epsilon(j, S \cup \{i\}).
-    \]
-    If $i < j$, the exact same argument applies with the roles of $i$ and $j$ interchanged.
-    \item Parts (2) and (3) follow by the same parity discrepancy using Lemma~\ref{lem:atomic_counts}(2).
-\end{enumerate}
+Suppose first that $j<i$. Adding $j$ shifts the preceding count for $i$ by one, while adding $i$ leaves the count for $j$ unchanged:
+\begin{equation}
+\sigma(i,S\cup\{j\})=\sigma(i,S)+1,\qquad
+\sigma(j,S\cup\{i\})=\sigma(j,S).
+\end{equation}
+Thus $\epsilon(i,S\cup\{j\})=-\epsilon(i,S)$ and $\epsilon(j,S\cup\{i\})=\epsilon(j,S)$, giving the relative factor $-1$ in part (1). If $i<j$, exchange their roles. For removal and mixed pairs, the corresponding count changes follow from Lemma~\ref{lem:atomic_counts}(2) in the same way, yielding parts (2) and (3).
 \end{proof}
 
 \section{Creation and Annihilation Operators on Fock Space}
@@ -293,12 +291,7 @@ In particular, $\mathcal{F}(\iota)$ is a concrete Hilbert CAR representation.
 \begin{proof}
 We verify both properties on arbitrary basis states $|S\rangle, |T\rangle$:
 \begin{enumerate}
-    \item For adjointness, we compute the matrix elements $\langle S \mid c_i \mid T \rangle$ and $\langle c_i^\dagger S \mid T \rangle$:
-    \begin{itemize}
-        \item If $i \in T$ and $S = T \setminus \{i\}$, then $c_i |T\rangle = \epsilon(i, T) |S\rangle$, so $\langle S \mid c_i \mid T \rangle = \epsilon(i, T)$. Also, $i \notin S$ and $S \cup \{i\} = T$, so $c_i^\dagger |S\rangle = \epsilon(i, S) |T\rangle$. By Lemma~\ref{lem:atomic_counts}(3), $\sigma(i, S) = \sigma(i, T)$, so $\epsilon(i, S) = \epsilon(i, T)$. Thus $\langle c_i^\dagger S \mid T \rangle = \epsilon(i, S) = \epsilon(i, T) = \langle S \mid c_i \mid T \rangle$.
-        \item In all other cases, both matrix elements vanish identically.
-    \end{itemize}
-    Since this holds for all basis states, $c_i^\dagger = (c_i)^\dagger$.
+    \item For the adjoint relation, both matrix elements $\langle S\mid c_i\mid T\rangle$ and $\langle c_i^\dagger S\mid T\rangle$ vanish unless $i\in T$ and $S=T\setminus\{i\}$. In that case their coefficients are respectively $\epsilon(i,T)$ and $\epsilon(i,S)$, which are equal because removing $i$ does not change the number of occupied modes preceding $i$, so $\sigma(i,S)=\sigma(i,T)$. Equality on all basis pairs gives $c_i^\dagger=(c_i)^\dagger$.
 
     \item For anticommutators:
     \begin{itemize}
@@ -340,23 +333,44 @@ Therefore $\Gamma c_i |S\rangle = (-1)^{\#S - 1} c_i |S\rangle = - c_i (-1)^{\#S
 Taking adjoints yields $\Gamma c_i^\dagger = - c_i^\dagger \Gamma$.
 \end{proof}
 
-\begin{remark}[Connection to Clifford Algebras and Planned Appendix]
-\label{rem:clifford_algebra}
-The algebraic structure of the fermionic Fock space $\mathcal{F}(\iota)$ and the global parity operator $\Gamma$ has a deep geometric interpretation through the theory of \emph{Clifford algebras}. 
-Defining the self-adjoint Majorana operators:
+\subsection{Clifford Algebra and the Fock Spin Representation}
+
+Write the ordered modes as $i_1<\cdots<i_d$ and let $W=\mathbb C^d$ with its standard inner product and ordered orthonormal basis $e_1,\ldots,e_d$. Identify $\mathcal F(\iota)$ with the exterior algebra $\Lambda^*W$ by mapping $|S\rangle$ to the wedge of those $e_j$ for which $i_j\in S$, in increasing order. For each $j$, exterior multiplication and contraction are linear maps on this same finite-dimensional space:
 \begin{equation}
-\gamma_{2j-1} \coloneqq c_j + c_j^\dagger, \qquad \gamma_{2j} \coloneqq -i (c_j - c_j^\dagger) \quad (j = 1, \dots, d),
+C_j(\omega)=e_j\wedge\omega,\qquad A_j(\omega)=\iota_{e_j}\omega,
+\qquad C_j,A_j\in\operatorname{End}_{\mathbb C}(\Lambda^*W).
 \end{equation}
-these $2d$ operators satisfy the standard Clifford algebra relations $\mathcal{C}\ell(2d, \mathbb{C})$:
+The defining contraction identity
 \begin{equation}
-\{\gamma_a, \gamma_b\} = 2 \delta_{a, b} I \quad (a, b \in \{1, \dots, 2d\}).
+\iota_{e_j}(e_k\wedge\omega)+e_k\wedge\iota_{e_j}(\omega)=\delta_{jk}\omega
 \end{equation}
-Under this correspondence, the global parity operator $\Gamma$ is proportional to the canonical Clifford volume element (chirality operator):
+gives the CAR, with $C_j=c_{i_j}^\dagger$ and $A_j=c_{i_j}$ under the occupation-space identification.
+
+The complex Clifford algebra $\mathrm{Cl}_{2d}(\mathbb C)$ is the quotient of the tensor algebra on a $2d$-dimensional space with orthonormal basis by the relations $v w+w v=2b(v,w)1$, where $b$ is the complex bilinear extension of the Euclidean inner product. Equivalently, its generators $\gamma_1,\ldots,\gamma_{2d}$ satisfy
 \begin{equation}
-\Gamma = (-i)^d \gamma_1 \gamma_2 \cdots \gamma_{2d}.
+\gamma_a\gamma_b+\gamma_b\gamma_a=2\delta_{ab}1.
 \end{equation}
-By the representation theory of complex Clifford algebras, $\mathcal{C}\ell(2d, \mathbb{C}) \cong \mathrm{End}(\mathbb{C}^{2^d})$, and the Fock space $\mathcal{F}(\iota)$ is its unique irreducible spin representation. A planned supporting appendix will develop this Clifford representation theory systematically, providing an alternative algebraic proof of Fock space irreducibility and parity grading.
-\end{remark}
+On $\mathcal F(\iota)$ define the Majorana operators
+\begin{equation}
+\gamma_{2j-1}=c_{i_j}+c_{i_j}^\dagger,\qquad
+\gamma_{2j}=-i(c_{i_j}-c_{i_j}^\dagger),\qquad j=1,\ldots,d.
+\end{equation}
+They are self-adjoint and obey the Clifford relations, so they determine a representation $\rho:\mathrm{Cl}_{2d}(\mathbb C)\to\operatorname{End}_{\mathbb C}(\mathcal F(\iota))$. For each mode,
+\begin{equation}
+\gamma_{2j-1}\gamma_{2j}=i(I-2n_{i_j}).
+\end{equation}
+The even factors for distinct modes commute. Consequently their ordered product is the Clifford volume element and is related to parity by
+\begin{equation}
+\gamma_1\gamma_2\cdots\gamma_{2d}=i^d\Gamma,
+\qquad \Gamma=(-i)^d\gamma_1\gamma_2\cdots\gamma_{2d}.
+\end{equation}
+
+This representation is irreducible. Since each $c_{i_j}$ and $c_{i_j}^\dagger$ is a linear combination of Majorana generators, the represented Clifford algebra contains the occupation projections
+\begin{equation}
+P_S=\prod_{i\in S}n_i\prod_{i\notin S}(I-n_i)
+\end{equation}
+which select the individual basis states. Strings of creation and annihilation operators carry $|S\rangle$ to any chosen $|T\rangle$ with a nonzero sign. After correcting that sign, these operators give every matrix unit $|T\rangle\langle S|$. Thus $\rho$ is onto the full endomorphism algebra. Since $\dim\mathcal F(\iota)=2^d$, its endomorphism algebra has dimension $2^{2d}$; the Clifford relations span $\mathrm{Cl}_{2d}(\mathbb C)$ by at most $2^{2d}$ ordered monomials. Surjectivity forces equality of dimensions, so $\rho$ is an isomorphism. The full matrix algebra acts irreducibly, and $\Gamma$ is the grading operator, acting by $(-1)^r$ on $\Lambda^r W$.
+
 
 \section{Chapter Summary and Literature Comparison}
 
@@ -364,7 +378,7 @@ In this chapter, we developed the exact theory of fermions on finite index sets:
 \begin{itemize}
     \item Established the two-tiered hierarchy separating algebraic CAR identities from Hilbert space adjoint compatibility.
     \item Clarified Dirac bra-ket notation and operator matrix elements $\langle u \mid A \mid v \rangle$.
-    \item Proved that fermionic sign factors $\epsilon(i, S) = (-1)^{\sigma(i, S)}$ satisfy exact sign exchange identities, eliminating sign ambiguities without software heuristics.
+    \item Proved that fermionic sign factors $\epsilon(i, S) = (-1)^{\sigma(i, S)}$ satisfy exact sign exchange identities, eliminating sign ambiguities through exact subset-count identities.
     \item Provided a visual TikZ specification of fermionic sign mechanics for creation, annihilation, and mixed pairs.
     \item Constructed the concrete $2^d$-dimensional Fock space $\mathcal{F}(\iota)$ and proved that it forms an exact Hilbert CAR representation.
     \item Defined the global fermion parity operator $\Gamma$ and contextualized it within Clifford representation theory.
@@ -373,4 +387,4 @@ In this chapter, we developed the exact theory of fermions on finite index sets:
 \paragraph{Comparison with Standard Continuum Literature.}
 In standard condensed matter physics literature (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), fermionic creation and annihilation operators are introduced directly through continuum field operators $\psi(x)$ or Fourier modes $c_k$ without establishing the underlying finite-dimensional representation theory. Permutation signs are handled implicitly using anticommuting Grassmann variables or Jordan--Wigner strings $\exp(i \pi \sum_{j < i} n_j)$.
 
-As demonstrated in this chapter, our constructive formulation defines the sign factors $\epsilon(i, S)$ directly on discrete subsets, proving all sign identities algebraically without infinite operator exponentials. This ensures that the Fock space carrier is well-defined and ready to host the position and momentum fermions developed in Chapter~\ref{ch:fermions}.
+As demonstrated in this chapter, the finite formulation defines the sign factors $\epsilon(i, S)$ directly on discrete subsets, proving all sign identities algebraically without infinite operator exponentials. This ensures that the Fock space carrier is well-defined and ready to host the position and momentum fermions developed in Chapter~\ref{ch:fermions}.

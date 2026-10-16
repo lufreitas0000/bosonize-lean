@@ -66,13 +66,20 @@ These are manuscript drafts with independent mathematical/editorial review pendi
 The user-requested batch import does not imply a passing independent review or
 change any Lean status. A later Jules revision round is planned, not dispatched.
 
+**Current master assembly (October 16, 2026):** the user explicitly directed
+the book to cover every chapter and appendix topic. The existing CH12–18 chapter
+sources and A05–A07/A10 appendices have therefore been integrated, and
+pedagogical A08–A09 appendix sources added. Their inclusion does not alter the
+Core/Phase-B/manuscript status recorded in the preface and each source. The
+previous instruction to keep CH12–18 private is superseded for this book update.
+
 ## Original writing priority (historical)
 
-Write the chapters that have no LaTeX draft yet, starting with CH19. CH12–18 have
-private local drafts awaiting separate review/integration; preserve them. CH01–11
-are already in the published book and are not being rewritten in this sprint.
-A later Jules task may revise existing chapters. Do not interpret the section
-workflow as authorization to rewrite the whole book.
+Historical priority before October 16 was to draft chapters without a LaTeX
+source, beginning with CH19, while keeping CH12–18 local. The explicit current
+direction above supersedes that boundary for master-book coverage. Future
+editorial revisions still require their own reviewed scope and must preserve
+the mathematical status distinctions.
 
 ## CH19 writing queue
 

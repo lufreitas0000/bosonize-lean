@@ -1,0 +1,268 @@
+\chapter{The Projected Mattis--Mandelstam Formula}
+\label{ch:mandelstam}
+
+\section{Introduction and the Bosonization Dictionary}
+
+In the classical continuum theory of one-dimensional Fermi systems, the bosonization dictionary culminates in the Mattis--Mandelstam operator identity, which expresses the localized chiral fermion field $\psi_\nu(x)$ as an operator exponential of bosonic dual phase fields:
+\begin{equation}
+\label{eq:continuum_mandelstam}
+\psi_\nu(x) \;\sim\; \frac{1}{\sqrt{2\pi \alpha}}\, F_\nu\, \exp\left( -i \phi_\nu^-(x) \right) \exp\left( i \phi_\nu^+(x) \right),
+\end{equation}
+where $F_\nu$ is a Klein factor lowering the fermion number of species $\nu$, and $\phi_\nu^\pm(x)$ are the annihilation and creation parts of the chiral bosonic field.
+
+While heuristically compelling, the classical formula~\eqref{eq:continuum_mandelstam} presents formidable difficulties on a finite discrete lattice:
+\begin{remark}[Finite-lattice obstructions]
+\begin{enumerate}
+    \item \textbf{Carrier and Domain Restrictions:} On a finite lattice of $L = 2h$ sites, the global fermionic Fock space has finite dimension $2^{2h|\sigma|}$, whereas the bosonic current algebra admits no faithful finite-dimensional representation with non-zero central charge. Thus, bosonic phase operators cannot act globally as unitary operators.
+    \item \textbf{Truncation and Excursions:} When operators are restricted to a low-energy budget subspace $B(\vec{N}, K)$, raising operators $W^-_\nu(x)$ create excitations exceeding $K$. Unrestricted power series immediately leave the carrier space.
+    \item \textbf{Ground State Hole Structure:} Annihilating a fermion from the Fermi sea $|N\rangle_0$ produces a superposition of hole configurations across many excitation energies. At energy cutoff $K=0$, the naive vertex operator produces only the sector ground state $|N-1\rangle_0$, completely missing deep-hole excitations present in the physical field $c_{(\nu, x)} |N\rangle_0$.
+\end{enumerate}
+\end{remark}
+
+This chapter develops the projected Mattis--Mandelstam construction from explicit finite chiral phases $W^\pm_\nu(x)$ with rational weights, a source zero-mode operator $Z_\nu(x)$ matching boundary holonomies, nilpotent compressed phase exponentials $\operatorname{expNil}(W^\pm)$ on energy budgets, and the composite map $B_\nu(x): B(\vec{N}, K_{\mathrm{in}}) \to B(\vec{N}-e_\nu, K_{\mathrm{out}})$. A cyclic-span criterion then gives a precise conditional route to comparing this map with the projected fermion field.
+
+\section{Chiral Phase Operators and Boundary Holonomies}
+
+Let $h \ge 1$, $L = 2h$, and let $\Lambda = \mathbb{Z}/L\mathbb{Z}$ be the periodic spatial chain. Let $\sigma$ be a finite, linearly ordered type of fermion species. The centered momentum band is $B = \{-h+1, \dots, h\}$, and $\zeta = e^{2\pi i / L}$ is the canonical primitive $L$-th root of unity.
+
+\begin{definition}[Chiral Phase Operators]
+\label{def:chiral_phases}
+Let $M \ge 0$ be a mode cutoff integer. For each species $\nu \in \sigma$ and position $x \in \mathbb{Z}$, the \emph{lowering phase operator} $W^+_\nu(x)$ and \emph{raising phase operator} $W^-_\nu(x)$ on the multispecies Fock space $\mathcal{F}(\sigma, h)$ are defined by:
+\begin{equation}
+\label{eq:w_plus_minus_def}
+W^+_\nu(x) \coloneqq \sum_{m=1}^M \frac{\zeta^{m x}}{m}\, \rho_{\nu, -m}, \qquad W^-_\nu(x) \coloneqq -\sum_{m=1}^M \frac{\zeta^{-m x}}{m}\, \rho_{\nu, m},
+\end{equation}
+where $\rho_{\nu, m}$ are the multispecies non-wrapping density current modes, extending the single-species construction of Chapter~\ref{ch:density_modes} to the ordered species carrier of Chapter~\ref{ch:klein_factors}. For $M = 0$, both evaluate to the zero operator.
+\end{definition}
+
+\begin{lemma}[Periodicity and Adjoint of Phase Operators]
+\label{lem:phase_properties}
+Assume $h \ge 1$ and $M \ge 0$. For every species $\nu \in \sigma$, position $x \in \mathbb{Z}$, and winding $w \in \mathbb{Z}$:
+\begin{enumerate}
+    \item \textbf{Spatial Periodicity:} $W^+_\nu(x + w L) = W^+_\nu(x)$ and $W^-_\nu(x + w L) = W^-_\nu(x)$.
+    \item \textbf{Hilbert Adjoint:} $(W^+_\nu(x))^\dagger = -W^-_\nu(x)$ and $(W^-_\nu(x))^\dagger = -W^+_\nu(x)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (1), the position dependence enters solely through $\zeta^{\pm m(x + w L)} = \zeta^{\pm m x} (\zeta^L)^{\pm m w} = \zeta^{\pm m x}$.
+For (2), taking the adjoint termwise and using $(\rho_{\nu,-m})^\dagger=\rho_{\nu,m}$ and $(\zeta^{mx}/m)^*=\zeta^{-mx}/m$ gives $(W^+_\nu(x))^\dagger=\sum_{m=1}^M\frac{\zeta^{-mx}}{m}\rho_{\nu,m}=-W^-_\nu(x)$.
+Applying the adjoint involution gives $(W^-_\nu(x))^\dagger = -W^+_\nu(x)$.
+\end{proof}
+
+\begin{remark}[The sign in the raising phase]
+The exterior minus sign in the definition of $W^-_\nu(x)$ is fixed by the adjoint relation: $(W^+_\nu(x))^\dagger=-W^-_\nu(x)$. Removing it changes the sign in the adjoint of the finite exponential and hence in the ordered vertex formula. It is therefore part of the algebraic convention, not a disposable notation choice.
+\end{remark}
+
+\section{Source Zero-Mode Operators and Holonomy Phase Matching}
+
+To incorporate boundary conditions, each species $\nu \in \sigma$ carries a boundary twist $b_\nu$ with holonomy $\tau_\nu \in \mathbb{C}$ ($|\tau_\nu| = 1$), representing the boundary condition $\psi_\nu(x + L) = \tau_\nu \psi_\nu(x)$, parametrized by a unit step phase $r_\nu \in \mathbb{C}$ ($r_\nu^L = \tau_\nu$).
+
+The phrase \emph{zero mode} means the spatial Fourier component with
+transfer $m=0$: it is uniform in position and carries the global charge,
+not a local density fluctuation. The sums defining the chiral phases start
+at $m=1$, so they describe only nonzero-mode fluctuations. Charge change is
+supplied separately by the Klein operator $F_\nu$, while the source zero
+mode records the charge-dependent phase of the state \emph{before} that
+change. This separation matters because the local oscillators describe
+particle--hole structure, whereas the uniform mode tracks the charge
+sector and the phase accumulated around the ring.
+
+\begin{definition}[Source Zero-Mode Operator]
+\label{def:zero_mode}
+Let $\vec{N} : \sigma \to \mathbb{Z}$ be an admissible sector charge and $K \ge 0$. For species $\nu \in \sigma$ and $x \in \mathbb{Z}$, the \emph{source zero scalar} is $z_\nu(x; \vec{N}) \coloneqq r_\nu^x \zeta^{x N_\nu} \in \mathbb{C}$.
+The \emph{source zero-mode operator} $Z_\nu(x) \in \operatorname{End}_{\mathbb{C}}(B(\vec{N}, K))$ is the diagonal operator:
+\begin{equation}
+Z_\nu(x) \psi \coloneqq z_\nu(x; \vec{N})\, \psi \quad \text{for all } \psi \in B(\vec{N}, K).
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Properties of the Source Zero Mode]
+\label{lem:zero_mode_properties}
+Assume $h \ge 1$ and let $\vec{N} : \sigma \to \mathbb{Z}$ be admissible.
+\begin{enumerate}
+    \item \textbf{Unit Norm and Winding:} $|z_\nu(x; \vec{N})| = 1$, and $z_\nu(x + w L; \vec{N}) = \tau_\nu^w z_\nu(x; \vec{N})$, hence $Z_\nu(x + w L) = \tau_\nu^w Z_\nu(x)$.
+    \item \textbf{Unitarity:} $(Z_\nu(x))^\dagger = (z_\nu(x; \vec{N}))^* I = (Z_\nu(x))^{-1}$.
+    \item \textbf{Klein Intertwining:} Under the multispecies pair margin $2K + \max(|N_\eta|, |N_\eta - \delta_{\nu, \eta}|) \le h$ for all $\eta \in \sigma$, the Klein lowering kernel $F_\nu$ satisfies:
+    \begin{equation}
+    F_\nu Z_\nu(x) |\vec{N}\rangle_0 = r_\nu^x\, \zeta^{x N_\nu} P(\nu, \vec{N})\, |\vec{N} - e_\nu\rangle_0,
+    \end{equation}
+    where $P(\nu, \vec{N}) = (-1)^{\sum_{\eta < \nu} (h + N_\eta)} (-1)^{h + N_\nu - 1}$ is the exact CAR ground phase.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (1), $|z_\nu|=1$, and the winding shift evaluates in one step as $r_\nu^{x+wL}\zeta^{(x+wL)N_\nu}=\tau_\nu^w z_\nu(x;\vec{N})$.
+For (2), $Z_\nu(x) = z_\nu I$ on an inner-product space implies $(Z_\nu)^\dagger = z_\nu^* I = z_\nu^{-1} I$.
+For (3), $Z_\nu(x)$ first evaluates the source-sector scalar $z_\nu(x;\vec{N})$; the subsequent action of $F_\nu$ contributes $P(\nu,\vec{N})$ and changes the charge to $\vec{N}-e_\nu$, giving the stated matrix element.
+\end{proof}
+
+\begin{remark}[Source ordering of the zero mode]
+The product $F_\nu Z_\nu(x)$ evaluates the phase at the source charge $N_\nu$, as required for the annihilated field. Reversing the factors evaluates $Z_\nu(x)$ in the target sector $N_\nu-1$ instead, changing the scalar by $\zeta^{-x}$ and producing an anomalous phase defect. The zero-mode factor must therefore act before the Klein charge shift.
+\end{remark}
+
+\section{Compressed Nilpotent Exponentials and Typed Budgets}
+
+\begin{definition}[Budget Projections and Typed Maps]
+\label{def:budget_projection_maps}
+Let $\vec{N} : \sigma \to \mathbb{Z}$ and $K \ge 0$.
+The orthogonal projection onto the budget $B(\vec{N}, K)$ is denoted by $P_{\vec{N}, K}$.
+For any operator $A$, the \emph{typed projected map} $\pi(A)_{\vec{N}_{\mathrm{in}}, \vec{N}_{\mathrm{out}}}^{K_{\mathrm{in}}, K_{\mathrm{out}}} : B(\vec{N}_{\mathrm{in}}, K_{\mathrm{in}}) \to B(\vec{N}_{\mathrm{out}}, K_{\mathrm{out}})$ is the restriction of $P_{\vec{N}_{\mathrm{out}}, K_{\mathrm{out}}} A$ to $B(\vec{N}_{\mathrm{in}}, K_{\mathrm{in}})$.
+The \emph{ambient compressed phases} are $W^\pm_{\nu, \mathrm{comp}}(x) \coloneqq P_{\vec{N}, K} W^\pm_\nu(x) P_{\vec{N}, K}$.
+\end{definition}
+
+\begin{lemma}[Projected Map Adjoint]
+\label{lem:projected_map_adjoint}
+For any ambient operator $A$, the Hilbert adjoint reverses source and target carriers:
+\begin{equation}
+\left( \pi(A)_{\vec{N}_{\mathrm{in}}, \vec{N}_{\mathrm{out}}}^{K_{\mathrm{in}}, K_{\mathrm{out}}} \right)^\dagger = \pi(A^\dagger)_{\vec{N}_{\mathrm{out}}, \vec{N}_{\mathrm{in}}}^{K_{\mathrm{out}}, K_{\mathrm{in}}}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $u \in B(\vec{N}_{\mathrm{out}}, K_{\mathrm{out}})$ and $v \in B(\vec{N}_{\mathrm{in}}, K_{\mathrm{in}})$, self-adjointness and the projection fixed-point property give $\langle u, P_{\mathrm{out}} A v \rangle = \langle A^\dagger u, v \rangle = \langle P_{\mathrm{in}} A^\dagger u, v \rangle$.
+\end{proof}
+
+\begin{theorem}[Nilpotency of Compressed Phases on Finite Budgets]
+\label{thm:compressed_nilpotency}
+Let $h \ge 1$, $M \ge 0$, $\vec{N} : \sigma \to \mathbb{Z}$, and $K \ge 0$.
+The ambient compressed phases and their typed restrictions satisfy:
+\begin{equation}
+\left( W^+_{\nu, \mathrm{comp}}(x) \right)^{K+1} = 0, \qquad \left( W^-_{\nu, \mathrm{comp}}(x) \right)^{K+1} = 0,
+\end{equation}
+and $\left( \pi(W^\pm_\nu(x))_{\vec{N}, \vec{N}}^{K, K} \right)^{K+1} = 0$ on $B(\vec{N}, K)$.
+\end{theorem}
+
+\begin{proof}
+Each application of $W^+_{\nu,\mathrm{comp}}(x)$ lowers the total excitation grade by at least one, and the filtration bottoms out at $\{0\}$; therefore $(W^+_{\nu,\mathrm{comp}}(x))^{K+1}$ annihilates $B(\vec{N},K)$. The adjoint relation $(W^+_{\nu,\mathrm{comp}})^\dagger=-W^-_{\nu,\mathrm{comp}}$ gives nilpotency of $W^-_{\nu,\mathrm{comp}}$ as well. Thus both compressed operators and their typed restrictions have the asserted nilpotency.
+\end{proof}
+
+\begin{remark}[Nilpotency from the finite grading]
+Nilpotency follows directly from the excitation grading: repeated application of the lowering phase eventually reaches the zero-energy floor, while the raising phase has the corresponding adjoint property. No continuum limit or finite-dimensional characteristic-polynomial argument is involved.
+\end{remark}
+
+\section{The Projected Vertex Candidate and Exact Adjoint}
+
+With nilpotency established above, define the finite polynomial exponential $\operatorname{expNil}_d(A) \coloneqq \sum_{j=0}^d \frac{A^j}{j!}$. For an operator that lowers a finite filtration by one step, this polynomial is the exact exponential because all higher powers vanish.
+
+\begin{definition}[Projected Bosonized Vertex Map]
+\label{def:vertex_candidate}
+Let $\vec{N}_t \coloneqq \vec{N} - e_\nu$. The \emph{projected bosonized vertex map}
+$B_\nu(x) : B(\vec{N}, K_{\mathrm{in}}) \to B(\vec{N} - e_\nu, K_{\mathrm{out}})$
+is the ordered composition:
+\begin{equation}
+\label{eq:vertex_candidate_formula}
+\begin{aligned}
+B_\nu(x) \coloneqq \frac{1}{\sqrt{L}} \operatorname{expNil}_{K_{\mathrm{out}}}\!\left( \pi(W^-_\nu(x))_{\vec{N}_t, \vec{N}_t}^{K_{\mathrm{out}}, K_{\mathrm{out}}} \right) &\circ \Pi_{\mathrm{trans}} \\
+&\circ \operatorname{expNil}_{K_{\mathrm{in}}}\!\left( \pi(W^+_\nu(x))_{\vec{N}_t, \vec{N}_t}^{K_{\mathrm{in}}, K_{\mathrm{in}}} \right) \circ F_{\nu, K_{\mathrm{in}}} \circ Z_\nu(x),
+\end{aligned}
+\end{equation}
+where $\Pi_{\mathrm{trans}} \coloneqq \pi(I)_{\vec{N}_t, \vec{N}_t}^{K_{\mathrm{in}}, K_{\mathrm{out}}}$ transitions between cutoffs, and $F_{\nu, K_{\mathrm{in}}} \coloneqq \pi(\mathcal{K}_\nu)_{\vec{N}, \vec{N}_t}^{K_{\mathrm{in}}, K_{\mathrm{in}}}$.
+\end{definition}
+
+\begin{lemma}[Exact Adjoint and Winding Invariance]
+\label{lem:vertex_candidate_properties}
+\begin{enumerate}
+    \item \textbf{Hilbert Adjoint:} The adjoint of $B_\nu(x)$ reverses the composition order of all five typed factors:
+    \begin{align}
+    (B_\nu(x))^\dagger = \frac{1}{\sqrt{L}} (Z_\nu(x))^\dagger \circ (F_{\nu, K_{\mathrm{in}}})^\dagger &\circ \operatorname{expNil}_{K_{\mathrm{in}}}\!\left( -\pi(W^-_\nu(x))_{\vec{N}_t, \vec{N}_t}^{K_{\mathrm{in}}, K_{\mathrm{in}}} \right) \\
+    &\circ (\Pi_{\mathrm{trans}})^\dagger \circ \operatorname{expNil}_{K_{\mathrm{out}}}\!\left( -\pi(W^+_\nu(x))_{\vec{N}_t, \vec{N}_t}^{K_{\mathrm{out}}, K_{\mathrm{out}}} \right).
+    \end{align}
+    \item \textbf{Winding Invariance:} For physical field $A_\nu(x) \coloneqq \pi(c_{(\nu, x)})_{\vec{N}, \vec{N}_t}^{K_{\mathrm{in}}, K_{\mathrm{out}}}$ and candidate $B_\nu(x)$:
+    \begin{equation}
+    A_\nu(x + w L) = \tau_\nu^w\, A_\nu(x), \qquad B_\nu(x + w L) = \tau_\nu^w\, B_\nu(x) \quad \text{for all } w \in \mathbb{Z}.
+    \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (1), reverse the five typed factors and apply $(\operatorname{expNil}_d(A))^\dagger=\operatorname{expNil}_d(A^\dagger)$ and $(W^\pm)^\dagger=-W^\mp$ to obtain the displayed formula; the reversed exponential order is retained. For (2), the Fourier character and twist give the physical winding, while periodicity of $W^\pm$ and the winding law for $Z_\nu$ give the same factor $\tau_\nu^w$ for the candidate.
+\end{proof}
+
+\begin{remark}[Exact finite adjoints]
+The adjoint calculation is an identity of finite-dimensional maps between the stated budget spaces. It uses only reversal of composition and the adjoint identities for the finite polynomial exponential and chiral phases; no topological convergence or infinite-series limit is required.
+\end{remark}
+
+\section{Physical Field Expansions and Commutator Excursions}
+
+\begin{lemma}[Retained Hole Expansion and Recurrence Residuals]
+\label{lem:physical_and_residuals}
+Let $A_\nu(x) = \pi(c_{(\nu, x)})$.
+\begin{enumerate}
+    \item \textbf{Physical Ground Expansion:} On the source ground state $|\vec{N}\rangle_0$:
+    \begin{equation}
+    \label{eq:physical_ground_expansion}
+    A_\nu(x) |\vec{N}\rangle_0 = \frac{1}{\sqrt{L}} \sum_{k \in \mathcal{S}_{N_\nu}} r_\nu^x\, \zeta^{k x}\, (-1)^{\#\{j \in \mathcal{S}_{\vec{N}} \mid j < (\nu, k)\}}\, P_{\mathrm{out}} |\mathcal{S}_{\vec{N}} \setminus \{(\nu, k)\}\rangle.
+    \end{equation}
+    \item \textbf{Recurrence Residual Identity:} For $c \equiv c_{(\nu, x)}$ and $\rho \equiv \rho_{\nu, m}$, with $P_{\mathrm{in}} \coloneqq P_{\vec{N}, K_{\mathrm{in}}}$ and $P_{\mathrm{out}} \coloneqq P_{\vec{N}-e_\nu, K_{\mathrm{out}}}$:
+    \begin{align}
+    \label{eq:projected_recurrence_residual}
+    (P_{\mathrm{out}} c P_{\mathrm{in}})(P_{\mathrm{in}} \rho P_{\mathrm{in}}) - (P_{\mathrm{out}} \rho P_{\mathrm{out}})(P_{\mathrm{out}} c P_{\mathrm{in}}) = \; &P_{\mathrm{out}} [c, \rho] P_{\mathrm{in}} \\
+    &- P_{\mathrm{out}} c (I - P_{\mathrm{in}}) \rho P_{\mathrm{in}} \\
+    &+ P_{\mathrm{out}} \rho (I - P_{\mathrm{out}}) c P_{\mathrm{in}}.
+    \end{align}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (1), expand $c_{(\nu, x)} = \frac{1}{\sqrt{L}} \sum_{k \in B} r_\nu^x \zeta^{kx} c_{(\nu, k)}$, apply CAR annihilation, and project with $P_{\mathrm{out}}$.
+For (2), insert $I=P_{\mathrm{in}}+(I-P_{\mathrm{in}})$ and $I=P_{\mathrm{out}}+(I-P_{\mathrm{out}})$ in the two projected products. Their difference is the projected commutator together with the retained boundary excursions through $I-P_{\mathrm{in}}$ and $I-P_{\mathrm{out}}$, exactly as displayed.
+\end{proof}
+
+Equation~\eqref{eq:physical_ground_expansion} shows that removing deeper modes $k = N_\nu - d$ creates holes of excitation $d > 0$.
+Equation~\eqref{eq:projected_recurrence_residual} retains both boundary
+excursions $(I - P_{\mathrm{in}})$ and $(I - P_{\mathrm{out}})$. These
+terms are required in the finite projected recurrence because intermediate
+states may leave either budget before the final projection.
+
+\section{The Conditional Cyclic Equality Criterion}
+
+\begin{theorem}[Cyclic Equality Criterion with Common Residuals]
+\label{thm:cyclic_criterion}
+Let $R$ be a semiring and $V, W$ additive abelian group $R$-modules. Let $v_0 \in V$ and $\{G_i\}_{i \in I} \subset \operatorname{End}_R(V)$.
+Define $\operatorname{cyclicSpan}(G, v_0) \coloneqq \operatorname{span}_R \{ G_{i_1} \dots G_{i_k} v_0 \mid k \ge 0, i_j \in I \}$.
+Let $A, B : V \to W$ be linear maps. Suppose there exist $\{T_i\}_{i \in I} \subset \operatorname{End}_R(W)$ and $\{R_i\}_{i \in I} \subset \operatorname{Hom}_R(V, W)$ such that:
+\begin{equation}
+A v_0 = B v_0, \qquad A \circ G_i = T_i \circ A + R_i, \qquad B \circ G_i = T_i \circ B + R_i \quad (\forall i \in I),
+\end{equation}
+and $\operatorname{cyclicSpan}(G, v_0) = V$. Then $A = B$.
+\end{theorem}
+
+\begin{proof}
+Subtracting recurrences gives $(A - B) \circ G_i = T_i \circ (A - B)$, canceling $R_i$.
+By induction on word length, $(A - B)(G_{i_1} \dots G_{i_k} v_0) = 0$.
+Thus $\operatorname{cyclicSpan}(G, v_0) \subseteq \ker(A - B)$. Since the span is $V$, $A = B$.
+\end{proof}
+
+\begin{theorem}[Conditional Field--Vertex Equivalence]
+\label{thm:field_vertex_conditional}
+Let $A_\nu(x) = \pi(c_{(\nu, x)})$ and $B_\nu(x)$ be the candidate~\eqref{eq:vertex_candidate_formula}.
+Suppose there exist creators $G_i \in \operatorname{End}_{\mathbb{C}}(B(\vec{N}, K_{\mathrm{in}}))$, target maps $T_i$, and common residuals $R_i$ such that:
+(1) $\operatorname{cyclicSpan}(G, |\vec{N}\rangle_0) = B(\vec{N}, K_{\mathrm{in}})$;
+(2) $A_\nu(x) |\vec{N}\rangle_0 = B_\nu(x) |\vec{N}\rangle_0$; and
+(3) $A_\nu \circ G_i = T_i \circ A_\nu + R_i$ and $B_\nu \circ G_i = T_i \circ B_\nu + R_i$.
+Then $A_\nu(x) = B_\nu(x)$ on $B(\vec{N}, K_{\mathrm{in}})$.
+\end{theorem}
+
+\begin{proof}
+Specialization of Theorem~\ref{thm:cyclic_criterion} to $V = B(\vec{N}, K_{\mathrm{in}})$ and $W = B(\vec{N}-e_\nu, K_{\mathrm{out}})$.
+\end{proof}
+
+\begin{remark}[Scope of the cyclic criterion]
+The cyclic-span argument is purely algebraic: if two maps agree on a reference vector and obey the same recurrence on a spanning family generated from it, their difference vanishes on the whole source space. The field--vertex comparison is conditional on these spanning and common-residual hypotheses.
+\end{remark}
+
+\section{Physical Status, Obstructions, and Open Scope}
+
+\begin{remark}[Physical status and open scope]
+We conclude by summarizing why unconditional equivalence is not established by numerical margins alone:
+\begin{enumerate}
+    \item \textbf{Deep-Hole Obstruction at $K=0$:} For $h = 2, L = 4, N = 0, K_{\mathrm{in}} = K_{\mathrm{out}} = 0, x = 0$, $\sqrt{4} c_0 |\Omega\rangle = c_{-1} |\Omega\rangle + c_0 |\Omega\rangle$. The state $c_{-1} |\Omega\rangle$ has excitation $1$. At $K_{\mathrm{out}} = 0$, $B(0) |\Omega\rangle = \frac{1}{2} P(1, 0) |-1\rangle_0$ produces only the target ground, missing the deep hole.
+    \item \textbf{Missing-Mode Counterexample:} For $h = 6, L = 12, N = 0, K_{\mathrm{in}} = 0, K_{\mathrm{out}} = 2, M = 1, x = 0$, the margin $2M + K_* + |N| \le h$ holds ($4 \le 6$). However, creating a hole at $-2$ (excitation $2$) gives coefficient $-1/\sqrt{12}$ under CAR, but $-1/(2\sqrt{12})$ under the candidate because mode $\rho_2$ is absent from $M = 1$. Mode coverage $M \ge K_*$ is strictly required.
+\end{enumerate}
+
+\begin{quote}
+\emph{The unconditional identity $P_{\mathrm{out}} c_{(\nu, x)} P_{\mathrm{in}} = B_\nu(x)$ under numerical margins alone is not established by the finite-lattice results here.}
+\end{quote}
+It remains an open research target subject to proving full vector ground matching~\eqref{eq:physical_ground_expansion}, matching recurrence excursions~\eqref{eq:projected_recurrence_residual}, and mode coverage $M \ge K_*$. Theorem~\ref{thm:field_vertex_conditional} provides the exact conditional framework under which this comparison can be completed.
+\end{remark}

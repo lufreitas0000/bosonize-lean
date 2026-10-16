@@ -29,6 +29,7 @@ D_m \coloneqq \left\{ (p, k) \in \Lambda^* \times \Lambda^* \;\middle|\; p = k +
 If $|m| \ge 2h = L$, the distance between $p$ and $k$ exceeds the total diameter of the band, so $D_m = \emptyset$.
 
 \begin{definition}[One-Particle Partial Shift Matrix]
+The space $\ell^2(\Lambda^*)$ is the finite-dimensional space of complex amplitudes indexed by the allowed momenta; its standard basis vectors $|k\rangle$ represent individual momentum modes. The matrix $T_m$ shifts by $m$ places inside the band: $T_m|k\rangle=|k+m\rangle$ when both labels lie in $\Lambda^*$, and zero otherwise. It is a partial shift because it stops at the band edges instead of wrapping around.
 The one-particle partial shift matrix $T_m \in \mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*))$ is the $L \times L$ matrix defined by:
 \begin{equation}
 (T_m)_{p, k} \coloneqq \begin{cases}
@@ -38,7 +39,23 @@ The one-particle partial shift matrix $T_m \in \mathrm{End}_{\mathbb{C}}(\ell^2(
 \end{equation}
 \end{definition}
 
+The choice to stop at the band edge is physical, not just a convenient
+matrix convention. A partial shift represents a genuine momentum transfer
+between two modes that both exist in the chosen finite band. If instead we
+identified the two band edges and wrapped the shift cyclically, a fermion
+near one edge could be sent to the opposite edge as though that large jump
+were an ordinary small transfer. Such a term is an Umklapp or wrap
+contribution: it depends on the cutoff and can mix the two edges. It would
+alter the current algebra and obscure the low-energy process we want to
+describe. Here a density mode creates a particle--hole excitation by moving
+an occupied fermion from $k$ to $k+m$ when that destination is available;
+the vacancy at $k$ is the hole. The process conserves total charge, and its
+energy change is the transfer $m$. Pauli exclusion or an endpoint outside
+the band simply makes that attempted hop vanish.
+
+
 \begin{definition}[Second Quantization Map]
+The occupation basis of $\mathcal{F}(L)=\ell^2(\mathcal{P}(\Lambda^*))$ records which modes are filled. For a one-particle map $A$, its second quantization $d\Gamma(A)$ applies $A$ in turn to each occupied particle and sums the results. For example, $d\Gamma(T_m)=\sum_k c_{k+m}^\dagger c_k$.
 For any single-particle matrix $A \in \mathrm{End}_{\mathbb{C}}(\ell^2(\Lambda^*))$, its second-quantized operator $d\Gamma(A) \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ on Fock space is defined by:
 \begin{equation}
 d\Gamma(A) \coloneqq \sum_{p, k \in \Lambda^*} A_{p, k}\, c_p^\dagger c_k.
@@ -76,9 +93,9 @@ For adjoints: $(d\Gamma(A))^\dagger = \sum_{p, k} \overline{A_{p, k}} (c_p^\dagg
     \begin{equation}
     \rho_m \coloneqq d\Gamma(T_m) = \sum_{(p, k) \in D_m} c_p^\dagger c_k = \sum_{\substack{k \in \Lambda^* \\ k+m \in \Lambda^*}} c_{k+m}^\dagger c_k.
     \end{equation}
-    \item The \emph{normal-ordered density operator} $:\!\rho_m\!:$ is defined by subtracting the vacuum charge $h$ at zero mode:
+    \item We define the \emph{normal-ordered density operator} $:\!\rho_m\!:$ by subtracting the vacuum charge $h$ at zero mode:
     \begin{equation}
-    :\!\rho_m\!: \coloneqq \rho_m - \delta_{m, 0}\, h I.
+    :\!\rho_m\!: = \rho_m - \delta_{m, 0}\, h I.
     \end{equation}
 \end{enumerate}
 \end{definition}
@@ -148,7 +165,7 @@ The statement for non-positive transfers follows immediately by taking Hilbert a
 \end{proof}
 
 \begin{remark}[Formalization Note]
-In the verified Lean~4 core (\texttt{Bosonize.Ch09}), Theorem~\ref{thm:same_sign_comm} is proved globally without assuming an energy budget. Same-sign density modes commute everywhere on the $2^L$-dimensional Fock space. The non-trivial Schwinger anomaly occurs strictly for opposite-sign pairs $[\rho_m, \rho_{-n}]$ ($m, n > 0$), which we analyze in Chapter~\ref{ch:heisenberg_algebra}.
+The formal statement and proof use the finite mathematical carriers and hypotheses specified in this chapter. The result is an exact algebraic or combinatorial claim within that scope; it does not presume an analytic limit or a stronger continuum identity.
 \end{remark}
 
 \section{Charge Conservation and Energy Grading}
@@ -271,16 +288,27 @@ Since eigenstates corresponding to distinct eigenvalues $m \in \{1, \dots, h\}$ 
 
 \section{Spatial Density Fourier Expansion and Wrap Remainders}
 
-To connect the momentum density modes to spatial local observables, consider the spatial density operator $\rho(x) \coloneqq \psi_x^\dagger \psi_x$.
-Taking the discrete Fourier transform of the spatial density:
+To connect the momentum density modes to spatial local observables, consider
+the spatial density operator $\rho(x) \coloneqq \psi_x^\dagger \psi_x$.
+Its Fourier component measures a density modulation around the ring: a
+slowly varying modulation transfers only nearby momenta, while a sharp
+position-localized density contains a wider range of transfers. In an
+unbounded momentum description, Fourier transforming simply labels the
+transferred momentum. A finite centered band is different because spatial
+Fourier orthogonality sees momentum labels modulo $L$. Consequently, a
+Fourier component contains both the desired ordinary transfer and any terms
+that reach it only by crossing a band edge. Keeping these contributions
+separate lets us state exactly when a spatial observable acts like a
+chiral density mode.
+Taking the discrete Fourier transform of the spatial density (with the canonical residue abbreviated by $x$ in these character exponents):
 \begin{align*}
-\sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}} \psi_x^\dagger \psi_x &= \sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}} \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \zeta^{-p x_{\mathrm{val}}} c_p^\dagger \right) \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x_{\mathrm{val}}} c_k \right) \\
-&= \frac{1}{L} \sum_{p, k \in \Lambda^*} c_p^\dagger c_k \left( \sum_{x \in \Lambda} \zeta^{(k - p + m) x_{\mathrm{val}}} \right).
+\sum_{x \in \Lambda} \zeta^{m x} \psi_x^\dagger \psi_x &= \sum_{x \in \Lambda} \zeta^{m x} \left( \frac{1}{\sqrt{L}} \sum_{p \in \Lambda^*} \zeta^{-p x} c_p^\dagger \right) \left( \frac{1}{\sqrt{L}} \sum_{k \in \Lambda^*} \zeta^{k x} c_k \right) \\
+&= \frac{1}{L} \sum_{p, k \in \Lambda^*} c_p^\dagger c_k \left( \sum_{x \in \Lambda} \zeta^{(k - p + m) x} \right).
 \end{align*}
 By spatial character orthogonality (Theorem~\ref{thm:fourier_orthogonality}), the spatial sum forces the modular congruence $k - p + m \equiv 0 \pmod L \iff p \equiv k + m \pmod L$.
 This decomposes the sum into two distinct components:
 \begin{equation}
-\sum_{x \in \Lambda} \zeta^{m x_{\mathrm{val}}}\, \psi_x^\dagger \psi_x = \rho_m + R_m,
+\sum_{x \in \Lambda} \zeta^{m x}\, \psi_x^\dagger \psi_x = \rho_m + R_m,
 \end{equation}
 where:
 \begin{itemize}
@@ -288,4 +316,24 @@ where:
     \item $R_m = \sum_{p \equiv k + m \pmod L, \; p \neq k + m} c_p^\dagger c_k$ is the \emph{cyclic wrap remainder} consisting of Umklapp scattering terms with wrapping integers $w = \pm 1$.
 \end{itemize}
 
-On the budget subspace under the unified margin conditions of Theorem~\ref{thm:unified_margin}, the wrap remainder $R_m$ annihilates all states. Thus, the physical spatial current coincides with the non-wrapping chiral current $\rho_m$.
+For example, take a four-mode band $\{-1,0,1,2\}$ and transfer $m=1$.
+The ordinary shift includes $-1\mapsto0$, $0\mapsto1$, and $1\mapsto2$.
+But spatial Fourier selection also sees the modular pair $2\mapsto-1$,
+which crosses the edge: it belongs to $R_1$, not to the ordinary partial
+shift. This term is absent on low-energy budget states when the margin
+conditions of Theorem~\ref{thm:unified_margin} prevent particles and holes
+from reaching the edge. In that regime the spatial Fourier density acts
+exactly as the non-wrapping chiral current $\rho_m$. Outside it, the wrap
+remainder is a real finite-band correction, not an error to discard.
+
+\section{Chapter Summary}
+We have defined density currents as second quantizations of partial
+momentum shifts, identified their charge and energy action, and separated
+ordinary transfers from finite-band wrap terms. The particle--hole picture
+explains why these bilinears are the natural collective variables, while
+the four-mode example shows why cyclic wrapping must be tracked rather than
+hidden. Under the budget margins, the wrap terms vanish and the desired
+current relations hold exactly. This is the finite-lattice starting point
+for the current algebra and completeness results that follow; it parallels
+the continuum density-current construction while keeping its cutoff
+corrections explicit.

@@ -1,0 +1,356 @@
+\chapter{Finite Exponentials, Klein Factors and Vertex Scope}
+\label{app:exponentials_klein}
+
+\section{Introduction and Scope}
+
+This appendix provides the technical algebraic and combinatorial foundations supporting the multi-species current algebra of Chapter~\ref{ch:klein_factors} and the projected Mattis--Mandelstam vertex operator construction of Chapter~\ref{ch:mandelstam}.
+
+In the standard literature on one-dimensional bosonization, operator exponentials are frequently treated as formal series or infinite-dimensional distributions. Expressions such as $e^{i \phi(x)}$ and the Baker--Campbell--Hausdorff (BCH) factorization $e^{A+B} = e^A e^B e^{-\frac{1}{2}[A,B]}$ are manipulated formally without specifying operator domains or verifying convergence.
+On a finite lattice of $L = 2h$ sites, however, such formal manipulations break down:
+\begin{enumerate}
+    \item \textbf{Absence of Global Exponentials:} The raising current $W^-_\nu(x)$ increases excitation energy and does not preserve any finite-energy subspace. Outside of an explicit energy cutoff, $W^-_\nu(x)$ is not nilpotent, and its formal exponential does not define an endomorphism on a truncated budget.
+    \item \textbf{Non-Central Commutators on Truncations:} While the unprojected current commutator $[\rho_m, \rho_n] = m \delta_{m+n, 0}$ is central within the low-energy margin, compressed phase operators $P W^\pm P$ have non-trivial boundary excursions with projectors. Consequently, their finite exponentials do not satisfy the scalar BCH relation.
+    \item \textbf{Graded Multispecies Fock Carriers:} When multiple fermion species $\nu \in \sigma$ are present, the Canonical Anticommutation Relations (CAR) require an explicit total ordering on all single-particle modes. Ensuring that bilinear hopping operators and density currents decouple cleanly across species requires a careful analysis of Jordan--Wigner and fermion sign parities.
+\end{enumerate}
+
+To resolve these difficulties, this appendix establishes:
+\begin{itemize}
+    \item \textbf{Exact Finite Taylor Operators:} A purely algebraic formulation of finite Taylor polynomials on arbitrary complex modules, establishing cutoff independence, two-sided invertibility, and adjoints under explicit nilpotency hypotheses certified by bounded filtrations.
+    \item \textbf{Multispecies CAR Fock Spaces:} A lexicographically ordered mode basis $\sigma \times B$ ensuring that bilinear currents decouple across species without inter-species Klein anomalies.
+    \item \textbf{Joint Energy Budgets and Product Gram Bases:} The construction of joint energy budgets $B(\vec{N}, K)$ governed by a simplex (total-energy) cutoff, and the proof of product Gram orthogonality and Haldane completeness.
+    \item \textbf{Scope and Verification Boundaries:} The precise mathematical separation between proved algebraic identities on finite budgets and open continuum or infinite-dimensional conjectures.
+\end{itemize}
+
+\section{Exact Finite Taylor Polynomials on Complex Modules}
+
+We begin with the general theory of polynomial exponentials on abstract
+complex vector spaces and modules.
+
+\begin{definition}[Finite Taylor Polynomial]
+\label{def:finite_taylor}
+Let $V$ be a module over $\mathbb{C}$. For any endomorphism $A \in \operatorname{End}_{\mathbb{C}}(V)$ and any integer degree $d \in \mathbb{N}$, the \emph{finite Taylor polynomial} through degree $d$ is the endomorphism:
+\begin{equation}
+\label{eq:finite_taylor_def}
+T_d(A) \coloneqq \sum_{j=0}^d \frac{1}{j!}\, A^j \in \operatorname{End}_{\mathbb{C}}(V).
+\end{equation}
+The evaluation on a vector $v \in V$ is $T_d(A) v = \sum_{j=0}^d \frac{1}{j!} (A^j v)$.
+\end{definition}
+
+Notice that Definition~\ref{def:finite_taylor} requires no nilpotency or convergence assumption: $T_d(A)$ is a well-defined polynomial in $A$ for any endomorphism on any complex module.
+
+\begin{lemma}[Basic Algebraic Properties of Taylor Polynomials]
+\label{lem:taylor_basic}
+Let $V$ and $W$ be $\mathbb{C}$-modules, and let $A \in \operatorname{End}_{\mathbb{C}}(V)$.
+\begin{enumerate}
+    \item \textbf{Zero Cutoff and Zero Operator:} $T_0(A) = I_V$, and $T_d(0) = I_V$ for all $d \in \mathbb{N}$.
+    \item \textbf{Self-Commutativity:} $[A, T_d(A)] = 0$ for all $d \in \mathbb{N}$.
+    \item \textbf{Intertwining Preservation:} If $B \in \operatorname{End}_{\mathbb{C}}(W)$ and $T : V \to W$ is a linear map satisfying $T \circ A = B \circ T$, then:
+    \begin{equation}
+    T \circ T_d(A) = T_d(B) \circ T \quad \text{for all } d \in \mathbb{N}.
+    \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (1), $T_0(A) = \frac{1}{0!} A^0 = I_V$. For $A = 0$, $0^0 = I_V$ and $0^j = 0$ for $j \ge 1$, so $T_d(0) = I_V$.
+For (2), since $A$ commutes with each power $A^j$, it commutes with their linear combination $T_d(A)$.
+For (3), by induction on $j$, $T \circ A = B \circ T$ implies $T \circ A^j = B^j \circ T$. Summing over $j \in \{0, \dots, d\}$ with coefficients $\frac{1}{j!}$ yields the result.
+\end{proof}
+
+\begin{theorem}[Cutoff Independence and Two-Sided Invertibility]
+\label{thm:taylor_invertibility}
+Let $V$ be a $\mathbb{C}$-module, $A \in \operatorname{End}_{\mathbb{C}}(V)$, and $d \in \mathbb{N}$. Assume that $A$ satisfies the nilpotency condition $A^{d+1} = 0$.
+\begin{enumerate}
+    \item \textbf{Cutoff Independence:} For any integer $e \ge d$:
+    \begin{equation}
+    T_e(A) = T_d(A).
+    \end{equation}
+    \item \textbf{Two-Sided Inverses:} The negative polynomial $T_d(-A)$ is an exact two-sided algebraic inverse:
+    \begin{equation}
+    T_d(A) T_d(-A) = T_d(-A) T_d(A) = I_V.
+    \end{equation}
+    \item \textbf{Linear Isomorphism:} The operator $T_d(A)$ is an injective and surjective linear automorphism of $V$. In particular, for any $v \in V$, $v \neq 0 \implies T_d(A) v \neq 0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For (1), for any $j \ge d + 1$, write $j = (d + 1) + k$ with $k \ge 0$. Then $A^j = A^{d+1} A^k = 0 \cdot A^k = 0$.
+Splitting the sum $\sum_{j=0}^e = \sum_{j=0}^d + \sum_{j=d+1}^e$, all terms in the second sum vanish, so $T_e(A) = T_d(A)$.
+
+For (2), expanding the product $T_d(A) T_d(-A)$ by the Cauchy product of finite sums:
+\[
+T_d(A) T_d(-A) = \sum_{j=0}^d \sum_{k=0}^d \frac{(-1)^k}{j! k!}\, A^{j+k} = \sum_{n=0}^{2d} \left( \sum_{k=0}^n \frac{(-1)^k}{k! (n-k)!} \right) A^n = \sum_{n=0}^{2d} \frac{(1 - 1)^n}{n!}\, A^n.
+\]
+For $n = 0$, the coefficient is $\frac{0^0}{0!} = 1$, giving $A^0 = I_V$.
+For $1 \le n \le d$, $(1 - 1)^n = 0^n = 0$.
+For $n \ge d + 1$, $A^n = 0$ by the nilpotency assumption.
+Therefore, all terms with $n \ge 1$ vanish identically, leaving $T_d(A) T_d(-A) = I_V$.
+Replacing $A$ with $-A$ (which also satisfies $(-A)^{d+1} = (-1)^{d+1} A^{d+1} = 0$) gives $T_d(-A) T_d(A) = I_V$.
+
+For (3), injectivity follows from the left inverse: $T_d(A) v = T_d(A) w \implies T_d(-A) T_d(A) v = T_d(-A) T_d(A) w \implies v = w$.
+Surjectivity follows from the right inverse: for any $w \in V$, $v \coloneqq T_d(-A) w$ satisfies $T_d(A) v = w$.
+Finally, if $v \neq 0$, then $T_d(A) v = 0 = T_d(A) 0$ contradicts injectivity.
+\end{proof}
+
+\begin{proposition}[Adjoint of Taylor Polynomials]
+\label{prop:taylor_adjoint}
+Let $V$ be a finite-dimensional complex inner-product space and $A \in \operatorname{End}_{\mathbb{C}}(V)$. Then for every $d \in \mathbb{N}$:
+\begin{equation}
+(T_d(A))^\dagger = T_d(A^\dagger).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By antilinearity of the adjoint map and $(A^j)^\dagger = (A^\dagger)^j$:
+\[
+(T_d(A))^\dagger = \left( \sum_{j=0}^d \frac{1}{j!}\, A^j \right)^\dagger = \sum_{j=0}^d \left(\frac{1}{j!}\right)^* (A^j)^\dagger = \sum_{j=0}^d \frac{1}{j!}\, (A^\dagger)^j = T_d(A^\dagger),
+\]
+where we used that the factorial coefficients $\frac{1}{j!} \in \mathbb{R}$ are strictly real.
+\end{proof}
+
+\begin{theorem}[Nilpotency via Bounded Filtrations]
+\label{thm:app_filtration_nilpotent}
+Let $V$ be a $\mathbb{C}$-module and $A \in \operatorname{End}_{\mathbb{C}}(V)$. Let $d \in \mathbb{N}$, and suppose there exists a family of submodules $\{F_n\}_{n=0}^{d+1}$ of $V$ such that:
+\begin{enumerate}
+    \item \textbf{Bottom and Top Conditions:} $F_0 = \{0\}$ and $F_{d+1} = V$;
+    \item \textbf{Filtration Lowering:} For every $n \in \{0, \dots, d\}$, $A(F_{n+1}) \subseteq F_n$.
+\end{enumerate}
+Then $A^{d+1} = 0$ identically on $V$.
+\end{theorem}
+
+\begin{proof}
+We prove by induction on $k \in \{0, \dots, d+1\}$ that $A^k(F_k) = \{0\}$.
+For $k = 0$, $F_0 = \{0\}$, so $A^0(F_0) = I(F_0) = \{0\}$.
+Assume $A^k(F_k) = \{0\}$ for some $k \le d$.
+For any $v \in F_{k+1}$, condition (2) gives $A v \in F_k$.
+Then $A^{k+1} v = A^k(A v) \in A^k(F_k) = \{0\}$, so $A^{k+1} v = 0$.
+Specializing to $k = d+1$: since $F_{d+1} = V$, we obtain $A^{d+1} v = 0$ for all $v \in V$, so $A^{d+1} = 0$.
+\end{proof}
+
+\begin{remark}[Formalization Note: Lean Realization of Exponentials]
+The formal statement and proof use the finite mathematical carriers and hypotheses specified in this chapter. The result is an exact algebraic or combinatorial claim within that scope; it does not presume an analytic limit or a stronger continuum identity.
+\end{remark}
+
+\section{Multispecies CAR Fock Spaces and Lexicographic Ordering}
+
+Let $\sigma$ be a finite, linearly ordered set of fermion species (e.g., spin $\sigma = \{\uparrow, \downarrow\}$ or chirality $\sigma = \{R, L\}$).
+The single-particle mode basis is the Cartesian product $\sigma \times B$, where $B = \{-h+1, \dots, h\}$ is the centered momentum band of $L = 2h$ modes.
+
+\begin{definition}[Lexicographic Mode Order]
+\label{def:mode_order}
+The mode space $\sigma \times B$ is endowed with the strict lexicographic order:
+\begin{equation}
+(\nu, k) < (\eta, l) \iff (\nu < \eta) \;\vee\; (\nu = \eta \;\wedge\; k < l).
+\end{equation}
+For an occupation configuration $S \subset \sigma \times B$ and a mode $(\nu, k)$, the \emph{preceding occupation count} is:
+\begin{equation}
+C_{(\nu, k)}(S) \coloneqq \#\left\{ (\eta, l) \in S \;\middle|\; (\eta, l) < (\nu, k) \right\}.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Preceding Count Decomposition]
+\label{lem:preceding_count_split}
+Let $S \subset \sigma \times B$, and let $S_\eta \coloneqq \{l \in B \mid (\eta, l) \in S\}$ be the single-species configuration of species $\eta$. Then:
+\begin{equation}
+\label{eq:preceding_count_split}
+C_{(\nu, k)}(S) = \sum_{\eta < \nu} |S_\eta| \;+\; C_k(S_\nu),
+\end{equation}
+where $C_k(S_\nu) = \#\{l \in S_\nu \mid l < k\}$ is the single-species preceding count.
+\end{lemma}
+
+\begin{proof}
+By Definition~\ref{def:mode_order}, a mode $(\eta, l) \in S$ satisfies $(\eta, l) < (\nu, k)$ if and only if either $\eta < \nu$ (in which case $l \in B$ is unconstrained, contributing $|S_\eta|$) or $\eta = \nu$ and $l < k$ (contributing $C_k(S_\nu)$). Since these cases are disjoint, the sum of cardinalities yields~\eqref{eq:preceding_count_split}.
+\end{proof}
+
+\begin{theorem}[Multispecies CAR Algebra]
+\label{thm:multispecies_car}
+The creation and annihilation operators on the multispecies Fock space $\mathcal{F}(\sigma, h)$ satisfy:
+\begin{align}
+\{c_{(\nu, k)}, c_{(\eta, l)}\} = 0, \qquad &\{c_{(\nu, k)}^\dagger, c_{(\eta, l)}^\dagger\} = 0, \\
+\{c_{(\nu, k)}, c_{(\eta, l)}^\dagger\} &= \delta_{\nu, \eta}\, \delta_{k, l}\, I,
+\end{align}
+and $(c_{(\nu, k)})^\dagger = c_{(\nu, k)}^\dagger$.
+\end{theorem}
+
+\begin{proof}
+Direct application of the standard CAR construction of Chapter~\ref{ch:car_fock} to the finite linearly ordered set $\sigma \times B$.
+\end{proof}
+
+We now come to the pivotal algebraic mechanism that permits independent density currents: the cancellation of inter-species sign factors in bilinear operators.
+
+\begin{theorem}[Bilinear Hopping and Density Tensor Factorization]
+\label{thm:hopping_tensor}
+Let $\nu \in \sigma$ and $p, k \in B$.
+\begin{enumerate}
+    \item \textbf{Hopping Parity Cancellation:} The single-species hopping operator $c_{(\nu, p)}^\dagger c_{(\nu, k)}$ acts on coordinate tensor states $v = \bigotimes_{\eta \in \sigma} v_\eta$ as:
+    \begin{equation}
+    c_{(\nu, p)}^\dagger c_{(\nu, k)} \left( \bigotimes_{\eta \in \sigma} v_\eta \right) = \left( c_{\nu, p}^\dagger c_{\nu, k} v_\nu \right) \otimes \left( \bigotimes_{\eta \neq \nu} v_\eta \right).
+    \end{equation}
+    \item \textbf{Density Mode Tensor Action:} For any mode $m \in \mathbb{Z}$, the density current $\rho_{\nu, m} \coloneqq \sum_{(p, k) \in D_m} c_{(\nu, p)}^\dagger c_{(\nu, k)}$ satisfies:
+    \begin{equation}
+    \rho_{\nu, m} \left( \bigotimes_{\eta \in \sigma} v_\eta \right) = \left( \rho_m v_\nu \right) \otimes \left( \bigotimes_{\eta \neq \nu} v_\eta \right).
+    \end{equation}
+    \item \textbf{Cross-Species Current Commutation:} For distinct species $\nu \neq \eta$ and any integers $m, n \in \mathbb{Z}$:
+    \begin{equation}
+    [\rho_{\nu, m}, \; \rho_{\eta, n}] = 0 \quad \text{globally on } \mathcal{F}(\sigma, h).
+    \end{equation}
+    \item \textbf{Adjoint and Positive-Mode Commutativity:} $(\rho_{\nu, m})^\dagger = \rho_{\nu, -m}$, and for all $m, n \ge 0$:
+    \begin{equation}
+    [\rho_{\nu, m}, \; \rho_{\nu, n}] = 0 \quad \text{globally on } \mathcal{F}(\sigma, h).
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For (1), by Lemma~\ref{lem:preceding_count_split}, applying $c_{(\nu, k)}$ to a basis ket $|S\rangle$ introduces the sign factor $(-1)^{C_{(\nu, k)}(S)} = (-1)^{\sum_{\eta < \nu} |S_\eta|} (-1)^{C_k(S_\nu)}$.
+Subsequent application of $c_{(\nu, p)}^\dagger$ introduces the sign factor $(-1)^{C_{(\nu, p)}(S')} = (-1)^{\sum_{\eta < \nu} |S'_\eta|} (-1)^{C_p(S'_\nu)}$.
+Since the hopping operator alters only the occupation of species $\nu$, the particle numbers $|S_\eta|$ for all preceding species $\eta < \nu$ are strictly unchanged: $|S'_\eta| = |S_\eta|$.
+Therefore, the inter-species sign factor appears twice:
+\[
+(-1)^{\sum_{\eta < \nu} |S_\eta|} \cdot (-1)^{\sum_{\eta < \nu} |S'_\eta|} = \left( (-1)^{\sum_{\eta < \nu} |S_\eta|} \right)^2 = +1.
+\]
+The inter-species Jordan--Wigner string squares to $+1$ and decouples completely!
+Hence, the operator acts solely on the $\nu$-th tensor component, proving (1).
+
+For (2), summing over valid pairs $(p, k) \in D_m$ yields the tensor action for $\rho_{\nu, m}$.
+For (3), when $\nu \neq \eta$, $\rho_{\nu, m}$ and $\rho_{\eta, n}$ act non-trivially on different tensor factors, hence commute.
+For (4), the adjoint formula $(\rho_{\nu, m})^\dagger = \rho_{\nu, -m}$ and positive-mode commutativity follow directly from the single-species results established in Chapter~\ref{ch:density_modes} and Appendix~\ref{app:density_partitions}.
+\end{proof}
+
+\begin{remark}[Formalization Note: Multispecies Verification]
+The formal statement and proof use the finite mathematical carriers and hypotheses specified in this chapter. The result is an exact algebraic or combinatorial claim within that scope; it does not presume an analytic limit or a stronger continuum identity.
+\end{remark}
+
+\section{Joint Energy Budgets and Product Haldane Basis}
+
+We now extend Haldane completeness (Chapter~\ref{ch:haldane_completeness}) to the multispecies setting.
+
+\begin{definition}[Joint Energy Budget]
+\label{def:joint_budget}
+Let $\vec{N} : \sigma \to \mathbb{Z}$ be an admissible sector charge vector and $K \ge 0$.
+The \emph{joint budget subspace} $B(\vec{N}, K) \subset \mathcal{F}(\sigma, h)$ is the subspace spanned by occupation configurations $S \subset \sigma \times B$ such that:
+\begin{enumerate}
+    \item Every species $\nu \in \sigma$ has fixed relative charge $\mathcal{N}(S_\nu) = N_\nu$;
+    \item The \emph{total excitation energy} summed over all species is bounded by $K$:
+    \begin{equation}
+    e_{\mathrm{tot}}(S) \coloneqq \sum_{\nu \in \sigma} e(S_\nu) \le K.
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Total-Energy vs.\ Independent-Box Cutoffs]
+It is essential that $B(\vec{N}, K)$ is defined by the simplex constraint $\sum_\nu e(S_\nu) \le K$, rather than by independent rectangular box cutoffs $e(S_\nu) \le K$ for each $\nu$. The physical Hamiltonian measures total energy; restricting total energy preserves rotational and chiral symmetry between branches and ensures compatibility with multi-species Bogoliubov transformations (Chapter~\ref{ch:klein_factors}).
+\end{remark}
+
+\begin{definition}[Joint Partition Labels and States]
+\label{def:joint_partitions}
+For $K \ge 0$, a \emph{joint partition} $\vec{\lambda}$ is a family of integer partitions $\vec{\lambda} = (\lambda_\nu)_{\nu \in \sigma}$ such that $\sum_{\nu \in \sigma} |\lambda_\nu| \le K$.
+The corresponding \emph{joint partition state} is the tensor product of single-species partition states:
+\begin{equation}
+|\vec{\lambda}; \vec{N}\rangle \coloneqq \bigotimes_{\nu \in \sigma} |\lambda_\nu; N_\nu\rangle \in B(\vec{N}, K).
+\end{equation}
+The \emph{joint normalization factor} is the product of single-species Hall products:
+\begin{equation}
+z_{\vec{\lambda}} \coloneqq \prod_{\nu \in \sigma} z_{\lambda_\nu} = \prod_{\nu \in \sigma} \prod_{m \ge 1} m^{r_m(\lambda_\nu)}\, r_m(\lambda_\nu)! > 0.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Product Gram Orthogonality and Joint Haldane Basis]
+\label{thm:joint_haldane_basis}
+Let $h \ge 1$ and $K \ge 0$. Assume the \emph{multispecies Regime R2 margin condition}:
+\begin{equation}
+\label{eq:multispecies_r2}
+2K + |N_\nu| \le h \quad \text{for all } \nu \in \sigma.
+\end{equation}
+\begin{enumerate}
+    \item \textbf{Product Gram Orthogonality:} For any joint partitions $\vec{\lambda}, \vec{\mu}$ with total size $\le K$:
+    \begin{equation}
+    \langle \vec{\lambda}; \vec{N} \mid \vec{\mu}; \vec{N} \rangle = \delta_{\vec{\lambda}, \vec{\mu}}\, z_{\vec{\lambda}}.
+    \end{equation}
+    \item \textbf{Haldane Completeness of Joint Budgets:} The family of joint partition states $\{|\vec{\lambda}; \vec{N}\rangle\}$ forms a complete orthogonal basis of the joint budget subspace $B(\vec{N}, K)$:
+    \begin{equation}
+    \operatorname{span}_{\mathbb{C}} \left\{ |\vec{\lambda}; \vec{N}\rangle \;\middle|\; \sum_{\nu \in \sigma} |\lambda_\nu| \le K \right\} = B(\vec{N}, K).
+    \end{equation}
+    \item \textbf{Charge Sector Eigenvalues:} For every $\nu \in \sigma$ and every $v \in B(\vec{N}, K)$:
+    \begin{equation}
+    \mathcal{Q}_\nu v = N_\nu\, v.
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For (1), by Theorem~\ref{thm:hopping_tensor}, inner products of coordinate tensor states factor over species:
+\[
+\langle \vec{\lambda}; \vec{N} \mid \vec{\mu}; \vec{N} \rangle = \prod_{\nu \in \sigma} \langle \lambda_\nu; N_\nu \mid \mu_\nu; N_\nu \rangle.
+\]
+For each species $\nu$, the excitation energy satisfies $|\lambda_\nu| \le \sum_{\eta} |\lambda_\eta| \le K$.
+Under the margin condition~\eqref{eq:multispecies_r2}, $2|\lambda_\nu| + |N_\nu| \le 2K + |N_\nu| \le h$.
+By Chapter~\ref{ch:haldane_completeness} (Theorem~\ref{thm:hall_gram}), the single-species Gram factor is $\delta_{\lambda_\nu, \mu_\nu} z_{\lambda_\nu}$.
+Multiplying over all $\nu \in \sigma$ yields $\delta_{\vec{\lambda}, \vec{\mu}} z_{\vec{\lambda}}$.
+
+For (2), pairwise orthogonality with strictly positive norms $z_{\vec{\lambda}} > 0$ implies linear independence.
+To prove spanning, let $S \in B(\vec{N}, K)$ be an occupation configuration. Each fiber configuration $S_\nu$ has energy $e_\nu = e(S_\nu) \ge 0$ with $\sum_\nu e_\nu \le K$.
+Under~\eqref{eq:multispecies_r2}, each fiber satisfies the single-species Regime R2 condition $2e_\nu + |N_\nu| \le h$.
+By Chapter~\ref{ch:haldane_completeness}, $|S_\nu\rangle$ expands as a linear combination of partition states $|\lambda_\nu; N_\nu\rangle$ with $|\lambda_\nu| = e_\nu$.
+Taking the coordinate tensor product across all species expresses $|S\rangle$ as a linear combination of joint partition states $|\vec{\lambda}; \vec{N}\rangle$ with $\sum_\nu |\lambda_\nu| = \sum_\nu e_\nu \le K$.
+Since the coordinate kets span $B(\vec{N}, K)$, the joint partition states span $B(\vec{N}, K)$ and form a basis.
+
+For (3), since every configuration $S \in B(\vec{N}, K)$ has relative charge $\mathcal{N}(S_\nu) = N_\nu$, the charge observable acts diagonally with eigenvalue $N_\nu$.
+\end{proof}
+
+\begin{remark}[Formalization Note: Product Basis Verification]
+The formal statement and proof use the finite mathematical carriers and hypotheses specified in this chapter. The result is an exact algebraic or combinatorial claim within that scope; it does not presume an analytic limit or a stronger continuum identity.
+\end{remark}
+
+\section{Klein Intertwining and the Scope of Vertex Operators}
+
+We conclude this appendix by clarifying the scope of the Klein lowering map and establishing the boundary between certified finite-lattice theorems and open continuum heuristics.
+
+\subsection{The Klein Map between Admissible Budgets}
+In constructive bosonization, the Klein factor $F_\nu : B(\vec{N}, K) \to B(\vec{N}-e_\nu, K)$ lowers the charge of species $\nu$ while preserving excitation energy.
+Its normalized kernel is defined by mapping each joint partition basis vector to the corresponding target basis vector:
+\begin{equation}
+F_\nu |\vec{\lambda}; \vec{N}\rangle \coloneqq P(\nu, \vec{N})\, |\vec{\lambda}; \vec{N}-e_\nu\rangle,
+\end{equation}
+where $P(\nu, \vec{N}) = (-1)^{\sum_{\eta < \nu} (h + N_\eta)} (-1)^{h + N_\nu - 1}$ is the exact CAR ground phase.
+Under the multispecies pair margin condition (Chapter~\ref{ch:klein_factors}, Theorem~\ref{thm:klein_isometry_equiv}):
+\[
+2K + \max(|N_\eta|, |N_\eta - \delta_{\nu, \eta}|) \le h \quad \text{for all } \eta \in \sigma,
+\]
+the Gram factor $z_{\vec{\lambda}}$ is identical in the source and target sectors.
+Consequently, $F_\nu$ is a typed linear isometry between finite-dimensional Hilbert spaces.
+
+\subsection{Verification Boundaries: What is Proved vs.\ Open}
+Table~\ref{tab:verification_boundary} provides an exact ledger of the status of mathematical statements in Chapters~\ref{ch:mandelstam} and~\ref{app:exponentials_klein}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{p{4.5cm} p{2.5cm} p{7.0cm}}
+\toprule
+\textbf{Mathematical statement} & \textbf{Proof status} & \textbf{Scope} \\
+\midrule
+Finite Taylor Polynomial $T_d(A)$ & Proved & Polynomial identity \\
+Cutoff Independence $T_e = T_d$ & Proved & Under the stated nilpotency bound \\
+Two-Sided Inverse $T_d(A) T_d(-A) = I$ & Proved & Under the stated nilpotency bound \\
+Adjoint Formula $(T_d(A))^\dagger = T_d(A^\dagger)$ & Proved & Finite-dimensional adjoint \\
+Nilpotency via Bounded Filtrations & Proved & Finite filtration argument \\
+Compressed Nilpotency $(P W^\pm P)^{K+1} = 0$ & Proved & On the stated energy budget \\
+Phase Adjoint $(W^+)^\dagger = -W^-$ & Proved & Finite current algebra \\
+Zero-Mode Unitarity and Holonomy & Proved & On the specified charge sector \\
+Candidate Adjoint Factor Reversal & Proved & Typed composition of finite maps \\
+Multispecies CAR Parity Cancellation & Proved & Ordered species representation \\
+Joint Budget Product Gram Basis & Proved & Under the joint margin condition \\
+Cyclic Criterion with Common Residuals & Proved & On the generated finite span \\
+Conditional Field--Vertex Theorem & Proved & Given the stated common-residual hypotheses \\
+\midrule
+Unconditional Identity $P_{\mathrm{out}} c_x P_{\mathrm{in}} = B(x)$ & \textbf{Open / Excluded} & Counterexamples at $K=0$ and missing modes \\
+Infinite-Dimensional BCH Factorization & \textbf{Excluded} & Fails on truncated budget carriers \\
+Analytic Vertex Operators $e^{i \phi(x)}$ & \textbf{Excluded} & Requires unbounded continuum operators \\
+\bottomrule
+\end{tabular}
+\caption{Formal boundary: exact finite theorems and identities that remain outside their stated scope.}
+\label{tab:verification_boundary}
+\end{table}
+
+By maintaining this rigorous separation, the \textsf{Bosonize-Lean} framework provides an exact, certified foundation for the algebraic physics of one-dimensional fermions, free of hidden approximations or unverified continuum leaps.

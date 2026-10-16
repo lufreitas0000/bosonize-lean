@@ -5,7 +5,7 @@
 
 In continuum quantum field theory, the Dirac sea has infinite negative depth. Attempting to define particle-hole operators, charges, and Hamiltonians directly in the continuum leads immediately to divergent vacuum expectations and unbounded operators. 
 
-To formalize bosonization constructively without topological approximations or divergent series, we introduce the \emph{Energy Budget regularization scheme}. The entire state space is decomposed into finite-dimensional subspaces governed by two discrete parameters:
+To develop the finite-lattice bosonization without topological approximations or divergent series, we introduce the \emph{Energy Budget regularization scheme}. The entire state space is decomposed into finite-dimensional subspaces governed by two discrete parameters:
 \begin{enumerate}
     \item Net charge sector deviation $N \in \mathbb{Z}$.
     \item Maximum excitation energy cutoff $K \in \mathbb{N}$.
@@ -55,9 +55,10 @@ To maintain strict mathematical rigor, all combinatorial quantities are defined 
 \begin{definition}[Integer Charge, Momentum, and Ground Energy Offset]
 For any configuration $S \subseteq \Lambda^*$:
 \begin{enumerate}
-    \item The total bare momentum energy relative to the half-filled sea is:
+    \item The half-filled reference sea has integer momentum energy $E_\Omega$; the total bare momentum relative to it is:
     \begin{equation}
-    P(S) \coloneqq \sum_{k \in S} k - \sum_{k \in \mathcal{S}_0} k \in \mathbb{Z}.
+    E_\Omega \coloneqq \sum_{k\in\mathcal{S}_0}k=-\frac{h(h-1)}2,\qquad
+    P(S) \coloneqq \sum_{k\in S}k-E_\Omega\in\mathbb Z.
     \end{equation}
     \item The \emph{sector ground reference energy offset} $E_0(N)$ is defined for $N \in \mathbb{Z}$ by:
     \begin{equation}
@@ -71,20 +72,22 @@ For any configuration $S \subseteq \Lambda^*$:
 \end{enumerate}
 \end{definition}
 
-\paragraph{Physical Intuition for the Ground Energy Offset $E_0(N)$.}
+\begin{quote}
+\item[]\paragraph{Physical Intuition for the Ground Energy Offset $E_0(N)$.}
 Why does the ground state of charge sector $N$ carry energy $E_0(N) = N(N+1)/2$?
 Consider adding $N > 0$ particles to the half-filled Dirac sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$. To minimize total kinetic energy, the particles must occupy the lowest available empty modes immediately above the Fermi surface, which are the consecutive positive modes $k = 1, 2, \dots, N$. The total momentum added is:
-\[
+\begin{equation}
 \sum_{k=1}^N k = 1 + 2 + \dots + N = \frac{N(N+1)}{2}.
-\]
+\end{equation}
 Similarly, if $N < 0$ particles are removed, the lowest-energy configuration removes the highest occupied modes $k = 0, -1, \dots, N+1$ from the sea. The net momentum change is $-\sum_{k=N+1}^0 k = \frac{|N|(|N|-1)}{2} + |N| = \frac{N(N+1)}{2}$.
 In 1D physics, this quadratic term $E_0(N) = \frac{1}{2} N^2 + \frac{1}{2} N$ reflects the macroscopic charging energy of a 1D Luttinger liquid: adding particles increases the Fermi momentum $k_F \propto N$, so the total kinetic energy increases quadratically as $\int_0^N k \, dk \sim \frac{1}{2} N^2$.
+\end{quote}
 
 \begin{definition}[Operator Observables]
-The relative charge observable $\hat{N}$ and excitation energy observable $\hat{E}$ are diagonal linear operators on $\mathcal{F}(L)$ defined on basis states by:
+The relative charge operator $N$ and excitation energy operator $E$ belong to $\operatorname{End}_{\mathbb C}(\mathcal F(L))$ and are defined on basis states by:
 \begin{align}
-\hat{N} |S\rangle &\coloneqq N(S) |S\rangle = (\#S - h) |S\rangle, \\
-\hat{E} |S\rangle &\coloneqq e(S) |S\rangle.
+N |S\rangle &\coloneqq N(S) |S\rangle = (\#S - h) |S\rangle, \\
+E |S\rangle &\coloneqq e(S) |S\rangle.
 \end{align}
 \end{definition}
 
@@ -93,19 +96,19 @@ The ground states satisfy:
 \begin{equation}
 P(\mathcal{S}_N) = E_0(N), \qquad e(\mathcal{S}_N) = 0 \quad \text{for all } N \in \{-h, \dots, h\}.
 \end{equation}
-In particular, $\hat{E} |N\rangle_0 = 0$.
+In particular, $E |N\rangle_0 = 0$.
 \end{lemma}
 
 \begin{proof}
-For $N \ge 0$, $\mathcal{S}_N$ is obtained from $\mathcal{S}_0$ by adding the positive modes $\{1, 2, \dots, N\}$. Thus:
-\[
-P(\mathcal{S}_N) = \sum_{k \in \mathcal{S}_N} k - \sum_{k \in \mathcal{S}_0} k = \sum_{k=1}^N k = \frac{N(N+1)}{2} = E_0(N).
-\]
-For $N < 0$, $\mathcal{S}_N$ is obtained from $\mathcal{S}_0$ by removing modes $\{N+1, \dots, 0\}$. Thus:
-\[
-P(\mathcal{S}_N) = - \sum_{k=N+1}^0 k = - \sum_{j=0}^{-N-1} (N+1+j) = \frac{N(N+1)}{2} = E_0(N).
-\]
-In both cases, $e(\mathcal{S}_N) = P(\mathcal{S}_N) - E_0(N) = 0$.
+For $N\ge0$, summing the added modes gives
+\begin{equation}
+P(\mathcal S_N)=\sum_{k=1}^{N}k=\frac{N(N+1)}2=E_0(N).
+\end{equation}
+For $N<0$, reindexing the removed modes gives
+\begin{equation}
+P(\mathcal S_N)=-\sum_{j=0}^{-N-1}(N+1+j)=\frac{N(N+1)}2=E_0(N).
+\end{equation}
+Thus $e(\mathcal S_N)=P(\mathcal S_N)-E_0(N)=0$ in either case.
 \end{proof}
 
 \section{The Rank Formula and Ground State Uniqueness}
@@ -130,16 +133,19 @@ Let $S \subseteq \Lambda^*$ be an occupation configuration with cardinality $\#S
 \end{enumerate}
 \end{definition}
 
-\paragraph{Physical Intuition for Particle Displacements.}
+\begin{quote}
+\item[]\paragraph{Physical Intuition for Particle Displacements.}
 The ground state $\mathcal{S}_N$ is a compact Fermi droplet where particles occupy consecutive lowest modes $g_i$. Any excited state $S$ is created by displacing particles upward from their ground positions. The integer $d_i = s_i - g_i$ measures how far the $i$-th fermion has been promoted above its ground state reference position.
+\end{quote}
 
 \begin{theorem}[Rank Formula and Non-Negativity of Excitation Energy]
 \label{thm:rank_formula}
 Let $S \subseteq \Lambda^*$ be any configuration with cardinality $\#S = h + N$ (so $N(S) = N$). 
 \begin{enumerate}
-    \item For every index $i \in \{0, 1, \dots, h+N-1\}$, the displacements satisfy:
+    \item The displacements are non-negative, non-decreasing, and bounded above by the band edge:
     \begin{equation}
-    d_i \ge 0, \qquad \text{and} \qquad d_{i+1} \ge d_i.
+    h+N=0\;:\;S=\emptyset,\qquad
+    h+N>0\;:\;0\le d_0\le\cdots\le d_{h+N-1}\le 2h-(h+N)=h-N.
     \end{equation}
     \item The excitation energy is the sum of particle displacements:
     \begin{equation}
@@ -153,24 +159,13 @@ Let $S \subseteq \Lambda^*$ be any configuration with cardinality $\#S = h + N$ 
 \begin{proof}
 We prove each assertion:
 \begin{enumerate}
-    \item Since $s_0 \in \Lambda^* = \{-h+1, \dots, h\}$, we have $s_0 \ge -h+1 = g_0$, so $d_0 = s_0 - g_0 \ge 0$.
-    Because the sequence $s_i$ consists of strictly increasing integers, $s_{i+1} \ge s_i + 1$.
-    Meanwhile, $g_{i+1} = -h + 1 + (i+1) = g_i + 1$. Therefore:
-    \[
-    d_{i+1} = s_{i+1} - g_{i+1} \ge (s_i + 1) - (g_i + 1) = s_i - g_i = d_i.
-    \]
-    By induction, $d_i \ge d_{i-1} \ge \dots \ge d_0 \ge 0$ for all $i$.
-    
-    \item By definition of the ground configuration $\mathcal{S}_N$, $\sum_{k \in \mathcal{S}_N} k = \sum_{i=0}^{h+N-1} g_i$. The total momentum of $S$ is $\sum_{k \in S} k = \sum_{i=0}^{h+N-1} s_i$. Therefore:
-    \[
-    \sum_{k \in S} k - \sum_{k \in \mathcal{S}_N} k = \sum_{i=0}^{h+N-1} (s_i - g_i) = \sum_{i=0}^{h+N-1} d_i.
-    \]
-    On the other hand:
-    \[
-    \sum_{k \in S} k - \sum_{k \in \mathcal{S}_N} k = \left( \sum_{k \in S} k - \sum_{k \in \mathcal{S}_0} k \right) - \left( \sum_{k \in \mathcal{S}_N} k - \sum_{k \in \mathcal{S}_0} k \right) = P(S) - E_0(N) = e(S).
-    \]
-    Thus $e(S) = \sum_{i=0}^{h+N-1} d_i$.
-    
+    \item If $S=\emptyset$, the displacement assertions are vacuous. Otherwise $s_0\ge g_0$, so $d_0\ge0$; for consecutive indices, $s_{i+1}-s_i\ge1$ and $g_{i+1}-g_i=1$, hence $d_{i+1}-d_i\ge0$. Finally, $s_{h+N-1}\le h$ and $g_{h+N-1}=N$ give $d_{h+N-1}\le h-N$.
+
+    \item Using $P(S)=\sum_{k\in S}k-E_\Omega$ and $P(\mathcal S_N)=E_0(N)$, the sorted occupations and ground positions give the telescoping identity
+    \begin{equation}
+    e(S)=P(S)-E_0(N)=\sum_{k\in S}k-\sum_{k\in\mathcal S_N}k
+    =\sum_{i=0}^{h+N-1}(s_i-g_i)=\sum_{i=0}^{h+N-1}d_i.
+    \end{equation}
     \item Since each $d_i \ge 0$, the sum of non-negative integers is non-negative: $e(S) \ge 0$.
     
     \item Since $d_i \ge 0$, the sum $\sum d_i = 0$ holds if and only if $d_i = 0$ for every $i \in \{0, \dots, h+N-1\}$.
@@ -186,12 +181,14 @@ In each admissible sector $N$, the zero-excitation energy subspace is strictly o
 \end{equation}
 \end{corollary}
 
-\paragraph{Physical Implications: Gapless Spectrum and Ground State Non-Degeneracy.}
+\begin{quote}
+\item[]\paragraph{Ground-state uniqueness and the gapless spectrum.}
 In condensed matter physics, Corollary~\ref{cor:ground_subspace} carries profound physical meaning:
 \begin{enumerate}
     \item \textbf{Non-Degenerate Ground State:} For any fixed particle number $h + N$, the ground state is unique (non-degenerate). There are no spontaneous symmetry-breaking degeneracies at zero temperature in 1D.
     \item \textbf{The Energy Gap:} The lowest possible non-zero excitation energy is obtained by setting $d_{h+N-1} = 1$ and all other $d_i = 0$, which corresponds to promoting the highest fermion across the Fermi level into mode $N+1$. The excitation energy of this state is $e(S) = 1$. In physical energy units, the excitation gap is $\Delta \epsilon = \frac{2\pi v_F}{L}$. As $L \to \infty$, the gap vanishes as $\mathcal{O}(1/L)$, confirming that the 1D free Fermi gas is a \emph{gapless (critical) system} with a continuous low-energy spectrum.
 \end{enumerate}
+\end{quote}
 
 \section{The Frozen Margins Theorem}
 
@@ -215,22 +212,27 @@ Let $S \subseteq \Lambda^*$ be a configuration with $N(S) = N$ and excitation en
 \begin{proof}
 By Theorem~\ref{thm:rank_formula}, $e(S) = \sum_{i=0}^{h+N-1} d_i \le K$. Since $d_i \ge 0$ for all $i$, each individual displacement satisfies $d_i \le K$.
 \begin{enumerate}
-    \item Suppose for contradiction that there exists a mode $k \le N - K$ such that $k \notin S$.
-    Then the hole at $k$ forces all particles with ground position $g_j \ge k$ to be shifted upward by at least $1$. The total number of particles above $k$ is $(h+N) - (k - (-h+1)) = h+N - k - h = N - k \ge K$.
-    Each such particle has displacement $d_j \ge 1$. Since there are at least $K+1$ such particles, the sum $\sum d_i$ strictly exceeds $K$, contradicting $e(S) \le K$. Thus $k \in S$.
-
-    \item Suppose for contradiction that there exists an occupied mode $k > N + K$ in $S$.
-    Then the largest particle $s_{h+N-1}$ satisfies $s_{h+N-1} \ge k > N + K$.
-    The ground position of the highest particle is $g_{h+N-1} = -h + 1 + (h+N-1) = N$.
-    Therefore, the displacement of the highest particle is:
-    \[
-    d_{h+N-1} = s_{h+N-1} - g_{h+N-1} > (N + K) - N = K.
-    \]
-    Since $d_{h+N-1} > K$, the sum $\sum d_i \ge d_{h+N-1} > K$, which contradicts $e(S) \le K$. Hence $k \notin S$.
+    \item If a mode $k\le N-K$ were unoccupied, the resulting hole would force total displacement at least $N-k+1\ge K+1$, contradicting $\sum_i d_i=e(S)\le K$. Thus every such mode is occupied.
+    \item If an occupied mode $k>N+K$ existed, the highest occupied mode would satisfy $s_{h+N-1}\ge k$ while its ground position is $g_{h+N-1}=N$. Hence $d_{h+N-1}\ge k-N>K$, contradicting $\sum_i d_i\le K$. Thus every such mode is empty.
 \end{enumerate}
 \end{proof}
 
 \section{Energy Budget Subspaces and Filtered Operators}
+
+\subsection{Coordinate Subspaces and Projector Algebra}
+For $U\subseteq\mathcal P(\Lambda^*)$, define the coordinate subspace and its orthogonal projector by
+\begin{equation}
+\operatorname{coord}(U)=\operatorname{span}_{\mathbb C}\{|S\rangle:S\in U\},\qquad
+P_U|S\rangle=\begin{cases}|S\rangle,&S\in U,\\0,&S\notin U,\end{cases}
+\quad P_U\in\operatorname{End}_{\mathbb C}(\mathcal F(L)).
+\end{equation}
+Their algebra is
+\begin{align}
+P_U^2&=P_U, & P_U^\dagger&=P_U, & \operatorname{Ran}(P_U)&=\operatorname{coord}(U),\\
+P_UP_V&=P_{U\cap V}, & P_{U\cup V}&=P_U+P_V-P_{U\cap V}.
+\end{align}
+Thus disjoint coordinate sets give orthogonal subspaces and $P_UP_V=0$. These identities follow by evaluating both sides on each occupation basis ket.
+
 
 \begin{definition}[Energy Budget Subspaces]
 \label{def:budget_subspace}
@@ -263,6 +265,7 @@ Let $A \in \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ be a linear operator.
     \begin{equation}
     e(S') \le e(S) + d.
     \end{equation}
+    \item The map is an \emph{exact charge-energy shift} $(q,d)\in\mathbb Z^2$ if every output configuration in $A|S\rangle$ satisfies both $N(S')=N(S)+q$ and $e(S')=e(S)+d$.
 \end{enumerate}
 \end{definition}
 
@@ -285,17 +288,48 @@ Let density operators with maximum mode cutoff $M \ge 1$ act on states in the ch
 \begin{equation}
 2M + K + K_{\mathrm{excursion}} + N_{\max} \le h.
 \end{equation}
-Under this condition, no density shift triggers an Umklapp boundary wrap, and all operator identities evaluate identically to their continuum form.
+Under this condition, no density shift triggers an Umklapp boundary wrap, so the specified mode transfers retain their unwrapped integer action on the stated budget.
 \end{theorem}
 
 \begin{proof}
-By Theorem~\ref{thm:frozen_margins}, the maximum occupied mode for an intermediate state with charge $N$ and energy $E \le K + K_{\mathrm{excursion}}$ is bounded above by $N + (K + K_{\mathrm{excursion}}) \le N_{\max} + K + K_{\mathrm{excursion}}$.
-Applying a mode shift of size $M$, the shifted momentum must not exceed the top of the band $+h$. This requires $(N_{\max} + K + K_{\mathrm{excursion}}) + M \le h$. Symmetrically, the lowest unoccupied mode is bounded below by $-N_{\max} - (K + K_{\mathrm{excursion}})$, and backward shifts of size $M$ must not cross the lower bound $-h+1$. Combining these bounds with buffer margins yields $2M + K + K_{\mathrm{excursion}} + N_{\max} \le h$.
+For every intermediate state, any highest occupied mode is at most $N+K+K_{\mathrm{excursion}}$, while any lowest unoccupied mode is at least $N-K-K_{\mathrm{excursion}}+1$. Using $|N|\le N_{\max}$ and allowing transfers up to $M$ with the corresponding edge buffer, the unified condition $2M+K+K_{\mathrm{excursion}}+N_{\max}\le h$ keeps both extremal modes in the linear interior and prevents Umklapp wrapping.
 \end{proof}
 
-\begin{remark}[Formalization Note]
-In the verified Lean~4 core, all 114 lemmas on energy gradings, projections, and ground states are verified in the Lean 4 kernel. The rank formula and displacement monotonicity are proved by finite sorting induction, ensuring that the entire regularized framework is constructive and mathematically rigid.
+\begin{remark}[Finite Algebraic Foundations]
+The rank formula, coordinate projectors, filtered maps, and word excursion bounds follow from finite sums on the occupation basis. The vacuum projectors and displacement description make the energy-budget regularization explicit without invoking an abstract dimension count or an infinite-volume limit.
 \end{remark}
+
+\section{Word Excursion Tracking and Compression Remainders}
+
+For a product of operators $W=A_1A_2\cdots A_s$ with exact energy shifts $\Delta e_j$ and charge shifts $q_j$, the rightmost factor acts first. Define its maximum upward energy excursion by
+\begin{equation}
+X(W)=\max\left(0,\max_{1\le r\le s}\sum_{j=1}^{r}\Delta e_{s-j+1}\right).
+\end{equation}
+
+\begin{theorem}[Word Evaluation Safety]
+\label{thm:word_evaluation_safety}
+Suppose $\psi\in B(N,K)$ and $K+X(W)\le K_{\max}$. After applying the first $r$ factors from the right, every intermediate vector lies in
+\begin{equation}
+B\left(N+\sum_{j=1}^{r}q_{s-j+1},K_{\max}\right),
+\end{equation}
+so every intermediate state remains within the energy budget $K_{\max}$.
+\end{theorem}
+
+\begin{proof}
+After $r$ right-to-left applications the cumulative energy shift is $\sum_{j=1}^{r}\Delta e_{s-j+1}\le X(W)$. Starting from energy at most $K$, the intermediate energy is therefore at most $K+X(W)\le K_{\max}$; the charge shift is the sum of the corresponding $r$ charge shifts.
+\end{proof}
+
+\begin{proposition}[Compression Remainder Identity]
+\label{prop:compression_remainder}
+For a coordinate projector $P=P_U$ and operators $A,B\in\operatorname{End}_{\mathbb C}(\mathcal F(L))$, the product of compressed operators differs from the compressed product by the exact intermediate leakage term
+\begin{equation}
+PABP-(PAP)(PBP)=PA(I-P)BP.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expanding $PABP-PAPBP$ and factoring on the left and right gives $PA(I-P)BP$.
+\end{proof}
 
 \section{Chapter Summary and Literature Comparison}
 
@@ -306,10 +340,13 @@ In this chapter, we developed the Energy Budget regularization scheme:
     \item Defined particle displacements $d_i = s_i - g_i$ and proved the Rank Formula $e(S) = \sum d_i \ge 0$, establishing ground state uniqueness $e(S) = 0 \iff S = \mathcal{S}_N$.
     \item Connected ground state non-degeneracy to the gapless $\mathcal{O}(1/L)$ critical scaling of the 1D Fermi gas.
     \item Proved the Frozen Margins Theorem: states with $e(S) \le K$ have rigidly filled deep seas ($k \le N - K$) and rigidly empty high modes ($k > N + K$).
-    \item Defined budget subspaces $B(N, K) = \bigoplus_{E=0}^K \mathcal{H}(N, E)$, formalized filtered operator parameters $(q, d)$, and proved the Unified Margin Inequality $2M + K + K_{\mathrm{excursion}} + N_{\max} \le h$.
+    \item Defined budget subspaces $B(N, K) = \bigoplus_{E=0}^K \mathcal{H}(N, E)$, specified filtered operator parameters $(q, d)$, and proved the Unified Margin Inequality $2M + K + K_{\mathrm{excursion}} + N_{\max} \le h$.
+    \item Established the coordinate-projector algebra, tracked cumulative energy excursions of operator words, and identified the exact leakage term produced by compressing an operator product.
 \end{itemize}
 
-\paragraph{Comparison with Standard Continuum Literature.}
-In standard continuum bosonization (Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), energy cutoffs are applied after the fact using smooth exponential damping factors $e^{-\alpha |k|}$ or soft Gaussian filters. While convenient for computing momentum integrals, soft cutoffs create non-orthogonal states and leave open whether the underlying Hilbert space is genuinely finite-dimensional.
+\begin{quote}
+\item[]\paragraph{Comparison with Standard Continuum Literature.}
+In standard continuum bosonization (Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), many treatments use smooth regulators, such as exponential damping factors $e^{-\alpha |k|}$ or Gaussian filters, to control momentum sums. The present construction instead specifies finite-dimensional orthogonal subspaces directly through integer charge and excitation-energy conditions.
 
-In our constructive framework, the energy budget $B(N, K)$ is an exact finite-dimensional orthogonal subspace. As shown in Theorem~\ref{thm:unified_margin}, when the unified margin condition is satisfied, the finite boundary does not introduce any distortion: operators act on $B(N, K)$ exactly as they do in the continuum, but with strictly finite-dimensional matrix representations.
+The energy budget $B(N,K)$ is an exact finite-dimensional orthogonal subspace. Theorem~\ref{thm:unified_margin} gives a sufficient margin under which the specified finite-lattice mode transfers avoid boundary wrapping.
+\end{quote}

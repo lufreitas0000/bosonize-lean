@@ -1,0 +1,354 @@
+\chapter{Klein Factors and Multi-Species Fermions}
+\label{ch:klein_factors}
+
+\section{Introduction and Multi-Species Statistics}
+
+A bosonization dictionary aims to express the local fermion field $\psi_\nu(x)$ using bosonic density modes together with an operator that changes charge. In the convention fixed in Chapter~\ref{ch:density_modes}, a density mode $\rho_m=\sum_k c_{k+m}^\dagger c_k$ moves an occupied fermion from $k$ to $k+m$ and preserves total particle number: $[N,\rho_m]=0$, where $N$ is the total-number operator on the finite Fock space. Density modes therefore generate particle-hole excitations within a charge sector. The field $\psi_\nu(x)$ instead removes one fermion, mapping charge $N$ to $N-1$; this difference motivates a separate charge-shift map.
+
+When multiple fermion species are present---such as spin-$\frac{1}{2}$ electrons with $\sigma \in \{\uparrow, \downarrow\}$, chiral fermions with chirality $\nu \in \{L, R\}$, or multiple bands and valleys---a second fundamental requirement arises: \emph{cross-species fermionic anticommutation}. The physical fermion fields for distinct species must satisfy the canonical anticommutation relations:
+\begin{equation}
+\label{eq:cross_car_intro}
+\{\psi_\nu(x), \psi_{\nu'}^\dagger(y)\} = \delta_{\nu, \nu'}\, \delta_{x, y}\, I, \qquad \{\psi_\nu(x), \psi_{\nu'}(y)\} = 0 \quad \text{for all } \nu, \nu'.
+\end{equation}
+If one were to define vertex operators purely as exponentials of species density fields $\exp(i \phi_\nu(x))$, vertex operators of distinct species would commute identically, violating~\eqref{eq:cross_car_intro}.
+
+In the physics literature, this discrepancy is resolved by introducing \emph{Klein factors} $F_\nu$, heuristically postulated as global unitary zero-mode operators satisfying $\{F_\nu, F_{\nu'}\} = 0$ ($\nu \neq \nu'$) and $[F_\nu, \rho_{\nu', m}] = 0$. On a finite discrete lattice, however, this heuristic picture encounters sharp mathematical obstructions:
+\begin{enumerate}
+    \item \textbf{Impossibility of Global Unitary Shift Operators:} On a finite CAR Fock space, the Hilbert space dimension of charge sector $N$ is $\binom{L}{h+N}$. Because these dimensions vary with $N$ (the ground sector $N=0$ has dimension $\binom{L}{h}$, while the extreme sectors $N = \pm h$ have dimension $1$), there can be no global unitary endomorphism on $\mathcal{F}(L)$ that lowers the particle number by $1$.
+    \item \textbf{Failure of Naive Clifford Algebra Properties:} The charge-lowering operators $F_\nu$ satisfy $F_\nu^2 |N\rangle_0 = \pm |N-2\rangle_0 \neq 0$. They do not square to zero or $\pm I$, and do not generate a finite-dimensional Clifford algebra. That property belongs exclusively to Hermitian Majorana combinations under special sector pairings.
+    \item \textbf{Constructive Typed Isometries Between Budgets:} Klein maps are constructed as \emph{explicit typed linear isometries} between low-energy energy-budget subspaces:
+    \begin{equation}
+    F_{\nu, \vec{N}, K} : B(\vec{N}, K) \xrightarrow{\sim} B(\vec{N} - e_\nu, K),
+    \end{equation}
+    realized by an explicit finite Gram kernel on the ambient Fock space.
+\end{enumerate}
+
+Thus the Klein factors in this finite construction are not assumed as extra generators satisfying a Clifford algebra. The familiar anticommuting global unitaries are a useful heuristic in continuum bosonization, but the finite Fock space cannot carry a unitary that shifts every charge sector by one: the sector dimensions differ. Here the map is built constructively from a finite sum of matrix elements between matched partition states, with a sign fixed by the ordered species convention. Its source and target explicitly record the charge vector and energy budget, and the phase and kernel depend on these data. It is therefore an isometry between the specified budget subspaces, not one unrestricted global unitary on the entire Fock space.
+
+\section{Multi-Species CAR Fock Space and Species Density Modes}
+
+Let $\sigma$ be a finite, strictly linearly ordered type of fermion species, $L = 2h$ with $h \ge 1$ the lattice length, and $\Lambda^* = \{-h+1, \dots, h\}$ the centered momentum band.
+
+\begin{definition}[Multi-Species Modes and Order]
+\label{def:species_modes}
+The total single-particle mode set is $\iota \coloneqq \sigma \times \Lambda^*$, equipped with the strict lexicographic total order:
+\begin{equation}
+\label{eq:lexicographic_order}
+(\nu, k) < (\eta, l) \iff \nu < \eta \quad \text{or} \quad (\nu = \eta \text{ and } k < l).
+\end{equation}
+\end{definition}
+
+\begin{definition}[Multi-Species CAR Fock Space and Tensor Vector Splitting]
+\label{def:multispecies_fock}
+The multi-species fermionic Fock space $\mathcal{F}_\sigma(L)$ is the complex Euclidean space with orthonormal occupation basis $\{|S\rangle\}$ indexed by subsets $S \subseteq \iota = \sigma \times \Lambda^*$, with dimension $\dim_{\mathbb{C}} \mathcal{F}_\sigma(L) = 2^{2h |\sigma|}$.
+\begin{enumerate}
+    \item For $S \subseteq \iota$ and $\nu \in \sigma$, the \emph{species configuration} is the slice $S_\nu \coloneqq \{k \in \Lambda^* \mid (\nu, k) \in S\}$. The map $S \mapsto (S_\nu)_{\nu \in \sigma}$ is an exact bijection.
+    \item For single-species vectors $v_\nu \in \mathcal{F}(L)$, the \emph{coordinate tensor vector} $\bigotimes_\nu v_\nu \in \mathcal{F}_\sigma(L)$ is defined on basis kets by $(\bigotimes_\nu v_\nu)(S) \coloneqq \prod_\nu v_\nu(S_\nu)$. In particular, $|S\rangle = \bigotimes_\nu |S_\nu\rangle$, and the inner product factors:
+    \begin{equation}
+    \label{eq:tensor_inner}
+    \left\langle \bigotimes_\nu v_\nu \;\middle|\; \bigotimes_\nu w_\nu \right\rangle = \prod_{\nu \in \sigma} \langle v_\nu \mid w_\nu \rangle.
+    \end{equation}
+    \item For admissible sector charges $\vec{N} = (N_\nu)_{\nu \in \sigma} \in \mathbb{Z}^\sigma$ ($-h \le N_\nu \le h$), the \emph{joint ground state} is the tensor product of single-species ground states: $|\vec{N}\rangle_0 \coloneqq \bigotimes_\nu |N_\nu\rangle_0 = |\mathcal{S}_{\vec{N}}\rangle$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Species Density Modes]
+\label{def:multispecies_density}
+For $\nu \in \sigma$ and $m \in \mathbb{Z}$, the species density current operator on $\mathcal{F}_\sigma(L)$ is:
+\begin{equation}
+\rho_{\nu, m} \coloneqq \sum_{k \in \Lambda^*, k+m \in \Lambda^*} c_{(\nu, k+m)}^\dagger c_{(\nu, k)}^{\phantom{\dagger}}.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Species Separation and Cross-Species Commutation]
+\label{lem:species_density_comm}
+Let $h \ge 1$, $\nu, \eta \in \sigma$, and $m, n \in \mathbb{Z}$.
+\begin{enumerate}
+    \item On tensor vectors, same-species hopping acts exclusively on the $\nu$-component:
+    \begin{equation}
+    c_{(\nu, p)}^\dagger c_{(\nu, k)}^{\phantom{\dagger}} \left( \bigotimes_{\gamma \in \sigma} v_\gamma \right) = \left( c_p^\dagger c_k v_\nu \right) \otimes \bigotimes_{\gamma \neq \nu} v_\gamma.
+    \end{equation}
+    The preceding-species sign $(-1)^{\sum_{\gamma < \nu} |S_\gamma|}$ from the lexicographic CAR ordering occurs twice (annihilation and creation) and squares to $+1$.
+    \item Consequently, density operators of distinct species commute identically on $\mathcal{F}_\sigma(L)$:
+    \begin{equation}
+    \label{eq:cross_species_comm}
+    [\rho_{\nu, m}, \rho_{\eta, n}] = 0 \quad \text{for all } \nu \neq \eta \text{ and all } m, n \in \mathbb{Z}.
+    \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+In the lexicographic CAR ordering, the preceding-species sign $(-1)^{\sum_{\gamma<\nu}|S_\gamma|}$ occurs once in annihilation and once in creation, so their product is its square, $+1$. Thus the same-species hopping acts only on the $\nu$ tensor factor as displayed; distinct species density modes act on disjoint factors and commute.
+\end{proof}
+
+\section{Joint Energy Budgets and Multi-Species Completeness}
+
+\begin{definition}[Joint Energy Budget and Partition States]
+\label{def:joint_energy_budget}
+Let $\vec{N} \in \mathbb{Z}^\sigma$ be admissible, and $K \in \mathbb{N}$. The \emph{joint energy budget subspace} $B(\vec{N}, K) \subset \mathcal{F}_\sigma(L)$ is:
+\begin{equation}
+\label{eq:joint_budget_def}
+B(\vec{N}, K) \coloneqq \operatorname{span}_{\mathbb{C}} \left\{ |S\rangle \;\middle|\; \forall \nu \in \sigma, \mathcal{N}(S_\nu) = N_\nu \quad \text{and} \quad \sum_{\nu \in \sigma} e(S_\nu) \le K \right\}.
+\end{equation}
+A \emph{joint partition} is a tuple $\vec{\lambda} = (\lambda_\nu)_{\nu \in \sigma}$ with $|\vec{\lambda}| \coloneqq \sum_\nu |\lambda_\nu| \le K$. The corresponding \emph{joint partition state} is $|\vec{\lambda}; \vec{N}\rangle \coloneqq \bigotimes_{\nu \in \sigma} |\lambda_\nu; N_\nu\rangle$, with \emph{joint Hall normalization} $z_{\vec{\lambda}} \coloneqq \prod_\nu z_{\lambda_\nu} > 0$.
+\end{definition}
+
+\begin{theorem}[Multi-Species Haldane Completeness]
+\label{thm:joint_haldane_completeness}
+Let $h \ge 1$ and let $\vec{N} \in \mathbb{Z}^\sigma$ be admissible. Assume the multi-species R2 margin condition $\forall \nu \in \sigma, 2K + |N_\nu| \le h$.
+\begin{enumerate}
+    \item \textbf{Exact Gram Matrix:} The joint partition states are mutually orthogonal with squared norms $z_{\vec{\lambda}}$:
+    \begin{equation}
+    \label{eq:joint_gram}
+    \langle \vec{\lambda}; \vec{N} \mid \vec{\mu}; \vec{N} \rangle = \delta_{\vec{\lambda}, \vec{\mu}}\, z_{\vec{\lambda}}.
+    \end{equation}
+    \item \textbf{Haldane Basis Completeness:} The states $\{|\vec{\lambda}; \vec{N}\rangle \mid |\vec{\lambda}| \le K\}$ form an orthogonal basis of $B(\vec{N}, K)$:
+    \begin{equation}
+    \operatorname{span}_{\mathbb{C}} \left\{ |\vec{\lambda}; \vec{N}\rangle \;\middle|\; \sum_{\nu \in \sigma} |\lambda_\nu| \le K \right\} = B(\vec{N}, K).
+    \end{equation}
+    \item \textbf{Charge Observables:} For each species $\eta \in \sigma$, the charge operator $N_\eta \in \operatorname{End}_{\mathbb C}(\mathcal{F}_\sigma(L))$ acts as the exact scalar: $N_\eta v = N_\eta^{\mathrm{sec}} v$ for all $v \in B(\vec{N}, K)$, where $N_\eta^{\mathrm{sec}}$ is the corresponding component of the sector label $\vec{N}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By~\eqref{eq:tensor_inner}, the joint inner product factors into single-species inner products; Theorem~\ref{thm:hall_gram} therefore gives $\delta_{\vec{\lambda},\vec{\mu}}\prod_\nu z_{\lambda_\nu}=\delta_{\vec{\lambda},\vec{\mu}}z_{\vec{\lambda}}$. Each occupation ket in $B(\vec{N},K)$ factors into species configurations, and the single-species partition bases expand those factors with total partition size at most $K$. Hence their tensor products span the joint budget. Finally, $N_\eta$ acts on $\mathcal{F}_\sigma(L)$ and every ket in this budget has species charge $N_\eta^{\mathrm{sec}}$, proving Part~3.
+\end{proof}
+
+\section{The Explicit Finite Klein Kernel and Typed Budget Isometries}
+
+For any charge vector $\vec{N} \in \mathbb{Z}^\sigma$ and species $\nu \in \sigma$, let $\vec{N} - e_\nu \coloneqq (N_\gamma - \delta_{\nu, \gamma})_{\gamma \in \sigma}$.
+
+\begin{definition}[Exact Klein Phase]
+\label{def:klein_phase}
+For $h \ge 1$, $\vec{N} \in \mathbb{Z}^\sigma$, and $\nu \in \sigma$, the \emph{Klein phase exponent} $p(\nu, \vec{N})$ and \emph{Klein phase} $P(\nu, \vec{N})$ are:
+\begin{equation}
+\label{eq:phase_exponent}
+p(\nu, \vec{N}) \coloneqq \sum_{\eta < \nu} (h + N_\eta) + (h + N_\nu - 1), \qquad P(\nu, \vec{N}) \coloneqq (-1)^{p(\nu, \vec{N})}.
+\end{equation}
+Since $(-1)^p \in \{\pm 1\}$, the phase has exact unit modulus: $|P(\nu, \vec{N})| = 1$.
+\end{definition}
+
+\begin{lemma}[Ground Top-Mode Fermi Annihilation]
+\label{lem:ground_top_annihilation}
+Let $h \ge 1$ and let $\vec{N}$ and $\vec{N} - e_\nu$ be admissible. Annihilating the top occupied mode $k_{\mathrm{top}} = N_\nu$ of species $\nu$ in the Fermi sea yields:
+\begin{equation}
+\label{eq:car_top_annihilation}
+c_{(\nu, N_\nu)} |\vec{N}\rangle_0 = P(\nu, \vec{N}) |\vec{N} - e_\nu\rangle_0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Modes preceding $(\nu, N_\nu)$ in $\mathcal{S}_{\vec{N}}$ comprise all modes of earlier species $\eta < \nu$ ($\sum_{\eta < \nu} (h + N_\eta)$ modes) and the modes of species $\nu$ strictly below $N_\nu$ ($h + N_\nu - 1$ modes). Their sum is $p(\nu, \vec{N})$. Erasing $N_\nu$ from $\mathcal{S}_{N_\nu}$ produces the sea $\mathcal{S}_{N_\nu - 1}$, which gives $|\vec{N} - e_\nu\rangle_0$.
+\end{proof}
+
+\begin{proposition}[Ground-to-Ground Field Matrix Element]
+\label{prop:ground_field_coeff}
+For boundary twists $b : \sigma \to \mathbb{R}$ and discrete Fourier field $\psi_\nu(x)$:
+\begin{equation}
+\langle \vec{N} - e_\nu |_0\, \psi_\nu(x)\, |\vec{N}\rangle_0 = \frac{1}{\sqrt{L}}\, P(\nu, \vec{N})\, e^{i \beta_\nu x / L}\, \zeta^{x N_\nu}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expanding $\psi_\nu(x) = \frac{1}{\sqrt{L}} \sum_k e^{i \beta_\nu x / L} \zeta^{-k x} c_{(\nu, k)}$, only $k = N_\nu$ connects $\mathcal{S}_{\vec{N}}$ to $\mathcal{S}_{\vec{N}-e_\nu}$. Applying Lemma~\ref{lem:ground_top_annihilation} gives the result.
+\end{proof}
+
+\begin{definition}[Finite Klein Kernel and Adjoint]
+\label{def:klein_kernel}
+The \emph{Klein kernel} $F_{\nu, \vec{N}, K}$ and its \emph{inverse kernel} $F_{\nu, \vec{N}, K}^{\mathrm{inv}}$ on $\mathcal{F}_\sigma(L)$ are:
+\begin{equation}
+\label{eq:klein_kernel_def}
+F_{\nu, \vec{N}, K} \coloneqq \sum_{|\vec{\lambda}| \le K} \frac{P(\nu, \vec{N})}{z_{\vec{\lambda}}}\, |\vec{\lambda}; \vec{N} - e_\nu\rangle \langle \vec{\lambda}; \vec{N}|, \qquad
+F_{\nu, \vec{N}, K}^{\mathrm{inv}} \coloneqq \sum_{|\vec{\lambda}| \le K} \frac{\overline{P(\nu, \vec{N})}}{z_{\vec{\lambda}}}\, |\vec{\lambda}; \vec{N}\rangle \langle \vec{\lambda}; \vec{N} - e_\nu|.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Ambient Adjoint and Basis Action]
+\label{lem:kernel_properties}
+Let $h \ge 1$, $\vec{N} \in \mathbb{Z}^\sigma$, $\nu \in \sigma$, and $K \in \mathbb{N}$.
+\begin{enumerate}
+    \item $(F_{\nu, \vec{N}, K})^\dagger = F_{\nu, \vec{N}, K}^{\mathrm{inv}}$ on $\mathcal{F}_\sigma(L)$.
+    \item If $\forall \gamma, 2K + |N_\gamma| \le h$, then $F_{\nu, \vec{N}, K} |\vec{\lambda}; \vec{N}\rangle = P(\nu, \vec{N}) |\vec{\lambda}; \vec{N} - e_\nu\rangle$ for all $|\vec{\lambda}| \le K$.
+    \item If $\forall \gamma, 2K + |N_\gamma - \delta_{\nu, \gamma}| \le h$, then $F_{\nu, \vec{N}, K}^{\mathrm{inv}} |\vec{\lambda}; \vec{N} - e_\nu\rangle = \overline{P(\nu, \vec{N})} |\vec{\lambda}; \vec{N}\rangle$ for all $|\vec{\lambda}| \le K$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part~1 follows from $(|u\rangle \langle v|)^\dagger=|v\rangle\langle u|$. On a basis state, the Gram bracket in the kernel sum selects the matching partition and contributes $z_{\vec{\lambda}}$, canceling its denominator; thus $F_{\nu,\vec{N},K}|\vec{\lambda};\vec{N}\rangle=P(\nu,\vec{N})|\vec{\lambda};\vec{N}-e_\nu\rangle$. The inverse action is identical with the conjugate phase.
+\end{proof}
+
+\begin{definition}[Pair Margin Condition]
+\label{def:pair_margin}
+The pair $(\vec{N}, \vec{N}-e_\nu)$ satisfies the \emph{pair margin condition} at cutoff $K$ if:
+\begin{equation}
+\label{eq:pair_margin}
+\forall \gamma \in \sigma, \quad 2K + |N_\gamma| \le h \quad \text{and} \quad 2K + |N_\gamma - \delta_{\nu, \gamma}| \le h.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Surjective Typed Budget Isometry]
+\label{thm:klein_isometry_equiv}
+Let $h \ge 1$ and assume the pair margin condition~\eqref{eq:pair_margin} at cutoff $K$. There exists a canonical surjective linear isometry equivalence:
+\begin{equation}
+\label{eq:typed_isometry}
+\mathcal{F}_{\nu, \vec{N}, K} : B(\vec{N}, K) \xrightarrow{\sim} B(\vec{N} - e_\nu, K)
+\end{equation}
+such that $\mathcal{F}_{\nu, \vec{N}, K}(v) = F_{\nu, \vec{N}, K} v$ for all $v \in B(\vec{N}, K)$. In particular:
+\begin{enumerate}
+    \item $\langle F_{\nu, \vec{N}, K} v \mid F_{\nu, \vec{N}, K} w \rangle = \langle v \mid w \rangle$ for all $v, w \in B(\vec{N}, K)$.
+    \item $F_{\nu, \vec{N}, K}^{\mathrm{inv}} (F_{\nu, \vec{N}, K} v) = v$ on $B(\vec{N}, K)$, and $F_{\nu, \vec{N}, K} (F_{\nu, \vec{N}, K}^{\mathrm{inv}} w) = w$ on $B(\vec{N} - e_\nu, K)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:kernel_properties}, $F$ maps the basis $\{|\vec{\lambda}; \vec{N}\rangle\}$ of $B(\vec{N}, K)$ bijectively onto the basis $\{|\vec{\lambda}; \vec{N} - e_\nu\rangle\}$ of $B(\vec{N} - e_\nu, K)$, multiplying by phase $P(\nu, \vec{N})$. Since $|P| = 1$ and the Gram matrices match ($\langle \vec{\lambda}; \vec{N}-e_\nu \mid \vec{\mu}; \vec{N}-e_\nu \rangle = \delta_{\vec{\lambda}, \vec{\mu}} z_{\vec{\lambda}} = \langle \vec{\lambda}; \vec{N} \mid \vec{\mu}; \vec{N} \rangle$), $F$ preserves inner products and is an exact linear isometry. The inverse kernel $F^{\mathrm{inv}}$ supplies the two-sided inverse on these subspaces.
+\end{proof}
+
+\begin{lemma}[Cutoff Consistency]
+\label{lem:kernel_cutoff_consistent}
+If $K \le J$ and the pair margin condition holds at cutoff $J$, then for all $v \in B(\vec{N}, K)$:
+\begin{equation}
+F_{\nu, \vec{N}, J} v = F_{\nu, \vec{N}, K} v.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Both operators agree on each basis vector $|\vec{\lambda}; \vec{N}\rangle$ with $|\vec{\lambda}| \le K \le J$, evaluating to $P(\nu, \vec{N}) |\vec{\lambda}; \vec{N} - e_\nu\rangle$. Linearity extends equality to all $v \in B(\vec{N}, K)$.
+\end{proof}
+
+\section{Intertwining Squares with Density Modes}
+
+\begin{theorem}[Raising Mode Intertwining Square]
+\label{thm:klein_raising_square}
+Let $h \ge 1$, $\vec{N} \in \mathbb{Z}^\sigma$, $\nu, \eta \in \sigma$, and $K, m \in \mathbb{N}$ with $m > 0$. Assume the pair margin condition at cutoff $K + m$: $\forall \gamma \in \sigma, 2(K + m) + \max(|N_\gamma|, |N_\gamma - \delta_{\nu, \gamma}|) \le h$.
+Then the following diagram commutes:
+\begin{equation}
+\label{eq:raising_diagram}
+\begin{matrix}
+B(\vec{N}, K) & \xrightarrow{\quad \rho_{\eta, m} \quad} & B(\vec{N}, K + m) \\
+\Big\downarrow \scriptstyle{\mathcal{F}_{\nu, \vec{N}, K}} & & \Big\downarrow \scriptstyle{\mathcal{F}_{\nu, \vec{N}, K+m}} \\
+B(\vec{N}-e_\nu, K) & \xrightarrow{\quad \rho_{\eta, m} \quad} & B(\vec{N}-e_\nu, K + m)
+\end{matrix}
+\end{equation}
+That is, $F_{\nu, \vec{N}, K+m} (\rho_{\eta, m} v) = \rho_{\eta, m} (F_{\nu, \vec{N}, K} v)$ for all $v \in B(\vec{N}, K)$.
+\end{theorem}
+
+\begin{proof}
+On each partition state, $\rho_{\eta,m}$ changes only the intra-species partition $\lambda_\eta$, while the Klein kernel evaluates the same sector phase $P(\nu,\vec{N})$ independently of that partition. Both paths therefore produce the same changed partition with the same phase, so the identity extends by linearity.
+\end{proof}
+
+\begin{theorem}[Lowering Mode Intertwining Square]
+\label{thm:klein_lowering_square}
+Under the same hypotheses as Theorem~\ref{thm:klein_raising_square}, the lowering modes satisfy the commuting diagram:
+\begin{equation}
+\label{eq:lowering_diagram}
+\begin{matrix}
+B(\vec{N}, K+m) & \xrightarrow{\quad \rho_{\eta, -m} \quad} & B(\vec{N}, K) \\
+\Big\downarrow \scriptstyle{\mathcal{F}_{\nu, \vec{N}, K+m}} & & \Big\downarrow \scriptstyle{\mathcal{F}_{\nu, \vec{N}, K}} \\
+B(\vec{N}-e_\nu, K+m) & \xrightarrow{\quad \rho_{\eta, -m} \quad} & B(\vec{N}-e_\nu, K)
+\end{matrix}
+\end{equation}
+That is, $F_{\nu, \vec{N}, K} (\rho_{\eta, -m} v) = \rho_{\eta, -m} (F_{\nu, \vec{N}, K+m} v)$ for all $v \in B(\vec{N}, K+m)$.
+\end{theorem}
+
+\begin{proof}
+For each basis state, lowering applies the same contraction coefficient and changes only $\lambda_\eta$, while the Klein kernel contributes the sector phase $P(\nu,\vec{N})$ on either path. The resulting states and coefficients coincide; linearity gives the commutative square on the full budget.
+\end{proof}
+
+\section{Cross-Species Anticommutation and Number Shifting}
+
+\begin{lemma}[Cross-Species Sign Identity]
+\label{lem:phase_cross_sign}
+Let $h \ge 1$, $\vec{N} \in \mathbb{Z}^\sigma$, and let $\nu \neq \eta$ be distinct species in $\sigma$. Then:
+\begin{equation}
+\label{eq:phase_cross_sign}
+P(\eta, \vec{N} - e_\nu)\, P(\nu, \vec{N}) = - P(\nu, \vec{N} - e_\eta)\, P(\eta, \vec{N}).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Lowering species $a$ shifts $p(b,\vec{N})$ by $-1$ when $a<b$ and by $0$ when $a>b$. For distinct $\nu,\eta$, exactly one of the two phase products in~\eqref{eq:phase_cross_sign} therefore acquires a relative minus sign, proving the identity.
+\end{proof}
+
+\begin{theorem}[Cross-Species Anticommutation on Energy Budgets]
+\label{thm:cross_anticommute}
+Let $\nu \neq \eta$ be distinct species. Under the four-sector margin condition:
+\begin{equation}
+\label{eq:four_sector_margin}
+\forall \gamma \in \sigma, \quad 2K + \max\left( |N_\gamma|, |N_\gamma - \delta_{\nu, \gamma}|, |N_\gamma - \delta_{\eta, \gamma}|, |N_\gamma - \delta_{\nu, \gamma} - \delta_{\eta, \gamma}| \right) \le h,
+\end{equation}
+the Klein operators anticommute identically on $B(\vec{N}, K)$:
+\begin{equation}
+\label{eq:cross_anticommute}
+\left( F_{\eta, \vec{N}-e_\nu, K} \circ F_{\nu, \vec{N}, K} + F_{\nu, \vec{N}-e_\eta, K} \circ F_{\eta, \vec{N}, K} \right) v = 0 \quad \text{for all } v \in B(\vec{N}, K).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+On each basis state, the two composites produce the same target partition state, multiplied by the two phase products in~\eqref{eq:phase_cross_sign}. Lemma~\ref{lem:phase_cross_sign} makes their sum zero, and linearity proves the result.
+\end{proof}
+
+\begin{theorem}[Number Operator Intertwining]
+\label{thm:number_shift}
+Under the pair margin condition at cutoff $K$, for all $v \in B(\vec{N}, K)$:
+\begin{equation}
+\label{eq:number_shift}
+    F_{\nu, \vec{N}, K} (N_\eta v) = (N_\eta + \delta_{\nu, \eta} I) (F_{\nu, \vec{N}, K} v).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+On $B(\vec{N},K)$, $N_\eta v=N_\eta^{\mathrm{sec}}v$; on the target budget the charge is $N_\eta^{\mathrm{sec}}-\delta_{\nu,\eta}$. Thus $(N_\eta+\delta_{\nu,\eta}I)Fv=N_\eta^{\mathrm{sec}}Fv=F(N_\eta v)$.
+\end{proof}
+
+\section{Non-Vacuity Witnesses, Demystifying Clifford Heuristics, and Outlook}
+
+\begin{lemma}[Non-Vacuous Ground and Double Action]
+\label{lem:kernel_nonvacuous}
+Let $h \ge 1$ and $\vec{N} \in \mathbb{Z}^\sigma$.
+\begin{enumerate}
+    \item Under the pair margin condition: $F_{\nu, \vec{N}, K} |\vec{N}\rangle_0 = P(\nu, \vec{N}) |\vec{N}-e_\nu\rangle_0 \neq 0$.
+    \item Under the four-sector margin condition, for any $\nu, \eta \in \sigma$ (including $\nu = \eta$):
+    \begin{equation}
+    F_{\eta, \vec{N}-e_\nu, K} \left( F_{\nu, \vec{N}, K} |\vec{N}\rangle_0 \right) = P(\eta, \vec{N}-e_\nu)\, P(\nu, \vec{N})\, |\vec{N}-e_\nu-e_\eta\rangle_0 \neq 0.
+    \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Evaluates on $|\vec{\emptyset}; \vec{N}\rangle = |\vec{N}\rangle_0$. Since $|P| = 1$ and the target ground kets are non-zero normalized basis vectors, both expressions are non-zero.
+\end{proof}
+
+\begin{remark}[Demystifying Clifford Heuristics]
+Lemma~\ref{lem:kernel_nonvacuous}(2) disproves the common heuristic that Klein factors generate a finite-dimensional Clifford algebra: $F_\nu^2 |\vec{N}\rangle_0 = \pm |\vec{N}-2e_\nu\rangle_0 \neq 0$. The operator $F_\nu^2$ neither vanishes nor equals $I$; it transfers the state into sector $\vec{N}-2e_\nu$. Clifford terminology is reserved strictly for Hermitian Majorana combinations under special sector pairings.
+\end{remark}
+
+\section{What the Klein factors accomplish}
+\begin{remark}[Physical role of the finite Klein maps]
+The finite construction in this chapter has two jobs. It transfers charge
+between species sectors with the signs required by the chosen ordering,
+and it preserves the exact relations with density excitations on the
+stated energy budgets. The non-vacuum examples show why these operators are
+not simply finite-dimensional Clifford generators: repeated charge shifts
+move through a family of sectors rather than closing after one or two
+applications. The $K=0$ example also identifies a limit of the naive
+continuum vertex formula: it cannot recover the full local fermion action
+when deep-hole configurations lie outside the retained budget. These facts
+motivate the projected construction in Chapter~\ref{ch:mandelstam}.
+
+This finite, explicitly graded account complements standard continuum
+bosonization treatments, where Klein factors encode inter-branch
+anticommutation and charge changes. Here the same physical role is realized
+with sector domains, boundary phases, and cutoff margins visible at every
+step. The results establish exact finite relations under their stated
+hypotheses. The next chapter uses this bookkeeping to build and analyze the
+projected Mattis--Mandelstam operator.
+\end{remark}
+
+\begin{remark}[The $K=0$ Obstruction and the Mattis--Mandelstam Construction]
+Reconstructing the local fermion field $\psi_\nu(x)$ via an unprojected operator equivalence $\psi_\nu(x) \sim F_\nu \exp(-i \phi_\nu(x))$ fails already at $K = 0$. On a lattice with $h=2, L=4, N=0, x=0$, the physical state $c_0 |\Omega\rangle$ contains orthogonal hole configurations at excitation energies $0$ and $1$. At $K=0$, any raising exponential acts as the identity, so $F \exp(\dots) |\Omega\rangle$ produces only the target ground state $|N-1\rangle_0$, completely missing the deep-hole states present in the Fermi sea. This necessitates the \emph{projected Mattis--Mandelstam formula} developed in Chapter~\ref{ch:mandelstam}.
+\end{remark}
+
+\begin{remark}[Finite maps between energy budgets]
+The fixed ordering of species and modes determines the fermionic signs, while the Klein phase supplies the sector-dependent sign for a transfer between species. The construction defines explicit linear maps between specified energy-budget spaces and establishes their isometry, density-mode intertwining, cross-species anticommutation, and nonzero action on reference states directly from the finite Gram kernel. It requires no prior assumption of abstract Clifford generators.
+\end{remark}

@@ -1,0 +1,286 @@
+\chapter{Normal Ordering and the Field Hamiltonian}
+\label{ch:field_hamiltonian}
+
+\section{Introduction: The Field Hamiltonian and Normal Ordering}
+
+In continuous quantum field theory, the free bosonic field Hamiltonian for a one-dimensional Luttinger liquid is formulated in real space as the integral of the squared spatial gradients of the dual fields:
+\begin{equation}
+H_{\mathrm{field}} = \frac{v}{2\pi} \int dx \left[ (\partial_x \phi(x))^2 + (\partial_x \theta(x))^2 \right].
+\end{equation}
+In Chapter~\ref{ch:heisenberg_algebra} and the Sugawara construction of Chapter~\ref{ch:sugawara}, we established that the kinetic energy of non-interacting fermions is algebraically represented in momentum space by the Sugawara Hamiltonian $H_{\mathrm{sug}} = \sum_{m} \rho_m \rho_{-m}$ on the energy budget subspace. The central physical question addressed in this chapter is:
+\begin{quote}
+\emph{How is the real-space gradient Hamiltonian $H_{\mathrm{field}}$ related to the momentum-space Sugawara Hamiltonian $H_{\mathrm{sug}}$ on a discrete, finite lattice $\Lambda = \mathbb{Z}/(2h)\mathbb{Z}$?}
+\end{quote}
+
+On the lattice, continuous derivatives are replaced by exact discrete forward differences $\Delta$:
+\begin{equation}
+(\Delta \phi)(x) \coloneqq \phi(x+1) - \phi(x), \qquad (\Delta \theta)(x) \coloneqq \theta(x+1) - \theta(x).
+\end{equation}
+Squaring these operator differences presents an immediate mathematical problem: in quantum field theory, squaring fields at the same spatial point produces ill-defined ultraviolet divergences. In continuum heuristic treatments, one subtracts the infinite vacuum expectation value $\langle \Omega | (\partial_x \phi)^2 | \Omega \rangle$ by ``normal ordering''.
+
+On a finite-dimensional Fock space, no infinite divergence occurs, but the vacuum expectation value is nonetheless non-zero and energy-dependent. Furthermore, normal ordering cannot be defined as a mathematical function on arbitrary already-evaluated operators: an operator in $\operatorname{End}_{\mathbb{C}}(\mathcal{H})$ can be written in many different ways, and redefining an operator based on its syntactic presentation is mathematically inconsistent.
+
+To resolve this issue, we distinguish a quadratic expression from the operator obtained by evaluating it. An \emph{ordered quadratic symbol} records a coefficient for each ordered pair of current modes; a linear evaluation map $\mathcal{N}$ then sends that record to an operator in $\operatorname{End}_{\mathbb{C}}(\mathcal{H}_\sigma(h))$. This is useful because normal ordering depends on the written order of factors: if we first collapse everything to an endomorphism, the information needed to decide which contraction to subtract has already been lost. We develop this finite symbol calculus here, where the gradient Hamiltonian first uses it.
+
+\section{Ordered Quadratic Symbols and Chiral Separation}
+
+Let $h \ge 1$ with $L = 2h$, let $M \ge 1$ be the mode cutoff satisfying $2M < 2h$, and let $\zeta \in \mathbb{C}$ be a primitive $(2h)$-th root of unity. Let $\sigma$ be a finite species type equipped with distinct branches $\nu_R, \nu_L \in \sigma$.
+
+To index these coefficients, a \emph{letter} $p \in \mathrm{Letter}(M)$ records a branch, a positive mode, and whether the corresponding current raises or lowers excitation energy:
+\begin{equation}
+p = (\mathrm{branch},\; i,\; \mathrm{type}) \in \{R,L\} \times \{0, \dots, M-1\} \times \{\mathrm{annihilator},\mathrm{creator}\}.
+\end{equation}
+The branch label selects the species $\nu_R$ or $\nu_L$, and the mode index $i$ corresponds to the positive momentum $m=i+1$. The type entry specifies whether the corresponding current is the creator $\rho_\eta(m)$ or annihilator $\rho_\eta(-m)$.
+
+A \emph{quadratic symbol} is a complex-valued coefficient function on ordered pairs of letters:
+\begin{equation}
+Q : \mathrm{Letter}(M) \times \mathrm{Letter}(M) \to \mathbb{C}.
+\end{equation}
+The \emph{normal evaluation} $\mathcal{N}(Q) \in \operatorname{End}_{\mathbb{C}}(\mathcal{H}_\sigma(h))$ is defined linearly by:
+\begin{equation}
+\mathcal{N}(Q) \coloneqq \sum_{p, q \in \mathrm{Letter}(M)} Q(p, q)\, N(p, q),
+\end{equation}
+where $N(p, q)$ is the ordered pair operator: if $p$ is an annihilator and $q$ is a creator, $N(p, q) \coloneqq \rho(q) \rho(p)$ (reordered so creators stand to the left of annihilators); otherwise, $N(p, q) \coloneqq \rho(p) \rho(q)$ (the raw product).
+
+This definition records the contraction created by changing the order of two currents. If $p$ is an annihilator and $q$ a creator, then
+\begin{equation}
+N(p,q)-\rho(p)\rho(q)=\rho(q)\rho(p)-\rho(p)\rho(q)=[\rho(q),\rho(p)].
+\end{equation}
+On the energy budgets where the current algebra of Chapter~\ref{ch:heisenberg_algebra} applies, this difference is a scalar multiple of the identity; for opposite momenta $m$ and $-m$, the scalar is $-m$. Thus normal ordering is not an extra rule for already-evaluated operators: it is an operation on the ordered pair of factors, and its correction is fixed by their commutator. The map $\mathcal{N}$ is linear because it is a finite sum with the coefficients $Q(p,q)$.
+
+For each site $x \in \mathbb{Z}/(2h)\mathbb{Z}$, the discrete gradient of the oriented chiral field $\Delta \varphi_\eta(x)$ is represented as a linear combination of letters:
+\begin{equation}
+(\Delta \varphi_\eta)(x) = \sum_{p \in \mathrm{Letter}(M)} c_\eta(x, p)\, \rho(p),
+\end{equation}
+where the gradient coefficients $c_\eta(x, p)$ retain the exact difference multipliers $(\zeta^{\pm \eta m} - 1)$. The symbols for the squared dual field gradients are:
+\begin{equation}
+Q_\phi(x)(p, q) \coloneqq c_\phi(x, p) c_\phi(x, q), \qquad Q_\theta(x)(p, q) \coloneqq c_\theta(x, p) c_\theta(x, q),
+\end{equation}
+
+These coefficients follow directly from the character shift: $\chi_k(x+1)=\zeta^k\chi_k(x)$, so $\Delta\chi_k(x)=(\zeta^k-1)\chi_k(x)$. Applying this identity term by term to the finite mode expansion in Chapter~\ref{ch:dual_fields} gives the displayed gradient and its letter coefficients. In particular, the difference multipliers retain the exact lattice dispersion; replacing them by continuum momenta at this stage would discard finite-lattice information.
+and the dual square symbol is their sum: $Q_{\mathrm{dual}}(x) \coloneqq Q_\phi(x) + Q_\theta(x)$.
+
+\begin{definition}[The Discrete Field Hamiltonian]
+\label{def:field_hamiltonian}
+The \emph{discrete field Hamiltonian} $H_{\mathrm{field}} \in \operatorname{End}_{\mathbb{C}}(\mathcal{H}_\sigma(h))$ is the spatial sum over the periodic lattice $\Lambda = \mathbb{Z}/(2h)\mathbb{Z}$ of the normal-ordered dual field gradients:
+\begin{equation}
+H_{\mathrm{field}} \coloneqq \sum_{x \in \mathbb{Z}/(2h)\mathbb{Z}} \mathcal{N}\left( Q_{\mathrm{dual}}(x) \right).
+\end{equation}
+\end{definition}
+
+The first major algebraic simplification occurs at the symbol level:
+
+\begin{lemma}[Exact Chiral Separation]
+\label{lem:field_chiral_separation}
+For every lattice site $x \in \mathbb{Z}/(2h)\mathbb{Z}$, the normal-ordered dual square decomposes into twice the sum of the chiral squares:
+\begin{equation}
+\mathcal{N}(Q_{\mathrm{dual}}(x)) = 2 \left[ \mathcal{N}(Q_R(x)) + \mathcal{N}(Q_L(x)) \right],
+\end{equation}
+where $Q_\eta(x)(p, q) \coloneqq c_\eta(x, p) c_\eta(x, q)$ is the symbol for $(\Delta \varphi_\eta(x))^2$.
+\end{lemma}
+
+\begin{proof}
+By Definition~\ref{def:dual_fields}, $\phi = \varphi_R + \varphi_L$ and $\theta = \varphi_R - \varphi_L$. The cross-branch terms in $(a_R+a_L)(b_R+b_L)+(a_R-a_L)(b_R-b_L)$ cancel identically, leaving $2(a_Rb_R+a_Lb_L)$; hence $Q_{\mathrm{dual}}(x)=2(Q_R(x)+Q_L(x))$, and linearity of $\mathcal{N}$ gives the result.
+\end{proof}
+
+Notice that this cancellation occurs at the level of quadratic symbols \emph{before} evaluating operators. It does not rely on any assumed commutativity of the operator algebra $\operatorname{End}_{\mathbb{C}}(\mathcal{H}_\sigma(h))$.
+
+\section{Discrete Fourier Collapse and the Lattice Dispersion Weight}
+
+We now sum the chiral squares over all lattice sites $x \in \mathbb{Z}/(2h)\mathbb{Z}$. In continuum field theory, integrating over space produces a Dirac delta function that enforces momentum conservation. On the discrete lattice, the sum over $x$ evaluates via the discrete Fourier transform.
+
+\begin{definition}[Algebraic Lattice Dispersion Weight]
+\label{def:lattice_dispersion_weight}
+For any mode $1 \le m \le M$, the \emph{algebraic lattice dispersion weight} $\varepsilon(m) \in \mathbb{C}$ is defined by:
+\begin{equation}
+\varepsilon(m) \coloneqq \frac{2h}{m^2} (\zeta^m - 1)(\zeta^{-m} - 1).
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Chiral Spatial Collapse on Budget]
+\label{lem:chiral_spatial_collapse}
+Let $h \ge 1$, $1 \le M$ with $2M < 2h$, and let $\zeta$ be a primitive $(2h)$-th root of unity. Let $\eta \in \{R, L\}$ and suppose the branch margin condition $2M + K + |N_{\nu_\eta}| \le h$ holds. Then for any vector $v \in B(h, \vec{N}, K)$ in the joint budget subspace:
+\begin{equation}
+\left( \sum_{x \in \mathbb{Z}/(2h)\mathbb{Z}} \mathcal{N}(Q_\eta(x)) \right) v = 2 \sum_{m=1}^M \varepsilon(m)\, \rho_{\nu_\eta}(m)\, \rho_{\nu_\eta}(-m)\, v.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By linearity of $\mathcal{N}$, summing over sites gives the character factor $\sum_x\chi_{k+l}(x)$, which vanishes unless $k+l=0$. The no-aliasing bounds $0<m+n\le2M<2h$ exclude same-sign matches, so only opposite creator flags with equal modes $m=n$ survive. Their two ordered pairings normal-order to $\rho_{\nu_\eta}(m)\rho_{\nu_\eta}(-m)$ and combine to the coefficient $2(2h)m^{-2}(\zeta^m-1)(\zeta^{-m}-1)=2\varepsilon(m)$, proving the formula on the stated budget.
+\end{proof}
+
+Combining the factor of $2$ from chiral separation (Lemma~\ref{lem:field_chiral_separation}) with the factor of $2$ from spatial collapse (Lemma~\ref{lem:chiral_spatial_collapse}) yields the exact factor of $4$:
+
+\begin{theorem}[The Exact Weighted Field Energy on Budget]
+\label{thm:field_weighted_energy}
+Let $h \ge 1$, $1 \le M$ with $2M < 2h$, and let $\zeta$ be a primitive $(2h)$-th root of unity. Assume the branch margin conditions hold:
+\begin{equation}
+2M + K + |N_{\nu_R}| \le h \quad \text{and} \quad 2M + K + |N_{\nu_L}| \le h.
+\end{equation}
+Then on every vector $v \in B(h, \vec{N}, K)$ in the joint budget subspace, the discrete field Hamiltonian evaluates to:
+\begin{equation}
+H_{\mathrm{field}} v = 4 \sum_{\eta \in \{R, L\}} \sum_{m=1}^M \varepsilon(m)\, \rho_{\nu_\eta}(m)\, \rho_{\nu_\eta}(-m)\, v.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The chiral separation contributes a factor of $2$, and spatial collapse contributes a second factor of $2$ on each branch. Substitution into the definition of $H_{\mathrm{field}}$ gives the stated formula immediately.
+\end{proof}
+
+\begin{theorem}[Excursion-Shifted Field Energy]
+\label{thm:field_weighted_after_excursion}
+Let $e \ge 0$ be a transient upward energy excursion. If the margin with excursion holds:
+\begin{equation}
+\forall \eta \in \{R, L\}, \quad 2M + K + e + |N_{\nu_\eta}| \le h,
+\end{equation}
+then for any vector $v \in B(h, \vec{N}, K + e)$, the identical factor-four weighted formula holds:
+\begin{equation}
+H_{\mathrm{field}} v = 4 \sum_{\eta \in \{R, L\}} \sum_{m=1}^M \varepsilon(m)\, \rho_{\nu_\eta}(m)\, \rho_{\nu_\eta}(-m)\, v.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:field_weighted_energy} by substituting the enlarged budget parameter $K' = K + e$.
+\end{proof}
+
+\begin{remark}[Scope of the Finite-Lattice Identity]
+The spatial sum collapses the quadratic symbols by character orthogonality before they are evaluated as operators. The stated no-aliasing and margin bounds then justify the surviving terms on the budget; no unrestricted global operator CCR identity is needed, and the result asserts no analytic continuum limit.
+\end{remark}
+
+\section{The Total Sugawara Reference and the Exact Error Operator}
+
+We now examine the deviation between the discrete field Hamiltonian $H_{\mathrm{field}}$ and the exact Sugawara Hamiltonian.
+
+\begin{definition}[Total Two-Branch Sugawara Hamiltonian]
+At mode cutoff $M$, the \emph{total two-branch Sugawara Hamiltonian} $H_{\mathrm{sug}}^{(M)} \in \operatorname{End}_{\mathbb{C}}(\mathcal{H}_\sigma(h))$ is defined by:
+\begin{equation}
+H_{\mathrm{sug}}^{(M)} \coloneqq \sum_{\eta \in \{R, L\}} \sum_{m=1}^M \rho_{\nu_\eta}(m)\, \rho_{\nu_\eta}(-m).
+\end{equation}
+\end{definition}
+
+If $H_{\mathrm{field}}$ were strictly proportional to $H_{\mathrm{sug}}^{(M)}$, the dispersion weight $\varepsilon(m)$ would have to be constant, independent of mode index $m$. Because $\varepsilon(m)$ varies with $m$, the lattice introduces a non-trivial dispersion error. To measure this error algebraically without introducing transcendental numbers, we select the first mode as the reference weight:
+\begin{equation}
+g_0 \coloneqq \varepsilon(1) = 2h (\zeta - 1)(\zeta^{-1} - 1) \in \mathbb{C}.
+\end{equation}
+
+\begin{definition}[The Discrete Field Error Operator]
+\label{def:error_operator}
+The \emph{field error operator} $E_{\mathrm{error}}^{(M)} \in \operatorname{End}_{\mathbb{C}}(\mathcal{H}_\sigma(h))$ is defined by:
+\begin{equation}
+E_{\mathrm{error}}^{(M)} \coloneqq H_{\mathrm{field}} - 4 g_0\, H_{\mathrm{sug}}^{(M)}.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Weighted Error Formula on Budget]
+\label{lem:error_weighted_on_budget}
+Under the branch margin conditions $2M + K + |N_{\nu_\eta}| \le h$, the error operator evaluates on any budget vector $v \in B(h, \vec{N}, K)$ as:
+\begin{equation}
+E_{\mathrm{error}}^{(M)} v = 4 \sum_{\eta \in \{R, L\}} \sum_{m=1}^M \left( \varepsilon(m) - g_0 \right) \rho_{\nu_\eta}(m)\, \rho_{\nu_\eta}(-m)\, v.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Immediate by subtracting $4 g_0 H_{\mathrm{sug}}^{(M)} v$ from the formula for $H_{\mathrm{field}} v$ given in Theorem~\ref{thm:field_weighted_energy} and distributing the scalar coefficients over the finite sum.
+\end{proof}
+
+\begin{lemma}[Ground State Annihilation]
+\label{lem:ground_error_zero}
+Let $\vec{N}$ be an admissible sector charge vector, and let $|N\rangle_0$ be the sector ground state. Under the margin conditions, the error operator annihilates the ground state identically:
+\begin{equation}
+E_{\mathrm{error}}^{(M)} |N\rangle_0 = 0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:error_weighted_on_budget}, $E_{\mathrm{error}}^{(M)} |N\rangle_0$ is a sum of terms of the form $\rho_{\nu_\eta}(m) \rho_{\nu_\eta}(-m) |N\rangle_0$.
+For each $m \ge 1$, $\rho_{\nu_\eta}(-m)$ is a lowering mode that reduces excitation energy. Because $|N\rangle_0$ has excitation energy zero, $\rho_{\nu_\eta}(-m) |N\rangle_0 = 0$ by the budget-zero annihilation theorem (Chapter~\ref{ch:density_modes}). Consequently, every term in the sum vanishes identically.
+\end{proof}
+
+Next, we evaluate the action of $E_{\mathrm{error}}^{(M)}$ on excited states. For any mode $1 \le m \le \min(M, K)$ and branch $\eta \in \{R, L\}$, consider the single-mode excitation:
+\begin{equation}
+\psi_{m, \eta} \coloneqq \rho_{\nu_\eta}(m) |N\rangle_0.
+\end{equation}
+By current budget mapping (Chapter~\ref{ch:density_modes}), $\psi_{m, \eta}$ has excitation energy $m \le K$, so $\psi_{m, \eta} \in B(h, \vec{N}, K)$.
+
+\begin{theorem}[Single-Mode Error Eigenvectors]
+\label{thm:single_mode_error_eigenvector}
+Let $h \ge 1$, $1 \le M$ with $2M < 2h$, and let $1 \le m \le \min(M, K)$. Under the branch margin conditions, the single-mode excitation $\psi_{m, \eta}$ is an exact eigenvector of the error operator:
+\begin{equation}
+E_{\mathrm{error}}^{(M)} \psi_{m, \eta} = 4 m \left( \varepsilon(m) - g_0 \right) \psi_{m, \eta}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The cross-species terms vanish by commutativity and ground-state annihilation. In the matching species, the Kac--Moody relation gives $\rho_{\nu_\eta}(-n)\rho_{\nu_\eta}(m)|N\rangle_0=n\delta_{n,m}|N\rangle_0$; the outer current then selects $n=m$, yielding $4m(\varepsilon(m)-g_0)\psi_{m,\eta}$.
+\end{proof}
+
+\begin{corollary}[First-Mode Annihilation]
+\label{cor:first_mode_annihilation}
+Because $g_0 = \varepsilon(1)$, the single-mode excitation at $m = 1$ is annihilated by the error operator:
+\begin{equation}
+E_{\mathrm{error}}^{(M)} \psi_{1, \eta} = 4 \cdot 1 \cdot (\varepsilon(1) - \varepsilon(1)) \psi_{1, \eta} = 0.
+\end{equation}
+\end{corollary}
+
+\begin{theorem}[Explicit Non-Zero Error Witness]
+\label{thm:concrete_excited_error_witness}
+Consider the concrete parameters:
+\begin{equation}
+h = 8, \quad M = 2, \quad K = 2, \quad \sigma = \{R,L\}, \quad \vec{N} = \vec{0}, \quad \zeta = \zeta_{16} \coloneqq e^{2\pi i / 16}.
+\end{equation}
+Then the error operator acts non-trivially on the single-mode excitation
+$\psi_{2,R}=\rho_R(2)|0\rangle_0$:
+$E_{\mathrm{error}}^{(M)}\psi_{2,R}\ne0$.
+\end{theorem}
+
+\begin{proof}
+The margin checks are $2M+K=6\le8$ and $2M=4<16$. If $\varepsilon(2)=\varepsilon(1)$, the dispersion formula forces $(\zeta_{16}-1)^4=0$, contradicting that the primitive root is a root of $\Phi_{16}(X)=X^8+1$ and is not $1$. Moreover, the restricted CCR implies $\psi_{2,R}\ne0$: otherwise $[\rho_R(-2),\rho_R(2)]|0\rangle_0=2|0\rangle_0$ would force the normalized ground state to vanish. The single-mode eigenvalue formula now gives $E_{\mathrm{error}}^{(M)}\psi_{2,R}=8(\varepsilon(2)-\varepsilon(1))\psi_{2,R}\ne0$.
+\end{proof}
+
+\begin{remark}[Exact finite dispersion check]
+The proof that $\varepsilon(2)\ne\varepsilon(1)$ is an algebraic argument in the cyclotomic field: equality would force a nonzero polynomial in a primitive root to vanish. No floating-point approximation is involved.
+\end{remark}
+
+\section{Physical Outlook: Taylor Asymptotics and RG Irrelevance}
+
+We conclude by relating the exact finite algebraic theorems established above to physical heuristics in condensed matter theory and quantum field theory.
+
+\begin{remark}[Trigonometric Form and Reality]
+For the canonical root $\zeta = e^{2\pi i / (2h)}$, the factor $(\zeta^m - 1)(\zeta^{-m} - 1)$ simplifies to:
+\begin{equation}
+(\zeta^m - 1)(\zeta^{-m} - 1) = 2 - \zeta^m - \zeta^{-m} = 2 - 2\cos\left(\frac{2\pi m}{2h}\right) = 4\sin^2\left(\frac{\pi m}{2h}\right).
+\end{equation}
+Consequently, the dispersion weight takes the positive real form:
+\begin{equation}
+\varepsilon(m) = \frac{4L}{m^2} \sin^2\left(\frac{\pi m}{L}\right) \ge 0.
+\end{equation}
+In the infrared limit $m \ll L$, we Taylor expand $\sin(x) = x - x^3/6 + \mathcal{O}(x^5)$:
+\begin{equation}
+\varepsilon(m) = \frac{4L}{m^2} \left[ \frac{\pi^2 m^2}{L^2} - \frac{\pi^4 m^4}{3 L^4} + \mathcal{O}\left(\frac{m^6}{L^6}\right) \right] = \frac{4\pi^2}{L} - \frac{4\pi^4 m^2}{3 L^3} + \mathcal{O}\left(\frac{m^4}{L^5}\right).
+\end{equation}
+The leading term $\frac{4\pi^2}{L}$ is completely independent of mode index $m$. Subtracting the reference weight $g_0 = \varepsilon(1)$ eliminates this leading term:
+\begin{equation}
+\varepsilon(m) - g_0 \approx - \frac{4\pi^4 (m^2 - 1)}{3 L^3} \propto - \frac{m^2}{L^3}.
+\end{equation}
+\end{remark}
+
+\begin{remark}[Renormalization Group Irrelevance]
+Because the error coefficient $\varepsilon(m) - g_0$ scales as $m^2$, translating this momentum-space weighting back into real space via inverse Fourier transform reveals that $E_{\mathrm{error}}$ corresponds formally to higher spatial derivative perturbations:
+\begin{equation}
+E_{\mathrm{error}} \sim \int dx \left[ (\partial_x^2 \phi(x))^2 + (\partial_x^2 \theta(x))^2 \right].
+\end{equation}
+In the terminology of the Wilsonian Renormalization Group (RG), a perturbation with two extra spatial derivatives in $1+1$ dimensions has scaling dimension $\Delta = 4 > 2$. It is therefore a strictly \emph{irrelevant operator} in the infrared limit $L \to \infty$. This explains why the continuum Luttinger liquid Hamiltonian emerges universally at low energies despite the presence of lattice dispersion errors.
+
+This scaling argument provides physical intuition, while the theorems above are finite-dimensional identities. An analytic limit $\lim_{L\to\infty}E_{\mathrm{error}}=0$ would require a specified sequence of lattices and operator topologies.
+\end{remark}
+
+
+\section{Chapter Summary}
+The finite current construction reproduces the leading low-energy
+Hamiltonian on the stated budget, while the lattice dispersion leaves
+mode-dependent corrections. Their small-momentum expansion motivates the
+usual derivative corrections and RG language, but the analytic scaling
+claim is an interpretation of that expansion rather than a theorem about
+an operator limit. The comparison with the continuum Luttinger Hamiltonian
+therefore has a precise scope: exact finite algebra for the chosen lattice
+and budget, plus a separate infrared approximation for long wavelengths.

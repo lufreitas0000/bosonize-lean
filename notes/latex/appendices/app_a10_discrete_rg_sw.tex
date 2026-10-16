@@ -1,0 +1,339 @@
+\chapter[Discrete Renormalization and Schrieffer--Wolff]{Discrete Renormalization and Schrieffer--Wolff Reduction}
+\label{app:discrete_rg_sw}
+
+\section{Introduction and Physical Motivation}
+
+In continuum quantum field theory and condensed matter physics, the Renormalization Group (RG) is conventionally formulated by integrating out infinitesimal momentum shells in a path integral or Wilsonian operator product expansion. On a discrete finite lattice equipped with a strict excitation energy budget $K$, infinitesimal momentum integration is conceptually and mathematically impossible:
+\begin{itemize}
+    \item The spectrum of spatial momentum modes on a finite periodic chain $\mathbb{Z}/L\mathbb{Z}$ is discrete ($\Delta p = 2\pi / L$). There are no continuous or infinitesimal momentum slices.
+    \item Total excitation energy $E = \sum m\, n_m$ is an integer taking values in $\{0, 1, \dots, K\}$. The state space decomposes into a finite direct sum of discrete energy shells.
+    \item Physical Hamiltonians on finite Fock spaces are bounded linear endomorphisms. Their spectra are strictly real, which precludes the direct appearance of continuous flow equations or finite plasmon decay lifetimes without an explicit thermodynamic limit.
+\end{itemize}
+
+To establish a mathematically rigorous counterpart of low-energy reduction on discrete lattices, this appendix develops discrete energy-shell projection and the \emph{Schrieffer--Wolff Transformation} (SWT) as an exact algebraic method.
+
+\section{Energy-Shell Filtering vs.\ Single-Mode Decimation}
+
+A fundamental conceptual distinction must be drawn between \emph{energy-shell filtering} and \emph{single-mode decimation}:
+\begin{quote}
+\emph{The budget decomposition $\mathcal{B}_K = \mathcal{B}_{K-1} \oplus \mathcal{H}_K$ is an energy-shell partition, not the elimination of a single high-momentum mode.}
+\end{quote}
+To illustrate this distinction concretely, consider a bosonic system with two modes $m=1$ and $m=2$ at energy cutoff $K = 2$. In polynomial coordinates (or partition states), the budget $\mathcal{B}_2$ is spanned by four independent states:
+\begin{equation}
+\mathcal{B}_2 = \operatorname{span}_{\mathbb{C}} \Big\{ |0\rangle, \; \rho_1 |0\rangle, \; \rho_1^2 |0\rangle, \; \rho_2 |0\rangle \Big\}.
+\end{equation}
+The excitation energy of each state is:
+\begin{itemize}
+    \item $E(|0\rangle) = 0$,
+    \item $E(\rho_1 |0\rangle) = 1$,
+    \item $E(\rho_1^2 |0\rangle) = 1 + 1 = 2$,
+    \item $E(\rho_2 |0\rangle) = 2$.
+\end{itemize}
+Now consider the two different reduction procedures:
+\begin{enumerate}
+    \item \textbf{Energy-Shell Projection:} Projecting to $\mathcal{B}_1$ retains only states of total excitation energy $\le 1$:
+    \[
+    \mathcal{B}_1 = \operatorname{span}_{\mathbb{C}} \Big\{ |0\rangle, \; \rho_1 |0\rangle \Big\}.
+    \]
+    Both $\rho_2 |0\rangle$ and $\rho_1^2 |0\rangle$ are discarded because both carry total excitation energy $E = 2$.
+    \item \textbf{Mode-2 Decimation:} Eliminating mode 2 while keeping mode 1 unrestricted would retain:
+    \[
+    \operatorname{span}_{\mathbb{C}} \Big\{ |0\rangle, \; \rho_1 |0\rangle, \; \rho_1^2 |0\rangle \Big\}.
+    \]
+\end{enumerate}
+Thus, energy-shell filtering discards multi-quanta excitations of low-momentum modes whenever their cumulative energy hits the shell boundary $K$.
+
+\begin{definition}[Fock Space Energy-Shell Projectors]
+Let $h \ge 1$, $\vec{N}$ be admissible sector charges, and $K \ge 1$.
+In the orthonormal occupation basis $\{|S\rangle\}$ of the multi-species Fock space $\mathcal{F}_\sigma(L)$:
+\begin{enumerate}
+    \item The \emph{low-energy shell projector} $P_{K-1} \in \operatorname{End}_{\mathbb{C}}(\mathcal{F}_\sigma(L))$ is the coordinate projection onto configurations with charge $\vec{N}$ and excitation energy $\le K - 1$:
+    \begin{equation}
+    P_{K-1} \coloneqq \sum_{S : \mathcal{N}(S) = \vec{N}, \, e(S) \le K-1} |S\rangle\langle S|.
+    \end{equation}
+    \item The \emph{maximal-energy boundary shell projector} $Q_K \in \operatorname{End}_{\mathbb{C}}(\mathcal{F}_\sigma(L))$ is the coordinate projection onto configurations with charge $\vec{N}$ and excitation energy exactly $K$:
+    \begin{equation}
+    Q_K \coloneqq \sum_{S : \mathcal{N}(S) = \vec{N}, \, e(S) = K} |S\rangle\langle S|.
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Properties of Fock Shell Projectors]
+\label{thm:app_shell_projectors}
+Let $K \ge 1$. The shell projectors satisfy:
+\begin{enumerate}
+    \item \textbf{Budget Partition:} On the full ambient Fock space:
+    \begin{equation}
+    P_{K-1} + Q_K = \Pi_{\vec{N}, K},
+    \end{equation}
+    where $\Pi_{\vec{N}, K}$ is the orthogonal projector onto the joint budget subspace $B(\vec{N}, K)$.
+    \item \textbf{Mutual Orthogonality:}
+    \begin{equation}
+    P_{K-1} Q_K = Q_K P_{K-1} = 0.
+    \end{equation}
+    \item \textbf{Self-Adjointness:}
+    \begin{equation}
+    P_{K-1}^\dagger = P_{K-1}, \qquad Q_K^\dagger = Q_K.
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Since $P_{K-1}$ and $Q_K$ are coordinate projectors defined by indicator functions on occupation configurations, self-adjointness and commutativity are immediate.
+For any configuration $S$ with charge $\vec{N}$, $e(S) \le K$ if and only if $e(S) \le K-1$ or $e(S) = K$, and these conditions are mutually exclusive. Hence $\mathbf{1}_{e(S) \le K-1} + \mathbf{1}_{e(S) = K} = \mathbf{1}_{e(S) \le K}$, and their product is zero.
+\end{proof}
+
+\begin{lemma}[Energy-Shell Filtering Discards Repeated Mode-1 State]
+\label{lem:app_discard_double_mode_one}
+Let $h \ge 2$, $\vec{N}$ admissible, and assume the margin condition $4 + |N_\nu| \le h$.
+Consider the two-quanta excitation of mode 1 on branch $\nu$:
+\begin{equation}
+|\psi_{1, 1}\rangle \coloneqq \rho_{1, \nu} \rho_{1, \nu} |\vec{N}\rangle_0.
+\end{equation}
+Then:
+\begin{enumerate}
+    \item $|\psi_{1, 1}\rangle$ belongs to the budget space $B(\vec{N}, 2)$ and is strictly non-zero:
+    \begin{equation}
+    |\psi_{1, 1}\rangle \in B(\vec{N}, 2), \qquad |\psi_{1, 1}\rangle \neq 0.
+    \end{equation}
+    \item The low-energy projector at $K = 2$ annihilates $|\psi_{1, 1}\rangle$:
+    \begin{equation}
+    P_1 |\psi_{1, 1}\rangle = 0.
+    \end{equation}
+    \item The high-energy boundary shell projector fixes $|\psi_{1, 1}\rangle$:
+    \begin{equation}
+    Q_2 |\psi_{1, 1}\rangle = |\psi_{1, 1}\rangle.
+    \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+By the current action lemma, $\rho_{1, \nu}$ raises excitation energy by 1. Acting twice on $|\vec{N}\rangle_0$ gives a state of total excitation energy $1 + 1 = 2$, so $|\psi_{1, 1}\rangle \in B(\vec{N}, 2)$.
+Applying two lowering currents $\rho_{-1, \nu} \rho_{-1, \nu}$ and using the Kac--Moody commutation relations on the budget:
+\[
+\rho_{-1, \nu} \rho_{-1, \nu} |\psi_{1, 1}\rangle = 2 |\vec{N}\rangle_0 \neq 0,
+\]
+which proves $|\psi_{1, 1}\rangle \neq 0$.
+Now consider $P_1 |\psi_{1, 1}\rangle \in B(\vec{N}, 1)$. Applying two lowering currents to any state in $B(\vec{N}, 1)$ yields 0 because each lowering current reduces energy by 1, and no state has energy $< 0$.
+Since $P_1$ is self-adjoint and idempotent:
+\[
+\|P_1 |\psi_{1, 1}\rangle\|^2 = \langle P_1 \psi_{1, 1} \mid P_1 \psi_{1, 1} \rangle = \langle \psi_{1, 1} \mid P_1 \psi_{1, 1} \rangle = \langle |\vec{N}\rangle_0 \mid \rho_{-1, \nu} \rho_{-1, \nu} P_1 |\psi_{1, 1}\rangle = 0.
+\]
+Hence $P_1 |\psi_{1, 1}\rangle = 0$.
+By Theorem~\ref{thm:app_shell_projectors}, $(P_1 + Q_2)|\psi_{1, 1}\rangle = \Pi_{\vec{N}, 2} |\psi_{1, 1}\rangle = |\psi_{1, 1}\rangle$. Since $P_1 |\psi_{1, 1}\rangle = 0$, it follows that $Q_2 |\psi_{1, 1}\rangle = |\psi_{1, 1}\rangle$.
+\end{proof}
+
+\begin{remark}[Formalization Note]
+The formal statement and proof use the finite mathematical carriers and hypotheses specified in this chapter. The result is an exact algebraic or combinatorial claim within that scope; it does not presume an analytic limit or a stronger continuum identity.
+\end{remark}
+
+\section[The Schrieffer--Wolff Reduction Modulo t3]{The Schrieffer--Wolff Reduction Modulo $t^3$}
+
+We now formulate the Schrieffer--Wolff perturbation reduction.
+Consider an abstract Hilbert space $\mathcal{H}$ equipped with complementary orthogonal projectors:
+\begin{equation}
+P^2 = P, \qquad Q^2 = Q, \qquad P + Q = I, \qquad P Q = Q P = 0.
+\end{equation}
+Let $H(t) = H_0 + t V$ be a perturbed Hamiltonian, where:
+\begin{enumerate}
+    \item $H_0$ is block-diagonal with respect to the partition: $[P, H_0] = 0$.
+    \item $V$ is a perturbation, decomposed into block-diagonal and block-off-diagonal parts:
+    \begin{equation}
+    V_{\mathrm{diag}} \coloneqq P V P + Q V Q, \qquad V_{\mathrm{off}} \coloneqq P V Q + Q V P.
+    \end{equation}
+    \item $S_1$ is an anti-Hermitian generator ($S_1^\dagger = -S_1$) satisfying the off-block generator equation:
+    \begin{equation}
+    \label{eq:generator_eq}
+    [S_1, H_0] = - V_{\mathrm{off}}, \qquad \text{with } P S_1 P = 0, \quad Q S_1 Q = 0.
+    \end{equation}
+\end{enumerate}
+
+To perform unitary transformation $e^{t S_1} (H_0 + t V) e^{-t S_1}$ algebraically without relying on non-constructive operator-analytic power series, we define the Baker--Campbell--Hausdorff polynomial through degree two:
+\begin{equation}
+\mathcal{B}_2(t) \coloneqq H_0 + t \Big( V + [S_1, H_0] \Big) + t^2 \left( [S_1, V] + \frac{1}{2} [S_1, [S_1, H_0]] \right).
+\end{equation}
+
+\begin{theorem}[Compressed Second-Order Schrieffer--Wolff Formula]
+\label{thm:app_sw_compressed}
+Let $P, Q, H_0, V, S_1$ satisfy $P+Q=I$, $P^2=P, Q^2=Q, PQ=0$, $[P, H_0] = 0$, $P S_1 P = 0, Q S_1 Q = 0$, and the generator equation $[S_1, H_0] = -V_{\mathrm{off}}$.
+Then the compression of $\mathcal{B}_2(t)$ onto the low-energy subspace $P$ evaluates identically to:
+\begin{equation}
+P \, \mathcal{B}_2(t) \, P = P H_0 P + t P V P + \frac{t^2}{2} P [S_1, V] P.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+We evaluate the compression order by order in $t$:
+\begin{enumerate}
+    \item \textbf{Degree 0:} $P H_0 P$ is retained directly.
+    \item \textbf{Degree 1:} The coefficient of $t$ is $P(V + [S_1, H_0])P = PVP + P[S_1, H_0]P$.
+    Using the generator equation $[S_1, H_0] = -V_{\mathrm{off}} = -(PVQ + QVP)$:
+    \[
+    P [S_1, H_0] P = - P (P V Q + Q V P) P = - (P V Q P + P Q V P) = 0,
+    \]
+    because $Q P = 0$ and $P Q = 0$. Hence the off-diagonal coupling is eliminated at order $t$, leaving $P V P$.
+    \item \textbf{Degree 2:} The coefficient of $t^2$ is:
+    \[
+    P [S_1, V] P + \frac{1}{2} P [S_1, [S_1, H_0]] P = P [S_1, V] P - \frac{1}{2} P [S_1, V_{\mathrm{off}}] P.
+    \]
+    Expanding the nested commutator using $P S_1 P = 0$ and $Q S_1 Q = 0$:
+    \[
+    P S_1 V_{\mathrm{off}} P = P S_1 (Q V P) = (P S_1 Q) V P = P S_1 V P,
+    \]
+    since $P S_1 = P S_1 (P + Q) = P S_1 Q$. Similarly, $P V_{\mathrm{off}} S_1 P = P V S_1 P$.
+    Thus $P [S_1, V_{\mathrm{off}}] P = P [S_1, V] P$.
+    Substituting this into the bracket:
+    \[
+    P [S_1, V] P - \frac{1}{2} P [S_1, V] P = \frac{1}{2} P [S_1, V] P.
+    \]
+\end{enumerate}
+Combining the three orders yields the formula.
+\end{proof}
+
+\begin{theorem}[Forward Implication on Off-Block Vanishing]
+\label{thm:app_sw_off_zero}
+If the perturbation has zero off-block coupling ($P V Q = 0$ and $Q V P = 0$), then $V_{\mathrm{off}} = 0$.
+The generator equation is solved by the trivial generator $S_1 = 0$.
+Then the second-order correction vanishes identically:
+\begin{equation}
+P [0, V] P = 0,
+\end{equation}
+and the effective low-energy Hamiltonian is exact without second-order correction:
+\begin{equation}
+P \, \mathcal{B}_2(t) \, P = P (H_0 + t V) P.
+\end{equation}
+\end{theorem}
+
+\begin{remark}[Formalization Note]
+The formal statement and proof use the finite mathematical carriers and hypotheses specified in this chapter. The result is an exact algebraic or combinatorial claim within that scope; it does not presume an analytic limit or a stronger continuum identity.
+\end{remark}
+
+\section{The Matrix Model and Rigorous Counterexamples}
+
+To clarify the exact mathematical scope of Schrieffer--Wolff reduction and prevent common physics misconceptions, we examine explicit finite matrix models.
+
+\begin{definition}[Non-Resonant Matrix Model]
+Let $\iota$ be a finite index set partitioned into low and high states by $\mathrm{inLow} : \iota \to \mathrm{Bool}$. Let $E : \iota \to \mathbb{R}$ assign real unperturbed energies. An off-block perturbation $V_{\mathrm{off}} \in \mathrm{Mat}_\iota(\mathbb{C})$ satisfies the \emph{non-resonance condition} if:
+\begin{equation}
+\forall i, j \in \iota, \quad \mathrm{inLow}(i) \neq \mathrm{inLow}(j) \implies V_{\mathrm{off}}(i, j) \neq 0 \implies E(i) \neq E(j).
+\end{equation}
+The matrix generator $S_1$ is defined entrywise by:
+\begin{equation}
+S_1(i, j) \coloneqq \begin{cases} \dfrac{V_{\mathrm{off}}(i, j)}{E(i) - E(j)}, & \text{if } \mathrm{inLow}(i) \neq \mathrm{inLow}(j) \text{ and } V_{\mathrm{off}}(i, j) \neq 0, \\ 0, & \text{otherwise}. \end{cases}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Exact Generator Commutator and Skew-Hermiticity]
+\label{thm:app_matrix_generator}
+Under the non-resonance condition:
+\begin{enumerate}
+    \item $[S_1, \mathrm{diag}(E)] = - V_{\mathrm{off}}$.
+    \item If $V_{\mathrm{off}}^\dagger = V_{\mathrm{off}}$, then $S_1^\dagger = - S_1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By direct computation of matrix entries:
+$([S_1, \mathrm{diag}(E)])_{i, j} = S_1(i, j) (E(j) - E(i))$.
+When $V_{\mathrm{off}}(i, j) \neq 0$ and blocks differ, $S_1(i, j) (E(j) - E(i)) = \frac{V_{\mathrm{off}}(i, j)}{E(i) - E(j)}(E(j) - E(i)) = -V_{\mathrm{off}}(i, j)$.
+When $V_{\mathrm{off}}(i, j) = 0$, both sides are 0.
+For Hermiticity: $(S_1^\dagger)_{i, j} = (S_1(j, i))^* = \frac{V_{\mathrm{off}}(j, i)^*}{E(j) - E(i)} = \frac{V_{\mathrm{off}}(i, j)}{-(E(i) - E(j))} = -S_1(i, j)$.
+\end{proof}
+
+\subsection[Counterexample 1: 2x2 Truncation Witness]{Counterexample 1: SWT is Not an Exact Finite-Matrix Equality ($2\times 2$ Witness)}
+
+A frequent heuristic assumption is that the second-order truncated Hamiltonian $P H_0 P + t P V P + \frac{t^2}{2} P [S_1, V] P$ gives the exact eigenvalues of the low-energy block. The following certified $2\times 2$ counterexample refutes this:
+
+\begin{proposition}[$2\times 2$ Truncation Witness]
+\label{prop:app_2x2_witness}
+Consider the $2\times 2$ system with:
+\begin{equation}
+H_0 = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}, \quad V = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad S_1 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}, \quad P = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}.
+\end{equation}
+Then:
+\begin{enumerate}
+    \item $[S_1, H_0] = -V$ and $S_1^\dagger = -S_1$.
+    \item The compressed second-order commutator entry is:
+    \begin{equation}
+    \Big( P [S_1, V] P \Big)_{0, 0} = -2.
+    \end{equation}
+    Consequently, the second-order effective energy at coupling $t = 2/3$ is $-t^2 = -(2/3)^2 = -4/9$.
+    \item However, the vector $v = (-2, 1)^T$ is an exact non-zero eigenvector of the full Hamiltonian $H_0 + \frac{2}{3} V$:
+    \begin{equation}
+    \left( H_0 + \frac{2}{3} V \right) \begin{pmatrix} -2 \\ 1 \end{pmatrix} = \begin{pmatrix} 2/3 \\ -1/3 \end{pmatrix} = -\frac{1}{3} \begin{pmatrix} -2 \\ 1 \end{pmatrix}.
+    \end{equation}
+    The exact eigenvalue is $-1/3$, whereas the second-order truncation predicts $-4/9 \neq -1/3$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Direct matrix multiplication verifies:
+$[S_1, H_0] = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} - \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix} = -V$.
+For the commutator: $[S_1, V] = \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix} - \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} = \begin{pmatrix} -2 & 0 \\ 0 & 2 \end{pmatrix}$.
+Projecting with $P$ yields the entry $-2$. The second-order term is $\frac{t^2}{2}(-2) = -t^2$. For $t = 2/3$, $-t^2 = -4/9$.
+Finally:
+\[
+\begin{pmatrix} 0 & 2/3 \\ 2/3 & 1 \end{pmatrix} \begin{pmatrix} -2 \\ 1 \end{pmatrix} = \begin{pmatrix} 2/3 \\ -4/3 + 1 \end{pmatrix} = \begin{pmatrix} 2/3 \\ -1/3 \end{pmatrix} = -\frac{1}{3} \begin{pmatrix} -2 \\ 1 \end{pmatrix}.
+\]
+Since $-4/9 \neq -1/3$, the second-order formula is strictly an asymptotic approximation modulo $t^3$, not an exact equality.
+\end{proof}
+
+\subsection[Counterexample 2: 3x3 Non-Equivalence Witness]{Counterexample 2: Disproof of the Biconditional Claim ($3\times 3$ Witness)}
+
+Theorem~\ref{thm:app_sw_off_zero} establishes that $P V Q = 0 \implies P [S_1, V] P = 0$. Does the converse hold? That is, if the second-order correction vanishes, must the cross-block coupling $P V Q$ be zero?
+
+\begin{proposition}[$3\times 3$ Non-Equivalence Witness]
+\label{prop:app_3x3_witness}
+Consider the 3-dimensional system partitioned into low subspace $\mathcal{P} = \operatorname{span}(e_0)$ and high subspace $\mathcal{Q} = \operatorname{span}(e_1, e_2)$, with:
+\begin{equation}
+H_0 = \begin{pmatrix} 0 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{pmatrix}, \quad P = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}, \quad V = \begin{pmatrix} 0 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}.
+\end{equation}
+The generator $S_1$ solving $[S_1, H_0] = -V$ is:
+\begin{equation}
+S_1 = \begin{pmatrix} 0 & 1 & -1 \\ -1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}.
+\end{equation}
+Then:
+\begin{enumerate}
+    \item The cross-block coupling is strictly non-zero:
+    \begin{equation}
+    P V Q = \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} \neq 0.
+    \end{equation}
+    \item Yet the compressed second-order commutator vanishes identically:
+    \begin{equation}
+    P [S_1, V] P = 0.
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The matrix products evaluate to:
+$(S_1 V)_{0, 0} = 1 \cdot 1 + (-1) \cdot 1 = 0$, and $(V S_1)_{0, 0} = 1 \cdot (-1) + 1 \cdot 1 = 0$.
+Thus $(P [S_1, V] P)_{0, 0} = 0 - 0 = 0$. All other entries of $P [S_1, V] P$ vanish by the projection $P$.
+The two intermediate states in $\mathcal{Q}$ have opposite excitation energies ($E_1 = -1$ and $E_2 = +1$). Their contributions to the second-order energy denominator cancel out:
+\[
+\frac{|\langle 0 | V | 1 \rangle|^2}{E_0 - E_1} + \frac{|\langle 0 | V | 2 \rangle|^2}{E_0 - E_2} = \frac{1}{0 - (-1)} + \frac{1}{0 - 1} = 1 - 1 = 0.
+\]
+Hence the second-order correction vanishes despite strong off-diagonal coupling $P V Q \neq 0$.
+\end{proof}
+
+\begin{remark}[Formalization Note]
+The formal statement and proof use the finite mathematical carriers and hypotheses specified in this chapter. The result is an exact algebraic or combinatorial claim within that scope; it does not presume an analytic limit or a stronger continuum identity.
+\end{remark}
+
+\section{Physical Applications and Demoted Heuristic Claims}
+
+In condensed matter physics, Schrieffer--Wolff reduction is widely invoked in two classic contexts:
+\begin{enumerate}
+    \item \textbf{Cubic Dispersion Curvature:} Expanding a non-linear band dispersion $\varepsilon(k) = v_F k + \frac{k^2}{2m^*}$ yields cubic mode couplings $V_{\mathrm{cubic}} \propto \sum \rho_p \rho_q \rho_{-(p+q)}$. Second-order perturbation theory generates effective 4-mode interactions. In continuum scaling theory, this leads to mode-dependent sound velocities and plasmon decay lifetimes.
+    \item \textbf{Umklapp Scattering and the Mott Transition:} At half-filling, the lattice Umklapp perturbation $H_U \propto \sum_x (O_U(x) + O_U^\dagger(x))$ couples states across energy shells. In continuum bosonization, second-order operator product expansions yield the Kosterlitz--Thouless (KT) flow equations, predicting the opening of a charge Mott gap.
+\end{enumerate}
+
+\begin{remark}[Demoted Heuristic Claims]
+We explicitly record that on the finite discrete lattice:
+\begin{itemize}
+    \item Continuous Wilsonian RG flows, differential scaling equations, and continuum operator product expansions are physical heuristics, not theorems in the finite-dimensional Core.
+    \item Because the finite-lattice Hamiltonian is self-adjoint on a finite-dimensional space, its spectrum is real; defining an actual decay lifetime requires an operational or thermodynamic limit.
+    \item Demonstrating Umklapp leakage or Mott gap opening requires proving that the operator has non-vanishing matrix elements strictly outside the chosen low-energy budget.
+\end{itemize}
+The exact theorems verified in Core are the discrete algebraic identities: the shell projection decomposition, the compressed degree-two BCH polynomial, and the matrix generator solutions.
+\end{remark}

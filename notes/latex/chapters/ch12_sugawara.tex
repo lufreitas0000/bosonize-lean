@@ -1,0 +1,282 @@
+\chapter{The Sugawara Construction}
+\label{ch:sugawara}
+
+\section{Introduction and the Sugawara Mechanism}
+
+In the algebraic formulation of conformal field theory and the representation theory of affine Lie algebras, the \emph{Sugawara construction} realizes the energy-momentum tensor and Virasoro generators as quadratic composites of current operators:
+\begin{equation}
+T(z) = \frac{1}{2k + c_g} \sum_a : \! J^a(z) J^a(z) \! :
+\end{equation}
+In the abelian bosonization of one-dimensional fermions, this construction takes a fundamental form. The non-interacting kinetic Hamiltonian of chiral fermions with linear dispersion $\epsilon_k \propto k$ is an ostensibly fermionic operator quadratic in canonical anticommutation relations (CAR) generators:
+\begin{equation}
+\label{eq:fermionic_kinetic_intro}
+H_0 = \sum_{k \in \Lambda^*} k\, c_k^\dagger c_k.
+\end{equation}
+The Sugawara theorem asserts that, up to an explicit zero-mode ground energy shift depending on the net fermion charge, this kinetic operator is algebraically equivalent to a quadratic sum of the bosonic density currents:
+\begin{equation}
+\label{eq:sugawara_heuristic_intro}
+H_{\mathrm{sug}} = \sum_{m=1}^\infty \rho_m \rho_{-m}.
+\end{equation}
+In continuum treatments, this relation is formulated with normal-ordered currents and an appropriate treatment of the vacuum energy and operator domains. We instead ask a finite-size question: on which explicitly specified low-energy states does a truncated current sum reproduce the fermionic excitation energy?
+
+On our discrete spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$), the situation requires careful mathematical reformulation: The excitation-energy operator is denoted by $E$ and acts on $\mathcal{F}(L)$, that is, $E\in\operatorname{End}_{\mathbb{C}}(\mathcal{F}(L))$; scalar excitation energies are integers and are identified by context or written as $e(S)$.
+\begin{enumerate}
+    \item \textbf{Finite Carrier and Absence of Global CCR:} By the No-Go Theorem~\ref{thm:no_go}, the finite-dimensional Fock space $\mathcal{F}(L)$ cannot support an exact infinite-dimensional Heisenberg current algebra. As proved in Chapter~\ref{ch:heisenberg_algebra}, the density commutators $[\rho_{-m}, \rho_m]$ exhibit boundary edge terms that vanish only when restricted to states in the energy budget subspace $B(N, K)$ under explicit margin bounds.
+    \item \textbf{Avoidance of Circular Commutation Proofs:} Attempting to prove $H_0 \sim H_{\mathrm{sug}}$ by directly computing $[H_{\mathrm{sug}}, \rho_n]$ and equating it to $[E, \rho_n] = n \rho_n$ suffers from circularity. A Lie algebra representation on an invariant subspace does not automatically identify the Casimir operator with the Hamiltonian without an independent completeness theorem. Furthermore, at small lattice sizes ($h=1$), naive commutator identities break down at the band edges.
+    \item \textbf{Exact Non-Circular Strategy via Haldane Completeness:} We use the following finite, non-circular strategy:
+    \begin{itemize}
+        \item We define a finite, positive Sugawara operator $H_{\mathrm{sug}}^{(M)} = \sum_{m=1}^M \rho_m \rho_{-m}$ on the ambient Fock space $\mathcal{F}(L)$ parametrized by a cutoff integer $M$.
+        \item We establish \emph{cutoff stability}: on any state in the energy budget $B(N, K)$, the terms $\rho_m\rho_{-m}$ with $m>K$ vanish. Therefore the truncated sums $H_{\mathrm{sug}}^{(M)}$ agree on this budget for all $M\ge K$. The operator need not act as the identity: terms with $m\le K$ can give a nonzero result.
+        \item By commuting lowering currents through the creation words defining bosonic partition states $|\lambda; N\rangle$, we compute the exact action of $H_{\mathrm{sug}}^{(M)}$ on every basis state of the Haldane partition basis (Chapter~\ref{ch:haldane_completeness}).
+        \item Using Haldane completeness (Theorem~\ref{thm:whole_budget_basis}), which proves that the partition states span the entire budget $B(N, K)$, we extend this eigenvalue identity by linearity across all of $B(N, K)$, establishing exact operator equivalence without any circular appeal to current commutators.
+        \item Finally, the current commutation relations $[H_{\mathrm{sug}}^{(M)}, \rho_n] \psi = n \rho_n \psi$ are derived as a safe corollary \emph{after} the equivalence is established.
+    \end{itemize}
+\end{enumerate}
+
+\begin{remark}[Scope of Finite-Fock Statements]
+Formal series and infinite charge lattices can be useful algebraic
+organizing devices, but their identities do not by themselves assert
+operator identities on a finite Fock space. Here every operator statement
+is made on its specified finite carrier and energy budget; continuum limits
+require additional hypotheses and arguments.
+\end{remark}
+
+\section{The Finite Sugawara Hamiltonian and Cutoff Stability}
+
+Throughout this chapter, $L = 2h$ with $h \ge 1$, $\Lambda^* = \{-h+1, \dots, h\}$ is the centered momentum band, $\mathcal{F}(L)$ denotes the complex Euclidean CAR Fock space of dimension $2^{2h}$, and $\rho_m = d\Gamma(T_m)$ are the non-wrapping density current operators (Chapter~\ref{ch:density_modes}).
+
+\begin{definition}[Finite Bosonic Sugawara Hamiltonian]
+\label{def:sugawara_hamiltonian}
+Let $M \in \mathbb{N}$ be a mode cutoff integer. The \emph{Sugawara Hamiltonian} $H_{\mathrm{sug}}^{(M)}$ is the endomorphism on $\mathcal{F}(L)$ defined by:
+\begin{equation}
+\label{eq:sugawara_def}
+H_{\mathrm{sug}}^{(M)} \coloneqq \sum_{m=1}^M \rho_m \rho_{-m}.
+\end{equation}
+When $M = 0$, $H_{\mathrm{sug}}^{(0)} = 0$. In each summand, the negative transfer (lowering) mode $\rho_{-m}$ acts first, followed by the positive transfer (raising) mode $\rho_m$.
+\end{definition}
+
+\begin{proposition}[Self-Adjointness and Positive Quadratic Form]
+\label{prop:sugawara_positive}
+Let $h \ge 1$ and $M \ge 0$.
+\begin{enumerate}
+    \item The operator $H_{\mathrm{sug}}^{(M)}$ is self-adjoint on $\mathcal{F}(L)$: $(H_{\mathrm{sug}}^{(M)})^\dagger = H_{\mathrm{sug}}^{(M)}$.
+    \item For every vector $v \in \mathcal{F}(L)$, the quadratic form is manifestly non-negative:
+    \begin{equation}
+    \label{eq:sugawara_inner}
+    \langle v \mid H_{\mathrm{sug}}^{(M)} \mid v \rangle = \sum_{m=1}^M \|\rho_{-m} v\|^2 \ge 0.
+    \end{equation}
+    \item For every admissible charge sector $N \in \mathbb{Z}$ ($-h \le N \le h$), $H_{\mathrm{sug}}^{(M)}$ annihilates the sector ground state: $H_{\mathrm{sug}}^{(M)} |N\rangle_0 = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:density_vanishing_adj}, $\rho_m^\dagger = \rho_{-m}$, so $(\rho_m \rho_{-m})^\dagger = (\rho_{-m})^\dagger (\rho_m)^\dagger = \rho_m \rho_{-m}$, making $H_{\mathrm{sug}}^{(M)}$ a sum of self-adjoint operators.
+For any $v \in \mathcal{F}(L)$, $\langle v \mid \rho_m \rho_{-m} \mid v \rangle = \langle \rho_{-m} v \mid \rho_{-m} v \rangle = \|\rho_{-m} v\|^2$, giving~\eqref{eq:sugawara_inner}.
+Finally, by Lemma~\ref{thm:budget_action_annihilation}, $\rho_{-m} |N\rangle_0 = 0$ for all $m \ge 1$, so $H_{\mathrm{sug}}^{(M)} |N\rangle_0 = 0$.
+\end{proof}
+
+\begin{lemma}[Inactive Mode Annihilation]
+\label{lem:inactive_mode_zero}
+Let $h \ge 1$, $N \in \mathbb{Z}$ admissible, and $K, m \in \mathbb{N}$. If $m > K$, then for every vector $v \in B(N, K)$:
+\begin{equation}
+\rho_m \rho_{-m} v = 0.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The mode $\rho_{-m}$ lowers excitation energy by $m$. Since excitation
+energies are nonnegative, it annihilates every vector in $B(N,K)$ when
+$m>K$; hence $\rho_m\rho_{-m}v=0$.
+\end{proof}
+
+\begin{theorem}[Cutoff Stability and Independence on the Budget]
+\label{thm:sugawara_cutoff_stability}
+Let $h \ge 1$, $N \in \mathbb{Z}$ admissible, and $K, M \in \mathbb{N}$ with $K \le M$. For every vector $v \in B(N, K)$:
+\begin{equation}
+H_{\mathrm{sug}}^{(M)} v = H_{\mathrm{sug}}^{(K)} v.
+\end{equation}
+In particular, if $M, M' \ge K$, then $H_{\mathrm{sug}}^{(M)} v = H_{\mathrm{sug}}^{(M')} v$.
+\end{theorem}
+
+\begin{proof}
+Splitting the sum at $K$ and applying Lemma~\ref{lem:inactive_mode_zero}
+to every term with $m>K$ leaves $H_{\mathrm{sug}}^{(K)}v$, so any two
+cutoffs at least $K$ agree on $B(N,K)$.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:sugawara_cutoff_stability} is an exact property of energy grading requiring neither the R2 margin condition nor an upper bound on $M$. The sum stabilizes once $M$ reaches $K$.
+\end{remark}
+
+\section{Word Contraction and the Partition Eigenvalue Theorem}
+
+For any finite sequence of non-negative integers $w=(w_1,\dots,w_\ell)$, define the operator word $W(w)\coloneqq\rho_{w_1}\cdots\rho_{w_\ell}$, so its action on the sector ground state is $W(w)|N\rangle_0$. For $m \ge 1$, let $r_m(w) \in \mathbb{N}$ denote the count of $m$ in $w$.
+
+Here $r_m(w)$ is the multiplicity of the transfer size $m$ among the entries of the word: for example, in $w=(2,1,2)$, $r_2(w)=2$. Each positive density mode raises the excitation energy by its own index, so the total energy of this word is $|w|=\sum_i w_i=\sum_{m\ge1}m r_m(w)$. The pull-through lemma below counts how many times a lowering mode can contract with a matching raising mode; that count is what produces the oscillator eigenvalue.
+
+\begin{lemma}[Bilinear Pull-Through on Words]
+\label{lem:density_bilinear_word}
+Let $h \ge 1$, $N \in \mathbb{Z}$ admissible, and $1 \le m \le K$. Let $w=(w_1,\dots,w_\ell)$ be a finite sequence of non-negative integers with $|w| \coloneqq \sum_i w_i \le K$. Under the R2 margin $2K + |N| \le h$:
+\begin{equation}
+\label{eq:bilinear_word_action}
+\rho_m \rho_{-m} W(w)|N\rangle_0 = m r_m(w) W(w)|N\rangle_0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Zero entries are powers of the charge mode and commute with the positive and negative nonzero modes. The Lowering Contraction Formula (Chapter~\ref{ch:haldane_completeness}, Lemma~\ref{lem:lowering_contraction}) therefore gives
+$\rho_{-m}W(w)|N\rangle_0=m r_m(w)W(w\setminus\{m\})|N\rangle_0$.
+Applying $\rho_m$ restores the deleted factor; positive density modes
+commute, so $\rho_mW(w\setminus\{m\})|N\rangle_0=W(w)|N\rangle_0$.
+This proves~\eqref{eq:bilinear_word_action}.
+\end{proof}
+
+\begin{proposition}[Word State Eigenvalue Theorem]
+\label{prop:sugawara_word_eigenvalue}
+Let $h \ge 1$, $N \in \mathbb{Z}$ admissible, $K \le M$, and $2K + |N| \le h$. For any finite sequence $w=(w_1,\dots,w_\ell)$ of non-negative integers with $|w| \le K$:
+\begin{equation}
+H_{\mathrm{sug}}^{(M)} W(w)|N\rangle_0 = |w|W(w)|N\rangle_0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By cutoff stability and Lemma~\ref{lem:density_bilinear_word},
+$H_{\mathrm{sug}}^{(M)}W(w)|N\rangle_0=\sum_{m=1}^K m r_m(w)W(w)|N\rangle_0
+=(\sum_i w_i)W(w)|N\rangle_0=|w|W(w)|N\rangle_0$, since
+$\sum_m m r_m(w)=\sum_iw_i$ by counting each part with its multiplicity.
+\end{proof}
+
+\begin{lemma}[Sugawara and Excitation Action on Partition States]
+\label{lem:sugawara_partition_eigenvalue}
+Let $h \ge 1$, $N \in \mathbb{Z}$ admissible, $E \le K \le M$, and $2K + |N| \le h$. For any partition $\lambda \vdash E$, the partition state $|\lambda; N\rangle \in B(N, K)$ satisfies:
+\begin{equation}
+\label{eq:sugawara_partition_action}
+H_{\mathrm{sug}}^{(M)} |\lambda; N\rangle = E |\lambda; N\rangle, \qquad E |\lambda; N\rangle = \left(\sum_i\lambda_i\right)|\lambda; N\rangle.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since $|\lambda; N\rangle = W(\lambda)|N\rangle_0$ with $\sum_i\lambda_i=E$, Proposition~\ref{prop:sugawara_word_eigenvalue} gives $H_{\mathrm{sug}}^{(M)} |\lambda; N\rangle = E |\lambda; N\rangle$. For the excitation observable $E$, $|\lambda; N\rangle \in \mathcal{H}^N_E$ by Lemma~\ref{lem:partition_state_well_defined}, and $E |S\rangle = e(S)|S\rangle$ on each basis ket. Since $e(S)=E=\sum_i\lambda_i$ in this subspace, the excitation-energy action agrees with the scalar eigenvalue.
+\end{proof}
+
+\section{The Sugawara Equivalence Theorem on the Whole Budget}
+
+\begin{theorem}[Sugawara Equivalence on the Energy Budget]
+\label{thm:sugawara_equivalence}
+Let $h \ge 1$ and $N \in \mathbb{Z}$ admissible. Let $K, M \in \mathbb{N}$ with $K \le M$, and assume the R2 margin condition $2K + |N| \le h$. Then for every state $v \in B(N, K)$:
+\begin{equation}
+\label{eq:sugawara_equivalence}
+E v = H_{\mathrm{sug}}^{(M)} v.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The Haldane partition states span $B(N,K)$ by
+Theorem~\ref{thm:whole_budget_basis}, and Lemma~\ref{lem:sugawara_partition_eigenvalue}
+shows that $E$ and $H_{\mathrm{sug}}^{(M)}$ agree on each such state;
+linearity therefore gives equality on the whole budget.
+\end{proof}
+
+\begin{theorem}[Shifted Hamiltonian and Asymmetric Sea Shift]
+\label{thm:sugawara_relative_hamiltonian}
+Let $h \ge 1$, $N \in \mathbb{Z}$ admissible, $K \le M$, and $2K + |N| \le h$. The shifted Hamiltonian $P=H_0-E_\Omega I$ acts on $\mathcal{F}(L)$, and on $B(N,K)$ satisfies:
+\begin{equation}
+\label{eq:shifted_sugawara}
+P v = \left( H_{\mathrm{sug}}^{(M)} + \frac{N(N+1)}{2} I \right) v \quad \text{for all } v \in B(N, K).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+On charge sector $N$, the zero-mode sea energy is $E_0(N)=N(N+1)/2$,
+so $P=E+E_0(N)I$ there; substituting
+$E=H_{\mathrm{sug}}^{(M)}$ from Theorem~\ref{thm:sugawara_equivalence}
+gives~\eqref{eq:shifted_sugawara}.
+\end{proof}
+
+\begin{theorem}[Physical Hamiltonian with Boundary Twist]
+\label{thm:physical_sugawara_budget}
+Let $\beta \in \mathbb{R}$ and $H_{\mathrm{rel}, \beta} \coloneqq H_{\mathrm{phys}}(\beta) - E_{\Omega}(\beta) I$. Under $2K + |N| \le h$ and $K \le M$:
+\begin{equation}
+\label{eq:physical_sugawara}
+H_{\mathrm{rel}, \beta} v = \left( H_{\mathrm{sug}}^{(M)} + \frac{N(N+1)}{2} + \beta N \right) v \quad \text{for all } v \in B(N, K).
+\end{equation}
+Furthermore, the physical excitation observable $H_{\mathrm{exc}, \beta} \coloneqq H_{\mathrm{rel}, \beta} - \operatorname{diag}\left( \frac{N(S)(N(S)+1)}{2} + \beta N(S) \right) = E$ identically on all of $\mathcal{F}(L)$.
+\end{theorem}
+
+\begin{proof}
+The dispersion shift $\epsilon_k(\beta)=k+\beta$ adds the zero-mode
+offset $\beta N$; combining it with the sea shift
+$N(N+1)/2$ and Theorem~\ref{thm:sugawara_equivalence} gives
+~\eqref{eq:physical_sugawara}. Subtracting these charge offsets leaves
+$E$ on the full Fock space.
+\end{proof}
+
+\section{The Density Commutator Corollaries}
+
+\begin{theorem}[Signed Density Commutator on Two Budgets]
+\label{thm:sugawara_signed_commutator}
+Let $h \ge 1$ and $N \in \mathbb{Z}$ admissible. Let $K, J, M \in \mathbb{N}$ and $n \in \mathbb{Z}$ satisfy:
+\begin{equation}
+\label{eq:signed_conditions}
+K + n \le J, \qquad K \le M, \quad J \le M, \qquad 2K + |N| \le h, \quad 2J + |N| \le h.
+\end{equation}
+Then for every input vector $v \in B(N, K)$:
+\begin{equation}
+\label{eq:signed_commutator}
+[H_{\mathrm{sug}}^{(M)}, \rho_n] v = n \rho_n v.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Since $v\in B(N,K)$ and $\rho_n v\in B(N,J)$, Theorem~\ref{thm:sugawara_equivalence}
+identifies $H_{\mathrm{sug}}^{(M)}$ with $E$ on both budgets. Hence
+$[H_{\mathrm{sug}}^{(M)},\rho_n]v=[E,\rho_n]v=n\rho_n v$ by charge-energy
+covariance.
+\end{proof}
+
+\begin{corollary}[Raising Mode Commutator]
+\label{cor:sugawara_raising_commutator}
+Let $h \ge 1$, $N \in \mathbb{Z}$ admissible, and $K, M, n \in \mathbb{N}$ with $K + n \le M$ and $2(K + n) + |N| \le h$. Then for every $v \in B(N, K)$:
+\begin{equation}
+[H_{\mathrm{sug}}^{(M)}, \rho_n] v = n \rho_n v.
+\end{equation}
+By Theorem~\ref{thm:sugawara_signed_commutator} with $J=K+n$.
+\end{corollary}
+
+
+
+
+\section{Explicit Low-Energy Witnesses and Scope of the Finite Proofs}
+
+The following examples check directly that the margin hypotheses admit
+nonzero vacuum and excited states, and that the Sugawara action on them is
+nontrivial.
+
+\begin{lemma}[Explicit Low-Energy Witnesses]
+\label{lem:sugawara_witnesses}
+Let $h \ge 1$.
+\begin{enumerate}
+    \item For $1 \le m \le K \le M$ and $2K \le h$, $v = \rho_m |\Omega\rangle \in B(0, K)$ satisfies:
+    $v \neq 0$ and $H_{\mathrm{sug}}^{(M)} v = m v \neq 0$.
+    \item For $1 \le n \le M$ and $2n \le h$, $|\Omega\rangle \in B(0, 0)$ satisfies:
+    $[H_{\mathrm{sug}}^{(M)}, \rho_n] |\Omega\rangle = n \rho_n |\Omega\rangle \neq 0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+These hypotheses describe nonempty low-energy regimes: the vacuum lies in $B(0,0)$, and the stated margins ensure the indicated excited vectors remain in the finite budget. By Theorem~\ref{thm:vacuum_norm}, $\|\rho_m |\Omega\rangle\|^2 = m > 0$, so $v \neq 0$. Since $\lambda = (m) \vdash m \le K$, Lemma~\ref{lem:sugawara_partition_eigenvalue} gives $H_{\mathrm{sug}}^{(M)} v = m v \neq 0$. For Part~2, apply Corollary~\ref{cor:sugawara_raising_commutator} with $K=0$. Since $\rho_n |\Omega\rangle \neq 0$ and $n > 0$, $n \rho_n |\Omega\rangle \neq 0$.
+\end{proof}
+
+\begin{remark}[Scope of the finite proofs]
+The operator identities in this chapter are finite sums on the finite fermionic Fock space. Their proofs reduce to the density commutators on the stated energy budgets, the fact that lowering modes below the vacuum vanish, and finite induction on words. The cutoff comparison is therefore a statement about restrictions to a fixed budget, not a claim about all observables or an infinite-volume theory.
+\end{remark}
+
+
+\section{Chapter Summary}
+On the finite energy budgets considered here, the Sugawara quadratic in
+density modes reproduces the excitation-energy action of the fermionic
+Hamiltonian. The non-vacuum witnesses confirm that this equality acts
+nontrivially on excited states, and the cutoff comparison is explicitly a
+statement about restricted operators. This recovers the current-based
+energy description familiar from conformal field theory in the regime
+where the finite current algebra applies, without asserting an ambient
+finite-dimensional CCR representation or an infinite-volume limit.

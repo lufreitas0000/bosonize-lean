@@ -1,9 +1,13 @@
 # BOSONIZE-LEAN: Master Table of Contents
 
-This document serves as the structural roadmap and index for the `Bosonize-Lean` mathematical reference notes. It outlines the formalization of 1+1D lattice bosonization. The formal architecture distinguishes between three levels of mathematical statements:
-1. **Proposed Finite Targets:** Intended algebraic identities on specified finite budget/CAR carriers. Chapters 1–16 and their implemented supporting portions currently have proved and frozen Core implementations (27 modules, 835 statement interfaces); Chapters 17–21 below remain intended results, not completed Lean proofs.
-2. **Specified Algebraic Targets:** Weighted polynomial CCR state construction, charge tensor algebra, coefficientwise Weyl-type vertices, and explicit generator duality. The notes specify their constructions and proof obligations; these are future Lean targets, with no analytic parameter evaluation or automatic finite-CAR realization.
-3. **Conditional Criteria & Physical Context:** Budget leakage requires a nonzero outside component. Continuum KT scaling and thermodynamic Mott gaps remain physical context requiring separate asymptotic constructions. See the [completion ledger](../../note/notes_review_completion_2026-10-09.md) for resolved revisions, scope exclusions and next-phase readiness; the [adaptive roadmap](../../adaptative_roadmap.md) controls cross-chapter discoveries.
+This document is the structural roadmap for the Bosonize-Lean mathematical notes. Status is based on the current Lean source and chapter records, not on the presence of a chapter in this table. The project currently has 31 locked Core Lean files covering Chapters 1–18 and implemented portions of Appendices A01–A07 and A10. Chapter 19 has a Phase-B-complete candidate and remains unpromoted. Chapters 20–21 and Appendix A09 do not have promoted chapter implementations; Appendix A08 and CH19 state work remain staging/candidate material. The `lake build`/Core locks establish source compilation and preservation, not independent correctness of every physical interpretation in the prose.
+
+The notes distinguish three kinds of content:
+1. **Promoted finite results:** Exact algebraic identities on stated finite CAR/Fock or budget carriers, with their actual hypotheses and boundary margins.
+2. **Staging and specified algebraic models:** Weighted polynomial CCR states, formal power series, charge-lattice constructions, and duality maps whose Lean development or Core promotion is incomplete.
+3. **Conditional criteria and physical context:** Leakage needs a nonzero outward component; continuum scaling and thermodynamic gaps need additional constructions and estimates.
+
+The [adaptive roadmap](../../adaptative_roadmap.md) records cross-chapter status and sequencing. Historical completion ledgers and reviews are dated snapshots and should not override the current source or chapter machine records.
 
 ---
 

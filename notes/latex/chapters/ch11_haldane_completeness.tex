@@ -26,6 +26,42 @@ In this chapter, we resolve Haldane completeness constructively and strictly wit
 \end{enumerate}
 Combining these two results proves that the bosonic density states form an explicit, complete orthogonal basis of the low-energy fermionic budget space $B(N, K)$.
 
+\section{A Study Case: Partitions in a Finite Band}
+\label{sec:haldane_h5_example}
+
+\begin{remark}
+Take $h=5$, so $L=10$ and the momentum band is $\{-4,-3,\ldots,5\}$.
+In charge sector $N=0$, the reference sea occupies $\{-4,-3,-2,-1,0\}$.
+The sorted occupied momenta $s_0<\cdots<s_4$ determine nondecreasing
+displacements $d_i=s_i-(-4+i)$, whose sum is the excitation energy. Removing
+zero entries and reversing the remaining list gives an ordinary partition.
+For example, displacements $(0,0,0,1,3)$ give partition $(3,1)$ and energy
+$4$. This makes the counting visible: at each energy the fermionic states
+are counted by partitions that fit inside a $5\times5$ rectangle.
+
+\begin{equation}
+\begin{array}{c|c|l}
+E & \text{fermionic multiplicity} & \text{partitions of }E \\ \hline
+0&1&() \\
+1&1&(1) \\
+2&2&(2),\ (1,1) \\
+3&3&(3),\ (2,1),\ (1,1,1) \\
+4&5&(4),\ (3,1),\ (2,2),\ (2,1,1),\ (1,1,1,1) \\
+5&7&(5),\ (4,1),\ (3,2),\ (3,1,1),\ (2,2,1),\ (2,1,1,1),\ (1,1,1,1,1) \\
+6&9&\text{all 11 partitions except }(6)\text{ and }(1^6)
+\end{array}
+\end{equation}
+
+Thus the first six energy levels have multiplicities
+$1,1,2,3,5,7$, exactly $p(E)$. At $E=6$, the partitions $(6)$ and
+$(1^6)$ no longer fit within the $5\times5$ rectangle, so the finite band
+has nine states rather than eleven. Below the edge threshold every
+partition is available; once an excitation reaches the edge, the
+unrestricted boson count begins to overcount the finite fermionic space.
+The general theorem below specifies the exact energy range in which the
+finite-band restriction removes no partitions.
+\end{remark}
+
 \section{Fermionic Coordinates and the Rectangle Bijection (Regime R1)}
 
 We begin by establishing the exact combinatorial dimension of the fermionic fixed-energy subspaces using the particle-hole displacement coordinates introduced in Chapter~\ref{ch:vacuum_budget}.
@@ -78,30 +114,20 @@ Let $h \ge 1$ and $-h \le N \le h$. The map $S \mapsto (d_0, \dots, d_{n-1})$ is
 \end{lemma}
 
 \begin{proof}
-Given $S \subseteq B$ with $|S| = n$, the sorted elements $s_0 < \dots < s_{n-1}$ are uniquely determined. Since $s_{i+1} > s_i$, we have $s_{i+1} - s_i \ge 1$, which gives:
-\[
-d_{i+1} - d_i = (s_{i+1} - g_{i+1}) - (s_i - g_i) = (s_{i+1} - s_i) - 1 \ge 0.
-\]
-Hence $d_0 \le d_1 \le \dots \le d_{n-1}$. The lower bound $d_0 \ge 0$ follows from $s_0 \ge -h + 1 = g_0$. The upper bound follows from $s_{n-1} \le h$, which yields:
-\[
-d_{n-1} = s_{n-1} - g_{n-1} = s_{n-1} - (-h + n) \le h - (-h + n) = 2h - n = h - N.
-\]
-Conversely, given any sequence $(d_0, \dots, d_{n-1})$ satisfying $0 \le d_0 \le \dots \le d_{n-1} \le h - N$, we define:
-\[
-s_i \coloneqq -h + 1 + i + d_i \quad (0 \le i < n).
-\]
-Then $s_{i+1} - s_i = 1 + (d_{i+1} - d_i) \ge 1$, so the values $s_i$ are strictly increasing integers. Furthermore:
-\[
-s_0 = -h + 1 + d_0 \ge -h + 1, \qquad s_{n-1} = -h + n + d_{n-1} \le -h + n + (2h - n) = h.
-\]
-Thus, every $s_i \in B$, and setting $S = \{s_0, \dots, s_{n-1}\}$ yields a subset of cardinality $n = h + N$ with excitation $\sum d_i = E$. These two constructions are mutually inverse.
+For sorted occupied modes, $s_{i+1}>s_i$ gives
+$d_{i+1}-d_i=(s_{i+1}-s_i)-1\ge0$; the band endpoints give
+$0\le d_0$ and $d_{n-1}\le2h-n=h-N$. Conversely, from any sequence
+with these bounds, set $s_i=-h+1+i+d_i$. Monotonicity of the $d_i$
+makes the $s_i$ strictly increasing, and the bounds place them in
+$B=\{-h+1,\ldots,h\}$. The two constructions are inverse, and the
+energy is $\sum_i d_i$ by definition.
 \end{proof}
 
 \begin{theorem}[Regime R1: Exact Dimension Equality]
 \label{thm:regime_r1}
 Let $h \ge 1$, $-h \le N \le h$, and let $E \ge 0$. Assume the \emph{Regime R1 margin condition}:
 \begin{equation}
-E \le \min(h + N, \; h - N) = h - |N|.
+E \le h-|N|.
 \end{equation}
 Then the dimension of the fixed-energy subspace $\mathcal{H}^N_E$ is identically equal to the unrestricted partition function $p(E)$:
 \begin{equation}
@@ -110,17 +136,12 @@ Then the dimension of the fixed-energy subspace $\mathcal{H}^N_E$ is identically
 \end{theorem}
 
 \begin{proof}
-By Lemma~\ref{lem:rectangle_bijection}, $\dim_{\mathbb{C}} \mathcal{H}^N_E$ equals the number of partitions of $E$ whose Young diagram fits inside the $(h+N) \times (h-N)$ rectangle.
-Let $\lambda = (\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_\ell > 0)$ be an arbitrary unrestricted integer partition of $E$, so that $\sum_{j=1}^\ell \lambda_j = E$ and each $\lambda_j \ge 1$.
-\begin{enumerate}
-    \item The number of parts $\ell$ satisfies $\ell \le \sum_{j=1}^\ell \lambda_j = E$. Under the margin condition, $E \le h + N = n$, so $\ell \le n$. Thus, padding $\lambda$ with $n - \ell \ge 0$ zeros yields a non-decreasing sequence $(d_0, \dots, d_{n-1})$ of length $n$.
-    \item The largest part $\lambda_1$ satisfies $\lambda_1 \le \sum_{j=1}^\ell \lambda_j = E$. Under the margin condition, $E \le h - N$, so $\lambda_1 \le h - N$. Thus, every part fits within the column limit $2h - n = h - N$.
-\end{enumerate}
-Because $E \le \min(h+N, h-N)$, \emph{every} unrestricted partition of $E$ automatically fits inside the bounding box. None of the boundary constraints are violated.
-Therefore, the restriction of bounded partitions is completely non-binding, and the set of valid fermionic configurations at energy $E$ is in bijective correspondence with the unrestricted partitions of $E$. We conclude:
-\[
-\dim_{\mathbb{C}} \mathcal{H}^N_E = p(E).
-\]
+By Lemma~\ref{lem:rectangle_bijection}, the dimension counts partitions
+that fit in the $(h+N)\times(h-N)$ rectangle. Every partition of $E$
+has at most $\ell\le E$ parts and largest part $\lambda_1\le E$;
+the margin gives $E\le h-|N|=\min(h+N,h-N)$. Thus its length fits
+the row bound and its largest part fits the column bound, so every
+partition of $E$ occurs and the count is $p(E)$.
 \end{proof}
 
 \section{Bosonic Partition States}
@@ -158,18 +179,18 @@ The partition state $|\lambda; N\rangle$ satisfies the following properties:
 \begin{proof}
 \begin{enumerate}
     \item By Theorem~\ref{thm:same_sign_comm}, positive density modes globally commute on the entire Fock carrier:
-    \[
+    \begin{equation}
     [\rho_m, \rho_n] = 0 \quad \text{for all } m, n \ge 1.
-    \]
+    \end{equation}
     Any permutation of the operators in a written product of positive modes can be generated by adjacent transpositions $\rho_m \rho_n = \rho_n \rho_m$. Hence the product operator is completely independent of the ordering of the parts.
-    \item By Theorem~\ref{thm:charge_energy_covariance}, each mode $\rho_m$ shifts the relative charge by $0$ and shifts the excitation energy by $+m$:
-    \[
-    \hat{N} \rho_m = \rho_m \hat{N}, \qquad [\hat{P}, \rho_m] = m \rho_m.
-    \]
+    \item The charge operator $N$ and excitation-energy operator $P$ act on the full Fock space $\mathcal{F}(L)$. By Theorem~\ref{thm:charge_energy_covariance}, each mode $\rho_m$ shifts the relative charge by $0$ and the excitation energy by $+m$:
+    \begin{equation}
+    N \rho_m = \rho_m N, \qquad [P, \rho_m] = m \rho_m.
+    \end{equation}
     Since $|N\rangle_0 \in \mathcal{H}^N_0$, acting with $\rho_{m_r}$ produces a state in $\mathcal{H}^N_{m_r}$. By induction on $r$, the composite state $|\lambda; N\rangle$ has charge $N$ and exact excitation energy:
-    \[
+    \begin{equation}
     \sum_{j=1}^r m_j = E.
-    \]
+    \end{equation}
     Therefore, $|\lambda; N\rangle \in \mathcal{H}^N_E$.
 \end{enumerate}
 \end{proof}
@@ -214,9 +235,9 @@ Consequently, the input state $W(w') |N\rangle_0$ satisfies the M2 (and M1) marg
 The bound $m + n_1 + E_{\mathrm{rem}} + |N| \le m + K + |N|$ holds identically because $n_1 + E_{\mathrm{rem}} = \sum_{k=1}^s n_k \le K$.
 Since $m \le K$, we have $m + K + |N| \le 2K + |N| \le h$.
 Therefore, the remainder state $W(w') |N\rangle_0 \in B(N, E_{\mathrm{rem}})$ lies safely within the buffer zone where the Kac--Moody commutator is exact:
-\[
+\begin{equation}
 [\rho_{-m}, \rho_{n_1}] W(w') |N\rangle_0 = m\, \delta_{m, n_1}\, W(w') |N\rangle_0.
-\]
+\end{equation}
 \end{proof}
 
 \begin{lemma}[Lowering Contraction Formula]
@@ -230,30 +251,13 @@ where $r_m(w)$ is the multiplicity of $m$ in $w$, and $w \setminus \{m\}$ is the
 \end{lemma}
 
 \begin{proof}
-We proceed by induction on the length $s$ of the word $w = (n_1, \dots, n_s)$.
-\begin{enumerate}
-    \item \textbf{Base step ($s = 0$):} $w = \emptyset$, so $W(\emptyset)|N\rangle_0 = |N\rangle_0$.
-    By Theorem~\ref{thm:budget_action_annihilation}(2), $\rho_{-m} |N\rangle_0 = 0$. Since $r_m(\emptyset) = 0$, both sides equal zero.
-    \item \textbf{Inductive step:} Let $w = (n_1, w')$. Then $W(w) = \rho_{n_1} W(w')$.
-    By Lemma~\ref{lem:right_remainder_margin}, we may commute $\rho_{-m}$ past $\rho_{n_1}$:
-    \[
-    \rho_{-m} \rho_{n_1} W(w') |N\rangle_0 = \rho_{n_1} \rho_{-m} W(w') |N\rangle_0 + [\rho_{-m}, \rho_{n_1}] W(w') |N\rangle_0.
-    \]
-    By Lemma~\ref{lem:right_remainder_margin}, the commutator evaluates to:
-    \[
-    [\rho_{-m}, \rho_{n_1}] W(w') |N\rangle_0 = m\, \delta_{m, n_1}\, W(w') |N\rangle_0.
-    \]
-    Applying the induction hypothesis to $\rho_{-m} W(w') |N\rangle_0$ yields:
-    \[
-    \rho_{n_1} \left( m\, r_m(w')\, W(w' \setminus \{m\}) |N\rangle_0 \right) + m\, \delta_{m, n_1}\, W(w') |N\rangle_0.
-    \]
-    Since positive modes commute, $\rho_{n_1} W(w' \setminus \{m\}) = W((n_1, w' \setminus \{m\})) = W(w \setminus \{m\})$.
-    Factoring out $m W(w \setminus \{m\}) |N\rangle_0$ gives the total coefficient:
-    \[
-    m \left( r_m(w') + \delta_{m, n_1} \right) = m \cdot r_m(w).
-    \]
-    This completes the induction.
-\end{enumerate}
+Proceed by induction on the word length. The empty word is annihilated by
+$\rho_{-m}$. For $w=(n_1,w')$, the budget invariant permits the
+Kac--Moody pull-through relation
+$\rho_{-m}\rho_{n_1}W(w')=\rho_{n_1}\rho_{-m}W(w')+
+ m\delta_{m,n_1}W(w')$. Applying induction to the remainder and
+commuting the positive modes combines the coefficients as
+$m(r_m(w')+\delta_{m,n_1})=m r_m(w)$, giving the claimed formula.
 \end{proof}
 
 \begin{theorem}[Regime R2: Hall--Gram Matrix Diagonalization]
@@ -269,28 +273,13 @@ the bosonic partition states satisfy the exact orthogonality relation for all $E
 \end{theorem}
 
 \begin{proof}
-If $E \neq E'$, the states $|\lambda; N\rangle \in \mathcal{H}^N_E$ and $|\mu; N\rangle \in \mathcal{H}^N_{E'}$ belong to distinct eigenspaces of the excitation energy observable $\hat{E}$. By Definition~\ref{def:budget_subspace}, distinct energy subspaces $\mathcal{H}(N, E)$ and $\mathcal{H}(N, E')$ are spanned by disjoint subsets of the orthonormal occupation basis $\{|S\rangle\}$, hence are mutually orthogonal, so $\langle \lambda; N \mid \mu; N \rangle = 0$.
-
-Now assume $E = E'$ and let $\lambda, \mu \vdash E$. We write $|\lambda; N\rangle = \rho_{m_1} \dots \rho_{m_r} |N\rangle_0$ and compute:
-\[
-\langle \lambda; N \mid \mu; N \rangle = \left\langle \lambda \setminus \{m_1\}; N \right| \rho_{-m_1} |\mu; N\rangle.
-\]
-By Lemma~\ref{lem:lowering_contraction},
-\[
-\rho_{-m_1} |\mu; N\rangle = m_1 \cdot r_{m_1}(\mu) \cdot |\mu \setminus \{m_1\}; N\rangle.
-\]
-If $m_1 \notin \mu$, then $r_{m_1}(\mu) = 0$, which immediately gives $\langle \lambda; N \mid \mu; N \rangle = 0$.
-If $m_1 \in \mu$, we obtain:
-\[
-\langle \lambda; N \mid \mu; N \rangle = m_1 \cdot r_{m_1}(\mu) \cdot \langle \lambda \setminus \{m_1\}; N \mid \mu \setminus \{m_1\}; N \rangle.
-\]
-Proceeding by induction on the total number of parts, if $\lambda \neq \mu$, at some step a part of $\lambda$ fails to appear in the remaining multiset of $\mu$, yielding zero.
-If $\lambda = \mu$, each occurrence of part $m$ is extracted successively, contributing factors $m \cdot r_m, m \cdot (r_m - 1), \dots, m \cdot 1 = m^{r_m} r_m!$.
-The base case is $\langle N \mid N \rangle_0 = 1$.
-Taking the product over all distinct part values $m \ge 1$ yields:
-\[
-\langle \lambda; N \mid \lambda; N \rangle = \prod_{m \ge 1} m^{r_m} r_m! = z_\lambda.
-\]
+Different energies are orthogonal because the states lie in distinct
+energy eigenspaces. At fixed energy, successively apply the lowering
+contraction formula to the parts of $\lambda$. If a part is unmatched
+in $\mu$, the inner product vanishes; otherwise each occurrence of a
+part $m$ extracts $m r_m,m(r_m-1),\ldots,m$, giving
+$m^{r_m}r_m!$. The recursion therefore yields zero unless $\lambda=\mu$,
+and in that case gives $\prod_m m^{r_m}r_m!=z_\lambda$.
 \end{proof}
 
 \begin{corollary}[Linear Independence]
@@ -305,9 +294,9 @@ is mutually orthogonal and linearly independent over $\mathbb{C}$.
 \begin{proof}
 Suppose $\sum_{\lambda} c_\lambda |\lambda; N\rangle = 0$ for some complex coefficients $c_\lambda$.
 Taking the inner product with $|\mu; N\rangle$ and using Theorem~\ref{thm:hall_gram} yields:
-\[
+\begin{equation}
 0 = \left\langle \mu; N \;\middle|\; \sum_\lambda c_\lambda |\lambda; N\rangle \right\rangle = \sum_\lambda c_\lambda \delta_{\lambda, \mu} z_\lambda = c_\mu z_\mu.
-\]
+\end{equation}
 Since $z_\mu \ge 1 > 0$, we conclude $c_\mu = 0$ for all $\mu$.
 \end{proof}
 
@@ -329,9 +318,9 @@ E \le h - |N|.
 
 \begin{proof}
 Since $E \le K$ and $K \ge 0$, we have $E \le 2K$. Therefore:
-\[
-E + |N| \le 2K + |N| \le h \implies E \le h - |N| = \min(h + N, h - N).
-\]
+\begin{equation}
+E + |N| \le 2K + |N| \le h \implies E \le h - |N|.
+\end{equation}
 \end{proof}
 
 \begin{theorem}[Haldane Completeness at Fixed Energy]
@@ -347,16 +336,11 @@ Then the bosonic partition states $\{|\lambda; N\rangle \mid \lambda \vdash E\}$
 \end{theorem}
 
 \begin{proof}
-We check the three requirements of a basis:
-\begin{enumerate}
-    \item \textbf{Subspace membership:} By Lemma~\ref{lem:partition_state_well_defined}(2), $|\lambda; N\rangle \in \mathcal{H}^N_E$ for every partition $\lambda \vdash E$.
-    \item \textbf{Linear independence:} By Corollary~\ref{cor:partition_linear_independence}, the family $\{|\lambda; N\rangle \mid \lambda \vdash E\}$ is orthogonal with strictly positive norms, hence linearly independent over $\mathbb{C}$.
-    \item \textbf{Dimension match:} The number of vectors in this linearly independent family is the number of partitions of $E$, which is $p(E)$.
-    By Lemma~\ref{lem:r2_implies_r1}, the condition $2E + |N| \le h$ implies the Regime R1 condition $E \le h - |N|$.
-    By Theorem~\ref{thm:regime_r1}, $\dim_{\mathbb{C}} \mathcal{H}^N_E = p(E)$.
-\end{enumerate}
-A linearly independent family of $p(E)$ vectors in a vector space of dimension $p(E)$ spans the entire space.
-Therefore, the partition states span $\mathcal{H}^N_E$ and constitute an orthogonal basis.
+Lemma~\ref{lem:partition_state_well_defined} places all $p(E)$ partition
+states in $\mathcal{H}^N_E$. Theorem~\ref{thm:hall_gram} gives them
+positive diagonal Gram matrix, so they are linearly independent. Since
+$2E+|N|\le h$ implies the R1 margin, Theorem~\ref{thm:regime_r1}
+gives $\dim\mathcal{H}^N_E=p(E)$. They therefore form a basis.
 \end{proof}
 
 \begin{theorem}[The Whole Budget Basis]
@@ -377,25 +361,63 @@ B(N, K) = \bigoplus_{E=0}^K \mathcal{H}^N_E, \qquad \dim_{\mathbb{C}} B(N, K) = 
 \end{theorem}
 
 \begin{proof}
-Recall from Definition~\ref{def:budget_subspace} that the budget subspace is:
-\[
-B(N, K) = \operatorname{span}_{\mathbb{C}} \left\{ |S\rangle \mid \mathcal{N}(S) = N,\; e(S) \le K \right\}.
-\]
-Since excitation energy is an integer taking values $0 \le E \le K$, the coordinate basis decomposes as:
-\[
-B(N, K) = \bigoplus_{E=0}^K \mathcal{H}^N_E.
-\]
-For each $E \le K$, the condition $2K + |N| \le h$ implies $2E + |N| \le 2K + |N| \le h$.
-By Theorem~\ref{thm:haldane_completeness_fixed_energy}, the family $\{|\lambda; N\rangle \mid \lambda \vdash E\}$ is an orthogonal basis of $\mathcal{H}^N_E$.
-Since spaces $\mathcal{H}^N_E$ and $\mathcal{H}^N_{E'}$ with $E \neq E'$ are mutually orthogonal, the union $\mathcal{B}_{\mathrm{basis}}(N, K)$ is an orthogonal basis of the direct sum $\bigoplus_{E=0}^K \mathcal{H}^N_E = B(N, K)$.
-Its dimension is the sum of dimensions $\sum_{E=0}^K p(E)$.
+The budget decomposes as $B(N,K)=\bigoplus_{E=0}^K\mathcal{H}^N_E$,
+with distinct energy subspaces orthogonal. For each $E\le K$, the R2
+margin implies $2E+|N|\le h$, so Theorem~\ref{thm:haldane_completeness_fixed_energy}
+provides an orthogonal partition basis of $\mathcal{H}^N_E$. Their union
+is consequently an orthogonal basis of the budget, with dimension
+$\sum_{E=0}^Kp(E)$.
 \end{proof}
+
+Theorem~\ref{thm:whole_budget_basis} explains why counting partitions is
+also a Hilbert-space dimension calculation. Distinct occupation kets are
+orthogonal, so the dimension at fixed energy $E$ is exactly the number of
+allowed occupation configurations. The rectangle bijection identifies
+those configurations with partitions; under the stated margin, every
+partition of $E$ fits, giving $p(E)$ states. Different energies are
+orthogonal as well, so the dimension through cutoff $K$ is the sum of these
+level multiplicities. In the $h=5$, $N=0$ example, the first four energy
+levels already give $1+1+2+3=7$ states, and including levels $4$ and $5$
+gives $19$.
+
+\subsection{How large is the low-energy space?}
+\begin{remark}
+The partition number has no simple elementary closed form, but it has an
+exact generating function:
+\begin{equation}
+\sum_{E=0}^{\infty}p(E)q^E=\prod_{m=1}^{\infty}\frac{1}{1-q^m},
+\qquad |q|<1.
+\end{equation}
+Each factor sums over the possible occupation number of bosonic mode $m$;
+choosing occupations with weighted energy $E=\sum_m m r_m$ is precisely a
+partition of $E$. For large $E$,
+\begin{equation}
+p(E)\sim \frac{1}{4E\sqrt{3}}\exp\!\left(\pi\sqrt{\frac{2E}{3}}\right),
+\end{equation}
+so the number of states grows rapidly but subexponentially in energy. For
+the finite-band theory, this unrestricted count is exact only in the
+proved margin range; outside it, the rectangle constraint can only reduce
+the count. If $D(N,K)=\dim B(N,K)$ and the R1 condition holds through $K$,
+then
+\begin{equation}
+D(N,K)=\sum_{E=0}^K p(E),\qquad
+p(K)\le D(N,K)\le (K+1)p(K).
+\end{equation}
+The lower bound counts just the top energy shell, while the upper bound uses
+that $p(E)$ is nondecreasing. These estimates quantify the size of the
+finite subspace on which the bosonic description is complete, and are
+useful when deciding how large a basis calculation or exact diagonalization
+must be. The exact generating function for the cumulative count is
+$(1-q)^{-1}\prod_{m\ge1}(1-q^m)^{-1}$.
+\end{remark}
+
 
 \section{Pedagogical Synthesis and Discussion}
 
 The significance of Theorems~\ref{thm:haldane_completeness_fixed_energy} and~\ref{thm:whole_budget_basis} warrants reflection.
 
 \subsection{Bosonization as an Exact Low-Energy Isomorphism}
+\begin{remark}
 In conventional field theory textbooks, bosonization is frequently presented as an operator equivalence between continuum Dirac fields $\psi(x)$ and vertex operators $\operatorname{exp}(i \phi(x))$ in the thermodynamic limit $L \to \infty$. This continuum picture obscures several essential structural facts:
 \begin{itemize}
     \item Are the collective bosonic states genuinely spanning, or are there hidden fermionic degrees of freedom that cannot be generated by density waves?
@@ -411,12 +433,25 @@ The constructive approach developed here provides definitive answers:
     \end{itemize}
     The fact that $R2 \implies R1$ ensures that whenever the current algebra is exact, the combinatorial space is simultaneously saturated.
 \end{enumerate}
-
-\begin{remark}[Formalization Note]
-In the verified Lean~4 development (as formalized in Chapter~11 and Appendix~A04), all 61 theorems comprising the rectangle bijection, the bounded-to-unrestricted partition equivalence, the lowering pull-through contraction, the Hall--Gram determinant evaluation, and the whole budget basis assembly are certified constructively. In particular:
-\begin{enumerate}
-    \item The coordinate bijection is established via an explicit structure preserving sorted displacements, proved with inverse maps without noncomputable choice.
-    \item The linear independence of the partition states is certified using the constructive criterion that pairwise orthogonality with strictly positive self-inner product implies linear independence.
-    \item Spanning is established by equating the cardinal number of independent vectors with the finite rank of the coordinate submodule.
-\end{enumerate}
 \end{remark}
+
+
+\begin{remark}[Constructive Structure of the Completeness Proof]
+The configuration--partition correspondence is given by explicit mutually
+inverse maps, so its bijectivity requires no choice principle. Likewise,
+the partition states have a positive-definite diagonal Gram matrix with
+entries $z_\lambda>0$; this directly proves linear independence. Together
+with the matching dimension count, these finite constructions establish
+completeness without an analytic limit or a stronger continuum identity.
+\end{remark}
+
+\section{Chapter Summary}
+The rectangle bijection gives the exact fermionic state count, and the
+positive Hall--Gram inner product shows that density-mode partition states
+are mutually orthogonal. Together these establish a complete basis of the
+finite low-energy budget whenever the stated margin holds. The partition
+function then predicts the Hilbert-space dimension and its growth, while
+the $h=5$ example displays the first point at which the band edge removes a
+partition. This is a finite and explicit realization of the completeness
+idea used in continuum bosonization; it identifies both the range of exact
+agreement and the boundary mechanism that limits it.

@@ -7,14 +7,17 @@ In conventional quantum field theory, bosonic Fock spaces are constructed as inf
 
 In the algebraic bosonization program presented in this monograph, we circumvent all topological subtleties by constructing the bosonic Fock layer \emph{purely algebraically}. The bosonic carrier is realized as a commutative multivariate polynomial ring over $\mathbb{C}$. 
 
-\paragraph{Why the Umbral/Polynomial Approach is Essential for Constructive Formalization.}
-The polynomial realization of the bosonic Fock space offers four decisive advantages for mathematical physics and constructive formalization:
+\begin{quote}
+\item[]\paragraph{Why the Umbral/Polynomial Approach is Useful.}
+The polynomial realization offers four useful features for the finite-lattice bosonization developed here:
 \begin{enumerate}
-    \item \textbf{Exact Polynomial Arithmetic:} Rather than manipulating infinite-dimensional vectors with convergence topologies, states are finite complex polynomials $p(X_1, \dots, X_M)$. All operations are exact algebraic manipulations in commutative algebra.
+    \item \textbf{Exact arithmetic:} Rather than manipulating infinite-dimensional vectors with convergence topologies, states are finite complex polynomials $p(X_1, \dots, X_M)$. All operations are exact algebraic manipulations in commutative algebra.
     \item \textbf{Elementary Realization of CCR:} Creation operators are simply coordinate multiplications $X_m \cdot p(X)$, and annihilation operators are scaled partial derivatives $m \frac{\partial p}{\partial X_m}$. The Canonical Commutation Relations $[A_m, C_n] = m \delta_{mn} I$ follow immediately from the elementary calculus product rule $\frac{\partial}{\partial X_m}(X_n p) = \delta_{mn} p + X_n \frac{\partial p}{\partial X_m}$.
     \item \textbf{Positive-Definite Metric via Haldane Weights:} Endowing polynomials with the Haldane inner product $\langle X^r, X^{r'} \rangle_H = \delta_{r, r'} \prod m^{r_m} r_m!$ renders creation and annihilation operators exact Hilbert space adjoints, providing an exact metric structure without functional integrals.
     \item \textbf{Strict Nilpotency and Finite Truncation:} When restricted to energy budget subspaces of weighted degree $\le K$, annihilation operators are strictly nilpotent. Consequently, operator exponentials (such as vertex operators and Weyl displacement operators) terminate after finitely many terms, becoming exact algebraic polynomials without any convergence requirements.
 \end{enumerate}
+
+\end{quote}
 
 \section{The Polynomial Carrier and the Haldane Inner Product}
 
@@ -28,13 +31,15 @@ The algebraic bosonic carrier space $\mathcal{F}_b$ is the commutative ring of m
 The bosonic vacuum state $|\Omega_b\rangle$ is the constant polynomial $1 \in \mathcal{F}_b$.
 \end{definition}
 
-\paragraph{Cutoff Independence and Direct Limits.}
-Although $\mathcal{F}_b$ is defined using an upper mode cutoff $M$, all constructions in this chapter are strictly \emph{cutoff-independent}. 
-Specifically, the polynomial algebras form a directed inductive system under canonical inclusions:
+\begin{quote}
+\item[]\paragraph{Cutoff Independence and Direct Limits.}
+Although $\mathcal{F}_b$ is defined using an upper mode cutoff $M$, a fixed polynomial involving only modes $1,\dots,M$ embeds canonically into every larger cutoff. Under this inclusion, its coefficients, inner product, and the actions of the existing modes are unchanged:
 \begin{equation}
 \mathbb{C}[X_1, \dots, X_M] \hookrightarrow \mathbb{C}[X_1, \dots, X_M, X_{M+1}], \qquad X_m \mapsto X_m.
 \end{equation}
-Under this inclusion, the Haldane inner product and commutation relations $[A_m, C_n] = m \delta_{m, n} I$ for existing modes $m, n \le M$ are preserved identically. Adding higher modes $M' > M$ never modifies the matrix elements, inner products, or algebraic commutators of existing modes. In the direct limit $M \to \infty$, the theory stabilizes to the polynomial ring in countably many indeterminates $\mathbb{C}[X_1, X_2, \dots]$, confirming that the finite cutoff $M$ is merely a computational parameter rather than a physical modification.
+This compatibility lets us compare results at different cutoffs. It does not say that every cutoff-dependent total operator or every physical observable is independent of $M$, nor does it by itself establish a continuum limit.
+
+\end{quote}
 
 \begin{definition}[Occupation Vectors, Particle Number, and Energy]
 An occupation configuration of bosonic modes is a tuple of non-negative integers $r = (r_1, r_2, \dots, r_M) \in \mathbb{N}^M$. Each occupation vector $r$ defines a basis monomial:
@@ -47,7 +52,8 @@ N(r) \coloneqq \sum_{m=1}^M r_m \in \mathbb{N}, \qquad E(r) \coloneqq \sum_{m=1}
 \end{equation}
 \end{definition}
 
-\paragraph{Linear Energy Dispersion vs.\ Momentum.}
+\begin{quote}
+\item[]\paragraph{Linear Energy Dispersion vs.\ Momentum.}
 Notice that the excitation energy $E(r) = \sum m r_m$ is defined linearly in the mode integer $m$. In physical condensed matter systems, this corresponds to the assumption of a \emph{linearized chiral dispersion}:
 \begin{equation}
 \epsilon_m \coloneqq v_F\, p_m = v_F \left(\frac{2\pi m}{L}\right).
@@ -57,6 +63,8 @@ In dimensionless lattice units where the Fermi velocity is normalized to $v_F \c
 E(r) \equiv P(r).
 \end{equation}
 While the linearity of $\epsilon_m$ is model-dependent (reflecting the linear approximation of the electron dispersion near the Fermi surface $k \approx \pm k_F$), it is the universal defining characteristic of Tomonaga--Luttinger liquid physics~\cite{haldane1981, giamarchi2004}.
+
+\end{quote}
 
 \begin{definition}[Current Operators and Derivatives]
 For each mode $m \in Q$:
@@ -106,35 +114,33 @@ For general polynomials $p = \sum_r p_r X^r$ and $q = \sum_r q_r X^r$, the pairi
     Applying $C_m$ raises the $m$-th occupation: $C_m X^r = X^{r + e_m}$.
     Applying $A_m$ lowers the $m$-th occupation: $A_m X^{r'} = m r_m' X^{r' - e_m}$ if $r_m' \ge 1$, and $0$ if $r_m' = 0$.
     Therefore:
-    \[
+    \begin{equation}
     \langle C_m X^r \mid X^{r'} \rangle_H = \langle X^{r + e_m} \mid X^{r'} \rangle_H = w(r + e_m)\, \delta_{r + e_m, r'}.
-    \]
+    \end{equation}
     On the other hand:
-    \[
+    \begin{equation}
     \langle X^r \mid A_m X^{r'} \rangle_H = m r_m' \langle X^r \mid X^{r' - e_m} \rangle_H = m r_m'\, w(r)\, \delta_{r, r' - e_m}.
-    \]
-    When $r' = r + e_m$, we have $r_m' = r_m + 1$. The ratio of Haldane weights satisfies the exact identity:
-    \[
-    w(r + e_m) = m^{r_m + 1} (r_m + 1)! \prod_{k \neq m} k^{r_k} r_k! = m (r_m + 1) w(r) = m r_m' w(r).
-    \]
+    \end{equation}
+    When $r'=r+e_m$, the weight ratio is $w(r+e_m)/w(r)=m(r_m+1)=m r_m'$, so the two basis pairings agree; both vanish unless $r'=r+e_m$.
     Thus $\langle C_m X^r \mid X^{r'} \rangle_H = \langle X^r \mid A_m X^{r'} \rangle_H$ for all basis monomials.
 \end{enumerate}
 \end{proof}
 
 \begin{definition}[Bosonic Observables]
-The total bosonic particle number operator $\hat{N}_b$ and the chiral bosonic Hamiltonian $\hat{H}_b$ are defined by:
+On a monomial $X^r$, the occupation number $r_m$ counts quanta in mode $m$. Thus $N_b$ counts all bosonic quanta, while $H_b$ weights each by its mode energy: for example, $X_1^2X_3$ contains three quanta and has energy $2\cdot1+1\cdot3=5$.
+The total bosonic particle number operator $N_b$ and the chiral bosonic Hamiltonian $H_b$ belong to $\operatorname{End}_{\mathbb C}(\mathcal F_b)$ and are defined by:
 \begin{align}
-\hat{N}_b &\coloneqq \sum_{m=1}^M \frac{1}{m} C_m A_m = \sum_{m=1}^M X_m \frac{\partial}{\partial X_m}, \\
-\hat{H}_b &\coloneqq \sum_{m=1}^M C_m A_m = \sum_{m=1}^M m X_m \frac{\partial}{\partial X_m}.
+N_b &\coloneqq \sum_{m=1}^M \frac{1}{m} C_m A_m = \sum_{m=1}^M X_m \frac{\partial}{\partial X_m}, \\
+H_b &\coloneqq \sum_{m=1}^M C_m A_m = \sum_{m=1}^M m X_m \frac{\partial}{\partial X_m}.
 \end{align}
 \end{definition}
 
 \begin{lemma}[Diagonal Action on Monomials]
 For every monomial basis state $X^r$:
 \begin{equation}
-\hat{N}_b X^r = N(r) X^r = \left(\sum_{m=1}^M r_m\right) X^r, \qquad \hat{H}_b X^r = E(r) X^r = \left(\sum_{m=1}^M m\, r_m\right) X^r.
+N_b X^r = N(r) X^r = \left(\sum_{m=1}^M r_m\right) X^r, \qquad H_b X^r = E(r) X^r = \left(\sum_{m=1}^M m\, r_m\right) X^r.
 \end{equation}
-Both $\hat{N}_b$ and $\hat{H}_b$ are formally self-adjoint under the Haldane inner product.
+Both $N_b$ and $H_b$ are self-adjoint under the Haldane inner product.
 \end{lemma}
 
 \begin{proof}
@@ -157,15 +163,11 @@ On the polynomial space $\mathcal{F}_b$, the operators $\{A_m, C_m \mid m \in Q\
 Coordinate multiplications commute: $[C_m, C_n] p = X_m X_n p - X_n X_m p = 0$.
 Partial derivatives commute: $[A_m, A_n] p = m n \left(\frac{\partial^2 p}{\partial X_m \partial X_n} - \frac{\partial^2 p}{\partial X_n \partial X_m}\right) = 0$ by Schwarz's theorem on polynomials.
 
-For the mixed commutator, let $p \in \mathcal{F}_b$ and apply the product rule for differentiation:
-\[
-\frac{\partial}{\partial X_m}(X_n p) = \left(\frac{\partial X_n}{\partial X_m}\right) p + X_n \frac{\partial p}{\partial X_m} = \delta_{m, n} p + X_n \frac{\partial p}{\partial X_m}.
-\]
-Multiplying by $m$:
-\[
-A_m(C_n p) = m\, \delta_{m, n} p + X_n \left(m \frac{\partial p}{\partial X_m}\right) = m\, \delta_{m, n} p + C_n(A_m p).
-\]
-Subtracting $C_n(A_m p)$ yields $[A_m, C_n] p = m\, \delta_{m, n} p = (m \delta_{m, n} I) p$.
+For $p\in\mathcal F_b$, the product rule gives in one step
+\begin{equation}
+A_m(C_n p)=m\frac{\partial}{\partial X_m}(X_n p)=m\delta_{m,n}p+X_n\left(m\frac{\partial p}{\partial X_m}\right)=m\delta_{m,n}p+C_n(A_m p),
+\end{equation}
+so subtracting the uncommuted term yields $[A_m,C_n]p=m\delta_{m,n}p$.
 \end{proof}
 
 \section{Energy Filtration and Finite Carrier Spaces}
@@ -216,21 +218,21 @@ For any ambient operators $A, B$, the commutator of their compressed projections
 \end{theorem}
 
 \begin{proof}
-Expanding $P_K A P_K P_K B P_K = P_K A P_K B P_K$. Writing $P_K = I - (I - P_K)$:
-\[
-P_K A P_K B P_K = P_K A (I - (I - P_K)) B P_K = P_K A B P_K - P_K A (I - P_K) B P_K.
-\]
-Symmetrically:
-\[
-P_K B P_K A P_K = P_K B A P_K - P_K B (I - P_K) A P_K.
-\]
-Subtracting the two expressions gives the desired identity.
+Using $P_K^2=P_K$ and substituting $P_K=I-(I-P_K)$ in both products gives directly
+\begin{align}
+[P_KAP_K,P_KBP_K]
+&=P_KABP_K-P_KBA P_K-P_KA(I-P_K)BP_K+P_KB(I-P_K)AP_K\\
+&=P_K[A,B]P_K-P_KA(I-P_K)BP_K+P_KB(I-P_K)AP_K.
+\end{align}
 \end{proof}
 
-\paragraph{Formal Correctness vs.\ Physical Implications: Finite Trace Obstruction.}
+\begin{quote}
+\item[]\paragraph{Formal Correctness vs.\ Physical Implications: Finite Trace Obstruction.}
 Theorem~\ref{thm:compressed_commutator} provides the exact mathematical explanation of the No-Go Theorem~\ref{thm:no_go} in the context of finite bosonic cutoffs. On the finite-dimensional carrier $\mathcal{F}_{\le K}$, the trace of any commutator $[\tilde{A}_m, \tilde{C}_m]$ must vanish identically by cyclic trace invariance: $\mathrm{Tr}([\tilde{A}_m, \tilde{C}_m]) = 0$. However, on the ambient space, $[A_m, C_m] = m I$, whose projected trace would be $m \dim(\mathcal{F}_{\le K}) > 0$. The discrepancy is precisely accounted for by the boundary terms $P_K C_m (I - P_K) A_m P_K$, which measure transient excursions out of the budget. 
 
 This proves that exact scalar commutation relations can only hold on the ambient space $\mathcal{F}_b$, or within protected internal margins where $(I - P_K)$ is not populated.
+
+\end{quote}
 
 \section{Exact Nilpotent Exponentials and the Baker--Campbell--Hausdorff Formula}
 
@@ -243,7 +245,7 @@ Let $V$ be a vector space and $A \in \mathrm{End}(V)$ a nilpotent operator with 
 \begin{equation}
 \operatorname{expNil}(A) \coloneqq \sum_{j=0}^d \frac{1}{j!} A^j.
 \end{equation}
-Because $A^{j} = 0$ for all $j > d$, this expression is an exact finite algebraic operator requiring no limits or analytic convergence.
+Because $A^{j} = 0$ for all $j > d$, this expression is an exact finite algebraic operator requiring no limits or analytic convergence. In later formulas we use the familiar notation $e^A$ for this same terminating polynomial whenever the operator is nilpotent on the specified carrier; it does not denote a separate analytic construction.
 \end{definition}
 
 \begin{theorem}[Exact Baker--Campbell--Hausdorff (BCH) Formula for Nilpotent Exponents]
@@ -264,19 +266,11 @@ e^{\alpha A_m} e^{\beta C_m} = e^{\beta C_m} e^{\alpha A_m} e^{m \alpha \beta I}
 \end{theorem}
 
 \begin{proof}
-Let $F(t) \coloneqq e^{t A} e^{t B} e^{-t A}$. Differentiating with respect to the formal parameter $t$:
-\[
-F'(t) = e^{t A} A e^{t B} e^{-t A} + e^{t A} e^{t B} B e^{-t A} - e^{t A} e^{t B} e^{-t A} A = e^{t A} [A, e^{t B}] e^{-t A} + e^{t A} e^{t B} B e^{-t A}.
-\]
-Using $[A, B^n] = n B^{n-1} [A, B] = n c B^{n-1}$, we have $[A, e^{t B}] = t c e^{t B}$. Thus:
-\[
-F'(t) = t c F(t) + e^{t A} e^{t B} B e^{-t A} - e^{t A} e^{t B} A e^{-t A} = t c F(t).
-\]
-Integrating the formal differential equation with initial condition $F(0) = I$ yields:
-\[
-F(t) = e^{t B} e^{t c} \implies e^{t A} e^{t B} = e^{t B} e^{t A} e^{t^2 [A, B]}.
-\]
-When $A$ and $B$ are nilpotent, both sides of the identity terminate after finitely many terms, establishing that the identity holds as an exact equality of polynomials in the operator algebra.
+Let $F(t)\coloneqq e^{tA}e^{tB}e^{-tA}$. Since $c=[A,B]$ commutes with both $A$ and $B$, the nested commutators give $e^{tA}Be^{-tA}=B+tc$, and hence
+\begin{equation}
+F'(t)=(B+2tc)F(t),\qquad F(t)=e^{tB}e^{t^2c}.
+\end{equation}
+Multiplying by $e^{tA}$ and using $[A,c]=0$ yields $e^{tA}e^{tB}=e^{tB}e^{tA}e^{t^2c}$, as claimed. On the specified nilpotent carriers, these exponentials are terminating polynomials.
 \end{proof}
 
 \section{Wick's Theorem and Vacuum Polynomial Recurrence}
@@ -284,21 +278,22 @@ When $A$ and $B$ are nilpotent, both sides of the identity terminate after finit
 We conclude this chapter with the algebraic formulation of Wick's theorem.
 
 \begin{definition}[Symmetric Position Operator]
-For a mode $m \in Q$, the symmetric operator $\hat{x}_m$ is defined by:
+For a mode $m \in Q$, the symmetric operator $x_m\in\operatorname{End}_{\mathbb C}(\mathcal F_b)$ is defined by:
 \begin{equation}
-\hat{x}_m \coloneqq D_m + X_m = \frac{1}{m} A_m + C_m.
+x_m \coloneqq D_m + X_m = \frac{1}{m} A_m + C_m.
 \end{equation}
 \end{definition}
 
 \begin{theorem}[Wick's Theorem and Polynomial Vacuum Recurrence]
 \label{thm:wick}
+Normal ordering means placing every creation factor $X_m$ to the left of every annihilation factor $D_m$. For example, $:X_m^aD_m^b:$ is the already ordered product $X_m^aD_m^b$; the colons specify the order and do not add another operation. In vacuum matrix elements this convention separates contractions from terms that annihilate the vacuum.
 \begin{enumerate}
     \item For any integer $n \ge 0$, the operator power satisfies:
     \begin{equation}
-    (\hat{x}_m)^n = \sum_{k=0}^{\lfloor n/2 \rfloor} \frac{n!}{k! (n - 2k)! 2^k} :(\hat{x}_m)^{n-2k}:,
+    (x_m)^n = \sum_{k=0}^{\lfloor n/2 \rfloor} \frac{n!}{k! (n - 2k)! 2^k} :(x_m)^{n-2k}:,
     \end{equation}
     where $:\! X_m^a D_m^b \!: \coloneqq X_m^a D_m^b$.
-    \item Evaluating on the vacuum state $1 \in \mathcal{F}_b$, all terms with $D_m$ annihilate the vacuum, yielding the vacuum polynomial $P_n(X) \coloneqq (\hat{x}_m)^n 1$.
+    \item Evaluating on the vacuum state $1 \in \mathcal{F}_b$, all terms with $D_m$ annihilate the vacuum, yielding the vacuum polynomial $P_n(X) \coloneqq (x_m)^n 1$.
     The polynomials $P_n(X)$ satisfy the recurrence relation:
     \begin{equation}
     P_0(X) = 1, \qquad P_1(X) = X_m, \qquad P_{n+1}(X) = X_m P_n(X) + n P_{n-1}(X),
@@ -312,15 +307,15 @@ For a mode $m \in Q$, the symmetric operator $\hat{x}_m$ is defined by:
 
 \begin{proof}
 By the commutator $[D_m, X_m] = I$, applying $(D_m + X_m)$ to $P_n(X)$ yields:
-\[
+\begin{equation}
 P_{n+1}(X) = (D_m + X_m) P_n(X) = X_m P_n(X) + D_m P_n(X).
-\]
+\end{equation}
 By induction on $n$, the derivative satisfies $D_m P_n(X) = n P_{n-1}(X)$. Substituting this into the equation yields the recurrence $P_{n+1}(X) = X_m P_n(X) + n P_{n-1}(X)$.
 Multiplying by $t^n / n!$ and summing over $n \ge 0$ solves the differential equation for the generating function, yielding $\exp(X_m t + t^2/2)$.
 \end{proof}
 
-\begin{remark}[Formalization Note]
-In the verified Lean~4 core, this entire bosonic structure is proved constructively over polynomials with rational and complex coefficients without analytic convergence theorems. The positive sign in the polynomial recurrence ($P_2 = X^2 + 1$) reflects the convention of the operator $(D + X)$, distinguishing it from the probabilists' Hermite polynomials $\mathrm{He}_2(X) = X^2 - 1$ which arise from $(X - D)$.
+\begin{remark}[The Umbral Convention and Hermite Polynomials]
+The vacuum polynomials generated by $x_m=D_m+X_m$ have the positive recurrence sign, with $P_2(X_m)=X_m^2+1$. This is the convention associated with $D+X$; the probabilists' Hermite polynomials instead use $X-D$ and satisfy $\mathrm{He}_2(X)=X^2-1$.
 \end{remark}
 
 \section{Chapter Summary and Literature Comparison}
@@ -337,7 +332,9 @@ In this chapter, we established the umbral polynomial Fock space layer:
     \item Proved Wick's theorem algebraically via Appell polynomial recurrences.
 \end{itemize}
 
-\paragraph{Comparison with Standard Continuum Literature.}
+\begin{quote}
+\item[]\paragraph{Comparison with Standard Continuum Literature.}
 In standard bosonization reviews, such as von Delft and Schoeller~\cite{vondelft1998}, Giamarchi~\cite{giamarchi2004}, and Gogolin et al.~\cite{gogolin1998}, the bosonic Fock space is taken as an infinite-dimensional Hilbert space spanned by states $b_q^\dagger \cdots b_k^\dagger |0\rangle$. Vertex operators $e^{i \alpha \phi(x)}$ are computed via normal-ordering identities :$e^A::e^B: = e^{\langle A B \rangle} :e^{A+B}:$, which involve singular short-distance divergences $\langle \phi(x) \phi(y) \rangle \sim -\ln|x-y|$.
 
 In our constructive umbral framework, all bosonic fields are finite polynomials on graded budget spaces. Nilpotent exponentials terminate into finite sums, eliminating short-distance singularities at the root. In Chapters~\ref{ch:density_modes} through~\ref{ch:haldane_completeness}, we will bridge this abstract polynomial Fock layer with the fermionic Fock space of Chapter~\ref{ch:fermions}, proving that the fermionic density modes $\rho_m$ realize this exact polynomial CCR on the fermionic budget space $B(N, K)$.
+\end{quote}

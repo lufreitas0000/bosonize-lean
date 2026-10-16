@@ -3,10 +3,9 @@
 \input{preamble}
 
 \title{\textbf{Constructive 1+1D Lattice Bosonization}\\
-\Large Exact Foundations, Algebraic Quantum Field Theory, and Haldane Completeness}
-\author{\textbf{Bosonize-Lean Project}\\
-\normalsize Formally Verified Lattice AQFT Monograph}
-\date{\today\\\small Source revision: \texttt{\BuildRevision}}
+\Large Finite Constructions and Algebraic Models}
+\author{}
+\date{\today}
 
 \begin{document}
 
@@ -20,22 +19,11 @@
 \chapter*{Preface}
 \markboth{Preface}{Preface}
 
-This monograph presents a complete, self-contained mathematical exposition of $1+1$-dimensional lattice bosonization formulated within constructive Algebraic Quantum Field Theory (AQFT). 
+This monograph develops a constructive account of $1+1$-dimensional bosonization on a finite lattice. Its starting point is physical: continuum descriptions bring divergent expressions and infinite mode sums that require regularization and careful limiting arguments. A finite periodic chain replaces those expressions with finite sums and finite-dimensional state spaces, so each construction can be stated and analyzed before any continuum limit is considered.
 
-In traditional condensed matter physics and quantum field theory, bosonization is frequently presented using formal functional integrals, divergent operator products, and heuristic infinite-dimensional limits. While physically intuitive, these heuristics often obscure essential mathematical structures, such as boundary holonomies, Umklapp wrapping, operator domain restrictions, and the exact combinatorial nature of the Schwinger anomaly.
+The finite setting makes the algebraic constraints of bosonization explicit. Periodic boundary conditions identify momenta modulo the lattice length; the finite momentum band has a distinguished boundary mode; and fermionic operators act on specified finite-dimensional sectors. Density commutators and bosonic representations therefore come with precise domains, cutoffs, and energy budgets. These restrictions are part of the physical statements: they identify where a relation holds exactly and where finite-band effects enter. The energy budget also provides a regularization by restricting attention to states of bounded excitation energy, while keeping the underlying lattice and its operator algebra exact.
 
-The research program documented here resolves these issues by developing bosonization as a system of \emph{exact algebraic theorems} on strictly finite lattices, finite-dimensional CAR Fock spaces, and graded polynomial algebras. Every theorem, lemma, and proposition appearing in Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} and Appendices~\ref{app:fourier_characters} through~\ref{app:density_partitions} has been fully formalized and verified by the Lean 4 interactive theorem prover without placeholders, unproved assertions, or non-standard axioms.
-
-The later Chapters~\ref{ch:correlations}--\ref{ch:spinful} are manuscript
-drafts awaiting independent mathematical and editorial review. Chapter~19 uses
-the accepted Phase-B CH19/A08 development, whose Core promotion remains open.
-Chapters~20 and~21 do not yet have implemented chapter Lean modules. Their
-mathematical derivations, formal-series constructions and finite comparisons
-must therefore be read with the scope and limitations stated in those chapters;
-compilation of this book does not certify their mathematics. Chapters~12--18
-have separate private drafts and are not included in this edition.
-
-Unlike formal code repositories or proof scripts, these lecture notes are designed to be read as a standalone mathematical book. The exposition employs standard mathematical language and rigorous prose. At the same time, dedicated \emph{Formalization Notes} explain the constructive mathematical insights that emerge when physical heuristics are translated into verified code.
+The finite theory does not, by itself, identify every result with its continuum counterpart. Each chapter states its finite carriers, charge sectors, cutoffs, and margin hypotheses, and distinguishes exact lattice identities from interpretations or limiting claims. The goal is to make the finite mathematics and its physical content transparent enough that readers can see both what is controlled and what requires an additional argument.
 
 \tableofcontents
 
@@ -60,54 +48,23 @@ Unlike formal code repositories or proof scripts, these lecture notes are design
 \include{chapters/ch10_heisenberg_algebra}
 \include{chapters/ch11_haldane_completeness}
 
-\part{Outlook: The Bosonization Dictionary and Interactions}
+\part{The Sugawara Construction and Multispecies Dictionary}
+\include{chapters/ch12_sugawara}
+\include{chapters/ch13_klein_factors}
+\include{chapters/ch14_mandelstam}
 
-\chapter*{The Forward Research Roadmap}
-\addcontentsline{toc}{chapter}{The Forward Research Roadmap}
-\label{ch:roadmap}
+\part{Dual Fields and Lattice Hamiltonians}
+\include{chapters/ch15_dual_fields}
+\include{chapters/ch16_field_hamiltonian}
 
-Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} establish the complete, verified algebraic foundation of lattice bosonization: from discrete spatial geometry, Fourier transforms, and CAR Fock spaces, to the exact Heisenberg Kac--Moody current algebra and Haldane completeness on the whole energy budget $B(N, K)$.
-
-The subsequent chapters of the ongoing research program extend this foundation to dynamic and interacting models:
-\begin{itemize}
-    \item \textbf{Chapter 12 (Sugawara Construction):} Proves the algebraic equivalence between the fermionic kinetic energy operator and the bosonic Sugawara Hamiltonian $H_{\mathrm{sug}}^{(M)} = \sum_{m=1}^M \rho_{-m} \rho_m$ on the whole budget $B(N, K)$.
-    \item \textbf{Chapter 13 (Klein Factors and Multi-Species Fermions):} Introduces multi-species branch fermions with explicit ground-ket sign factors to intertwine charge and chirality across commuting budget squares.
-    \item \textbf{Chapter 14 (The Projected Mattis--Mandelstam Formula):} Defines exact finite vertex operators via nilpotent polynomial exponentials and establishes the conditional cyclic-span criterion.
-    \item \textbf{Chapters 15--16 (Dual Fields and Lattice Hamiltonians):} Formulates Hermitian phase and density fields $\phi(x), \theta(x)$ and computes the spatial collapse of lattice gradients and dispersion errors.
-    \item \textbf{Chapters 17--18 (Interactions and Bogoliubov Transformations):} Analyzes forward scattering, the Luttinger liquid Hamiltonian, and the exact canonical Bogoliubov transformation on budget vectors.
-    \item \textbf{Chapters 19--21 (Correlations, Duality, and Spinful Systems):} Develops correlation functions, explicitly specified algebraic model duality, and spinful finite constructions. CH19 Phase B is accepted; CH20--21 remain manuscript/interface drafts rather than completed Lean chapters.
-\end{itemize}
-
-% Manuscript drafts imported from individually supplied standalone sections.
-% CH12--18 private drafts remain outside the published master pending review.
-\setcounter{chapter}{18}
-\chapter{States and Correlations}
-\label{ch:correlations}
-\input{chapters/sections/19.1.tex}
-\input{chapters/sections/19.2.tex}
-\input{chapters/sections/19.3.tex}
-\input{chapters/sections/19.4.tex}
-
-\chapter{Projected Order Parameters, Formal Vertices, and Model Duality}
-\label{ch:order-parameters}
-\input{chapters/sections/20.1.tex}
-\input{chapters/sections/20.2.tex}
-\input{chapters/sections/20.3.tex}
-
-\chapter{Spinful Systems, Sector Leakage, and Effective Hamiltonians}
-\label{ch:spinful}
-\input{chapters/sections/21.1.tex}
-\input{chapters/sections/21.2.tex}
-\input{chapters/sections/21.3.tex}
-\input{chapters/sections/21.4.tex}
+\part{Interactions and Bogoliubov Transformations}
+\include{chapters/ch17_luttinger_models}
+\include{chapters/ch18_bogoliubov}
 
 \appendix
 \part{Supporting Mathematical Appendices}
 
-\include{appendices/app_a01_fourier_characters}
-\include{appendices/app_a02_car_hilbert}
-\include{appendices/app_a03_energy_budgets}
-\include{appendices/app_a04_density_partitions}
+\include{appendices/app_a07_interactions_bogoliubov}
 
 \backmatter
 
