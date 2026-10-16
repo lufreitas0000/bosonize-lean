@@ -11,13 +11,13 @@ Furthermore, pairing the momentum operator $P = -i \partial_x$ with the position
 
 On a discrete spatial lattice, such as the periodic circular chain $\Lambda = \mathbb{Z}/L\mathbb{Z}$ introduced in Chapter~\ref{ch:lattice_band}, infinitesimal derivatives do not exist. Instead, calculus must be formulated through finite differences. Umbral calculus provides the rigorous algebraic framework that replaces differential operators with finite differences without loss of algebraic structure. 
 
-In this chapter, we develop the exact theory of discrete difference operators. We establish that:
+In this chapter, we develop the exact theory of discrete difference operators. This presentation is intended to make the algebraic framework and its assumptions explicit, adapting some continuum structures (like the Leibniz rule) while exactly preserving others (like summation by parts). We establish that:
 \begin{enumerate}
     \item Finite differences satisfy exact non-infinitesimal Leibniz identities over arbitrary commutative rings.
-    \item Forward and backward differences are exact formal adjoints under periodic lattice summation, yielding discrete summation by parts without boundary terms.
+    \item Forward and backward differences are exact formal adjoints under periodic lattice summation, yielding discrete summation by parts without boundary terms. These periodic differences are diagonalized by the finite Fourier characters introduced in Chapter~\ref{ch:fourier}.
     \item The shift operator admits an exact algebraic Newton binomial expansion in powers of the forward difference.
     \item An umbral intertwining map connects polynomial derivatives to discrete differences.
-    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists on bilateral sequences, accompanied by the finite-dimensional No-Go theorem explaining why quantum CCR cannot be represented by finite matrices.
+    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists on the infinite bilateral-sequence carrier, accompanied by the finite-dimensional No-Go theorem demonstrating why a sequence-space CCR can never be transferred to finite matrices.
 \end{enumerate}
 
 \section{The Coordinate Domain and the Operator Algebra}
@@ -26,8 +26,8 @@ We separate the algebraic requirements on the coordinate domain from the coeffic
 \begin{itemize}
     \item \textbf{Coordinate Domain:} Let $(S, +, 0, 1)$ be an additive abelian group equipped with a distinguished unit step element $1 \in S$. The group translation mappings $x \mapsto x + 1$ and $x \mapsto x - 1$ form mutual inverse bijections on $S$.
     \begin{itemize}
-        \item When $S = \mathbb{Z}$, the domain models the infinite one-dimensional discrete line.
-        \item When $S = \Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L \ge 1$, the domain models the finite periodic circular lattice with $1 \coloneqq 1 \bmod L$.
+        \item When $S = \mathbb{Z}$, the domain models the infinite one-dimensional discrete line, serving as the bilateral-sequence carrier.
+        \item When $S = \Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L \ge 1$, the domain models the finite periodic circular lattice space with $1 \coloneqq 1 \bmod L$.
     \end{itemize}
     \item \textbf{Coefficient Ring:} Let $R$ be an arbitrary commutative ring with unit (such as $\mathbb{Z}$, $\mathbb{Q}$, or $\mathbb{C}$). No division, topological completeness, or field axioms are assumed unless explicitly stated.
     \item \textbf{Function Algebra:} The set of functions $R^S \equiv (S \to R)$ forms an associative, commutative $R$-algebra under pointwise addition, scalar multiplication, and pointwise multiplication.
@@ -66,7 +66,7 @@ We define the following linear operators in $\mathrm{End}_R(R^S)$:
 \end{definition}
 
 \paragraph{Physical Intuition: Discretizing Differential Operators.}
-In condensed matter physics, a spatial derivative is approximated by $\partial_x f(x) \approx \frac{f(x+a) - f(x)}{a}$. In our unit lattice units ($a = 1$), $\Delta$ is the forward discrete derivative, $\nabla$ is the backward discrete derivative, and their composition $\Delta\nabla$ is the standard nearest-neighbor discrete kinetic Laplacian.
+In condensed matter physics, a spatial derivative is approximated by $\partial_x f(x) \approx \frac{f(x+a) - f(x)}{a}$. In our unit lattice units ($a = 1$), $\Delta$ is the forward discrete derivative, $\nabla$ is the backward discrete derivative, and their composition $\Delta\nabla$ is the standard nearest-neighbor discrete kinetic Laplacian. These operators act well-defined on both the infinite bilateral-sequence carrier and the finite periodic lattice space.
 
 \begin{proposition}[Laplacian Expansion]
 In the operator algebra $\mathrm{End}_R(R^S)$, the discrete Laplacian satisfies:
@@ -132,11 +132,11 @@ The quadratic cross-term $(\Delta f)(\Delta g)$ in~\eqref{eq:leibniz_symmetric} 
 \[
 \Delta_a(f g)(x) = (\Delta_a f)(x) g(x) + f(x) (\Delta_a g)(x) + a (\Delta_a f)(x) (\Delta_a g)(x).
 \]
-In the continuum limit $a \to 0$, the cross-term is of order $\mathcal{O}(a)$ and vanishes, recovering the standard continuum product rule. On a discrete lattice, however, this cross-term is non-zero and exact. Ignoring this term leads to spurious violations of conservation laws and gauge invariance in discrete field theories.
+In the continuum limit $a \to 0$, the cross-term is of order $\mathcal{O}(a)$ and vanishes, recovering the standard continuum product rule. On a discrete lattice, however, this cross-term is non-zero and exact. Retaining this term explicitly is a mathematical necessity for maintaining discrete conservation laws and exact lattice formulations without appealing to continuum limits.
 
 \section{Discrete Summation by Parts on Periodic Lattices}
 
-In continuum field theory, integration by parts $\int \partial_x f \, g \, dx = - \int f \, \partial_x g \, dx$ transfers derivatives from one field to another, provided boundary terms vanish. On the discrete circle $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the boundary terms vanish identically by cyclicity.
+In continuum field theory, integration by parts $\int \partial_x f \, g \, dx = - \int f \, \partial_x g \, dx$ transfers derivatives from one field to another, provided boundary terms vanish. On the discrete circle $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the boundary terms vanish identically by cyclicity. As we will see in Chapter~\ref{ch:fourier}, these difference operators on the periodic lattice are diagonalized by finite Fourier characters, bridging discrete calculus with frequency domain analysis.
 
 \begin{theorem}[Discrete Summation by Parts]
 \label{thm:summation_by_parts}
@@ -255,7 +255,7 @@ This establishes $\Phi \circ D = \Delta_{\mathrm{poly}} \circ \Phi$ on all polyn
 
 \section{The Discrete Heisenberg Pair and the No-Go Theorem}
 
-In continuous quantum mechanics, position $X$ and momentum $P = -i \partial_x$ satisfy the Heisenberg canonical commutation relation $[P, X] = -i I$. In this section, we establish how this commutation relation manifests on discrete lattices.
+In continuous quantum mechanics, position $X$ and momentum $P = -i \partial_x$ satisfy the Heisenberg canonical commutation relation $[P, X] = -i I$. In this section, we establish how this commutation relation manifests on the infinite bilateral-sequence carrier.
 
 \begin{definition}[Position Multiplier Operator]
 On the infinite integer lattice $S = \mathbb{Z}$, the position multiplier operator $\beta \in \mathrm{End}_R(R^\mathbb{Z})$ is defined by:
@@ -264,7 +264,7 @@ On the infinite integer lattice $S = \mathbb{Z}$, the position multiplier operat
 \end{equation}
 \end{definition}
 
-The backward shift in the argument of $f(x-1)$ is mathematically essential: it balances the forward shift in $\Delta = E - I$.
+The backward shift in the argument of $f(x-1)$ is mathematically essential: it balances the forward shift in $\Delta = E - I$. Exact coordinate multiplication without cyclic wrapping inherently relies on the infinite sequence space.
 
 \begin{theorem}[Discrete Heisenberg Commutator]
 \label{thm:discrete_heisenberg}
@@ -301,7 +301,7 @@ Let $f : \mathbb{Z} \to R$ be an arbitrary function and evaluate both compositio
 Since this holds for every $f$ and every $x$, we conclude $[\Delta, \beta] = I$.
 \end{proof}
 
-A natural question arises: can such an exact Heisenberg pair $[A, B] = I$ be realized on a finite spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, where functions form a finite-dimensional vector space $R^L$? The following classical theorem shows this is impossible.
+A natural question arises: can this sequence-space canonical commutation relation $[A, B] = I$ be transferred to a finite spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, where functions form a finite-dimensional vector space $R^L$? The following classical theorem shows this is impossible. A global scalar CCR can never be transferred to finite matrices.
 
 \begin{theorem}[Finite-Dimensional CCR No-Go Theorem]
 \label{thm:no_go}
@@ -327,7 +327,7 @@ Because $K$ has characteristic zero and $n \ge 1$, $n \cdot 1_K \neq 0$ in $K$. 
 \end{proof}
 
 \paragraph{Formal Correctness vs.\ Physical Implications: Resolution of the CCR Obstruction.}
-Theorem~\ref{thm:no_go} explains why quantum canonical commutation relations cannot be realized by finite-dimensional single-particle matrices. On a finite periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the space of single-particle wavefunctions has dimension $L < \infty$, so single-particle position and momentum operators cannot satisfy $[P, X] = -i I$.
+Theorem~\ref{thm:no_go} explains why a global nonzero scalar canonical commutation relation cannot be realized by generic finite-dimensional single-particle matrices. On a finite periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the space of single-particle wavefunctions has dimension $L < \infty$, so unrestricted single-particle position and momentum operators cannot satisfy a global scalar CCR $[P, X] = -i I$.
 
 In condensed matter physics, this obstruction is frequently bypassed by asserting infinite-dimensional Hilbert spaces or imposing periodic boundary conditions with discontinuous sawtooth position operators. In our constructive program, the obstruction is resolved through \emph{bosonization}:
 \begin{itemize}
@@ -343,14 +343,14 @@ In the verified Lean~4 core, the proof of Theorem~\ref{thm:no_go} is formalized 
 
 In this chapter, we developed the algebraic foundations of discrete differences:
 \begin{itemize}
-    \item Forward $\Delta = E - I$ and backward $\nabla = I - E^{-1}$ differences satisfy exact discrete Leibniz rules with a cross-term $(\Delta f)(\Delta g)$.
-    \item On periodic lattices $\Lambda$, $\Delta$ and $-\nabla$ are exact formal adjoints, yielding summation by parts without boundary terms.
+    \item Forward $\Delta = E - I$ and backward $\nabla = I - E^{-1}$ differences satisfy exact discrete Leibniz rules with an adapted cross-term $(\Delta f)(\Delta g)$.
+    \item On finite periodic lattices $\Lambda$, $\Delta$ and $-\nabla$ are exact formal adjoints, yielding summation by parts without boundary terms.
     \item The shift operator expands into finite Newton binomial series over falling factorials $X^{\underline{n}}$.
     \item The umbral map $\Phi$ intertwines polynomial differentiation with discrete differences.
-    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists on bilateral sequences, while the finite-dimensional No-Go theorem proves that quantum CCR cannot be represented on finite-dimensional single-particle matrices.
+    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists strictly on the infinite bilateral-sequence carrier. The finite-dimensional No-Go theorem proves that this sequence-space CCR can never be transferred to finite periodic matrices.
 \end{itemize}
 
 \paragraph{Comparison with Standard Continuum Literature.}
 In standard bosonization texts (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), field derivatives $\partial_x \phi(x)$ are taken in the continuum sense. The Leibniz rule is assumed to be the classical derivation rule, and integration by parts is carried out by dropping boundary terms at spatial infinity or across periodic boundary lengths $\mathcal{L}$.
 
-As shown by Mattis and Lieb~\cite{mattis1965} and Haldane~\cite{haldane1981}, the continuum derivative is an idealization that conceals how lattice cutoffs regularize field theories. The umbral framework developed here establishes that exact algebraic analogues of differential calculus exist directly on the discrete lattice without taking limits. Furthermore, the finite-dimensional No-Go theorem provides the mathematical reason why current algebras in Chapter~\ref{ch:heisenberg_algebra} must emerge via normal ordering on fermionic Fock spaces rather than single-particle coordinate pairs.
+As shown by Mattis and Lieb~\cite{mattis1965} and Haldane~\cite{haldane1981}, the continuum derivative is an idealization. The umbral framework developed here establishes that the discrete lattice provides a specific fixed-model regularization instead of eliminating every divergence. It adapts continuum structures (such as modifying the product rule) while retaining others (such as summation by parts). Furthermore, the finite-dimensional No-Go theorem provides the mathematical reason why a sequence-space CCR cannot be mapped directly to finite dimensional models, requiring current algebras in Chapter~\ref{ch:heisenberg_algebra} to emerge via normal ordering on fermionic Fock spaces rather than naive single-particle coordinate pairs.
