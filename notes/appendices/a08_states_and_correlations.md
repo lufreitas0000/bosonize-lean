@@ -129,3 +129,11 @@ Prove charge-phase products on each δ_N and oscillator Gaussian moments by fixe
 ## Limits and physical interpretation
 
 The finite D₁ sum is periodic and exact. Power-law decay, continuum duality, and physical order-parameter correlators require specified comparison maps, regulator/scaling limits, separation regimes, and error estimates. Coefficientwise formal series identities alone establish none of these analytic statements.
+
+## Constructive realization in the current Lean scope
+
+The accepted A08 implementation covers the polynomial oscillator construction, its positive normalized bare and dressed word functionals, the Bogoliubov pullback and its contraction consequences, the finite Fock vector-state facts used by CH19, and the explicit compressed-vacuum obstruction. The oscillator algebra is uncompressed despite having finitely many modes: its polynomial carrier contains arbitrarily high degrees. The compressed matrices are a separate degree-at-most-one example, and their obstruction applies when the squeeze parameter is nonzero.
+
+CH19 adds exact finite ordered and symmetrized density-kernel results on the oscillator algebra, plus ground-state contractions and a free-kernel comparison on the finite CAR Fock carrier. The latter comparison is an equality of one scalar kernel at zero squeeze, under the stated lattice, nonzero-phase, admissibility, and margin hypotheses. It is not an identification of the oscillator state with a finite-Fock density matrix. The broader charge extension, formal Weyl-type vertices, coefficientwise Gaussian series formulas, general Wick tables, and finite interacting-state comparisons described above remain proposed or deferred work; they are not among the promoted declarations. The general-orientation contraction gap is tracked as CH19-N2 for CH20b.
+
+The corresponding verified implementations are [A08 oscillator states](../../Bosonize/Core/A08OscillatorStates.lean) and [CH19 correlations](../../Bosonize/Core/Ch19Correlations.lean); their companions map declarations to hypotheses and fresh audit evidence.

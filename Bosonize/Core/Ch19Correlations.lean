@@ -1,5 +1,5 @@
 import Bosonize.Core.Ch18Bogoliubov
-import BosonizeStubs.A08OscillatorStates
+import Bosonize.Core.A08OscillatorStates
 
 namespace Bosonize.Ch19
 

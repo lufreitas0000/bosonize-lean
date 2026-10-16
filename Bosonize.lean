@@ -32,6 +32,8 @@ import Bosonize.Core.A04PartitionCombinatorics
 import Bosonize.Core.Ch11HaldaneCompleteness
 
 import Bosonize.Core.Ch12Sugawara
+import Bosonize.Core.A08OscillatorStates
+import Bosonize.Core.Ch19Correlations
 
 /-!
 # Bosonize Core Library

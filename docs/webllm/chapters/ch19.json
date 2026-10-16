@@ -2,17 +2,44 @@
   "chapter": 19,
   "modules": [
     {
-      "path": "BosonizeStubs/A08OscillatorStates.lean"
+      "path": "Bosonize/Core/A08OscillatorStates.lean"
     },
     {
-      "path": "BosonizeStubs/Ch19Correlations.lean"
+      "path": "Bosonize/Core/Ch19Correlations.lean"
     }
   ],
-  "phase": "B_complete",
+  "phase": "C_complete",
+  "migration": [
+    {
+      "from": "BosonizeStubs/A08OscillatorStates.lean",
+      "to": "Bosonize/Core/A08OscillatorStates.lean",
+      "source_sha256": "ed3ef9f87c9be26460004fd52efbdd7f0a2490b544c990cc89e6178f0a97ee35",
+      "old_imports": [
+        "import Bosonize.Core.Ch18Bogoliubov"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.Ch18Bogoliubov"
+      ]
+    },
+    {
+      "from": "BosonizeStubs/Ch19Correlations.lean",
+      "to": "Bosonize/Core/Ch19Correlations.lean",
+      "phase_b_source_sha256": "cc2eee0d9a5c53cf9a9e7b9a48998fd8de90d4b17f8359003b957bb7214e1687",
+      "source_sha256": "845e95b619fca515b25c2a103071ba1fa0fdfa46ddd12081440ddfbdae902339",
+      "old_imports": [
+        "import Bosonize.Core.Ch18Bogoliubov",
+        "import BosonizeStubs.A08OscillatorStates"
+      ],
+      "new_imports": [
+        "import Bosonize.Core.Ch18Bogoliubov",
+        "import Bosonize.Core.A08OscillatorStates"
+      ]
+    }
+  ],
   "pending_modules": [],
   "sources": {
-    "BosonizeStubs/A08OscillatorStates.lean": "ed3ef9f87c9be26460004fd52efbdd7f0a2490b544c990cc89e6178f0a97ee35",
-    "BosonizeStubs/Ch19Correlations.lean": "cc2eee0d9a5c53cf9a9e7b9a48998fd8de90d4b17f8359003b957bb7214e1687"
+    "Bosonize/Core/A08OscillatorStates.lean": "ed3ef9f87c9be26460004fd52efbdd7f0a2490b544c990cc89e6178f0a97ee35",
+    "Bosonize/Core/Ch19Correlations.lean": "845e95b619fca515b25c2a103071ba1fa0fdfa46ddd12081440ddfbdae902339"
   },
   "theorem_contracts": 62
 }

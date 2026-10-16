@@ -67,3 +67,13 @@ Use the linearity of $\omega_{\tilde{\Omega}}$ to move it inside the double `Fin
    * If continuum asymptotics are required, specify the scaling variables and limiting sequence in a completely separate analytic module. Do not use $\propto$ to hide finite regulator dependence.
 2. **Two-Point Contractions:**
    * Apply the functional linearity `map_add` and both the $c^2$ and $s^2$ evaluations. Do not omit the free-vacuum fluctuations.
+
+#### Constructive realization in Lean: current CH19 scope
+
+The promoted CH19 development uses two algebraic carriers. Appendix A08's oscillator carrier is a free complex algebra on creator and annihilator symbols, represented on multivariate polynomials with positive monomial weights. Its vacuum functional is normalized and positive in the word-Gram sense, and the dressed functional is the pullback by the inverse Bogoliubov map. This is an algebraic oscillator state; it is not a density matrix on a finite Fock space. The proved compression example shows that, for nonzero squeeze parameter, the two compressed lowering matrices on the degree-at-most-one slice have no common vacuum vector and admit no trace-one matrix satisfying both vacuum equations.
+
+On the oscillator carrier, CH19 proves both ordered right-branch contractions, the vanishing same-branch creator-creator and annihilator-annihilator terms, the cross-branch contractions, and the exact finite ordered density kernel. The kernel keeps its complex ordering information; its symmetrization is a separate theorem. The lattice form requires a nonzero phase, and the primitive-root version records the finite-lattice character relation. No power-law or continuum limit follows from these finite sums.
+
+The second carrier is the finite CAR Fock space from the earlier chapters. There the ground vector expectations and the zero-margin current identities are proved under explicit admissibility and budget conditions. The only comparison with the oscillator functional is the scalar equality between the finite Fock ground density kernel and the free oscillator kernel at zero squeeze. This does not identify the states or establish an interacting finite-model comparison. General-orientation Wick tables remain an open CH20b obligation (tracked as CH19-N2); formal vertices and coefficientwise series evaluations are outside the promoted CH19 result.
+
+The implementation is in [the promoted CH19 source](../../Bosonize/Core/Ch19Correlations.lean), with the oscillator construction and compression result in [Appendix A08's Core source](../../Bosonize/Core/A08OscillatorStates.lean). Exact declaration and audit mappings are recorded in their companion notebooks.

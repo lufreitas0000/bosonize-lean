@@ -11484,7 +11484,7 @@
         }
       }
     },
-    "BosonizeStubs/A08OscillatorStates.lean": {
+    "Bosonize/Core/A08OscillatorStates.lean": {
       "commands": [
         {
           "kind": "import",
@@ -11880,7 +11880,7 @@
         }
       }
     },
-    "BosonizeStubs/Ch19Correlations.lean": {
+    "Bosonize/Core/Ch19Correlations.lean": {
       "commands": [
         {
           "kind": "import",
@@ -11890,9 +11890,9 @@
         },
         {
           "kind": "import",
-          "label": "import BosonizeStubs.A08OscillatorStates",
-          "hash": "53b1fdf3b9d8baca62669623503d73b72faafc2d3c9141a7e20eb1e544282a37",
-          "text": "import BosonizeStubs.A08OscillatorStates"
+          "label": "import Bosonize.Core.A08OscillatorStates",
+          "hash": "5177d3ad02b6233cd18b2e3198348979a77671b9599974dc5a27836a19928643",
+          "text": "import Bosonize.Core.A08OscillatorStates"
         },
         {
           "kind": "namespace",
@@ -11965,163 +11965,163 @@
         "Bosonize.Ch19.c_sq_eq_luttinger": {
           "kind": "theorem",
           "hash": "623f47f27ab0031adacae4b57741aefdebaff0e7782fa97b06758da3cb37df7a",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem c_sq_eq_luttinger (hp : Bosonize.Ch18.HyperbolicPair) : hp.c ^ 2 = (Bosonize.Ch18.luttingerG hp + (Bosonize.Ch18.luttingerG hp)\u207b\u00b9 + 2) / 4"
         },
         "Bosonize.Ch19.concrete_correlation_witness": {
           "kind": "theorem",
           "hash": "62db940edc01f058e786c41f3a0fd2075374591d8e9494054106683ecbb57886",
-          "ctx": "459147f3ab42f3dc91fbfdc3af80880fa1d65b7fac198af2ca0047ef5623a1a5",
+          "ctx": "ab2e3fdd27c394edc550600b1da867849ba36ad22ab0827bc1a7331f2125640a",
           "text": "theorem concrete_correlation_witness : Bosonize.A08.omegaP 2 Bosonize.Ch18.concretePair (Bosonize.A08.creatorGen 2 .right (1 : Fin 2) * Bosonize.A08.annihilatorGen 2 .right (1 : Fin 2)) = (9 : \u2102) / 8 \u2227 Bosonize.A08.omegaP 2 Bosonize.Ch18.concretePair (Bosonize.A08.annihilatorGen 2 .right (1 : Fin 2) * Bosonize.A08.creatorGen 2 .right (1 : Fin 2)) = (25 : \u2102) / 8 \u2227 Bosonize.A08.omegaP 2 Bosonize.Ch18.concretePair (Bosonize.A08.creatorGen 2 .right (1 : Fin 2) * Bosonize.A08.creatorGen 2 .left (1 : Fin 2)) = -(15 : \u2102) / 8 \u2227 orderedDensityCorrelation 8 2 (Bosonize.A01.canonicalRoot (2 * 8)) Bosonize.Ch18.concretePair 0 0 = (51 : \u2102) / 2048 \u2227 Bosonize.A06.branchMargins 8 2 0 Bosonize.Ch18.concreteNs Bosonize.Ch18.concreteBranches \u2227 Bosonize.A08.vectorState 8 (Bosonize.A05.groundKet 8 Bosonize.Ch18.concreteNs) (Bosonize.A05.rho 8 0 (-2) * Bosonize.A05.rho 8 0 2) = 2 \u2227 Bosonize.A08.vectorState 8 (Bosonize.A05.groundKet 8 Bosonize.Ch18.concreteNs) (Bosonize.A07Interactions.bogoliubovCreator 8 2 Bosonize.Ch18.concretePair.c Bosonize.Ch18.concretePair.s Bosonize.Ch18.concreteBranches .right * Bosonize.A07Interactions.bogoliubovAnnihilator 8 2 Bosonize.Ch18.concretePair.c Bosonize.Ch18.concretePair.s Bosonize.Ch18.concreteBranches .right) = (9 : \u2102) / 8 \u2227 Bosonize.A08.vectorState 8 (Bosonize.A05.groundKet 8 Bosonize.Ch18.concreteNs) (Bosonize.A07Interactions.bogoliubovCreator 8 2 Bosonize.Ch18.concretePair.c Bosonize.Ch18.concretePair.s Bosonize.Ch18.concreteBranches .right * Bosonize.A07Interactions.bogoliubovAnnihilator 8 2 Bosonize.Ch18.concretePair.c Bosonize.Ch18.concretePair.s Bosonize.Ch18.concreteBranches .right) \u2260 0 \u2227 Bosonize.A08.vectorState 8 (Bosonize.A05.groundKet 8 Bosonize.Ch18.concreteNs) (fockDensityR 8 2 (Bosonize.A01.canonicalRoot (2 * 8)) Bosonize.Ch18.concreteBranches 0 * fockDensityR 8 2 (Bosonize.A01.canonicalRoot (2 * 8)) Bosonize.Ch18.concreteBranches 0) = (3 : \u2102) / 256"
         },
         "Bosonize.Ch19.density_commutator_expectation": {
           "kind": "theorem",
           "hash": "fb0897780907f4302b41f20bc399774f07d0b531c43fe890279abad531822eb4",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem density_commutator_expectation (h M : \u2115) [NeZero (2 * h)] (\u03b6 : \u2102) (h\u03b6 : \u03b6 \u2260 0) (hp : Bosonize.Ch18.HyperbolicPair) (x y : ZMod (2 * h)) : orderedDensityCorrelation h M \u03b6 hp x y - orderedDensityCorrelation h M \u03b6 hp y x = densityKernel h M \u03b6 1 (-1) ((x.val : \u2124) - (y.val : \u2124))"
         },
         "Bosonize.Ch19.density_kernel_diagonal": {
           "kind": "theorem",
           "hash": "bd79946e6c0d67e3c6ebde5f5747ab60611d6975777b9ba992ced27d57e06787",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem density_kernel_diagonal (h M : \u2115) [NeZero (2 * h)] (\u03b6 : \u2102) (h\u03b6 : \u03b6 \u2260 0) (hp : Bosonize.Ch18.HyperbolicPair) (x : ZMod (2 * h)) : orderedDensityCorrelation h M \u03b6 hp x x = ((((hp.c ^ 2 + hp.s ^ 2) * ((M * (M + 1) : \u211d) / 2) / ((2 * h : \u2115) : \u211d) ^ 2 : \u211d) : \u2102))"
         },
         "Bosonize.Ch19.density_kernel_diagonal_pos": {
           "kind": "theorem",
           "hash": "172a5d652da4e8b6b99c465f9ed566ffd61e9262761e509a64b436b6e61ea03a",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem density_kernel_diagonal_pos (h M : \u2115) [NeZero (2 * h)] (\u03b6 : \u2102) (h\u03b6 : \u03b6 \u2260 0) (hp : Bosonize.Ch18.HyperbolicPair) (x : ZMod (2 * h)) (hh : 0 < h) (hM : 1 \u2264 M) : 0 < (orderedDensityCorrelation h M \u03b6 hp x x).re"
         },
         "Bosonize.Ch19.excited_ket_norm_sq": {
           "kind": "theorem",
           "hash": "8afa4fce929ea159b7a2760dc890c0fff0c579cb487940ffeb3c21b83e632fb2",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem excited_ket_norm_sq (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hmM : m \u2264 M) (branches : Bosonize.A06.Branches \u03c3) (\u03b7 : Bosonize.A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.marginAt h M 0 Ns (Bosonize.A06.speciesOf branches \u03b7)) : \u2016Bosonize.Ch16.excitedKet h Ns branches \u03b7 m\u2016 ^ 2 = (m : \u211d)"
         },
         "Bosonize.Ch19.fock_ground_density_kernel": {
           "kind": "theorem",
           "hash": "74f2e5872e37fe518eba6f126626bbf0f13cb6d401d4fae577c4cdd4c9d93bc1",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem fock_ground_density_kernel (h M : \u2115) [NeZero (2 * h)] (hh : 0 < h) (\u03b6 : \u2102) (h\u03b6 : \u03b6 \u2260 0) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.marginAt h M 0 Ns branches.rightSpecies) (x y : ZMod (2 * h)) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (fockDensityR h M \u03b6 branches x * fockDensityR h M \u03b6 branches y) = densityKernel h M \u03b6 1 0 ((x.val : \u2124) - (y.val : \u2124))"
         },
         "Bosonize.Ch19.fock_ground_matches_free_state": {
           "kind": "theorem",
           "hash": "2238010040c3b0f47b2c5dece911edeeba0e16c13116d0ee222962dbbed5925a",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem fock_ground_matches_free_state (h M : \u2115) [NeZero (2 * h)] (hh : 0 < h) (\u03b6 : \u2102) (h\u03b6 : \u03b6 \u2260 0) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.marginAt h M 0 Ns branches.rightSpecies) (x y : ZMod (2 * h)) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (fockDensityR h M \u03b6 branches x * fockDensityR h M \u03b6 branches y) = orderedDensityCorrelation h M \u03b6 freePair x y"
         },
         "Bosonize.Ch19.ground_dressed_number": {
           "kind": "theorem",
           "hash": "848fe46a25894b83ad8343f027af26fe7e0fa2ed70bd5841f48e16dc959cf2cd",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem ground_dressed_number (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hmM : m \u2264 M) (hp : Bosonize.Ch18.HyperbolicPair) (branches : Bosonize.A06.Branches \u03c3) (\u03b7 : Bosonize.A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.branchMargins h M 0 Ns branches) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (Bosonize.A07Interactions.bogoliubovCreator h m hp.c hp.s branches \u03b7 * Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches \u03b7) = (m : \u2102) * (hp.s : \u2102) ^ 2"
         },
         "Bosonize.Ch19.ground_dressed_reverse": {
           "kind": "theorem",
           "hash": "b8684ff37bb1e4ebffc7dcc0124641e0133b16f543e9bb3ff0b7b3030a76be84",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem ground_dressed_reverse (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hmM : m \u2264 M) (hp : Bosonize.Ch18.HyperbolicPair) (branches : Bosonize.A06.Branches \u03c3) (\u03b7 : Bosonize.A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.branchMargins h M 0 Ns branches) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches \u03b7 * Bosonize.A07Interactions.bogoliubovCreator h m hp.c hp.s branches \u03b7) = (m : \u2102) * (hp.c : \u2102) ^ 2"
         },
         "Bosonize.Ch19.ground_lowering_lowering": {
           "kind": "theorem",
           "hash": "603a19aea235bc631bf1a403c80e6008111167500f9151d7708c3ac491b7fd84",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem ground_lowering_lowering (h : \u2115) (hh : 0 < h) (m n : \u2115) (hn : 1 \u2264 n) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (Bosonize.A05.rho h branches.rightSpecies (-(m : \u2124)) * Bosonize.A05.rho h branches.rightSpecies (-(n : \u2124))) = 0"
         },
         "Bosonize.Ch19.ground_lowering_raising": {
           "kind": "theorem",
           "hash": "b0b64eea13419d4f98644b15201383a4f9b811a40334333c90e416d1bbd90877",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem ground_lowering_raising (h M : \u2115) (hh : 0 < h) (m n : \u2115) (hm : 1 \u2264 m) (hmM : m \u2264 M) (hnM : n \u2264 M) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.marginAt h M 0 Ns branches.rightSpecies) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (Bosonize.A05.rho h branches.rightSpecies (-(m : \u2124)) * Bosonize.A05.rho h branches.rightSpecies (n : \u2124)) = if m = n then (m : \u2102) else 0"
         },
         "Bosonize.Ch19.ground_not_dressed_vacuum": {
           "kind": "theorem",
           "hash": "4835476b1c23553c8c4255a2b9637308c055ecf0bc97caee2e1d34789a70d76c",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem ground_not_dressed_vacuum (h M m : \u2115) (hh : 0 < h) (hm : 1 \u2264 m) (hmM : m \u2264 M) (hp : Bosonize.Ch18.HyperbolicPair) (hs : hp.s \u2260 0) (branches : Bosonize.A06.Branches \u03c3) (\u03b7 : Bosonize.A06.Orientation) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) (hmargin : Bosonize.A06.branchMargins h M 0 Ns branches) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (Bosonize.A07Interactions.bogoliubovCreator h m hp.c hp.s branches \u03b7 * Bosonize.A07Interactions.bogoliubovAnnihilator h m hp.c hp.s branches \u03b7) \u2260 0"
         },
         "Bosonize.Ch19.ground_raising_lowering": {
           "kind": "theorem",
           "hash": "3d5c5f6f08f65f2beb71b0cb04dbcec8d4a4db0483b7fa53aa8cc9953871aff3",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem ground_raising_lowering (h : \u2115) (hh : 0 < h) (m n : \u2115) (hn : 1 \u2264 n) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (Bosonize.A05.rho h branches.rightSpecies (m : \u2124) * Bosonize.A05.rho h branches.rightSpecies (-(n : \u2124))) = 0"
         },
         "Bosonize.Ch19.ground_raising_raising": {
           "kind": "theorem",
           "hash": "87c6ba7b29e82e9f7c646b4209eab4af3ba9cf7de80f3b927b4b05c2db965581",
-          "ctx": "ec01dd810f40e66164fbf5af50eb3a7d64e35ab71bfce636eded5ca10dc9d0c8",
+          "ctx": "f161195e74b0f74fd535b7f51714ec2028f423ba01a9890d2f8ac02dd2710355",
           "text": "theorem ground_raising_raising (h : \u2115) (hh : 0 < h) (m n : \u2115) (hm : 1 \u2264 m) (branches : Bosonize.A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : Bosonize.A05.admissible h Ns) : Bosonize.A08.vectorState h (Bosonize.A05.groundKet h Ns) (Bosonize.A05.rho h branches.rightSpecies (m : \u2124) * Bosonize.A05.rho h branches.rightSpecies (n : \u2124)) = 0"
         },
         "Bosonize.Ch19.omegaP_annihilator_annihilator_right": {
           "kind": "theorem",
           "hash": "dc7492573483e12f9d05969b36f096f89943c69358a06e96cb0ffadfe21eb874",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem omegaP_annihilator_annihilator_right (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (i j : Fin M) : Bosonize.A08.omegaP M hp (Bosonize.A08.annihilatorGen M .right i * Bosonize.A08.annihilatorGen M .right j) = 0"
         },
         "Bosonize.Ch19.omegaP_annihilator_creator_right": {
           "kind": "theorem",
           "hash": "188e75d8c2676ac76802438f4bb78d1998910c2cad4a90f1b3ea9bf59c41c1cd",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem omegaP_annihilator_creator_right (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (i j : Fin M) : Bosonize.A08.omegaP M hp (Bosonize.A08.annihilatorGen M .right i * Bosonize.A08.creatorGen M .right j) = if i = j then ((i.val + 1 : \u2115) : \u2102) * (hp.c : \u2102) ^ 2 else 0"
         },
         "Bosonize.Ch19.omegaP_creator_annihilator_right": {
           "kind": "theorem",
           "hash": "42e84c496c2d6c95ef0053010a675b6f64ce3b73d0feb27ce36293ec6f7ada4d",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem omegaP_creator_annihilator_right (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (i j : Fin M) : Bosonize.A08.omegaP M hp (Bosonize.A08.creatorGen M .right i * Bosonize.A08.annihilatorGen M .right j) = if i = j then ((i.val + 1 : \u2115) : \u2102) * (hp.s : \u2102) ^ 2 else 0"
         },
         "Bosonize.Ch19.omegaP_creator_creator_right": {
           "kind": "theorem",
           "hash": "9dd99765dd0e7431a5bf0f1f1ff203db222766a389708297ce8741e5e109f070",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem omegaP_creator_creator_right (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (i j : Fin M) : Bosonize.A08.omegaP M hp (Bosonize.A08.creatorGen M .right i * Bosonize.A08.creatorGen M .right j) = 0"
         },
         "Bosonize.Ch19.omegaP_cross_annihilator_annihilator": {
           "kind": "theorem",
           "hash": "a8b5fa7b3384e7ca18e875bc3ad60402c7a1d8f9aa4f97deab0c6f86d442e916",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem omegaP_cross_annihilator_annihilator (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (i j : Fin M) : Bosonize.A08.omegaP M hp (Bosonize.A08.annihilatorGen M .right i * Bosonize.A08.annihilatorGen M .left j) = if i = j then -(((i.val + 1 : \u2115) : \u2102) * (hp.c : \u2102) * (hp.s : \u2102)) else 0"
         },
         "Bosonize.Ch19.omegaP_cross_creator_annihilator": {
           "kind": "theorem",
           "hash": "5fe813798cfd78d2a6c59e825bb8f06b3bc795a8ed3c8d89c79f98d3b51c8cab",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem omegaP_cross_creator_annihilator (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (i j : Fin M) : Bosonize.A08.omegaP M hp (Bosonize.A08.creatorGen M .right i * Bosonize.A08.annihilatorGen M .left j) = 0"
         },
         "Bosonize.Ch19.omegaP_cross_creator_creator": {
           "kind": "theorem",
           "hash": "9f64b4a1d25a55f60b201c0cf7f0acf3dce4ba1e39fdcdb135b57dadd5cd9026",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem omegaP_cross_creator_creator (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (i j : Fin M) : Bosonize.A08.omegaP M hp (Bosonize.A08.creatorGen M .right i * Bosonize.A08.creatorGen M .left j) = if i = j then -(((i.val + 1 : \u2115) : \u2102) * (hp.c : \u2102) * (hp.s : \u2102)) else 0"
         },
         "Bosonize.Ch19.ordered_density_free": {
           "kind": "theorem",
           "hash": "dab53f93086c6698576996e6407930a408a3ac606d458865a61facd00af9a464",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem ordered_density_free (h M : \u2115) [NeZero (2 * h)] (\u03b6 : \u2102) (h\u03b6 : \u03b6 \u2260 0) (hp : Bosonize.Ch18.HyperbolicPair) (hs : hp.s = 0) (x y : ZMod (2 * h)) : orderedDensityCorrelation h M \u03b6 hp x y = densityKernel h M \u03b6 1 0 ((x.val : \u2124) - (y.val : \u2124))"
         },
         "Bosonize.Ch19.ordered_density_kernel": {
           "kind": "theorem",
           "hash": "c256a73e68650084b9f40e73f083798a6f13dd91cef5e463489933cf4446630c",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem ordered_density_kernel (h M : \u2115) [NeZero (2 * h)] (\u03b6 : \u2102) (h\u03b6 : \u03b6 \u2260 0) (hp : Bosonize.Ch18.HyperbolicPair) (x y : ZMod (2 * h)) : orderedDensityCorrelation h M \u03b6 hp x y = densityKernel h M \u03b6 (hp.c ^ 2) (hp.s ^ 2) ((x.val : \u2124) - (y.val : \u2124))"
         },
         "Bosonize.Ch19.ordered_density_kernel_lattice": {
           "kind": "theorem",
           "hash": "a22e57a4ded3494bf01796592b28d9eeb83bd823de041a2bc9d2a1da50dc4d68",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem ordered_density_kernel_lattice (h M : \u2115) [NeZero (2 * h)] (\u03b6 : \u2102) (h\u03b6 : IsPrimitiveRoot \u03b6 (2 * h)) (hp : Bosonize.Ch18.HyperbolicPair) (x y : ZMod (2 * h)) : orderedDensityCorrelation h M \u03b6 hp x y = (((2 * h : \u2115) : \u2102)\u207b\u00b9) ^ 2 * \u2211 m \u2208 Finset.Icc 1 M, (m : \u2102) * ((hp.s : \u2102) ^ 2 * Bosonize.A06.latticeCharacter h \u03b6 (-(m : \u2124)) (x - y) + (hp.c : \u2102) ^ 2 * Bosonize.A06.latticeCharacter h \u03b6 (m : \u2124) (x - y))"
         },
         "Bosonize.Ch19.s_sq_eq_luttinger": {
           "kind": "theorem",
           "hash": "81ee6fc9462d2d48b26df89f50fb3914507c8f2647f237e2d02c0e8bde6fd171",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem s_sq_eq_luttinger (hp : Bosonize.Ch18.HyperbolicPair) : hp.s ^ 2 = (Bosonize.Ch18.luttingerG hp + (Bosonize.Ch18.luttingerG hp)\u207b\u00b9 - 2) / 4"
         },
         "Bosonize.Ch19.symmetrized_density_kernel": {
           "kind": "theorem",
           "hash": "3ebaad1a9161e296d5846f859ae684a109abb845ae95886905c3366e06fea9e2",
-          "ctx": "0031d1ad70328490665af4e16704f2a6f4cb00f17b00487f9224e7f8b6832f45",
+          "ctx": "770d827279154d56996564d6b0c31c3e75352a67e7cd0d6b9ebf4282a25964f9",
           "text": "theorem symmetrized_density_kernel (h M : \u2115) [NeZero (2 * h)] (\u03b6 : \u2102) (h\u03b6 : \u03b6 \u2260 0) (hp : Bosonize.Ch18.HyperbolicPair) (x y : ZMod (2 * h)) : (orderedDensityCorrelation h M \u03b6 hp x y + orderedDensityCorrelation h M \u03b6 hp y x) / 2 = densityKernel h M \u03b6 ((Bosonize.Ch18.luttingerG hp + (Bosonize.Ch18.luttingerG hp)\u207b\u00b9) / 4) ((Bosonize.Ch18.luttingerG hp + (Bosonize.Ch18.luttingerG hp)\u207b\u00b9) / 4) ((x.val : \u2124) - (y.val : \u2124))"
         }
       }
