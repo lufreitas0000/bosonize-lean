@@ -41,3 +41,38 @@
 - Local staging, companion and lock are prepared from this exact reviewed source. The first compiler attempt failed only on those two missing instances; the final fresh run passed.
 
 Phase A interface review and elaboration are complete. All 64 contracts remain unproved; Phase B must prove them under the new lock before any Phase C promotion.
+
+## Phase B reviewed interface correction — 2026-10-16
+
+Restored archive checkpoint `2fecda3711065037f2879f73421f78c86161e0db`
+captures the previously uncommitted proof development from detached base
+`0cfbf0c0b56ed020be89ac5be6537b994e702c6c`. Source SHA256 before the
+remaining nonzero proof integration:
+`a7168fd19c5e72c0f7d1371a1b67b83e827030dcbc75e5e544d9a9008b64106d`.
+
+Independent reviewer `/root/audit_locks` compared this exact source with the
+accepted Phase A interface. All 64 original contracts and original data remain;
+ten headers gain only `omit [Fintype σ] in` to remove redundant section-instance
+context. Additions decompose the approved proofs: 47 private helper lemmas,
+18 local occupation-order/equality instances derived directly from A05,
+three private concrete occupation definitions, four helper sections and a
+local type variable. `Mathlib.Analysis.Real.Pi.Bounds` supplies
+`Real.pi_gt_three` for the explicit linear-μ counterexample. No mathematical
+hypotheses/conclusions or upstream Core sources changed. Review verdict:
+scoped additive correction approved, conditional on fresh elaboration/axiom
+checks. These changes predated this resumption; the inherited partial manifest
+omitted the helpers and therefore failed strict verification.
+
+Fresh installed-compiler elaboration of the exact source plus `#print axioms`
+for 158 completed declarations succeeded with no errors and only the single
+expected placeholder warning for the remaining
+`concrete_discarded_channel_nonzero`. Every audited completed declaration used
+only `propext`, `Classical.choice`, and `Quot.sound` (or no axioms). Complete
+output: `docs/verification/ch20-phase-b-20261016/reviewed-baseline-axioms.log`.
+The incomplete theorem was excluded from this baseline axiom audit and is
+not accepted by this record. Existing Core guard passed for 33 complete files.
+
+The correction regenerates only the CH20 record using the guard parser API;
+all other manifest records are checked unchanged. This establishes a reviewed
+committed baseline before further canonical proof-body edits. Phase B remains
+in progress; Phase C is outside this request.
