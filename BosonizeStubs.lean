@@ -1,5 +1,4 @@
 import Bosonize
-import BosonizeStubs.Ch20CDW
 
 /-!
 # Bosonize Staging Library

@@ -151,3 +151,26 @@ Final independent read-only review `/root/audit_locks` bound PASS to the exact
 final source hash and audited commit above. It rechecked preserved original
 contracts, CH20-only manifest impact, the restored imports, coefficient witness
 and cosine proof, unchanged Core/dependencies, and all final validation logs.
+
+## Phase C promotion — 2026-10-16
+
+The canonical source moves byte-for-byte from `BosonizeStubs/Ch20CDW.lean` to
+`Bosonize/Core/Ch20CDW.lean`; namespace `Bosonize.Ch20` is unchanged. Its SHA256
+is `00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f`. All imports already target Core; no import,
+statement or proof substitutions are needed. The v2 lock entry changes only
+its path key; every declaration and command hash is preserved. The complete
+source hash is added to the Core manifest, leaving the existing 33 entries
+unchanged. The Core aggregator gains its import; staging inherits it through
+`import Bosonize`. Historical Phase A/B paths and receipts above are retained
+as provenance. Current companion and source live under `Bosonize/Core/`.
+
+Pedagogical mapping: `notes/md/ch20_CDW.md` retains the reference chapter and
+adds the verified finite realization. Charge shifts and residuals map to
+`orderCDW_charge_commutator`, `orderSC_charge_commutator`,
+`projected_cdw_residual`, `projected_sc_residual`; periodic ground coefficients
+to `orderCDW_ground_coeff`, `orderSC_ground_coeff`; cutoff witnesses to
+`concrete_discarded_channel_nonzero` and `concrete_discarded_channel_target_zero`;
+scalar/family/parameter duality to `cdw_charge_duality`, `sc_charge_duality`,
+`dual_xCDW`, `dual_xSC`, `dual_pairingMode`, `dual_symmetric_zero_mode`,
+`dual_canonical_mu_zero_mode`; finite kernel to `logKernel_nonneg` and witnesses.
+Formal vertices, Wick/state transport and continuum claims remain deferred.

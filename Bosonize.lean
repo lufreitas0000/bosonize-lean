@@ -34,6 +34,7 @@ import Bosonize.Core.Ch11HaldaneCompleteness
 import Bosonize.Core.Ch12Sugawara
 import Bosonize.Core.A08OscillatorStates
 import Bosonize.Core.Ch19Correlations
+import Bosonize.Core.Ch20CDW
 
 /-!
 # Bosonize Core Library

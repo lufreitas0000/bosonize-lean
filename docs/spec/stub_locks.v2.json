@@ -12126,7 +12126,7 @@
         }
       }
     },
-    "BosonizeStubs/Ch20CDW.lean": {
+    "Bosonize/Core/Ch20CDW.lean": {
       "commands": [
         {
           "kind": "import",
