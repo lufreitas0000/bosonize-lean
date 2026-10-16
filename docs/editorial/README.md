@@ -30,3 +30,7 @@ The subsequent rewrite order is coordination of global scope/notation first,
 then the CH01–03/A01 pilot, a later CH07–08/A03 pair, and individual dense chapters
 with relevant appendix context. Shared files need one owner. No rewrite task has
 been dispatched or approved by this report checkpoint.
+
+## Active chapter rewrite wave
+
+The user authorized chapter rewriting after the first review. [REWRITE_WAVE1.md](REWRITE_WAVE1.md) sets the bounded prose scope; [REWRITE_WAVE1_STATUS.json](REWRITE_WAVE1_STATUS.json) records all 15 dispatched Jules sessions. CH01–11 and CH19–21 each have one owner, with a separate frontmatter owner. Existing mathematical blocks and all appendices, Lean and locks are preserved. The sessions are candidates until source checks, prose inspection and real-book compilation pass. Global notation reconciliation and appendix relocation remain separate work.

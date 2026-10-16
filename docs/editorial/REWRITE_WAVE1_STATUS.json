@@ -1,0 +1,109 @@
+{
+  "dispatch_base": "4e28060",
+  "stage": "Dispatched: candidate rewrites are not yet accepted or published",
+  "chapter_strategy": "One chapter per session; a separate session owns main.tex frontmatter/roadmap only.",
+  "jobs": [
+    {
+      "chapter": "CH01",
+      "task": "bosonize-lean--rewrite-ch01-wave1",
+      "session": "https://jules.google.com/session/16033437896827980283",
+      "dispatched_at": "2026-10-16T00:35:07.981449+00:00"
+    },
+    {
+      "chapter": "CH02",
+      "task": "bosonize-lean--rewrite-ch02-wave1",
+      "session": "https://jules.google.com/session/4349361890691014354",
+      "dispatched_at": "2026-10-16T00:35:11.612046+00:00"
+    },
+    {
+      "chapter": "CH03",
+      "task": "bosonize-lean--rewrite-ch03-wave1",
+      "session": "https://jules.google.com/session/11096842965569419421",
+      "dispatched_at": "2026-10-16T00:35:15.631468+00:00"
+    },
+    {
+      "chapter": "CH04",
+      "task": "bosonize-lean--rewrite-ch04-wave1",
+      "session": "https://jules.google.com/session/13640349422861630672",
+      "dispatched_at": "2026-10-16T00:35:19.536143+00:00"
+    },
+    {
+      "chapter": "CH05",
+      "task": "bosonize-lean--rewrite-ch05-wave1",
+      "session": "https://jules.google.com/session/4953799156936034531",
+      "dispatched_at": "2026-10-16T00:35:23.821299+00:00"
+    },
+    {
+      "chapter": "CH06",
+      "task": "bosonize-lean--rewrite-ch06-wave1",
+      "session": "https://jules.google.com/session/16072594996072518752",
+      "dispatched_at": "2026-10-16T00:35:27.914374+00:00"
+    },
+    {
+      "chapter": "CH07",
+      "task": "bosonize-lean--rewrite-ch07-wave1",
+      "session": "https://jules.google.com/session/6628946825800271795",
+      "dispatched_at": "2026-10-16T00:35:31.471559+00:00"
+    },
+    {
+      "chapter": "CH08",
+      "task": "bosonize-lean--rewrite-ch08-wave1",
+      "session": "https://jules.google.com/session/13648113474117759430",
+      "dispatched_at": "2026-10-16T00:35:35.498030+00:00"
+    },
+    {
+      "chapter": "CH09",
+      "task": "bosonize-lean--rewrite-ch09-wave1",
+      "session": "https://jules.google.com/session/3417474204592107079",
+      "dispatched_at": "2026-10-16T00:35:39.855997+00:00"
+    },
+    {
+      "chapter": "CH10",
+      "task": "bosonize-lean--rewrite-ch10-wave1",
+      "session": "https://jules.google.com/session/4064820356513671914",
+      "dispatched_at": "2026-10-16T00:35:44.075476+00:00"
+    },
+    {
+      "chapter": "CH11",
+      "task": "bosonize-lean--rewrite-ch11-wave1",
+      "session": "https://jules.google.com/session/4427945683332135247",
+      "dispatched_at": "2026-10-16T00:35:48.368543+00:00"
+    },
+    {
+      "chapter": "CH19",
+      "task": "bosonize-lean--rewrite-ch19-wave1",
+      "session": "https://jules.google.com/session/9102733825150575766",
+      "dispatched_at": "2026-10-16T00:35:52.962777+00:00"
+    },
+    {
+      "chapter": "CH20",
+      "task": "bosonize-lean--rewrite-ch20-wave1",
+      "session": "https://jules.google.com/session/14798661373269291327",
+      "dispatched_at": "2026-10-16T00:35:57.377721+00:00"
+    },
+    {
+      "chapter": "CH21",
+      "task": "bosonize-lean--rewrite-ch21-wave1",
+      "session": "https://jules.google.com/session/2452652107077444780",
+      "dispatched_at": "2026-10-16T00:36:02.465898+00:00"
+    },
+    {
+      "chapter": "Frontmatter",
+      "task": "bosonize-lean--rewrite-frontmatter-wave1",
+      "session": "https://jules.google.com/session/3208893926813201988",
+      "dispatched_at": "2026-10-16T00:36:06.574685+00:00"
+    }
+  ],
+  "checks_completed": [
+    "Baseline actual book compilation passed",
+    "Preservation baseline: 583 existing mathematical blocks",
+    "Mutation checks reject changed mathematical blocks, removed labels and non-owned Lean edits"
+  ],
+  "acceptance_pending": [
+    "Collect final candidate patches through agentctl",
+    "Inspect changed prose and mathematical scope",
+    "Compile isolated candidates in the sandbox",
+    "Integrate disjoint reviewed changes and compile the combined book",
+    "Push accepted sources and check the CI PDF source receipt"
+  ]
+}
