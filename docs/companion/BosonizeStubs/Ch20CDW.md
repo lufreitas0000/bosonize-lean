@@ -102,3 +102,52 @@ warning-as-error compilation. This restores the original four Core imports;
 only the CH20 lock record is amended. The final source SHA256 is
 `00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f` (filled from the actual file below). No linter is suppressed.
 Final acceptance still requires the full fresh verifier, build and CI receipts.
+
+## Phase B local acceptance — 2026-10-16
+
+All 64 original Phase A theorem contracts are proved. Together with the reviewed
+private helpers, data and local instances, the final verifier audited 159
+declarations from freshly compiled source. Source SHA256:
+`00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f`.
+The earlier Phase A counts above describe the historical acceptance snapshot,
+not the current proof status.
+
+Acceptance evidence is in `docs/verification/ch20-phase-b-20261016/`:
+- `receipt.json` binds the final source/lock/log hashes and audited commit
+  `b0d3e8a72f219277c709618a596a363b546d9707`.
+- `final-verifier.log`: repository `verify_phase_b.py` passed with 159 freshly
+  audited declarations, zero forbidden proof tokens, zero warnings under
+  warning-as-error compilation, and only `propext`, `Classical.choice`,
+  `Quot.sound` (or no axioms).
+- `ci.log`: full `scripts/ci.sh` ended `CI OK`: 69 guard tests, strict v2 locks,
+  all 33 complete Core hashes, Core build, staging build, and 18 Web-LLM tests.
+  The `Fixture.value`/`sorryAx` output is from a deliberate negative verifier
+  test; it is not a CH20 dependency.
+- Native canonical Lean MCP diagnostics passed with empty items and failed
+  dependencies, partial=false, timed_out=false after rebuilding/restarting the
+  LSP following worktree restoration. Scratch MCP unavailability was a tooling
+  result, not substituted for the subsequent canonical diagnostic result.
+
+The final verifier and CI ran using the required namespace sandbox, with no
+network and credential directories hidden, in a separate audit checkout at the
+same commit. `WEBLLM_COMPILER_ROOT` selected that exact checkout under the
+verifier's same-HEAD check. No baseline gate was weakened. The verifier needed a
+reviewed regression fix to recognize Lean's generated private names in fresh
+`#print axioms` output; five targeted tests and the full suite passed, including
+rejection of missing receipts and nonstandard axioms.
+
+This is local Phase B acceptance from independently reviewed proof development.
+No browser finish transaction was invented: CH20 was not started in that runner
+and there is no downloaded-response finish receipt. No remote GitHub CI result
+or push is claimed. The work is retained on `codex/ch20-phase-b-resume`.
+
+The proved scope remains finite CAR order parameters with explicit compression
+residuals, scalar charge/Klein duality, mode-family substitutions, and finite
+parameter/kernel witnesses. It does not establish a finite-Fock unitary duality,
+formal vertex/Gaussian/state transport, analytic evaluation or continuum
+correlators. CH20b and Phase C remain outside this Phase B-only continuation.
+
+Final independent read-only review `/root/audit_locks` bound PASS to the exact
+final source hash and audited commit above. It rechecked preserved original
+contracts, CH20-only manifest impact, the restored imports, coefficient witness
+and cosine proof, unchanged Core/dependencies, and all final validation logs.
