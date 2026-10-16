@@ -25,18 +25,43 @@ lemmas disconnected from the actual fields, and conflates carriers. The live
 source guidance itself documents these as rejected patterns. It is not a valid
 Phase A or review baseline.
 
-## Phase boundary and next action
+## Original phase boundary
 
-The formalizer workflow requires an external Phase A drafter, then an independent
-mathematical/interface review before establishing locks. The user authorized no
-paid-provider calls, desktop/Antigravity subagents, or other credit pools. No
-provider or credit-pool call was made. The remaining repository-approved path
-under that constraint is to prepare and return a bounded human-browser packet;
-the human-operated browser response and independent review artifact must then be
-returned to this checkout for local elaboration and review. Phase B, CH20b, and
-CH21 must remain downstream of that accepted interface.
+At the initial inspection the formalizer workflow still required an external
+Phase A draft and independent mathematical/interface review. The user authorized
+no paid-provider calls, desktop/Antigravity subagents, or other credit pools. No
+provider or credit-pool call was made. The bounded browser packet was prepared,
+and the user supplied its response and matching Markdown download.
 
-No CH20 Lean source, lock, companion, or chapter note was altered here. The
-roadmap was corrected to mark Phase A as awaiting recovery. The unrelated dirty
-LaTeX, Markdown, and rule-file changes present before this checkpoint were left
-untouched.
+## Phase A acceptance — October 16, 2026
+
+- Packet: `ch20_phase_a-20261016T133230Z-dbc49307`; base SHA
+  `d555477a75e28da8e75d5e6e88518fdce173c9aa`.
+- Final draft SHA-256:
+  `d3b89fbbde18a8f2d6a06a7b6779721cd1eb48749615cd9b4e5ca4ec3ff59272`.
+- Staging source: `BosonizeStubs/Ch20CDW.lean`; SHA-256
+  `77d49a6fe6166d07cdc706a2ab1de0b7a0745882ed0658e6d3ca104cacddb241`.
+- Independent reviewer `/root/ch20_phase_a_review` returned PASS for the exact
+  final draft hash. The review covered interface mathematics and scope; it did
+  not prove any of the stubs. Its provenance finding was resolved by separating
+  the empty editable-target baseline hash from the source-hash list.
+- The first fresh elaboration found two missing `[Fintype σ] [LinearOrder σ]`
+  binders on zero-mode lemmas. Those were added, the candidate was re-elaborated,
+  and the exact revised artifact was re-reviewed.
+- Fresh `scripts/webllm/verify_phase_a.py` passed: 27 audited data declarations,
+  64 unproved theorem stubs, with only expected `sorry` warnings. Data axioms
+  were limited to `Classical.choice`, `Quot.sound`, and `propext` (or none).
+- `lake build BosonizeStubs` passed at 3420 jobs, including
+  `BosonizeStubs.Ch20CDW`; its 64 `sorry` warnings are expected for Phase A.
+- `stub_lock.py --check --strict` passed with 1032 statements and 1063 frozen
+  commands across 34 files. `core_lock.py` passed for all 33 frozen Core files.
+- The exact reviewed interface is now in `docs/webllm/drafts/ch20_phase_a.md`,
+  `BosonizeStubs/Ch20CDW.lean`, and
+  `docs/companion/BosonizeStubs/Ch20CDW.md`; only its scoped new lock record was
+  added. `BosonizeStubs.lean` imports the new staging module.
+- The original files in `C:\Users\lucas\Downloads` were not modified.
+
+Phase A is complete. All 64 contracts remain unproved and are eligible for
+Phase B under the frozen interface. CH20b, CH21, and the canonical closure audit
+remain downstream. The unrelated dirty LaTeX, Markdown, and rule-file changes
+listed in the initial checkpoint remain untouched.
