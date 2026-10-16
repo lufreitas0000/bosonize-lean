@@ -1,0 +1,48 @@
+{
+  "status": "first editorial review obtained and inspected; chapter rewrites not started",
+  "date_local": "2026-10-15",
+  "timezone": "America/Fortaleza",
+  "manuscript_source_commit": "f6766b16178d378fbb318c4927186c0dbdf8e34e",
+  "review_setup_commit": "15849fa603c1d2c0b5b555c103647a57e427088d",
+  "jules_session_url": "https://jules.google.com/session/8606663091090500557",
+  "jules_state": "COMPLETED",
+  "jules_sessions": 1,
+  "correction_messages": 2,
+  "verified_candidate_commit": "901f5d535d63be77fe9543a3fcdbf52e701fc33d",
+  "report_sha256": "ce38b89f67a36b34deef3d4066a47da3299e4cbb0d253015d56fd28a2c2e94a1",
+  "report_observations": 24,
+  "report_words": 2770,
+  "covered_published_chapters": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    19,
+    20,
+    21
+  ],
+  "private_latex_not_reviewed": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "mechanical_gates": {
+    "commit_guards": "pass",
+    "ingest_validate": "pass",
+    "verify_commands": "pass"
+  },
+  "inspection": "COORDINATOR_INSPECTION.md",
+  "mathematical_verification": "not performed; identified source/hypothesis questions remain review tasks",
+  "chapter_rewrites_authorized": false
+}
