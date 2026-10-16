@@ -373,43 +373,36 @@
     },
     {
       "chapter": 19,
-      "status": "B_complete",
+      "status": "C_complete",
       "markdown": [
         "notes/md/ch19_correlations.md"
       ],
       "latex": [
+        "notes/latex/chapters/ch19_states_correlations.tex"
+      ],
+      "lean": [
+        "Bosonize/Core/A08OscillatorStates.lean",
+        "Bosonize/Core/Ch19Correlations.lean"
+      ],
+      "sections": [
+        "Chapter 19: States and Correlations",
+        "Two kinds of quantum expectation",
+        "Building the dressed oscillator state",
+        "Mode correlations: why order matters",
+        "Spatial correlations on a finite ring",
+        "Returning to the finite fermionic sea"
+      ],
+      "writing_status": "complete replacement included after Chapter 18; independent editorial review pending",
+      "supersedes": [
         "notes/latex/chapters/sections/19.1.tex",
         "notes/latex/chapters/sections/19.2.tex",
         "notes/latex/chapters/sections/19.3.tex",
         "notes/latex/chapters/sections/19.4.tex"
-      ],
-      "lean": [
-        "BosonizeStubs/Ch19Correlations.lean"
-      ],
-      "sections": [
-        "Chapter 19: Exact Correlation Functions",
-        "19.1 The Interacting Vacuum and Algebraic States",
-        "19.2 Algebraic Evaluation of the Mode Correlators",
-        "19.3 Real-Space Spatial Correlators",
-        "19.4 Technical Notes for the Lean 4 Formalization"
-      ],
-      "writing_status": "integrated manuscript draft; independent review pending",
-      "writing_tasks": [
-        "packets/book_ch19_scope.toml",
-        "packets/book_ch19_mode_correlators.toml",
-        "packets/book_ch19_spatial_correlators.toml",
-        "packets/book_ch19_finite_comparison.toml"
-      ],
-      "section_numbers": [
-        "19.1",
-        "19.2",
-        "19.3",
-        "19.4"
       ]
     },
     {
       "chapter": 20,
-      "status": "draft/pending (see roadmap)",
+      "status": "C_complete",
       "markdown": [
         "notes/md/ch20_CDW.md"
       ],
@@ -418,14 +411,16 @@
         "notes/latex/chapters/sections/20.2.tex",
         "notes/latex/chapters/sections/20.3.tex"
       ],
-      "lean": [],
+      "lean": [
+        "Bosonize/Core/Ch20CDW.lean"
+      ],
       "sections": [
         "Chapter 20: Projected Order Parameters, Formal Vertex Correlators, and Model Duality",
         "20.1 Exact Finite CAR Products",
         "20.2 Constructed Formal Vertices and Exact Formal Correlators",
         "20.3 Explicit Algebraic Model Duality"
       ],
-      "writing_status": "integrated manuscript draft; independent review pending",
+      "writing_status": "Lean Phase C complete; LaTeX sections staged but not yet included in master; independent manuscript review pending",
       "section_numbers": [
         "20.1",
         "20.2",

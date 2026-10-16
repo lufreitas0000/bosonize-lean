@@ -1,10 +1,31 @@
 {
   "version": 1,
   "route": "explicit user-requested manuscript import",
-  "status": "compiled manuscript drafts; independent mathematical review pending",
-  "lean_status": "CH19/A08 Phase B accepted; CH20–21 chapter Lean unimplemented",
+  "status": "CH19 complete replacement included after Chapter 18 in master; independent mathematical/editorial review pending",
+  "lean_status": "CH19/A08 and CH20 Phase C complete; CH21 Lean and master-book integration remain pending",
   "imported_at": "2026-10-15T23:27:53.093920+00:00",
-  "sections": [
+  "sections": [],
+  "chapter_replacements": [
+    {
+      "number": "19",
+      "id": "ch19-states-correlations",
+      "title": "States and Correlations",
+      "source_artifact": "C:\\Users\\lucas\\Downloads\\ch19_states_and_correlations_revised.tex",
+      "source_sha256": "fc1c246d1008abb61c8e5219675681c7ae2a76d5557519bdb7e003ef0d6892f5",
+      "target": "notes/latex/chapters/ch19_states_correlations.tex",
+      "integrated_sha256": "fdee02efc9532f456e83cf73c1ae3c43db4a7ad172fb36db1acf8ecd05524051",
+      "included_after": "notes/latex/chapters/ch18_bogoliubov.tex",
+      "supersedes": [
+        "notes/latex/chapters/sections/19.1.tex",
+        "notes/latex/chapters/sections/19.2.tex",
+        "notes/latex/chapters/sections/19.3.tex",
+        "notes/latex/chapters/sections/19.4.tex"
+      ],
+      "status": "master build candidate; independent editorial review pending; CH19/A08 Lean Phase C complete",
+      "label": "ch:correlations"
+    }
+  ],
+  "superseded_sections": [
     {
       "number": "19.1",
       "id": "ch19-scope",
@@ -15,7 +36,8 @@
       "template_sha256": "31d09a9dd2b9946182fdbd093603ba23c73a79362a484cec43c59426a467976d",
       "target": "notes/latex/chapters/sections/19.1.tex",
       "body_sha256": "e09e3acc3ba141626ec838f4225b257153df096186760f511ae40c5e65c820aa",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "superseded by complete Chapter 19 replacement; retained for provenance only"
     },
     {
       "number": "19.2",
@@ -27,7 +49,8 @@
       "template_sha256": "573f2b0ce3cf6bada002c60e0ca58ec7131d79f1d7b82195155fed435ff4a5d8",
       "target": "notes/latex/chapters/sections/19.2.tex",
       "body_sha256": "ce4b43d5b94f0aa67b5b41bab7a85959ec77ce8da743017cf083505343b9a0b5",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "superseded by complete Chapter 19 replacement; retained for provenance only"
     },
     {
       "number": "19.3",
@@ -39,7 +62,8 @@
       "template_sha256": "d75d6f7d0aca6f8336d2db3ec97af1ade1d5fe9a16047712d24fbd63983de409",
       "target": "notes/latex/chapters/sections/19.3.tex",
       "body_sha256": "fa0b8a29814d32086ea7da2843afd8dd6aaba127c863295fca83abd8d6ea464b",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "superseded by complete Chapter 19 replacement; retained for provenance only"
     },
     {
       "number": "19.4",
@@ -53,8 +77,11 @@
       "body_sha256": "261269343791f9e4a94ae497fae04f8796bf5e3a150896f48a568feee35ce0ee",
       "format_adjustments": [
         "Restored missing final newline after end{document}; body unchanged"
-      ]
-    },
+      ],
+      "status": "superseded by complete Chapter 19 replacement; retained for provenance only"
+    }
+  ],
+  "pending_master_sections": [
     {
       "number": "20.1",
       "id": "ch20-projected-products",
@@ -65,7 +92,8 @@
       "template_sha256": "6a2d0b822fcfe3053540448b6f1df4a29d73475324401ef6741784b5e4b123cb",
       "target": "notes/latex/chapters/sections/20.1.tex",
       "body_sha256": "3b6cec0a9cce7b616d7921eb6bbfb8e6e94aba078a0b3a3e25d3848b4e82b21e",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "staged manuscript; not yet included in main.tex"
     },
     {
       "number": "20.2",
@@ -77,7 +105,8 @@
       "template_sha256": "7f60f94f03a8fff4264192df72325bc21440366dbe597465af7f51bc6590d996",
       "target": "notes/latex/chapters/sections/20.2.tex",
       "body_sha256": "d5e2bdd2f0e1c7a39486e4dc2be9f63c534052bd6f07857aefa280d6ce4fd88f",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "staged manuscript; not yet included in main.tex"
     },
     {
       "number": "20.3",
@@ -89,7 +118,8 @@
       "template_sha256": "109bb27a51405e4711a29cd47ba862b8e226b3b9d1bb46d6e69c30c3020f8694",
       "target": "notes/latex/chapters/sections/20.3.tex",
       "body_sha256": "b828b53fead82b5c979eef281028ed3543444577b361d450ece96135b1cd9d56",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "staged manuscript; not yet included in main.tex"
     },
     {
       "number": "21.1",
@@ -101,7 +131,8 @@
       "template_sha256": "097d19c1fe99e19a94872437a5647826925a61d369a3c1658474478ff8a6868c",
       "target": "notes/latex/chapters/sections/21.1.tex",
       "body_sha256": "f70d1f4047de23b37f6a12f121422bf1b415ae118c733f45c0d85e2ef65e92b0",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "staged manuscript; not yet included in main.tex"
     },
     {
       "number": "21.2",
@@ -113,7 +144,8 @@
       "template_sha256": "f2481cff391366b4794d9b8522020aeed1c5d40914e2848b837a6cee2a9aab29",
       "target": "notes/latex/chapters/sections/21.2.tex",
       "body_sha256": "6d32c8991455636950d2c1e99ab83baa4e17abf2e8183f7edf077bbc7e38de96",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "staged manuscript; not yet included in main.tex"
     },
     {
       "number": "21.3",
@@ -125,7 +157,8 @@
       "template_sha256": "2e5e483a491198c07f9ef0d20349fea2678b4f94efee97fba344cd8686676502",
       "target": "notes/latex/chapters/sections/21.3.tex",
       "body_sha256": "50285d4a45ebf16d4951de689bae04e29dc5cf70e21cc0c28d1a30b2740d545c",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "staged manuscript; not yet included in main.tex"
     },
     {
       "number": "21.4",
@@ -137,7 +170,8 @@
       "template_sha256": "b921106f14caab2aba9e9f5d44423637f7d738bf805fe0deabf464ea68f04bca",
       "target": "notes/latex/chapters/sections/21.4.tex",
       "body_sha256": "4fe44afacec436492a4427b8f019dd41a6f0ae03f945872cf1bb24c4b27eaa42",
-      "format_adjustments": []
+      "format_adjustments": [],
+      "status": "staged manuscript; not yet included in main.tex"
     }
   ]
 }

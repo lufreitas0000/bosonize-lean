@@ -35,7 +35,30 @@ def inventory(root):
             raise ValueError('Standalone wrapper leaked into '+target)
         numbers.append(row['number'])
     if len(set(numbers))!=len(numbers): raise ValueError('Duplicate section number')
-    return dict(included_sections=numbers,book_sources_sha256=seen)
+    chapters=[]
+    for row in manifest.get('chapter_replacements',[]):
+        target=str(Path(row['target']).relative_to('notes/latex'))
+        if target not in seen: raise ValueError('Chapter replacement absent from book: '+target)
+        text=(root/target).read_text()
+        if len(re.findall(r'\\chapter(?:\[[^]]*\])?\s*\{',text))!=1:
+            raise ValueError('Expected one chapter in '+target)
+        expected=row.get('label')
+        if not expected or '\\label{'+expected+'}' not in text:
+            raise ValueError('Missing stable chapter label in '+target)
+        if re.search(r'\\(?:documentclass|usepackage|begin\{document\})',text):
+            raise ValueError('Standalone wrapper leaked into '+target)
+        predecessor=row.get('included_after')
+        if predecessor:
+            predecessor=str(Path(predecessor).relative_to('notes/latex'))
+            main=(root/'main.tex').read_text()
+            before=r'\\include\s*\{'+re.escape(Path(predecessor).with_suffix('').as_posix())+r'\}'
+            current=r'\\include\s*\{'+re.escape(Path(target).with_suffix('').as_posix())+r'\}'
+            left=re.search(before,main);right=re.search(current,main)
+            if not left or not right or left.start()>=right.start():
+                raise ValueError('Chapter is not included after its required predecessor: '+target)
+        chapters.append(row['number'])
+    if len(set(chapters))!=len(chapters): raise ValueError('Duplicate chapter replacement number')
+    return dict(included_sections=numbers,included_chapters=chapters,book_sources_sha256=seen)
 
 
 if __name__=='__main__':
@@ -47,4 +70,4 @@ if __name__=='__main__':
     if args.receipt:
         receipt=json.loads(args.receipt.read_text());receipt.update(result)
         args.receipt.write_text(json.dumps(receipt,indent=2)+'\n')
-    print('PASS: master includes sections '+', '.join(result['included_sections']))
+    print('PASS: master includes chapters '+', '.join(result['included_chapters'])+'; sections '+', '.join(result['included_sections']))

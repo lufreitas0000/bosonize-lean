@@ -3,75 +3,60 @@
 [![Build LaTeX Monograph](https://github.com/lufreitas0000/bosonize-lean/actions/workflows/latex.yml/badge.svg)](https://github.com/lufreitas0000/bosonize-lean/actions/workflows/latex.yml)
 [![Download Monograph PDF](https://img.shields.io/badge/PDF-Download%20Monograph-blue?logo=adobe-acrobat-reader)](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf)
 
-> **Working monograph**: The published master now contains CH01–11, the 11 manuscript-draft sections of CH19–21, and A01–A04. CH12–18 have local drafts awaiting review/integration; CH19–21 await independent mathematical/editorial review. The PDF is a developing manuscript, not the completed 21-chapter book. Download [**bosonize-monograph.pdf**](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf); [build provenance](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/book-build.json) records its source revision.
+Bosonize-Lean develops exact algebraic results for one-dimensional lattice bosonization. The formalization distinguishes finite-dimensional fermionic CAR spaces from uncompressed polynomial CCR carriers and states exactly where finite-band, energy-budget, charge-sector, and projection hypotheses apply. Formal power series are coefficientwise constructions; analytic limits and continuum interpretations require separate arguments.
 
-Bosonize-Lean develops exact algebraic statements for 1+1-dimensional lattice bosonization. The program uses finite-dimensional CAR/budget spaces and polynomial or explicitly specified algebraic carriers. Formal series, where selected, are interpreted coefficientwise; analytic limits, Hilbert completions and topological interpretations require separate constructions.
+## Current status
 
-**Current status:** Chapters 1–18 and their implemented support are promoted and frozen in 31 Core modules. CH19/A08 has 62 contracts accepted in Phase B; Phase C remains unfinished. CH20–21 have reviewed drafts. The CLI/TUI provides `make work`, browser/Jules/API tasks and saved verification evidence. Section files and menu labels use numeric identifiers such as `19.2`. See the [writing workflow](docs/webllm/LATEX_WORKFLOW.md) and [planned Jules revision round](docs/webllm/JULES_REVISION_PLAN.md); no Jules rewrite has been dispatched.
+| Scope | Status | Evidence and limits |
+| --- | --- | --- |
+| CH01–18 and implemented support | Phase C complete; promoted and frozen | See the chapter records under `docs/webllm/chapters/` and the [adaptive roadmap](adaptative_roadmap.md). |
+| CH19/A08 | Phase C complete; 62 theorem contracts promoted | Fresh build, strict locks, standard-axiom audits, and independent migration and pedagogy reviews are recorded in [the validation report](note/ch19_phase_c_validation_2026-10-16.md). General-orientation Wick contractions, analytic vertex evaluation, finite interacting-state equivalence, and continuum power laws remain outside its scope. |
+| CH20 finite order parameters and duality | Phase C complete; 64 theorem contracts promoted and frozen | Local Phase C evidence and independent review are in [the validation report](note/ch20_phase_c_validation_2026-10-16.md). That is Lean acceptance evidence; the LaTeX book has a separate GitHub Actions build and release workflow. |
+| CH21 and dependent CH20b work | Pending | See the [roadmap](adaptative_roadmap.md) for current dependencies and acceptance gates. |
 
-**Overall pipeline:** [Adaptive roadmap and Kanban board](adaptative_roadmap.md). The board orders dependent chapter work and records evidence. When a discovered mathematical/interface problem affects several notes or dependent files, halt the affected work and run a dedicated issue sprint before resuming. Routine local proof repairs stay within the chapter. A01/Chapter 3 Phase C is complete: all 61 Fourier lemmas are proved, audited through the Core aggregator, and protected by complete-source hashes. See the [A01 notebook](docs/companion/Bosonize/Core/A01FourierCharacters.md) and [Chapter 3 notebook](docs/companion/Bosonize/Core/Ch03Fourier.md). CH04 and finite-CAR A02 Phase C is complete: all 69 lemmas are promoted, freshly audited through `import Bosonize`, and protected by complete-source hashes. Both modules compile without warnings after the approved count/sign cleanup. See the [A02 notebook](docs/companion/Bosonize/Core/A02CARHilbert.md), [CH04 notebook](docs/companion/Bosonize/Core/Ch04CARFock.md), and roadmap.
+Lean completion and book completion are tracked separately. The LaTeX master currently includes Chapters 1–19 and Appendix A07. The full Chapter 19 replacement follows Chapter 18; its source compiles in the book, while independent editorial review of this replacement remains pending. Chapters 20–21 have staged LaTeX sections that are not yet included in the master. Therefore the released PDF is a working manuscript, not the complete 21-chapter monograph.
 
-**Latest formal completion:** CH18 (Bogoliubov): 34 proved contracts, 55 declaration axiom checks, preserved Core locks and local CI. The [audit](note/ch18_and_orchestration_audit_2026-10-15.md) identifies remaining prose/notation corrections; no live repair or subsequent chapter promotion is implied.
+Download the [latest compiled monograph PDF](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf). Its [build receipt](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/book-build.json) records the source revision and PDF hash.
 
-**Chapter workflow:**
+## Repository map
 
-1. **Phase A — Draft and document:** Complete definitions, one-sorry theorem stubs, checked imports/APIs and an exact companion notebook. Have another agent independently review the exact interface, resolve deterministic findings and record a passing verdict.
-2. **Phase B — Prove the approved interface:** Automatically lock and commit the independently reviewed baseline, then change proof bodies while preserving definitions, names and signatures. Run guards and compiler checks; critically evaluate suggestions.
-3. **Phase C — Audit, promote and freeze:** Require complete proofs, zero warnings/placeholders, fresh axiom audits and passing guards/builds, then promote and freeze in Core. Update the formal companion and the corresponding pedagogical lecture note explaining the Lean file in natural mathematical language. Preserve the reference theory, distinguish actual proved scope, independently review the lecture-note update, and commit the verified checkpoint.
-
-**Automatic pipeline:** A chapter-development request authorizes A–B–C within that chapter's scope. Independent agent review gates Phase A and staging-interface corrections; routine locking, troubleshooting and validated promotion proceed without additional confirmation. Ask the human only for substantive mathematical/scope ambiguity. Explicit phase-only or stop requests take precedence; a workflow-update request does not itself launch chapter proofs. See the [pipeline policy](.agents/skills/formalizer/references/pipeline.md). Guards establish interface preservation; they do not establish proof completion. Solve lint causes without suppressing linters, and never weaken a frozen theorem to make a suggested tactic succeed.
-
-| Location | Purpose |
+| Path | Contents |
 | --- | --- |
-| `Bosonize/Core/` | Proved, immutable Lean sources, including frozen proof bodies. |
-| `BosonizeStubs/` | Staging definitions/statements and approved proof work. |
-| [Chapter index](notes/md/TOC.md) | Mathematical references and dependency roadmap. |
-| [Appendix index](notes/appendices/README.md) | Supporting contracts and helper obligations. |
-| `docs/companion/` | Mirrored source, design decisions, proof and validation evidence. |
-| `docs/stub_suggestion/`, `docs/proof_suggestion/` | Advisory interfaces/proof ideas; adopted, adapted or rejected with reasons. |
-| `note/` | Dated audits, completion records and future issue-sprint notes. |
-| [Formalizer skill](.agents/skills/formalizer/SKILL.md) | Detailed A–B–C and proof-design instructions. |
-| [Pedagogical synchronization skill](.agents/skills/pedagogical-sync/SKILL.md) | Preserve reference exposition and explain the verified constructive mathematics in chapter/appendix notes during Phase C. |
+| `Bosonize/Core/` | Promoted, frozen Lean modules. |
+| `BosonizeStubs/` | Staging interfaces and approved proof work. |
+| `docs/companion/` | Source-mirrored design, declaration mapping, and proof evidence. |
+| `notes/md/` | Pedagogical chapter notes. |
+| `notes/latex/` | Book master, chapter and appendix sources, bibliography, and build files. |
+| `docs/webllm/chapters/` | Machine-readable phase and source-migration records. |
+| `note/` | Dated validation records, audits, and scoped checkpoints. |
+| `adaptative_roadmap.md` | Project roadmap, chapter dependencies, and release gates. |
 
-Validation: run `make ci` for guard tests, strict definition/statement freeze, complete Core freeze and both Lean library builds. Use `STUB_LOCK_BASELINE_REF=<approved-commit>` to compare against a committed baseline. Axiom auditing and fresh warning-free chapter compilation supply separate evidence; a build with staging placeholders is not proof completion. If Lean MCP tools are not exposed to the chat, use the installed compiler/local library and report that fallback explicitly. See the [Lean MCP launch repair and live checks](note/lean_mcp_connection_repair_2026-10-09.md) for the desktop PATH fix, verified diagnostics/goals and current-chat reload boundary.
+## Build and validation
 
-The approved A01/Chapter 3 interface was locked at `73add90`; Phase B completed at `40ff996`. Authorized Phase C migrates their paths and the CH03 dependency import, preserving all definitions, statement headers and proofs. Use the Phase C promotion commit (or a later approved checkpoint containing the same manifests) as `STUB_LOCK_BASELINE_REF` for current CI: the historical staging baseline predates this migration. Native Lean MCP diagnostics and goal retrieval now work in this chat.
+Build the LaTeX book locally:
 
-CH04/A02 are frozen in Core. The initial lock `7a2da78` and cleanup checkpoint `ddf9548` are historical staging baselines; use the committed Phase C checkpoint (or a later approved commit containing the promoted manifests) for current committed-baseline checks. A02 moves unchanged; CH04 changes only its A02 dependency import and dependent context records. Strict guards, all 69 guard tests, both builds, fresh warning-as-error compilation and native MCP diagnostics pass. The historical CH04/A02 Core audit covered 271 lemmas with only standard axioms. CH05 and CH06 Phase C is complete: 35 and 54 lemmas respectively are promoted and frozen in Core, bringing the library to eight frozen modules. CH05 moves byte-for-byte; CH06 changes only its CH05 dependency import and the affected context records. All 69 guard tests, both guards/builds, fresh warning-as-error compilation, native MCP diagnostics and the fresh Core axiom audit pass. See the [CH05 notebook](docs/companion/Bosonize/Core/Ch05Fermions.md) and [CH06 notebook](docs/companion/Bosonize/Core/Ch06LocalNet.md). Use the committed Phase C promotion checkpoint as the current baseline. A03 and CH07 Phase C is complete: all 114 theorem proofs and 45 data declarations compile without warnings or placeholders and pass the fresh standard-axiom audit. Their initial interfaces are committed at `20ed09b` and Phase B at `2b3186f`; use the committed Phase C checkpoint for current baselines. The fresh Core audit covers all 457 theorems, and both guards, all 69 tests, both builds and native MCP checks pass. Both modules are promoted and frozen in Core; CH07 now imports the promoted A03. See the [A03 notebook](docs/companion/Bosonize/Core/A03EnergyBudgets.md) and [CH07 notebook](docs/companion/Bosonize/Core/Ch07VacuumBudget.md) for exact proofs, genuine ground/excited witnesses and the checked Ch06Ext twist-energy dictionary.
+```bash
+make -C notes/latex
+```
 
-The separate [CH06 extension](Bosonize/Core/Ch06Ext.lean) is proved, promoted and frozen: 72 theorems and 29 complete data declarations cover boundary holonomy, Fourier/CAR, transport, locality, zero modes, the JW parity dictionary and the same-sea physical-energy bridge. The approved twelve-lemma length-assumption cleanup is recorded at `1a562b7`; promotion preserves that corrected interface and all proofs. Use the committed promotion checkpoint for current baselines. See the [notebook](docs/companion/Bosonize/Core/Ch06Ext.md) for exact source and validation. The [boundary issue review](note/issue_twisted_boundary_conditions_2026-10-09.md) retains separate source-reconciliation and spin-model obligations. A03/CH07 Phase B now consumes the reference excitation convention and documents its twist bridge; both modules are now frozen in Core.
+The GitHub Actions workflow **Build LaTeX Monograph** runs on relevant pushes and pull requests. It checks that manifest-listed chapter and section sources are included in the master, compiles the book, rejects unresolved references and duplicate labels, binds a source/PDF hash receipt, and uploads the PDF and logs. A successful push to `main` also updates the GitHub release named `latest`.
 
-<!-- lean-cycle CH15 -->
-## Automated CH15 checkpoint
+For the Lean repository checks:
 
-CH15: **C_complete**. 23 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch15.json`.
+```bash
+make ci
+```
 
-<!-- /lean-cycle CH15 -->
+The Lean build, freeze guards, warning and placeholder checks, and axiom audits provide separate evidence. A successful LaTeX build does not establish mathematical correctness, and a Lean promotion does not imply that the corresponding chapter is already integrated into the book.
 
-<!-- lean-cycle CH16 -->
-## Automated CH16 checkpoint
+## Chapter workflow
 
-CH16: **C_complete**. 19 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch16.json`.
+Lean chapters follow three reviewed phases:
 
-<!-- /lean-cycle CH16 -->
+1. **Phase A — Specify:** define the mathematical scope and carrier, prepare the interface and companion record, and independently review the exact declarations.
+2. **Phase B — Prove:** preserve the approved interface while completing proofs; run the compiler, lock, placeholder, warning, and axiom checks.
+3. **Phase C — Audit and promote:** independently review the proof and pedagogy, migrate accepted sources to frozen Core, and record fresh build and audit evidence.
 
-<!-- lean-cycle CH17 -->
-## Automated CH17 checkpoint
+The chapter phase record describes Lean status. The LaTeX catalog and import manifest separately describe book inclusion and editorial review. Neither status is inferred from the other.
 
-CH17: **C_complete**. 37 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch17.json`.
-
-<!-- /lean-cycle CH17 -->
-
-<!-- lean-cycle CH18 -->
-## Automated CH18 checkpoint
-
-CH18: **C_complete**. 34 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch18.json`.
-
-<!-- /lean-cycle CH18 -->
-
-<!-- lean-cycle CH19 -->
-## Automated CH19 checkpoint
-
-CH19: **B_complete**. 62 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch19.json`.
-
-<!-- /lean-cycle CH19 -->
+See the [formalizer workflow](.agents/skills/formalizer/SKILL.md), [pedagogical synchronization guidance](.agents/skills/pedagogical-sync/SKILL.md), [LaTeX writing workflow](docs/webllm/LATEX_WORKFLOW.md), and [adaptive roadmap](adaptative_roadmap.md) for the detailed procedures.

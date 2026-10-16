@@ -4,11 +4,12 @@ Updated: 2026-10-16. **Current goal:** the user authorized sequential completion
 
 This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures. The requested execution policy for the next implementation is external-first (Jules and account-eligible OpenAI API), with no default Antigravity author/reviewer or desktop-subagent fallback. Skills/rules and the direct judge entrypoints now enforce that default policy within the controller; the desktop account itself remains outside its control.
 
-Current document sprint (2026-10-15): native single-file LaTeX handoff and arrow-key
-operator workflow implemented; write unwritten CH19 first. Preserve existing
-CH01–18 text/drafts for later Jules revision/review. The four-section CH19 queue
-and remaining acceptance gates are in [LaTeX workflow](docs/webllm/LATEX_WORKFLOW.md).
-This is writing infrastructure, not CH19 promotion or new mathematical acceptance.
+Current document sprint (2026-10-16): CH19's complete replacement is included
+immediately after Chapter 18 in the LaTeX master. The source compiles in the
+full book; its independent editorial review remains pending. CH19/A08 and CH20
+Lean Phase C are complete. CH20–21 LaTeX sections remain staged outside the
+master; the writing and acceptance conventions are in the
+[LaTeX workflow](docs/webllm/LATEX_WORKFLOW.md).
 
 ## Baseline and mathematical scope
 
@@ -312,20 +313,28 @@ CH18: **C_complete**. 34 contracts; 0 pending proof modules. Current machine rec
 <!-- lean-cycle CH19 -->
 ## Automated CH19 checkpoint
 
-CH19: **B_complete**. 62 contracts; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch19.json`.
+CH19/A08: **C_complete**. 62 contracts promoted and audited; 0 pending proof modules. Current machine record: `docs/webllm/chapters/ch19.json`; see `note/ch19_phase_c_validation_2026-10-16.md`.
 
 <!-- /lean-cycle CH19 -->
+
+<!-- lean-cycle CH20 -->
+## Automated CH20 checkpoint
+
+CH20: **C_complete**. 64 contracts promoted and frozen; see `note/ch20_phase_c_validation_2026-10-16.md`.
+
+<!-- /lean-cycle CH20 -->
 
 
 ## Manuscript import checkpoint — October 15, 2026
 
-All eleven user-supplied CH19–21 LaTeX sections are integrated as manuscript
-drafts, numbered 19.1–19.4, 20.1–20.3 and 21.1–21.4. The source manifest is
-`notes/latex/plan/imported_sections.json`. The master includes the entire batch;
-publication checks verify inclusion, references, citations and labels. No Lean
-source, lock or phase status changes in this step. CH12–18 private LaTeX drafts
-remain outside the published book. Independent mathematical/editorial review and
-full reference-coverage reconciliation remain open.
+The four earlier numbered CH19 sections are superseded by the complete
+`notes/latex/chapters/ch19_states_correlations.tex` source, included after
+Chapter 18. It has a successful full-book build and remains pending independent
+editorial review. The 20.1–20.3 and 21.1–21.4 section sources remain staged and
+are not yet in `main.tex`. The source manifest is
+`notes/latex/plan/imported_sections.json`; publication checks validate sources
+that are actually listed as integrated. CH19/A08 and CH20 Lean Phase C are
+complete; chapter phase status remains separate from manuscript integration.
 
 Next revision round is **planned only** in `docs/webllm/JULES_REVISION_PLAN.md`:
 pilot CH01–03 as a bundle, CH07–08 as a pair, and use one chapter per task for the

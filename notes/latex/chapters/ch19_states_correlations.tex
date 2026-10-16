@@ -1,0 +1,733 @@
+% Replacement for Chapter 19. This file includes its own \chapter command.
+% Integrate it in place of the old chapter heading and 19.1--19.4 inputs.
+\chapter{States and Correlations}
+\label{ch:correlations}
+
+Chapter~18 showed how a hyperbolic change of current variables simplifies
+an interacting quadratic Hamiltonian.  A diagonal expression suggests a
+vacuum and, with it, correlation functions.  There is a difficulty, however:
+the finite fermionic system and the familiar bosonic oscillator have
+different algebraic properties.  Their currents agree on appropriately
+protected low-energy vectors, but they are not globally the same operators.
+Which vacuum, then, is being used when we calculate a correlation?
+
+We will give two precise answers.  First, an \emph{uncompressed oscillator
+algebra} has a positive state in which the dressed modes annihilate the
+vacuum.  Its correlations follow by finite algebraic calculations.  Second,
+the original finite CAR system has genuine vector states, and a protected
+fermionic sea permits some of the same current calculations.  Their answers
+agree in the free case; an interacting-state comparison requires additional
+work.  The distinction will remain visible in the notation throughout.
+
+\section{Two kinds of quantum expectation}
+\label{sec:ch19-scope}
+
+\subsection*{The finite system}
+
+Let $\mathcal H_{\mathrm F}$ be the finite-dimensional fermionic Fock space
+constructed earlier.  A normalized vector $\Psi\in\mathcal H_{\mathrm F}$
+and a positive trace-one matrix $\Gamma$ give, respectively,
+\begin{equation}
+ \langle X\rangle^{\mathrm F}_{\Psi}
+ :=\langle\Psi,X\Psi\rangle,
+ \qquad
+ \langle X\rangle^{\mathrm F}_{\Gamma}
+ :=\operatorname{Tr}(\Gamma X).
+ \label{eq:ch19-vector-expectation}
+\end{equation}
+The inner product is linear in the second argument.  Both expressions are
+normalized positive linear functionals: in particular,
+$\langle X^*X\rangle^{\mathrm F}_{\Psi}=\|X\Psi\|^2\geq0$.
+For a specified self-adjoint finite Hamiltonian, a ground-state vector
+always exists.  It need not be annihilated by operators called
+``dressed annihilators.''  The latter is a separate condition.
+
+The value of an ordered product depends on its order:
+$\langle XY\rangle$ and $\langle YX\rangle$ may differ, even in a
+ground state.  Neither is generally the product of the separate
+expectations.  These elementary observations will determine the two-point
+functions below.
+
+\subsection*{Why the finite currents are not global oscillators}
+
+A one-line argument marks the boundary of the finite description.
+
+\begin{proposition}[Finite-dimensional trace obstruction]
+\label{prop:ch19-trace-obstruction}
+If $A,C$ are endomorphisms of a nonzero finite-dimensional complex
+vector space and $[A,C]=\lambda I$, then $\lambda=0$.
+\end{proposition}
+\begin{proof}
+Cyclicity of the matrix trace gives
+$0=\operatorname{Tr}(AC-CA)=\lambda\dim\mathcal H$.
+\end{proof}
+
+In particular, the canonical commutator $[A,C]=mI$, $m>0$, cannot hold
+throughout finite Fock space.  This does \emph{not} contradict the finite
+Schwinger-term identities proved in earlier chapters: those identities
+act on selected vectors under band-margin hypotheses, and they do not
+assert a global scalar commutator.
+
+There is a second way to see the issue.  For an orthogonal projection
+$\Pi$ and $Q=I-\Pi$, compression gives
+\begin{equation}
+ [\Pi A\Pi,\Pi C\Pi]
+ =\Pi[A,C]\Pi-\Pi AQ C\Pi+\Pi CQ A\Pi,
+ \label{eq:ch19-compression-remainder}
+\end{equation}
+where the equality is understood on $\Pi\mathcal H$.  The last two
+terms measure paths that leave the projected space between the two
+operator actions.  They need not vanish simply because the initial
+and final vectors lie below an energy cutoff.
+
+We therefore distinguish the finite expectation
+$\langle\,\cdot\,\rangle^{\mathrm F}$ from the abstract bosonic
+functional $\omega_P$ constructed next.  Here $P=(c,s)$ denotes
+Bogoliubov parameters; $\Pi$ is reserved for a projection.
+
+\section{Building the dressed oscillator state}
+\label{sec:ch19-oscillator-state}
+
+\subsection*{An algebra with no highest occupation}
+
+Fix a finite set of positive modes $m=1,\ldots,M$ and two branches
+$\nu\in\{R,L\}$; $M=0$ is allowed, with empty sums understood.  For each
+label introduce bare creation and annihilation generators $C_{\nu m}$
+and $A_{\nu m}=C_{\nu m}^{*}$.  They generate the unital complex
+$*$-algebra $\mathfrak A_M$ subject to
+\begin{equation}
+ [A_{\nu m},C_{\eta n}]
+   =m\delta_{\nu\eta}\delta_{mn}I,
+ \qquad [A_{\nu m},A_{\eta n}]
+   =[C_{\nu m},C_{\eta n}]=0.
+ \label{eq:ch19-abstract-ccr}
+\end{equation}
+Here $*$ reverses the order of products as well as taking complex
+conjugates of coefficients.  Algebraically, $\mathfrak A_M$ can be
+constructed from finite noncommuting words by identifying expressions
+that differ by the relations in \eqref{eq:ch19-abstract-ccr}.  The
+identification is compatible with multiplication on both sides: an
+identity remains valid when inserted into a longer word.  No
+infinite series or limiting procedure is involved.
+
+It is useful to see an actual space on which these relations hold.
+Consider commuting polynomial variables $X_{\nu m}$ and the carrier
+\[
+ \mathcal P_M=\mathbb C[X_{\nu m}:\nu\in\{R,L\},\ 1\leq m\leq M].
+\]
+The \emph{variables} commute; their multiplication and differentiation
+\emph{operators} do not.  Define
+\begin{equation}
+ \pi(C_{\nu m})f=X_{\nu m}f,
+ \qquad \pi(A_{\nu m})f=m\frac{\partial f}{\partial X_{\nu m}},
+ \label{eq:ch19-polynomial-representation}
+\end{equation}
+and make the monomials orthogonal with
+\begin{equation}
+ \langle X^{\alpha},X^{\beta}\rangle_{\mathcal P}
+  =\delta_{\alpha\beta}
+   \prod_{\nu,m}\alpha_{\nu m}!\,m^{\alpha_{\nu m}}.
+ \label{eq:ch19-polynomial-gram}
+\end{equation}
+The positive weights ensure a genuine inner product on polynomials,
+without taking a Hilbert-space completion.  Multiplication by
+$X_{\nu m}$ and $m\partial/\partial X_{\nu m}$ are adjoints on this
+common polynomial domain, and the ordinary differentiation rule proves
+\eqref{eq:ch19-abstract-ccr}.  Thus these operators represent the
+relation algebra consistently and show it is nonzero.
+
+The smallest example already captures the mechanism.  With one mode of
+weight $m$, let $C=X$ and $A=m\,d/dX$.  Then
+\begin{equation}
+ AC\,X^n=m(n+1)X^n,
+ \qquad CA\,X^n=mnX^n,
+ \label{eq:ch19-one-mode-ccr}
+\end{equation}
+so $[A,C]=mI$ for every $n\geq0$.  Each polynomial has finite
+degree, but there is no highest allowed degree.  If one instead
+retains only $1,X,\ldots,X^N$ and compresses the operators, their
+commutator acts as $mI$ below the top level and as $-mN$ on $X^N$.
+The defect at that one level restores the zero trace required in
+finite dimension.  This is why an energy-truncated oscillator is not
+an exact uncompressed oscillator.
+
+\subsection*{A positive vacuum without an infinite series}
+
+Write $\mathbf1$ for the constant polynomial, which has norm one.
+It is annihilated by every $A_{\nu m}$.  The vacuum expectation is
+\begin{definition}[Polynomial vacuum]
+\label{def:ch19-polynomial-vacuum}
+\begin{equation}
+ \omega_0(a):=\langle\mathbf1,\pi(a)\mathbf1\rangle_{\mathcal P},
+ \qquad a\in\mathfrak A_M.
+ \label{eq:ch19-omega-zero}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Positivity and the vacuum rule]
+\label{prop:ch19-polynomial-state}
+The functional $\omega_0$ is normalized and positive.  For every
+$a\in\mathfrak A_M$ and retained mode,
+\begin{equation}
+ \omega_0(a^*a)=\|\pi(a)\mathbf1\|_{\mathcal P}^2\geq0,
+ \qquad
+ \omega_0(aA_{\nu m})=\omega_0(C_{\nu m}a)=0.
+ \label{eq:ch19-omega0-positive}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Normalization follows from $\|\mathbf1\|=1$; positivity follows
+from the algebraic adjoint relation.  A rightmost annihilator acts
+first and kills $\mathbf1$.  The leftmost-creator identity is its
+adjoint counterpart.
+\end{proof}
+
+These two rules give the fundamental ordered contractions:
+\begin{equation}
+ \omega_0(A_{\nu m}C_{\eta n})
+     =m\delta_{\nu\eta}\delta_{mn},
+ \qquad \omega_0(C_{\nu m}A_{\eta n})=0.
+ \label{eq:ch19-free-two-orders}
+\end{equation}
+For instance, $AC\mathbf1=m\mathbf1$, whereas
+$CA\mathbf1=0$.  The nonzero expectation in the first order is a
+vacuum fluctuation fixed by the CCR, not a thermodynamic
+approximation.  Expectations of longer finite words reduce by
+commuting annihilators to the right; this pairing rule is the
+algebraic meaning of a Gaussian, or quasi-free, oscillator vacuum.
+
+\subsection*{A vacuum for the dressed modes}
+
+Take real $c,s$ with $c^2-s^2=1$, as in Chapter~18, and let
+$\bar R=L$, $\bar L=R$.  The Bogoliubov map on bare generators is
+\begin{equation}
+ \begin{aligned}
+ \beta(C_{\nu m})&=cC_{\nu m}+sA_{\bar\nu m},\\
+ \beta(A_{\nu m})&=cA_{\nu m}+sC_{\bar\nu m}.
+ \end{aligned}
+ \label{eq:ch19-bogoliubov-creator}
+\end{equation}
+The transformed generators satisfy the same CCR: in particular,
+$[\beta(A_{Rm}),\beta(C_{Rn})]
+=m\delta_{mn}(c^2-s^2)I$.  The cross-branch terms cancel in the
+remaining commutators.  Reality of $c,s$ preserves adjoints, and
+replacing $s$ by $-s$ gives the inverse.  Consequently $\beta$ is a
+$*$-automorphism of $\mathfrak A_M$.
+
+Denote its images by
+$\widetilde C_{\nu m}=\beta(C_{\nu m})$ and
+$\widetilde A_{\nu m}=\beta(A_{\nu m})$.  We want a state in which
+the \emph{dressed} annihilators, rather than the bare annihilators,
+kill the vacuum.  This fixes the direction of the pullback:
+\begin{definition}[Dressed abstract state]
+\label{def:ch19-dressed-functional}
+\begin{equation}
+ \boxed{\omega_P(a)=\omega_0\bigl(\beta^{-1}(a)\bigr),
+ \qquad P=(c,s).}
+ \label{eq:ch19-dressed-state}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Positive dressed vacuum]
+\label{prop:ch19-dressed-positive}
+The functional $\omega_P$ is normalized and positive, and
+\begin{equation}
+ \omega_P(a\widetilde A_{\nu m})=0,
+ \qquad \omega_P(\widetilde C_{\nu m}a)=0
+ \qquad (a\in\mathfrak A_M).
+ \label{eq:ch19-dressed-annihilation}
+\end{equation}
+\end{proposition}
+\begin{proof}
+A $*$-automorphism maps $a^*a$ to the corresponding positive
+square, so positivity follows from that of $\omega_0$.  Moreover,
+$\beta^{-1}(\widetilde A_{\nu m})=A_{\nu m}$ and
+$\beta^{-1}(\widetilde C_{\nu m})=C_{\nu m}$; the preceding vacuum
+rules give both vanishing statements.
+\end{proof}
+
+This is a \emph{constructed state on an uncompressed polynomial
+$*$-algebra}, not a density matrix on finite fermionic Fock space.
+In particular, we have neither assumed a global finite CCR nor
+constructed an interacting finite-CAR ground ket.
+
+\section{Mode correlations: why order matters}
+\label{sec:ch19-mode-correlators}
+
+An observable expressed in the original density modes uses the
+\emph{bare} generators.  Although $\omega_P$ is a vacuum for the
+dressed modes, it need not annihilate their bare counterparts.
+To find its measurable consequences, invert the transformation:
+\[
+ \beta^{-1}(C_{\nu m})=cC_{\nu m}-sA_{\bar\nu m},
+ \qquad
+ \beta^{-1}(A_{\nu m})=cA_{\nu m}-sC_{\bar\nu m}.
+\]
+The following finite table is the essential calculation of the chapter.
+
+\begin{theorem}[Ordered contractions in the dressed state]
+\label{thm:ch19-mode-same-branch}
+\label{thm:ch19-mode-cross-branch}
+For $1\leq m,n\leq M$ and $\nu\in\{R,L\}$,
+\begin{align}
+ \omega_P(C_{\nu m}A_{\nu n})
+   &=m\delta_{mn}s^2,
+   \label{eq:ch19-mode-CA}\\
+ \omega_P(A_{\nu m}C_{\nu n})
+   &=m\delta_{mn}c^2,
+   \label{eq:ch19-mode-AC}\\
+ \omega_P(C_{\nu m}C_{\nu n})
+   &=\omega_P(A_{\nu m}A_{\nu n})=0.
+   \label{eq:ch19-mode-like}
+\end{align}
+For opposite branches,
+\begin{align}
+ \omega_P(C_{Rm}C_{Ln})
+   &=-m\delta_{mn}cs,
+   \label{eq:ch19-cross-CC}\\
+ \omega_P(A_{Rm}A_{Ln})
+   &=-m\delta_{mn}cs,
+   \label{eq:ch19-cross-AA}\\
+ \omega_P(C_{Rm}A_{Ln})
+   &=\omega_P(A_{Rm}C_{Ln})=0.
+   \label{eq:ch19-cross-mixed}
+\end{align}
+The cross-branch relations also hold with $R$ and $L$ exchanged.
+\end{theorem}
+\begin{proof}
+Consider the two terms that reveal the mechanism.  In the same
+branch, the inverse pullback gives
+\begin{align*}
+ \omega_P(C_{Rm}A_{Rn})
+ &=\omega_0\!\left((cC_{Rm}-sA_{Lm})
+                    (cA_{Rn}-sC_{Ln})\right)
+ =s^2m\delta_{mn}.
+\end{align*}
+Only $A_{Lm}C_{Ln}$ survives the bare vacuum evaluation.  On the
+other hand,
+\[
+ \omega_P(A_{Rm}C_{Rn})
+ =\omega_0\!\left((cA_{Rm}-sC_{Lm})
+                     (cC_{Rn}-sA_{Ln})\right)
+ =c^2m\delta_{mn},
+\]
+because now $A_{Rm}C_{Rn}$ survives.  For a cross-branch pair,
+\[
+ \omega_P(C_{Rm}C_{Ln})
+ =\omega_0\!\left((cC_{Rm}-sA_{Lm})
+                     (cC_{Ln}-sA_{Rn})\right)
+ =-cs\,m\delta_{mn}.
+\]
+The minus sign comes from the inverse map.  The other formulas
+follow by the same two-point vacuum rule, adjoints, and commuting
+different branches.
+\end{proof}
+
+Two consequences deserve emphasis.  First, the difference of the two
+same-branch orders is fixed:
+\begin{equation}
+ \omega_P(A_{\nu m}C_{\nu n})
+ -\omega_P(C_{\nu n}A_{\nu m})
+ =m\delta_{mn}.
+ \label{eq:ch19-mode-commutator-check}
+\end{equation}
+Replacing both coefficients by $s^2$ would already give the wrong
+free-vacuum limit.  Second, opposite-branch generators commute but
+have nonzero correlations in $\omega_P$.  Commutativity is not
+statistical independence.
+
+The Luttinger parameter of Chapter~18 is
+$g=(c-s)^2>0$, with $g^{-1}=(c+s)^2$; hence
+\begin{equation}
+ c^2+s^2=\frac{g+g^{-1}}2,
+ \qquad cs=\frac{g^{-1}-g}{4}.
+ \label{eq:ch19-mode-g-coefficients}
+\end{equation}
+The symmetrized same-branch contraction is therefore
+$\tfrac12m\delta_{mn}(c^2+s^2)$.  In contrast, the ordered
+products retain the separate $c^2$ and $s^2$ coefficients.
+
+This is the fluctuation content of the dressing.  Relative to the
+dressed vacuum, a bare mode has occupation $s^2$ per unit mode weight,
+and the two branches acquire an anomalous pair correlation $-cs$.
+Thus mixing does not remove vacuum fluctuations; it redistributes
+them between branches.  The same-branch symmetric fluctuation grows
+from its free value by the factor $c^2+s^2=1+2s^2$, while its
+antisymmetric part remains fixed by the CCR.  These are exact
+covariances of the abstract state defined here, not a thermal
+population or a claim about a finite interacting fermionic ground state.
+
+As a quick positivity check, fix $m$ and put
+$Y_m=C_{Rm}+A_{Lm}$.  The theorem gives
+\begin{equation}
+ \omega_P(Y_m^*Y_m)
+   =m(c^2+s^2-2cs)=m(c-s)^2=mg>0.
+ \label{eq:ch19-squeezed-check}
+\end{equation}
+The negative anomalous contraction is consistent with a positive
+state: the \emph{complete} square remains nonnegative.
+
+\section{Spatial correlations on a finite ring}
+\label{sec:ch19-spatial-correlators}
+
+The mode labels become positions by a finite Fourier sum.  Fix
+$L=2h>0$, let $\Lambda=\mathbb Z/L\mathbb Z$, and set
+\begin{equation}
+ \zeta=e^{2\pi i/L},\qquad
+ \chi_m(x)=\zeta^{mx},\qquad x\in\Lambda.
+ \label{eq:ch19-spatial-character}
+\end{equation}
+These are characters of the cyclic lattice, so
+$\chi_{-m}(x)=\overline{\chi_m(x)}$ and
+$\chi_m(x)\chi_{-m}(y)=\chi_m(x-y)$.  The oscillator model remains
+uncompressed in occupation number; only the positive mode set
+$1\leq m\leq M$ is finite.  The algebraic calculation does not
+require $M<h$, although a low-momentum identification with distinct
+non-Nyquist lattice modes normally does.
+
+Consider the \emph{nonzero-mode part} of the right-moving density,
+\begin{equation}
+ \rho_R(x)=\frac1L\sum_{m=1}^{M}
+ \left(\chi_{-m}(x)C_{Rm}+\chi_m(x)A_{Rm}\right).
+ \label{eq:ch19-spatial-rho}
+\end{equation}
+It is self-adjoint by the conjugation property of the characters.
+This is not the full microscopic density: its charge zero mode is
+not included.  The $1/L$ normalization is fixed by the Fourier
+convention of the preceding chapters.
+
+\begin{theorem}[Exact ordered spatial kernel]
+\label{thm:ch19-spatial-ordered}
+For $x,y\in\Lambda$, with $d=x-y$,
+\begin{equation}
+ \boxed{\displaystyle
+ D_P(x,y):=\omega_P(\rho_R(x)\rho_R(y))
+ =\frac1{L^2}\sum_{m=1}^{M}m
+ \bigl(s^2\chi_{-m}(d)+c^2\chi_m(d)\bigr).}
+ \label{eq:ch19-spatial-ordered}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Expand the product of the two finite Fourier sums.  The $CC$ and
+$AA$ expectations vanish.  In the $CA$ and $AC$ terms, the mode
+contractions impose $m=n$ and provide, respectively, the factors
+$ms^2$ and $mc^2$.  Multiplying the remaining characters gives
+$\chi_{-m}(x-y)$ and $\chi_m(x-y)$, proving the formula.
+\end{proof}
+
+The kernel is generally \emph{complex}.  Let
+$\theta_m=2\pi m(x-y)/L$, with any integer representatives of
+$x,y$.  Using $c^2-s^2=1$ gives the particularly transparent form
+\begin{equation}
+ \boxed{\displaystyle
+ D_P(x,y)=\frac1{L^2}\sum_{m=1}^{M}m
+ \left[\frac{g+g^{-1}}2\cos\theta_m
+                   +i\sin\theta_m\right].}
+ \label{eq:ch19-spatial-ordered-realimag}
+\end{equation}
+The real part depends on the interacting state; the imaginary part
+is fixed by the current algebra.  Taking the real part too early
+would discard precisely the information distinguishing the two
+operator orders.
+
+\begin{proposition}[Commutator and symmetric fluctuations]
+\label{prop:ch19-spatial-commutator}
+\label{prop:ch19-spatial-symmetrized}
+The abstract density operators obey
+\begin{equation}
+ [\rho_R(x),\rho_R(y)]
+  =\frac{2i}{L^2}\sum_{m=1}^{M}m\sin\theta_m\,I,
+ \label{eq:ch19-spatial-commutator}
+\end{equation}
+and their symmetrized two-point function is
+\begin{equation}
+ S_P(x,y):=\frac12\omega_P(\{\rho_R(x),\rho_R(y)\})
+   =\frac{g+g^{-1}}{2L^2}
+       \sum_{m=1}^{M}m\cos\theta_m.
+ \label{eq:ch19-spatial-symmetrized}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Compute the commutator directly from
+$[A_{Rm},C_{Rn}]=m\delta_{mn}I$; only the mixed terms survive.
+The symmetric formula is the half-sum of $D_P(x,y)$ and
+$D_P(y,x)$.
+\end{proof}
+
+\subsection*{Positivity is a property of the whole kernel}
+
+At coincident points the Fourier phases are one, so
+\begin{theorem}[Coincident-point fluctuation]
+\label{thm:ch19-spatial-diagonal}
+\begin{equation}
+ D_P(x,x)
+ =\frac{c^2+s^2}{L^2}\frac{M(M+1)}2
+ =\frac{g+g^{-1}}{2L^2}\frac{M(M+1)}2.
+ \label{eq:ch19-spatial-diagonal}
+\end{equation}
+This is strictly positive for $M\geq1$ and vanishes for $M=0$.
+\end{theorem}
+
+But a positive two-point function need not be real or pointwise
+nonnegative away from $x=y$.  The correct statement is matrix
+positivity.
+\begin{proposition}[Positive-semidefinite ordered kernel]
+\label{prop:ch19-spatial-psd}
+For sites $x_1,\ldots,x_r$ and coefficients $z_1,\ldots,z_r\in\mathbb C$,
+\begin{equation}
+ \sum_{a,b=1}^{r}\overline{z_a}D_P(x_a,x_b)z_b\geq0,
+ \qquad D_P(y,x)=\overline{D_P(x,y)}.
+ \label{eq:ch19-spatial-psd}
+\end{equation}
+\end{proposition}
+\begin{proof}
+With $B=\sum_b z_b\rho_R(x_b)$, the sum is exactly
+$\omega_P(B^*B)\geq0$.  Hermiticity follows because each
+$\rho_R(x)$ is self-adjoint.
+\end{proof}
+
+For a finite-mode theory this is already a complete result: the
+Fourier kernel is explicit, cutoff dependent, Hermitian and positive
+semidefinite.  Neither a large-distance power law nor a continuum
+limit follows from these finite sums alone.
+
+\section{Returning to the finite fermionic sea}
+\label{sec:ch19-finite-comparison}
+
+We now evaluate \emph{corresponding formulas} in the original finite
+fermionic representation.  The word ``corresponding'' matters: the
+abstract generators and the finite CAR currents act on different
+spaces.  Equality of two calculated numbers need not provide a map
+identifying their operator algebras or states.
+
+\subsection*{Protected current contractions}
+
+Fix $L=2h$, a charge assignment $N$ admissible for the finite
+construction, and its normalized bare sector-ground vector $\Omega_N$.
+Write
+\begin{equation}
+ R_m:=\rho^{\mathrm F}_{m,R},\qquad
+ R_{-m}:=\rho^{\mathrm F}_{-m,R}=R_m^*,
+ \qquad \langle X\rangle^{\mathrm F}_N
+ :=\langle\Omega_N,X\Omega_N\rangle.
+ \label{eq:ch19-comp-two-evaluators}
+\end{equation}
+Assume the right-branch \emph{zero-budget margin} used in the finite
+current theorem, together with $h>0$ and $1\leq m,n\leq M$.
+In the source formalization this is
+$\mathrm{marginAt}(h,M,0,N,R)$; its excursion bounds include
+$m+n+|N_R|\leq h$.  The relevant vector identities are
+\begin{equation}
+ R_{-m}\Omega_N=0,
+ \qquad [R_{-m},R_n]\Omega_N=m\delta_{mn}\Omega_N.
+ \label{eq:ch19-comp-ground-commutator}
+\end{equation}
+They are only asserted on the specified state under these
+hypotheses, not on the entire finite CAR Fock space.
+
+\begin{proposition}[Protected finite-ground contractions]
+\label{prop:ch19-comp-ground-contractions}
+For the modes in this range,
+\begin{align}
+ \langle R_{-m}R_n\rangle^{\mathrm F}_N&=m\delta_{mn},
+   \label{eq:ch19-comp-lr}\\
+ \langle R_mR_{-n}\rangle^{\mathrm F}_N&=0,
+   \label{eq:ch19-comp-rl}\\
+ \langle R_mR_n\rangle^{\mathrm F}_N
+  &=\langle R_{-m}R_{-n}\rangle^{\mathrm F}_N=0.
+   \label{eq:ch19-comp-same-sign}
+\end{align}
+In particular, $\|R_m\Omega_N\|^2=m$.
+\end{proposition}
+\begin{proof}
+Use
+$R_{-m}R_n=[R_{-m},R_n]+R_nR_{-m}$ on $\Omega_N$.
+The second term vanishes because the lowering mode acts first.
+The reversed product and the two-lowering product vanish for the
+same reason.  The two-raising expectation vanishes by adjointness,
+and the norm formula follows from the first contraction.
+\end{proof}
+
+\subsection*{The precise free-state agreement}
+
+Build the right-branch finite oscillatory density with the same
+selected modes and Fourier convention:
+\begin{equation}
+ \rho_R^{\mathrm F}(x)
+ :=\frac1L\sum_{m=1}^{M}
+ \left(\chi_{-m}(x)R_m+\chi_m(x)R_{-m}\right).
+ \label{eq:ch19-comp-fock-density}
+\end{equation}
+
+\begin{theorem}[Free quadratic comparison]
+\label{thm:ch19-comp-free-kernel}
+Under the finite current-margin hypotheses above, for all
+$x,y\in\Lambda$,
+\begin{equation}
+ \boxed{\displaystyle
+ \langle\rho_R^{\mathrm F}(x)\rho_R^{\mathrm F}(y)
+ \rangle^{\mathrm F}_N
+ =\frac1{L^2}\sum_{m=1}^{M}m\chi_m(x-y)
+ =\omega_0(\rho_R(x)\rho_R(y)).}
+ \label{eq:ch19-comp-fock-kernel}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Expand the ordered product of the two finite densities.
+The protected contractions kill every term except
+$R_{-m}R_n$, which contributes $m\delta_{mn}$.  The remaining
+characters give the displayed sum.  For the abstract state,
+substitute the free hyperbolic pair $(c,s)=(1,0)$ into
+\eqref{eq:ch19-spatial-ordered}.
+\end{proof}
+
+The agreement is exact for these quadratic observables.  It does
+not identify the finite and abstract states on arbitrary words,
+nor does it identify the bare sea with an interacting ground state.
+
+\subsection*{What changes when the mixing is nonzero?}
+
+For the two chosen finite branches let
+\begin{equation}
+ \widetilde A_{\nu m}^{\mathrm F}
+   =c\rho_{-m,\nu}^{\mathrm F}
+     +s\rho_{m,\bar\nu}^{\mathrm F},
+ \qquad
+ \widetilde C_{\nu m}^{\mathrm F}
+   =(\widetilde A_{\nu m}^{\mathrm F})^*.
+ \label{eq:ch19-comp-dressed-ann}
+\end{equation}
+Assume the \emph{both-branch} zero-budget margins, so that the
+relevant excitation norms hold for both $R$ and $L$.  Since the
+bare lowering currents kill $\Omega_N$,
+$\widetilde A_{\nu m}^{\mathrm F}\Omega_N
+=s\rho_{m,\bar\nu}^{\mathrm F}\Omega_N$.
+
+\begin{proposition}[Finite dressed-number witness]
+\label{prop:ch19-comp-dressed-number}
+Under these assumptions, for $1\leq m\leq M$,
+\begin{equation}
+ \langle\widetilde C_{\nu m}^{\mathrm F}
+           \widetilde A_{\nu m}^{\mathrm F}\rangle_N^{\mathrm F}
+   =ms^2,
+ \qquad
+ \langle\widetilde A_{\nu m}^{\mathrm F}
+           \widetilde C_{\nu m}^{\mathrm F}\rangle_N^{\mathrm F}
+   =mc^2.
+ \label{eq:ch19-comp-dressed-ca}
+\end{equation}
+If $s\ne0$, the bare sea $\Omega_N$ is not a vacuum for the
+finite dressed annihilator.
+\end{proposition}
+\begin{proof}
+The first expectation is
+$\|\widetilde A_{\nu m}^{\mathrm F}\Omega_N\|^2
+=s^2\|\rho_{m,\bar\nu}^{\mathrm F}\Omega_N\|^2=ms^2$.
+For the second, use
+$\widetilde C_{\nu m}^{\mathrm F}\Omega_N
+=c\rho_{m,\nu}^{\mathrm F}\Omega_N$ and take its squared norm.
+\end{proof}
+
+The abstract \emph{bare} contraction
+$\omega_P(C_{\nu m}A_{\nu m})$ and the finite \emph{dressed}
+contraction
+$\langle\widetilde C_{\nu m}^{\mathrm F}\widetilde A_{\nu m}^{\mathrm F}\rangle_N^{\mathrm F}$
+both equal $ms^2$, but refer to different operators in different
+states.  In fact,
+$\omega_P(\widetilde C_{\nu m}\widetilde A_{\nu m})=0$,
+while the finite value is nonzero for $s\ne0$.
+
+\begin{example}[Sixteen-site finite/abstract comparison]
+\label{ex:ch19-comp-16-sites}
+
+Use the same stable hyperbolic pair that appears in the Chapter~18
+finite witness:
+\[
+ L=16,\qquad h=8,\qquad M=2,\qquad
+ c=\frac54,\quad s=\frac34,\quad g=(c-s)^2=\frac14.
+\]
+Take the admissible zero-charge sea, for which the stated
+both-branch margins hold.  At the second positive mode,
+\begin{equation}
+ \|R_2\Omega_0\|^2=2,
+ \qquad
+ \langle\widetilde C_{R2}^{\mathrm F}
+          \widetilde A_{R2}^{\mathrm F}\rangle_0^{\mathrm F}
+ =2\left(\frac34\right)^2=\frac98.
+ \label{eq:ch19-comp-example-dressed}
+\end{equation}
+At one site the \emph{finite bare} density variance is
+\begin{equation}
+ \langle(\rho_R^{\mathrm F}(0))^2\rangle_0^{\mathrm F}
+   =\frac{1+2}{16^2}=\frac3{256},
+ \label{eq:ch19-comp-example-free}
+\end{equation}
+while the \emph{abstract interacting} density variance is
+\begin{equation}
+ D_P(0,0)=\frac{1+2}{16^2}
+ \left(\frac{25}{16}+\frac9{16}\right)
+ =\frac{51}{2048}\ne\frac3{256}.
+ \label{eq:ch19-comp-example-abstract}
+\end{equation}
+The comparison is deliberately between a \emph{bare} finite sea
+and an \emph{interacting} abstract state.  It neither constructs nor
+rules out a different finite interacting ground state.
+\end{example}
+
+For a separate illustration of the danger of energy truncation,
+retain only the three polynomial states
+$\{1,X_R,X_L\}$ of total degree at most one.  Compressing the
+two dressed annihilators gives
+\[
+ Q_R=\begin{pmatrix}0&c&0\\0&0&0\\s&0&0\end{pmatrix},
+ \qquad
+ Q_L=\begin{pmatrix}0&0&c\\s&0&0\\0&0&0\end{pmatrix},
+ \qquad
+ Q_R^*Q_R+Q_L^*Q_L
+   =\operatorname{diag}(2s^2,c^2,c^2).
+\]
+For $s\ne0$ the diagonal matrix is strictly positive, so
+$\ker Q_R\cap\ker Q_L=\{0\}$.  Nevertheless the positive
+finite Hamiltonian $Q_R^*Q_R+Q_L^*Q_L$ has ground states.
+Annihilation-vacuum conditions and ground-state existence are
+not equivalent assertions.
+
+\subsection*{The remaining comparison problem}
+
+To compare the interacting abstract state $\omega_P$ with a genuine
+interacting finite-CAR state, one must first choose the latter
+(e.g.\ a ground density matrix $\Gamma_h$ for a specified finite
+Hamiltonian), and choose which abstract words $a$ are represented
+by which finite operators $\Phi_h(a)$.  For a given word, the
+comparison defect can then be stated precisely as
+\begin{equation}
+ \varepsilon_h(a)
+  :=\operatorname{Tr}(\Gamma_h\Phi_h(a))-\omega_P(a).
+ \label{eq:ch19-comp-comparison-defect}
+\end{equation}
+The map $\Phi_h$ cannot be a globally exact representation of the
+nonzero scalar CCR by finite matrices.  A meaningful estimate must
+specify its domain of words and control intermediate excursions,
+finite-band edges, and the chosen energy budgets.  No bound on
+$\varepsilon_h$ is established here for interacting finite states.
+
+The outcome of this chapter is therefore sharp but limited.  We have
+constructed a positive algebraic dressed state; calculated its ordered
+mode and spatial correlations; established the positivity of the
+resulting kernel; and matched its free quadratic kernel to a protected
+finite fermionic sea.  The Gaussian state is not automatically the
+finite interacting ground state.  Chapter~20 uses this distinction
+when it introduces genuine finite-CAR products and, separately,
+formal vertex correlators.  Neither a convergent vertex exponential
+nor a continuum power law has been derived from the present
+finite-mode results.
+
+\paragraph{Verification boundary.}
+CH19/A08 Phase C is complete within its reviewed scope: the polynomial
+oscillator state, ordered mode contractions, spatial kernel and protected
+free finite-state comparison are promoted and audited in Core.  The
+independent validation record is\footnote{\texttt{note/ch19\_phase\_c\_validation\_2026-10-16.md}}.
+This chapter remains a manuscript candidate pending its own independent
+editorial review.  The Lean result does not establish a finite interacting
+ground-state equivalence, analytic evaluation of formal vertices, or a
+continuum power law; those remain separate obligations.

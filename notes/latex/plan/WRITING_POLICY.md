@@ -81,13 +81,11 @@ direction above supersedes that boundary for master-book coverage. Future
 editorial revisions still require their own reviewed scope and must preserve
 the mathematical status distinctions.
 
-## CH19 writing queue
+## CH19 writing record
 
-1. `book_ch19_scope.toml`: finite expectations versus abstract functionals.
-2. `book_ch19_mode_correlators.toml`: ordered mode contractions.
-3. `book_ch19_spatial_correlators.toml`: spatial kernels and symmetrization.
-4. `book_ch19_finite_comparison.toml`: finite-Fock comparison and limitations.
-
-Prepare the next task only after integrating its predecessors. Each later packet
-requires their committed section files as context, so work follows a continuous
-narrative. The writing queue does not bypass CH19's pending formal promotion.
+The historical four-section queue has been superseded by the complete
+`chapters/ch19_states_correlations.tex` replacement, included after Chapter 18.
+Its master build passes; independent editorial review of this replacement is
+still pending. CH19/A08 Lean Phase C is complete as recorded in
+`note/ch19_phase_c_validation_2026-10-16.md`. This Lean status does not waive the
+manuscript review gate or extend the proved scope.
