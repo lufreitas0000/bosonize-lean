@@ -1,0 +1,72 @@
+{
+  "purpose": "Inspection prompts only: repetitions, typography or harmless rephrasing may explain differences; not a mathematical verdict. Existing displayed/proof blocks are checked separately.",
+  "files": [
+    {
+      "chapter": "CH03",
+      "file": "notes/latex/chapters/ch03_fourier.tex",
+      "removed_or_rephrased": [
+        "[\\psi(x), \\psi^\\dagger(y)] = \\delta(x-y)"
+      ],
+      "added_or_rephrased": []
+    },
+    {
+      "chapter": "CH05",
+      "file": "notes/latex/chapters/ch05_fermions.tex",
+      "removed_or_rephrased": [
+        "\\mathcal{S}_0 = \\{-h+1, \\dots, 0\\}",
+        "[P, c_p^\\dagger] = p c_p^\\dagger"
+      ],
+      "added_or_rephrased": [
+        "\\chi(k, x) = \\zeta^{k x_{\\mathrm{val}}}",
+        "\\chi(-k, x) = \\zeta^{-k x_{\\mathrm{val}}}",
+        "[\\hat{P}, c_p^\\dagger] = p c_p^\\dagger"
+      ]
+    },
+    {
+      "chapter": "CH06",
+      "file": "notes/latex/chapters/ch06_lattice_aqft_net.tex",
+      "removed_or_rephrased": [],
+      "added_or_rephrased": [
+        "\\mathfrak{A}(\\Lambda)"
+      ]
+    },
+    {
+      "chapter": "CH07",
+      "file": "notes/latex/chapters/ch07_vacuum_budget.tex",
+      "removed_or_rephrased": [
+        "-\\sum_{k=N+1}^0 k = \\frac{|N|(|N|-1)}{2} + |N| = \\frac{N(N+1)}{2}",
+        "\\int_0^N k \\, dk \\sim \\frac{1}{2} N^2"
+      ],
+      "added_or_rephrased": [
+        "-\\sum_{k=N+1}^0 k = \\frac{|N|(|N|-1)}{2} = \\frac{N(N+1)}{2}"
+      ]
+    },
+    {
+      "chapter": "CH08",
+      "file": "notes/latex/chapters/ch08_boson_fock.tex",
+      "removed_or_rephrased": [
+        "b_q^\\dagger \\cdots b_k^\\dagger |0\\rangle",
+        "e^A::e^B: = e^{\\langle A B \\rangle} :e^{A+B}:"
+      ],
+      "added_or_rephrased": [
+        ":\\!e^A\\!::\\!e^B\\!: = e^{\\langle A B \\rangle} :\\!e^{A+B}\\!:"
+      ]
+    },
+    {
+      "chapter": "CH10",
+      "file": "notes/latex/chapters/ch10_heisenberg_algebra.tex",
+      "removed_or_rephrased": [],
+      "added_or_rephrased": [
+        "[\\rho_m, \\rho_n] = -m \\delta_{m+n, 0}"
+      ]
+    },
+    {
+      "chapter": "CH20",
+      "file": "notes/latex/chapters/sections/20.3.tex",
+      "removed_or_rephrased": [
+        "g\\leftrightarrow g^{-1}"
+      ],
+      "added_or_rephrased": []
+    }
+  ]
+}

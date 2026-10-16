@@ -1,0 +1,10 @@
+version = 1
+id = "rewrite-review-interactions-wave1"
+repo = "../.."
+phase = "C"
+timeout = 180
+max_packet_bytes = 240000
+task = "Perform the independent editorial review in docs/editorial/REWRITE_REVIEW_BRIEF.md for ONLY CH19, CH20, CH21, Frontmatter. Read current chapter text and the corresponding original-to-candidate diff; do not merely summarize the prior global review. Write only docs/editorial/rewrite_reviews/interactions.md. Do not edit manuscript sources or create any other files. Include every assigned chapter in Coverage; no mathematical certification claim."
+targets = ["docs/editorial/rewrite_reviews/interactions.md"]
+context = ["docs/editorial/REWRITE_REVIEW_BRIEF.md", "docs/editorial/STYLE_AND_SCOPE.md", "docs/editorial/COORDINATOR_INSPECTION.md", "docs/editorial/rewrite_wave1_jobs.json"]
+verify = [["python3", "scripts/verify_rewrite_review.py", "docs/editorial/rewrite_reviews/interactions.md"], ["python3", "scripts/verify_editorial_rewrite.py", "--group", "all"]]

@@ -1,0 +1,1344 @@
+diff --git a/notes/latex/chapters/ch01_lattice_band.tex b/notes/latex/chapters/ch01_lattice_band.tex
+index 5dd538a..ee3ff10 100644
+--- a/notes/latex/chapters/ch01_lattice_band.tex
++++ b/notes/latex/chapters/ch01_lattice_band.tex
+@@ -3,7 +3,7 @@
+ 
+ \section{Introduction and Discrete Setting}
+ 
+-In relativistic quantum field theory in $1+1$ dimensions, continuous spacetime coordinates and infinite-dimensional momentum representations frequently introduce severe infrared and ultraviolet divergences. In the constructivist and algebraic program developed in this monograph, all continuum divergences are eliminated at the foundation by formulating the theory on a strictly finite, discrete spatial manifold and its exact Fourier-dual momentum space.
++In relativistic quantum field theory in $1+1$ dimensions, continuous spacetime coordinates and infinite-dimensional momentum representations frequently introduce infrared and ultraviolet divergences. In the constructivist and algebraic program developed in this monograph, we choose to formulate the theory on a strictly finite, discrete spatial manifold and its exact Fourier-dual momentum space as an explicit modelling choice. This approach makes the algebraic structures and bounds exact, though it is an expository decision rather than a fundamental requirement of Lean's type theory or discrete Fourier analysis.
+ 
+ Throughout this chapter, let $L \in \mathbb{N}$ denote the number of spatial lattice sites, assuming $L \ge 1$. While general difference calculus and Fourier transforms can be formulated for arbitrary positive integers $L$, the construction of half-filled Dirac seas and fermionic Fock spaces from Chapter~\ref{ch:fermions} onward strictly requires an even lattice length:
+ \begin{equation}
+@@ -274,10 +274,12 @@ In this opening chapter, we established the discrete spatial and momentum geomet
+ \paragraph{Comparison with Standard Continuum Literature.}
+ In standard condensed matter bosonization texts, such as Giamarchi~\cite{giamarchi2004}, Gogolin, Nersesyan, and Tsvelik~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the spatial circle is typically taken as a continuous interval $[0, \mathcal{L}]$ with periodic boundary conditions, leading to an infinite set of discrete momentum modes $k_n = \frac{2\pi n}{\mathcal{L}}$ ($n \in \mathbb{Z}$). In that setting, there is no upper momentum cutoff, Umklapp scattering is treated as an extrinsic perturbation or ignored in low-energy Tomonaga--Luttinger models, and the Fermi sea has infinite depth.
+ 
+-By contrast, our constructive formulation models the physical lattice from the outset. As emphasized by Haldane~\cite{haldane1981}, the lattice acts as an intrinsic ultraviolet regulator. The asymmetric Brillouin zone $\Lambda^*$ is the unique choice that simultaneously achieves:
++By contrast, our constructive formulation models the physical lattice from the outset. As emphasized by Haldane~\cite{haldane1981}, the lattice acts as an intrinsic ultraviolet regulator. The asymmetric Brillouin zone $\Lambda^*$ is a consistent representative choice that simultaneously achieves:
+ \begin{enumerate}
+     \item Exact finite dimension: $\dim(\ell^2(\Lambda)) = \dim(\ell^2(\Lambda^*)) = L$.
+     \item Absence of duplicate physical modes.
+     \item Decidable, constructive arithmetic without boundary ambiguities.
+ \end{enumerate}
+-In later chapters (specifically Chapter~\ref{ch:heisenberg_algebra} and Chapter~\ref{ch:haldane_completeness}), we will demonstrate that when particle excitations are restricted to an energy budget margin $2M + K + |N| \le h$, the Umklapp wrapping $w$ vanishes identically ($w = 0$), and the exact lattice dynamics reproduces the continuum current algebra of Giamarchi~\cite{giamarchi2004} and von Delft--Schoeller~\cite{vondelft1998} with zero error.
++This convention fixing $+h$ is an expository choice; the mirrored half-open convention excluding $+h$ and retaining $-h$ is equally mathematically possible.
++
++In later chapters (specifically Chapter~\ref{ch:heisenberg_algebra} and Chapter~\ref{ch:haldane_completeness}), we will demonstrate that when particle excitations are restricted to a protected energy budget subspace satisfying the margin $2M + K + |N| \le h$, the Umklapp wrapping $w$ vanishes identically ($w = 0$). On this restricted subspace, the exact lattice commutators and Haldane completeness relation exactly match the continuum current algebra forms of Giamarchi~\cite{giamarchi2004} and von Delft--Schoeller~\cite{vondelft1998}. This is a conditional identity on a protected subspace, not a claim of complete dynamical equivalence or a general continuum limit. Operating on this strictly discrete spatial geometry means that standard continuous derivatives are unavailable; consequently, Chapter~\ref{ch:umbral_calculus} will develop the necessary exact finite difference calculus and umbral shifts to replace them.
+diff --git a/notes/latex/chapters/ch02_umbral_calculus.tex b/notes/latex/chapters/ch02_umbral_calculus.tex
+index 42cec35..31eda44 100644
+--- a/notes/latex/chapters/ch02_umbral_calculus.tex
++++ b/notes/latex/chapters/ch02_umbral_calculus.tex
+@@ -11,13 +11,13 @@ Furthermore, pairing the momentum operator $P = -i \partial_x$ with the position
+ 
+ On a discrete spatial lattice, such as the periodic circular chain $\Lambda = \mathbb{Z}/L\mathbb{Z}$ introduced in Chapter~\ref{ch:lattice_band}, infinitesimal derivatives do not exist. Instead, calculus must be formulated through finite differences. Umbral calculus provides the rigorous algebraic framework that replaces differential operators with finite differences without loss of algebraic structure. 
+ 
+-In this chapter, we develop the exact theory of discrete difference operators. We establish that:
++In this chapter, we develop the exact theory of discrete difference operators. This presentation is intended to make the algebraic framework and its assumptions explicit, adapting some continuum structures (like the Leibniz rule) while exactly preserving others (like summation by parts). We establish that:
+ \begin{enumerate}
+     \item Finite differences satisfy exact non-infinitesimal Leibniz identities over arbitrary commutative rings.
+-    \item Forward and backward differences are exact formal adjoints under periodic lattice summation, yielding discrete summation by parts without boundary terms.
++    \item Forward and backward differences are exact formal adjoints under periodic lattice summation, yielding discrete summation by parts without boundary terms. These periodic differences are diagonalized by the finite Fourier characters introduced in Chapter~\ref{ch:fourier}.
+     \item The shift operator admits an exact algebraic Newton binomial expansion in powers of the forward difference.
+     \item An umbral intertwining map connects polynomial derivatives to discrete differences.
+-    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists on bilateral sequences, accompanied by the finite-dimensional No-Go theorem explaining why quantum CCR cannot be represented by finite matrices.
++    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists on the infinite bilateral-sequence carrier, accompanied by the finite-dimensional No-Go theorem demonstrating why a sequence-space CCR can never be transferred to finite matrices.
+ \end{enumerate}
+ 
+ \section{The Coordinate Domain and the Operator Algebra}
+@@ -26,8 +26,8 @@ We separate the algebraic requirements on the coordinate domain from the coeffic
+ \begin{itemize}
+     \item \textbf{Coordinate Domain:} Let $(S, +, 0, 1)$ be an additive abelian group equipped with a distinguished unit step element $1 \in S$. The group translation mappings $x \mapsto x + 1$ and $x \mapsto x - 1$ form mutual inverse bijections on $S$.
+     \begin{itemize}
+-        \item When $S = \mathbb{Z}$, the domain models the infinite one-dimensional discrete line.
+-        \item When $S = \Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L \ge 1$, the domain models the finite periodic circular lattice with $1 \coloneqq 1 \bmod L$.
++        \item When $S = \mathbb{Z}$, the domain models the infinite one-dimensional discrete line, serving as the bilateral-sequence carrier.
++        \item When $S = \Lambda = \mathbb{Z}/L\mathbb{Z}$ with $L \ge 1$, the domain models the finite periodic circular lattice space with $1 \coloneqq 1 \bmod L$.
+     \end{itemize}
+     \item \textbf{Coefficient Ring:} Let $R$ be an arbitrary commutative ring with unit (such as $\mathbb{Z}$, $\mathbb{Q}$, or $\mathbb{C}$). No division, topological completeness, or field axioms are assumed unless explicitly stated.
+     \item \textbf{Function Algebra:} The set of functions $R^S \equiv (S \to R)$ forms an associative, commutative $R$-algebra under pointwise addition, scalar multiplication, and pointwise multiplication.
+@@ -66,7 +66,7 @@ We define the following linear operators in $\mathrm{End}_R(R^S)$:
+ \end{definition}
+ 
+ \paragraph{Physical Intuition: Discretizing Differential Operators.}
+-In condensed matter physics, a spatial derivative is approximated by $\partial_x f(x) \approx \frac{f(x+a) - f(x)}{a}$. In our unit lattice units ($a = 1$), $\Delta$ is the forward discrete derivative, $\nabla$ is the backward discrete derivative, and their composition $\Delta\nabla$ is the standard nearest-neighbor discrete kinetic Laplacian.
++In condensed matter physics, a spatial derivative is approximated by $\partial_x f(x) \approx \frac{f(x+a) - f(x)}{a}$. In our unit lattice units ($a = 1$), $\Delta$ is the forward discrete derivative, $\nabla$ is the backward discrete derivative, and their composition $\Delta\nabla$ is the standard nearest-neighbor discrete kinetic Laplacian. These operators act well-defined on both the infinite bilateral-sequence carrier and the finite periodic lattice space.
+ 
+ \begin{proposition}[Laplacian Expansion]
+ In the operator algebra $\mathrm{End}_R(R^S)$, the discrete Laplacian satisfies:
+@@ -132,11 +132,11 @@ The quadratic cross-term $(\Delta f)(\Delta g)$ in~\eqref{eq:leibniz_symmetric}
+ \[
+ \Delta_a(f g)(x) = (\Delta_a f)(x) g(x) + f(x) (\Delta_a g)(x) + a (\Delta_a f)(x) (\Delta_a g)(x).
+ \]
+-In the continuum limit $a \to 0$, the cross-term is of order $\mathcal{O}(a)$ and vanishes, recovering the standard continuum product rule. On a discrete lattice, however, this cross-term is non-zero and exact. Ignoring this term leads to spurious violations of conservation laws and gauge invariance in discrete field theories.
++In the continuum limit $a \to 0$, the cross-term is of order $\mathcal{O}(a)$ and vanishes, recovering the standard continuum product rule. On a discrete lattice, however, this cross-term is non-zero and exact. Retaining this term explicitly is a mathematical necessity for maintaining discrete conservation laws and exact lattice formulations without appealing to continuum limits.
+ 
+ \section{Discrete Summation by Parts on Periodic Lattices}
+ 
+-In continuum field theory, integration by parts $\int \partial_x f \, g \, dx = - \int f \, \partial_x g \, dx$ transfers derivatives from one field to another, provided boundary terms vanish. On the discrete circle $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the boundary terms vanish identically by cyclicity.
++In continuum field theory, integration by parts $\int \partial_x f \, g \, dx = - \int f \, \partial_x g \, dx$ transfers derivatives from one field to another, provided boundary terms vanish. On the discrete circle $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the boundary terms vanish identically by cyclicity. As we will see in Chapter~\ref{ch:fourier}, these difference operators on the periodic lattice are diagonalized by finite Fourier characters, bridging discrete calculus with frequency domain analysis.
+ 
+ \begin{theorem}[Discrete Summation by Parts]
+ \label{thm:summation_by_parts}
+@@ -255,7 +255,7 @@ This establishes $\Phi \circ D = \Delta_{\mathrm{poly}} \circ \Phi$ on all polyn
+ 
+ \section{The Discrete Heisenberg Pair and the No-Go Theorem}
+ 
+-In continuous quantum mechanics, position $X$ and momentum $P = -i \partial_x$ satisfy the Heisenberg canonical commutation relation $[P, X] = -i I$. In this section, we establish how this commutation relation manifests on discrete lattices.
++In continuous quantum mechanics, position $X$ and momentum $P = -i \partial_x$ satisfy the Heisenberg canonical commutation relation $[P, X] = -i I$. In this section, we establish how this commutation relation manifests on the infinite bilateral-sequence carrier.
+ 
+ \begin{definition}[Position Multiplier Operator]
+ On the infinite integer lattice $S = \mathbb{Z}$, the position multiplier operator $\beta \in \mathrm{End}_R(R^\mathbb{Z})$ is defined by:
+@@ -264,7 +264,7 @@ On the infinite integer lattice $S = \mathbb{Z}$, the position multiplier operat
+ \end{equation}
+ \end{definition}
+ 
+-The backward shift in the argument of $f(x-1)$ is mathematically essential: it balances the forward shift in $\Delta = E - I$.
++The backward shift in the argument of $f(x-1)$ is mathematically essential: it balances the forward shift in $\Delta = E - I$. Exact coordinate multiplication without cyclic wrapping inherently relies on the infinite sequence space.
+ 
+ \begin{theorem}[Discrete Heisenberg Commutator]
+ \label{thm:discrete_heisenberg}
+@@ -301,7 +301,7 @@ Let $f : \mathbb{Z} \to R$ be an arbitrary function and evaluate both compositio
+ Since this holds for every $f$ and every $x$, we conclude $[\Delta, \beta] = I$.
+ \end{proof}
+ 
+-A natural question arises: can such an exact Heisenberg pair $[A, B] = I$ be realized on a finite spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, where functions form a finite-dimensional vector space $R^L$? The following classical theorem shows this is impossible.
++A natural question arises: can this sequence-space canonical commutation relation $[A, B] = I$ be transferred to a finite spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, where functions form a finite-dimensional vector space $R^L$? The following classical theorem shows this is impossible. A global scalar CCR can never be transferred to finite matrices.
+ 
+ \begin{theorem}[Finite-Dimensional CCR No-Go Theorem]
+ \label{thm:no_go}
+@@ -327,7 +327,7 @@ Because $K$ has characteristic zero and $n \ge 1$, $n \cdot 1_K \neq 0$ in $K$.
+ \end{proof}
+ 
+ \paragraph{Formal Correctness vs.\ Physical Implications: Resolution of the CCR Obstruction.}
+-Theorem~\ref{thm:no_go} explains why quantum canonical commutation relations cannot be realized by finite-dimensional single-particle matrices. On a finite periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the space of single-particle wavefunctions has dimension $L < \infty$, so single-particle position and momentum operators cannot satisfy $[P, X] = -i I$.
++Theorem~\ref{thm:no_go} explains why a global nonzero scalar canonical commutation relation cannot be realized by generic finite-dimensional single-particle matrices. On a finite periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$, the space of single-particle wavefunctions has dimension $L < \infty$, so unrestricted single-particle position and momentum operators cannot satisfy a global scalar CCR $[P, X] = -i I$.
+ 
+ In condensed matter physics, this obstruction is frequently bypassed by asserting infinite-dimensional Hilbert spaces or imposing periodic boundary conditions with discontinuous sawtooth position operators. In our constructive program, the obstruction is resolved through \emph{bosonization}:
+ \begin{itemize}
+@@ -343,14 +343,14 @@ In the verified Lean~4 core, the proof of Theorem~\ref{thm:no_go} is formalized
+ 
+ In this chapter, we developed the algebraic foundations of discrete differences:
+ \begin{itemize}
+-    \item Forward $\Delta = E - I$ and backward $\nabla = I - E^{-1}$ differences satisfy exact discrete Leibniz rules with a cross-term $(\Delta f)(\Delta g)$.
+-    \item On periodic lattices $\Lambda$, $\Delta$ and $-\nabla$ are exact formal adjoints, yielding summation by parts without boundary terms.
++    \item Forward $\Delta = E - I$ and backward $\nabla = I - E^{-1}$ differences satisfy exact discrete Leibniz rules with an adapted cross-term $(\Delta f)(\Delta g)$.
++    \item On finite periodic lattices $\Lambda$, $\Delta$ and $-\nabla$ are exact formal adjoints, yielding summation by parts without boundary terms.
+     \item The shift operator expands into finite Newton binomial series over falling factorials $X^{\underline{n}}$.
+     \item The umbral map $\Phi$ intertwines polynomial differentiation with discrete differences.
+-    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists on bilateral sequences, while the finite-dimensional No-Go theorem proves that quantum CCR cannot be represented on finite-dimensional single-particle matrices.
++    \item An exact discrete Heisenberg pair $[\Delta, \beta] = I$ exists strictly on the infinite bilateral-sequence carrier. The finite-dimensional No-Go theorem proves that this sequence-space CCR can never be transferred to finite periodic matrices.
+ \end{itemize}
+ 
+ \paragraph{Comparison with Standard Continuum Literature.}
+ In standard bosonization texts (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), field derivatives $\partial_x \phi(x)$ are taken in the continuum sense. The Leibniz rule is assumed to be the classical derivation rule, and integration by parts is carried out by dropping boundary terms at spatial infinity or across periodic boundary lengths $\mathcal{L}$.
+ 
+-As shown by Mattis and Lieb~\cite{mattis1965} and Haldane~\cite{haldane1981}, the continuum derivative is an idealization that conceals how lattice cutoffs regularize field theories. The umbral framework developed here establishes that exact algebraic analogues of differential calculus exist directly on the discrete lattice without taking limits. Furthermore, the finite-dimensional No-Go theorem provides the mathematical reason why current algebras in Chapter~\ref{ch:heisenberg_algebra} must emerge via normal ordering on fermionic Fock spaces rather than single-particle coordinate pairs.
++As shown by Mattis and Lieb~\cite{mattis1965} and Haldane~\cite{haldane1981}, the continuum derivative is an idealization. The umbral framework developed here establishes that the discrete lattice provides a specific fixed-model regularization instead of eliminating every divergence. It adapts continuum structures (such as modifying the product rule) while retaining others (such as summation by parts). Furthermore, the finite-dimensional No-Go theorem provides the mathematical reason why a sequence-space CCR cannot be mapped directly to finite dimensional models, requiring current algebras in Chapter~\ref{ch:heisenberg_algebra} to emerge via normal ordering on fermionic Fock spaces rather than naive single-particle coordinate pairs.
+diff --git a/notes/latex/chapters/ch03_fourier.tex b/notes/latex/chapters/ch03_fourier.tex
+index 0b52821..b334f1f 100644
+--- a/notes/latex/chapters/ch03_fourier.tex
++++ b/notes/latex/chapters/ch03_fourier.tex
+@@ -5,13 +5,13 @@
+ 
+ The discrete Fourier transform is the central kinematic bridge of quantum field theory on a lattice. It connects the spatial coordinate representation on the periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ to the dual momentum representation on the centered band $\Lambda^* = \{-h+1, \dots, h\}$ (for even $L = 2h$).
+ 
+-In standard physics presentations, the Fourier transform is defined immediately on complex functions using transcendental exponentials $e^{2\pi i k x / L}$ and the unitary normalization factor $1/\sqrt{L}$. While physically standard, this conflates two distinct mathematical layers:
++In standard physics presentations, the Fourier transform is often defined immediately on complex functions using transcendental exponentials $e^{2\pi i k x / L}$ and the unitary normalization factor $1/\sqrt{L}$. Here, we separate two distinct mathematical layers to clarify the role of the normalization factor:
+ \begin{enumerate}
+-    \item \textbf{The algebraic character layer:} Character orthogonality and algebraic Fourier inversion require only a commutative field $K$ containing a primitive $L$-th root of unity $\zeta$, and the invertibility of the lattice size ($L \cdot 1_K \neq 0$, meaning the characteristic of $K$ does not divide $L$). Square roots, analytic limits, and metric structures are completely unnecessary at this level.
+-    \item \textbf{The Hilbert unitary layer:} To make the Fourier transform an exact isometry that preserves Canonical Anticommutation Relations (CAR) between position and momentum fermions without spurious factors of $\sqrt{L}$, we instantiate $K = \mathbb{C}$ and introduce the metric normalization $a = 1/\sqrt{L}$.
++    \item \textbf{The algebraic character layer:} Character orthogonality and algebraic Fourier inversion require only a commutative field $K$ containing a primitive $L$-th root of unity $\zeta$, and the invertibility of the lattice size ($L \cdot 1_K \neq 0$). Square roots, analytic limits, and metric structures are not required at this level.
++    \item \textbf{The Hilbert unitary layer:} To make the Fourier transform an exact isometry that preserves Canonical Anticommutation Relations (CAR) between position and momentum fermions (developed in Chapters~\ref{ch:car_fock} and~\ref{ch:fermions}), we instantiate $K = \mathbb{C}$ and introduce the metric normalization $a = 1/\sqrt{L}$. This leads to the unitary change of one-particle basis underlying those CAR operators.
+ \end{enumerate}
+ 
+-In this chapter, we develop both layers in full mathematical rigor, following the verified constructive formalization.
++In this chapter, we develop both layers, preparing the groundwork for the exact operator mappings that follow.
+ 
+ \section{Generic Character Algebra over Fields}
+ 
+@@ -72,7 +72,7 @@ We define the $K$-linear transforms:
+ \end{enumerate}
+ \end{definition}
+ 
+-Note that $\chi(-k, x) = \zeta^{-k x_{\mathrm{val}}} = (\zeta^{k x_{\mathrm{val}}})^{-1} = \chi(k, x)^{-1}$. By Lemma~\ref{lem:rep_independence}, evaluating at $-k \in \mathbb{Z}$ agrees with evaluating at the transported band negation $\ominus k \in \Lambda^*$, ensuring algebraic consistency even when $-k \notin \Lambda^*$.
++Note that $\chi(-k, x) = \zeta^{-k x_{\mathrm{val}}} = (\zeta^{k x_{\mathrm{val}}})^{-1} = \chi(k, x)^{-1}$. By Lemma~\ref{lem:rep_independence}, evaluating at $-k \in \mathbb{Z}$ agrees with evaluating at the transported band negation $\ominus k \in \Lambda^*$, ensuring algebraic consistency even when $-k \notin \Lambda^*$. The opposite signs chosen for the analysis and synthesis transforms correspond exactly to the algebraic inversion, balancing the sum of roots of unity when composed.
+ 
+ \section{Dual Character Orthogonality and Algebraic Inversion}
+ 
+@@ -232,14 +232,14 @@ Using the trigonometric identity $\cos\theta = 1 - 2 \sin^2(\theta/2)$:
+ \]
+ \end{proof}
+ 
+-\paragraph{Formal Correctness vs.\ Physical Implications: Trigonometric Truncation vs.\ Continuum Dispersion.}
+-In continuum physics, the spatial kinetic operator is $-\partial_x^2$, whose Fourier transform yields the quadratic dispersion $p_{\mathrm{phys}}^2 = (2\pi k / L)^2$. In the long-wavelength continuum limit where the mode index is small compared to the lattice size ($|k| \ll L$), we approximate $\sin(\pi k / L) \approx \frac{\pi k}{L}$, and the exact lattice dispersion becomes:
++\paragraph{Fixed Lattice Regularization.}
++In continuum physics, the spatial kinetic operator is $-\partial_x^2$, whose Fourier transform yields the quadratic dispersion $p_{\mathrm{phys}}^2 = (2\pi k / L)^2$. In the long-wavelength regime where the mode index is small compared to the lattice size ($|k| \ll L$), we approximate $\sin(\pi k / L) \approx \frac{\pi k}{L}$, and the exact lattice dispersion becomes:
+ \begin{equation}
+ -4 \sin^2\left(\frac{\pi k}{L}\right) \approx -4 \left(\frac{\pi k}{L}\right)^2 = -\left(\frac{2\pi k}{L}\right)^2 = -p_{\mathrm{phys}}^2,
+ \end{equation}
+-recovering the continuous kinetic Laplacian $-\partial_x^2$. 
++corresponding to the continuous kinetic Laplacian. 
+ 
+-On the discrete lattice, the trigonometric dispersion $-4 \sin^2(\pi k / L)$ is bounded between $-4$ and $0$ for all modes in the Brillouin zone. High-momentum modes near the Brillouin zone edge do not diverge quadratically; their energy saturates at $-4$. This natural trigonometric bending provides an intrinsic, exact ultraviolet regularization that eliminates divergences without needing arbitrary momentum cutoffs.
++On the discrete lattice, the trigonometric dispersion $-4 \sin^2(\pi k / L)$ is bounded between $-4$ and $0$ for all modes in the Brillouin zone. High-momentum modes near the Brillouin zone edge do not diverge quadratically; their energy saturates at $-4$. This provides a fixed lattice regularization that bounds the kinetic energy per particle. We emphasize that this fixed dispersion is not an elimination of every divergence in an interacting model; correlation length phenomena and state overlaps require separate careful handling.
+ 
+ \section{Chapter Summary and Literature Comparison}
+ 
+@@ -247,11 +247,9 @@ In this chapter, we developed the finite Fourier transform bridging spatial and
+ \begin{itemize}
+     \item The algebraic character layer is defined over any commutative field $K$ containing a primitive $L$-th root $\zeta$, requiring only $L \cdot 1_K \neq 0$.
+     \item Dual character orthogonality yields two-sided algebraic inversion $T \circ S = S \circ T = L I$.
+-    \item In the complex Hilbert setting ($K = \mathbb{C}$), scaling by $1/\sqrt{L}$ yields the unitary Fourier isometry $U$, satisfying the Parseval/Plancherel identity.
++    \item In the complex Hilbert setting ($K = \mathbb{C}$), scaling by $1/\sqrt{L}$ yields the unitary Fourier isometry $U$, satisfying the Parseval/Plancherel identity. This establishes the complex-unitary layer needed for the unitary change of one-particle basis underlying the CAR in Chapters~\ref{ch:car_fock} and~\ref{ch:fermions}.
+     \item The discrete difference operators and Laplacian $\Delta\nabla$ are diagonalized by characters, yielding the exact bounded lattice dispersion $-4\sin^2(\pi k / L)$.
+ \end{itemize}
+ 
+-\paragraph{Comparison with Standard Continuum Literature.}
+-In standard condensed matter treatments of 1D systems, such as Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the Fourier transform is formulated with continuous plane waves $e^{i k x}$, integrating over a continuous wire $[0, \mathcal{L}]$. Field commutators are delta functions $[\psi(x), \psi^\dagger(y)] = \delta(x-y)$, which are singular distributions requiring smearing with test functions.
+-
+-In our constructive framework, all transforms are finite sums over the discrete group $\Lambda$. Kronecker deltas $\delta_{x, y}$ replace Dirac delta distributions, characters $\chi(k, x)$ are finite algebraic roots of unity, and the Fourier transform is a strictly unitary operator on finite-dimensional spaces. This ensures that when we construct spatial fermionic operators in Chapter~\ref{ch:fermions}, the CAR relations are preserved exactly with zero distribution-theoretic artifacts.
++\paragraph{Comparison with Selected Literature.}
++In standard condensed matter treatments of 1D systems, such as Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the Fourier transform is often formulated with continuous plane waves $e^{i k x}$, integrating over a continuous wire $[0, \mathcal{L}]$. In our lattice framework, all transforms are finite sums over the discrete group $\Lambda$. Kronecker deltas $\delta_{x, y}$ naturally replace delta distributions, characters $\chi(k, x)$ are finite algebraic roots of unity, and the Fourier transform acts as a strictly unitary operator on finite-dimensional spaces. This sets up the discrete spatial fermionic operators in Chapter~\ref{ch:fermions} using a finite change of basis from the momentum CAR.
+diff --git a/notes/latex/chapters/ch04_car_fock.tex b/notes/latex/chapters/ch04_car_fock.tex
+index 2e0ab48..486082e 100644
+--- a/notes/latex/chapters/ch04_car_fock.tex
++++ b/notes/latex/chapters/ch04_car_fock.tex
+@@ -9,7 +9,7 @@ Let $\iota$ be a non-empty, finite index set equipped with a linear order:
+ \begin{equation}
+ \iota = \{1, 2, \dots, d\}, \quad d \coloneqq \#\iota \ge 1.
+ \end{equation}
+-The choice of a total linear order $\le$ on $\iota$ is physically unobservable but mathematically essential: it fixes the sign conventions acquired during the permutation of fermionic creation operators, eliminating sign ambiguities.
++The choice of a total linear order $\le$ on $\iota$ is an occupation-basis convention: it fixes the sign factors acquired during the permutation of fermionic creation operators, avoiding sign ambiguities.
+ 
+ Typical physical realizations of $\iota$ include:
+ \begin{enumerate}
+@@ -30,7 +30,7 @@ Let $V$ be a complex vector space. An \emph{Algebraic CAR representation} over $
+ \end{align}
+ \end{definition}
+ 
+-Without assuming any inner product, adjoint operation, or topological structure on $V$, the algebraic relations alone imply fundamental commutation theorems.
++Without assuming any inner product, adjoint operation, or topological structure on $V$, the algebraic relations alone imply the standard commutation identities.
+ 
+ \begin{theorem}[Purely Algebraic CAR Identities]
+ \label{thm:algebraic_car}
+@@ -92,7 +92,7 @@ In Dirac bra-ket notation, for any states $|u\rangle, |v\rangle \in V$ and linea
+ \begin{equation}
+ \langle u \mid A \mid v \rangle \coloneqq \langle u \mid A v \rangle \equiv \langle A^\dagger u \mid v \rangle.
+ \end{equation}
+-This notation is completely rigorous: the placement of the operator between the bra and ket reflects the self-adjointness of the inner product pairing, meaning that acting forward on the ket with $A$ is identical to acting backward on the bra with $A^\dagger$.
++In this notation, the placement of the operator between the bra and ket reflects the self-adjointness of the inner product pairing, meaning that acting forward on the ket with $A$ is identical to acting backward on the bra with $A^\dagger$.
+ 
+ \begin{remark}[Formalization Note]
+ In the verified Lean formalization (\texttt{Bosonize.A02}), the separation between \texttt{AlgebraicCAR} and \texttt{CAR} is strictly maintained. Adjoint compatibility is an independent geometric axiom: if $(c, c^\dagger)$ is an algebraic CAR pair and $S$ is an invertible non-unitary operator, the similarity transform $\tilde{c}_i \coloneqq S c_i S^{-1}$ and $\tilde{c}_i^\dagger \coloneqq S c_i^\dagger S^{-1}$ preserves all anticommutators, but $\tilde{c}_i^\dagger \neq (\tilde{c}_i)^\dagger$. Thus, adjointness is an essential condition that fixes the physical Hilbert space metric.
+@@ -124,7 +124,7 @@ For each subset $S \subseteq \iota$, the basis vector $|S\rangle$ is the indicat
+ \end{enumerate}
+ \end{proposition}
+ 
+-\section{Exact Fermionic Sign Mechanics}
++\section{Fermionic Sign Mechanics}
+ 
+ To define creation and annihilation operators on $\mathcal{F}(\iota)$ that satisfy anticommutation, we must account for the permutation phase acquired when inserting or removing a fermion.
+ 
+@@ -142,7 +142,7 @@ Let $\iota$ be linearly ordered by $\le$. For any mode $i \in \iota$ and any occ
+ \end{enumerate}
+ \end{definition}
+ 
+-To maintain strict mathematical precision, the domain of the count $\sigma(i, S)$ is defined in $\mathbb{N}$, and arithmetic evaluations are carried out additively via disjoint unions.
++The domain of the count $\sigma(i, S)$ is defined in $\mathbb{N}$, and arithmetic evaluations are carried out additively via disjoint unions.
+ 
+ \begin{lemma}[Additive Atomic Counts]
+ \label{lem:atomic_counts}
+@@ -177,7 +177,7 @@ When two operations are performed sequentially, say creating mode $j$ and then c
+     \item \textbf{Creating $j$ then $i$:} When $j$ is created first, it enters the state with phase $\epsilon(j, S)$. When $i$ is created next, mode $j$ is already present in the configuration. Because $j < i$, mode $j$ contributes $+1$ to the count of particles preceding $i$, so the second phase is $(-1)^{\sigma(i, S) + 1} = -\epsilon(i, S)$.
+     \item \textbf{Creating $i$ then $j$:} When $i$ is created first, it enters with phase $\epsilon(i, S)$. When $j$ is created next, although $i$ is now in the configuration, $i > j$ does \emph{not} precede $j$! Thus the count of particles preceding $j$ is unaffected: $\sigma(j, S \cup \{i\}) = \sigma(j, S)$, so the phase remains $\epsilon(j, S)$.
+ \end{enumerate}
+-Comparing the two composite phases reveals a relative factor of $-1$. This fundamental sign discrepancy is the exact combinatorial origin of $\{c_i^\dagger, c_j^\dagger\} = 0$.
++Comparing the two composite phases reveals a relative factor of $-1$. This fundamental sign discrepancy is the combinatorial origin of $\{c_i^\dagger, c_j^\dagger\} = 0$.
+ 
+ Figure~\ref{fig:sign_mechanics} illustrates this asymmetric count shift visually.
+ 
+@@ -358,19 +358,18 @@ Under this correspondence, the global parity operator $\Gamma$ is proportional t
+ By the representation theory of complex Clifford algebras, $\mathcal{C}\ell(2d, \mathbb{C}) \cong \mathrm{End}(\mathbb{C}^{2^d})$, and the Fock space $\mathcal{F}(\iota)$ is its unique irreducible spin representation. A planned supporting appendix will develop this Clifford representation theory systematically, providing an alternative algebraic proof of Fock space irreducibility and parity grading.
+ \end{remark}
+ 
+-\section{Chapter Summary and Literature Comparison}
++\section{Summary and Transition to Spatial Fermions}
+ 
+-In this chapter, we developed the exact theory of fermions on finite index sets:
++In this chapter, we formulated fermions on finite index sets:
+ \begin{itemize}
+-    \item Established the two-tiered hierarchy separating algebraic CAR identities from Hilbert space adjoint compatibility.
+-    \item Clarified Dirac bra-ket notation and operator matrix elements $\langle u \mid A \mid v \rangle$.
+-    \item Proved that fermionic sign factors $\epsilon(i, S) = (-1)^{\sigma(i, S)}$ satisfy exact sign exchange identities, eliminating sign ambiguities without software heuristics.
+-    \item Provided a visual TikZ specification of fermionic sign mechanics for creation, annihilation, and mixed pairs.
+-    \item Constructed the concrete $2^d$-dimensional Fock space $\mathcal{F}(\iota)$ and proved that it forms an exact Hilbert CAR representation.
+-    \item Defined the global fermion parity operator $\Gamma$ and contextualized it within Clifford representation theory.
++    \item Separated algebraic CAR identities from Hilbert space adjoint compatibility.
++    \item Described Dirac bra-ket notation and operator matrix elements $\langle u \mid A \mid v \rangle$.
++    \item Verified that fermionic sign factors $\epsilon(i, S) = (-1)^{\sigma(i, S)}$ satisfy sign exchange identities.
++    \item Illustrated fermionic sign mechanics for creation, annihilation, and mixed pairs.
++    \item Constructed the $2^d$-dimensional Fock space $\mathcal{F}(\iota)$ and showed that it provides a Hilbert CAR representation.
++    \item Defined the global fermion parity operator $\Gamma$ and related it to Clifford representation theory.
+ \end{itemize}
+ 
+-\paragraph{Comparison with Standard Continuum Literature.}
+-In standard condensed matter physics literature (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), fermionic creation and annihilation operators are introduced directly through continuum field operators $\psi(x)$ or Fourier modes $c_k$ without establishing the underlying finite-dimensional representation theory. Permutation signs are handled implicitly using anticommuting Grassmann variables or Jordan--Wigner strings $\exp(i \pi \sum_{j < i} n_j)$.
++Standard condensed matter literature (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}) typically introduces fermionic creation and annihilation operators through continuum field operators $\psi(x)$ or Fourier modes $c_k$. Permutation signs are often handled implicitly using anticommuting Grassmann variables or Jordan--Wigner strings $\exp(i \pi \sum_{j < i} n_j)$.
+ 
+-As demonstrated in this chapter, our constructive formulation defines the sign factors $\epsilon(i, S)$ directly on discrete subsets, proving all sign identities algebraically without infinite operator exponentials. This ensures that the Fock space carrier is well-defined and ready to host the position and momentum fermions developed in Chapter~\ref{ch:fermions}.
++In our formulation, the sign factors $\epsilon(i, S)$ are defined explicitly on discrete subsets. This finite-dimensional construction ensures that the Fock space carrier is well-defined. Having established the general algebraic properties of the CAR on an arbitrary ordered finite set $\iota$, Chapter~\ref{ch:fermions} will specialize this construction to the momentum band $\Lambda^*$ and apply the spatial Fourier transform to define position-space fermions, bridging the abstract algebraic structure with the spatial lattice geometry without repeating the CAR derivation.
+diff --git a/notes/latex/chapters/ch05_fermions.tex b/notes/latex/chapters/ch05_fermions.tex
+index 0fc95f4..35da4d2 100644
+--- a/notes/latex/chapters/ch05_fermions.tex
++++ b/notes/latex/chapters/ch05_fermions.tex
+@@ -19,11 +19,11 @@ The fermionic state space is the Fock space over the momentum band:
+ \begin{equation}
+ \mathcal{F}(L) \coloneqq \ell^2(\mathcal{P}(\Lambda^*)) \equiv \bigoplus_{S \subseteq \Lambda^*} \mathbb{C} |S\rangle,
+ \end{equation}
+-which has exact complex dimension $\dim_{\mathbb{C}} \mathcal{F}(L) = 2^L$. The momentum creation and annihilation operators $\{c_k, c_k^\dagger \mid k \in \Lambda^*\}$ satisfy the standard CAR algebra:
++which has complex dimension $\dim_{\mathbb{C}} \mathcal{F}(L) = 2^L$. The momentum creation and annihilation operators $\{c_k, c_k^\dagger \mid k \in \Lambda^*\}$ satisfy the standard CAR algebra:
+ \begin{equation}
+ \{c_k, c_p^\dagger\} = \delta_{k, p} I, \qquad \{c_k, c_p\} = 0, \qquad \{c_k^\dagger, c_p^\dagger\} = 0, \qquad c_k^\dagger = (c_k)^\dagger.
+ \end{equation}
+-Following our global notation conventions, the symbols $c_k, c_k^\dagger$ are reserved strictly for momentum modes.
++Following the notation conventions, the symbols $c_k, c_k^\dagger$ are reserved for momentum modes.
+ 
+ \section{Spatial Fermions via the Unitary Fourier Transform}
+ 
+@@ -43,6 +43,8 @@ n_x \coloneqq \psi_x^\dagger \psi_x.
+ \end{equation}
+ \end{definition}
+ 
++This definition assigns the positive Fourier phase $\chi(k, x) = \zeta^{k x_{\mathrm{val}}}$ to the annihilation operator $\psi_x$. Taking the Hilbert adjoint of this linear combination naturally yields the negative phase $\chi(-k, x) = \zeta^{-k x_{\mathrm{val}}}$ for the creation operator $\psi_x^\dagger$. We note an unresolved discrepancy with the frontmatter notation conventions, which define the annihilator using the negative phase $\chi(-k, x)$. Both choices correspond to valid unitary changes of basis, but they represent opposite conventions for the discrete Fourier analysis and synthesis transforms. To match the formalized proofs in this chapter, we retain the positive-phase annihilator convention locally, without making a global sign replacement.
++
+ \begin{lemma}[Hilbert Adjoint Compatibility]
+ The spatial creation operator is the exact Hilbert adjoint of the spatial annihilation operator:
+ \begin{equation}
+@@ -60,7 +62,7 @@ Because $(c_k)^\dagger = c_k^\dagger$ and $\overline{\zeta^{k x_{\mathrm{val}}}}
+ 
+ \section{Exact Position CAR Inheritance}
+ 
+-The fundamental theorem of discrete spatial fermions is that they inherit the local canonical anticommutation relations without distortion.
++A primary consequence of this unitary equivalence is that the spatial fermions satisfy local canonical anticommutation relations.
+ 
+ \begin{theorem}[Exact Spatial CAR]
+ \label{thm:spatial_car}
+@@ -98,15 +100,15 @@ We evaluate each anticommutator using the bilinearity of $\{\cdot, \cdot\}$:
+ \end{proof}
+ 
+ \paragraph{Formal Correctness vs.\ Physical Implications: Global Fourier vs.\ Jordan--Wigner.}
+-Notice a remarkable conceptual feature of our construction: spatial fermions $\psi_x$ are obtained directly as global unitary Fourier transforms of momentum fermions $c_k$. In standard 1D lattice physics (such as Lieb, Schultz, and Mattis~\cite{lieb1961}), lattice fermions are frequently introduced through Jordan--Wigner transformations from Pauli spin matrices $\sigma_j^\pm$:
++In standard 1D lattice physics (such as Lieb, Schultz, and Mattis~\cite{lieb1961}), lattice fermions are frequently introduced through Jordan--Wigner transformations from Pauli spin matrices $\sigma_j^\pm$:
+ \[
+ \psi_j = \left( \prod_{l < j} \sigma_l^z \right) \sigma_j^-.
+ \]
+-While physically intuitive for quantum spin chains, Jordan--Wigner strings introduce non-local phase tails that complicate spatial locality on periodic rings. In our formulation, the spatial operators $\psi_x$ anticommute locally across distinct sites $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$ as an exact consequence of character orthogonality, requiring no string operators whatsoever.
++While physically intuitive for quantum spin chains, Jordan--Wigner strings introduce non-local phase tails that can complicate spatial locality on periodic rings. In the present formulation, spatial operators $\psi_x$ are defined as global Fourier transforms of the momentum CAR generators. They anticommute locally across distinct sites, $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$, as a consequence of finite character orthogonality rather than through explicit string operators.
+ 
+ \section{Operator Fourier Inversion}
+ 
+-The relationship between position and momentum fermions is completely symmetric under Fourier inversion.
++The relationship between position and momentum fermions is invertible via the inverse discrete Fourier transform.
+ 
+ \begin{theorem}[Fourier Inversion for Operators]
+ \label{thm:op_fourier_inversion}
+@@ -153,7 +155,7 @@ Applying spatial character orthogonality $\sum_{x \in \Lambda} \chi(p - k, x) =
+ 
+ \section{The Dirac Fermi Sea and Linearized Hamiltonians}
+ 
+-In relativistic field theory and 1D condensed matter physics, the physical vacuum is not the bare state $|\emptyset\rangle$ devoid of particles, but the filled Dirac sea where all negative-energy single-particle levels are occupied.
++To model physical fermions, the relevant ground state is often not the empty state $|\emptyset\rangle$, but a filled Dirac sea where all negative-energy single-particle levels are occupied.
+ 
+ \begin{definition}[Dirac Sea Configuration and Vacuum]
+ For even lattice length $L = 2h$, the half-filled Dirac Fermi sea configuration $\mathcal{S}_0 \subset \Lambda^*$ consists of all non-positive momentum modes:
+@@ -227,20 +229,22 @@ We prove each statement:
+ \end{proof}
+ 
+ \paragraph{Formal Correctness vs.\ Physical Implications: Linearization and the Dirac Sea.}
+-In standard Luttinger liquid theory (e.g., Haldane~\cite{haldane1981}, Giamarchi~\cite{giamarchi2004}, and von Delft--Schoeller~\cite{vondelft1998}), the kinetic dispersion is linearized near the Fermi points $\pm k_F$. The spectrum is extended to $-\infty$, yielding an infinite Dirac sea. While this makes the model solvable, it leads to an infinite ground state energy $\sum_{k \le 0} k = -\infty$, requiring formal infinite normal ordering.
++In standard Luttinger liquid theory (e.g., Haldane~\cite{haldane1981}, Giamarchi~\cite{giamarchi2004}, and von Delft--Schoeller~\cite{vondelft1998}), the kinetic dispersion is linearized near the Fermi points $\pm k_F$. The spectrum is extended to $-\infty$, yielding an infinite Dirac sea. While this approximation simplifies the evaluation of commutators, it results in a formally infinite ground state energy $\sum_{k \le 0} k = -\infty$, which is handled via infinite normal ordering.
+ 
+-In our finite constructive formulation, the Dirac sea $\mathcal{S}_0$ has a finite bottom at mode $-h+1$. The ground state energy $E_\Omega = -h(h-1)/2$ is an exact finite integer. No infinite subtraction is required. At the same time, for low-energy excitations near the Fermi surface $k \approx 0$, the spectrum is strictly linear ($\epsilon_k = k$), exactly matching the physics of chiral 1D fermions.
++In the present finite-dimensional setting, the Dirac sea $\mathcal{S}_0$ has a lower bound at mode $-h+1$. The ground state energy $E_\Omega = -h(h-1)/2$ is a finite integer, so no infinite subtraction is necessary. For excitations near the Fermi surface $k \approx 0$, the dispersion remains strictly linear ($\epsilon_k = k$), modeling the low-energy behavior of chiral 1D fermions within the explicitly bounded momentum band.
+ 
+ \section{Chapter Summary and Literature Comparison}
+ 
+-In this chapter, we united the Fourier transform and CAR representations to describe physical lattice fermions:
++In this chapter, we united the Fourier transform and CAR representations to describe lattice fermions:
+ \begin{itemize}
+-    \item Spatial fermionic operators $\psi_x, \psi_x^\dagger$ are constructed via the unitary Fourier transform, leaving $c_k, c_k^\dagger$ strictly reserved for momentum modes.
+-    \item Spatial operators satisfy exact local CAR relations $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$ without non-local Jordan--Wigner strings.
+-    \item Total particle number is strictly conserved across representations: $\hat{N}_{\mathrm{tot}} = \sum_k c_k^\dagger c_k = \sum_x \psi_x^\dagger \psi_x$.
+-    \item The half-filled Dirac sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$ provides a finite ground state $|\Omega\rangle$ with exact finite energy $E_\Omega = -h(h-1)/2$.
+-    \item The physical momentum Hamiltonian $\hat{P} = H_0 - E_\Omega I$ generates exact energy shifts $[P, c_p^\dagger] = p c_p^\dagger$.
++    \item Spatial fermionic operators $\psi_x, \psi_x^\dagger$ are constructed via the discrete Fourier transform of momentum modes $c_k, c_k^\dagger$.
++    \item Spatial operators satisfy local CAR relations $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$ as a consequence of finite character orthogonality.
++    \item Total particle number is conserved across representations: $\hat{N}_{\mathrm{tot}} = \sum_k c_k^\dagger c_k = \sum_x \psi_x^\dagger \psi_x$.
++    \item The half-filled Dirac sea $\mathcal{S}_0$ provides a finite ground state $|\Omega\rangle$ with finite energy $E_\Omega = -h(h-1)/2$.
++    \item The physical momentum Hamiltonian $\hat{P} = H_0 - E_\Omega I$ generates energy shifts $[\hat{P}, c_p^\dagger] = p c_p^\dagger$.
+ \end{itemize}
+ 
+ \paragraph{Comparison with Standard Continuum Literature.}
+-In standard physics texts, such as Giamarchi~\cite{giamarchi2004} and Gogolin et al.~\cite{gogolin1998}, spatial fermions $\psi(x)$ and momentum modes $c_k$ are introduced simultaneously with continuous spatial indices $x \in [0, \mathcal{L}]$. Field operators satisfy singular anticommutators $\{\psi(x), \psi^\dagger(y)\} = \delta(x-y)$. In contrast, our finite lattice fermions $\psi_x$ are bounded operators on a finite-dimensional Hilbert space of dimension $2^L$. All sums are finite, operator products are well-defined, and the Dirac sea is mathematically regular, setting the stage for the Algebraic Quantum Field Theory local net in Chapter~\ref{ch:lattice_aqft_net}.
++In texts such as Giamarchi~\cite{giamarchi2004} and Gogolin et al.~\cite{gogolin1998}, spatial fermions $\psi(x)$ and momentum modes $c_k$ are often introduced with continuous spatial indices $x \in [0, \mathcal{L}]$. Field operators then satisfy distributional anticommutators $\{\psi(x), \psi^\dagger(y)\} = \delta(x-y)$. In the finite formulation used here, the lattice fermions $\psi_x$ are bounded operators on a finite-dimensional Hilbert space. All sums are finite, operator products are mathematically well-defined, and the Dirac sea is a bounded set.
++
++These spatial fermions provide the foundation for building observable algebras localized to spatial intervals. In Chapter~\ref{ch:lattice_aqft_net}, we use these operators to construct a graded local net, distinguishing between the field locality of the anticommuting fermions and the ordinary spatial locality of even observables.
+diff --git a/notes/latex/chapters/ch06_lattice_aqft_net.tex b/notes/latex/chapters/ch06_lattice_aqft_net.tex
+index cbf1557..39e0064 100644
+--- a/notes/latex/chapters/ch06_lattice_aqft_net.tex
++++ b/notes/latex/chapters/ch06_lattice_aqft_net.tex
+@@ -5,11 +5,10 @@
+ 
+ In standard formulations of Quantum Field Theory, fields $\psi(x)$ are regarded as primary objects, and physical states are defined as rays in a Hilbert space. In Algebraic Quantum Field Theory (AQFT), following the foundational framework of Rudolf Haag and Daniel Kastler~\cite{haag1996}, the primary mathematical structure of a quantum theory is its \emph{net of local observable algebras}: an assignment of a unital $*$-algebra $\mathfrak{A}(O)$ to each spacetime region $O$, satisfying causality, isotony, and covariance.
+ 
+-In continuum spacetime, establishing the existence of a local net that satisfies the Haag--Kastler axioms for interacting theories is an arduous analytic problem, often encountering severe ultraviolet singularities. On the discrete spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$), the situation is dramatically different and conceptually pristine:
++In continuum spacetime, establishing the existence of a local net that satisfies the Haag--Kastler axioms for interacting theories requires solving difficult analytic problems. On the discrete spatial lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$), the algebraic structure can be studied directly using finite matrices:
+ \begin{enumerate}
+-    \item No abstract physical axioms need to be postulated.
+     \item Every local algebra $\mathfrak{A}(I)$ is constructed explicitly from the spatial CAR operators $\{\psi_x, \psi_x^\dagger \mid x \in I\}$ acting on the finite-dimensional fermionic Fock space $\mathcal{F}(L)$.
+-    \item All the Haag--Kastler axioms---including isotony, additivity, twisted locality, and global irreducibility---are established as rigorous constructive theorems.
++    \item Algebraic properties such as isotony, additivity, twisted locality, and global irreducibility are established as exact identities on this finite configuration.
+ \end{enumerate}
+ 
+ \paragraph{Algebraic Primer for Physicists.}
+@@ -164,7 +163,7 @@ Since $A$ and $B$ are even, $\sigma = 0$ and $\tau = 0$, so $\sigma \cdot \tau =
+ \end{proof}
+ 
+ \paragraph{Physical Context for Locality.}
+-Corollary~\ref{cor:observable_locality} is the discrete lattice realization of Einstein causality: measurements performed in spatially disjoint regions commute and cannot interfere with one another. This graded commutation structure explains why only even operators qualify as physical observables. Fermionic fields $\psi_x$ are unobservable directly; only their even bilinears $\psi_x^\dagger \psi_x$, $\psi_x^\dagger \psi_y$ generate physically measurable gauge-invariant observables.
++The finite lattice formulation distinguishes between graded locality for fermionic fields and ordinary locality for physical observables. Theorem~\ref{thm:twisted_locality} establishes graded locality: fields in disjoint regions anticommute. Corollary~\ref{cor:observable_locality} realizes ordinary Einstein causality: even operators in disjoint regions commute strictly. In this exact algebraic setting, fermionic fields $\psi_x$ are unobservable directly; only their even bilinears, such as $\psi_x^\dagger \psi_x$ and $\psi_x^\dagger \psi_y$, generate measurable gauge-invariant observables. This isolates the core causality structure without requiring the functional-analytic machinery of the full continuum Haag--Kastler program.
+ 
+ \section{Global Algebra Irreducibility}
+ 
+@@ -317,17 +316,17 @@ Corollary~\ref{cor:jw_dictionary} explains why a complete formalization of 1D qu
+ 
+ \section{Chapter Summary and Literature Comparison}
+ 
+-In this chapter, we formulated and proved the Haag--Kastler axioms of Algebraic Quantum Field Theory on the discrete lattice:
++In this chapter, we described the algebraic structure of the fermionic net on the discrete lattice:
+ \begin{itemize}
+     \item Provided precise definitions of operator algebras, $C^*$-subalgebras, and automorphisms for physics readers.
+     \item Local field algebras $\mathfrak{A}(I)$ are generated by spatial fermions $\{\psi_x, \psi_x^\dagger \mid x \in I\}$.
+     \item The global parity operator $\Gamma$ generates an involutive $*$-automorphism $\alpha$, yielding a direct-sum $\mathbb{Z}_2$-grading $\mathfrak{A}(I) = \mathfrak{A}_+(I) \oplus \mathfrak{A}_-(I)$.
+-    \item Proved the Haag--Kastler axioms: Isotony, Additivity, Twisted Locality ($A B = (-1)^{\sigma\cdot\tau} B A$), and Strict Locality of Physical Observables ($[A, B] = 0$ for $A, B \in \mathfrak{A}_+$).
+-    \item Proved Global Irreducibility $\mathfrak{A}(\Lambda) = \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ constructively via vacuum projectors and creation words.
++    \item Proved the exact algebraic identities corresponding to Isotony, Additivity, Twisted Locality ($A B = (-1)^{\sigma\cdot\tau} B A$), and Strict Locality of Physical Observables ($[A, B] = 0$ for $A, B \in \mathfrak{A}_+$).
++    \item Proved Global Irreducibility $\mathfrak{A}(\Lambda) = \mathrm{End}_{\mathbb{C}}(\mathcal{F}(L))$ via vacuum projectors and creation words.
+     \item Formulated boundary extensions: explicitly distinguished dual space modes from shifted physical wavenumbers $p_{\mathrm{phys}} = \frac{2\pi(k+\beta)}{L}$, defined the boundary datum $b = (r, \tau)$, proved the covariance of spatial translation unitaries $T_b(m) \psi_b(n) T_b(m)^\dagger = \psi_b(n+m)$, and contextualized the Jordan--Wigner sector dictionary.
+ \end{itemize}
+ 
+ \paragraph{Comparison with Standard Continuum Literature.}
+-In continuum AQFT (Haag~\cite{haag1996}), local nets $\mathfrak{A}(O)$ are assigned to open diamond regions in continuous Minkowski spacetime. Proving that an interacting continuum model satisfies the Haag--Kastler axioms requires profound functional analysis (e.g., Glimm--Jaffe constructive quantum field theory, Tomita--Takesaki modular theory, and Bisognano--Wichmann bisector theorems). 
++In continuum AQFT (Haag~\cite{haag1996}), local nets $\mathfrak{A}(O)$ are assigned to open diamond regions in continuous Minkowski spacetime. The existence of interacting continuum models satisfying the Haag--Kastler axioms is typically addressed through functional analysis.
+ 
+-On the discrete lattice, as demonstrated in this chapter, all Haag--Kastler axioms become constructive algebraic theorems on finite-dimensional matrices. By establishing strict locality and global irreducibility at the lattice level, we ensure that the bosonization dictionary developed in Chapters~\ref{ch:heisenberg_algebra} and~\ref{ch:haldane_completeness} is mathematically watertight before taking continuum approximations.
++On the discrete lattice, these algebraic relations are exactly satisfied by finite-dimensional matrices. In particular, Theorem~\ref{thm:global_irreducibility} shows that the global lattice algebra $\mathfrak{A}(\Lambda)$ generates all linear operators on the $2^L$-dimensional Fock space $\mathcal{F}(L)$. Because this ambient state space is large, our next step is to organize it into physically relevant subspaces. In Chapter~\ref{ch:vacuum_budget}, we define charge sectors and select reference ground states, which provide the foundation for the finite energy budget used throughout the bosonization dictionary.
+diff --git a/notes/latex/chapters/ch07_vacuum_budget.tex b/notes/latex/chapters/ch07_vacuum_budget.tex
+index 365419f..d5b6463 100644
+--- a/notes/latex/chapters/ch07_vacuum_budget.tex
++++ b/notes/latex/chapters/ch07_vacuum_budget.tex
+@@ -3,9 +3,9 @@
+ 
+ \section{Introduction and the Energy Budget Philosophy}
+ 
+-In continuum quantum field theory, the Dirac sea has infinite negative depth. Attempting to define particle-hole operators, charges, and Hamiltonians directly in the continuum leads immediately to divergent vacuum expectations and unbounded operators. 
++In standard continuum treatments of the Dirac sea, the negative-energy modes have infinite depth, and defining particle-hole operators, charges, and Hamiltonians typically requires regularization to manage the resulting expectations and operator domains. 
+ 
+-To formalize bosonization constructively without topological approximations or divergent series, we introduce the \emph{Energy Budget regularization scheme}. The entire state space is decomposed into finite-dimensional subspaces governed by two discrete parameters:
++To construct these operators explicitly on a finite lattice, we organize the finite CAR representation using the \emph{Energy Budget regularization scheme}. This setup avoids immediate analytic completion by decomposing the finite state space into orthogonal finite-dimensional subspaces governed by two discrete parameters:
+ \begin{enumerate}
+     \item Net charge sector deviation $N \in \mathbb{Z}$.
+     \item Maximum excitation energy cutoff $K \in \mathbb{N}$.
+@@ -15,7 +15,7 @@ Throughout this chapter, let $L = 2h$ with $h \ge 1$ be an even positive integer
+ 
+ \section{Admissible Charge Sectors and Sector Grounds}
+ 
+-Because the single-particle band $\Lambda^*$ contains exactly $2h$ modes, an occupation configuration $S \subseteq \Lambda^*$ can have particle number $\#S$ between $0$ and $2h$. 
++Because the single-particle band $\Lambda^*$ contains exactly $2h$ modes, an occupation configuration $S \subseteq \Lambda^*$ can have particle number $\#S$ between $0$ and $2h$. We organize these configurations by their particle count relative to half-filling.
+ 
+ \begin{definition}[Admissible Charge Sectors]
+ The net charge deviation $N \in \mathbb{Z}$ of an occupation configuration $S \subseteq \Lambda^*$ relative to half-filling is defined by:
+@@ -72,13 +72,13 @@ For any configuration $S \subseteq \Lambda^*$:
+ \end{definition}
+ 
+ \paragraph{Physical Intuition for the Ground Energy Offset $E_0(N)$.}
+-Why does the ground state of charge sector $N$ carry energy $E_0(N) = N(N+1)/2$?
+-Consider adding $N > 0$ particles to the half-filled Dirac sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$. To minimize total kinetic energy, the particles must occupy the lowest available empty modes immediately above the Fermi surface, which are the consecutive positive modes $k = 1, 2, \dots, N$. The total momentum added is:
++The ground state of charge sector $N$ carries energy $E_0(N) = N(N+1)/2$ relative to the half-filled reference.
++When adding $N > 0$ particles to the reference sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$, minimizing the bare momentum energy requires occupying the lowest available empty modes immediately above the Fermi surface, which are the consecutive positive modes $k = 1, 2, \dots, N$. The total momentum added is:
+ \[
+ \sum_{k=1}^N k = 1 + 2 + \dots + N = \frac{N(N+1)}{2}.
+ \]
+-Similarly, if $N < 0$ particles are removed, the lowest-energy configuration removes the highest occupied modes $k = 0, -1, \dots, N+1$ from the sea. The net momentum change is $-\sum_{k=N+1}^0 k = \frac{|N|(|N|-1)}{2} + |N| = \frac{N(N+1)}{2}$.
+-In 1D physics, this quadratic term $E_0(N) = \frac{1}{2} N^2 + \frac{1}{2} N$ reflects the macroscopic charging energy of a 1D Luttinger liquid: adding particles increases the Fermi momentum $k_F \propto N$, so the total kinetic energy increases quadratically as $\int_0^N k \, dk \sim \frac{1}{2} N^2$.
++Similarly, if $N < 0$ particles are removed, the lowest-energy configuration removes the highest occupied modes $k = 0, -1, \dots, N+1$ from the sea. The net momentum change is $-\sum_{k=N+1}^0 k = \frac{|N|(|N|-1)}{2} = \frac{N(N+1)}{2}$.
++This quadratic term $E_0(N) = \frac{1}{2} N^2 + \frac{1}{2} N$ models the macroscopic charging energy often found in 1D Luttinger liquid treatments, where adding particles shifts the Fermi momentum $k_F \propto N$ and increases the total kinetic energy quadratically.
+ 
+ \begin{definition}[Operator Observables]
+ The relative charge observable $\hat{N}$ and excitation energy observable $\hat{E}$ are diagonal linear operators on $\mathcal{F}(L)$ defined on basis states by:
+@@ -297,9 +297,9 @@ Applying a mode shift of size $M$, the shifted momentum must not exceed the top
+ In the verified Lean~4 core, all 114 lemmas on energy gradings, projections, and ground states are verified in the Lean 4 kernel. The rank formula and displacement monotonicity are proved by finite sorting induction, ensuring that the entire regularized framework is constructive and mathematically rigid.
+ \end{remark}
+ 
+-\section{Chapter Summary and Literature Comparison}
++\section{Chapter Summary and Bridge to Bosonic Carriers}
+ 
+-In this chapter, we developed the Energy Budget regularization scheme:
++In this chapter, we developed the finite Energy Budget regularization scheme:
+ \begin{itemize}
+     \item Admissible charge sectors $N \in \{-h, \dots, h\}$ possess unique ground configurations $\mathcal{S}_N = \{-h+1, \dots, N\}$.
+     \item The sector ground reference offset $E_0(N) = N(N+1)/2$ evaluates the macroscopic charging energy in exact integer arithmetic.
+@@ -309,7 +309,7 @@ In this chapter, we developed the Energy Budget regularization scheme:
+     \item Defined budget subspaces $B(N, K) = \bigoplus_{E=0}^K \mathcal{H}(N, E)$, formalized filtered operator parameters $(q, d)$, and proved the Unified Margin Inequality $2M + K + K_{\mathrm{excursion}} + N_{\max} \le h$.
+ \end{itemize}
+ 
+-\paragraph{Comparison with Standard Continuum Literature.}
+-In standard continuum bosonization (Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), energy cutoffs are applied after the fact using smooth exponential damping factors $e^{-\alpha |k|}$ or soft Gaussian filters. While convenient for computing momentum integrals, soft cutoffs create non-orthogonal states and leave open whether the underlying Hilbert space is genuinely finite-dimensional.
++The energy budget structures introduced here operate strictly within the finite fermionic Fock space. With these bounded, exact, finite-dimensional carrier spaces established, Chapter~\ref{ch:boson_fock} will introduce an ambient bosonic polynomial algebra. We must keep these two carriers distinct: while the ambient polynomial space will help express structural identities elegantly, the actual physical state projections will remain within the finite fermionic budgets $B(N, K)$ characterized here.
+ 
+-In our constructive framework, the energy budget $B(N, K)$ is an exact finite-dimensional orthogonal subspace. As shown in Theorem~\ref{thm:unified_margin}, when the unified margin condition is satisfied, the finite boundary does not introduce any distortion: operators act on $B(N, K)$ exactly as they do in the continuum, but with strictly finite-dimensional matrix representations.
++\paragraph{Comparison with Standard Continuum Literature.}
++For context, in standard continuum bosonization (Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), energy cutoffs are often applied after the fact using smooth exponential damping factors or soft Gaussian filters. While convenient for computing momentum integrals over the continuous band, soft cutoffs create non-orthogonal filtered states. Here we use an explicit integer margin condition on the exact finite-dimensional orthogonal subspace $B(N, K)$, which avoids introducing any distortion to the finite representation when the margin condition is satisfied.
+diff --git a/notes/latex/chapters/ch08_boson_fock.tex b/notes/latex/chapters/ch08_boson_fock.tex
+index cc06db3..fabcd4f 100644
+--- a/notes/latex/chapters/ch08_boson_fock.tex
++++ b/notes/latex/chapters/ch08_boson_fock.tex
+@@ -3,17 +3,17 @@
+ 
+ \section{Introduction and the Algebraic Oscillator Approach}
+ 
+-In conventional quantum field theory, bosonic Fock spaces are constructed as infinite direct sums of symmetric tensor products $\bigoplus_{n=0}^\infty \mathrm{Sym}^n(\mathcal{H}_1)$ over a single-particle Hilbert space $\mathcal{H}_1$. This analytic framework inherently requires unbounded creation and annihilation operators, dense domains, topological completions, and subtle operator trace anomalies.
++In standard quantum field theory, bosonic Fock spaces are typically constructed as infinite direct sums of symmetric tensor products $\bigoplus_{n=0}^\infty \mathrm{Sym}^n(\mathcal{H}_1)$ over a single-particle Hilbert space $\mathcal{H}_1$. That analytic framework studies unbounded creation and annihilation operators, dense domains, and topological completions.
+ 
+-In the algebraic bosonization program presented in this monograph, we circumvent all topological subtleties by constructing the bosonic Fock layer \emph{purely algebraically}. The bosonic carrier is realized as a commutative multivariate polynomial ring over $\mathbb{C}$. 
++In the algebraic bosonization program presented in this monograph, we choose to study the bosonic Fock layer \emph{purely algebraically} as an expository choice to make the combinatorics explicit. We realize the bosonic carrier as a commutative multivariate polynomial ring over $\mathbb{C}$. 
+ 
+-\paragraph{Why the Umbral/Polynomial Approach is Essential for Constructive Formalization.}
+-The polynomial realization of the bosonic Fock space offers four decisive advantages for mathematical physics and constructive formalization:
++\paragraph{Properties of the Polynomial Carrier.}
++The polynomial realization of the bosonic Fock space structures the formalization around exact algebra:
+ \begin{enumerate}
+-    \item \textbf{Exact Polynomial Arithmetic:} Rather than manipulating infinite-dimensional vectors with convergence topologies, states are finite complex polynomials $p(X_1, \dots, X_M)$. All operations are exact algebraic manipulations in commutative algebra.
+-    \item \textbf{Elementary Realization of CCR:} Creation operators are simply coordinate multiplications $X_m \cdot p(X)$, and annihilation operators are scaled partial derivatives $m \frac{\partial p}{\partial X_m}$. The Canonical Commutation Relations $[A_m, C_n] = m \delta_{mn} I$ follow immediately from the elementary calculus product rule $\frac{\partial}{\partial X_m}(X_n p) = \delta_{mn} p + X_n \frac{\partial p}{\partial X_m}$.
+-    \item \textbf{Positive-Definite Metric via Haldane Weights:} Endowing polynomials with the Haldane inner product $\langle X^r, X^{r'} \rangle_H = \delta_{r, r'} \prod m^{r_m} r_m!$ renders creation and annihilation operators exact Hilbert space adjoints, providing an exact metric structure without functional integrals.
+-    \item \textbf{Strict Nilpotency and Finite Truncation:} When restricted to energy budget subspaces of weighted degree $\le K$, annihilation operators are strictly nilpotent. Consequently, operator exponentials (such as vertex operators and Weyl displacement operators) terminate after finitely many terms, becoming exact algebraic polynomials without any convergence requirements.
++    \item \textbf{Exact Polynomial Arithmetic:} States are modeled as finite complex polynomials $p(X_1, \dots, X_M)$. Operations are expressed as algebraic manipulations in commutative algebra rather than as limits in a completion. Note that while the mode count $M$ is bounded, this does not bound the polynomial degree. The ambient polynomial algebra thus still has unbounded degree and infinite dimension.
++    \item \textbf{Elementary Realization of CCR:} Creation operators act as coordinate multiplications $X_m \cdot p(X)$, and annihilation operators as scaled partial derivatives $m \frac{\partial p}{\partial X_m}$. The Canonical Commutation Relations $[A_m, C_n] = m \delta_{mn} I$ match the elementary product rule $\frac{\partial}{\partial X_m}(X_n p) = \delta_{mn} p + X_n \frac{\partial p}{\partial X_m}$.
++    \item \textbf{Positive-Definite Metric via Haldane Weights:} Endowing polynomials with the Haldane inner product $\langle X^r, X^{r'} \rangle_H = \delta_{r, r'} \prod m^{r_m} r_m!$ provides an algebraic pairing where creation and annihilation operators are exact adjoints with respect to this form.
++    \item \textbf{Strict Nilpotency and Finite Truncation:} When explicitly restricted to finite energy budget subspaces of weighted degree $\le K$, annihilation operators act as strictly nilpotent maps. On these restricted cutoffs, appropriate operator exponentials terminate after finitely many terms, defining exact finite algebraic polynomials.
+ \end{enumerate}
+ 
+ \section{The Polynomial Carrier and the Haldane Inner Product}
+@@ -99,6 +99,9 @@ For general polynomials $p = \sum_r p_r X^r$ and $q = \sum_r q_r X^r$, the pairi
+ \end{enumerate}
+ \end{proposition}
+ 
++\paragraph{Scope and Operator Domains.}
++Proposition~\ref{prop:haldane_adjoint} defines an \emph{algebraic pairing} on the pre-Hilbert space $\mathcal{F}_b$. It demonstrates formal adjointness for polynomials, which should be distinguished from taking adjoints of unbounded operators in a topologically complete Hilbert space, where explicit specification of operator domains is required. We have chosen the polynomial carrier here to evaluate explicit algebraic bounds rather than choosing a Hilbert space completion.
++
+ \begin{proof}
+ \begin{enumerate}
+     \item Since every mode weight $m \ge 1$ and every $r_m \ge 0$, the weight $w(r) = \prod m^{r_m} r_m! > 0$ is strictly positive. Therefore $\langle p \mid p \rangle_H = \sum_r w(r) |p_r|^2 \ge 0$. If the sum vanishes, each $|p_r|^2 = 0$, so $p = 0$.
+@@ -236,7 +239,7 @@ This proves that exact scalar commutation relations can only hold on the ambient
+ 
+ In quantum field theory and the physics of the 1D electron gas, vertex operators $V_\alpha(x) = :e^{i \alpha \phi(x)}:$ generate coherent states and interpolate between fermionic and bosonic excitations. In an infinite-dimensional Hilbert space, defining exponentials of unbounded operators requires subtle domain considerations and analytic continuations. 
+ 
+-Within our algebraic framework, however, the energy budget filtration provides an extraordinarily clean resolution: on the finite subspace $\mathcal{F}_{\le K}$, the annihilation operator $A_m$ is strictly nilpotent ($A_m^{d+1} = 0$). Consequently, operator exponentials become exact terminating polynomials!
++Within our algebraic framework, we explicitly constrain the domain to the finite subspace $\mathcal{F}_{\le K}$, where the annihilation operator $A_m$ is strictly nilpotent ($A_m^{d+1} = 0$). Under this specific truncation, operator exponentials of $A_m$ terminate as finite polynomials. Note that finite dimension and projection alone do not generally imply nilpotency (the finite identity matrix being a counterexample); termination here depends directly on the definition of $A_m$ lowering the energy grading and the space $\mathcal{F}_{\le K}$ having a strict cutoff.
+ 
+ \begin{definition}[Nilpotent Exponential]
+ Let $V$ be a vector space and $A \in \mathrm{End}(V)$ a nilpotent operator with $A^{d+1} = 0$. The \emph{nilpotent exponential} $\operatorname{expNil}(A)$ is the finite polynomial:
+@@ -263,6 +266,9 @@ e^{\alpha A_m} e^{\beta C_m} = e^{\beta C_m} e^{\alpha A_m} e^{m \alpha \beta I}
+ \end{equation}
+ \end{theorem}
+ 
++\paragraph{Scope of Exponentials.}
++Theorem~\ref{thm:bch} assumes $A$ and $B$ are both nilpotent on a subspace $V$. As demonstrated in Proposition~\ref{prop:nilpotency}, the lowering map $A_m$ is indeed nilpotent on $\mathcal{F}_{\le K}$. However, the creation map $C_m$ is \emph{not} nilpotent on the ambient space $\mathcal{F}_b$, and its exponential cannot terminate there. Furthermore, finite compressed creation/annihilation maps with boundary corrections do not satisfy a global nonzero scalar CCR, so this theorem cannot simply be applied as an endomorphism identity on the finite budget. Nilpotency of lowering maps alone does not establish a finite Weyl/vertex exponential identity. Any application of this theorem must explicitly distinguish the domains where exact nilpotent truncation applies from the full ambient space or budget subspaces requiring truncation boundaries.
++
+ \begin{proof}
+ Let $F(t) \coloneqq e^{t A} e^{t B} e^{-t A}$. Differentiating with respect to the formal parameter $t$:
+ \[
+@@ -327,17 +333,17 @@ In the verified Lean~4 core, this entire bosonic structure is proved constructiv
+ 
+ In this chapter, we established the umbral polynomial Fock space layer:
+ \begin{itemize}
+-    \item Explained why multivariate polynomials $\mathbb{C}[X_1, \dots, X_M]$ provide an exact algebraic foundation for bosonic quantum fields, avoiding unbounded operator subtleties.
++    \item Explained why multivariate polynomials $\mathbb{C}[X_1, \dots, X_M]$ provide an explicitly combinatorial foundation for bosonic algebra.
+     \item Clarified that energy $E(r) = \sum m r_m$ corresponds to the linearized chiral dispersion of Tomonaga--Luttinger liquid physics where energy and momentum coincide ($E \equiv P$).
+     \item Proved that the construction is cutoff-independent, stabilizing in the directed limit $M \to \infty$.
+-    \item Constructed the positive-definite Haldane inner product, making creation and annihilation operators exact adjoints $A_m^\dagger = C_m$.
++    \item Constructed the positive-definite Haldane inner product, defining algebraic adjoints $A_m^\dagger = C_m$ before any Hilbert space completion.
+     \item Proved the exact ambient Canonical Commutation Relations $[A_m, C_n] = m \delta_{mn} I$.
+-    \item Established the finite-dimensional budget filtration $\mathcal{F}_{\le K}$, proved operator nilpotency, and derived the compressed commutator remainder theorem explaining the finite trace obstruction.
+-    \item Demonstrated that operator exponentials and the Baker--Campbell--Hausdorff formula become exact terminating polynomial identities for nilpotent exponents.
++    \item Established the finite-dimensional budget filtration $\mathcal{F}_{\le K}$, proved operator nilpotency for lowering maps, and derived the compressed commutator remainder theorem.
++    \item Demonstrated that operator exponentials and the Baker--Campbell--Hausdorff formula become exact terminating polynomial identities specifically for nilpotent exponents, noting that further domain hypotheses are required to use this as a full Weyl exponential identity.
+     \item Proved Wick's theorem algebraically via Appell polynomial recurrences.
+ \end{itemize}
+ 
+-\paragraph{Comparison with Standard Continuum Literature.}
+-In standard bosonization reviews, such as von Delft and Schoeller~\cite{vondelft1998}, Giamarchi~\cite{giamarchi2004}, and Gogolin et al.~\cite{gogolin1998}, the bosonic Fock space is taken as an infinite-dimensional Hilbert space spanned by states $b_q^\dagger \cdots b_k^\dagger |0\rangle$. Vertex operators $e^{i \alpha \phi(x)}$ are computed via normal-ordering identities :$e^A::e^B: = e^{\langle A B \rangle} :e^{A+B}:$, which involve singular short-distance divergences $\langle \phi(x) \phi(y) \rangle \sim -\ln|x-y|$.
++\paragraph{Bridging to Fermionic Density Currents and Literature Comparison.}
++The standard bosonization reviews, such as von Delft and Schoeller~\cite{vondelft1998}, Giamarchi~\cite{giamarchi2004}, and Gogolin et al.~\cite{gogolin1998}, typically study these bosonic structures in infinite-dimensional Hilbert spaces representing the continuum limit. In those continuum field models, vertex operators $e^{i \alpha \phi(x)}$ are computed via normal-ordering identities $:\!e^A\!::\!e^B\!: = e^{\langle A B \rangle} :\!e^{A+B}\!:$, where the short-distance contractions generate characteristic logarithmic terms such as $\langle \phi(x) \phi(y) \rangle \sim -\ln|x-y|$. Our goal here is not to replace those broader analytic continuum treatments, but to present an explicitly combinatorial counterpart. By defining these fields on explicit graded budget spaces at finite lattice scales, the combinatorics are exposed as terminating algebraic operations rather than analytic limits.
+ 
+-In our constructive umbral framework, all bosonic fields are finite polynomials on graded budget spaces. Nilpotent exponentials terminate into finite sums, eliminating short-distance singularities at the root. In Chapters~\ref{ch:density_modes} through~\ref{ch:haldane_completeness}, we will bridge this abstract polynomial Fock layer with the fermionic Fock space of Chapter~\ref{ch:fermions}, proving that the fermionic density modes $\rho_m$ realize this exact polynomial CCR on the fermionic budget space $B(N, K)$.
++In the next step, Chapter~\ref{ch:density_modes} introduces the fermionic density currents $\rho_m$ as explicit particle-hole pairs on the finite lattice. We will bridge this abstract polynomial Fock layer with the fermionic Fock space of Chapter~\ref{ch:fermions}, examining how these non-wrapping density currents realize the polynomial structures developed here when restricted to the fermionic budget space $B(N, K)$.
+diff --git a/notes/latex/chapters/ch09_density_modes.tex b/notes/latex/chapters/ch09_density_modes.tex
+index 009aab8..55c4330 100644
+--- a/notes/latex/chapters/ch09_density_modes.tex
++++ b/notes/latex/chapters/ch09_density_modes.tex
+@@ -3,16 +3,16 @@
+ 
+ \section{Introduction and the Bridge to Bosonic Currents}
+ 
+-The central mechanism of bosonization in $1+1$ dimensions is the construction of bosonic current operators out of bilinear products of fermionic fields. In continuous quantum field theory, the chiral current is formally written as $\rho(x) = :\! \psi^\dagger(x) \psi(x) \!:$. Because the product of two quantum fields at the same spacetime point is singular, the continuum definition requires point-splitting regularization, subtracting infinite vacuum expectation values and introducing ambiguous anomalous Schwinger terms.
++The central mechanism of bosonization in $1+1$ dimensions is the construction of bosonic current operators out of bilinear products of fermionic fields. In continuous quantum field theory, the chiral current is formally written as $\rho(x) = :\! \psi^\dagger(x) \psi(x) \!:$. Because the product of two quantum fields at the same spacetime point is singular, the continuum definition requires point-splitting regularization, subtracting infinite vacuum expectation values and introducing anomalous Schwinger terms.
+ 
+-In our constructive lattice AQFT framework, all singularities and heuristic subtractions disappear. Density modes are defined as exact, non-wrapping momentum-shift operators on the finite-dimensional fermionic Fock space $\mathcal{F}(L)$ ($L = 2h$, $h \ge 1$). 
++In our finite-lattice framework, these continuum operator products are replaced by finite matrices acting on the finite-dimensional fermionic Fock space $\mathcal{F}(L)$ ($L = 2h$, $h \ge 1$). Density modes are defined here as non-wrapping momentum-shift operators, taking care to respect the boundaries of the discrete Brillouin zone.
+ 
+-In this chapter, we develop the exact kinematics of these density operators. We prove that:
++In this chapter, we develop the kinematics of these density operators. We prove that:
+ \begin{enumerate}
+     \item Density modes strictly conserve net fermion charge and grade excitation energy by the mode integer $m$.
+     \item Same-sign density modes commute globally on the entire Fock space without any budget restriction.
+     \item Negative density modes strictly annihilate every sector ground state $|N\rangle_0$.
+-    \item The state $\rho_m |\Omega\rangle$ has exact norm squared $\|\rho_m |\Omega\rangle\|^2 = m$ for $1 \le m \le h$, establishing the linear independence of density modes prior to any CCR evaluation.
++    \item The state $\rho_m |\Omega\rangle$ has norm squared $\|\rho_m |\Omega\rangle\|^2 = m$ for $1 \le m \le h$, establishing the linear independence of density modes prior to any CCR evaluation.
+ \end{enumerate}
+ 
+ \section{Non-Wrapping Momentum Kinematics and Valid Pairs}
+@@ -70,6 +70,8 @@ For adjoints: $(d\Gamma(A))^\dagger = \sum_{p, k} \overline{A_{p, k}} (c_p^\dagg
+ 
+ \section{Raw and Normal-Ordered Density Operators}
+ 
++We now define the density modes as the second quantization of the non-wrapping partial shift matrices. Notice that this definition uses a non-wrapping raising shift, meaning the target momentum $p = k+m$ must lie strictly within the finite band. This differs from the cyclic wrapped lowering convention ($k \ominus m$) summarized in the frontmatter. Furthermore, our definition applies a simple scalar correction solely to the zero mode to account for the vacuum charge, rather than using a mode-by-mode fermionic normal-ordering product. We retain both notations in this monograph because the non-wrapping definition is essential for the explicit finite-difference derivations here and in Chapter~\ref{ch:heisenberg_algebra}, while the wrapped definition appears in later chapters studying correlation functions. Do not silently harmonize these definitions or their corresponding commutation signs; the discrepancy between them is a finite-lattice effect that only vanishes under explicit energy bounds.
++
+ \begin{definition}[Raw and Normal-Ordered Densities]
+ \begin{enumerate}
+     \item For any mode transfer integer $m \in \mathbb{Z}$, the \emph{raw density operator} $\rho_m$ is the second quantization of the partial shift matrix $T_m$:
+@@ -101,6 +103,8 @@ For $m = 0$, $D_0 = \{(k, k) \mid k \in \Lambda^*\}$. Thus $\rho_0 = \sum_k c_k^
+ 
+ \section{Exact Kinematic Lemmas and Global Commutativity}
+ 
++The properties of the partial shift matrices directly determine the vanishing conditions and adjoints of the density modes.
++
+ \begin{lemma}[Vanishing and Adjoint Inversion]
+ \label{lem:density_vanishing_adj}
+ \begin{enumerate}
+@@ -117,6 +121,8 @@ If $|m| \ge 2h$, the difference between any two elements in $\Lambda^*$ cannot e
+ For adjoints: $(T_m)_{p, k} = 1 \iff p = k + m \iff k = p - m \iff (T_{-m})_{k, p} = 1$. Thus $T_m^\dagger = T_{-m}$. By Lemma~\ref{lem:dgamma_comm}, $\rho_m^\dagger = d\Gamma(T_m^\dagger) = d\Gamma(T_{-m}) = \rho_{-m}$.
+ \end{proof}
+ 
++Because the non-wrapping shift operators truncating at the band edges still compose cleanly in the forward direction, they commute globally on the Fock space when their shift directions match.
++
+ \begin{theorem}[Global Same-Sign Commutativity]
+ \label{thm:same_sign_comm}
+ For all non-negative integers $m, n \ge 0$:
+@@ -212,7 +218,7 @@ For any admissible charge sector $N \in \{-h, \dots, h\}$ and energy cutoff $K \
+ 
+ \section{Exact Vacuum Norm and Linear Independence}
+ 
+-To demonstrate that the density modes $\{\rho_m\}$ create non-trivial physical excitations, we compute the exact norm of the vacuum excitation $\rho_m |\Omega\rangle$ without relying on unproved commutation relations.
++To demonstrate that the density modes $\{\rho_m\}$ create non-trivial physical excitations, we compute the norm of the vacuum excitation $\rho_m |\Omega\rangle$ without relying on unproved commutation relations.
+ 
+ \begin{theorem}[Exact Vacuum Excitation Norm]
+ \label{thm:vacuum_norm}
+@@ -289,3 +295,5 @@ where:
+ \end{itemize}
+ 
+ On the budget subspace under the unified margin conditions of Theorem~\ref{thm:unified_margin}, the wrap remainder $R_m$ annihilates all states. Thus, the physical spatial current coincides with the non-wrapping chiral current $\rho_m$.
++
++This conditional equivalence allows us to use the algebraically simpler non-wrapping operators on protected states. However, because the un-wrapped shifts strictly truncate at the boundaries of the finite momentum band, the commutators of these density modes are not exact scalars on the entire Fock space. In Chapter~\ref{ch:heisenberg_algebra}, we will evaluate the commutator $[\rho_m, \rho_{-n}]$ and explicitly isolate the finite band-edge operators that arise, showing how they yield the expected Heisenberg algebra only when applied within a protected energy budget.
+diff --git a/notes/latex/chapters/ch10_heisenberg_algebra.tex b/notes/latex/chapters/ch10_heisenberg_algebra.tex
+index 2367343..e52799a 100644
+--- a/notes/latex/chapters/ch10_heisenberg_algebra.tex
++++ b/notes/latex/chapters/ch10_heisenberg_algebra.tex
+@@ -3,20 +3,19 @@
+ 
+ \section{Introduction and the Algebraic Origin of the Schwinger Anomaly}
+ 
+-The central mathematical miracle of quantum bosonization is that bilinear products of fermionic field operators satisfy bosonic canonical commutation relations. In continuous quantum field theory, this phenomenon is expressed by the affine Lie algebra $\widehat{\mathfrak{u}}(1)$ (the $U(1)$ Kac--Moody current algebra):
++A key step in the standard bosonization program is establishing that bilinear products of fermionic field operators satisfy bosonic canonical commutation relations (CCR). In continuous quantum field theory, this phenomenon is expressed by the affine Lie algebra $\widehat{\mathfrak{u}}(1)$ (the $U(1)$ Kac--Moody current algebra):
+ \begin{equation}
+ [J_m, J_n] = m\, \delta_{m+n, 0}\, I.
+ \end{equation}
+-The central term $m\, \delta_{m+n, 0}$, known as the \emph{Schwinger term} or the chiral anomaly, is traditionally derived via heuristic point-splitting, formal normal ordering, or infinite Dirac sea subtractions.
++The central term $m\, \delta_{m+n, 0}$, known as the \emph{Schwinger term} or the chiral anomaly, is traditionally derived in infinite-dimensional settings via point-splitting, formal normal ordering, or infinite Dirac sea subtractions.
+ 
+-On our discrete lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$), the situation is fundamentally clarified. 
+-As proven by the No-Go Theorem~\ref{thm:no_go}, no finite-dimensional matrix algebra can admit operators satisfying $[A, B] = I$ because the trace of any commutator must vanish identically. How, then, can fermionic density operators on the finite Fock space $\mathcal{F}(L)$ satisfy bosonic commutation relations?
++Our model operates on a discrete lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$) with strictly finite-dimensional carrier spaces. As stated by the No-Go Theorem~\ref{thm:no_go}, a global nonzero scalar canonical commutation relation cannot hold for finite matrices, because the trace of any commutator must vanish identically on a finite-dimensional space. We must therefore carefully distinguish between a dynamical identity on the full finite Fock space $\mathcal{F}(L)$, a protected-budget identity valid only on restricted subspaces, and the ambient polynomial algebra.
+ 
+-The answer lies in the \emph{Energy Budget regularization}:
++To recover the exact Schwinger term, we rely on the \emph{Energy Budget regularization} applied to finite subspaces:
+ \begin{enumerate}
+-    \item On the full Fock space $\mathcal{F}(L)$, the commutator $[\rho_{-m}, \rho_m]$ is not a scalar, but a non-trivial dynamical operator given by the difference between the fermion occupations at the bottom and top edges of the band.
+-    \item When evaluated on vectors in the energy budget subspace $B(N, K)$ satisfying explicit \emph{margin inequalities}, the deep Fermi sea is frozen full and the high momentum band is frozen empty.
+-    \item Consequently, the edge operators evaluate to the exact positive integer $m$ on budget states, realizing the exact Kac--Moody algebra without any infinite-dimensional or topological approximations.
++    \item On the full finite-dimensional Fock space $\mathcal{F}(L)$, the commutator $[\rho_{-m}, \rho_m]$ is not a scalar. Instead, it is a dynamical operator determined by the difference between the fermion occupations at the global bottom and top edges of the momentum band. We evaluate these global edge terms explicitly before considering any subspace restrictions.
++    \item We then restrict our attention to the energy budget subspace $B(N, K)$. Provided the parameters satisfy explicit \emph{margin inequalities}, the deep Fermi sea remains rigidly full and the high momentum band remains rigidly empty.
++    \item As a result, the dynamical edge operators evaluate to exactly $m$ when acting on these protected budget states. This establishes a protected-budget CCR identity that locally matches the Kac--Moody algebra, even though the global operator on $\mathcal{F}(L)$ remains traceless.
+ \end{enumerate}
+ 
+ \section{The Exact Diagonal Edge Formula on Fock Space}
+@@ -95,7 +94,7 @@ Both sets contain exactly $m$ momentum modes: $\#\mathcal{E}_{\mathrm{bot}}(m) =
+ 
+ \section{Regime M1: The Diagonal Buffer Zone and the Schwinger Term}
+ 
+-We now evaluate the edge formula on states belonging to the energy budget subspace $B(N, K)$.
++Having established the global edge formula for $[\rho_{-m}, \rho_m]$ on the unrestricted Fock space, we now evaluate its action on states belonging to the constrained energy budget subspace $B(N, K)$. By introducing a margin condition (M1), we ensure that the global edge terms act on regions of the momentum band where particle occupations are rigidly blocked by the finite budget.
+ 
+ \begin{theorem}[Regime M1: Exact Diagonal Schwinger Term]
+ \label{thm:regime_m1}
+@@ -153,7 +152,7 @@ Extending by linearity to all $\psi \in B(N, K)$ completes the proof.
+ 
+ \section{Regime M2: Off-Diagonal Suppression and Pauli Blocking}
+ 
+-We now examine off-diagonal commutators $[\rho_m, \rho_n]$ where $m + n \neq 0$.
++The diagonal case analyzed in Regime M1 successfully resolves the Schwinger term for opposing density modes. We now turn to the off-diagonal commutators $[\rho_m, \rho_n]$ where $m + n \neq 0$. Here, we demonstrate how an extended margin condition (M2) ensures that any single-particle hopping terms connecting the opposing band edges are annihilated by Pauli blocking on the rigid ground sea configurations.
+ 
+ \begin{theorem}[Regime M2: Off-Diagonal Suppression]
+ \label{thm:regime_m2}
+@@ -181,7 +180,7 @@ We divide into two cases:
+ 
+ \section[The Exact U(1) Kac--Moody Algebra on the Budget Subspace]{The Exact $U(1)$ Kac--Moody Algebra on the Budget Subspace}
+ 
+-Combining Regimes M1 and M2 yields the central theorem of constructive bosonization.
++Combining the diagonal Schwinger term from Regime M1 and the off-diagonal suppression from Regime M2 yields a protected commutation relation on the finite budget. Note the choice of sign and index order in the resulting relation: the theorem establishes $[\rho_m, \rho_n] = -m \delta_{m+n, 0}$ for normal-ordered modes. This negative sign stems from the explicit definitions of our finite shift operations on the spatial lattice and the orientation of the modes; it must be mapped carefully when comparing to literature conventions that assume positive scalars.
+ 
+ \begin{theorem}[$U(1)$ Kac--Moody Current Algebra on $B(N, K)$]
+ \label{thm:kac_moody}
+@@ -226,7 +225,7 @@ Under the margin condition of Theorem~\ref{thm:kac_moody}, these operators satis
+ 
+ \section{Word-Excursion Tracking in Composed Products}
+ 
+-When evaluating products of density operators $\rho_{a_1} \rho_{a_2} \cdots \rho_{a_s}$ (such as in vertex operators or multi-mode partition states), intermediate states undergo transient energy fluctuations.
++When sequentially applying multiple density operators $\rho_{a_1} \rho_{a_2} \cdots \rho_{a_s}$ to a state (a procedure required to build vertex operators or multi-mode partition states), the intermediate states undergo transient energy fluctuations. For the protected budget commutator to hold universally across the entire evaluation of such an operator word, the intermediate states are not required to remain in the original initial budget $B(N, K)$. Instead, they enter an enlarged budget controlled by the \emph{maximum upward energy excursion} encountered during the sequential application. The overall margin inequality involving the finite band edge $h$ must hold for this enlarged maximum budget.
+ 
+ \begin{definition}[Application Order and Cumulative Energy Excursion]
+ For a written operator product $W = \rho_{a_1} \rho_{a_2} \cdots \rho_{a_s}$, the operators act from right to left in the sequence of signed transfers $(a_s, a_{s-1}, \dots, a_1)$.
+@@ -259,3 +258,9 @@ Since $2M + (K + X(W)) + |N| \le h$, each intermediate state satisfies the unifo
+ \begin{remark}[Formalization Note]
+ In the verified Lean~4 development (as formalized in Chapter~10 and Appendix~A04), all edge formulas, margin bounds, and excursion trackers are certified constructively without noncomputable axioms. The reconciliation of the finite-dimensional trace obstruction is precise: on the bare empty state $|\emptyset\rangle$, the commutator $[\rho_{-m}, \rho_m] |\emptyset\rangle = 0 \neq m |\emptyset\rangle$. The commutator is strictly traceless across the full Fock carrier $\mathcal{F}(L)$, yet evaluates identically to the non-zero central scalar $m I$ on the physical low-energy budget subspace $B(N, K)$.
+ \end{remark}
++
++\section{From Protected Algebra to State Space Spanning}
++
++The margin-protected identity in Theorem~\ref{thm:kac_moody} is an input-restricted ambient-operator identity, not a closed finite-dimensional endomorphism representation of the CCR. Because raising currents generally map states out of a fixed budget, composition of multiple modes is performed in the ambient finite CAR space with explicitly tracked margins. Establishing that these density modes locally obey a bosonic algebra subject to these margins does not immediately imply that the multi-mode excitations they generate are sufficient to describe every valid state. 
++
++A critical question remains: when we apply the positive density modes $\rho_m$ to the sector ground state $|N\rangle_0$, do the resulting bosonic partition states span the entirety of the protected budget subspace $B(N, K)$, or are there hidden fermionic degrees of freedom left out? To answer this, we must compare the dimension of the subspace created by these bosonic operators with the exact combinatorics of the underlying fermionic particle-hole excitations. This counting problem, which determines the completeness of the bosonization map on the finite lattice, is the subject of Chapter~\ref{ch:haldane_completeness}.
+diff --git a/notes/latex/chapters/ch11_haldane_completeness.tex b/notes/latex/chapters/ch11_haldane_completeness.tex
+index 7241648..b67e908 100644
+--- a/notes/latex/chapters/ch11_haldane_completeness.tex
++++ b/notes/latex/chapters/ch11_haldane_completeness.tex
+@@ -14,9 +14,9 @@ However, an algebraic representation of an operator algebra on a Hilbert space d
+ \begin{quote}
+ \emph{Do the multi-mode bosonic density excitations generated by acting with $\{\rho_m\}_{m \ge 1}$ on the Fermi ground sea $|N\rangle_0$ completely span the low-energy fermionic Hilbert space?}
+ \end{quote}
+-In the continuum theory of one-dimensional Fermi liquids, this property is known as \emph{Haldane completeness}. In infinite-volume continuum models, completeness is typically argued via representation theory of the infinite-dimensional affine Lie algebra $\widehat{\mathfrak{u}}(1)$ or character formulas for the Virasoro algebra. On a finite discrete lattice, however, such continuum arguments break down: the global fermionic Fock space has finite dimension $2^{2h}$, which cannot be isomorphic to the infinite-dimensional Fock space of an infinite family of harmonic oscillators, and boundary-wrapping effects distort the current algebra at high energies.
++In the continuum theory of one-dimensional Fermi liquids, this property is known as \emph{Haldane completeness}. In infinite-volume continuum models, completeness is typically established using the representation theory of the infinite-dimensional affine Lie algebra $\widehat{\mathfrak{u}}(1)$ or character formulas for the Virasoro algebra. In the present finite discrete lattice setting, the global fermionic Fock space has finite dimension $2^{2h}$, which requires a different approach since it is not isomorphic to the infinite-dimensional Fock space of an infinite family of harmonic oscillators. Additionally, boundary-wrapping effects must be tracked at finite band edges.
+ 
+-In this chapter, we resolve Haldane completeness constructively and strictly within finite dimensions. We establish two complementary regimes:
++In this chapter, we verify Haldane completeness for the finite lattice model by using a combinatorial counting method combined with a Gram matrix evaluation. This explicit finite approach establishes completeness in two complementary regimes:
+ \begin{enumerate}
+     \item \textbf{Regime R1 (Combinatorial Rectangle Bijection):} At excitation energy $E$, whenever $E \le \min(h+N, h-N)$, the dimension of the fermionic fixed-energy subspace $\mathcal{H}^N_E$ is identically equal to the number of unrestricted integer partitions $p(E)$:
+     \begin{equation}
+@@ -395,16 +395,16 @@ Its dimension is the sum of dimensions $\sum_{E=0}^K p(E)$.
+ 
+ The significance of Theorems~\ref{thm:haldane_completeness_fixed_energy} and~\ref{thm:whole_budget_basis} warrants reflection.
+ 
+-\subsection{Bosonization as an Exact Low-Energy Isomorphism}
+-In conventional field theory textbooks, bosonization is frequently presented as an operator equivalence between continuum Dirac fields $\psi(x)$ and vertex operators $\operatorname{exp}(i \phi(x))$ in the thermodynamic limit $L \to \infty$. This continuum picture obscures several essential structural facts:
++\subsection{Bosonization as a Finite Low-Energy Isomorphism}
++In conventional field theory textbooks, bosonization is often presented as an operator equivalence between continuum Dirac fields $\psi(x)$ and vertex operators $\operatorname{exp}(i \phi(x))$ in the thermodynamic limit $L \to \infty$. When working with finite lattice models, we can ask analogous structural questions before taking any limit:
+ \begin{itemize}
+-    \item Are the collective bosonic states genuinely spanning, or are there hidden fermionic degrees of freedom that cannot be generated by density waves?
+-    \item How does the finite number of lattice sites restrict the validity of the bosonic algebra?
++    \item Are the collective bosonic states genuinely spanning within the restricted budget, or are there fermionic degrees of freedom that cannot be generated by density waves?
++    \item How does the finite number of lattice sites explicitly restrict the validity of the bosonic algebra?
+ \end{itemize}
+-The constructive approach developed here provides definitive answers:
++The finite-dimensional approach developed here provides explicit answers for these bounded models:
+ \begin{enumerate}
+-    \item \textbf{No Hidden Degrees of Freedom:} At low energies ($E \le K$ with $2K + |N| \le h$), the collective bosonic density waves span \emph{every single fermionic state} in the sector. There are no missing states. The correspondence between fermionic particle-hole excitations and bosonic multi-quanta excitations is not an approximation; it is an exact linear isomorphism of Hilbert spaces.
+-    \item \textbf{Explicit Margin Duality:} The two regimes R1 and R2 reveal the precise role of the lattice cutoff:
++    \item \textbf{No Hidden Degrees of Freedom:} At low energies ($E \le K$ with $2K + |N| \le h$), the collective bosonic density waves span \emph{every fermionic state} in the restricted budget. There are no missing states within this subspace. The correspondence between fermionic particle-hole excitations and bosonic multi-quanta excitations is an exact linear isomorphism of these finite-dimensional Hilbert spaces.
++    \item \textbf{Explicit Margin Duality:} The two regimes R1 and R2 reveal the exact role of the lattice cutoff in this finite representation:
+     \begin{itemize}
+         \item Regime R1 ($K \le h - |N|$) is purely kinematic and combinatorial: it guarantees that the Fermi sea has enough depth and room for particle-hole pairs without hitting the band edges.
+         \item Regime R2 ($2K + |N| \le h$) is dynamical and algebraic: it provides the additional buffer required for lowering currents $\rho_{-m}$ to commute through multi-operator products without generating off-diagonal lattice artifacts.
+@@ -420,3 +420,17 @@ In the verified Lean~4 development (as formalized in Chapter~11 and Appendix~A04
+     \item Spanning is established by equating the cardinal number of independent vectors with the finite rank of the coordinate submodule.
+ \end{enumerate}
+ \end{remark}
++
++\subsection{Forward Context and Missing Prerequisites}
++
++The completion of the Haldane completeness argument establishes the algebraic foundations of the free lattice bosonization map. However, several physical components are required to apply this map to interacting models and correlation functions as introduced in Chapter~\ref{ch:correlations}. In the present published edition of this book, the detailed derivations of these intermediate steps (Chapters~12--18) are omitted, although their Lean~4 formalizations are promoted and complete.
++
++To bridge the gap to Chapter~\ref{ch:correlations}, we briefly list the missing constructions that are required but not supplied by this summary:
++\begin{itemize}
++    \item \textbf{The Sugawara Construction:} The exact algebraic equivalence between the fermionic kinetic energy operator and the bosonic Sugawara Hamiltonian on the valid energy budget.
++    \item \textbf{Klein Factors and Multi-Species Fermions:} The introduction of explicit ground-ket sign operators to correctly intertwine charge and chirality between commuting branches.
++    \item \textbf{Vertex Operators:} The definition of exact finite vertex operators via nilpotent polynomial exponentials, and the conditional cyclic-span criterion.
++    \item \textbf{Dual Fields and Lattice Hamiltonians:} The formulation of Hermitian phase and density fields $\phi(x), \theta(x)$, along with the treatment of spatial gradients and lattice dispersion errors.
++    \item \textbf{Interactions and Bogoliubov Transformations:} The analysis of forward scattering, the Luttinger liquid Hamiltonian, and the exact canonical Bogoliubov transformations of the finite budget vectors.
++\end{itemize}
++The reader should be aware that the subsequent chapters rely on these exact finite-lattice formulations of the above topics, rather than their familiar continuum counterparts.
+diff --git a/notes/latex/chapters/sections/19.1.tex b/notes/latex/chapters/sections/19.1.tex
+index cbd4ea9..e29b873 100644
+--- a/notes/latex/chapters/sections/19.1.tex
++++ b/notes/latex/chapters/sections/19.1.tex
+@@ -21,10 +21,10 @@ Chapter~18, with real parameters obeying $c^2-s^2=1$.  No infinite-volume
+ limit, Hilbert-space completion of the polynomial oscillator carrier, or
+ identification of finite fermionic and abstract bosonic expectations is assumed.
+ The aim of this section is to construct and distinguish the two kinds of
+-state evaluation.  Ordered mode contractions, their spatial Fourier sums,
++state evaluation.  We explicitly distinguish the finite CAR carrier (which models actual fermionic lattice states), the ambient polynomial oscillator carrier (unbounded degree, before completion), the protected budget (a subspace with valid commutation properties), the algebraic state (the abstract expectation functional $\omega_P$), and the coefficientwise formal-series evaluation used in later models. Ordered mode contractions, their spatial Fourier sums,
+ and quantitative comparisons between the models are treated subsequently.
+-For the usual physical context of bosonized correlators, see
+-\cite{giamarchi2004,vondelft1998}; the exact finite hypotheses used below
++For the usual physical context of bosonized correlators, we refer the reader to standard analytical treatments such as
++\cite{giamarchi2004,vondelft1998}. The exact finite hypotheses used below
+ are those of the present construction rather than consequences of continuum
+ bosonization prescriptions.
+ 
+diff --git a/notes/latex/chapters/sections/19.2.tex b/notes/latex/chapters/sections/19.2.tex
+index 090b975..a7759c3 100644
+--- a/notes/latex/chapters/sections/19.2.tex
++++ b/notes/latex/chapters/sections/19.2.tex
+@@ -327,8 +327,8 @@ In particular,
+    &=-\frac{m\delta_{mn}}4(g^{-1}-g).
+ \end{align*}
+ The coupling $g$ here is a \emph{hyperbolic/Luttinger parameter}; it
+-is not the Umklapp coupling $g_U$ used in a later chapter.
+-These finite algebraic identities do not invoke a continuum limit.
++must be kept distinct from the Umklapp coupling $g_U$ used in later chapters.
++These finite algebraic identities are exact within the polynomial representation and do not invoke a continuum limit.
+ 
+ \subsection{Worked example: two modes and a squeezed combination}
+ 
+diff --git a/notes/latex/chapters/sections/19.3.tex b/notes/latex/chapters/sections/19.3.tex
+index 4fbcb7b..b761366 100644
+--- a/notes/latex/chapters/sections/19.3.tex
++++ b/notes/latex/chapters/sections/19.3.tex
+@@ -5,7 +5,7 @@ A density mode is a useful algebraic coordinate, but a physical density is
+ usually discussed at a \emph{site}.  To pass from the ordered mode
+ contractions of Section~\ref{sec:ch19-mode-correlators} to an observable
+ at two positions, we must reconstruct the spatial field by a finite Fourier
+-sum.  This operation appears innocuous: multiply each mode by a phase and
++sum.  This operation appears innocuous: multiply each mode by a lattice Fourier phase and
+ sum.  Yet the order of the two resulting fields matters, because each field
+ contains both creation and annihilation generators.  Reversing their product
+ changes the answer by an exact canonical commutator.
+@@ -14,7 +14,7 @@ The question of this section is therefore deliberately finite and precise:
+ \emph{given the positive abstract CCR functional constructed in
+ Section~\ref{sec:ch19-scope}, what complex number does it assign to the
+ ordered product of two spatial density operators?}  We will first derive
+-that number, then separate its symmetric (fluctuation) and antisymmetric
++the finite spatial correlation kernels, then separate their symmetric (fluctuation) and antisymmetric
+ (commutator) contributions.  Only afterward will we interpret positivity
+ and evaluate a concrete lattice example.  Neither this reconstruction nor
+ the finite Fourier calculation identifies the abstract functional with a
+diff --git a/notes/latex/chapters/sections/19.4.tex b/notes/latex/chapters/sections/19.4.tex
+index 14807c5..4904ca7 100644
+--- a/notes/latex/chapters/sections/19.4.tex
++++ b/notes/latex/chapters/sections/19.4.tex
+@@ -506,7 +506,10 @@ providing a direct witness against treating it as the interacting
+ algebraic vacuum.  The next task is therefore not to repeat the
+ Gaussian calculation, but to specify and verify a finite interacting
+ state together with its observable comparison map and boundary
+-estimates.  The accepted CH19/A08 Phase-B Lean results support the
++estimates.  Chapter~\ref{ch:order-parameters} will go on to develop
++formal order-parameter models and coefficientwise vertex correlators,
++without supplying this missing finite interacting-state comparison.
++The accepted CH19/A08 Phase-B Lean results support the
+ claims made above; they have not thereby been promoted to the frozen
+ Core, nor does successful compilation of this prose supply an
+ independent mathematical review.
+diff --git a/notes/latex/chapters/sections/20.1.tex b/notes/latex/chapters/sections/20.1.tex
+index af9fe61..5d3fbab 100644
+--- a/notes/latex/chapters/sections/20.1.tex
++++ b/notes/latex/chapters/sections/20.1.tex
+@@ -1,30 +1,13 @@
+ \section{Exact Finite CAR Products: Density Waves and Pairing}
+ \label{sec:ch20-projected-products}
+ 
+-A single fermion field changes particle number by one.  A charge-density-wave
+-(CDW) operator, by contrast, removes a left-moving fermion and creates a
+-right-moving fermion; a superconducting (SC) pair-annihilation operator removes
+-one fermion of each chirality.  Both are products of two fields.  This simple
+-observation raises a question which does not arise for a single field:
+-\emph{what happens between the first operation and the second when our
+-calculation is confined to an energy-budget subspace?}
+-
+-The full finite fermionic Fock space has an unambiguous answer: multiply the
+-operators in their stated order.  Budget restrictions introduce a different
+-operation, however.  The product of \emph{individually projected} fields
+-passes through a selected intermediate subspace, whereas a projection of the
+-\emph{full product} allows intermediate states to leave that subspace and
+-return before the final projection.  Those discarded paths form an explicit
+-remainder.  Keeping the remainder is the purpose of this section.  The
+-construction also provides a convenient setting in which to check chirality,
+-charge labels, Fourier phases, and fermionic signs before introducing the
+-formal vertex operators of Section~\ref{sec:ch20-formal-vertices}.
+-
+-Throughout this section, all identities concerning finite fermion operators
+-are elementary statements on a finite-dimensional Hilbert space; their
+-application to the chapter's proposed bosonization dictionary remains a
+-separate mathematical verification task.  In particular, no new Chapter~20
+-Lean theorem is being claimed here.
++A single fermion field changes the total particle number by one. By contrast, a charge-density-wave (CDW) operator removes a left-moving fermion and creates a right-moving fermion, while a superconducting (SC) pair-annihilation operator removes one fermion of each chirality. Both are composite operators formed by multiplying two fields. This composition introduces a question that does not arise for single fields: \emph{what happens to the intermediate states between the first and second operations when calculations are restricted to a specific energy-budget subspace?}
++
++In the full, unrestricted finite fermionic Fock space, we multiply the operators in their defined order. Imposing a strict energy budget changes the situation. Multiplying two \emph{individually projected} fields forces the system to pass entirely through a chosen intermediate budget subspace. In contrast, projecting the \emph{full product} allows intermediate states to exceed the budget, provided they return to an allowed state before the final projection. These temporary excursions out of the intermediate budget produce an explicit mathematical remainder. 
++
++This section isolates and tracks this remainder. Working out this finite-lattice product provides a setting to clarify chirality, charge labels, Fourier phases, and fermionic ordering signs. These details must be established before defining formal vertex operators in Section~\ref{sec:ch20-formal-vertices}. 
++
++Throughout this section, all identities involving finite fermion operators are elementary statements within a finite-dimensional Hilbert space. Applying them to establish a complete bosonization dictionary remains a separate problem. There is currently no implemented Lean formalization for Chapter 20, and the results here are presented as unverified draft mathematics.
+ 
+ \subsection{The ambient finite-CAR system}
+ \label{subsec:ch20-ambient}
+@@ -662,11 +645,6 @@ especially important for later pairing, duality and spinful/Umklapp
+ constructions: a scalar agreement on sector grounds does not certify an
+ operator identity on all excited budget states.
+ 
+-Finally, the sign and phase conventions fixed here are provisional
+-cross-chapter conventions: \(R<L\), common positive-exponent finite
+-annihilation Fourier transform, left field acting first, source charge
+-phases, and separate cutoffs for each arrow.  Their compatibility with
+-future chapter integrations must be reviewed against the actual committed
+-interfaces.  Neither a thermodynamic limit nor continuum scaling,
+-spectral equivalence or a finite interacting-state identification has
+-been established in this section.
++Finally, the sign and phase conventions fixed here are provisional cross-chapter conventions: \(R<L\), common positive-exponent finite annihilation Fourier transform, left field acting first, source charge phases, and separate cutoffs for each arrow. Their compatibility with future chapter integrations must be reviewed against the actual committed interfaces. Neither a thermodynamic limit nor continuum scaling, spectral equivalence, or a finite interacting-state identification has been established in this section.
++
++We have now established the finite-lattice CAR products and isolated their projected residuals. To connect these results with the standard literature, we turn in Section~\ref{sec:ch20-formal-vertices} to the construction of formal vertex series. We keep the finite projected CAR identities and these formal vertex series in strictly separate stages, explicitly maintaining the unproved comparison gap between the finite matrices and the formal oscillator evaluations.
+diff --git a/notes/latex/chapters/sections/20.2.tex b/notes/latex/chapters/sections/20.2.tex
+index 7f0d727..c64f44d 100644
+--- a/notes/latex/chapters/sections/20.2.tex
++++ b/notes/latex/chapters/sections/20.2.tex
+@@ -1,27 +1,9 @@
+ \section{Constructed Formal Vertices and Coefficientwise Correlators}
+ \label{sec:ch20-formal-vertices}
+ 
+-Section~\ref{sec:ch20-projected-products} treated density-wave and pairing
+-operators as \emph{literal products of finite-lattice fermion fields}.  We
+-could evaluate these products on the full CAR Fock space, and we saw why an
+-intermediate energy-budget projection introduces an explicit residual.  We
+-now ask a related but mathematically different question: can we construct a
+-model in which the oscillator expressions suggested by bosonization are
+-well-defined, possess an actual positive vacuum functional, and admit
+-exactly computable two-point functions?
+-
+-A tempting shortcut would be to replace each fermion field by its
+-Mattis--Mandelstam expression, multiply exponentials, and invoke Gaussian
+-averaging.  This is not justified by the preceding finite-CAR calculation:
+-the projected product may have a nonzero residual, and compression does not
+-preserve every exponential identity.  Instead we shall \emph{construct a
+-second carrier}, with uncompressed canonical commutation relations (CCR),
+-independent charge shifts, and a formal-power-series parameter.  It makes
+-the algebraic steps behind the familiar vertex correlation formula exact,
+-while keeping the comparison with a finite interacting fermion state open.
+-The uncompressed oscillator and charge construction is the one developed
+-in Appendix~A08 of the project notes; we give the arguments needed here at
+-the point where they first enter the calculation.
++Section~\ref{sec:ch20-projected-products} analyzed density-wave and pairing operators as products of finite-lattice fermion fields. By evaluating these products on the full CAR Fock space, we saw that intermediate energy-budget projections introduce an explicit residual. We now ask a related but mathematically distinct question: can we construct an algebraic model where the oscillator expressions used in the bosonization literature are well-defined, possess a positive vacuum functional, and allow us to compute two-point correlation functions?
++
++A common shortcut is to replace each fermion field with an exponential Mattis--Mandelstam expression, multiply the resulting exponentials, and compute a Gaussian average. However, the finite-CAR calculation showed that projected products contain residuals, and projection does not universally preserve exponential identities. Instead of evaluating these objects directly on the finite lattice, we construct a second, distinct algebraic carrier. This carrier is endowed with uncompressed canonical commutation relations (CCR), independent charge shifts, and a formal power-series parameter. This approach clarifies the algebraic steps of the vertex correlation formulas. It leaves the comparison between these formal series and an actual finite interacting fermion state as a clearly defined open question. We use the uncompressed oscillator and charge construction developed in Appendix~A08, introducing the necessary algebraic components as they enter the calculation.
+ 
+ \subsection{An uncompressed oscillator algebra and its positive vacuum}
+ \label{subsec:ch20b-oscillator}
+@@ -806,11 +788,6 @@ Section~\ref{sec:ch20-model-duality}: a star-algebra substitution may
+ transport this \emph{family} of formal states without being a unitary
+ symmetry of every finite-charge fermionic sector.
+ 
+-Finally, the relative normalization of raw charge/spin currents in a
+-later multicomponent theory cannot be changed silently by inserting a
+-\(1/\sqrt2\); and any use of the Fourier or Klein convention must
+-retain the stated orientation and source action.  Both conventions are
+-explicit here to make a future integration audit possible.  As with
+-Section~20.1, the derivations in this section are mathematical drafts
+-awaiting independent review and potential Lean formalization; they are
+-not claims that a Chapter~20 Lean module has already verified them.
++Finally, the relative normalization of raw charge/spin currents in a later multicomponent theory cannot be changed silently by inserting a \(1/\sqrt2\); and any use of the Fourier or Klein convention must retain the stated orientation and source action. Both conventions are explicit here to make a future integration audit possible. As with Section~20.1, the derivations in this section are mathematical drafts awaiting independent review and potential Lean formalization; they are not claims that a Chapter~20 Lean module has already verified them.
++
++With the formal vertex models constructed and their correlators evaluated algebraically, we can examine how these correlators relate to one another. The structural similarity between the density-wave and pairing correlation formulas suggests an underlying symmetry. In Section~\ref{sec:ch20-model-duality}, we construct an explicit algebraic duality map that exchanges these operators while preserving the underlying algebra.
+diff --git a/notes/latex/chapters/sections/20.3.tex b/notes/latex/chapters/sections/20.3.tex
+index 0d0ff88..031970f 100644
+--- a/notes/latex/chapters/sections/20.3.tex
++++ b/notes/latex/chapters/sections/20.3.tex
+@@ -4,35 +4,11 @@
+ \subsection{Why the order-parameter exchange needs a map of algebras}
+ \label{subsec:ch20c-motivation}
+ 
+-In the preceding section, the charge-density-wave (CDW) and
+-superconducting (SC) vertices were defined as formal series in an
+-\emph{uncompressed} oscillator--charge algebra.  Their oscillator
+-correlators involve the reciprocal parameters $g$ and $g^{-1}$,
+-suggesting a duality between density-wave and pairing channels.  The
+-similarity of two correlation formulas is not, by itself, a duality
+-proof.  We must give one map that acts consistently on all the
+-oscillator generators, charge labels, fermionic Klein signs, and
+-ordered position-dependent phases; only then can we transport
+-Hamiltonians and states.
+-
+-The charge sectors reveal a possible obstruction before any algebra
+-is done.  The CDW Klein word changes the source charge by
+-$e_R-e_L=(1,-1)$, whereas our SC word is an \emph{annihilation}
+-pair and changes charge by $-e_R-e_L=(-1,-1)$.  Reflecting the left
+-charge sends $(1,-1)$ to $(1,1)$, which is the charge shift of
+-$W_{\mathrm{SC}}^*$, \emph{not} of $W_{\mathrm{SC}}$.  Therefore a
+-correct exchange must involve an adjoint.  The remaining source-phase
+-mismatch will turn out to be exactly $\zeta^x$.  This observation
+-also explains why a bare substitution $g\leftrightarrow g^{-1}$ is
+-insufficient.
+-
+-We work with an even finite lattice length $L=2h$ ($h\geq1$), an
+-integer position $x$ interpreted modulo $L$, the canonical root
+-$\zeta=e^{2\pi i/L}$, and an oscillator-mode set $1\leq m\leq M$
+-with $M\geq1$ finite.  The chiralities are ordered $R<L$.  We recall
+-only the definitions needed to make the duality transparent; the
+-construction of the positive polynomial vacuum and coefficientwise
+-formal vertices belongs to Section~\ref{sec:ch20-formal-vertices}.
++In Section~\ref{sec:ch20-formal-vertices}, we defined the charge-density-wave (CDW) and superconducting (SC) vertices as formal series within an uncompressed oscillator--charge algebra. Their evaluated oscillator correlators depend on the reciprocal interaction parameters $g$ and $g^{-1}$, suggesting a duality between the density-wave and pairing channels. However, the similarity between two resulting formulas does not constitute a proof of duality. To establish duality, we construct a single, well-defined algebraic map that consistently transforms all oscillator generators, charge labels, fermionic Klein signs, and ordered position-dependent phases. This explicit map allows us to transport Hamiltonians and states between the two models.
++
++The charge sectors reveal a structural hurdle before analyzing the oscillators. The CDW Klein word shifts the source charge by $e_R-e_L=(1,-1)$. In contrast, our SC word is an annihilation pair, shifting the charge by $-e_R-e_L=(-1,-1)$. A simple reflection of the left charge maps $(1,-1)$ to $(1,1)$, which is the charge shift of the adjoint operator $W_{\mathrm{SC}}^*$, not $W_{\mathrm{SC}}$ itself. Consequently, any algebraic exchange must incorporate an adjoint operation. We will also see that resolving the remaining source-phase mismatch requires a factor of $\zeta^x$. This complexity shows why simply swapping $g$ and $g^{-1}$ is insufficient.
++
++We consider an even finite lattice length $L=2h$ ($h\geq1$), an integer position $x$ modulo $L$, the canonical phase $\zeta=e^{2\pi i/L}$, and a finite oscillator-mode cutoff $1\leq m\leq M$ ($M\geq1$). The left and right chiralities remain ordered as $R<L$. We briefly recall the definitions required to make this duality explicit, relying on the positive polynomial vacuum and formal vertices from Section~\ref{sec:ch20-formal-vertices}.
+ 
+ An \emph{algebra automorphism} is a bijective linear map preserving
+ products and the unit.  A \emph{star automorphism} also satisfies
+@@ -795,12 +771,6 @@ $\omega_{P,N}$ automatically identify with a ground-state
+ expectation of an interacting finite-CAR Hamiltonian.
+ \end{enumerate}
+ 
+-In summary, the involution has been proved on the algebra specified
+-here: bare generators, their dressed families, signed charge shifts,
+-ordered characters, finite polynomial Hamiltonians, charge-indexed
+-positive states, and coefficientwise Weyl-type vertices.  Its
+-interpretation as a physical duality between fermionic models is a
+-separate mathematical problem.  This section is a monograph draft;
+-there is no implemented Chapter~20 Lean module certifying its
+-statements, and an independent check of the conventions and proofs
+-is required before book integration.
++In summary, the duality involution has been explicitly verified on the formal algebra constructed here. We have mapped the bare generators, their dressed families, the signed charge shifts, the ordered characters, the finite polynomial Hamiltonians, the charge-indexed positive states, and the coefficientwise Weyl-type vertices. Crucially, this algebraic model duality is not a statement of full interacting-CAR equivalence. Extending this formal mapping into a proven unitary symmetry of the finite-lattice CAR Hamiltonian, or evaluating it as a continuum dynamical equivalence, remains an open problem. As throughout Chapter 20, these derivations are unverified mathematical drafts awaiting formalization in Lean.
++
++The models discussed in this chapter incorporate only two species of fermions (right and left movers). Physical models often include spin, which doubles the mode content to four species. In Chapter~21, we will motivate this four-species extension, establishing the species ordering, charge shifts, and parity conventions needed to define spinful interacting systems without ambiguity.
+diff --git a/notes/latex/chapters/sections/21.1.tex b/notes/latex/chapters/sections/21.1.tex
+index 86b0c9b..80936c0 100644
+--- a/notes/latex/chapters/sections/21.1.tex
++++ b/notes/latex/chapters/sections/21.1.tex
+@@ -3,16 +3,7 @@
+ 
+ \subsection*{From two chiral branches to four fermion species}
+ 
+-For spinless fermions, the two chiral branches carry separate density
+-fluctuations.  Adding an electron spin label produces four branches, but it
+-also raises a question which is invisible if one starts immediately with
+-continuum ``charge'' and ``spin'' fields: \emph{which pairs of charge and spin
+-quantum numbers actually describe finite fermionic states?}  A second question
+-concerns the familiar claim of spin--charge separation.  The operator algebra
+-will separate into simple linear combinations, whereas commutation on a
+-finite energy budget and factorization of the state space require distinct
+-arguments.  We first formulate these questions entirely in the finite CAR
+-(carrier) representation, before using any oscillator interpretation.
++We follow the standard bosonization program by introducing spin as an additional fermion species, producing four branches. Keeping the lattice size and energy restrictions explicit allows us to examine questions that are often invisible when starting immediately with continuum charge and spin fields. In particular, we must ask: \emph{which pairs of charge and spin quantum numbers actually describe finite fermionic states?} We must also examine the familiar claim of spin--charge separation. Although the operator algebra separates into simple linear combinations, checking commutation on a finite energy budget and identifying state-space factorization require distinct algebraic steps. We first formulate these questions entirely in the finite CAR (carrier) representation, explicitly defining our species order and raw-current conventions, before considering any formal oscillator models.
+ 
+ Fix an integer $h\geq 1$, and write
+ \begin{equation}
+@@ -128,7 +119,7 @@ place a separate independent cutoff $K$ on every species.
+ 
+ \subsection*{Raw currents and their exact inverse}
+ 
+-For $m\in\mathbb Z$ and $\alpha\in\mathcal C$, define the ordered
++With the species order fixed, we can now assemble density modes. For $m\in\mathbb Z$ and $\alpha\in\mathcal C$, define the ordered
+ non-wrapping density operator
+ \begin{equation}
+   \rho_{\alpha,m}
+@@ -163,7 +154,7 @@ Here $R^{c,s}$ denotes a \emph{raw current}, not the right-moving
+ chirality $R$.  Neither current contains a factor $1/\sqrt2$.
+ \end{definition}
+ 
+-The change of variables is algebraically invertible over $\mathbb C$:
++This definition establishes the raw unnormalized conventions $R^c$ and $R^s$ used in this text. The change of variables is algebraically invertible over $\mathbb C$:
+ \begin{equation}
+  \begin{pmatrix}R^c_{\eta,m}\\R^s_{\eta,m}\end{pmatrix}
+  =\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+@@ -185,11 +176,11 @@ different.
+ 
+ \subsection*{The edge obstruction and the finite common-margin theorem}
+ 
+-A tempting argument says that up- and down-spin densities commute and
+-therefore so do the charge and spin currents.  The conclusion does
+-\emph{not} follow.  The two same-spin commutators still remain, and a
+-finite band has edge-dependent corrections to the usual current algebra.
+-Define
++A tempting heuristic argument suggests that up- and down-spin densities commute and
++therefore so do the charge and spin currents. The exact conclusion on a finite carrier does
++\emph{not} follow so simply. The two same-spin commutators still remain, and a
++finite band inherently produces edge-dependent corrections to the usual current algebra. To analyze this, we
++define
+ \begin{equation}
+  E_{\eta,\sigma}(m,n)
+   =[\rho_{(\eta,\sigma),m},\rho_{(\eta,\sigma),n}].
+@@ -235,7 +226,7 @@ every constituent commutator vanishes.  No rearrangement of fermionic
+ \emph{odd} factors was used.
+ \end{proof}
+ 
+-The single-species Schwinger coefficient in the convention of this book is
++The resulting single-species Schwinger coefficient in the convention of this book is
+ \begin{equation}
+  \kappa(m,n)=
+  \begin{cases}-m,&m+n=0,\\0,&m+n\ne0.\end{cases}
+@@ -341,7 +332,7 @@ the relative plus or minus sign distinguishes charge and spin
+ combinations, while both retain the raw normalization $2m$.
+ \end{example}
+ 
+-The budget hypothesis is substantive.  For example, keep one chirality,
++The conditional budget hypothesis is substantive and cannot be omitted. For example, keep one chirality,
+ put its up-spin species into the \emph{completely filled} band, its
+ down-spin species into the sea ground, and leave the other two species
+ in their sea grounds.  Every nonzero-momentum density hop annihilates
+@@ -379,8 +370,8 @@ $0=\lambda\dim\mathcal H$.
+ 
+ \subsection*{Integer zero modes and the parity sublattice}
+ 
+-The same linear transformation must now be applied to the integer
+-\emph{zero-mode} charges, not to oscillator operators.  For each
++Having examined the oscillator-like currents, the same linear transformation must now be applied to the integer
++\emph{zero-mode} charges. For each
+ chirality, define the commuting self-adjoint observables
+ \begin{equation}
+  \widehat Q_{c,\eta}=\widehat N_{(\eta,\uparrow)}
+diff --git a/notes/latex/chapters/sections/21.2.tex b/notes/latex/chapters/sections/21.2.tex
+index 1334744..19ea6cf 100644
+--- a/notes/latex/chapters/sections/21.2.tex
++++ b/notes/latex/chapters/sections/21.2.tex
+@@ -3,16 +3,7 @@
+ 
+ \subsection*{Why one singlet operator has two different targets}
+ 
+-A spin-singlet Cooper pair is often represented by a single compact field
+-expression.  In a finite fermionic Hilbert space, however, we must first ask a
+-more elementary question: \emph{which occupation-number sectors does this
+-operator connect?}  For a pair assembled from a right mover and a left mover,
+-the two antisymmetrized spin assignments remove particles from different
+-species.  Although they carry the same \emph{total} charge and spin, they do
+-not have the same four-component charge vector.  Their operators therefore
+-have different target spaces when the finite energy budgets are treated as
+-typed linear maps.  Their relative fermionic signs must also be calculated,
+-not discarded under the phrase ``the Klein factors cancel.''
++A spin-singlet Cooper pair is often represented by a single compact field expression in the continuum literature. However, on a finite fermionic Hilbert space, we must first ask a more elementary question: \emph{which occupation-number sectors does this operator connect?} When assembling a pair from a right mover and a left mover, the two antisymmetrized spin assignments remove particles from different species. Although they carry the same \emph{total} charge and spin, they do not possess the same four-component charge vector. Consequently, when their finite energy budgets are treated as typed linear maps, their operators have distinctly different target spaces. Furthermore, their relative fermionic signs must be explicitly computed and cannot simply be discarded under the heuristic phrase ``the Klein factors cancel.''
+ 
+ We continue with the ordered four-species CAR carrier of
+ Section~\ref{sec:ch21-spin-charge}.  Set
+@@ -177,12 +168,7 @@ correct codomain.
+ 
+ \subsection*{The signed Klein factors are ordered charge-shift maps}
+ 
+-A Klein factor is sometimes introduced as an anticommuting symbol attached
+-to each fermion field.  On the finite occupation representation, the source
+-of its sign is more concrete: removing a fermion requires commuting it past
+-all occupied modes that precede it in the fixed species--momentum order.
+-The signed factor is consequently a \emph{charge-dependent map}, not an
+-arbitrary numerical phase assigned to each species.
++While a Klein factor is sometimes introduced as an abstract anticommuting symbol attached to each fermion field, on our finite occupation representation the source of its sign is entirely concrete: removing a fermion requires commuting it past all occupied modes that precede it in the fixed species--momentum order. Thus, the signed factor is a rigorously defined \emph{charge-dependent map}, rather than an arbitrary numerical phase assigned loosely to each species.
+ 
+ For each admissible integer vector \(\mathbf N\), write
+ \(\Omega_{\mathbf N}\) for the normalized charge-sector ground ket, with
+@@ -397,13 +383,7 @@ with the overall negative sign applied to channel 2.
+ 
+ \subsection*{Typed finite budgets, the direct-sum target, and exact residuals}
+ 
+-The finite-field product is an ambient endomorphism on \(\mathcal H_L\),
+-so \(A_1-A_2\) is well defined there.  Trouble arises only if each
+-annihilator is first compressed to a map between \emph{different}
+-charge-sector energy budgets and these maps are then subtracted as if their
+-codomains agreed.  The remedy is to specify each intermediate space,
+-calculate its omitted component, and embed both final targets into the
+-same Hilbert space.
++The finite-field product is an ambient endomorphism on \(\mathcal H_L\), meaning \(A_1-A_2\) is well defined there. Trouble arises only if each annihilator is first compressed to a map between \emph{different} charge-sector energy budgets and these maps are then subtracted as if their codomains agreed. The remedy is to rigorously specify each intermediate space, calculate its omitted component, and embed both final targets into the same encompassing Hilbert space.
+ 
+ Let \(\mathcal E(S)\) be the nonnegative integer grading relative to
+ the ground configuration of the charge sector of \(S\), as in
+@@ -591,7 +571,7 @@ budgets'' is insufficient to infer the same two-term formula.
+ 
+ \subsection*{What is established, and what remains conditional}
+ 
+-We have derived three logically separate statements.  First,
++In summary, we have derived three logically separate statements.  First,
+ \eqref{eq:ch21-pair-shift-one}--\eqref{eq:ch21-pair-targets} are exact
+ species-charge selection rules in the full finite CAR algebra.  They
+ show why the singlet has two, rather than one, typed charge channels.
+diff --git a/notes/latex/chapters/sections/21.3.tex b/notes/latex/chapters/sections/21.3.tex
+index 7a23133..7d20fdf 100644
+--- a/notes/latex/chapters/sections/21.3.tex
++++ b/notes/latex/chapters/sections/21.3.tex
+@@ -3,16 +3,7 @@
+ 
+ \subsection*{From a four-fermion process to a precise invariance question}
+ 
+-In the preceding sections the charge and spin currents were built from four
+-ordered fermion species, and the spin-singlet pair was found to have two
+-separate species-charge targets.  We now confront a related question for a
+-Hamiltonian rather than an order parameter: \emph{does a chosen finite
+-low-energy space remain invariant under a local interaction?}  An answer
+-requires more than the name ``Umklapp.''  It requires an ordered CAR word,
+-an explicit charge shift, and a state on which the operator acts nontrivially
+-\emph{outside} the chosen space.  Pauli exclusion can make a seemingly
+-outward process vanish; the opposite process may remain nonzero while staying
+-inside the permitted charge box.
++In the preceding sections, the charge and spin currents were explicitly built from four ordered fermion species, and the spin-singlet pair was shown to have two separate species-charge targets. We now confront a related question for an interacting Hamiltonian rather than an order parameter: \emph{does a chosen finite low-energy subspace remain invariant under a local interaction?} Answering this requires more than heuristically naming a process ``Umklapp.'' It requires a precisely ordered CAR word, an explicit calculation of the charge shift, and a concrete state on which the operator acts nontrivially \emph{outside} the chosen budget space. Pauli exclusion can cause a seemingly outward process to vanish, while the opposite process may remain nonzero while safely staying inside the permitted finite charge box.
+ 
+ The discussion is entirely on a finite lattice and uses the occupation
+ representation from Chapter~\ref{ch:car_fock}.  We prove exact selection rules,
+@@ -509,26 +500,9 @@ establish invariance of the whole box under \(H_U\).
+ 
+ \subsection*{What finite leakage does, and does not, establish}
+ 
+-The exact conclusions of this section can now be separated.  The CAR
+-calculation proves a four-species selection rule and identifies precisely
+-which charge sectors an Umklapp interaction couples.  Same-sector
+-first-order compression vanishes, but a charge-bounded or energy-bounded
+-subspace can fail to be invariant, as witnessed by a nonzero
+-\emph{outside} matrix element.  The finite compression
+-\(P_{K,\mathbf B}H_UP_{K,\mathbf B}\) remains a legitimate Hermitian
+-matrix on the retained carrier; it is simply not the restriction of an
+-invariant ambient dynamics when the leakage is nonzero.
+-
+-The finite energy-shell machinery of Appendix A10 can subsequently be
+-used to organize perturbative block reduction.  Its quadratic
+-Schrieffer--Wolff/Baker--Campbell--Hausdorff identities concern stated
+-projectors and polynomial coefficients through a fixed order; they do
+-not automatically provide an analytic conjugation, error estimate, or
+-RG semigroup.  In particular, removing a shell of \emph{total excitation
+-energy} is not identical to removing a particular Fourier momentum
+-mode.  The shell-compression formalism must be instantiated with its
+-projector and block-diagonality hypotheses before being applied to
+-\(H_U\).
++The exact conclusions of this section concerning finite leakage can now be isolated. The CAR calculation proves a rigorous four-species selection rule and identifies precisely which charge sectors an Umklapp interaction couples. While same-sector first-order compression vanishes, a charge-bounded or energy-bounded subspace can fail to be dynamically invariant, as witnessed by a nonzero \emph{outside} matrix element. Although the finite compression \(P_{K,\mathbf B}H_UP_{K,\mathbf B}\) remains a well-defined Hermitian matrix on the retained carrier, it must not be confused with the exact restriction of an invariant ambient dynamics when this finite leakage is nonzero.
++
++The finite energy-shell machinery of Appendix A10 can subsequently be used to organize perturbative block reduction. However, its exact quadratic Schrieffer--Wolff identities concern specified projectors and polynomial coefficients through a fixed order; they do not automatically supply an analytic conjugation, an unbounded error estimate, or a continuum renormalization group (RG) semigroup. In particular, algebraically removing a shell of \emph{total excitation energy} is not identical to integrating out a particular Fourier momentum mode. The finite SW identities must be carefully distinguished from these continuum constructions and must be instantiated with explicit projector and block-diagonality hypotheses before application to \(H_U\).
+ 
+ Finally, a Mott gap would require a spectral statement for a specified
+ many-body Hamiltonian, and a physically meaningful thermodynamic claim
+diff --git a/notes/latex/chapters/sections/21.4.tex b/notes/latex/chapters/sections/21.4.tex
+index cd5fc32..e5f0a0a 100644
+--- a/notes/latex/chapters/sections/21.4.tex
++++ b/notes/latex/chapters/sections/21.4.tex
+@@ -1,25 +1,9 @@
+ \section{Finite Energy-Shell Projection and Effective Hamiltonians}
+ \label{sec:ch21-finite-effective}
+ 
+-The preceding sections built finite operators before asking which states they
+-preserve.  In particular, the Umklapp word has a definite change of four
+-species charges, but this selection rule is not a spectral statement, and its
+-nonzero action need not preserve a chosen finite-energy carrier.  We now face
+-a different, constructive question: \emph{if we intentionally retain only a
+-low-energy part of a finite Hilbert space, what operator describes its
+-interaction with the discarded states?}  Simply deleting the discarded
+-states removes the very virtual excursions that can modify low-energy
+-matrix elements.  A finite Schrieffer--Wolff transformation supplies a
+-controlled algebraic answer through second order in a coupling parameter.
+-
+-This section develops the method rather than presupposing familiarity with
+-renormalization.  The starting objects are ordinary finite-dimensional
+-Hilbert spaces, orthogonal projections and matrix commutators.  We shall
+-separate (i) exact partition identities, (ii) a solvable non-resonant matrix
+-equation, (iii) an \emph{exact identity between polynomials of degree two},
+-and (iv) approximation of an analytic unitary rotation.  Their hypotheses
+-are different.  In particular, none of these steps by itself constructs a
+-charge gap or a continuum renormalization-group (RG) flow.
++The preceding sections built finite operators before analyzing which states they preserve. In particular, we saw that the Umklapp word has a definite change of four species charges, but this purely algebraic selection rule is not a spectral statement, and its nonzero action need not preserve a chosen finite-energy carrier. We now face a different, constructive question: \emph{if we intentionally retain only a low-energy part of a finite Hilbert space, what effective operator describes its indirect interaction with the discarded states?} Simply deleting the discarded states removes the precise virtual excursions that modify low-energy matrix elements. To address this, a finite Schrieffer--Wolff (SW) transformation supplies a controlled algebraic answer through second order in a coupling parameter.
++
++This section develops the exact finite method rather than presupposing familiarity with continuum renormalization. The starting objects are ordinary finite-dimensional Hilbert spaces, explicit orthogonal projections, and matrix commutators. We will carefully separate (i) exact partition identities, (ii) a solvable non-resonant matrix equation, (iii) an \emph{exact identity between polynomials of degree two}, and (iv) the approximation of an analytic unitary rotation. The hypotheses for each step are distinct. As we emphasize throughout, none of these finite algebraic steps by itself constructs a charge gap, establishes full dynamical spin-charge separation, or derives a continuum renormalization-group (RG) flow.
+ 
+ \subsection{What does an energy shell discard?}
+ \label{subsec:ch21-energy-shell}
+@@ -621,11 +605,4 @@ Finally, an isolated finite Hermitian Hamiltonian has a real discrete
+ spectrum, so scattering lifetimes or dissipative flow cannot be
+ inferred solely from the matrix identities above.
+ 
+-What has been established here is therefore deliberately narrower
+-and more precise: a well-defined \emph{finite energy-shell filter}, a
+-non-resonant \emph{first-order unitary generator}, an exact
+-\emph{second-order compressed polynomial identity}, and a finite
+-analytic remainder estimate with explicit hypotheses.  These results
+-provide the operator-level starting point for a future controlled
+-effective-Hamiltonian analysis, without prematurely identifying its
+-outcome with a charge gap or a continuum renormalization-group law.
++What has been established here is therefore deliberately narrower and more precise: a well-defined \emph{finite energy-shell filter}, a non-resonant \emph{first-order unitary generator}, an exact \emph{second-order compressed polynomial identity}, and a finite analytic remainder estimate with explicit hypotheses. These finite algebraic results provide the rigorous operator-level starting point for a future controlled effective-Hamiltonian analysis, without prematurely identifying this finite framework with a charge gap, full spin-charge separation, or a continuum renormalization-group law.
+diff --git a/notes/latex/main.tex b/notes/latex/main.tex
+index 6466f25..2898633 100644
+--- a/notes/latex/main.tex
++++ b/notes/latex/main.tex
+@@ -2,10 +2,10 @@
+ 
+ \input{preamble}
+ 
+-\title{\textbf{Constructive 1+1D Lattice Bosonization}\\
+-\Large Exact Foundations, Algebraic Quantum Field Theory, and Haldane Completeness}
++\title{\textbf{1+1D Lattice Bosonization}\\
++\Large Explicit Finite-Lattice and Finite-Budget Models}
+ \author{\textbf{Bosonize-Lean Project}\\
+-\normalsize Formally Verified Lattice AQFT Monograph}
++\normalsize A Pedagogical Monograph}
+ \date{\today\\\small Source revision: \texttt{\BuildRevision}}
+ 
+ \begin{document}
+@@ -20,22 +20,15 @@
+ \chapter*{Preface}
+ \markboth{Preface}{Preface}
+ 
+-This monograph presents a complete, self-contained mathematical exposition of $1+1$-dimensional lattice bosonization formulated within constructive Algebraic Quantum Field Theory (AQFT). 
++This monograph presents a pedagogical rederivation of selected results from the $1+1$-dimensional bosonization literature. We follow the standard bosonization program, keeping the lattice size and the energy restrictions explicit. At fixed size, the fermionic constructions use finite-dimensional CAR Fock spaces and finite sums. Some bosonic identities are most naturally expressed on an ambient polynomial algebra; we state separately when those identities apply to a finite energy budget.
+ 
+-In traditional condensed matter physics and quantum field theory, bosonization is frequently presented using formal functional integrals, divergent operator products, and heuristic infinite-dimensional limits. While physically intuitive, these heuristics often obscure essential mathematical structures, such as boundary holonomies, Umklapp wrapping, operator domain restrictions, and the exact combinatorial nature of the Schwinger anomaly.
++This presentation is intended to make the algebra and its assumptions accessible. By maintaining explicit finite lattices and bounded cutoffs, we highlight algebraic structures such as boundary holonomies, Umklapp wrapping, and operator domain restrictions. However, this explicit finite framework also imposes limitations. It does not by itself establish a continuum limit, a thermodynamic limit, or replace the broader analytic treatments found in the established literature.
+ 
+-The research program documented here resolves these issues by developing bosonization as a system of \emph{exact algebraic theorems} on strictly finite lattices, finite-dimensional CAR Fock spaces, and graded polynomial algebras. Every theorem, lemma, and proposition appearing in Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} and Appendices~\ref{app:fourier_characters} through~\ref{app:density_partitions} has been fully formalized and verified by the Lean 4 interactive theorem prover without placeholders, unproved assertions, or non-standard axioms.
++The material presented in Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} and Appendices~\ref{app:fourier_characters} through~\ref{app:density_partitions} corresponds to an implemented Lean 4 formalization. Note that Lean proof coverage applies strictly to the actual mathematical declarations and their explicit hypotheses, not automatically to every explanatory sentence in the text.
+ 
+-The later Chapters~\ref{ch:correlations}--\ref{ch:spinful} are manuscript
+-drafts awaiting independent mathematical and editorial review. Chapter~19 uses
+-the accepted Phase-B CH19/A08 development, whose Core promotion remains open.
+-Chapters~20 and~21 do not yet have implemented chapter Lean modules. Their
+-mathematical derivations, formal-series constructions and finite comparisons
+-must therefore be read with the scope and limitations stated in those chapters;
+-compilation of this book does not certify their mathematics. Chapters~12--18
+-have separate private drafts and are not included in this edition.
++The later Chapters~\ref{ch:correlations}--\ref{ch:spinful} are manuscript drafts awaiting independent mathematical and editorial review. Chapter~19 uses the accepted Phase-B CH19/A08 development, whose Core promotion remains open. Chapters~20 and~21 do not yet have implemented chapter Lean modules. Their mathematical derivations, formal-series constructions, and finite comparisons must therefore be read with the scope and limitations stated in those chapters; compilation of this book does not certify their mathematics. Chapters~12--18 have separate private drafts and are not included in this edition, leaving an expository and prerequisite gap before reaching Chapter~19, although their implemented Lean formalizations are already promoted.
+ 
+-Unlike formal code repositories or proof scripts, these lecture notes are designed to be read as a standalone mathematical book. The exposition employs standard mathematical language and rigorous prose. At the same time, dedicated \emph{Formalization Notes} explain the constructive mathematical insights that emerge when physical heuristics are translated into verified code.
++These notes are designed to be read by readers familiar with undergraduate quantum mechanics and linear algebra. Where our expository choices deviate from convention, or where specific structural insights emerge from the finite setting, dedicated \emph{Formalization Notes} discuss the exact definitions employed.
+ 
+ \tableofcontents
+ 
+@@ -66,16 +59,16 @@ Unlike formal code repositories or proof scripts, these lecture notes are design
+ \addcontentsline{toc}{chapter}{The Forward Research Roadmap}
+ \label{ch:roadmap}
+ 
+-Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} establish the complete, verified algebraic foundation of lattice bosonization: from discrete spatial geometry, Fourier transforms, and CAR Fock spaces, to the exact Heisenberg Kac--Moody current algebra and Haldane completeness on the whole energy budget $B(N, K)$.
++Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} establish the foundational discrete kinematics of our models: from spatial lattices and Fourier transforms to finite-dimensional CAR Fock spaces, the Heisenberg algebra of density modes, and Haldane completeness on the finite energy budget $B(N, K)$.
+ 
+-The subsequent chapters of the ongoing research program extend this foundation to dynamic and interacting models:
++The subsequent chapters outline the steps to extend this foundation toward interacting models. As noted in the Preface, Chapters~12--18 are not included in this edition. While their implemented Lean developments are already promoted, their full textbook derivations remain unpublished here. We map their intended coverage here to identify the missing prerequisites for the later text:
+ \begin{itemize}
+-    \item \textbf{Chapter 12 (Sugawara Construction):} Proves the algebraic equivalence between the fermionic kinetic energy operator and the bosonic Sugawara Hamiltonian $H_{\mathrm{sug}}^{(M)} = \sum_{m=1}^M \rho_{-m} \rho_m$ on the whole budget $B(N, K)$.
+-    \item \textbf{Chapter 13 (Klein Factors and Multi-Species Fermions):} Introduces multi-species branch fermions with explicit ground-ket sign factors to intertwine charge and chirality across commuting budget squares.
+-    \item \textbf{Chapter 14 (The Projected Mattis--Mandelstam Formula):} Defines exact finite vertex operators via nilpotent polynomial exponentials and establishes the conditional cyclic-span criterion.
+-    \item \textbf{Chapters 15--16 (Dual Fields and Lattice Hamiltonians):} Formulates Hermitian phase and density fields $\phi(x), \theta(x)$ and computes the spatial collapse of lattice gradients and dispersion errors.
+-    \item \textbf{Chapters 17--18 (Interactions and Bogoliubov Transformations):} Analyzes forward scattering, the Luttinger liquid Hamiltonian, and the exact canonical Bogoliubov transformation on budget vectors.
+-    \item \textbf{Chapters 19--21 (Correlations, Duality, and Spinful Systems):} Develops correlation functions, explicitly specified algebraic model duality, and spinful finite constructions. CH19 Phase B is accepted; CH20--21 remain manuscript/interface drafts rather than completed Lean chapters.
++    \item \textbf{Chapter 12 (Sugawara Construction):} Compares the fermionic kinetic energy operator with the bosonic Sugawara Hamiltonian $H_{\mathrm{sug}}^{(M)} = \sum_{m=1}^M \rho_{-m} \rho_m$ on the finite budget $B(N, K)$.
++    \item \textbf{Chapter 13 (Klein Factors and Multi-Species Fermions):} Introduces multi-species branch fermions with explicit ground-ket sign factors to map charge and chirality across commuting budget squares.
++    \item \textbf{Chapter 14 (The Projected Mattis--Mandelstam Formula):} Explores finite vertex operators using nilpotent polynomial exponentials and discusses the conditional cyclic-span criterion.
++    \item \textbf{Chapters 15--16 (Dual Fields and Lattice Hamiltonians):} Examines Hermitian phase and density fields $\phi(x), \theta(x)$ and computes the spatial lattice gradients and dispersion errors.
++    \item \textbf{Chapters 17--18 (Interactions and Bogoliubov Transformations):} Analyzes forward scattering models and the exact canonical Bogoliubov transformation on budget vectors.
++    \item \textbf{Chapters 19--21 (Correlations, Duality, and Spinful Systems):} Develops correlation functions, explicitly specified algebraic model duality, and spinful finite constructions. CH19 Phase B is accepted but not Core promoted; CH20--21 remain manuscript drafts and do not yet have implemented Lean modules.
+ \end{itemize}
+ 
+ % Manuscript drafts imported from individually supplied standalone sections.
