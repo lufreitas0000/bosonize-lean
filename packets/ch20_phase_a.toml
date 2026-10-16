@@ -65,4 +65,4 @@ lean_proofs = []
 locked = ["docs/spec/core_locks.json"]
 verify = [["python3", "scripts/webllm/verify_phase_a.py", "docs/webllm/drafts/ch20_phase_a.md"]]
 timeout = 900
-max_packet_bytes = 300000
+max_packet_bytes = 400000
