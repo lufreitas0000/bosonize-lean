@@ -3,7 +3,7 @@
 
 \section{Introduction and Discrete Setting}
 
-In relativistic quantum field theory in $1+1$ dimensions, continuous spacetime coordinates and infinite-dimensional momentum representations frequently introduce severe infrared and ultraviolet divergences. In the constructivist and algebraic program developed in this monograph, all continuum divergences are eliminated at the foundation by formulating the theory on a strictly finite, discrete spatial manifold and its exact Fourier-dual momentum space.
+In relativistic quantum field theory in $1+1$ dimensions, continuous spacetime coordinates and infinite-dimensional momentum representations frequently introduce infrared and ultraviolet divergences. In the constructivist and algebraic program developed in this monograph, we choose to formulate the theory on a strictly finite, discrete spatial manifold and its exact Fourier-dual momentum space as an explicit modelling choice. This approach makes the algebraic structures and bounds exact, though it is an expository decision rather than a fundamental requirement of Lean's type theory or discrete Fourier analysis.
 
 Throughout this chapter, let $L \in \mathbb{N}$ denote the number of spatial lattice sites, assuming $L \ge 1$. While general difference calculus and Fourier transforms can be formulated for arbitrary positive integers $L$, the construction of half-filled Dirac seas and fermionic Fock spaces from Chapter~\ref{ch:fermions} onward strictly requires an even lattice length:
 \begin{equation}
@@ -274,10 +274,12 @@ In this opening chapter, we established the discrete spatial and momentum geomet
 \paragraph{Comparison with Standard Continuum Literature.}
 In standard condensed matter bosonization texts, such as Giamarchi~\cite{giamarchi2004}, Gogolin, Nersesyan, and Tsvelik~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the spatial circle is typically taken as a continuous interval $[0, \mathcal{L}]$ with periodic boundary conditions, leading to an infinite set of discrete momentum modes $k_n = \frac{2\pi n}{\mathcal{L}}$ ($n \in \mathbb{Z}$). In that setting, there is no upper momentum cutoff, Umklapp scattering is treated as an extrinsic perturbation or ignored in low-energy Tomonaga--Luttinger models, and the Fermi sea has infinite depth.
 
-By contrast, our constructive formulation models the physical lattice from the outset. As emphasized by Haldane~\cite{haldane1981}, the lattice acts as an intrinsic ultraviolet regulator. The asymmetric Brillouin zone $\Lambda^*$ is the unique choice that simultaneously achieves:
+By contrast, our constructive formulation models the physical lattice from the outset. As emphasized by Haldane~\cite{haldane1981}, the lattice acts as an intrinsic ultraviolet regulator. The asymmetric Brillouin zone $\Lambda^*$ is a consistent representative choice that simultaneously achieves:
 \begin{enumerate}
     \item Exact finite dimension: $\dim(\ell^2(\Lambda)) = \dim(\ell^2(\Lambda^*)) = L$.
     \item Absence of duplicate physical modes.
     \item Decidable, constructive arithmetic without boundary ambiguities.
 \end{enumerate}
-In later chapters (specifically Chapter~\ref{ch:heisenberg_algebra} and Chapter~\ref{ch:haldane_completeness}), we will demonstrate that when particle excitations are restricted to an energy budget margin $2M + K + |N| \le h$, the Umklapp wrapping $w$ vanishes identically ($w = 0$), and the exact lattice dynamics reproduces the continuum current algebra of Giamarchi~\cite{giamarchi2004} and von Delft--Schoeller~\cite{vondelft1998} with zero error.
+This convention fixing $+h$ is an expository choice; the mirrored half-open convention excluding $+h$ and retaining $-h$ is equally mathematically possible.
+
+In later chapters (specifically Chapter~\ref{ch:heisenberg_algebra} and Chapter~\ref{ch:haldane_completeness}), we will demonstrate that when particle excitations are restricted to a protected energy budget subspace satisfying the margin $2M + K + |N| \le h$, the Umklapp wrapping $w$ vanishes identically ($w = 0$). On this restricted subspace, the exact lattice commutators and Haldane completeness relation exactly match the continuum current algebra forms of Giamarchi~\cite{giamarchi2004} and von Delft--Schoeller~\cite{vondelft1998}. This is a conditional identity on a protected subspace, not a claim of complete dynamical equivalence or a general continuum limit. Operating on this strictly discrete spatial geometry means that standard continuous derivatives are unavailable; consequently, Chapter~\ref{ch:umbral_calculus} will develop the necessary exact finite difference calculus and umbral shifts to replace them.
