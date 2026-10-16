@@ -1,0 +1,68 @@
+version = 1
+id = "ch20_phase_a"
+phase = "A"
+repo = ".."
+task = """
+Draft a complete CH20 Phase A interface and mirrored companion notebook from
+the supplied, explicitly unverified source guidance. Return only
+docs/webllm/drafts/ch20_phase_a.md as a complete Markdown artifact. Do not edit
+active Lean files, notes, aggregators, or locks; do not claim local compilation.
+
+The proposed Lean code contains one complete finite-order-parameter/duality
+module in namespace Bosonize.Ch20, importing only the current Bosonize Core
+modules it actually needs. Do not import Mathlib wholesale, staging modules,
+or any A08/CH19 state carrier. Reuse the exact carriers and APIs in the supplied
+guidance. Every data declaration is complete and explicitly named; every
+theorem/lemma is exactly a one-sorry stub ending `:= by sorry`. No `True`
+targets, artificial map parameters disconnected from the physical fields,
+unsupported instances, or local notation.
+
+Include the source-audited finite CAR observables, exact charge shifts,
+typed source/intermediate/target projections with explicit product residuals,
+the actual projected-map adjoint relationship, charge/Klein scalar laws,
+nonzero finite witnesses, parameter involution, mode-family duality, symmetric
+zero-mode result, and finite kernel claims only to the extent the stated
+carriers and hypotheses are explicit. Keep a concrete nonzero CAR witness and
+the discarded-channel residual witness. Preserve operator order and actual
+adjoints; do not assert finite-Fock unitary/T-duality or spectral equivalence.
+
+Exclude formal Weyl vertices, coefficientwise correlators, tensor-algebra/state
+transport, Wick/Gaussian obligations and finite state comparison; these require
+the separate CH20b review after CH19 Core is available. Exclude CH21 spin,
+parity, Umklapp and effective-Hamiltonian obligations. Keep all projection
+residuals; never drop them without an explicit proved hypothesis. Use integer
+positions and the Core's canonical root/twist conventions. Do not claim
+analytic limits, power laws, or thermodynamic consequences.
+
+Use exactly these sections: ## Source map, ## Design and scope, ## Lean draft,
+## Companion notebook, ## Review obligations. Include the exact source paths
+and hashes from this packet. Reconcile every proposed statement with the
+sources and actual imported Core declarations; mark any underspecified claim
+for review rather than guessing. The companion records carrier choices,
+imports, exact signatures, source-to-contract map, dependencies, margin reasons,
+non-vacuity witnesses, accepted/adapted/rejected proposals, and deferred CH20b
+claims. Review obligations must name concrete sign/carrier/hypothesis checks.
+Do not include purported proof or test results.
+"""
+targets = ["docs/webllm/drafts/ch20_phase_a.md"]
+context = [
+  "docs/webllm/guidance/ch20_phase_a_sources.md",
+  "notes/md/ch20_CDW.md",
+  "notes/appendices/a08_states_and_correlations.md",
+  "notes/appendices/a09_duality_spin_and_umklapp.md",
+  "Bosonize/Core/Ch14Mandelstam.lean",
+  "Bosonize/Core/Ch16FieldHamiltonian.lean",
+  "Bosonize/Core/Ch17LuttingerModels.lean",
+  "Bosonize/Core/Ch18Bogoliubov.lean",
+  "Bosonize/Core/A05MultiSpecies.lean",
+  "Bosonize/Core/A06ChiralFields.lean",
+  "Bosonize/Core/A07Interactions.lean",
+  "scripts/webllm/verify_phase_a.py",
+  "lean-toolchain",
+  "lakefile.toml"
+]
+lean_proofs = []
+locked = ["docs/spec/core_locks.json"]
+verify = [["python3", "scripts/webllm/verify_phase_a.py", "docs/webllm/drafts/ch20_phase_a.md"]]
+timeout = 900
+max_packet_bytes = 300000
