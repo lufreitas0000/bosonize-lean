@@ -1,0 +1,10 @@
+version = 1
+id = "rewrite-ch07-wave1"
+repo = "../.."
+phase = "B"
+timeout = 180
+max_packet_bytes = 240000
+task = "Implement the prose rewrite of CH07 described in docs/editorial/REWRITE_WAVE1.md. EDIT ONLY the listed targets. Explain charge, ground and excitation budget before margins. Preserve N = particle count minus h and the correct admissible bounds. Lead from finite fermionic budgets to the ambient bosonic carrier in CH08. Run python3 scripts/verify_editorial_rewrite.py --group rewrite-ch07-wave1 and python3 scripts/check_book_sources.py. No extra files, no formula/proof edits, no PR, no model calls. Read relevant neighbouring chapters and appendices from the repository as READ-ONLY context."
+targets = ["notes/latex/chapters/ch07_vacuum_budget.tex"]
+context = ["docs/editorial/REWRITE_WAVE1.md", "docs/editorial/STYLE_AND_SCOPE.md", "docs/editorial/COORDINATOR_INSPECTION.md", "notes/latex/frontmatter/notation.tex", "notes/latex/main.tex", "notes/latex/chapters/ch07_vacuum_budget.tex"]
+verify = [["python3", "scripts/verify_editorial_rewrite.py", "--group", "rewrite-ch07-wave1"], ["python3", "scripts/check_book_sources.py"], ["python3", "/home/lucas/Projects/scripts/verify_document.py", "--root", "notes/latex", "--main", "main.tex"]]

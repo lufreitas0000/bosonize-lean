@@ -1,0 +1,10 @@
+version = 1
+id = "rewrite-frontmatter-wave1"
+repo = "../.."
+phase = "B"
+timeout = 180
+max_packet_bytes = 240000
+task = "Implement the prose rewrite of Frontmatter described in docs/editorial/REWRITE_WAVE1.md. EDIT ONLY the listed targets. Rewrite title/subtitle, preface and roadmap prose in a modest pedagogical voice. Credit established literature without inventing citations or bibliography. Remove complete/self-contained/all printed statements Lean verified claims. Explain selected finite-lattice/budget constructions, ambient polynomial spaces and limitations. Preserve exact CH01\u201318/CH19/CH20\u201321 status distinctions and missing CH12\u201318 manuscript coverage. Preserve every input/include, counter, label, structural command and existing displayed mathematics. Notation.tex is read-only; do not silently settle the Fourier/current conflicts. Run python3 scripts/verify_editorial_rewrite.py --group rewrite-frontmatter-wave1 and python3 scripts/check_book_sources.py. No extra files, no formula/proof edits, no PR, no model calls. Read relevant neighbouring chapters and appendices from the repository as READ-ONLY context."
+targets = ["notes/latex/main.tex"]
+context = ["docs/editorial/REWRITE_WAVE1.md", "docs/editorial/STYLE_AND_SCOPE.md", "docs/editorial/COORDINATOR_INSPECTION.md", "notes/latex/frontmatter/notation.tex", "notes/latex/main.tex"]
+verify = [["python3", "scripts/verify_editorial_rewrite.py", "--group", "rewrite-frontmatter-wave1"], ["python3", "scripts/check_book_sources.py"], ["python3", "/home/lucas/Projects/scripts/verify_document.py", "--root", "notes/latex", "--main", "main.tex"]]

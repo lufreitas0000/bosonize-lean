@@ -1,0 +1,10 @@
+version = 1
+id = "rewrite-ch03-wave1"
+repo = "../.."
+phase = "B"
+timeout = 180
+max_packet_bytes = 240000
+task = "Implement the prose rewrite of CH03 described in docs/editorial/REWRITE_WAVE1.md. EDIT ONLY the listed targets. Explain the dual analysis/synthesis Fourier signs and algebraic inversion versus unitary normalization. Fixed lattice dispersion is not elimination of every divergence. Lead to the one-particle basis change underlying CAR in CH04/05. Run python3 scripts/verify_editorial_rewrite.py --group rewrite-ch03-wave1 and python3 scripts/check_book_sources.py. No extra files, no formula/proof edits, no PR, no model calls. Read relevant neighbouring chapters and appendices from the repository as READ-ONLY context."
+targets = ["notes/latex/chapters/ch03_fourier.tex"]
+context = ["docs/editorial/REWRITE_WAVE1.md", "docs/editorial/STYLE_AND_SCOPE.md", "docs/editorial/COORDINATOR_INSPECTION.md", "notes/latex/frontmatter/notation.tex", "notes/latex/main.tex", "notes/latex/chapters/ch03_fourier.tex"]
+verify = [["python3", "scripts/verify_editorial_rewrite.py", "--group", "rewrite-ch03-wave1"], ["python3", "scripts/check_book_sources.py"], ["python3", "/home/lucas/Projects/scripts/verify_document.py", "--root", "notes/latex", "--main", "main.tex"]]

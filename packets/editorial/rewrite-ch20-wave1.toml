@@ -1,0 +1,10 @@
+version = 1
+id = "rewrite-ch20-wave1"
+repo = "../.."
+phase = "B"
+timeout = 180
+max_packet_bytes = 240000
+task = "Implement the prose rewrite of CH20 described in docs/editorial/REWRITE_WAVE1.md. EDIT ONLY the listed targets. Keep finite projected CAR identities, formal vertex series and their unproved comparison separate. Retain existing caveats. Do not turn algebraic model duality into full interacting-CAR equivalence or an evaluated continuum statement. Improve transitions across all three owned sections. Lead to species order, charge shifts and parity in CH21. No implemented CH20 Lean module. Run python3 scripts/verify_editorial_rewrite.py --group rewrite-ch20-wave1 and python3 scripts/check_book_sources.py. No extra files, no formula/proof edits, no PR, no model calls. Read relevant neighbouring chapters and appendices from the repository as READ-ONLY context."
+targets = ["notes/latex/chapters/sections/20.1.tex", "notes/latex/chapters/sections/20.2.tex", "notes/latex/chapters/sections/20.3.tex"]
+context = ["docs/editorial/REWRITE_WAVE1.md", "docs/editorial/STYLE_AND_SCOPE.md", "docs/editorial/COORDINATOR_INSPECTION.md", "notes/latex/frontmatter/notation.tex", "notes/latex/main.tex", "notes/latex/chapters/sections/20.1.tex", "notes/latex/chapters/sections/20.2.tex", "notes/latex/chapters/sections/20.3.tex"]
+verify = [["python3", "scripts/verify_editorial_rewrite.py", "--group", "rewrite-ch20-wave1"], ["python3", "scripts/check_book_sources.py"], ["python3", "/home/lucas/Projects/scripts/verify_document.py", "--root", "notes/latex", "--main", "main.tex"]]

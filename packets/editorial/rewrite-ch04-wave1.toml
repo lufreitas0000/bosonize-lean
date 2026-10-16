@@ -1,0 +1,10 @@
+version = 1
+id = "rewrite-ch04-wave1"
+repo = "../.."
+phase = "B"
+timeout = 180
+max_packet_bytes = 240000
+task = "Implement the prose rewrite of CH04 described in docs/editorial/REWRITE_WAVE1.md. EDIT ONLY the listed targets. Retain the existing momentum/spin specializations of the finite index set. Explain occupation-basis ordering as a convention. Lead from abstract CAR to its spatial Fourier realization in CH05 without repeating its derivation. Run python3 scripts/verify_editorial_rewrite.py --group rewrite-ch04-wave1 and python3 scripts/check_book_sources.py. No extra files, no formula/proof edits, no PR, no model calls. Read relevant neighbouring chapters and appendices from the repository as READ-ONLY context."
+targets = ["notes/latex/chapters/ch04_car_fock.tex"]
+context = ["docs/editorial/REWRITE_WAVE1.md", "docs/editorial/STYLE_AND_SCOPE.md", "docs/editorial/COORDINATOR_INSPECTION.md", "notes/latex/frontmatter/notation.tex", "notes/latex/main.tex", "notes/latex/chapters/ch04_car_fock.tex"]
+verify = [["python3", "scripts/verify_editorial_rewrite.py", "--group", "rewrite-ch04-wave1"], ["python3", "scripts/check_book_sources.py"], ["python3", "/home/lucas/Projects/scripts/verify_document.py", "--root", "notes/latex", "--main", "main.tex"]]

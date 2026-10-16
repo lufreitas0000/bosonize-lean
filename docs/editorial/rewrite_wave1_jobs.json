@@ -1,0 +1,132 @@
+{
+  "jobs": [
+    {
+      "id": "rewrite-ch01-wave1",
+      "chapter": "CH01",
+      "targets": [
+        "notes/latex/chapters/ch01_lattice_band.tex"
+      ],
+      "instruction": "Explain the finite circle as a modelling choice, not a requirement of Lean or Fourier theory. Explain the half-open representative convention without claiming it is unique. Qualify any zero-error continuum comparison by its actual protected space and hypotheses. Lead into finite shifts/differences in CH02."
+    },
+    {
+      "id": "rewrite-ch02-wave1",
+      "chapter": "CH02",
+      "targets": [
+        "notes/latex/chapters/ch02_umbral_calculus.tex"
+      ],
+      "instruction": "Distinguish the bilateral-sequence carrier from finite periodic lattice spaces. Qualify preservation of continuum structure. Connect periodic differences to diagonalization by characters in CH03. Never transfer a sequence-space CCR to finite matrices."
+    },
+    {
+      "id": "rewrite-ch03-wave1",
+      "chapter": "CH03",
+      "targets": [
+        "notes/latex/chapters/ch03_fourier.tex"
+      ],
+      "instruction": "Explain the dual analysis/synthesis Fourier signs and algebraic inversion versus unitary normalization. Fixed lattice dispersion is not elimination of every divergence. Lead to the one-particle basis change underlying CAR in CH04/05."
+    },
+    {
+      "id": "rewrite-ch04-wave1",
+      "chapter": "CH04",
+      "targets": [
+        "notes/latex/chapters/ch04_car_fock.tex"
+      ],
+      "instruction": "Retain the existing momentum/spin specializations of the finite index set. Explain occupation-basis ordering as a convention. Lead from abstract CAR to its spatial Fourier realization in CH05 without repeating its derivation."
+    },
+    {
+      "id": "rewrite-ch05-wave1",
+      "chapter": "CH05",
+      "targets": [
+        "notes/latex/chapters/ch05_fermions.tex"
+      ],
+      "instruction": "Retain the good opening combining CH03/04. Explain the existing positive annihilator phase and its adjoint convention locally, without changing formulas or making a global sign replacement. Note the frontmatter discrepancy as unresolved rather than silently resolving it. Lead into local field and even observable algebras in CH06."
+    },
+    {
+      "id": "rewrite-ch06-wave1",
+      "chapter": "CH06",
+      "targets": [
+        "notes/latex/chapters/ch06_lattice_aqft_net.tex"
+      ],
+      "instruction": "Replace claims of conceptual purity or dismissals of the literature with the specific finite construction. Explain graded locality for fields and ordinary locality for even observables, distinct from the full continuum Haag-Kastler program. Lead to charge sectors and reference states in CH07."
+    },
+    {
+      "id": "rewrite-ch07-wave1",
+      "chapter": "CH07",
+      "targets": [
+        "notes/latex/chapters/ch07_vacuum_budget.tex"
+      ],
+      "instruction": "Explain charge, ground and excitation budget before margins. Preserve N = particle count minus h and the correct admissible bounds. Lead from finite fermionic budgets to the ambient bosonic carrier in CH08."
+    },
+    {
+      "id": "rewrite-ch08-wave1",
+      "chapter": "CH08",
+      "targets": [
+        "notes/latex/chapters/ch08_boson_fock.tex"
+      ],
+      "instruction": "Say bounded mode count does not bound polynomial degree. Distinguish algebraic pairing/adjointness from Hilbert completion and operator domains. Remove claims that every exponential terminates or that all topology is circumvented: explain only actual nilpotent maps and cutoffs. If a protected mathematical block overclaims, leave it unchanged and state the exact scope immediately outside it; do not invent a proof. Lead into fermionic density currents in CH09."
+    },
+    {
+      "id": "rewrite-ch09-wave1",
+      "chapter": "CH09",
+      "targets": [
+        "notes/latex/chapters/ch09_density_modes.tex"
+      ],
+      "instruction": "Explain nonwrapping raising currents and their normal-ordering correction, unlike the wrapped lowering convention in frontmatter. Do not silently harmonize these definitions or transfer CCR signs. Lead to finite band-edge commutators in CH10."
+    },
+    {
+      "id": "rewrite-ch10-wave1",
+      "chapter": "CH10",
+      "targets": [
+        "notes/latex/chapters/ch10_heisenberg_algebra.tex"
+      ],
+      "instruction": "Explain global edge terms before the protected scalar commutator. State actual budget/word-dependent margin hypotheses in plain language. Do not claim a global nonzero scalar CCR for finite matrices. Lead to the spanning/counting question in CH11."
+    },
+    {
+      "id": "rewrite-ch11-wave1",
+      "chapter": "CH11",
+      "targets": [
+        "notes/latex/chapters/ch11_haldane_completeness.tex"
+      ],
+      "instruction": "Explain the finite counting and Gram argument and its exact completeness regime without dismissing continuum arguments. End with an honest prerequisites bridge: CH12\u201318 are absent from the published book although their Lean modules are promoted; list the missing Sugawara/Klein/vertex/dual-field/Hamiltonian/Bogoliubov constructions needed before CH19, without pretending this summary supplies them."
+    },
+    {
+      "id": "rewrite-ch19-wave1",
+      "chapter": "CH19",
+      "targets": [
+        "notes/latex/chapters/sections/19.1.tex",
+        "notes/latex/chapters/sections/19.2.tex",
+        "notes/latex/chapters/sections/19.3.tex",
+        "notes/latex/chapters/sections/19.4.tex"
+      ],
+      "instruction": "Explain prerequisites and distinguish the finite CAR carrier, oscillator carrier, protected budget, algebraic state and coefficientwise formal-series evaluation. Keep g and g_U distinct. Retain existing finite-versus-abstract state caveats. CH19/A08 Phase B accepted but not Core promoted. Lead from finite comparisons to the formal order-parameter models of CH20."
+    },
+    {
+      "id": "rewrite-ch20-wave1",
+      "chapter": "CH20",
+      "targets": [
+        "notes/latex/chapters/sections/20.1.tex",
+        "notes/latex/chapters/sections/20.2.tex",
+        "notes/latex/chapters/sections/20.3.tex"
+      ],
+      "instruction": "Keep finite projected CAR identities, formal vertex series and their unproved comparison separate. Retain existing caveats. Do not turn algebraic model duality into full interacting-CAR equivalence or an evaluated continuum statement. Improve transitions across all three owned sections. Lead to species order, charge shifts and parity in CH21. No implemented CH20 Lean module."
+    },
+    {
+      "id": "rewrite-ch21-wave1",
+      "chapter": "CH21",
+      "targets": [
+        "notes/latex/chapters/sections/21.1.tex",
+        "notes/latex/chapters/sections/21.2.tex",
+        "notes/latex/chapters/sections/21.3.tex",
+        "notes/latex/chapters/sections/21.4.tex"
+      ],
+      "instruction": "Explain species order and the actual raw R^c/R^s conventions, without changing normalization/formulas. Distinguish conditional budget CCR, finite leakage/SW identities and state-space factorization. Retain caveats: no derived continuum RG, general gap or full spin-charge separation. Improve transitions across all four owned sections. No implemented CH21 Lean module."
+    },
+    {
+      "id": "rewrite-frontmatter-wave1",
+      "chapter": "Frontmatter",
+      "targets": [
+        "notes/latex/main.tex"
+      ],
+      "instruction": "Rewrite title/subtitle, preface and roadmap prose in a modest pedagogical voice. Credit established literature without inventing citations or bibliography. Remove complete/self-contained/all printed statements Lean verified claims. Explain selected finite-lattice/budget constructions, ambient polynomial spaces and limitations. Preserve exact CH01\u201318/CH19/CH20\u201321 status distinctions and missing CH12\u201318 manuscript coverage. Preserve every input/include, counter, label, structural command and existing displayed mathematics. Notation.tex is read-only; do not silently settle the Fourier/current conflicts."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+version = 1
+id = "rewrite-ch19-wave1"
+repo = "../.."
+phase = "B"
+timeout = 180
+max_packet_bytes = 240000
+task = "Implement the prose rewrite of CH19 described in docs/editorial/REWRITE_WAVE1.md. EDIT ONLY the listed targets. Explain prerequisites and distinguish the finite CAR carrier, oscillator carrier, protected budget, algebraic state and coefficientwise formal-series evaluation. Keep g and g_U distinct. Retain existing finite-versus-abstract state caveats. CH19/A08 Phase B accepted but not Core promoted. Lead from finite comparisons to the formal order-parameter models of CH20. Run python3 scripts/verify_editorial_rewrite.py --group rewrite-ch19-wave1 and python3 scripts/check_book_sources.py. No extra files, no formula/proof edits, no PR, no model calls. Read relevant neighbouring chapters and appendices from the repository as READ-ONLY context."
+targets = ["notes/latex/chapters/sections/19.1.tex", "notes/latex/chapters/sections/19.2.tex", "notes/latex/chapters/sections/19.3.tex", "notes/latex/chapters/sections/19.4.tex"]
+context = ["docs/editorial/REWRITE_WAVE1.md", "docs/editorial/STYLE_AND_SCOPE.md", "docs/editorial/COORDINATOR_INSPECTION.md", "notes/latex/frontmatter/notation.tex", "notes/latex/main.tex", "notes/latex/chapters/sections/19.1.tex", "notes/latex/chapters/sections/19.2.tex", "notes/latex/chapters/sections/19.3.tex", "notes/latex/chapters/sections/19.4.tex"]
+verify = [["python3", "scripts/verify_editorial_rewrite.py", "--group", "rewrite-ch19-wave1"], ["python3", "scripts/check_book_sources.py"], ["python3", "/home/lucas/Projects/scripts/verify_document.py", "--root", "notes/latex", "--main", "main.tex"]]
