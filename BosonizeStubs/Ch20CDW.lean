@@ -2,7 +2,6 @@ import Bosonize.Core.Ch14Mandelstam
 import Bosonize.Core.Ch16FieldHamiltonian
 import Bosonize.Core.Ch17LuttingerModels
 import Bosonize.Core.Ch18Bogoliubov
-import Mathlib.Analysis.Real.Pi.Bounds
 
 namespace Bosonize.Ch20
 
@@ -2166,7 +2165,353 @@ lemma concrete_discarded_channel_nonzero :
     Ch14.projectedMap 2 witnessZero (cdwTarget Ch16.standardBranches witnessZero)
         0 1 (cdwResidualOp 2 (fun _ => Ch06Ext.periodicTwist 4)
           Ch16.standardBranches 1 witnessZero 0)
-        (Ch14.groundVector 2 (by decide) witnessZero witnessZero_admissible 0) ≠ 0 := by sorry
+        (Ch14.groundVector 2 (by decide) witnessZero witnessZero_admissible 0) ≠ 0 := by
+  classical
+  let m1 : Ch01.Band 4 := ⟨1, by norm_num [Ch01.inBandPredicate]⟩
+  have ground_memX := ground_memCDWX (σ := Fin 2)
+  have speciesBridge := targetZeroSpeciesBridge
+  have leftSpecies_residualOccupation := targetZeroLeftSpeciesOccupation
+  have leftSpecies_residual_excitation := targetZeroLeftSpeciesExcitation
+  have speciesEraseBridge (S : A05.Occupation (Fin 2) 2) (η ν : Fin 2)
+      (q k : Ch01.Band 4) :
+      q ∈ Ch07.speciesConfiguration 2 (S.erase (ν,k)) η ↔
+        q ∈ Ch07.speciesConfiguration 2 S η ∧ (η ≠ ν ∨ q ≠ k) := by
+    rw [speciesBridge, speciesBridge]
+    simp only [Finset.mem_erase]
+    constructor
+    · rintro ⟨hne,hm⟩
+      refine ⟨hm, ?_⟩
+      by_cases hη : η = ν
+      · right
+        intro hq
+        apply hne
+        exact Prod.ext hη hq
+      · exact Or.inl hη
+    · rintro ⟨hm,hneq⟩
+      refine ⟨?_,hm⟩
+      intro hp
+      have hp' := Prod.mk.inj hp
+      rcases hneq with hη | hq
+      · exact hη hp'.1
+      · exact hq hp'.2
+
+  have speciesInsertBridge (S : A05.Occupation (Fin 2) 2) (η ν : Fin 2)
+      (q k : Ch01.Band 4) :
+      q ∈ Ch07.speciesConfiguration 2 (insert (ν,k) S) η ↔
+        q ∈ Ch07.speciesConfiguration 2 S η ∨ (η = ν ∧ q = k) := by
+    rw [speciesBridge, speciesBridge]
+    simp only [Finset.mem_insert]
+    constructor
+    · rintro (h | h)
+      · exact Or.inr (Prod.mk.inj h)
+      · exact Or.inl h
+    · rintro (h | ⟨hη,hq⟩)
+      · exact Or.inr h
+      · subst η
+        subst q
+        exact Or.inl rfl
+
+  have residual_m1_pair_unique (k p : Ch01.Band 4)
+      (heq : insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) =
+        targetZeroOccupation m1) : k = targetZeroMn ∧ p = m1 := by
+    have hsL := congrArg (fun S => Ch07.speciesConfiguration 2 S 1) heq
+    have hsR := congrArg (fun S => Ch07.speciesConfiguration 2 S 0) heq
+    have hL0 : targetZeroM0 ∈ Ch07.speciesConfiguration 2
+        (insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k))) 1 := by
+      rw [hsL, leftSpecies_residualOccupation]
+      simp
+    have hsrcmn : targetZeroMn ∈ Ch07.speciesConfiguration 2
+        (A05.groundConfiguration 2 witnessZero) 1 := by
+      rw [speciesBridge, ground_memX]
+      simp [witnessZero,targetZeroMn]
+    have hk : k ≠ targetZeroM0 := by
+      intro h
+      subst k
+      have hL0' : targetZeroM0 ∈ Ch07.speciesConfiguration 2
+          ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroM0)) 1 := by
+        rw [speciesInsertBridge] at hL0
+        simpa using hL0
+      have hnot : targetZeroM0 ∉ Ch07.speciesConfiguration 2
+          ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroM0)) 1 := by
+        rw [speciesEraseBridge]
+        simp
+      exact hnot hL0'
+    have hkn : k = targetZeroMn := by
+      have hmnAbsent : targetZeroMn ∉ Ch07.speciesConfiguration 2
+          (insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k))) 1 := by
+        rw [hsL, leftSpecies_residualOccupation]
+        simp only [Finset.mem_singleton]
+        intro heq
+        have hv := congrArg Subtype.val heq
+        norm_num [targetZeroMn,targetZeroM0] at hv
+      have heraseAbsent : targetZeroMn ∉ Ch07.speciesConfiguration 2
+          ((A05.groundConfiguration 2 witnessZero).erase (1,k)) 1 := by
+        rw [speciesInsertBridge] at hmnAbsent
+        intro hm
+        exact hmnAbsent (Or.inl hm)
+      by_contra hnot
+      have hmnErase : targetZeroMn ∈ Ch07.speciesConfiguration 2
+          ((A05.groundConfiguration 2 witnessZero).erase (1,k)) 1 := by
+        apply (speciesEraseBridge _ _ _ _ _).mpr
+        refine ⟨hsrcmn, Or.inr ?_⟩
+        intro heq
+        exact hnot heq.symm
+      exact heraseAbsent hmnErase
+    refine ⟨hkn, ?_⟩
+    subst k
+    have hR1 : m1 ∈ Ch07.speciesConfiguration 2
+        (insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn))) 0 := by
+      rw [hsR]
+      rw [speciesBridge]
+      simp [targetZeroOccupation, m1]
+    have hsource1 : m1 ∉ Ch07.speciesConfiguration 2
+        ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn)) 0 := by
+      rw [speciesEraseBridge, speciesBridge, ground_memX]
+      simp [witnessZero,m1,targetZeroMn]
+    rw [speciesInsertBridge] at hR1
+    rcases hR1 with hbad | ⟨_,hp⟩
+    · exact (hsource1 hbad).elim
+    · exact hp.symm
+
+
+
+  have rightSpecies_residual_m1 :
+      Ch07.speciesConfiguration 2 (targetZeroOccupation m1) 0 =
+        Ch07.groundConfiguration 2 1 := by
+    ext q
+    rw [speciesBridge]
+    simp only [targetZeroOccupation, Finset.mem_insert, Finset.mem_erase]
+    simp only [Prod.mk.injEq]
+    rw [ground_memX 2 witnessZero 0 q]
+    simp only [Ch07.groundConfiguration, Finset.mem_filter, Finset.mem_univ, true_and]
+    simp only [witnessZero]
+    constructor
+    · rintro (hq | ⟨hneq, hsrc⟩)
+      · have hv := congrArg Subtype.val hq
+        norm_num [m1] at hv; omega
+      · have hb := q.2
+        dsimp [Ch01.inBandPredicate] at hb
+        omega
+    · intro hq
+      by_cases hv : q.val = 1
+      · left
+        exact Subtype.ext hv
+      · right
+        constructor
+        · intro he
+          have hs := Prod.mk.inj he
+          norm_num at hs
+        · have hb := q.2
+          dsimp [Ch01.inBandPredicate] at hb
+          omega
+
+
+  have residual_m1_target_budget :
+      targetZeroOccupation m1 ∈ Ch14.budgetSet 2
+        (cdwTarget Ch16.standardBranches witnessZero) 1 := by
+    rw [Ch14.budgetSet]
+    constructor
+    · intro ν
+      fin_cases ν
+      · change Ch07.relativeCharge 2
+          (Ch07.speciesConfiguration 2 (targetZeroOccupation m1) 0) = 1
+        rw [rightSpecies_residual_m1]
+        exact Ch07.ground_configuration_charge 2 (by decide) 1 (by norm_num [Ch07.admissible])
+      · change Ch07.relativeCharge 2
+          (Ch07.speciesConfiguration 2 (targetZeroOccupation m1) 1) = -1
+        rw [leftSpecies_residualOccupation]
+        norm_num [Ch07.relativeCharge]
+    · rw [Ch07.totalExcitation]
+      simp only [Fin.sum_univ_two]
+      rw [leftSpecies_residualOccupation, rightSpecies_residual_m1]
+      have hleft : Ch07.excitationEnergy 2 {targetZeroM0} = 1 := by
+        unfold Ch07.excitationEnergy Ch07.relativeEnergy Ch07.relativeCharge
+        rw [Ch05.sea_energy_even 2 (by decide)]
+        norm_num [Ch07.groundEnergy, Ch05.occupationEnergy, targetZeroM0]
+      have hright : Ch07.excitationEnergy 2
+          (Ch07.groundConfiguration 2 1) = 0 :=
+        Ch07.ground_configuration_excitation 2 (by decide) 1 (by norm_num [Ch07.admissible])
+      rw [hleft, hright]
+      norm_num
+
+  have mapIf
+      (f : A05.FockSpace (Fin 2) 2 →ₗ[ℂ] A05.FockSpace (Fin 2) 2) (P : Prop) [Decidable P] (x y : A05.FockSpace (Fin 2) 2) :
+      f (if P then x else y) = if P then f x else f y := by
+    split_ifs <;> rfl
+
+  have inner_zero_ifX (x v : A05.FockSpace (Fin 2) 2) (p : Prop) [Decidable p] :
+      inner ℂ x (if p then 0 else v) = if p then 0 else inner ℂ x v := by
+    split_ifs <;> simp
+
+  let residual_m1_g (k p : Ch01.Band 4) : Prop :=
+    (1,k) ∈ A05.groundConfiguration 2 witnessZero ∧
+    (A05.groundConfiguration 2 witnessZero).erase (1,k) ∉
+      Ch14.budgetSet 2 (Ch13.lowerCharge witnessZero 1) 0 ∧
+    (0,p) ∉ (A05.groundConfiguration 2 witnessZero).erase (1,k) ∧
+    insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) ∈
+      Ch14.budgetSet 2 (cdwTarget Ch16.standardBranches witnessZero) 1 ∧
+    insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) = targetZeroOccupation m1
+
+  let residual_m1_f (k p : Ch01.Band 4) : ℂ :=
+    Ch06Ext.twistedCharacter 4 (Ch06Ext.periodicTwist 4) k 1 *
+      Ch04.fermionSign (1,k) (A05.groundConfiguration 2 witnessZero) *
+      star (A01.normalization 4 : ℂ) *
+      star (Ch06Ext.twistedCharacter 4 (Ch06Ext.periodicTwist 4) p 1) *
+      Ch04.fermionSign (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k))
+
+  have residual_m1_inner_expand :
+      inner ℂ (A02.ket (targetZeroOccupation m1))
+        (Ch14.projection 2 (cdwTarget Ch16.standardBranches witnessZero) 1
+          (cdwResidualOp 2 (fun _ => Ch06Ext.periodicTwist 4)
+            Ch16.standardBranches 1 witnessZero 0
+            (@A02.ket (A05.Mode (Fin 2) 2) (inferInstance)
+              (A05.localModeDecidableEq (σ:=Fin 2) 2)
+              (A05.groundConfiguration 2 witnessZero)))) =
+      (A01.normalization 4 : ℂ) *
+        ∑ k : Ch01.Band 4, ∑ p : Ch01.Band 4,
+          if residual_m1_g k p then residual_m1_f k p else 0 := by
+    simp only [Ch16.standardBranches]
+    rw [discardedResidualDoubleExpansion]
+    simp only [Ch14.projection, mapIf, map_zero, map_smul, map_sum]
+    rw [inner_smul_right]
+    rw [inner_fsumX]
+    simp_rw [inner_if_zeroX]
+    simp_rw [inner_zero_ifX]
+    simp_rw [inner_smul_right]
+    simp_rw [inner_fsumX]
+    simp_rw [A03.projection_ket]
+    simp_rw [inner_smul_right]
+    simp_rw [inner_if_zeroX]
+    simp_rw [inner_smul_right]
+    simp_rw [inner_if_zeroX]
+    simp_rw [A02.ket_inner]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro k _
+    by_cases hk : (1,k) ∈ A05.groundConfiguration 2 witnessZero
+    · simp only [hk, ite_true]
+      by_cases hmid : (A05.groundConfiguration 2 witnessZero).erase (1,k) ∈
+          Ch14.budgetSet 2 (Ch13.lowerCharge witnessZero 1) 0
+      · simp [hmid, residual_m1_g]
+      · simp only [hmid, ite_false]
+        rw [← mul_assoc, Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro p _
+        by_cases hp : (0,p) ∈ (A05.groundConfiguration 2 witnessZero).erase (1,k)
+        · simp only [residual_m1_g, hp, not_true_eq_false, false_and, and_false, ite_false, mul_zero]
+        · simp only [hp, not_false_eq_true, ite_true]
+          by_cases ht : insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) ∈
+              Ch14.budgetSet 2 (cdwTarget Ch16.standardBranches witnessZero) 1
+          · by_cases heq : insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) =
+                targetZeroOccupation m1
+            · have hIns : insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) ∈
+                  Ch14.budgetSet 2 (cdwTarget Ch16.standardBranches witnessZero) 1 := by
+                rw [heq]
+                exact residual_m1_target_budget
+              simp only [residual_m1_g, hk, hmid, hp, heq, not_false_eq_true,
+                true_and, and_true, ite_true, eq_self]
+              simp [residual_m1_f, mul_assoc, mul_left_comm, mul_comm]
+              rfl
+            · have hneq : targetZeroOccupation m1 ≠
+                  insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) :=
+                fun h => heq h.symm
+              simp only [residual_m1_g, hk, hmid, hp, heq, hneq, not_false_eq_true,
+                and_false, ite_false]
+              simp only [ite_self, mul_zero]
+          · by_cases heq : insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) =
+                targetZeroOccupation m1
+            · have hIns : insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) ∈
+                  Ch14.budgetSet 2 (cdwTarget Ch16.standardBranches witnessZero) 1 := by
+                rw [heq]
+                exact residual_m1_target_budget
+              exact (ht hIns).elim
+            · have hneq : targetZeroOccupation m1 ≠
+                  insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,k)) :=
+                fun h => heq h.symm
+              simp only [residual_m1_g, hk, hmid, hp, heq, hneq, not_false_eq_true,
+                and_false, ite_false]
+              simp only [ite_self, mul_zero]
+    · simp [hk, residual_m1_g]
+
+  have residual_m1_coefficient_nonzero :
+      inner ℂ (A02.ket (targetZeroOccupation m1))
+        (Ch14.projection 2 (cdwTarget Ch16.standardBranches witnessZero) 1
+          (cdwResidualOp 2 (fun _ => Ch06Ext.periodicTwist 4)
+            Ch16.standardBranches 1 witnessZero 0
+            (@A02.ket (A05.Mode (Fin 2) 2) (inferInstance)
+              (A05.localModeDecidableEq (σ:=Fin 2) 2)
+              (A05.groundConfiguration 2 witnessZero)))) ≠ 0 := by
+    rw [residual_m1_inner_expand]
+    classical
+    let g := residual_m1_g
+    let f := residual_m1_f
+    have huniq : ∀ k p, g k p → k = targetZeroMn ∧ p = m1 := by
+      intro k p hg
+      exact residual_m1_pair_unique k p hg.2.2.2.2
+    have hsupport : g targetZeroMn m1 := by
+      refine ⟨?_, targetZeroErased_not_mid_budget, ?_, residual_m1_target_budget, ?_⟩
+      · rw [ground_memX 2 witnessZero 1 targetZeroMn]
+        simp [witnessZero,targetZeroMn]
+      · intro hp
+        have hsource : (0,m1) ∈ A05.groundConfiguration 2 witnessZero :=
+          (Finset.mem_erase.mp hp).2
+        rw [ground_memX 2 witnessZero 0 m1] at hsource
+        simp [witnessZero,m1] at hsource
+      · simp [targetZeroOccupation]
+    change (A01.normalization 4 : ℂ) *
+        (∑ k : Ch01.Band 4, ∑ p : Ch01.Band 4,
+          if g k p then f k p else 0) ≠ 0
+    rw [sum_single_pairX targetZeroMn m1 f g huniq hsupport]
+    simp only [f]
+    have hnorm : (A01.normalization 4 : ℂ) ≠ 0 := by
+      norm_num [A01.normalization]
+    have hsign₁ : Ch04.fermionSign (1,targetZeroMn)
+        (A05.groundConfiguration 2 witnessZero) ≠ 0 := by
+      exact Ch04.fermion_sign_ne_zero _ _
+    have hsign₂ : Ch04.fermionSign (0,m1)
+        ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn)) ≠ 0 := by
+      exact Ch04.fermion_sign_ne_zero _ _
+    have hnormStar : star (A01.normalization 4 : ℂ) ≠ 0 := by
+      simpa using hnorm
+    have hchar₁ : Ch06Ext.twistedCharacter 4
+        (Ch06Ext.periodicTwist 4) targetZeroMn 1 ≠ 0 := by
+      unfold Ch06Ext.twistedCharacter
+      apply mul_ne_zero
+      · unfold Ch06Ext.liftPhase Ch06Ext.periodicTwist
+        simp
+      · unfold A01.integerCharacter
+        have hroot : A01.canonicalRoot 4 ≠ 0 := by
+          unfold A01.canonicalRoot
+          exact Complex.exp_ne_zero _
+        exact zpow_ne_zero _ hroot
+    have hchar₂ : Ch06Ext.twistedCharacter 4
+        (Ch06Ext.periodicTwist 4) m1 1 ≠ 0 := by
+      unfold Ch06Ext.twistedCharacter
+      apply mul_ne_zero
+      · unfold Ch06Ext.liftPhase Ch06Ext.periodicTwist
+        simp
+      · unfold A01.integerCharacter
+        have hroot : A01.canonicalRoot 4 ≠ 0 := by
+          unfold A01.canonicalRoot
+          exact Complex.exp_ne_zero _
+        exact zpow_ne_zero _ hroot
+    have hchar₂Star : star (Ch06Ext.twistedCharacter 4
+        (Ch06Ext.periodicTwist 4) m1 1) ≠ 0 := by
+      simpa using hchar₂
+    unfold residual_m1_f
+    apply mul_ne_zero hnorm
+    exact mul_ne_zero (mul_ne_zero (mul_ne_zero (mul_ne_zero hchar₁ hsign₁)
+      hnormStar) hchar₂Star) hsign₂
+  intro hz
+  have hraw := congrArg Subtype.val hz
+  change Ch14.projection 2 (cdwTarget Ch16.standardBranches witnessZero) 1
+      ((cdwResidualOp 2 (fun _ => Ch06Ext.periodicTwist 4)
+        Ch16.standardBranches 1 witnessZero 0)
+       (A05.groundKet 2 witnessZero)) = 0 at hraw
+  have hi := congrArg (fun y => inner ℂ (A02.ket (targetZeroOccupation m1)) y) hraw
+  simp at hi
+  exact residual_m1_coefficient_nonzero hi
+
 
 /-- A *different* target cutoff removes the same discarded channel. -/
 lemma concrete_discarded_channel_target_zero :
@@ -2617,8 +2962,9 @@ lemma concrete_linear_mu_counterexample :
   have hRed := hEq
   norm_num [Ch17.zeroModeEnergyScalar, Ch16.standardBranches] at hRed
   have hpi : Real.pi = 2 := by linarith
-  have hgt : (3 : ℝ) < Real.pi := Real.pi_gt_three
-  linarith
+  have hc : Real.cos 1 = 0 := by
+    simpa [hpi] using Real.cos_pi_div_two
+  exact (ne_of_gt Real.cos_one_pos) hc
 
 end DualityWitnesses
 

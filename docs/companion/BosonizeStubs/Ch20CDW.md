@@ -76,3 +76,29 @@ The correction regenerates only the CH20 record using the guard parser API;
 all other manifest records are checked unchanged. This establishes a reviewed
 committed baseline before further canonical proof-body edits. Phase B remains
 in progress; Phase C is outside this request.
+
+### Remaining witness integration and import correction
+
+Independent proof reviewer `/root/review_proof` approved the unique-coefficient
+argument and its adaptation to the canonical ground-vector contract. The
+integrated proof keeps every supporting construction as a local `let`/`have`,
+reuses the existing expansion and occupation helpers, and leaves the canonical
+statement unchanged. The witness removes left mode -1 and creates right mode +1;
+its left excitation is one and right excitation zero. Intermediate cutoff zero
+rejects it, while target cutoff one retains it. Equality with the witness forces
+that unique mode pair, whose coefficient is a product of nonzero normalization,
+characters and fermion signs. Thus cancellation cannot destroy this coefficient.
+
+Fresh warning-as-error compiler validation passed on the complete integrated
+source. Native canonical Lean MCP diagnostics subsequently returned success=true,
+partial=false, timed_out=false, items=[], failed_dependencies=[].
+
+Lake additionally diagnosed a module-system import warning for the newly added
+Pi.Bounds import. Independent reviewer `/root/audit_locks` approved removing that
+extra import and proving the unchanged concrete μ counterexample using existing
+`Real.cos_pi_div_two` and `Real.cos_one_pos`: the derived equality π=2 would force
+cos(1)=0, contradicting positivity. The final complete candidate again passed
+warning-as-error compilation. This restores the original four Core imports;
+only the CH20 lock record is amended. The final source SHA256 is
+`00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f` (filled from the actual file below). No linter is suppressed.
+Final acceptance still requires the full fresh verifier, build and CI receipts.
