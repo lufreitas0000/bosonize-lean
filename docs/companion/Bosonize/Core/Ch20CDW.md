@@ -174,3 +174,31 @@ scalar/family/parameter duality to `cdw_charge_duality`, `sc_charge_duality`,
 `dual_xCDW`, `dual_xSC`, `dual_pairingMode`, `dual_symmetric_zero_mode`,
 `dual_canonical_mu_zero_mode`; finite kernel to `logKernel_nonneg` and witnesses.
 Formal vertices, Wick/state transport and continuum claims remain deferred.
+
+### Pedagogical synchronization and independent review
+
+Author `/root/review_proof` appended a 130-line constructive-realization section
+to `notes/md/ch20_CDW.md`. The entire original 8207-byte reference note remains
+an exact prefix, SHA256
+`29a1016437b6fbc310c455fec6d15c1216e16b048eb12c34885b647deca87f78`.
+The resulting note SHA256 is
+`b5b014fc9a612d64f5bfba94ccbc18f7000df7cc13393028ddff06b71ff39b22`.
+Independent reviewer `/root/audit_locks` checked the exact source/note hashes,
+migration, preserved reference information, formulas/hypotheses, witness,
+limits and four relative links: PASS, no corrections required. This separately
+establishes migration integrity and pedagogical fidelity; compiler/axiom/CI
+results are recorded below.
+
+### Phase C acceptance evidence
+
+The required namespace-sandbox validation at promotion commit `426f402` passed
+full `make ci` (69 guard tests, 18 verifier tests, both builds), strict locks and
+34 Core hashes. A fresh warning-as-error source compilation audited all 159
+CH20 declarations. A separate `import Bosonize` audit checked the original
+91 public data/theorem declarations, establishing downstream aggregator access.
+Only `propext`, `Classical.choice`, and `Quot.sound` occur; forbidden proof-token
+scan passed. Full logs, script and receipt are under
+`docs/verification/ch20-phase-c-20261016/`; the validation report is
+`note/ch20_phase_c_validation_2026-10-16.md`. Independent migration and pedagogical
+reviews passed as recorded above. CH20 Phase C is complete locally; no browser
+finish transaction, push, remote CI, or completion of CH20b is claimed.

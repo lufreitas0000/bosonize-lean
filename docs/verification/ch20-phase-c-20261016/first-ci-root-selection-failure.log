@@ -1,0 +1,66 @@
+./scripts/ci.sh
+== Testing the statement-freeze guard ==
+.....................................................................
+----------------------------------------------------------------------
+Ran 69 tests in 2.226s
+
+OK
+== Checking frozen chapter definitions and statements ==
+[stub_lock] Verification PASSED: 1079 statement(s) and 1093 frozen command(s) verified.
+== Checking complete frozen Core sources ==
+[core_lock] Verified 34 complete Core source file(s).
+== Building Bosonize (Core) ==
+ℹ [3403/3419] Replayed Bosonize.Core.Ch13KleinFactors
+info: Bosonize/Core/Ch13KleinFactors.lean:228:4: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+ℹ [3411/3419] Replayed Bosonize.Core.A07InteractionsAndBogoliubov
+info: Bosonize/Core/A07InteractionsAndBogoliubov.lean:375:2: Try this:
+  [apply] abel_nf
+✔ [3417/3419] Built Bosonize.Core.Ch20CDW (19s)
+✔ [3418/3419] Built Bosonize (2.2s)
+Build completed successfully (3419 jobs).
+== Building BosonizeStubs (Staging) ==
+ℹ [3403/3420] Replayed Bosonize.Core.Ch13KleinFactors
+info: Bosonize/Core/Ch13KleinFactors.lean:228:4: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+ℹ [3411/3420] Replayed Bosonize.Core.A07InteractionsAndBogoliubov
+info: Bosonize/Core/A07InteractionsAndBogoliubov.lean:375:2: Try this:
+  [apply] abel_nf
+✔ [3419/3420] Built BosonizeStubs (2.3s)
+Build completed successfully (3420 jobs).
+== Testing the Web-LLM artifact/proof verifiers and axiom audit ==
+.........E........
+======================================================================
+ERROR: test_real_elaboration_and_indirect_sorry_audit (test_verify_phase_a.Tests.test_real_elaboration_and_indirect_sorry_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lucas/Projects/.packets/worktrees/ch20-phase-b-final-audit-20261016/scripts/webllm/test_verify_phase_a.py", line 40, in test_real_elaboration_and_indirect_sorry_audit
+    verifier.verify(path)
+  File "/home/lucas/Projects/.packets/worktrees/ch20-phase-b-final-audit-20261016/scripts/webllm/verify_phase_a.py", line 96, in verify
+    working = compiler_root(repo)
+              ^^^^^^^^^^^^^^^^^^^
+  File "/home/lucas/Projects/.packets/worktrees/ch20-phase-b-final-audit-20261016/scripts/webllm/verify_phase_a.py", line 86, in compiler_root
+    raise ValueError("Primary checkout moved since packet baseline; regenerate")
+ValueError: Primary checkout moved since packet baseline; regenerate
+
+----------------------------------------------------------------------
+Ran 18 tests in 9.204s
+
+FAILED (errors=1)
+'Fixture.value' depends on axioms: [sorryAx]
+PASS Markdown structure: /tmp/tmpr9bkpdhp/candidate.md; human evidence/prose review still required
+make: *** [Makefile:19: ci] Error 1
+Traceback (most recent call last):
+  File "/home/lucas/Projects/.packets/worktrees/ch20-phase-b-final-audit-20261016/.scratch/ch20_phase_c_audit.py", line 9, in <module>
+    subprocess.run(['make','ci'],check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['make', 'ci']' returned non-zero exit status 2.

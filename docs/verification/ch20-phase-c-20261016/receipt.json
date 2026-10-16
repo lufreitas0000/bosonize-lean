@@ -1,0 +1,28 @@
+{
+  "audited_commit": "426f402bc7e07d02b405a000a236fee310a55b6a",
+  "source_sha256": "00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f",
+  "full_source_audit": 159,
+  "core_aggregator_audit": 91,
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "core_files": 34,
+  "ci": "passed",
+  "sandbox": "1",
+  "proof_token_scan": "passed",
+  "pedagogical_review": {
+    "author": "/root/review_proof",
+    "reviewer": "/root/audit_locks",
+    "verdict": "PASS",
+    "original_bytes_preserved": 8207,
+    "note_sha256": "b5b014fc9a612d64f5bfba94ccbc18f7000df7cc13393028ddff06b71ff39b22"
+  },
+  "log_hashes": {
+    "all-declarations.log": "e5ec7f2b1e2094d99a27c2c3a73cad7eb6524bea206f00bb20e964b0ba5a720e",
+    "core-aggregator.log": "6b887f490d985994df519072a17b01a60af80ec538b8e466541f71523e6aaa3e",
+    "ci-and-audit.log": "cb4aa4eb0e2cb330a488729cc0b9b0512fe6f1aaa0fb352275030bb8f42ca27a",
+    "first-ci-root-selection-failure.log": "d69380448d94c1cec1b048bd6a4f3e02a7791d01cede56c7255bae5425b32782"
+  }
+}
