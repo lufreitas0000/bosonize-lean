@@ -3,16 +3,16 @@
 
 \section{Introduction and the Bridge to Bosonic Currents}
 
-The central mechanism of bosonization in $1+1$ dimensions is the construction of bosonic current operators out of bilinear products of fermionic fields. In continuous quantum field theory, the chiral current is formally written as $\rho(x) = :\! \psi^\dagger(x) \psi(x) \!:$. Because the product of two quantum fields at the same spacetime point is singular, the continuum definition requires point-splitting regularization, subtracting infinite vacuum expectation values and introducing ambiguous anomalous Schwinger terms.
+The central mechanism of bosonization in $1+1$ dimensions is the construction of bosonic current operators out of bilinear products of fermionic fields. In continuous quantum field theory, the chiral current is formally written as $\rho(x) = :\! \psi^\dagger(x) \psi(x) \!:$. Because the product of two quantum fields at the same spacetime point is singular, the continuum definition requires point-splitting regularization, subtracting infinite vacuum expectation values and introducing anomalous Schwinger terms.
 
-In our constructive lattice AQFT framework, all singularities and heuristic subtractions disappear. Density modes are defined as exact, non-wrapping momentum-shift operators on the finite-dimensional fermionic Fock space $\mathcal{F}(L)$ ($L = 2h$, $h \ge 1$). 
+In our finite-lattice framework, these continuum operator products are replaced by finite matrices acting on the finite-dimensional fermionic Fock space $\mathcal{F}(L)$ ($L = 2h$, $h \ge 1$). Density modes are defined here as non-wrapping momentum-shift operators, taking care to respect the boundaries of the discrete Brillouin zone.
 
-In this chapter, we develop the exact kinematics of these density operators. We prove that:
+In this chapter, we develop the kinematics of these density operators. We prove that:
 \begin{enumerate}
     \item Density modes strictly conserve net fermion charge and grade excitation energy by the mode integer $m$.
     \item Same-sign density modes commute globally on the entire Fock space without any budget restriction.
     \item Negative density modes strictly annihilate every sector ground state $|N\rangle_0$.
-    \item The state $\rho_m |\Omega\rangle$ has exact norm squared $\|\rho_m |\Omega\rangle\|^2 = m$ for $1 \le m \le h$, establishing the linear independence of density modes prior to any CCR evaluation.
+    \item The state $\rho_m |\Omega\rangle$ has norm squared $\|\rho_m |\Omega\rangle\|^2 = m$ for $1 \le m \le h$, establishing the linear independence of density modes prior to any CCR evaluation.
 \end{enumerate}
 
 \section{Non-Wrapping Momentum Kinematics and Valid Pairs}
@@ -70,6 +70,8 @@ For adjoints: $(d\Gamma(A))^\dagger = \sum_{p, k} \overline{A_{p, k}} (c_p^\dagg
 
 \section{Raw and Normal-Ordered Density Operators}
 
+We now define the density modes as the second quantization of the non-wrapping partial shift matrices. Notice that this definition uses a non-wrapping raising shift, meaning the target momentum $p = k+m$ must lie strictly within the finite band. This differs from the cyclic wrapped lowering convention ($k \ominus m$) summarized in the frontmatter. Furthermore, our definition applies a simple scalar correction solely to the zero mode to account for the vacuum charge, rather than using a mode-by-mode fermionic normal-ordering product. We retain both notations in this monograph because the non-wrapping definition is essential for the explicit finite-difference derivations here and in Chapter~\ref{ch:heisenberg_algebra}, while the wrapped definition appears in later chapters studying correlation functions. Do not silently harmonize these definitions or their corresponding commutation signs; the discrepancy between them is a finite-lattice effect that only vanishes under explicit energy bounds.
+
 \begin{definition}[Raw and Normal-Ordered Densities]
 \begin{enumerate}
     \item For any mode transfer integer $m \in \mathbb{Z}$, the \emph{raw density operator} $\rho_m$ is the second quantization of the partial shift matrix $T_m$:
@@ -101,6 +103,8 @@ For $m = 0$, $D_0 = \{(k, k) \mid k \in \Lambda^*\}$. Thus $\rho_0 = \sum_k c_k^
 
 \section{Exact Kinematic Lemmas and Global Commutativity}
 
+The properties of the partial shift matrices directly determine the vanishing conditions and adjoints of the density modes.
+
 \begin{lemma}[Vanishing and Adjoint Inversion]
 \label{lem:density_vanishing_adj}
 \begin{enumerate}
@@ -116,6 +120,8 @@ For $m = 0$, $D_0 = \{(k, k) \mid k \in \Lambda^*\}$. Thus $\rho_0 = \sum_k c_k^
 If $|m| \ge 2h$, the difference between any two elements in $\Lambda^*$ cannot equal $m$ because the diameter of $\Lambda^*$ is $2h - 1$. Hence $D_m = \emptyset$.
 For adjoints: $(T_m)_{p, k} = 1 \iff p = k + m \iff k = p - m \iff (T_{-m})_{k, p} = 1$. Thus $T_m^\dagger = T_{-m}$. By Lemma~\ref{lem:dgamma_comm}, $\rho_m^\dagger = d\Gamma(T_m^\dagger) = d\Gamma(T_{-m}) = \rho_{-m}$.
 \end{proof}
+
+Because the non-wrapping shift operators truncating at the band edges still compose cleanly in the forward direction, they commute globally on the Fock space when their shift directions match.
 
 \begin{theorem}[Global Same-Sign Commutativity]
 \label{thm:same_sign_comm}
@@ -212,7 +218,7 @@ For any admissible charge sector $N \in \{-h, \dots, h\}$ and energy cutoff $K \
 
 \section{Exact Vacuum Norm and Linear Independence}
 
-To demonstrate that the density modes $\{\rho_m\}$ create non-trivial physical excitations, we compute the exact norm of the vacuum excitation $\rho_m |\Omega\rangle$ without relying on unproved commutation relations.
+To demonstrate that the density modes $\{\rho_m\}$ create non-trivial physical excitations, we compute the norm of the vacuum excitation $\rho_m |\Omega\rangle$ without relying on unproved commutation relations.
 
 \begin{theorem}[Exact Vacuum Excitation Norm]
 \label{thm:vacuum_norm}
@@ -289,3 +295,5 @@ where:
 \end{itemize}
 
 On the budget subspace under the unified margin conditions of Theorem~\ref{thm:unified_margin}, the wrap remainder $R_m$ annihilates all states. Thus, the physical spatial current coincides with the non-wrapping chiral current $\rho_m$.
+
+This conditional equivalence allows us to use the algebraically simpler non-wrapping operators on protected states. However, because the un-wrapped shifts strictly truncate at the boundaries of the finite momentum band, the commutators of these density modes are not exact scalars on the entire Fock space. In Chapter~\ref{ch:heisenberg_algebra}, we will evaluate the commutator $[\rho_m, \rho_{-n}]$ and explicitly isolate the finite band-edge operators that arise, showing how they yield the expected Heisenberg algebra only when applied within a protected energy budget.
