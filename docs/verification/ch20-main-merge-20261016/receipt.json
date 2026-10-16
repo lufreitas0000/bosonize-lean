@@ -1,0 +1,10 @@
+{
+  "tested_merge_commit": "6622ecc3f44b2ebb7c4f77af5782533af2440258",
+  "result": "CI OK",
+  "sandbox": "required, network disabled, credentials hidden",
+  "core_files": 34,
+  "scratch_files_in_published_tree": 0,
+  "ch20_source_sha256": "00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f",
+  "ci_log_sha256": "58441e443915d10141b25beecb286fcf443a7e893bb14f66cd544f3381c01d8d",
+  "ch21": "R&D proposal/prompts only; no new Lean development"
+}
