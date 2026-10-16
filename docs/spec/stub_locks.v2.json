@@ -12126,650 +12126,1112 @@
         }
       }
     },
-    "BosonizeStubs/Ch20CDW.lean": {
+    "Bosonize/Core/Ch20CDW.lean": {
       "commands": [
         {
-          "hash": "886bf91b6d4ef559b8389c9b47c04208a544963292b465f6b9d34e80feffbc83",
           "kind": "import",
           "label": "import Bosonize.Core.Ch14Mandelstam",
+          "hash": "886bf91b6d4ef559b8389c9b47c04208a544963292b465f6b9d34e80feffbc83",
           "text": "import Bosonize.Core.Ch14Mandelstam"
         },
         {
-          "hash": "8edb36728e68b34125d97ad280dd8fff778e399ef69808ef4a26fbc6153e215b",
           "kind": "import",
           "label": "import Bosonize.Core.Ch16FieldHamiltonian",
+          "hash": "8edb36728e68b34125d97ad280dd8fff778e399ef69808ef4a26fbc6153e215b",
           "text": "import Bosonize.Core.Ch16FieldHamiltonian"
         },
         {
-          "hash": "8d50a8080a7fb9df29e69a9200c7a70bb844143ce88777d2b210691c2743836d",
           "kind": "import",
           "label": "import Bosonize.Core.Ch17LuttingerModels",
+          "hash": "8d50a8080a7fb9df29e69a9200c7a70bb844143ce88777d2b210691c2743836d",
           "text": "import Bosonize.Core.Ch17LuttingerModels"
         },
         {
-          "hash": "544f711d1b5cd21b867ca6b8adadd7a9b50a65b09a1fa78e5c614ad9bfb6016a",
           "kind": "import",
           "label": "import Bosonize.Core.Ch18Bogoliubov",
+          "hash": "544f711d1b5cd21b867ca6b8adadd7a9b50a65b09a1fa78e5c614ad9bfb6016a",
           "text": "import Bosonize.Core.Ch18Bogoliubov"
         },
         {
-          "hash": "9a2aa7098efb365aa36e26df4418cd04d28fbaea3a4b540b93e6a6f19e61e588",
           "kind": "namespace",
           "label": "namespace Bosonize.Ch20",
+          "hash": "9a2aa7098efb365aa36e26df4418cd04d28fbaea3a4b540b93e6a6f19e61e588",
           "text": "namespace Bosonize.Ch20"
         },
         {
-          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
           "kind": "open",
           "label": "open scoped BigOperators Classical",
+          "hash": "dc528984043fa9f2531081f70cef6256e9aa115d61dcd72da59366514d88a41e",
           "text": "open scoped BigOperators Classical"
         },
         {
-          "hash": "bc2d1b4a2706d946175fc2cb5929cc28fcff1420a734dd38c35c957c87397061",
           "kind": "section",
           "label": "section FiniteCAR",
+          "hash": "bc2d1b4a2706d946175fc2cb5929cc28fcff1420a734dd38c35c957c87397061",
           "text": "section FiniteCAR"
         },
         {
-          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
           "kind": "variable",
           "label": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]",
+          "hash": "2c0471c01bd0c1e85c6e03cca2fb8394b3dab008fa72d4cdbca9b60907b5d715",
           "text": "variable {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]"
         },
         {
-          "hash": "5100c83069732b1ab085e59a9d334278b40f08821c3b249799bd4e52854b1e49",
           "kind": "def",
           "label": "def Bosonize.Ch20.raiseCharge",
+          "hash": "5100c83069732b1ab085e59a9d334278b40f08821c3b249799bd4e52854b1e49",
           "text": "noncomputable def raiseCharge (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : \u03c3 \u2192 \u2124 :=\n  Function.update Ns \u03bd (Ns \u03bd + 1)"
         },
         {
-          "hash": "edd5dd0946f5cb2b447518419bafc6f2a20153971e27dd858d7209bb4318d38d",
           "kind": "def",
           "label": "def Bosonize.Ch20.reflectLeft",
+          "hash": "edd5dd0946f5cb2b447518419bafc6f2a20153971e27dd858d7209bb4318d38d",
           "text": "noncomputable def reflectLeft (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : \u03c3 \u2192 \u2124 :=\n  Function.update Ns branches.leftSpecies (-(Ns branches.leftSpecies))"
         },
         {
-          "hash": "e38ca873762a358e69989ed32cdfcfbbf00768bd571275170c0f08b7d8a26892",
           "kind": "def",
           "label": "def Bosonize.Ch20.cdwTarget",
+          "hash": "e38ca873762a358e69989ed32cdfcfbbf00768bd571275170c0f08b7d8a26892",
           "text": "noncomputable def cdwTarget (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : \u03c3 \u2192 \u2124 :=\n  raiseCharge (Ch13.lowerCharge Ns branches.leftSpecies) branches.rightSpecies"
         },
         {
-          "hash": "931f16f10734d319ab7d99a797a95712152ce8afa4ee51707efa20d5e801a168",
           "kind": "def",
           "label": "def Bosonize.Ch20.scTarget",
+          "hash": "931f16f10734d319ab7d99a797a95712152ce8afa4ee51707efa20d5e801a168",
           "text": "noncomputable def scTarget (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : \u03c3 \u2192 \u2124 :=\n  Ch13.lowerCharge (Ch13.lowerCharge Ns branches.leftSpecies) branches.rightSpecies"
         },
         {
-          "hash": "53ffc32c6ab580261089cf0c7d62e00bc478daa34ff49705d737c81553f981ca",
           "kind": "def",
           "label": "def Bosonize.Ch20.cdwShift",
+          "hash": "53ffc32c6ab580261089cf0c7d62e00bc478daa34ff49705d737c81553f981ca",
           "text": "noncomputable def cdwShift (branches : A06.Branches \u03c3) (\u03bd : \u03c3) : \u2124 :=\n  (if \u03bd = branches.rightSpecies then (1 : \u2124) else 0) -\n    (if \u03bd = branches.leftSpecies then (1 : \u2124) else 0)"
         },
         {
-          "hash": "c3454c4274c083088fde2bd08f3bd318f51b768714a35024be79c6471628219a",
           "kind": "def",
           "label": "def Bosonize.Ch20.scShift",
+          "hash": "c3454c4274c083088fde2bd08f3bd318f51b768714a35024be79c6471628219a",
           "text": "noncomputable def scShift (branches : A06.Branches \u03c3) (\u03bd : \u03c3) : \u2124 :=\n  -(if \u03bd = branches.rightSpecies then (1 : \u2124) else 0) -\n    (if \u03bd = branches.leftSpecies then (1 : \u2124) else 0)"
         },
         {
-          "hash": "1c2459ae8e6215d55de9677b553fce26fd4bfb29bc588364229237cd1bbf0769",
           "kind": "def",
           "label": "def Bosonize.Ch20.fieldOf",
+          "hash": "1c2459ae8e6215d55de9677b553fce26fd4bfb29bc588364229237cd1bbf0769",
           "text": "noncomputable def fieldOf (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h))\n    (\u03bd : \u03c3) (x : \u2124) : A05.Operators \u03c3 h :=\n  A05.liftedAnnihilation h b \u03bd x"
         },
         {
-          "hash": "84fb2a2bfc38ac23af1f2c9b476df7aa7fabde049f23876bb25339f3c8beadd6",
           "kind": "def",
           "label": "def Bosonize.Ch20.orderCDW",
+          "hash": "84fb2a2bfc38ac23af1f2c9b476df7aa7fabde049f23876bb25339f3c8beadd6",
           "text": "noncomputable def orderCDW (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h))\n    (branches : A06.Branches \u03c3) (x : \u2124) : A05.Operators \u03c3 h :=\n  LinearMap.adjoint (fieldOf h b branches.rightSpecies x) *\n    fieldOf h b branches.leftSpecies x"
         },
         {
-          "hash": "71d31f883224d97e13547040d9b788efaffc6419179ec909f1ac52429e8af9d1",
           "kind": "def",
           "label": "def Bosonize.Ch20.orderSC",
+          "hash": "71d31f883224d97e13547040d9b788efaffc6419179ec909f1ac52429e8af9d1",
           "text": "noncomputable def orderSC (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h))\n    (branches : A06.Branches \u03c3) (x : \u2124) : A05.Operators \u03c3 h :=\n  fieldOf h b branches.rightSpecies x * fieldOf h b branches.leftSpecies x"
         },
         {
-          "hash": "8d608ab33c4e28e026bf8fa9085c35448cab2e62d4f1b03060a39afce9b91641",
           "kind": "def",
           "label": "def Bosonize.Ch20.cdwResidualOp",
+          "hash": "8d608ab33c4e28e026bf8fa9085c35448cab2e62d4f1b03060a39afce9b91641",
           "text": "noncomputable def cdwResidualOp (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h))\n    (branches : A06.Branches \u03c3) (x : \u2124) (Ns : \u03c3 \u2192 \u2124) (Km : \u2115) :\n    A05.Operators \u03c3 h :=\n  LinearMap.adjoint (fieldOf h b branches.rightSpecies x) *\n    (1 - Ch14.projection h (Ch13.lowerCharge Ns branches.leftSpecies) Km) *\n    fieldOf h b branches.leftSpecies x"
         },
         {
-          "hash": "c2af417c4b74536be60230972f3e4859ccf1543e4f1d6abf266a8ff70634b3d6",
           "kind": "def",
           "label": "def Bosonize.Ch20.scResidualOp",
+          "hash": "c2af417c4b74536be60230972f3e4859ccf1543e4f1d6abf266a8ff70634b3d6",
           "text": "noncomputable def scResidualOp (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h))\n    (branches : A06.Branches \u03c3) (x : \u2124) (Ns : \u03c3 \u2192 \u2124) (Km : \u2115) :\n    A05.Operators \u03c3 h :=\n  fieldOf h b branches.rightSpecies x *\n    (1 - Ch14.projection h (Ch13.lowerCharge Ns branches.leftSpecies) Km) *\n    fieldOf h b branches.leftSpecies x"
         },
         {
-          "hash": "3102c3fc16982c6d897a3fab1d21da46cfd9417b250a82b5fe8ad9ddbd25a6f9",
           "kind": "def",
           "label": "def Bosonize.Ch20.cdwChargeCoeff",
+          "hash": "3102c3fc16982c6d897a3fab1d21da46cfd9417b250a82b5fe8ad9ddbd25a6f9",
           "text": "noncomputable def cdwChargeCoeff (h : \u2115) (branches : A06.Branches \u03c3)\n    (Ns : \u03c3 \u2192 \u2124) (x : \u2124) : \u2102 :=\n  A01.integerCharacter (A01.canonicalRoot (2 * h))\n      (Ns branches.leftSpecies - Ns branches.rightSpecies - 1) x *\n    (Ch13.kleinPhase h Ns branches.leftSpecies *\n      Ch13.kleinPhase h (cdwTarget branches Ns) branches.rightSpecies)"
         },
         {
-          "hash": "87215a656552b9190621cf6e213e894ca794ee4f956e55618e2b9d0f738f969e",
           "kind": "def",
           "label": "def Bosonize.Ch20.scChargeCoeff",
+          "hash": "87215a656552b9190621cf6e213e894ca794ee4f956e55618e2b9d0f738f969e",
           "text": "noncomputable def scChargeCoeff (h : \u2115) (branches : A06.Branches \u03c3)\n    (Ns : \u03c3 \u2192 \u2124) (x : \u2124) : \u2102 :=\n  A01.integerCharacter (A01.canonicalRoot (2 * h))\n      (Ns branches.rightSpecies + Ns branches.leftSpecies) x *\n    (Ch13.kleinPhase h Ns branches.leftSpecies *\n      Ch13.kleinPhase h (Ch13.lowerCharge Ns branches.leftSpecies)\n        branches.rightSpecies)"
         },
         {
-          "hash": "914712a307ddaf09c34d6b62c937a358c3c166aba108ee00d9521836fbfbf744",
+          "kind": "section",
+          "label": "section CDWGroundCoeffProofHelpers",
+          "hash": "4b333e2eec3ad7d73c0988c8fde1a17f1d6464720130014999bd945e5e7d437a",
+          "text": "section CDWGroundCoeffProofHelpers"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.localModeLinearOrderCDW",
+          "hash": "20d646542a7eb135923252615bd612aad0e540ec0d50d3e8c2612064465117a4",
+          "text": "noncomputable local instance localModeLinearOrderCDW (h : \u2115) :\n    LinearOrder (A05.Mode \u03c3 h) := A05.speciesOrder h"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.localModeLTCDW",
+          "hash": "7b0d57f6f4aa9ab66ee9decd2c3045910eea08db50acda44e879c1566894219a",
+          "text": "noncomputable local instance localModeLTCDW (h : \u2115) :\n    LT (A05.Mode \u03c3 h) := (A05.speciesOrder h).toLT"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.localModeLECDW",
+          "hash": "8ebcf491236379357642abe39257c59b1a62919c5ae06a0012b9997b8e37db9f",
+          "text": "noncomputable local instance localModeLECDW (h : \u2115) :\n    LE (A05.Mode \u03c3 h) := (A05.speciesOrder h).toLE"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.localModeDecidableEqCDW",
+          "hash": "7c78400ccbbd022fa12584073d396fc1fbb2479fe654fac03946540f50282a78",
+          "text": "noncomputable local instance localModeDecidableEqCDW (h : \u2115) :\n    DecidableEq (A05.Mode \u03c3 h) := (A05.speciesOrder h).toDecidableEq"
+        },
+        {
+          "kind": "end",
+          "label": "end CDWGroundCoeffProofHelpers",
+          "hash": "ba0cf87aa578f4ad45dd7fe7c581b2cde94c6108a9243773d0b403ec65913c25",
+          "text": "end CDWGroundCoeffProofHelpers"
+        },
+        {
+          "kind": "section",
+          "label": "section GroundCoeffProofHelpers",
+          "hash": "cf38da011d7612777fadf47c203b9743c518db4bbb887785e29cb6bb28cdc1da",
+          "text": "section GroundCoeffProofHelpers"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.localModeLinearOrder",
+          "hash": "bdff2b845fb369d2eaaeb91bec15b10177b3da6ed7936e51ab60620104a2b56e",
+          "text": "noncomputable local instance localModeLinearOrder (h : \u2115) :\n    LinearOrder (A05.Mode \u03c3 h) := A05.speciesOrder h"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.localModeLT",
+          "hash": "bd548bca148f9ab6be660e7dd1f083dd57046915f7b7e478ee1f16a9538fea73",
+          "text": "noncomputable local instance localModeLT (h : \u2115) :\n    LT (A05.Mode \u03c3 h) := (A05.speciesOrder h).toLT"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.localModeLE",
+          "hash": "dbf21dd9663260572e220d6adebd545b85894a26d70f820d824e4e1f3332c32b",
+          "text": "noncomputable local instance localModeLE (h : \u2115) :\n    LE (A05.Mode \u03c3 h) := (A05.speciesOrder h).toLE"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.localModeDecidableEq",
+          "hash": "d6db54a3fff04e51bc7dbbd494c3640a801d59df4c1cd1f2275e430878fef442",
+          "text": "noncomputable local instance localModeDecidableEq (h : \u2115) :\n    DecidableEq (A05.Mode \u03c3 h) := (A05.speciesOrder h).toDecidableEq"
+        },
+        {
+          "kind": "end",
+          "label": "end GroundCoeffProofHelpers",
+          "hash": "b7a27348719ad7f884d9b32a0ec1d0d7ebd01d25e302b665455b39c0ba0f4c5c",
+          "text": "end GroundCoeffProofHelpers"
+        },
+        {
           "kind": "end",
           "label": "end FiniteCAR",
+          "hash": "914712a307ddaf09c34d6b62c937a358c3c166aba108ee00d9521836fbfbf744",
           "text": "end FiniteCAR"
         },
         {
-          "hash": "99f5d8f900116432006dce0d8eaa18bc697c90d167ac077af39eff1506b08fd6",
           "kind": "section",
           "label": "section FiniteWitnesses",
+          "hash": "99f5d8f900116432006dce0d8eaa18bc697c90d167ac077af39eff1506b08fd6",
           "text": "section FiniteWitnesses"
         },
         {
-          "hash": "0923af52f1284f35ce6cba6957e9ededd6ada8a3d2252b843e47e883830ceb36",
           "kind": "def",
           "label": "def Bosonize.Ch20.witnessZero",
+          "hash": "0923af52f1284f35ce6cba6957e9ededd6ada8a3d2252b843e47e883830ceb36",
           "text": "def witnessZero : Fin 2 \u2192 \u2124 := fun _ => 0"
         },
         {
-          "hash": "46c5d633506ed30d74474f0d01e65a8536a1b4180f40b4df376652c991c0c811",
           "kind": "def",
           "label": "def Bosonize.Ch20.witnessSC",
+          "hash": "46c5d633506ed30d74474f0d01e65a8536a1b4180f40b4df376652c991c0c811",
           "text": "def witnessSC : Fin 2 \u2192 \u2124 := ![1, 0]"
         },
         {
-          "hash": "a5ce37327905797336d00f8df28e89f6e99c2ee1673593dbf7ed7f1fe29fcdf7",
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.targetZeroModeOrder",
+          "hash": "da46eb3f37797a3c62f22199140eeb99a72475b4101b09138f036376f0ad115a",
+          "text": "noncomputable local instance targetZeroModeOrder :\n    LinearOrder (A05.Mode (Fin 2) 2) := A05.localModeLinearOrder (\u03c3:=Fin 2) 2"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.targetZeroModeLT",
+          "hash": "3756ff7a4b767a25151f7e13decc442219f8675f232610785ecdb89c7a4d2ae8",
+          "text": "noncomputable local instance targetZeroModeLT :\n    LT (A05.Mode (Fin 2) 2) := A05.localModeLT (\u03c3:=Fin 2) 2"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.targetZeroModeLE",
+          "hash": "42334de8d8c17567291cef1ec1755db391ed347eb6cb21ab2b5e9dc5382240f3",
+          "text": "noncomputable local instance targetZeroModeLE :\n    LE (A05.Mode (Fin 2) 2) := A05.localModeLE (\u03c3:=Fin 2) 2"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.targetZeroModeDecEq",
+          "hash": "3d52a87d7d7642754865c8a13aa96c1bd583551fad74b6af83ed9906a19a962b",
+          "text": "noncomputable local instance targetZeroModeDecEq :\n    DecidableEq (A05.Mode (Fin 2) 2) :=\n      fun a b => A05.localModeDecidableEq (\u03c3:=Fin 2) 2 a b"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.targetZeroPairOrder",
+          "hash": "fdbd6129e21c2c43cc3186837dc20f787f7331bffb49318c219ba4cbf6842911",
+          "text": "noncomputable local instance targetZeroPairOrder :\n    LinearOrder (Fin 2 \u00d7 Ch01.Band 4) := A05.localModeLinearOrder (\u03c3:=Fin 2) 2"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.targetZeroPairLT",
+          "hash": "3b8f24e4e5a771dfb57c59160a38695ef7a289f6509cc0968d9583c30a54e7af",
+          "text": "noncomputable local instance targetZeroPairLT :\n    LT (Fin 2 \u00d7 Ch01.Band 4) := A05.localModeLT (\u03c3:=Fin 2) 2"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.targetZeroPairLE",
+          "hash": "aa37cf294fa354287eef625da668079944d14535fbea57caef6b6e6ec7e18490",
+          "text": "noncomputable local instance targetZeroPairLE :\n    LE (Fin 2 \u00d7 Ch01.Band 4) := A05.localModeLE (\u03c3:=Fin 2) 2"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.targetZeroPairDecEq",
+          "hash": "0bd7836abfd874313c34199f8f2c72b6c2f315279b1be07236b7f00afee46ca8",
+          "text": "noncomputable local instance targetZeroPairDecEq :\n    DecidableEq (Fin 2 \u00d7 Ch01.Band 4) :=\n      A05.localModeDecidableEq (\u03c3:=Fin 2) 2"
+        },
+        {
+          "kind": "section",
+          "label": "section DiscardedTargetZeroHelpers",
+          "hash": "aaea56b5ba5fe6d5b260307f9574e4a6879905aed641e246ebf77fabadb8db8b",
+          "text": "section DiscardedTargetZeroHelpers"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch20.targetZeroMn",
+          "hash": "d1b7a4356d6f167ad93936d6c480675cd9c5990ecf9202425be066af6e92ac99",
+          "text": "private def targetZeroMn : Ch01.Band 4 :=\n  \u27e8-1, by norm_num [Ch01.inBandPredicate]\u27e9"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch20.targetZeroM0",
+          "hash": "bb6e16009e62f024bc3f2e6148020e9528ed6ba28d5935b17651098f5dca6624",
+          "text": "private def targetZeroM0 : Ch01.Band 4 :=\n  \u27e80, by norm_num [Ch01.inBandPredicate]\u27e9"
+        },
+        {
+          "kind": "def",
+          "label": "def Bosonize.Ch20.targetZeroOccupation",
+          "hash": "8dcacabe07e80e5243be2dd5ea46ea0a151e7d447e3ca8092dadbfafaed667c3",
+          "text": "private noncomputable def targetZeroOccupation (l : Ch01.Band 4) :\n    A05.Occupation (Fin 2) 2 :=\n  insert (0,l) ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn))"
+        },
+        {
+          "kind": "end",
+          "label": "end DiscardedTargetZeroHelpers",
+          "hash": "ba2e77c88821cfc70a09a6125ff7baa3373f6ae089982545f87e4a013102a9c4",
+          "text": "end DiscardedTargetZeroHelpers"
+        },
+        {
+          "kind": "section",
+          "label": "section DiscardedResidualExpansionHelpers",
+          "hash": "44d093eafb62ce3df05e050c37707ff73f3d9bda5a6f719dea6cf96a0ba6ea61",
+          "text": "section DiscardedResidualExpansionHelpers"
+        },
+        {
+          "kind": "variable",
+          "label": "variable {\u03c4 : Type*} [Fintype \u03c4] [LinearOrder \u03c4]",
+          "hash": "498674fae8e807f5aee9a244ec7d04e249587ac7835d2712504550562bcac015",
+          "text": "variable {\u03c4 : Type*} [Fintype \u03c4] [LinearOrder \u03c4]"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.discardedModeOrder",
+          "hash": "fdd2092533c47ca9c141eb2a98ae99af3bf025dbc6b51dfa3bdd1b7494282089",
+          "text": "noncomputable local instance discardedModeOrder (h : \u2115) :\n    LinearOrder (A05.Mode \u03c4 h) := A05.localModeLinearOrder h"
+        },
+        {
+          "kind": "instance",
+          "label": "instance Bosonize.Ch20.discardedModeDecEq",
+          "hash": "ee8971e9d254b506596e55396315bdf58f9b4b6bebe938577e5286a4e9f3cdb9",
+          "text": "noncomputable local instance discardedModeDecEq (h : \u2115) :\n    DecidableEq (A05.Mode \u03c4 h) := A05.localModeDecidableEq h"
+        },
+        {
+          "kind": "end",
+          "label": "end DiscardedResidualExpansionHelpers",
+          "hash": "2b4b85f0cd71fd26daa2266a87482ccaaa8059155bc86d5e9e59e23738301055",
+          "text": "end DiscardedResidualExpansionHelpers"
+        },
+        {
           "kind": "end",
           "label": "end FiniteWitnesses",
+          "hash": "a5ce37327905797336d00f8df28e89f6e99c2ee1673593dbf7ed7f1fe29fcdf7",
           "text": "end FiniteWitnesses"
         },
         {
-          "hash": "4a8457f2500b4e62ae3e4a4598ecf5383ba899089582b04a972c0f8d38b54223",
           "kind": "section",
           "label": "section ModeFamilyDuality",
+          "hash": "4a8457f2500b4e62ae3e4a4598ecf5383ba899089582b04a972c0f8d38b54223",
           "text": "section ModeFamilyDuality"
         },
         {
-          "hash": "4f99d44878cab91d7e58347e92234c8d6364ca91ead579b6aad663b976f461a0",
           "kind": "def",
           "label": "def Bosonize.Ch20.dualPair",
+          "hash": "4f99d44878cab91d7e58347e92234c8d6364ca91ead579b6aad663b976f461a0",
           "text": "def dualPair (hp : Ch18.HyperbolicPair) : Ch18.HyperbolicPair where\n  c := hp.c\n  s := -hp.s\n  hyperbolic_id := by simpa only [neg_sq] using hp.hyperbolic_id"
         },
         {
-          "hash": "0caef3f4474797ba2496659501f81363ef71ccadcbd3693b75c00761aa15480f",
           "kind": "def",
           "label": "def Bosonize.Ch20.dualParams",
+          "hash": "0caef3f4474797ba2496659501f81363ef71ccadcbd3693b75c00761aa15480f",
           "text": "def dualParams {v1 v2 : \u211d}\n    (lp : A07Interactions.HyperbolicParams v1 v2) :\n    A07Interactions.HyperbolicParams v1 (-v2) where\n  u := lp.u\n  c := lp.c\n  s := -lp.s\n  u_pos := lp.u_pos\n  c_pos := lp.c_pos\n  u_sq := by simpa only [neg_sq] using lp.u_sq\n  hyperbolic_id := by simpa only [neg_sq] using lp.hyperbolic_id\n  match_v1 := by simpa only [neg_sq] using lp.match_v1\n  match_v2 := by\n    simpa only [mul_neg] using congrArg Neg.neg lp.match_v2"
         },
         {
-          "hash": "b37e4a607a78ed467c43344fc02b507f2c94e78ab934c18c4726e1667282bf18",
           "kind": "abbrev",
           "label": "abbrev Bosonize.Ch20.ModeFamily",
+          "hash": "b37e4a607a78ed467c43344fc02b507f2c94e78ab934c18c4726e1667282bf18",
           "text": "abbrev ModeFamily (E : Type*) [AddCommGroup E] [Module \u2102 E] :=\n  A06.Orientation \u2192 \u2124 \u2192 Module.End \u2102 E"
         },
         {
-          "hash": "b4759c401fa7b1ce528aa76250083f5c3cb6c025a69095a2d3a2d1e1660b1242",
           "kind": "def",
           "label": "def Bosonize.Ch20.speciesFamily",
+          "hash": "b4759c401fa7b1ce528aa76250083f5c3cb6c025a69095a2d3a2d1e1660b1242",
           "text": "noncomputable def speciesFamily {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]\n    (h : \u2115) (branches : A06.Branches \u03c3) : ModeFamily (A05.FockSpace \u03c3 h) :=\n  fun \u03b7 k => A05.rho h (A06.speciesOf branches \u03b7) k"
         },
         {
-          "hash": "547949d8d8d2ebc80ecd03958bb1ff0e341b8e16fb927ea3563cdf1d183e7b54",
           "kind": "def",
           "label": "def Bosonize.Ch20.dualFamily",
+          "hash": "547949d8d8d2ebc80ecd03958bb1ff0e341b8e16fb927ea3563cdf1d183e7b54",
           "text": "def dualFamily {E : Type*} [AddCommGroup E] [Module \u2102 E]\n    (\u03c1 : ModeFamily E) : ModeFamily E :=\n  fun \u03b7 k => match \u03b7 with\n    | .right => -\u03c1 .right k\n    | .left => \u03c1 .left k"
         },
         {
-          "hash": "8120dbd9c2fd9319571bf737fe6356568eca411ffbab79a95a3512352dff350f",
           "kind": "def",
           "label": "def Bosonize.Ch20.dressedCreatorOf",
+          "hash": "8120dbd9c2fd9319571bf737fe6356568eca411ffbab79a95a3512352dff350f",
           "text": "noncomputable def dressedCreatorOf {E : Type*} [AddCommGroup E] [Module \u2102 E]\n    (\u03c1 : ModeFamily E) (c s : \u211d) (\u03b7 : A06.Orientation) (m : \u2115) :\n    Module.End \u2102 E :=\n  (c : \u2102) \u2022 \u03c1 \u03b7 (m : \u2124) +\n    (s : \u2102) \u2022 \u03c1 (A07Interactions.oppositeOrientation \u03b7) (-(m : \u2124))"
         },
         {
-          "hash": "d2effcb1fb81a5ede84c40886b45252602f90ceb8bf585a177604f7c18bd7b7a",
           "kind": "def",
           "label": "def Bosonize.Ch20.dressedAnnihilatorOf",
+          "hash": "d2effcb1fb81a5ede84c40886b45252602f90ceb8bf585a177604f7c18bd7b7a",
           "text": "noncomputable def dressedAnnihilatorOf {E : Type*} [AddCommGroup E] [Module \u2102 E]\n    (\u03c1 : ModeFamily E) (c s : \u211d) (\u03b7 : A06.Orientation) (m : \u2115) :\n    Module.End \u2102 E :=\n  (c : \u2102) \u2022 \u03c1 \u03b7 (-(m : \u2124)) +\n    (s : \u2102) \u2022 \u03c1 (A07Interactions.oppositeOrientation \u03b7) (m : \u2124)"
         },
         {
-          "hash": "bf184a36a53c61c399863e6695cb9e53891373812f21199c031a22fa5dc0d15a",
           "kind": "def",
           "label": "def Bosonize.Ch20.pairingModeOf",
+          "hash": "bf184a36a53c61c399863e6695cb9e53891373812f21199c031a22fa5dc0d15a",
           "text": "noncomputable def pairingModeOf {E : Type*} [AddCommGroup E] [Module \u2102 E]\n    (\u03c1 : ModeFamily E) (m : \u2115) (v1 v2 : \u211d) : Module.End \u2102 E :=\n  (v1 : \u2102) \u2022\n      (\u03c1 .right (m : \u2124) * \u03c1 .right (-(m : \u2124)) +\n       \u03c1 .left (m : \u2124) * \u03c1 .left (-(m : \u2124))) +\n    (v2 : \u2102) \u2022\n      (\u03c1 .right (m : \u2124) * \u03c1 .left (m : \u2124) +\n       \u03c1 .right (-(m : \u2124)) * \u03c1 .left (-(m : \u2124)))"
         },
         {
-          "hash": "645c6dda9f5e4e93fdc68dd68f391a081b8b10992c8db4ffc0db4b21d221e00b",
           "kind": "def",
           "label": "def Bosonize.Ch20.chiralPhaseOf",
+          "hash": "645c6dda9f5e4e93fdc68dd68f391a081b8b10992c8db4ffc0db4b21d221e00b",
           "text": "noncomputable def chiralPhaseOf {E : Type*} [AddCommGroup E] [Module \u2102 E]\n    (\u03c1 : ModeFamily E) (h M : \u2115) (c s : \u211d)\n    (\u03b7 : A06.Orientation) (x : \u2124) : Module.End \u2102 E :=\n  \u2211 m \u2208 Finset.Icc 1 M,\n    ((m : \u2102)\u207b\u00b9) \u2022\n      (A01.integerCharacter (A01.canonicalRoot (2 * h))\n          (-(A06.orientationSign \u03b7) * (m : \u2124)) x \u2022\n          dressedCreatorOf \u03c1 c s \u03b7 m +\n       A01.integerCharacter (A01.canonicalRoot (2 * h))\n          (A06.orientationSign \u03b7 * (m : \u2124)) x \u2022\n          dressedAnnihilatorOf \u03c1 c s \u03b7 m)"
         },
         {
-          "hash": "5354ca3a1bb057005224cc50064b28d11b0d549737545de058486178930fbee7",
           "kind": "def",
           "label": "def Bosonize.Ch20.xCDWOf",
+          "hash": "5354ca3a1bb057005224cc50064b28d11b0d549737545de058486178930fbee7",
           "text": "noncomputable def xCDWOf {E : Type*} [AddCommGroup E] [Module \u2102 E]\n    (\u03c1 : ModeFamily E) (h M : \u2115) (hp : Ch18.HyperbolicPair)\n    (x : \u2124) : Module.End \u2102 E :=\n  ((hp.c - hp.s : \u211d) : \u2102) \u2022\n    (chiralPhaseOf \u03c1 h M hp.c hp.s .right x +\n      chiralPhaseOf \u03c1 h M hp.c hp.s .left x)"
         },
         {
-          "hash": "67ded25b330abbd7ccf4a1cb312f74b21b80980be1c225263d195165ab91ff7d",
           "kind": "def",
           "label": "def Bosonize.Ch20.xSCOf",
+          "hash": "67ded25b330abbd7ccf4a1cb312f74b21b80980be1c225263d195165ab91ff7d",
           "text": "noncomputable def xSCOf {E : Type*} [AddCommGroup E] [Module \u2102 E]\n    (\u03c1 : ModeFamily E) (h M : \u2115) (hp : Ch18.HyperbolicPair)\n    (x : \u2124) : Module.End \u2102 E :=\n  ((hp.c + hp.s : \u211d) : \u2102) \u2022\n    (chiralPhaseOf \u03c1 h M hp.c hp.s .right x -\n      chiralPhaseOf \u03c1 h M hp.c hp.s .left x)"
         },
         {
-          "hash": "ec8c8878ddb63ed18026edd2df48dc8c86c1c434b153c09fe1b26e37577944bd",
           "kind": "def",
           "label": "def Bosonize.Ch20.logKernel",
+          "hash": "ec8c8878ddb63ed18026edd2df48dc8c86c1c434b153c09fe1b26e37577944bd",
           "text": "noncomputable def logKernel (h M : \u2115) (x y : \u2124) : \u211d :=\n  \u2211 m \u2208 Finset.Icc 1 M,\n    (1 - Real.cos\n      ((2 * Real.pi * (m : \u211d) * ((x - y : \u2124) : \u211d)) /\n        ((2 * h : \u2115) : \u211d))) / (m : \u211d)"
         },
         {
-          "hash": "12aabe64b3d04a3766d34bbb90adc77cefc39a00d5ad2471255155209018355f",
           "kind": "end",
           "label": "end ModeFamilyDuality",
+          "hash": "12aabe64b3d04a3766d34bbb90adc77cefc39a00d5ad2471255155209018355f",
           "text": "end ModeFamilyDuality"
         },
         {
-          "hash": "1ee58851d416d8c13c8e3d011e6bf06b5eae6a434bb89f77cbd3be4a5490b62e",
           "kind": "section",
           "label": "section DualityWitnesses",
+          "hash": "1ee58851d416d8c13c8e3d011e6bf06b5eae6a434bb89f77cbd3be4a5490b62e",
           "text": "section DualityWitnesses"
         },
         {
-          "hash": "8937e3ebffe7ae063a03ec7f368aa9b20962b220c0dd12afe2e3074139334d08",
           "kind": "end",
           "label": "end DualityWitnesses",
+          "hash": "8937e3ebffe7ae063a03ec7f368aa9b20962b220c0dd12afe2e3074139334d08",
           "text": "end DualityWitnesses"
         },
         {
-          "hash": "4525727865abbc7b62b082bbaf07176696186ed7d52b73c87e3eccc4aaa8c7b3",
           "kind": "end",
           "label": "end Bosonize.Ch20",
+          "hash": "4525727865abbc7b62b082bbaf07176696186ed7d52b73c87e3eccc4aaa8c7b3",
           "text": "end Bosonize.Ch20"
         }
       ],
       "lemmas": {
         "Bosonize.Ch20.ambient_cdw_residual": {
-          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
-          "hash": "f20a0f23da9b0da2b5323ea454b096066d0b82fbf7c8e2fc5ee997d8ef8bd5ef",
           "kind": "lemma",
+          "hash": "f20a0f23da9b0da2b5323ea454b096066d0b82fbf7c8e2fc5ee997d8ef8bd5ef",
+          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
           "text": "lemma ambient_cdw_residual (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h)) (branches : A06.Branches \u03c3) (x : \u2124) (Ns : \u03c3 \u2192 \u2124) (Ks Km Kt : \u2115) : Ch14.projection h (cdwTarget branches Ns) Kt * orderCDW h b branches x * Ch14.projection h Ns Ks = Ch14.projection h (cdwTarget branches Ns) Kt * LinearMap.adjoint (fieldOf h b branches.rightSpecies x) * Ch14.projection h (Ch13.lowerCharge Ns branches.leftSpecies) Km * fieldOf h b branches.leftSpecies x * Ch14.projection h Ns Ks + Ch14.projection h (cdwTarget branches Ns) Kt * cdwResidualOp h b branches x Ns Km * Ch14.projection h Ns Ks"
         },
         "Bosonize.Ch20.ambient_sc_residual": {
-          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
-          "hash": "4c6a07af02d0361ffd1a2590027e2c697948954594a8e3f4c5a5109fea5aaf5c",
           "kind": "lemma",
+          "hash": "4c6a07af02d0361ffd1a2590027e2c697948954594a8e3f4c5a5109fea5aaf5c",
+          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
           "text": "lemma ambient_sc_residual (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h)) (branches : A06.Branches \u03c3) (x : \u2124) (Ns : \u03c3 \u2192 \u2124) (Ks Km Kt : \u2115) : Ch14.projection h (scTarget branches Ns) Kt * orderSC h b branches x * Ch14.projection h Ns Ks = Ch14.projection h (scTarget branches Ns) Kt * fieldOf h b branches.rightSpecies x * Ch14.projection h (Ch13.lowerCharge Ns branches.leftSpecies) Km * fieldOf h b branches.leftSpecies x * Ch14.projection h Ns Ks + Ch14.projection h (scTarget branches Ns) Kt * scResidualOp h b branches x Ns Km * Ch14.projection h Ns Ks"
         },
         "Bosonize.Ch20.cdwChargeCoeff_norm": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "837f62de125b6ec4043bf004d55356013be48f2396e5e108a2eafd4297eec9c8",
           "kind": "lemma",
+          "hash": "837f62de125b6ec4043bf004d55356013be48f2396e5e108a2eafd4297eec9c8",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
           "text": "lemma cdwChargeCoeff_norm (h : \u2115) (hh : 0 < h) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (x : \u2124) : \u2016cdwChargeCoeff h branches Ns x\u2016 = 1"
         },
         "Bosonize.Ch20.cdwTarget_apply": {
-          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
-          "hash": "483b000fb44b04c2d149fa656b76710dc7a82b859eecec3c39d08a584be9a8e3",
           "kind": "lemma",
-          "text": "lemma cdwTarget_apply (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : cdwTarget branches Ns \u03bd = Ns \u03bd + cdwShift branches \u03bd"
+          "hash": "aee9f450603ea75da3a5c74a5793ebd5d1dde3aafbf9bc1e363ae90079ad4fe5",
+          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
+          "text": "omit [Fintype \u03c3] in lemma cdwTarget_apply (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : cdwTarget branches Ns \u03bd = Ns \u03bd + cdwShift branches \u03bd"
         },
         "Bosonize.Ch20.cdwTarget_lower_right": {
-          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
-          "hash": "0e39369f8fe77bb4a99f5dee747d4ce55f02b5742c91f507a8cecd27e89289ca",
           "kind": "lemma",
-          "text": "lemma cdwTarget_lower_right (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : Ch13.lowerCharge (cdwTarget branches Ns) branches.rightSpecies = Ch13.lowerCharge Ns branches.leftSpecies"
+          "hash": "c88106cac9bd33522f16cb07fbea9148a65625b70cb98668b79cf6789ec65fcc",
+          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
+          "text": "omit [Fintype \u03c3] in lemma cdwTarget_lower_right (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : Ch13.lowerCharge (cdwTarget branches Ns) branches.rightSpecies = Ch13.lowerCharge Ns branches.leftSpecies"
         },
         "Bosonize.Ch20.cdwTarget_reverse_shift": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "acaa73bed7ad03c65c529d65cd369edfada8bd258619b756bc36f8b678d81123",
           "kind": "lemma",
-          "text": "lemma cdwTarget_reverse_shift (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : cdwTarget branches (raiseCharge (Ch13.lowerCharge Ns branches.rightSpecies) branches.leftSpecies) = Ns"
+          "hash": "057b58503d190b7083f1b9272ca5aa7655cec39a932e55e375359173c3c070ef",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
+          "text": "omit [Fintype \u03c3] in lemma cdwTarget_reverse_shift (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : cdwTarget branches (raiseCharge (Ch13.lowerCharge Ns branches.rightSpecies) branches.leftSpecies) = Ns"
+        },
+        "Bosonize.Ch20.cdwTopWitnessX": {
+          "kind": "lemma",
+          "hash": "0adb79cae70e802dc5bd332aeba96b00537f9add437cd77995da212d6a79970c",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma cdwTopWitnessX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hR : Ns branches.rightSpecies < (h : \u2124)) (hL : -(h : \u2124) < Ns branches.leftSpecies) : \u2203 k p : Ch01.Band (2*h), k.val = Ns branches.leftSpecies \u2227 p.val = Ns branches.rightSpecies + 1 \u2227 (branches.leftSpecies,k) \u2208 A05.groundConfiguration h Ns \u2227 (branches.rightSpecies,p) \u2208 A05.groundConfiguration h (cdwTarget branches Ns)"
+        },
+        "Bosonize.Ch20.cdw_admissibleX": {
+          "kind": "lemma",
+          "hash": "e168c391f65af07b2b966bab8b70c44a289c6a008bcf8352d9f6934aa8ba0838",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "omit [Fintype \u03c3] in private lemma cdw_admissibleX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hR : Ns branches.rightSpecies < (h : \u2124)) (hL : -(h : \u2124) < Ns branches.leftSpecies) : A05.admissible h (cdwTarget branches Ns)"
         },
         "Bosonize.Ch20.cdw_charge_duality": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "b03acddb626c6ac078dedc2d936cd6143c6610e98621c2894eb0d55a13752813",
           "kind": "lemma",
+          "hash": "b03acddb626c6ac078dedc2d936cd6143c6610e98621c2894eb0d55a13752813",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
           "text": "lemma cdw_charge_duality (h : \u2115) (hh : 0 < h) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (x : \u2124) : cdwChargeCoeff h branches (reflectLeft branches Ns) x = A01.integerCharacter (A01.canonicalRoot (2 * h)) 1 x * star (scChargeCoeff h branches (raiseCharge (raiseCharge Ns branches.rightSpecies) branches.leftSpecies) x)"
         },
-        "Bosonize.Ch20.cdw_creation_factor_eq_budgetAdjoint": {
-          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
-          "hash": "45d95f2ffadb5649df1561a0c37d8a6729354ba8e856cec341ca0194dbd37f1f",
+        "Bosonize.Ch20.cdw_config_forwardX": {
           "kind": "lemma",
+          "hash": "1841d6dbadc58f08ec0a3dee1a4c1ff6c05b21880141ce46f6630be671340efd",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma cdw_config_forwardX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (k p : Ch01.Band (2*h)) (heq : insert (branches.rightSpecies,p) ((A05.groundConfiguration h Ns).erase (branches.leftSpecies,k)) = A05.groundConfiguration h (cdwTarget branches Ns)) (hk : (branches.leftSpecies,k) \u2208 A05.groundConfiguration h Ns) (hp : (branches.rightSpecies,p) \u2209 (A05.groundConfiguration h Ns).erase (branches.leftSpecies,k)) : k.val = Ns branches.leftSpecies \u2227 p.val = Ns branches.rightSpecies + 1"
+        },
+        "Bosonize.Ch20.cdw_config_reverseX": {
+          "kind": "lemma",
+          "hash": "9157ad06909587d51479918833ba9c0139d3a004da6b50ca5438a6409fbcc6c5",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma cdw_config_reverseX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (k p : Ch01.Band (2*h)) (hkval : k.val = Ns branches.leftSpecies) (hpval : p.val = Ns branches.rightSpecies + 1) : insert (branches.rightSpecies,p) ((A05.groundConfiguration h Ns).erase (branches.leftSpecies,k)) = A05.groundConfiguration h (cdwTarget branches Ns)"
+        },
+        "Bosonize.Ch20.cdw_creation_factor_eq_budgetAdjoint": {
+          "kind": "lemma",
+          "hash": "45d95f2ffadb5649df1561a0c37d8a6729354ba8e856cec341ca0194dbd37f1f",
+          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
           "text": "lemma cdw_creation_factor_eq_budgetAdjoint (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h)) (branches : A06.Branches \u03c3) (x : \u2124) (Ns : \u03c3 \u2192 \u2124) (Km Kt : \u2115) : Ch14.projectedMap h (Ch13.lowerCharge Ns branches.leftSpecies) (cdwTarget branches Ns) Km Kt (LinearMap.adjoint (fieldOf h b branches.rightSpecies x)) = Ch14.budgetAdjoint h (cdwTarget branches Ns) (Ch13.lowerCharge Ns branches.leftSpecies) Kt Km (Ch14.projectedMap h (cdwTarget branches Ns) (Ch13.lowerCharge Ns branches.leftSpecies) Kt Km (fieldOf h b branches.rightSpecies x))"
         },
-        "Bosonize.Ch20.cdw_target_dual": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "b011b13f1ed992aa53fd186ca67c9c8e806503e13299abc311b4795a812c7569",
+        "Bosonize.Ch20.cdw_pair_condition_iffX": {
           "kind": "lemma",
-          "text": "lemma cdw_target_dual (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : reflectLeft branches (cdwTarget branches (reflectLeft branches Ns)) = raiseCharge (raiseCharge Ns branches.rightSpecies) branches.leftSpecies"
+          "hash": "d41410d883457541baf74160ecbb56b0904cf62ca477d29b2f5ab75350926d80",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma cdw_pair_condition_iffX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (k\u2080 p\u2080 k p : Ch01.Band (2*h)) (hk\u2080 : (branches.leftSpecies,k\u2080) \u2208 A05.groundConfiguration h Ns) (hp\u2080 : (branches.rightSpecies,p\u2080) \u2208 A05.groundConfiguration h (cdwTarget branches Ns)) (hkval : k\u2080.val = Ns branches.leftSpecies) (hpval : p\u2080.val = Ns branches.rightSpecies + 1) : ((branches.rightSpecies,p) \u2208 A05.groundConfiguration h (cdwTarget branches Ns) \u2227 (branches.leftSpecies,k) \u2208 A05.groundConfiguration h Ns \u2227 (A05.groundConfiguration h (cdwTarget branches Ns)).erase (branches.rightSpecies,p) = (A05.groundConfiguration h Ns).erase (branches.leftSpecies,k)) \u2194 k = k\u2080 \u2227 p = p\u2080"
+        },
+        "Bosonize.Ch20.cdw_pair_support_iffX": {
+          "kind": "lemma",
+          "hash": "6b3aa6fd1c1227dc8feb641fb45f00513b54173e27fc5c6f98c893ba32b32d98",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma cdw_pair_support_iffX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (k p : Ch01.Band (2*h)) (hk : (branches.leftSpecies,k) \u2208 A05.groundConfiguration h Ns) (hp : (branches.rightSpecies,p) \u2208 A05.groundConfiguration h (cdwTarget branches Ns)) : (A05.groundConfiguration h (cdwTarget branches Ns)).erase (branches.rightSpecies,p) = (A05.groundConfiguration h Ns).erase (branches.leftSpecies,k) \u2194 k.val = Ns branches.leftSpecies \u2227 p.val = Ns branches.rightSpecies + 1"
+        },
+        "Bosonize.Ch20.cdw_target_dual": {
+          "kind": "lemma",
+          "hash": "683e797e0a90676bb1a49a49e9019db27831ced5d00da9a3b6d57476e62b6649",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
+          "text": "omit [Fintype \u03c3] in lemma cdw_target_dual (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : reflectLeft branches (cdwTarget branches (reflectLeft branches Ns)) = raiseCharge (raiseCharge Ns branches.rightSpecies) branches.leftSpecies"
         },
         "Bosonize.Ch20.concrete_cdw_coefficient": {
-          "ctx": "830fbb032cb33f22e2af9dbf0487e4c8ec035958e0a00fff617e4fdb4ff67706",
-          "hash": "191b638b8e8b50b77e52b9738151056ca599be03b006718e18b3229a52167316",
           "kind": "lemma",
+          "hash": "191b638b8e8b50b77e52b9738151056ca599be03b006718e18b3229a52167316",
+          "ctx": "d496d7b521ad4c3389dba0eb49efc82254c181f09a9c3f4a3a8a4002962bad14",
           "text": "lemma concrete_cdw_coefficient : cdwChargeCoeff 2 Ch16.standardBranches witnessZero 1 = Complex.I"
         },
         "Bosonize.Ch20.concrete_discarded_channel_nonzero": {
-          "ctx": "830fbb032cb33f22e2af9dbf0487e4c8ec035958e0a00fff617e4fdb4ff67706",
-          "hash": "2a77ddbc0654176672340de2660262ddaf8dbc309901ebd346d09de2bf720844",
           "kind": "lemma",
+          "hash": "2a77ddbc0654176672340de2660262ddaf8dbc309901ebd346d09de2bf720844",
+          "ctx": "35cf2f2e4a46eaa73972b96f4b1cbcbe19d19efa300c7613447ba9015112ee18",
           "text": "lemma concrete_discarded_channel_nonzero : Ch14.projectedMap 2 witnessZero (cdwTarget Ch16.standardBranches witnessZero) 0 1 (cdwResidualOp 2 (fun _ => Ch06Ext.periodicTwist 4) Ch16.standardBranches 1 witnessZero 0) (Ch14.groundVector 2 (by decide) witnessZero witnessZero_admissible 0) \u2260 0"
         },
         "Bosonize.Ch20.concrete_discarded_channel_target_zero": {
-          "ctx": "830fbb032cb33f22e2af9dbf0487e4c8ec035958e0a00fff617e4fdb4ff67706",
-          "hash": "975a97314c0318a35eb6d5b8d804c5fba80a1b432a425e4ccf2657ff49e71b28",
           "kind": "lemma",
+          "hash": "975a97314c0318a35eb6d5b8d804c5fba80a1b432a425e4ccf2657ff49e71b28",
+          "ctx": "35cf2f2e4a46eaa73972b96f4b1cbcbe19d19efa300c7613447ba9015112ee18",
           "text": "lemma concrete_discarded_channel_target_zero : Ch14.projectedMap 2 witnessZero (cdwTarget Ch16.standardBranches witnessZero) 0 0 (cdwResidualOp 2 (fun _ => Ch06Ext.periodicTwist 4) Ch16.standardBranches 1 witnessZero 0) (Ch14.groundVector 2 (by decide) witnessZero witnessZero_admissible 0) = 0"
         },
         "Bosonize.Ch20.concrete_dualPair_ne": {
-          "ctx": "02ef67b88e352624aafeaf1e93d1321ee587bc3d8ace694a58872644dd9ad68a",
-          "hash": "41e41a7b78a632a2b55d70a66b2f3cae93cb6089db3d812d0291b5c44fb37f4d",
           "kind": "lemma",
+          "hash": "41e41a7b78a632a2b55d70a66b2f3cae93cb6089db3d812d0291b5c44fb37f4d",
+          "ctx": "15faca534c3e078afbc7cf6998c5f14fe709df13e707370c91530629a22c2929",
           "text": "lemma concrete_dualPair_ne : dualPair Ch18.concretePair \u2260 Ch18.concretePair"
         },
         "Bosonize.Ch20.concrete_linear_mu_counterexample": {
-          "ctx": "02ef67b88e352624aafeaf1e93d1321ee587bc3d8ace694a58872644dd9ad68a",
-          "hash": "8f83fe73121c3ab7f29cb9be33a1bd793e0c086796068dfed62da77d07dfa969",
           "kind": "lemma",
+          "hash": "8f83fe73121c3ab7f29cb9be33a1bd793e0c086796068dfed62da77d07dfa969",
+          "ctx": "15faca534c3e078afbc7cf6998c5f14fe709df13e707370c91530629a22c2929",
           "text": "lemma concrete_linear_mu_counterexample : Ch17.zeroModeEnergyScalar 1 1 0 0 1 Ch16.standardBranches (![0, 1] : Fin 2 \u2192 \u2124) \u2260 Ch17.zeroModeEnergyScalar 1 1 0 0 1 Ch16.standardBranches (![0, -1] : Fin 2 \u2192 \u2124)"
         },
         "Bosonize.Ch20.concrete_logKernel": {
-          "ctx": "02ef67b88e352624aafeaf1e93d1321ee587bc3d8ace694a58872644dd9ad68a",
-          "hash": "501a2d8192ffe8fbfaf22d073daedcf28b8cf785d25cc90f68057a26c58b88bf",
           "kind": "lemma",
+          "hash": "501a2d8192ffe8fbfaf22d073daedcf28b8cf785d25cc90f68057a26c58b88bf",
+          "ctx": "15faca534c3e078afbc7cf6998c5f14fe709df13e707370c91530629a22c2929",
           "text": "lemma concrete_logKernel : logKernel 2 1 1 0 = 1"
         },
         "Bosonize.Ch20.concrete_luttingerG": {
-          "ctx": "02ef67b88e352624aafeaf1e93d1321ee587bc3d8ace694a58872644dd9ad68a",
-          "hash": "fbb5567dc28e858b4a4ade49b8fc5ca068bdb21315f9593e4864543cfbff4ef6",
           "kind": "lemma",
+          "hash": "fbb5567dc28e858b4a4ade49b8fc5ca068bdb21315f9593e4864543cfbff4ef6",
+          "ctx": "15faca534c3e078afbc7cf6998c5f14fe709df13e707370c91530629a22c2929",
           "text": "lemma concrete_luttingerG : Ch18.luttingerG Ch18.concretePair = (1 / 4 : \u211d)"
         },
         "Bosonize.Ch20.concrete_luttingerG_dual": {
-          "ctx": "02ef67b88e352624aafeaf1e93d1321ee587bc3d8ace694a58872644dd9ad68a",
-          "hash": "274696e527845c5d91074e7e54ac90ce8bab27368dbd5b5e39feb52c34042785",
           "kind": "lemma",
+          "hash": "274696e527845c5d91074e7e54ac90ce8bab27368dbd5b5e39feb52c34042785",
+          "ctx": "15faca534c3e078afbc7cf6998c5f14fe709df13e707370c91530629a22c2929",
           "text": "lemma concrete_luttingerG_dual : Ch18.luttingerG (dualPair Ch18.concretePair) = (4 : \u211d)"
         },
         "Bosonize.Ch20.concrete_orderSC_nonzero": {
-          "ctx": "830fbb032cb33f22e2af9dbf0487e4c8ec035958e0a00fff617e4fdb4ff67706",
-          "hash": "6e47a8fd0c16f85c6869045423c1989d3242506fa2855cc73827319ede01a5f5",
           "kind": "lemma",
+          "hash": "6e47a8fd0c16f85c6869045423c1989d3242506fa2855cc73827319ede01a5f5",
+          "ctx": "35cf2f2e4a46eaa73972b96f4b1cbcbe19d19efa300c7613447ba9015112ee18",
           "text": "lemma concrete_orderSC_nonzero : orderSC 2 (fun _ => Ch06Ext.periodicTwist 4) Ch16.standardBranches 1 \u2260 0"
         },
         "Bosonize.Ch20.concrete_order_witness_cdw": {
-          "ctx": "830fbb032cb33f22e2af9dbf0487e4c8ec035958e0a00fff617e4fdb4ff67706",
-          "hash": "668055123fb2060adcebfa71f7f1910f9a73d3fd71b19ca67fa7726da78f68ef",
           "kind": "lemma",
+          "hash": "668055123fb2060adcebfa71f7f1910f9a73d3fd71b19ca67fa7726da78f68ef",
+          "ctx": "d496d7b521ad4c3389dba0eb49efc82254c181f09a9c3f4a3a8a4002962bad14",
           "text": "lemma concrete_order_witness_cdw : inner \u2102 (A05.groundKet 2 (cdwTarget Ch16.standardBranches witnessZero)) (orderCDW 2 (fun _ => Ch06Ext.periodicTwist 4) Ch16.standardBranches 1 (A05.groundKet 2 witnessZero)) = Complex.I / 4"
         },
         "Bosonize.Ch20.concrete_order_witness_sc": {
-          "ctx": "830fbb032cb33f22e2af9dbf0487e4c8ec035958e0a00fff617e4fdb4ff67706",
-          "hash": "b7eb98179bd03265b08eb77d01f25a9acbc8f7630cc4e6aed7625905a5a56db2",
           "kind": "lemma",
+          "hash": "b7eb98179bd03265b08eb77d01f25a9acbc8f7630cc4e6aed7625905a5a56db2",
+          "ctx": "d496d7b521ad4c3389dba0eb49efc82254c181f09a9c3f4a3a8a4002962bad14",
           "text": "lemma concrete_order_witness_sc : inner \u2102 (A05.groundKet 2 (scTarget Ch16.standardBranches witnessSC)) (orderSC 2 (fun _ => Ch06Ext.periodicTwist 4) Ch16.standardBranches 1 (A05.groundKet 2 witnessSC)) = Complex.I / 4"
         },
         "Bosonize.Ch20.concrete_pairing_duality_nontrivial": {
-          "ctx": "02ef67b88e352624aafeaf1e93d1321ee587bc3d8ace694a58872644dd9ad68a",
-          "hash": "1206ff96d7247138ef9c75ea672e626f0c5606eef7892ce8ba2bf99855bec9a3",
           "kind": "lemma",
+          "hash": "1206ff96d7247138ef9c75ea672e626f0c5606eef7892ce8ba2bf99855bec9a3",
+          "ctx": "15faca534c3e078afbc7cf6998c5f14fe709df13e707370c91530629a22c2929",
           "text": "lemma concrete_pairing_duality_nontrivial : pairingModeOf (speciesFamily 8 Ch16.standardBranches) 1 17 15 (A05.groundKet 8 Ch18.concreteNs) \u2260 pairingModeOf (speciesFamily 8 Ch16.standardBranches) 1 17 (-15) (A05.groundKet 8 Ch18.concreteNs)"
         },
         "Bosonize.Ch20.concrete_sc_coefficient": {
-          "ctx": "830fbb032cb33f22e2af9dbf0487e4c8ec035958e0a00fff617e4fdb4ff67706",
-          "hash": "306e31276033271ad4dce39276b1b82b6ae4507c729b6b801fc958eb42cadcff",
           "kind": "lemma",
+          "hash": "306e31276033271ad4dce39276b1b82b6ae4507c729b6b801fc958eb42cadcff",
+          "ctx": "d496d7b521ad4c3389dba0eb49efc82254c181f09a9c3f4a3a8a4002962bad14",
           "text": "lemma concrete_sc_coefficient : scChargeCoeff 2 Ch16.standardBranches witnessSC 1 = Complex.I"
         },
-        "Bosonize.Ch20.dressedAnnihilatorOf_species": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "d384d90cde15908f8a631070d8ea6c6b2a7341af48cc113d0a2d54514ebbe0dd",
+        "Bosonize.Ch20.discardedAdjointLiftedKet": {
           "kind": "lemma",
+          "hash": "8279d7cc7bca10405c5eece48a12c7fb074983e098793c2be89ff836b080f226",
+          "ctx": "4c312bae64643b0c85539c0da6b5d0b21b41f863a0dfc2eed690403ff3bebd63",
+          "text": "private lemma discardedAdjointLiftedKet (h : \u2115) (b : \u03c4 \u2192 Ch06Ext.BoundaryTwist (2*h)) (\u03bd : \u03c4) (x : \u2124) (S : A05.Occupation \u03c4 h) : LinearMap.adjoint (A05.liftedAnnihilation h b \u03bd x) (A02.ket S) = star (A01.normalization (2*h) : \u2102) \u2022 \u2211 k : Ch01.Band (2*h), star (Ch06Ext.twistedCharacter (2*h) (b \u03bd) k x) \u2022 (if (\u03bd,k) \u2209 S then Ch04.fermionSign (\u03bd,k) S \u2022 A02.ket (insert (\u03bd,k) S) else 0)"
+        },
+        "Bosonize.Ch20.discardedFieldKet": {
+          "kind": "lemma",
+          "hash": "3ec45c590e896a7bf40ef51e19e4bed3ad82f417759ce516b310feab12df4df8",
+          "ctx": "4c312bae64643b0c85539c0da6b5d0b21b41f863a0dfc2eed690403ff3bebd63",
+          "text": "private lemma discardedFieldKet (h : \u2115) (b : \u03c4 \u2192 Ch06Ext.BoundaryTwist (2*h)) (\u03bd : \u03c4) (x : \u2124) (S : A05.Occupation \u03c4 h) : A05.liftedAnnihilation h b \u03bd x (A02.ket S) = (A01.normalization (2*h) : \u2102) \u2022 \u2211 k : Ch01.Band (2*h), if (\u03bd,k) \u2208 S then (Ch06Ext.twistedCharacter (2*h) (b \u03bd) k x * Ch04.fermionSign (\u03bd,k) S) \u2022 A02.ket (S.erase (\u03bd,k)) else 0"
+        },
+        "Bosonize.Ch20.discardedOneSubProjectionKet": {
+          "kind": "lemma",
+          "hash": "6e16cf877db16eb6894b053b77f18d54c8a76e5975bebeffd6b49f500c6a1c66",
+          "ctx": "4c312bae64643b0c85539c0da6b5d0b21b41f863a0dfc2eed690403ff3bebd63",
+          "text": "private lemma discardedOneSubProjectionKet (h : \u2115) (Ns : \u03c4 \u2192 \u2124) (K : \u2115) (S : A05.Occupation \u03c4 h) (c : \u2102) : (1 - Ch14.projection h Ns K) (c \u2022 A02.ket S) = if S \u2208 Ch14.budgetSet h Ns K then 0 else c \u2022 A02.ket S"
+        },
+        "Bosonize.Ch20.discardedProjectedFieldKet": {
+          "kind": "lemma",
+          "hash": "c5718076d96bf269aeab37bd9289aaf1d7215ebd6c050d440e65df0c82a09be4",
+          "ctx": "4c312bae64643b0c85539c0da6b5d0b21b41f863a0dfc2eed690403ff3bebd63",
+          "text": "private lemma discardedProjectedFieldKet (h : \u2115) (b : \u03c4 \u2192 Ch06Ext.BoundaryTwist (2*h)) (br : A06.Branches \u03c4) (x : \u2124) (Ns : \u03c4 \u2192 \u2124) (K : \u2115) (S : A05.Occupation \u03c4 h) : (1 - Ch14.projection h (Ch13.lowerCharge Ns br.leftSpecies) K) (A05.liftedAnnihilation h b br.leftSpecies x (A02.ket S)) = (A01.normalization (2*h) : \u2102) \u2022 \u2211 k : Ch01.Band (2*h), if (br.leftSpecies,k) \u2208 S then if S.erase (br.leftSpecies,k) \u2208 Ch14.budgetSet h (Ch13.lowerCharge Ns br.leftSpecies) K then 0 else (Ch06Ext.twistedCharacter (2*h) (b br.leftSpecies) k x * Ch04.fermionSign (br.leftSpecies,k) S) \u2022 A02.ket (S.erase (br.leftSpecies,k)) else 0"
+        },
+        "Bosonize.Ch20.discardedResidualDoubleExpansion": {
+          "kind": "lemma",
+          "hash": "26778b9d5f75d2e06966e28986fb24f0c82fbe2ce5e2cc65c31e4b596cdb00d2",
+          "ctx": "4c312bae64643b0c85539c0da6b5d0b21b41f863a0dfc2eed690403ff3bebd63",
+          "text": "private lemma discardedResidualDoubleExpansion (h : \u2115) (b : \u03c4 \u2192 Ch06Ext.BoundaryTwist (2*h)) (br : A06.Branches \u03c4) (x : \u2124) (Ns : \u03c4 \u2192 \u2124) (Km : \u2115) (S : A05.Occupation \u03c4 h) : Ch20.cdwResidualOp h b br x Ns Km (A02.ket S) = (A01.normalization (2*h) : \u2102) \u2022 \u2211 k : Ch01.Band (2*h), if (br.leftSpecies,k) \u2208 S then if S.erase (br.leftSpecies,k) \u2208 Ch14.budgetSet h (Ch13.lowerCharge Ns br.leftSpecies) Km then 0 else (Ch06Ext.twistedCharacter (2*h) (b br.leftSpecies) k x * Ch04.fermionSign (br.leftSpecies,k) S) \u2022 (star (A01.normalization (2*h) : \u2102) \u2022 \u2211 p : Ch01.Band (2*h), star (Ch06Ext.twistedCharacter (2*h) (b br.rightSpecies) p x) \u2022 (if (br.rightSpecies,p) \u2209 S.erase (br.leftSpecies,k) then Ch04.fermionSign (br.rightSpecies,p) (S.erase (br.leftSpecies,k)) \u2022 A02.ket (insert (br.rightSpecies,p) (S.erase (br.leftSpecies,k))) else 0)) else 0"
+        },
+        "Bosonize.Ch20.dressedAnnihilatorOf_species": {
+          "kind": "lemma",
+          "hash": "d384d90cde15908f8a631070d8ea6c6b2a7341af48cc113d0a2d54514ebbe0dd",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dressedAnnihilatorOf_species {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h m : \u2115) (c s : \u211d) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) : dressedAnnihilatorOf (speciesFamily h branches) c s \u03b7 m = A07Interactions.bogoliubovAnnihilator h m c s branches \u03b7"
         },
         "Bosonize.Ch20.dressedCreatorOf_species": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "37c78a03bda99d64cf4852b9dce33661236dc6fd6b21f22b690eb3032154962b",
           "kind": "lemma",
+          "hash": "37c78a03bda99d64cf4852b9dce33661236dc6fd6b21f22b690eb3032154962b",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dressedCreatorOf_species {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h m : \u2115) (c s : \u211d) (branches : A06.Branches \u03c3) (\u03b7 : A06.Orientation) : dressedCreatorOf (speciesFamily h branches) c s \u03b7 m = A07Interactions.bogoliubovCreator h m c s branches \u03b7"
         },
         "Bosonize.Ch20.dualFamily_involutive": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "cfd566974f7437030246833dd17a03a01192997f11261619ef42f6ada413e702",
           "kind": "lemma",
+          "hash": "cfd566974f7437030246833dd17a03a01192997f11261619ef42f6ada413e702",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dualFamily_involutive {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) : dualFamily (dualFamily \u03c1) = \u03c1"
         },
         "Bosonize.Ch20.dualPair_involutive": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "204047bf5654811c87a9c3fdbdd5583188bcb393324b4f4dd983d7f2bb0f8d16",
           "kind": "lemma",
+          "hash": "204047bf5654811c87a9c3fdbdd5583188bcb393324b4f4dd983d7f2bb0f8d16",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dualPair_involutive (hp : Ch18.HyperbolicPair) : dualPair (dualPair hp) = hp"
         },
         "Bosonize.Ch20.dualParams_involutive": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "8057d4495a99af2ff1eba1fb78e4044ccebb1730041a5a1b3b10519578b765ad",
           "kind": "lemma",
+          "hash": "8057d4495a99af2ff1eba1fb78e4044ccebb1730041a5a1b3b10519578b765ad",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dualParams_involutive {v1 v2 : \u211d} (lp : A07Interactions.HyperbolicParams v1 v2) : (dualParams (dualParams lp)).u = lp.u \u2227 (dualParams (dualParams lp)).c = lp.c \u2227 (dualParams (dualParams lp)).s = lp.s"
         },
         "Bosonize.Ch20.dualParams_pair": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "9b0d8547faa32ba167ffd3171cff4451575030e5851cf58cdd0ace12fbdcf6ca",
           "kind": "lemma",
+          "hash": "9b0d8547faa32ba167ffd3171cff4451575030e5851cf58cdd0ace12fbdcf6ca",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dualParams_pair {v1 v2 : \u211d} (lp : A07Interactions.HyperbolicParams v1 v2) : Ch18.HyperbolicPair.ofParams (dualParams lp) = dualPair (Ch18.HyperbolicPair.ofParams lp)"
         },
         "Bosonize.Ch20.dual_canonical_mu_zero_mode": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "d8da6aec048cd81f69da3102edc301ba648d14a9a62d9dcd4c781b776cc56172",
           "kind": "lemma",
+          "hash": "d8da6aec048cd81f69da3102edc301ba648d14a9a62d9dcd4c781b776cc56172",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_canonical_mu_zero_mode {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h : \u2115) (vF g4 g2 : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : Ch17.zeroModeEnergyScalar h vF g4 g2 (Ch17.canonicalMu h vF) branches (reflectLeft branches Ns) = Ch17.zeroModeEnergyScalar h vF g4 (-g2) (Ch17.canonicalMu h vF) branches Ns"
         },
         "Bosonize.Ch20.dual_chiralPhase_left": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "5d88d8d225b8a696b7a027791675df62ca274f446cee63999b94261402d884fe",
           "kind": "lemma",
+          "hash": "5d88d8d225b8a696b7a027791675df62ca274f446cee63999b94261402d884fe",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_chiralPhase_left {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (h M : \u2115) (c s : \u211d) (x : \u2124) : chiralPhaseOf (dualFamily \u03c1) h M c s .left x = chiralPhaseOf \u03c1 h M c (-s) .left x"
         },
         "Bosonize.Ch20.dual_chiralPhase_right": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "8b22b5d31b31094311a721955c4ec9fefb8f76634450e6ab990ed89bc2206e7a",
           "kind": "lemma",
+          "hash": "8b22b5d31b31094311a721955c4ec9fefb8f76634450e6ab990ed89bc2206e7a",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_chiralPhase_right {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (h M : \u2115) (c s : \u211d) (x : \u2124) : chiralPhaseOf (dualFamily \u03c1) h M c s .right x = -chiralPhaseOf \u03c1 h M c (-s) .right x"
         },
         "Bosonize.Ch20.dual_commutator": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "a2f33a8b9c5254fce9866603a266edda0e62c3f58dabe981aa2742b8d4c72e04",
           "kind": "lemma",
+          "hash": "a2f33a8b9c5254fce9866603a266edda0e62c3f58dabe981aa2742b8d4c72e04",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_commutator {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (\u03b7 \u03b7' : A06.Orientation) (m n : \u2124) : A02.commutator (dualFamily \u03c1 \u03b7 m) (dualFamily \u03c1 \u03b7' n) = (if \u03b7 = \u03b7' then (1 : \u2102) else -1) \u2022 A02.commutator (\u03c1 \u03b7 m) (\u03c1 \u03b7' n)"
         },
         "Bosonize.Ch20.dual_dressed_annihilator_left": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "29e4e17cc209b28d4df14c40070697a869e5c3e5fb8574752c19a5d3a7cc2499",
           "kind": "lemma",
+          "hash": "29e4e17cc209b28d4df14c40070697a869e5c3e5fb8574752c19a5d3a7cc2499",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_dressed_annihilator_left {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (c s : \u211d) (m : \u2115) : dressedAnnihilatorOf (dualFamily \u03c1) c s .left m = dressedAnnihilatorOf \u03c1 c (-s) .left m"
         },
         "Bosonize.Ch20.dual_dressed_annihilator_right": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "752200e879832a26a581536d704094bdd8ff89b930870edf88360fe4a053a1cd",
           "kind": "lemma",
+          "hash": "752200e879832a26a581536d704094bdd8ff89b930870edf88360fe4a053a1cd",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_dressed_annihilator_right {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (c s : \u211d) (m : \u2115) : dressedAnnihilatorOf (dualFamily \u03c1) c s .right m = -dressedAnnihilatorOf \u03c1 c (-s) .right m"
         },
         "Bosonize.Ch20.dual_dressed_creator_left": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "790f092b3f36d16cce1c832a468ec2e124ea34a1646676d61f4d623620d34d70",
           "kind": "lemma",
+          "hash": "790f092b3f36d16cce1c832a468ec2e124ea34a1646676d61f4d623620d34d70",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_dressed_creator_left {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (c s : \u211d) (m : \u2115) : dressedCreatorOf (dualFamily \u03c1) c s .left m = dressedCreatorOf \u03c1 c (-s) .left m"
         },
         "Bosonize.Ch20.dual_dressed_creator_right": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "e4ee424f4fed17995bdc905eed32d03da6c1250a5500f14cdbc5706c8ff6af08",
           "kind": "lemma",
+          "hash": "e4ee424f4fed17995bdc905eed32d03da6c1250a5500f14cdbc5706c8ff6af08",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_dressed_creator_right {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (c s : \u211d) (m : \u2115) : dressedCreatorOf (dualFamily \u03c1) c s .right m = -dressedCreatorOf \u03c1 c (-s) .right m"
         },
         "Bosonize.Ch20.dual_pairingMode": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "bc4b93cc1ddbbee88ef50c378c00741046f05104f8ffda6a223f51004fdfd326",
           "kind": "lemma",
+          "hash": "bc4b93cc1ddbbee88ef50c378c00741046f05104f8ffda6a223f51004fdfd326",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_pairingMode {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (m : \u2115) (v1 v2 : \u211d) : pairingModeOf (dualFamily \u03c1) m v1 v2 = pairingModeOf \u03c1 m v1 (-v2)"
         },
         "Bosonize.Ch20.dual_symmetric_zero_mode": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "12e83fc4f7008a7883f64b7991ad692aaaa8c43274b73b149a80c3bf4c51c8b3",
           "kind": "lemma",
+          "hash": "12e83fc4f7008a7883f64b7991ad692aaaa8c43274b73b149a80c3bf4c51c8b3",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_symmetric_zero_mode {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h : \u2115) (vF g4 g2 : \u211d) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : Ch17.symmetricZeroModeScalar h vF g4 g2 branches (reflectLeft branches Ns) = Ch17.symmetricZeroModeScalar h vF g4 (-g2) branches Ns"
         },
         "Bosonize.Ch20.dual_xCDW": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "3fced2f11f9746d111cbb24930d42fed890b2ada238942045d09e17e99a33d7b",
           "kind": "lemma",
+          "hash": "3fced2f11f9746d111cbb24930d42fed890b2ada238942045d09e17e99a33d7b",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_xCDW {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (h M : \u2115) (hp : Ch18.HyperbolicPair) (x : \u2124) : xCDWOf (dualFamily \u03c1) h M hp x = -xSCOf \u03c1 h M (dualPair hp) x"
         },
         "Bosonize.Ch20.dual_xSC": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "f979e8a6eb7b6d71701787d7b4abf08ee6e5def07dd4b730e03dd2950f41b078",
           "kind": "lemma",
+          "hash": "f979e8a6eb7b6d71701787d7b4abf08ee6e5def07dd4b730e03dd2950f41b078",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma dual_xSC {E : Type*} [AddCommGroup E] [Module \u2102 E] (\u03c1 : ModeFamily E) (h M : \u2115) (hp : Ch18.HyperbolicPair) (x : \u2124) : xSCOf (dualFamily \u03c1) h M hp x = -xCDWOf \u03c1 h M (dualPair hp) x"
         },
-        "Bosonize.Ch20.klein_reflect_left": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "c6ebe09f0af39956c63861c2642f0c318cdb96255ace01e3e8f1b0975c35904c",
+        "Bosonize.Ch20.fieldKetCDWX": {
           "kind": "lemma",
+          "hash": "9886e0cf7b00513ef4268fa84a14716e03547fae56fc16ec9f7597aaf5659ed6",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma fieldKetCDWX (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h)) (S : A05.Occupation \u03c3 h) (\u03bd : \u03c3) (x : \u2124) : A05.liftedAnnihilation h b \u03bd x (A02.ket S) = (A01.normalization (2*h) : \u2102) \u2022 \u2211 k : Ch01.Band (2*h), if (\u03bd,k) \u2208 S then (Ch06Ext.twistedCharacter (2*h) (b \u03bd) k x * Ch04.fermionSign (\u03bd,k) S) \u2022 A02.ket (S.erase (\u03bd,k)) else 0"
+        },
+        "Bosonize.Ch20.fieldKetX": {
+          "kind": "lemma",
+          "hash": "b50620c5eea58785ece82e4d35c9c73cff0e4fdc605b942167c323a86a625c55",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma fieldKetX (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h)) (S : A05.Occupation \u03c3 h) (\u03bd : \u03c3) (x : \u2124) : A05.liftedAnnihilation h b \u03bd x (A02.ket S) = (A01.normalization (2*h) : \u2102) \u2022 \u2211 k : Ch01.Band (2*h), if (\u03bd,k) \u2208 S then (Ch06Ext.twistedCharacter (2*h) (b \u03bd) k x * Ch04.fermionSign (\u03bd,k) S) \u2022 A02.ket (S.erase (\u03bd,k)) else 0"
+        },
+        "Bosonize.Ch20.ground_memCDWX": {
+          "kind": "lemma",
+          "hash": "ce98e4d828ac3a9f81f5395b90db82c16e6225e3f5124be68940d09429d7aa8d",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma ground_memCDWX (h : \u2115) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (k : Ch01.Band (2*h)) : (\u03bd,k) \u2208 A05.groundConfiguration h Ns \u2194 k.val \u2264 Ns \u03bd"
+        },
+        "Bosonize.Ch20.ground_memX": {
+          "kind": "lemma",
+          "hash": "511d0e9c5104f9b0bbafca0397ddff7fb0d50b58fefc9b51a89fb51e50dab50c",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma ground_memX (h : \u2115) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (k : Ch01.Band (2*h)) : (\u03bd,k) \u2208 A05.groundConfiguration h Ns \u2194 k.val \u2264 Ns \u03bd"
+        },
+        "Bosonize.Ch20.ground_top_signX": {
+          "kind": "lemma",
+          "hash": "49cfb3e4ba0b7600fbf90f8d73024f165bc04a8a07a16a0c3ef675dc8dd907ef",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma ground_top_signX (h : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (\u03bd : \u03c3) (h\u03bd : -(h : \u2124)+1 \u2264 Ns \u03bd) (k : Ch01.Band (2*h)) (hk : k.val = Ns \u03bd) : Ch04.fermionSign (\u03bd,k) (A05.groundConfiguration h Ns) = Ch13.kleinPhase h Ns \u03bd"
+        },
+        "Bosonize.Ch20.hole_pair_innerX": {
+          "kind": "lemma",
+          "hash": "1e6c8a417e36ff4a3e3ca7c3643df8ef1ec0205a59d299dc8de292f9306cd4ad",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma hole_pair_innerX {\u03b9 : Type*} [Fintype \u03b9] [DecidableEq \u03b9] (i j : \u03b9) (S T : A02.Occupation \u03b9) (a b : \u2102) : inner \u2102 (if i \u2208 T then a \u2022 A02.ket (T.erase i) else 0) (if j \u2208 S then b \u2022 A02.ket (S.erase j) else 0) = if i \u2208 T \u2227 j \u2208 S \u2227 T.erase i = S.erase j then star a * b else 0"
+        },
+        "Bosonize.Ch20.inner_fsumX": {
+          "kind": "lemma",
+          "hash": "87901275ca7d807dadfe1fa6d0ddb1c7f2c70ae1672f0ad68dd7b459bd10a101",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma inner_fsumX {E : Type*} [SeminormedAddCommGroup E] [InnerProductSpace \u2102 E] {\u03b9 : Type*} [Fintype \u03b9] (f : \u03b9 \u2192 E) (x : E) : inner \u2102 x (\u2211 i, f i) = \u2211 i, inner \u2102 x (f i)"
+        },
+        "Bosonize.Ch20.inner_if_zeroX": {
+          "kind": "lemma",
+          "hash": "c5234031ad1b70dabc49ab081e39048cec907b4a76bc1f83816e2ae959ba3f37",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma inner_if_zeroX {E : Type*} [SeminormedAddCommGroup E] [InnerProductSpace \u2102 E] (x v : E) (p : Prop) [Decidable p] : inner \u2102 x (if p then v else 0) = if p then inner \u2102 x v else 0"
+        },
+        "Bosonize.Ch20.inner_sum_leftCDWX": {
+          "kind": "lemma",
+          "hash": "8687fe2be522da8fed52e377157a52a2051c72bad8429921a4eb98c691a76b10",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma inner_sum_leftCDWX {\u03b9 E : Type*} [Fintype \u03b9] [SeminormedAddCommGroup E] [InnerProductSpace \u2102 E] (f : \u03b9 \u2192 E) (y : E) : inner \u2102 (\u2211 i, f i) y = \u2211 i, inner \u2102 (f i) y"
+        },
+        "Bosonize.Ch20.inner_sum_rightCDWX": {
+          "kind": "lemma",
+          "hash": "17fc460fd9f1d489ab9e5e700d87d082d93bbe94f60b4f8ccfc214c6325c7bc8",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma inner_sum_rightCDWX {\u03b9 E : Type*} [Fintype \u03b9] [SeminormedAddCommGroup E] [InnerProductSpace \u2102 E] (y : E) (f : \u03b9 \u2192 E) : inner \u2102 y (\u2211 i, f i) = \u2211 i, inner \u2102 y (f i)"
+        },
+        "Bosonize.Ch20.klein_reflect_left": {
+          "kind": "lemma",
+          "hash": "c6ebe09f0af39956c63861c2642f0c318cdb96255ace01e3e8f1b0975c35904c",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
           "text": "lemma klein_reflect_left (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : Ch13.kleinPhase h (reflectLeft branches Ns) branches.leftSpecies = -Ch13.kleinPhase h (raiseCharge Ns branches.leftSpecies) branches.leftSpecies"
         },
         "Bosonize.Ch20.klein_reflect_right": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "5d2cd92dd4db0f73a07adc89f4b3413c5dc2e65a69379ca0b7ee37d43e6cc1e4",
           "kind": "lemma",
+          "hash": "5d2cd92dd4db0f73a07adc89f4b3413c5dc2e65a69379ca0b7ee37d43e6cc1e4",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
           "text": "lemma klein_reflect_right (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : Ch13.kleinPhase h (reflectLeft branches Ns) branches.rightSpecies = Ch13.kleinPhase h Ns branches.rightSpecies"
         },
         "Bosonize.Ch20.logKernel_nonneg": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "87a7179dfcf1780d1f10c1a7295fb0ab79a9ac062c4ce572ecb08b0b1f96b171",
           "kind": "lemma",
+          "hash": "87a7179dfcf1780d1f10c1a7295fb0ab79a9ac062c4ce572ecb08b0b1f96b171",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma logKernel_nonneg (h M : \u2115) (x y : \u2124) : 0 \u2264 logKernel h M x y"
         },
         "Bosonize.Ch20.logKernel_self": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "e0f16faecfc0417f4855b361c8bde6428d9b24b72a689d53af2bf0c3d9ec3e5a",
           "kind": "lemma",
+          "hash": "e0f16faecfc0417f4855b361c8bde6428d9b24b72a689d53af2bf0c3d9ec3e5a",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma logKernel_self (h M : \u2115) (x : \u2124) : logKernel h M x x = 0"
         },
         "Bosonize.Ch20.logKernel_symm": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "300875a65d504e0b1dfcd0d9c71a74d1fc4d9256ec008917c4599145b1f9d303",
           "kind": "lemma",
+          "hash": "300875a65d504e0b1dfcd0d9c71a74d1fc4d9256ec008917c4599145b1f9d303",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma logKernel_symm (h M : \u2115) (x y : \u2124) : logKernel h M x y = logKernel h M y x"
         },
         "Bosonize.Ch20.lowerCharge_raiseCharge": {
-          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
-          "hash": "49de15d264b2aa4fbf6948354b4baa3d71a982bc93f13317965a978f17e5c83b",
           "kind": "lemma",
-          "text": "lemma lowerCharge_raiseCharge (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : Ch13.lowerCharge (raiseCharge Ns \u03bd) \u03bd = Ns"
+          "hash": "1af38f319d909177d87ea1fabb7aeccb0d393c1814a44044fd751136356ab489",
+          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
+          "text": "omit [Fintype \u03c3] in lemma lowerCharge_raiseCharge (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : Ch13.lowerCharge (raiseCharge Ns \u03bd) \u03bd = Ns"
         },
         "Bosonize.Ch20.luttingerGInv_dual": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "d4974a2f80538bad2f146d2f64d27eafa89012d3389e0675839abaa68ea1d806",
           "kind": "lemma",
+          "hash": "d4974a2f80538bad2f146d2f64d27eafa89012d3389e0675839abaa68ea1d806",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma luttingerGInv_dual (hp : Ch18.HyperbolicPair) : Ch18.luttingerGInv (dualPair hp) = Ch18.luttingerG hp"
         },
         "Bosonize.Ch20.luttingerG_dual": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "4fc3e50ff0ab2b9413c9c3896edd9dba9c62dec3706e4baac4c75b1d758dc7bd",
           "kind": "lemma",
+          "hash": "4fc3e50ff0ab2b9413c9c3896edd9dba9c62dec3706e4baac4c75b1d758dc7bd",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma luttingerG_dual (hp : Ch18.HyperbolicPair) : Ch18.luttingerG (dualPair hp) = Ch18.luttingerGInv hp"
         },
-        "Bosonize.Ch20.orderCDW_charge_commutator": {
-          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
-          "hash": "d77e9ccdb2ae1735effc275fec6ce79e83d3570b9ebe261a176384aba45bbbb0",
+        "Bosonize.Ch20.map_if_zeroX": {
           "kind": "lemma",
+          "hash": "11edbb774c5695481cd49a5ee05165870a69c91bae754471fad7fad40be997a4",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma map_if_zeroX {V W : Type*} [AddCommMonoid V] [AddCommMonoid W] [Module \u2102 V] [Module \u2102 W] (f : V \u2192\u2097[\u2102] W) (p : Prop) [Decidable p] (v : V) : f (if p then v else 0) = if p then f v else 0"
+        },
+        "Bosonize.Ch20.orderCDW_charge_commutator": {
+          "kind": "lemma",
+          "hash": "d77e9ccdb2ae1735effc275fec6ce79e83d3570b9ebe261a176384aba45bbbb0",
+          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
           "text": "lemma orderCDW_charge_commutator (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h)) (branches : A06.Branches \u03c3) (x : \u2124) (\u03bd : \u03c3) : A02.commutator (A05.chargeObservable h \u03bd) (orderCDW h b branches x) = ((cdwShift branches \u03bd : \u2124) : \u2102) \u2022 orderCDW h b branches x"
         },
         "Bosonize.Ch20.orderCDW_ground_coeff": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "9b242d3c4976087c50c51ee2b3579165268bf6469d947266f8d237bbe9116af8",
           "kind": "lemma",
+          "hash": "9b242d3c4976087c50c51ee2b3579165268bf6469d947266f8d237bbe9116af8",
+          "ctx": "13678182d6e96cbc449637216acc56815547dddc46cb685afce03fedf62a59a1",
           "text": "lemma orderCDW_ground_coeff (h : \u2115) (hh : 0 < h) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hR : Ns branches.rightSpecies < (h : \u2124)) (hL : -(h : \u2124) < Ns branches.leftSpecies) (x : \u2124) : inner \u2102 (A05.groundKet h (cdwTarget branches Ns)) (orderCDW h (fun _ => Ch06Ext.periodicTwist (2 * h)) branches x (A05.groundKet h Ns)) = (((2 * h : \u2115) : \u2102)\u207b\u00b9) * cdwChargeCoeff h branches Ns x"
         },
         "Bosonize.Ch20.orderSC_charge_commutator": {
-          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
-          "hash": "b94d1624ddebbaf9c853d2e119d8fc8273f5fa51083dd85daf93f20279a32815",
           "kind": "lemma",
+          "hash": "b94d1624ddebbaf9c853d2e119d8fc8273f5fa51083dd85daf93f20279a32815",
+          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
           "text": "lemma orderSC_charge_commutator (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h)) (branches : A06.Branches \u03c3) (x : \u2124) (\u03bd : \u03c3) : A02.commutator (A05.chargeObservable h \u03bd) (orderSC h b branches x) = ((scShift branches \u03bd : \u2124) : \u2102) \u2022 orderSC h b branches x"
         },
-        "Bosonize.Ch20.orderSC_ground_coeff": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "be511ba1fd551caa2cf9eaeddc83cb2b0b8826f61ff645eca6627dcaa7b17435",
+        "Bosonize.Ch20.orderSC_expandX": {
           "kind": "lemma",
+          "hash": "951ce55e3a90e178628647a53ce1dccfc3ddb7c26f17d8a2ab33aa5d31edb426",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma orderSC_expandX (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h)) (br : A06.Branches \u03c3) (x : \u2124) (S : A05.Occupation \u03c3 h) : orderSC h b br x (A02.ket S) = ((A01.normalization (2*h) : \u2102)^2) \u2022 \u2211 k : Ch01.Band (2*h), \u2211 p : Ch01.Band (2*h), if (br.leftSpecies,k) \u2208 S \u2227 (br.rightSpecies,p) \u2208 S.erase (br.leftSpecies,k) then ((Ch06Ext.twistedCharacter (2*h) (b br.rightSpecies) p x * Ch04.fermionSign (br.rightSpecies,p) (S.erase (br.leftSpecies,k))) * (Ch06Ext.twistedCharacter (2*h) (b br.leftSpecies) k x * Ch04.fermionSign (br.leftSpecies,k) S)) \u2022 A02.ket ((S.erase (br.leftSpecies,k)).erase (br.rightSpecies,p)) else 0"
+        },
+        "Bosonize.Ch20.orderSC_ground_coeff": {
+          "kind": "lemma",
+          "hash": "be511ba1fd551caa2cf9eaeddc83cb2b0b8826f61ff645eca6627dcaa7b17435",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
           "text": "lemma orderSC_ground_coeff (h : \u2115) (hh : 0 < h) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hR : -(h : \u2124) < Ns branches.rightSpecies) (hL : -(h : \u2124) < Ns branches.leftSpecies) (x : \u2124) : inner \u2102 (A05.groundKet h (scTarget branches Ns)) (orderSC h (fun _ => Ch06Ext.periodicTwist (2 * h)) branches x (A05.groundKet h Ns)) = (((2 * h : \u2115) : \u2102)\u207b\u00b9) * scChargeCoeff h branches Ns x"
         },
-        "Bosonize.Ch20.pairingModeOf_species": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "8eefc1cdc68f844e27bf99b76574cde4005f06e12ae1a4d2d0c34e4e5dc31d84",
+        "Bosonize.Ch20.orderSC_inner_expandX": {
           "kind": "lemma",
+          "hash": "c3f18d5107662ac5494b6c024654d08f1cd40b21d30500b3db2402255a4ac517",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma orderSC_inner_expandX (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2*h)) (br : A06.Branches \u03c3) (x : \u2124) (S T : A05.Occupation \u03c3 h) : inner \u2102 (A02.ket T) (orderSC h b br x (A02.ket S)) = ((A01.normalization (2*h) : \u2102)^2) * \u2211 k : Ch01.Band (2*h), \u2211 p : Ch01.Band (2*h), if (br.rightSpecies,p) \u2208 S \u2227 (br.leftSpecies,k) \u2208 S \u2227 (br.rightSpecies = br.leftSpecies \u2192 p \u2260 k) \u2227 T = (S.erase (br.leftSpecies,k)).erase (br.rightSpecies,p) then Ch04.fermionSign (br.rightSpecies,p) (S.erase (br.leftSpecies,k)) * (Ch04.fermionSign (br.leftSpecies,k) S * (Ch06Ext.twistedCharacter (2*h) (b br.rightSpecies) p x * Ch06Ext.twistedCharacter (2*h) (b br.leftSpecies) k x)) else 0"
+        },
+        "Bosonize.Ch20.pairingModeOf_species": {
+          "kind": "lemma",
+          "hash": "8eefc1cdc68f844e27bf99b76574cde4005f06e12ae1a4d2d0c34e4e5dc31d84",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma pairingModeOf_species {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h m : \u2115) (v1 v2 : \u211d) (branches : A06.Branches \u03c3) : pairingModeOf (speciesFamily h branches) m v1 v2 = A07Interactions.pairingMode h m v1 v2 branches"
         },
         "Bosonize.Ch20.projected_cdw_residual": {
-          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
-          "hash": "e2beb6c39dc7ee726bf097852ce1b81d0d85028ca69ba95eeb8f48a8a0b4e39e",
           "kind": "lemma",
+          "hash": "e2beb6c39dc7ee726bf097852ce1b81d0d85028ca69ba95eeb8f48a8a0b4e39e",
+          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
           "text": "lemma projected_cdw_residual (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h)) (branches : A06.Branches \u03c3) (x : \u2124) (Ns : \u03c3 \u2192 \u2124) (Ks Km Kt : \u2115) : Ch14.projectedMap h Ns (cdwTarget branches Ns) Ks Kt (orderCDW h b branches x) = (Ch14.projectedMap h (Ch13.lowerCharge Ns branches.leftSpecies) (cdwTarget branches Ns) Km Kt (LinearMap.adjoint (fieldOf h b branches.rightSpecies x))).comp (Ch14.projectedMap h Ns (Ch13.lowerCharge Ns branches.leftSpecies) Ks Km (fieldOf h b branches.leftSpecies x)) + Ch14.projectedMap h Ns (cdwTarget branches Ns) Ks Kt (cdwResidualOp h b branches x Ns Km)"
         },
         "Bosonize.Ch20.projected_sc_residual": {
-          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
-          "hash": "46a5af1723151ef99254387eda76043bf61c3dd487b4f8e3aeb9d8091b16b673",
           "kind": "lemma",
+          "hash": "46a5af1723151ef99254387eda76043bf61c3dd487b4f8e3aeb9d8091b16b673",
+          "ctx": "37689de0a6c3f6c8c0f3608e8dfccbedf386cda234b9885fd74e3fbdfccc7bc6",
           "text": "lemma projected_sc_residual (h : \u2115) (b : \u03c3 \u2192 Ch06Ext.BoundaryTwist (2 * h)) (branches : A06.Branches \u03c3) (x : \u2124) (Ns : \u03c3 \u2192 \u2124) (Ks Km Kt : \u2115) : Ch14.projectedMap h Ns (scTarget branches Ns) Ks Kt (orderSC h b branches x) = (Ch14.projectedMap h (Ch13.lowerCharge Ns branches.leftSpecies) (scTarget branches Ns) Km Kt (fieldOf h b branches.rightSpecies x)).comp (Ch14.projectedMap h Ns (Ch13.lowerCharge Ns branches.leftSpecies) Ks Km (fieldOf h b branches.leftSpecies x)) + Ch14.projectedMap h Ns (scTarget branches Ns) Ks Kt (scResidualOp h b branches x Ns Km)"
         },
         "Bosonize.Ch20.raiseCharge_lowerCharge": {
-          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
-          "hash": "233e894efb035a134a93a8c443724a765a9e00a5587dcacdecc9a1efe86a3ca2",
           "kind": "lemma",
-          "text": "lemma raiseCharge_lowerCharge (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : raiseCharge (Ch13.lowerCharge Ns \u03bd) \u03bd = Ns"
+          "hash": "503fa49a79d9c66acdf55d79ca0236131bbd2712b4d75fbba0c9749bcfcce374",
+          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
+          "text": "omit [Fintype \u03c3] in lemma raiseCharge_lowerCharge (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : raiseCharge (Ch13.lowerCharge Ns \u03bd) \u03bd = Ns"
         },
         "Bosonize.Ch20.reflectLeft_involutive": {
-          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
-          "hash": "0eca95007dadc87f1ccc73652e75c9362827be6f17c5b10afa5e13e84d9d6d01",
           "kind": "lemma",
-          "text": "lemma reflectLeft_involutive (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : reflectLeft branches (reflectLeft branches Ns) = Ns"
+          "hash": "a64d6ba27030c2462d2ca721af0270f8f911b57b63459be94159716ccc9c6853",
+          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
+          "text": "omit [Fintype \u03c3] in lemma reflectLeft_involutive (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : reflectLeft branches (reflectLeft branches Ns) = Ns"
         },
         "Bosonize.Ch20.scChargeCoeff_norm": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "5d2d03696c45f91f88fa27a90aee24b625071fec4b9f5afa5a2ec83b0a7865ab",
           "kind": "lemma",
+          "hash": "5d2d03696c45f91f88fa27a90aee24b625071fec4b9f5afa5a2ec83b0a7865ab",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
           "text": "lemma scChargeCoeff_norm (h : \u2115) (hh : 0 < h) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (x : \u2124) : \u2016scChargeCoeff h branches Ns x\u2016 = 1"
         },
         "Bosonize.Ch20.scTarget_apply": {
-          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
-          "hash": "2ba469e2a20d624f0038194772499d017b3f358b30a5c0029895b7962e3c2287",
           "kind": "lemma",
-          "text": "lemma scTarget_apply (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : scTarget branches Ns \u03bd = Ns \u03bd + scShift branches \u03bd"
+          "hash": "f188ebc7c6804813edb2bf100be3f6a0c41f3539f83fd25e7fbb5281351b01b2",
+          "ctx": "1d1462555c5cbc9a4d3ce717c4083845bb920180b201a7e1c74a7640e6d5628a",
+          "text": "omit [Fintype \u03c3] in lemma scTarget_apply (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) : scTarget branches Ns \u03bd = Ns \u03bd + scShift branches \u03bd"
         },
         "Bosonize.Ch20.scTarget_reverse_double_raise": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "e7e96e348f776b278271a2784615ff69661e2c2c817767715f75d94d7ddfa0db",
           "kind": "lemma",
-          "text": "lemma scTarget_reverse_double_raise (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : scTarget branches (raiseCharge (raiseCharge Ns branches.rightSpecies) branches.leftSpecies) = Ns"
+          "hash": "4cb13e1824be044b7e5bcb42d1384355e12cc4aeeecf668e6a7823d491182af9",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
+          "text": "omit [Fintype \u03c3] in lemma scTarget_reverse_double_raise (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : scTarget branches (raiseCharge (raiseCharge Ns branches.rightSpecies) branches.leftSpecies) = Ns"
         },
         "Bosonize.Ch20.sc_charge_duality": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "6310e116600a634f4d380b82ad566328f816099df69b4398a7e82bc6a025027c",
           "kind": "lemma",
+          "hash": "6310e116600a634f4d380b82ad566328f816099df69b4398a7e82bc6a025027c",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
           "text": "lemma sc_charge_duality (h : \u2115) (hh : 0 < h) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (x : \u2124) : scChargeCoeff h branches (reflectLeft branches Ns) x = A01.integerCharacter (A01.canonicalRoot (2 * h)) 1 x * star (cdwChargeCoeff h branches (raiseCharge (Ch13.lowerCharge Ns branches.rightSpecies) branches.leftSpecies) x)"
         },
-        "Bosonize.Ch20.sc_target_dual": {
-          "ctx": "91681bb60a1cc969c0dca7be7772b49c86f890bfaf9b742325309cba32a6ea06",
-          "hash": "e740ba5fb16302f6b6de427ef7f0e15e290fdd1e5bdd10005e5e79edd4126797",
+        "Bosonize.Ch20.sc_ground_pair_cond_iffX": {
           "kind": "lemma",
-          "text": "lemma sc_target_dual (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : reflectLeft branches (scTarget branches (reflectLeft branches Ns)) = raiseCharge (Ch13.lowerCharge Ns branches.rightSpecies) branches.leftSpecies"
+          "hash": "a0ff73f1145d2c2062ed505c47a1989928004280a53fb335396c358c823766f0",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma sc_ground_pair_cond_iffX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (k p : Ch01.Band (2*h)) (hk : (branches.leftSpecies,k) \u2208 A05.groundConfiguration h Ns) (hp : (branches.rightSpecies,p) \u2208 A05.groundConfiguration h Ns) : ((branches.rightSpecies,p) \u2208 A05.groundConfiguration h Ns \u2227 (branches.leftSpecies,k) \u2208 A05.groundConfiguration h Ns \u2227 (branches.rightSpecies = branches.leftSpecies \u2192 p \u2260 k) \u2227 A05.groundConfiguration h (scTarget branches Ns) = Finset.erase (Finset.erase (A05.groundConfiguration h Ns) (branches.leftSpecies,k)) (branches.rightSpecies,p)) \u2194 k.val = Ns branches.leftSpecies \u2227 p.val = Ns branches.rightSpecies"
+        },
+        "Bosonize.Ch20.sc_pair_forwardX": {
+          "kind": "lemma",
+          "hash": "9c05a650570215e30d39c2c7b3c5000bfe2acb642c90178d92ba2b729ad3e256",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma sc_pair_forwardX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (k p : Ch01.Band (2*h)) (heq : ((A05.groundConfiguration h Ns).erase (branches.leftSpecies,k)).erase (branches.rightSpecies,p) = A05.groundConfiguration h (scTarget branches Ns)) (hk : (branches.leftSpecies,k) \u2208 A05.groundConfiguration h Ns) (hp : (branches.rightSpecies,p) \u2208 A05.groundConfiguration h Ns) : k.val = Ns branches.leftSpecies \u2227 p.val = Ns branches.rightSpecies"
+        },
+        "Bosonize.Ch20.sc_pair_reverseX": {
+          "kind": "lemma",
+          "hash": "61acd1c08432d8eaa2db63cb34a97073257cc740e8d9d163dcfbcea429ce5777",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma sc_pair_reverseX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (k p : Ch01.Band (2*h)) (hkval : k.val = Ns branches.leftSpecies) (hpval : p.val = Ns branches.rightSpecies) : ((A05.groundConfiguration h Ns).erase (branches.leftSpecies,k)).erase (branches.rightSpecies,p) = A05.groundConfiguration h (scTarget branches Ns)"
+        },
+        "Bosonize.Ch20.sc_pair_sign_kleinX": {
+          "kind": "lemma",
+          "hash": "d5cf47136d901ccbf1477ca5771da09a1b06ad52bb20259812a23a52adefb4fb",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma sc_pair_sign_kleinX (h : \u2115) (hh : 0 < h) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (hR : -(h : \u2124) < Ns branches.rightSpecies) (hL : -(h : \u2124) < Ns branches.leftSpecies) (k p : Ch01.Band (2*h)) (hk : k.val = Ns branches.leftSpecies) (hp : p.val = Ns branches.rightSpecies) : Ch04.fermionSign (branches.rightSpecies,p) ((A05.groundConfiguration h Ns).erase (branches.leftSpecies,k)) * Ch04.fermionSign (branches.leftSpecies,k) (A05.groundConfiguration h Ns) = Ch13.kleinPhase h Ns branches.leftSpecies * Ch13.kleinPhase h (Ch13.lowerCharge Ns branches.leftSpecies) branches.rightSpecies"
+        },
+        "Bosonize.Ch20.sc_pair_support_iffX": {
+          "kind": "lemma",
+          "hash": "3489a5aef30db52ab9057bfdb8c5cca4c94ff402b9f3af76369a14f338bf3d19",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma sc_pair_support_iffX (h : \u2115) (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) (k p : Ch01.Band (2*h)) (hk : (branches.leftSpecies,k) \u2208 A05.groundConfiguration h Ns) (hp : (branches.rightSpecies,p) \u2208 A05.groundConfiguration h Ns) : ((A05.groundConfiguration h Ns).erase (branches.leftSpecies,k)).erase (branches.rightSpecies,p) = A05.groundConfiguration h (scTarget branches Ns) \u2194 k.val = Ns branches.leftSpecies \u2227 p.val = Ns branches.rightSpecies"
+        },
+        "Bosonize.Ch20.sc_target_dual": {
+          "kind": "lemma",
+          "hash": "36180c1351cc67bd6b4b3d42333e65200f89c537410f4da7c011a88409931453",
+          "ctx": "a67024be9e21aa2cd09aaa056f24dad937ea13bc6b278ff3882db6dbe5327439",
+          "text": "omit [Fintype \u03c3] in lemma sc_target_dual (branches : A06.Branches \u03c3) (Ns : \u03c3 \u2192 \u2124) : reflectLeft branches (scTarget branches (reflectLeft branches Ns)) = raiseCharge (Ch13.lowerCharge Ns branches.rightSpecies) branches.leftSpecies"
+        },
+        "Bosonize.Ch20.scalar_top_pair": {
+          "kind": "lemma",
+          "hash": "0d0d18a2c898a956534659a8c3a8eb4524647539ab48bfc21e8e07f447400cde",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma scalar_top_pair (h : \u2115) (hh : 0 < h) (Ns T : \u03c3 \u2192 \u2124) (l r : \u03c3) (x : \u2124) (hT : T r = Ns r + 1) : star ((A01.normalization (2*h) : \u2102) * Ch13.kleinPhase h T r * A01.integerCharacter (A01.canonicalRoot (2*h)) (T r) x) * ((A01.normalization (2*h) : \u2102) * Ch13.kleinPhase h Ns l * A01.integerCharacter (A01.canonicalRoot (2*h)) (Ns l) x) = (((2*h : \u2115) : \u2102)\u207b\u00b9) * (A01.integerCharacter (A01.canonicalRoot (2*h)) (Ns l - Ns r - 1) x * (Ch13.kleinPhase h Ns l * Ch13.kleinPhase h T r))"
+        },
+        "Bosonize.Ch20.scalar_top_pair_sc": {
+          "kind": "lemma",
+          "hash": "29ba509381b9876787e783a3c3a724baa28421f798b965c50ec68609a9c62630",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma scalar_top_pair_sc (h : \u2115) (hh : 0 < h) (Ns T : \u03c3 \u2192 \u2124) (l r : \u03c3) (x : \u2124) (hT : T r = Ns r) : ((A01.normalization (2*h) : \u2102) * Ch13.kleinPhase h T r * A01.integerCharacter (A01.canonicalRoot (2*h)) (T r) x) * ((A01.normalization (2*h) : \u2102) * Ch13.kleinPhase h Ns l * A01.integerCharacter (A01.canonicalRoot (2*h)) (Ns l) x) = (((2*h : \u2115) : \u2102)\u207b\u00b9) * (A01.integerCharacter (A01.canonicalRoot (2*h)) (Ns r + Ns l) x * (Ch13.kleinPhase h Ns l * Ch13.kleinPhase h T r))"
+        },
+        "Bosonize.Ch20.sum_single_pairCDW": {
+          "kind": "lemma",
+          "hash": "b41888631121977d7cb74e66c4276e58b97a10cbdd4d7f1d4d20f19fc99f5e47",
+          "ctx": "4de2cff385e1feeded709d34133226fffd33645b95a19b025c2ab540adec671c",
+          "text": "private lemma sum_single_pairCDW {\u03b1 \u03b2 R : Type*} [Fintype \u03b1] [Fintype \u03b2] [DecidableEq \u03b1] [DecidableEq \u03b2] [AddCommMonoid R] (a\u2080 : \u03b1) (b\u2080 : \u03b2) (f : \u03b1 \u2192 \u03b2 \u2192 R) : \u2211 b : \u03b2, \u2211 a : \u03b1, (if (a = a\u2080 \u2227 b = b\u2080) then f a b else 0) = f a\u2080 b\u2080"
+        },
+        "Bosonize.Ch20.sum_single_pairX": {
+          "kind": "lemma",
+          "hash": "ba4e003385356bcd45a7468f77766ebd9126389ab456faae480a937ebe95ef82",
+          "ctx": "f1758efbdd32dbd765303c3892a79d7244367295931f4460dae67babaf91c905",
+          "text": "private lemma sum_single_pairX {\u03b9 \u03ba : Type*} [Fintype \u03b9] [Fintype \u03ba] [DecidableEq \u03b9] [DecidableEq \u03ba] [LinearOrder \u03b9] [LinearOrder \u03ba] (a : \u03b9) (b : \u03ba) (f : \u03b9 \u2192 \u03ba \u2192 \u2102) (g : \u03b9 \u2192 \u03ba \u2192 Prop) [DecidableRel g] (ha : \u2200 i j, g i j \u2192 i = a \u2227 j = b) (hab : g a b) : (\u2211 i, \u2211 j, if g i j then f i j else 0) = f a b"
+        },
+        "Bosonize.Ch20.targetZeroEraseM0_eq_lowerGround": {
+          "kind": "lemma",
+          "hash": "0dc3ec654f55f0754788ddfc1092ca7047d2d90c7321caf26a625ff1c0c6d318",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroEraseM0_eq_lowerGround : (A05.groundConfiguration 2 witnessZero).erase (1,targetZeroM0) = A05.groundConfiguration 2 (Ch13.lowerCharge witnessZero 1)"
+        },
+        "Bosonize.Ch20.targetZeroEraseM0_mem_mid_budget": {
+          "kind": "lemma",
+          "hash": "1a18b22743218d4e64e966b2591d611c2bda91cada8ea750fec240cf84724ee3",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroEraseM0_mem_mid_budget : (A05.groundConfiguration 2 witnessZero).erase (1,targetZeroM0) \u2208 Ch14.budgetSet 2 (Ch13.lowerCharge witnessZero 1) 0"
+        },
+        "Bosonize.Ch20.targetZeroErasedExcitation_ge_one": {
+          "kind": "lemma",
+          "hash": "0f8603cf4773f459136ab0154d0b8eeceeff3bbba6c42eebd898d81f82cc4906",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroErasedExcitation_ge_one : 1 \u2264 Ch07.totalExcitation 2 ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn))"
+        },
+        "Bosonize.Ch20.targetZeroErasedSpeciesOne": {
+          "kind": "lemma",
+          "hash": "d5662d8006b71ebabe90febb1422a266b7cd9d3ee6e89f3b103186e538bbcf2a",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroErasedSpeciesOne : Ch07.speciesConfiguration 2 ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn)) 1 = {targetZeroM0}"
+        },
+        "Bosonize.Ch20.targetZeroErased_not_mid_budget": {
+          "kind": "lemma",
+          "hash": "456bdf8f4f04602e9be0481cadf574f4cbf3d38490ae6697c0a6ea192c71850c",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroErased_not_mid_budget : (A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn) \u2209 Ch14.budgetSet 2 (Ch13.lowerCharge witnessZero 1) 0"
+        },
+        "Bosonize.Ch20.targetZeroLeftSpeciesExcitation": {
+          "kind": "lemma",
+          "hash": "96d737b5bd04d39392aa68d657e309ae37a9e5eb314e6d290638472bcc066d5e",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroLeftSpeciesExcitation (l : Ch01.Band 4) : Ch07.excitationEnergy 2 (Ch07.speciesConfiguration 2 (targetZeroOccupation l) 1) = 1"
+        },
+        "Bosonize.Ch20.targetZeroLeftSpeciesOccupation": {
+          "kind": "lemma",
+          "hash": "7b49b457bffdc73ec11e185ae3f2892526790863651905dd3f11ce179706947d",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroLeftSpeciesOccupation (l : Ch01.Band 4) : Ch07.speciesConfiguration 2 (targetZeroOccupation l) 1 = {targetZeroM0}"
+        },
+        "Bosonize.Ch20.targetZeroLowerAdmissible": {
+          "kind": "lemma",
+          "hash": "7b66348f83f66f6f261f714e7d49ccd649e95119b3e91b36ed15ea1ad96ce65a",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroLowerAdmissible : A05.admissible 2 (Ch13.lowerCharge witnessZero 1)"
+        },
+        "Bosonize.Ch20.targetZeroOccupationEq": {
+          "kind": "lemma",
+          "hash": "78fba193b98062e1a5b612d57b1b710689c08518a2d7579548ca6ffde0c884fd",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroOccupationEq (l : Ch01.Band 4) : insert (0,l) ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn)) = targetZeroOccupation l"
+        },
+        "Bosonize.Ch20.targetZeroOccupationExcitation_pos": {
+          "kind": "lemma",
+          "hash": "06adf992d79fbbbc2020bad5bb86bf4e78a706e0ace0230be512a9e5aff6fa76",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroOccupationExcitation_pos (l : Ch01.Band 4) : 1 \u2264 Ch07.totalExcitation 2 (targetZeroOccupation l)"
+        },
+        "Bosonize.Ch20.targetZeroOccupation_not_budget_zero": {
+          "kind": "lemma",
+          "hash": "eeaa8198da655fd3f05f6bb914d9a4d1781d232146c1639c7d1381301a17ebc2",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroOccupation_not_budget_zero (l : Ch01.Band 4) : targetZeroOccupation l \u2209 Ch14.budgetSet 2 (cdwTarget Ch16.standardBranches witnessZero) 0"
+        },
+        "Bosonize.Ch20.targetZeroProjectionCreatedSum": {
+          "kind": "lemma",
+          "hash": "2ec28c89999af8eecb66d55568e14a26335d27d779e47ba7e4061641459c5659",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroProjectionCreatedSum (c : \u2102) : Ch14.projection 2 (cdwTarget Ch16.standardBranches witnessZero) 0 (c \u2022 \u2211 p : Ch01.Band 4, if (0,p) \u2208 A05.groundConfiguration 2 witnessZero then 0 else star (Ch06Ext.twistedCharacter 4 (Ch06Ext.periodicTwist 4) p 1) \u2022 Ch04.fermionSign (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn)) \u2022 A02.ket (insert (0,p) ((A05.groundConfiguration 2 witnessZero).erase (1,targetZeroMn)))) = 0"
+        },
+        "Bosonize.Ch20.targetZeroProjectionKet": {
+          "kind": "lemma",
+          "hash": "2f89955d2f488105bed815f98e77145f92c359250a6679d546ce705fd75b7fce",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroProjectionKet (l : Ch01.Band 4) : Ch14.projection 2 (cdwTarget Ch16.standardBranches witnessZero) 0 (A02.ket (targetZeroOccupation l)) = 0"
+        },
+        "Bosonize.Ch20.targetZeroSpeciesBridge": {
+          "kind": "lemma",
+          "hash": "b283a9e54611355c0c438204b3fdfb3ef9d4db1863091b9130d89de72b3ac452",
+          "ctx": "66d3dbdec3581c8939d32583e5fdc06c0a6df31cc781680e6b4c3c5659b09ec5",
+          "text": "private lemma targetZeroSpeciesBridge (S : A05.Occupation (Fin 2) 2) (\u03b7 : Fin 2) (q : Ch01.Band 4) : q \u2208 Ch07.speciesConfiguration 2 S \u03b7 \u2194 (\u03b7,q) \u2208 S"
         },
         "Bosonize.Ch20.v2Velocity_neg": {
-          "ctx": "6ad49ba360ae9a2787ce3260ff910b05ecf29e90a0e535fee146fc101f9b1738",
-          "hash": "77d3225836e9337f3599a74ef9a614c58af612f6a7f52226fa3001d1a48d4fc6",
           "kind": "lemma",
+          "hash": "77d3225836e9337f3599a74ef9a614c58af612f6a7f52226fa3001d1a48d4fc6",
+          "ctx": "d56e43927ae0f7704c8796aafd7cdd37c90260c9ce811fae0a2d5c74f479525a",
           "text": "lemma v2Velocity_neg (g2 : \u211d) : Ch17.v2Velocity (-g2) = -Ch17.v2Velocity g2"
         },
         "Bosonize.Ch20.witnessZero_admissible": {
-          "ctx": "830fbb032cb33f22e2af9dbf0487e4c8ec035958e0a00fff617e4fdb4ff67706",
-          "hash": "489b92ae3c59c0e589cdf682f53a3bc6f57eb862857c47d2cd7c46c8e503665f",
           "kind": "lemma",
+          "hash": "489b92ae3c59c0e589cdf682f53a3bc6f57eb862857c47d2cd7c46c8e503665f",
+          "ctx": "d496d7b521ad4c3389dba0eb49efc82254c181f09a9c3f4a3a8a4002962bad14",
           "text": "lemma witnessZero_admissible : A05.admissible 2 witnessZero"
         }
       }

@@ -1,0 +1,48 @@
+{
+  "phase": "B",
+  "scope": "CH20 finite part only",
+  "status": "local_verification_passed",
+  "audited_commit": "b0d3e8a72f219277c709618a596a363b546d9707",
+  "source": "BosonizeStubs/Ch20CDW.lean",
+  "source_sha256": "00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f",
+  "lock_sha256": "1821e0036880babbf36d45c93e1e45a72664115da7614f0f73e5257403dcb019",
+  "compiler": "leanprover/lean4:v4.35.0-rc4",
+  "sandbox": {
+    "required": true,
+    "network": "disabled",
+    "credentials": "hidden"
+  },
+  "verifier": {
+    "exit_code": 0,
+    "declarations": 159,
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "fresh_overlay": true,
+    "warning_as_error": true,
+    "forbidden_token_scan": "passed"
+  },
+  "ci": {
+    "exit_code": 0,
+    "result": "CI OK",
+    "guard_tests": 69,
+    "webllm_tests": 18,
+    "core_files": 33,
+    "core_and_staging_builds": "passed"
+  },
+  "native_mcp": {
+    "file": "BosonizeStubs/Ch20CDW.lean",
+    "success": true,
+    "partial": false,
+    "timed_out": false,
+    "items": [],
+    "failed_dependencies": []
+  },
+  "browser_finish_runner": "not invoked; local independently reviewed proof development, not a downloaded browser response",
+  "remote_ci": "not run",
+  "phase_C": "not started",
+  "final-verifier.log_sha256": "3709279edcc93bee17f137ad4d97364127afb35735771bcbc0c308072cdd70d9",
+  "ci.log_sha256": "2fe6515e4fdaada8f724ff183ee32289ed6a1fba638603d9d2f7c568ade1ac45"
+}

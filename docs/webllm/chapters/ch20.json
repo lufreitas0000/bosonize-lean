@@ -1,0 +1,21 @@
+{
+  "chapter": 20,
+  "modules": [
+    {
+      "path": "Bosonize/Core/Ch20CDW.lean"
+    }
+  ],
+  "phase": "C_complete",
+  "migration": [
+    {
+      "from": "BosonizeStubs/Ch20CDW.lean",
+      "to": "Bosonize/Core/Ch20CDW.lean",
+      "byte_identical": true
+    }
+  ],
+  "sources": {
+    "Bosonize/Core/Ch20CDW.lean": "00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f"
+  },
+  "theorem_contracts": 64,
+  "acceptance": "local; no browser finish transaction or remote CI"
+}

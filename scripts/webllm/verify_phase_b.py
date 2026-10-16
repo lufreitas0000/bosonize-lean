@@ -51,6 +51,24 @@ def dependencies(repo, targets):
     return ordered
 
 
+def check_axiom_output(output, audited):
+    """Check fresh #print output, including Lean's private declaration names."""
+    for name in audited:
+        # Lean prints private declarations using their internal name rather than
+        # the source alias supplied to #print: _private.<module>.<index>.<alias>.
+        printed_name = r"(?:_private\.[^\s']+\.\d+\.)?" + re.escape(name)
+        pattern = (r"^'" + printed_name + r"' (?:"
+                   r"depends on axioms:\s*\[([^\]]*)\]|"
+                   r"does not depend on any axioms)")
+        matches = list(re.finditer(pattern, output, re.MULTILINE))
+        if not matches:
+            raise ValueError(f"Missing fresh axiom audit: {name}")
+        for match in matches:
+            axioms = {x.strip() for x in (match[1] or "").split(",") if x.strip()}
+            if axioms - phase_a.ALLOWED_AXIOMS:
+                raise ValueError(f"Nonstandard axioms for {name}: {sorted(axioms)}")
+
+
 def compile_modules(repo, names, primary):
     env = os.environ.copy()
     original_path = subprocess.check_output(["lake", "env", "printenv", "LEAN_PATH"], cwd=primary, text=True).strip()
@@ -76,13 +94,7 @@ def compile_modules(repo, names, primary):
             print(output, end="", flush=True)
             if result.returncode or "warning:" in output:
                 raise ValueError(f"Fresh warning-as-error compile failed: {name}")
-            for n in audited:
-                found = re.search(r"'" + re.escape(n) + r"' depends on axioms: \[([^\]]*)\]", output)
-                if not found and f"'{n}' does not depend on any axioms" not in output:
-                    raise ValueError(f"Missing fresh axiom audit: {n}")
-                axioms = {x.strip() for x in found[1].split(",") if x.strip()} if found else set()
-                if axioms - phase_a.ALLOWED_AXIOMS:
-                    raise ValueError(f"Nonstandard axioms for {n}: {sorted(axioms)}")
+            check_axiom_output(output, audited)
             print(f"PASS: {name}, {len(audited)} freshly audited declarations", flush=True)
 
 

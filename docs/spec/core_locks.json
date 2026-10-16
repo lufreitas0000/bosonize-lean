@@ -31,5 +31,6 @@
   "Bosonize/Core/Ch17LuttingerModels.lean": "9355fcc40f2ec1e5d9ac5ef07065ee8d03a957d8329ef9d5d528e7f1f2e3223c",
   "Bosonize/Core/Ch18Bogoliubov.lean": "b55da072fac73055173cd65e584751caabdd02f2473648725b09e11c6fbc314b",
   "Bosonize/Core/A08OscillatorStates.lean": "ed3ef9f87c9be26460004fd52efbdd7f0a2490b544c990cc89e6178f0a97ee35",
-  "Bosonize/Core/Ch19Correlations.lean": "845e95b619fca515b25c2a103071ba1fa0fdfa46ddd12081440ddfbdae902339"
+  "Bosonize/Core/Ch19Correlations.lean": "845e95b619fca515b25c2a103071ba1fa0fdfa46ddd12081440ddfbdae902339",
+  "Bosonize/Core/Ch20CDW.lean": "00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f"
 }

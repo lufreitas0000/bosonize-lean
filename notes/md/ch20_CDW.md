@@ -99,3 +99,133 @@ For the second identity prove oscillator vacuum invariance and $D\beta_P=\beta_{
 
 *Lean 4 Proof Strategy:*
 Prove relation and star preservation, inverse, charge conjugation on kets, exact Klein/phase identities, and tensor transport. Extend via word induction and coefficient extensionality. Expand H preserving word order, and use positive-state pullback for the state identity. Do not infer finite unitary equivalence from a scalar parameter substitution or from this uncompressed quotient automorphism.
+
+
+#### Constructive realization in Lean
+
+The verified finite part of this chapter is developed in the
+[CH20 Core module](../../Bosonize/Core/Ch20CDW.lean), with exact theorem mappings
+and validation evidence in its [companion](../../docs/companion/Bosonize/Core/Ch20CDW.md).
+It realizes the CAR products and their projection residuals in §20.1, together
+with charge-coefficient, parameter and mode-family identities underlying §20.3.
+The formal vertices and state transport in §§20.2–20.3 retain the separate
+construction obligations described below. The earlier proof strategies remain
+reference proposals; the realization here explains the completed finite arguments.
+
+**Occupation configurations and fields.** Fix a finite ordered species set,
+distinct species R and L, and the momentum band $\{-h+1,\ldots,h\}$ of length
+$2h$. The finite Fock space has an orthonormal ket $|S\rangle$ for every subset
+of species–momentum pairs. Removing an occupied pair or inserting an empty pair
+multiplies the ket by the fermionic sign determined by the occupied pairs
+preceding it. Forbidden removal or insertion gives zero. These basis actions
+supply the concrete CAR and their actual Hilbert adjoints.
+
+The position field is the normalized finite Fourier sum of these annihilators.
+The general order-parameter and residual identities retain a boundary twist for
+each species and take integer positions $x$. Creation in the CDW word is the
+Hilbert adjoint of the right field, including conjugation of its Fourier
+coefficients. The charge commutators follow by applying the charge observable
+to the occupation basis and then to the ordered two-field product: CDW raises
+$N_R$ and lowers $N_L$, whereas SC lowers both. These are ambient operator
+identities; a cutoff is introduced only when a budget map is requested.
+
+**Three budgets and the retained remainder.** A configuration belongs to
+$B(N,K)$ when each species has relative charge $N_\nu$ and the sum of its species
+excitation energies is at most $K$. This is the total-energy condition of
+[A03](../appendices/a03_energy_budgets_and_filtered_maps.md), so it couples the
+species through one common excitation allowance. Its orthogonal projector
+retains precisely the admitted occupation coordinates.
+
+For source $B(N,K_s)$, middle $B(N-e_L,K_m)$, and the appropriate target
+$B(N+e_R-e_L,K_t)$ or $B(N-e_R-e_L,K_t)$, the proof inserts
+$I=P_m+(I-P_m)$ between the two fields. This gives exactly (20.3) and (20.4),
+for arbitrary nonnegative cutoffs, with the escaped intermediate component
+still present. No range-preservation hypothesis is needed for an identity
+that retains that component. The projected right creation is also proved to
+be the adjoint of the projected right annihilation with source and target
+reversed. Thus the dagger in the typed CDW factor has its actual Hilbert-space
+meaning on those two named budgets.
+
+The difference between intermediate and final truncation can be seen in one
+explicit state. Take $h=2$, periodic twists, $R=0$, $L=1$, $x=1$, and the
+zero-charge source sea, whose two species both occupy $\{-1,0\}$. Set
+$K_s=K_m=0$. Removing the left mode $-1$ leaves $S_L=\{0\}$: its charge is
+$-1$ and its excitation above that sector's ground configuration is one.
+It is therefore discarded by the middle projector. Creating the right mode
+$+1$ then gives
+$$
+ S_R=\{-1,0,1\},\qquad S_L=\{0\}.
+$$
+The right species is a charge-one ground configuration and has zero excitation;
+the total target excitation is exactly one. Hence the target cutoff $K_t=1$
+retains this occupation. Equality with this occupation forces the unique pair
+of removed and created modes $(-1,+1)$. Its Fourier coefficient is a product
+of nonzero normalization factors, characters and fermionic signs, so no other
+term can cancel it. This proves nonzero residual action on the specified source
+ground vector. At $K_t=0$ the entire residual output is proved zero: removing
+left mode $0$ was already admitted by the middle budget, while removing $-1$
+leaves the left excitation that a right creation cannot change.
+
+**Ground coefficients and the charge reflection.** The general ground-matrix
+coefficient formulas specialize the fields to periodic twists. They require
+$h>0$ and admissibility $-h\le N_\nu\le h$ for every species. For CDW the
+additional edge conditions are $N_R<h$ and $-h<N_L$; for SC they are
+$-h<N_R$ and $-h<N_L$. These conditions allow the required right insertion
+or removal and left removal. Occupation matching reduces each ground-to-ground
+coefficient to its unique boundary-mode pair, giving $1/(2h)$ times the
+charge/Klein coefficient in §20.1. The two $L=4$ examples give $i/4$ in the
+stated source sectors, and the SC operator is proved nonzero. The periodic
+specialization is part of these coefficient theorems; the general operator
+identities above still retain the twists.
+
+Let $f$ negate $N_L$ and fix the other charges, and write $K_{CDW}$ and $K_{SC}$
+for the scalar character–Klein coefficients. For $h>0$, the proved reflection
+laws include
+$$
+ K_{CDW}(fN,x)=\zeta^x\,
+ \overline{K_{SC}(N+e_R+e_L,x)},\qquad
+ K_{SC}(fN,x)=\zeta^x\,
+ \overline{K_{CDW}(N-e_R+e_L,x)}.
+$$
+Their coefficients have modulus one. The charge shifts on the conjugated side
+express the reversed source of an adjoint; the extra root phase $\zeta^x$
+is retained. These are scalar and charge-label identities, supplying that
+part of (20.10) without asserting its full formal-vertex version.
+
+**Parameter and mode-family substitution.** The hyperbolic construction sends
+$(c,s)$ to $(c,-s)$, fixes $u,v_1$, and sends $v_2$ to $-v_2$. Applying it twice
+recovers the original hyperbolic pair and the physical coordinates of the
+parameter record. It exchanges $(c-s)^2$ and $(c+s)^2$. The explicit pair
+$(5/4,3/4)$ gives $g=1/4$ and its dual gives $g=4$.
+
+For a family of endomorphisms $\rho_{\eta,m}$, substitute
+$\rho_{R,m}\mapsto-\rho_{R,m}$ and $\rho_{L,m}\mapsto\rho_{L,m}$.
+This substitution is involutive. Equal-orientation commutators are unchanged;
+cross commutators gain a minus sign, so an already zero cross commutator stays
+zero. Expanding the ordered quadratic words proves that the pairing expression
+at $(v_1,v_2)$ becomes the expression at $(v_1,-v_2)$. Finite dressed phases
+use the opposite spatial orientations explained in
+[A06](../appendices/a06_chiral_fields_and_lattice_kernels.md); their substitution
+laws give $X_{CDW}\mapsto-X_{SC}$ and $X_{SC}\mapsto-X_{CDW}$ at dual parameters.
+These identities hold for the defined finite sums on a mode family. Their
+specialization to the existing density modes is proved, but a unitary on the
+finite Fock space implementing all of this is a further construction. A
+nonzero pairing example at $h=8$, $m=1$, $v_1=17$, $v_2=15$ confirms that reversing
+the interaction changes its action on an actual ground ket.
+
+The symmetric quadratic charge energy transforms with $N_L\mapsto-N_L$ and
+$g_2\mapsto-g_2$, as does the zero-mode energy at its specified canonical chemical
+potential. The theorem does not extend to arbitrary chemical potentials: the
+chapter proves a concrete inequality between the unadjusted energies at charges
+$(0,1)$ and $(0,-1)$.
+
+**Finite kernel and remaining formal theory.** The finite cosine sum (20.5)
+is proved symmetric, nonnegative and zero at equal arguments. Its elementary
+proof uses evenness of cosine and $\cos t\le1$ term by term; for $h=2$, $M=1$,
+$x=1$, $y=0$ its value is one. This finite kernel is available for a subsequent
+correlator construction. Constructing formal vertices, proving their Hermitian
+and Gaussian/Wick properties, the full tensor-algebra duality and vertex law,
+and state transport remain CH20b obligations. The finite results do not yet
+supply the formal correlations (20.8)–(20.9), evaluation of a formal parameter
+at one, or a continuum power law. The reference formulas above remain the
+stated targets for those further constructions.

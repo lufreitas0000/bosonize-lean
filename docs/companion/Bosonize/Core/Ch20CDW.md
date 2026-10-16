@@ -41,3 +41,164 @@
 - Local staging, companion and lock are prepared from this exact reviewed source. The first compiler attempt failed only on those two missing instances; the final fresh run passed.
 
 Phase A interface review and elaboration are complete. All 64 contracts remain unproved; Phase B must prove them under the new lock before any Phase C promotion.
+
+## Phase B reviewed interface correction — 2026-10-16
+
+Restored archive checkpoint `2fecda3711065037f2879f73421f78c86161e0db`
+captures the previously uncommitted proof development from detached base
+`0cfbf0c0b56ed020be89ac5be6537b994e702c6c`. Source SHA256 before the
+remaining nonzero proof integration:
+`a7168fd19c5e72c0f7d1371a1b67b83e827030dcbc75e5e544d9a9008b64106d`.
+
+Independent reviewer `/root/audit_locks` compared this exact source with the
+accepted Phase A interface. All 64 original contracts and original data remain;
+ten headers gain only `omit [Fintype σ] in` to remove redundant section-instance
+context. Additions decompose the approved proofs: 47 private helper lemmas,
+18 local occupation-order/equality instances derived directly from A05,
+three private concrete occupation definitions, four helper sections and a
+local type variable. `Mathlib.Analysis.Real.Pi.Bounds` supplies
+`Real.pi_gt_three` for the explicit linear-μ counterexample. No mathematical
+hypotheses/conclusions or upstream Core sources changed. Review verdict:
+scoped additive correction approved, conditional on fresh elaboration/axiom
+checks. These changes predated this resumption; the inherited partial manifest
+omitted the helpers and therefore failed strict verification.
+
+Fresh installed-compiler elaboration of the exact source plus `#print axioms`
+for 158 completed declarations succeeded with no errors and only the single
+expected placeholder warning for the remaining
+`concrete_discarded_channel_nonzero`. Every audited completed declaration used
+only `propext`, `Classical.choice`, and `Quot.sound` (or no axioms). Complete
+output: `docs/verification/ch20-phase-b-20261016/reviewed-baseline-axioms.log`.
+The incomplete theorem was excluded from this baseline axiom audit and is
+not accepted by this record. Existing Core guard passed for 33 complete files.
+
+The correction regenerates only the CH20 record using the guard parser API;
+all other manifest records are checked unchanged. This establishes a reviewed
+committed baseline before further canonical proof-body edits. Phase B remains
+in progress; Phase C is outside this request.
+
+### Remaining witness integration and import correction
+
+Independent proof reviewer `/root/review_proof` approved the unique-coefficient
+argument and its adaptation to the canonical ground-vector contract. The
+integrated proof keeps every supporting construction as a local `let`/`have`,
+reuses the existing expansion and occupation helpers, and leaves the canonical
+statement unchanged. The witness removes left mode -1 and creates right mode +1;
+its left excitation is one and right excitation zero. Intermediate cutoff zero
+rejects it, while target cutoff one retains it. Equality with the witness forces
+that unique mode pair, whose coefficient is a product of nonzero normalization,
+characters and fermion signs. Thus cancellation cannot destroy this coefficient.
+
+Fresh warning-as-error compiler validation passed on the complete integrated
+source. Native canonical Lean MCP diagnostics subsequently returned success=true,
+partial=false, timed_out=false, items=[], failed_dependencies=[].
+
+Lake additionally diagnosed a module-system import warning for the newly added
+Pi.Bounds import. Independent reviewer `/root/audit_locks` approved removing that
+extra import and proving the unchanged concrete μ counterexample using existing
+`Real.cos_pi_div_two` and `Real.cos_one_pos`: the derived equality π=2 would force
+cos(1)=0, contradicting positivity. The final complete candidate again passed
+warning-as-error compilation. This restores the original four Core imports;
+only the CH20 lock record is amended. The final source SHA256 is
+`00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f` (filled from the actual file below). No linter is suppressed.
+Final acceptance still requires the full fresh verifier, build and CI receipts.
+
+## Phase B local acceptance — 2026-10-16
+
+All 64 original Phase A theorem contracts are proved. Together with the reviewed
+private helpers, data and local instances, the final verifier audited 159
+declarations from freshly compiled source. Source SHA256:
+`00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f`.
+The earlier Phase A counts above describe the historical acceptance snapshot,
+not the current proof status.
+
+Acceptance evidence is in `docs/verification/ch20-phase-b-20261016/`:
+- `receipt.json` binds the final source/lock/log hashes and audited commit
+  `b0d3e8a72f219277c709618a596a363b546d9707`.
+- `final-verifier.log`: repository `verify_phase_b.py` passed with 159 freshly
+  audited declarations, zero forbidden proof tokens, zero warnings under
+  warning-as-error compilation, and only `propext`, `Classical.choice`,
+  `Quot.sound` (or no axioms).
+- `ci.log`: full `scripts/ci.sh` ended `CI OK`: 69 guard tests, strict v2 locks,
+  all 33 complete Core hashes, Core build, staging build, and 18 Web-LLM tests.
+  The `Fixture.value`/`sorryAx` output is from a deliberate negative verifier
+  test; it is not a CH20 dependency.
+- Native canonical Lean MCP diagnostics passed with empty items and failed
+  dependencies, partial=false, timed_out=false after rebuilding/restarting the
+  LSP following worktree restoration. Scratch MCP unavailability was a tooling
+  result, not substituted for the subsequent canonical diagnostic result.
+
+The final verifier and CI ran using the required namespace sandbox, with no
+network and credential directories hidden, in a separate audit checkout at the
+same commit. `WEBLLM_COMPILER_ROOT` selected that exact checkout under the
+verifier's same-HEAD check. No baseline gate was weakened. The verifier needed a
+reviewed regression fix to recognize Lean's generated private names in fresh
+`#print axioms` output; five targeted tests and the full suite passed, including
+rejection of missing receipts and nonstandard axioms.
+
+This is local Phase B acceptance from independently reviewed proof development.
+No browser finish transaction was invented: CH20 was not started in that runner
+and there is no downloaded-response finish receipt. No remote GitHub CI result
+or push is claimed. The work is retained on `codex/ch20-phase-b-resume`.
+
+The proved scope remains finite CAR order parameters with explicit compression
+residuals, scalar charge/Klein duality, mode-family substitutions, and finite
+parameter/kernel witnesses. It does not establish a finite-Fock unitary duality,
+formal vertex/Gaussian/state transport, analytic evaluation or continuum
+correlators. CH20b and Phase C remain outside this Phase B-only continuation.
+
+Final independent read-only review `/root/audit_locks` bound PASS to the exact
+final source hash and audited commit above. It rechecked preserved original
+contracts, CH20-only manifest impact, the restored imports, coefficient witness
+and cosine proof, unchanged Core/dependencies, and all final validation logs.
+
+## Phase C promotion — 2026-10-16
+
+The canonical source moves byte-for-byte from `BosonizeStubs/Ch20CDW.lean` to
+`Bosonize/Core/Ch20CDW.lean`; namespace `Bosonize.Ch20` is unchanged. Its SHA256
+is `00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f`. All imports already target Core; no import,
+statement or proof substitutions are needed. The v2 lock entry changes only
+its path key; every declaration and command hash is preserved. The complete
+source hash is added to the Core manifest, leaving the existing 33 entries
+unchanged. The Core aggregator gains its import; staging inherits it through
+`import Bosonize`. Historical Phase A/B paths and receipts above are retained
+as provenance. Current companion and source live under `Bosonize/Core/`.
+
+Pedagogical mapping: `notes/md/ch20_CDW.md` retains the reference chapter and
+adds the verified finite realization. Charge shifts and residuals map to
+`orderCDW_charge_commutator`, `orderSC_charge_commutator`,
+`projected_cdw_residual`, `projected_sc_residual`; periodic ground coefficients
+to `orderCDW_ground_coeff`, `orderSC_ground_coeff`; cutoff witnesses to
+`concrete_discarded_channel_nonzero` and `concrete_discarded_channel_target_zero`;
+scalar/family/parameter duality to `cdw_charge_duality`, `sc_charge_duality`,
+`dual_xCDW`, `dual_xSC`, `dual_pairingMode`, `dual_symmetric_zero_mode`,
+`dual_canonical_mu_zero_mode`; finite kernel to `logKernel_nonneg` and witnesses.
+Formal vertices, Wick/state transport and continuum claims remain deferred.
+
+### Pedagogical synchronization and independent review
+
+Author `/root/review_proof` appended a 130-line constructive-realization section
+to `notes/md/ch20_CDW.md`. The entire original 8207-byte reference note remains
+an exact prefix, SHA256
+`29a1016437b6fbc310c455fec6d15c1216e16b048eb12c34885b647deca87f78`.
+The resulting note SHA256 is
+`b5b014fc9a612d64f5bfba94ccbc18f7000df7cc13393028ddff06b71ff39b22`.
+Independent reviewer `/root/audit_locks` checked the exact source/note hashes,
+migration, preserved reference information, formulas/hypotheses, witness,
+limits and four relative links: PASS, no corrections required. This separately
+establishes migration integrity and pedagogical fidelity; compiler/axiom/CI
+results are recorded below.
+
+### Phase C acceptance evidence
+
+The required namespace-sandbox validation at promotion commit `426f402` passed
+full `make ci` (69 guard tests, 18 verifier tests, both builds), strict locks and
+34 Core hashes. A fresh warning-as-error source compilation audited all 159
+CH20 declarations. A separate `import Bosonize` audit checked the original
+91 public data/theorem declarations, establishing downstream aggregator access.
+Only `propext`, `Classical.choice`, and `Quot.sound` occur; forbidden proof-token
+scan passed. Full logs, script and receipt are under
+`docs/verification/ch20-phase-c-20261016/`; the validation report is
+`note/ch20_phase_c_validation_2026-10-16.md`. Independent migration and pedagogical
+reviews passed as recorded above. CH20 Phase C is complete locally; no browser
+finish transaction, push, remote CI, or completion of CH20b is claimed.
