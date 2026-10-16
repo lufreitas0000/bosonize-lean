@@ -3,17 +3,17 @@
 
 \section{Introduction and the Algebraic Oscillator Approach}
 
-In conventional quantum field theory, bosonic Fock spaces are constructed as infinite direct sums of symmetric tensor products $\bigoplus_{n=0}^\infty \mathrm{Sym}^n(\mathcal{H}_1)$ over a single-particle Hilbert space $\mathcal{H}_1$. This analytic framework inherently requires unbounded creation and annihilation operators, dense domains, topological completions, and subtle operator trace anomalies.
+In standard quantum field theory, bosonic Fock spaces are typically constructed as infinite direct sums of symmetric tensor products $\bigoplus_{n=0}^\infty \mathrm{Sym}^n(\mathcal{H}_1)$ over a single-particle Hilbert space $\mathcal{H}_1$. That analytic framework studies unbounded creation and annihilation operators, dense domains, and topological completions.
 
-In the algebraic bosonization program presented in this monograph, we circumvent all topological subtleties by constructing the bosonic Fock layer \emph{purely algebraically}. The bosonic carrier is realized as a commutative multivariate polynomial ring over $\mathbb{C}$. 
+In the algebraic bosonization program presented in this monograph, we choose to study the bosonic Fock layer \emph{purely algebraically} as an expository choice to make the combinatorics explicit. We realize the bosonic carrier as a commutative multivariate polynomial ring over $\mathbb{C}$. 
 
-\paragraph{Why the Umbral/Polynomial Approach is Essential for Constructive Formalization.}
-The polynomial realization of the bosonic Fock space offers four decisive advantages for mathematical physics and constructive formalization:
+\paragraph{Properties of the Polynomial Carrier.}
+The polynomial realization of the bosonic Fock space structures the formalization around exact algebra:
 \begin{enumerate}
-    \item \textbf{Exact Polynomial Arithmetic:} Rather than manipulating infinite-dimensional vectors with convergence topologies, states are finite complex polynomials $p(X_1, \dots, X_M)$. All operations are exact algebraic manipulations in commutative algebra.
-    \item \textbf{Elementary Realization of CCR:} Creation operators are simply coordinate multiplications $X_m \cdot p(X)$, and annihilation operators are scaled partial derivatives $m \frac{\partial p}{\partial X_m}$. The Canonical Commutation Relations $[A_m, C_n] = m \delta_{mn} I$ follow immediately from the elementary calculus product rule $\frac{\partial}{\partial X_m}(X_n p) = \delta_{mn} p + X_n \frac{\partial p}{\partial X_m}$.
-    \item \textbf{Positive-Definite Metric via Haldane Weights:} Endowing polynomials with the Haldane inner product $\langle X^r, X^{r'} \rangle_H = \delta_{r, r'} \prod m^{r_m} r_m!$ renders creation and annihilation operators exact Hilbert space adjoints, providing an exact metric structure without functional integrals.
-    \item \textbf{Strict Nilpotency and Finite Truncation:} When restricted to energy budget subspaces of weighted degree $\le K$, annihilation operators are strictly nilpotent. Consequently, operator exponentials (such as vertex operators and Weyl displacement operators) terminate after finitely many terms, becoming exact algebraic polynomials without any convergence requirements.
+    \item \textbf{Exact Polynomial Arithmetic:} States are modeled as finite complex polynomials $p(X_1, \dots, X_M)$. Operations are expressed as algebraic manipulations in commutative algebra rather than as limits in a completion. Note that while the mode count $M$ is bounded, this does not bound the polynomial degree. The ambient polynomial algebra thus still has unbounded degree and infinite dimension.
+    \item \textbf{Elementary Realization of CCR:} Creation operators act as coordinate multiplications $X_m \cdot p(X)$, and annihilation operators as scaled partial derivatives $m \frac{\partial p}{\partial X_m}$. The Canonical Commutation Relations $[A_m, C_n] = m \delta_{mn} I$ match the elementary product rule $\frac{\partial}{\partial X_m}(X_n p) = \delta_{mn} p + X_n \frac{\partial p}{\partial X_m}$.
+    \item \textbf{Positive-Definite Metric via Haldane Weights:} Endowing polynomials with the Haldane inner product $\langle X^r, X^{r'} \rangle_H = \delta_{r, r'} \prod m^{r_m} r_m!$ provides an algebraic pairing where creation and annihilation operators are exact adjoints with respect to this form.
+    \item \textbf{Strict Nilpotency and Finite Truncation:} When explicitly restricted to finite energy budget subspaces of weighted degree $\le K$, annihilation operators act as strictly nilpotent maps. On these restricted cutoffs, appropriate operator exponentials terminate after finitely many terms, defining exact finite algebraic polynomials.
 \end{enumerate}
 
 \section{The Polynomial Carrier and the Haldane Inner Product}
@@ -98,6 +98,9 @@ For general polynomials $p = \sum_r p_r X^r$ and $q = \sum_r q_r X^r$, the pairi
     That is, $A_m^\dagger = C_m$ and $C_m^\dagger = A_m$ under the Haldane metric.
 \end{enumerate}
 \end{proposition}
+
+\paragraph{Scope and Operator Domains.}
+Proposition~\ref{prop:haldane_adjoint} defines an \emph{algebraic pairing} on the pre-Hilbert space $\mathcal{F}_b$. It demonstrates formal adjointness for polynomials, which should be distinguished from taking adjoints of unbounded operators in a topologically complete Hilbert space, where explicit specification of operator domains is required. We have chosen the polynomial carrier here to evaluate explicit algebraic bounds rather than choosing a Hilbert space completion.
 
 \begin{proof}
 \begin{enumerate}
@@ -236,7 +239,7 @@ This proves that exact scalar commutation relations can only hold on the ambient
 
 In quantum field theory and the physics of the 1D electron gas, vertex operators $V_\alpha(x) = :e^{i \alpha \phi(x)}:$ generate coherent states and interpolate between fermionic and bosonic excitations. In an infinite-dimensional Hilbert space, defining exponentials of unbounded operators requires subtle domain considerations and analytic continuations. 
 
-Within our algebraic framework, however, the energy budget filtration provides an extraordinarily clean resolution: on the finite subspace $\mathcal{F}_{\le K}$, the annihilation operator $A_m$ is strictly nilpotent ($A_m^{d+1} = 0$). Consequently, operator exponentials become exact terminating polynomials!
+Within our algebraic framework, we explicitly constrain the domain to the finite subspace $\mathcal{F}_{\le K}$, where the annihilation operator $A_m$ is strictly nilpotent ($A_m^{d+1} = 0$). Under this specific truncation, operator exponentials of $A_m$ terminate as finite polynomials. Note that finite dimension and projection alone do not generally imply nilpotency (the finite identity matrix being a counterexample); termination here depends directly on the definition of $A_m$ lowering the energy grading and the space $\mathcal{F}_{\le K}$ having a strict cutoff.
 
 \begin{definition}[Nilpotent Exponential]
 Let $V$ be a vector space and $A \in \mathrm{End}(V)$ a nilpotent operator with $A^{d+1} = 0$. The \emph{nilpotent exponential} $\operatorname{expNil}(A)$ is the finite polynomial:
@@ -262,6 +265,9 @@ In particular, for the ambient bosonic currents with $[A_m, C_m] = m I$:
 e^{\alpha A_m} e^{\beta C_m} = e^{\beta C_m} e^{\alpha A_m} e^{m \alpha \beta I}.
 \end{equation}
 \end{theorem}
+
+\paragraph{Scope of Exponentials.}
+Theorem~\ref{thm:bch} assumes $A$ and $B$ are both nilpotent on a subspace $V$. As demonstrated in Proposition~\ref{prop:nilpotency}, the lowering map $A_m$ is indeed nilpotent on $\mathcal{F}_{\le K}$. However, the creation map $C_m$ is \emph{not} nilpotent on the ambient space $\mathcal{F}_b$, and its exponential cannot terminate there. Furthermore, finite compressed creation/annihilation maps with boundary corrections do not satisfy a global nonzero scalar CCR, so this theorem cannot simply be applied as an endomorphism identity on the finite budget. Nilpotency of lowering maps alone does not establish a finite Weyl/vertex exponential identity. Any application of this theorem must explicitly distinguish the domains where exact nilpotent truncation applies from the full ambient space or budget subspaces requiring truncation boundaries.
 
 \begin{proof}
 Let $F(t) \coloneqq e^{t A} e^{t B} e^{-t A}$. Differentiating with respect to the formal parameter $t$:
@@ -327,17 +333,17 @@ In the verified Lean~4 core, this entire bosonic structure is proved constructiv
 
 In this chapter, we established the umbral polynomial Fock space layer:
 \begin{itemize}
-    \item Explained why multivariate polynomials $\mathbb{C}[X_1, \dots, X_M]$ provide an exact algebraic foundation for bosonic quantum fields, avoiding unbounded operator subtleties.
+    \item Explained why multivariate polynomials $\mathbb{C}[X_1, \dots, X_M]$ provide an explicitly combinatorial foundation for bosonic algebra.
     \item Clarified that energy $E(r) = \sum m r_m$ corresponds to the linearized chiral dispersion of Tomonaga--Luttinger liquid physics where energy and momentum coincide ($E \equiv P$).
     \item Proved that the construction is cutoff-independent, stabilizing in the directed limit $M \to \infty$.
-    \item Constructed the positive-definite Haldane inner product, making creation and annihilation operators exact adjoints $A_m^\dagger = C_m$.
+    \item Constructed the positive-definite Haldane inner product, defining algebraic adjoints $A_m^\dagger = C_m$ before any Hilbert space completion.
     \item Proved the exact ambient Canonical Commutation Relations $[A_m, C_n] = m \delta_{mn} I$.
-    \item Established the finite-dimensional budget filtration $\mathcal{F}_{\le K}$, proved operator nilpotency, and derived the compressed commutator remainder theorem explaining the finite trace obstruction.
-    \item Demonstrated that operator exponentials and the Baker--Campbell--Hausdorff formula become exact terminating polynomial identities for nilpotent exponents.
+    \item Established the finite-dimensional budget filtration $\mathcal{F}_{\le K}$, proved operator nilpotency for lowering maps, and derived the compressed commutator remainder theorem.
+    \item Demonstrated that operator exponentials and the Baker--Campbell--Hausdorff formula become exact terminating polynomial identities specifically for nilpotent exponents, noting that further domain hypotheses are required to use this as a full Weyl exponential identity.
     \item Proved Wick's theorem algebraically via Appell polynomial recurrences.
 \end{itemize}
 
-\paragraph{Comparison with Standard Continuum Literature.}
-In standard bosonization reviews, such as von Delft and Schoeller~\cite{vondelft1998}, Giamarchi~\cite{giamarchi2004}, and Gogolin et al.~\cite{gogolin1998}, the bosonic Fock space is taken as an infinite-dimensional Hilbert space spanned by states $b_q^\dagger \cdots b_k^\dagger |0\rangle$. Vertex operators $e^{i \alpha \phi(x)}$ are computed via normal-ordering identities :$e^A::e^B: = e^{\langle A B \rangle} :e^{A+B}:$, which involve singular short-distance divergences $\langle \phi(x) \phi(y) \rangle \sim -\ln|x-y|$.
+\paragraph{Bridging to Fermionic Density Currents and Literature Comparison.}
+The standard bosonization reviews, such as von Delft and Schoeller~\cite{vondelft1998}, Giamarchi~\cite{giamarchi2004}, and Gogolin et al.~\cite{gogolin1998}, typically study these bosonic structures in infinite-dimensional Hilbert spaces representing the continuum limit. In those continuum field models, vertex operators $e^{i \alpha \phi(x)}$ are computed via normal-ordering identities $:\!e^A\!::\!e^B\!: = e^{\langle A B \rangle} :\!e^{A+B}\!:$, where the short-distance contractions generate characteristic logarithmic terms such as $\langle \phi(x) \phi(y) \rangle \sim -\ln|x-y|$. Our goal here is not to replace those broader analytic continuum treatments, but to present an explicitly combinatorial counterpart. By defining these fields on explicit graded budget spaces at finite lattice scales, the combinatorics are exposed as terminating algebraic operations rather than analytic limits.
 
-In our constructive umbral framework, all bosonic fields are finite polynomials on graded budget spaces. Nilpotent exponentials terminate into finite sums, eliminating short-distance singularities at the root. In Chapters~\ref{ch:density_modes} through~\ref{ch:haldane_completeness}, we will bridge this abstract polynomial Fock layer with the fermionic Fock space of Chapter~\ref{ch:fermions}, proving that the fermionic density modes $\rho_m$ realize this exact polynomial CCR on the fermionic budget space $B(N, K)$.
+In the next step, Chapter~\ref{ch:density_modes} introduces the fermionic density currents $\rho_m$ as explicit particle-hole pairs on the finite lattice. We will bridge this abstract polynomial Fock layer with the fermionic Fock space of Chapter~\ref{ch:fermions}, examining how these non-wrapping density currents realize the polynomial structures developed here when restricted to the fermionic budget space $B(N, K)$.
