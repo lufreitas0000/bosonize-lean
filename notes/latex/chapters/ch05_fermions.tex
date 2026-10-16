@@ -19,11 +19,11 @@ The fermionic state space is the Fock space over the momentum band:
 \begin{equation}
 \mathcal{F}(L) \coloneqq \ell^2(\mathcal{P}(\Lambda^*)) \equiv \bigoplus_{S \subseteq \Lambda^*} \mathbb{C} |S\rangle,
 \end{equation}
-which has exact complex dimension $\dim_{\mathbb{C}} \mathcal{F}(L) = 2^L$. The momentum creation and annihilation operators $\{c_k, c_k^\dagger \mid k \in \Lambda^*\}$ satisfy the standard CAR algebra:
+which has complex dimension $\dim_{\mathbb{C}} \mathcal{F}(L) = 2^L$. The momentum creation and annihilation operators $\{c_k, c_k^\dagger \mid k \in \Lambda^*\}$ satisfy the standard CAR algebra:
 \begin{equation}
 \{c_k, c_p^\dagger\} = \delta_{k, p} I, \qquad \{c_k, c_p\} = 0, \qquad \{c_k^\dagger, c_p^\dagger\} = 0, \qquad c_k^\dagger = (c_k)^\dagger.
 \end{equation}
-Following our global notation conventions, the symbols $c_k, c_k^\dagger$ are reserved strictly for momentum modes.
+Following the notation conventions, the symbols $c_k, c_k^\dagger$ are reserved for momentum modes.
 
 \section{Spatial Fermions via the Unitary Fourier Transform}
 
@@ -43,6 +43,8 @@ n_x \coloneqq \psi_x^\dagger \psi_x.
 \end{equation}
 \end{definition}
 
+This definition assigns the positive Fourier phase $\chi(k, x) = \zeta^{k x_{\mathrm{val}}}$ to the annihilation operator $\psi_x$. Taking the Hilbert adjoint of this linear combination naturally yields the negative phase $\chi(-k, x) = \zeta^{-k x_{\mathrm{val}}}$ for the creation operator $\psi_x^\dagger$. We note an unresolved discrepancy with the frontmatter notation conventions, which define the annihilator using the negative phase $\chi(-k, x)$. Both choices correspond to valid unitary changes of basis, but they represent opposite conventions for the discrete Fourier analysis and synthesis transforms. To match the formalized proofs in this chapter, we retain the positive-phase annihilator convention locally, without making a global sign replacement.
+
 \begin{lemma}[Hilbert Adjoint Compatibility]
 The spatial creation operator is the exact Hilbert adjoint of the spatial annihilation operator:
 \begin{equation}
@@ -60,7 +62,7 @@ Because $(c_k)^\dagger = c_k^\dagger$ and $\overline{\zeta^{k x_{\mathrm{val}}}}
 
 \section{Exact Position CAR Inheritance}
 
-The fundamental theorem of discrete spatial fermions is that they inherit the local canonical anticommutation relations without distortion.
+A primary consequence of this unitary equivalence is that the spatial fermions satisfy local canonical anticommutation relations.
 
 \begin{theorem}[Exact Spatial CAR]
 \label{thm:spatial_car}
@@ -98,15 +100,15 @@ We evaluate each anticommutator using the bilinearity of $\{\cdot, \cdot\}$:
 \end{proof}
 
 \paragraph{Formal Correctness vs.\ Physical Implications: Global Fourier vs.\ Jordan--Wigner.}
-Notice a remarkable conceptual feature of our construction: spatial fermions $\psi_x$ are obtained directly as global unitary Fourier transforms of momentum fermions $c_k$. In standard 1D lattice physics (such as Lieb, Schultz, and Mattis~\cite{lieb1961}), lattice fermions are frequently introduced through Jordan--Wigner transformations from Pauli spin matrices $\sigma_j^\pm$:
+In standard 1D lattice physics (such as Lieb, Schultz, and Mattis~\cite{lieb1961}), lattice fermions are frequently introduced through Jordan--Wigner transformations from Pauli spin matrices $\sigma_j^\pm$:
 \[
 \psi_j = \left( \prod_{l < j} \sigma_l^z \right) \sigma_j^-.
 \]
-While physically intuitive for quantum spin chains, Jordan--Wigner strings introduce non-local phase tails that complicate spatial locality on periodic rings. In our formulation, the spatial operators $\psi_x$ anticommute locally across distinct sites $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$ as an exact consequence of character orthogonality, requiring no string operators whatsoever.
+While physically intuitive for quantum spin chains, Jordan--Wigner strings introduce non-local phase tails that can complicate spatial locality on periodic rings. In the present formulation, spatial operators $\psi_x$ are defined as global Fourier transforms of the momentum CAR generators. They anticommute locally across distinct sites, $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$, as a consequence of finite character orthogonality rather than through explicit string operators.
 
 \section{Operator Fourier Inversion}
 
-The relationship between position and momentum fermions is completely symmetric under Fourier inversion.
+The relationship between position and momentum fermions is invertible via the inverse discrete Fourier transform.
 
 \begin{theorem}[Fourier Inversion for Operators]
 \label{thm:op_fourier_inversion}
@@ -153,7 +155,7 @@ Applying spatial character orthogonality $\sum_{x \in \Lambda} \chi(p - k, x) = 
 
 \section{The Dirac Fermi Sea and Linearized Hamiltonians}
 
-In relativistic field theory and 1D condensed matter physics, the physical vacuum is not the bare state $|\emptyset\rangle$ devoid of particles, but the filled Dirac sea where all negative-energy single-particle levels are occupied.
+To model physical fermions, the relevant ground state is often not the empty state $|\emptyset\rangle$, but a filled Dirac sea where all negative-energy single-particle levels are occupied.
 
 \begin{definition}[Dirac Sea Configuration and Vacuum]
 For even lattice length $L = 2h$, the half-filled Dirac Fermi sea configuration $\mathcal{S}_0 \subset \Lambda^*$ consists of all non-positive momentum modes:
@@ -227,20 +229,22 @@ We prove each statement:
 \end{proof}
 
 \paragraph{Formal Correctness vs.\ Physical Implications: Linearization and the Dirac Sea.}
-In standard Luttinger liquid theory (e.g., Haldane~\cite{haldane1981}, Giamarchi~\cite{giamarchi2004}, and von Delft--Schoeller~\cite{vondelft1998}), the kinetic dispersion is linearized near the Fermi points $\pm k_F$. The spectrum is extended to $-\infty$, yielding an infinite Dirac sea. While this makes the model solvable, it leads to an infinite ground state energy $\sum_{k \le 0} k = -\infty$, requiring formal infinite normal ordering.
+In standard Luttinger liquid theory (e.g., Haldane~\cite{haldane1981}, Giamarchi~\cite{giamarchi2004}, and von Delft--Schoeller~\cite{vondelft1998}), the kinetic dispersion is linearized near the Fermi points $\pm k_F$. The spectrum is extended to $-\infty$, yielding an infinite Dirac sea. While this approximation simplifies the evaluation of commutators, it results in a formally infinite ground state energy $\sum_{k \le 0} k = -\infty$, which is handled via infinite normal ordering.
 
-In our finite constructive formulation, the Dirac sea $\mathcal{S}_0$ has a finite bottom at mode $-h+1$. The ground state energy $E_\Omega = -h(h-1)/2$ is an exact finite integer. No infinite subtraction is required. At the same time, for low-energy excitations near the Fermi surface $k \approx 0$, the spectrum is strictly linear ($\epsilon_k = k$), exactly matching the physics of chiral 1D fermions.
+In the present finite-dimensional setting, the Dirac sea $\mathcal{S}_0$ has a lower bound at mode $-h+1$. The ground state energy $E_\Omega = -h(h-1)/2$ is a finite integer, so no infinite subtraction is necessary. For excitations near the Fermi surface $k \approx 0$, the dispersion remains strictly linear ($\epsilon_k = k$), modeling the low-energy behavior of chiral 1D fermions within the explicitly bounded momentum band.
 
 \section{Chapter Summary and Literature Comparison}
 
-In this chapter, we united the Fourier transform and CAR representations to describe physical lattice fermions:
+In this chapter, we united the Fourier transform and CAR representations to describe lattice fermions:
 \begin{itemize}
-    \item Spatial fermionic operators $\psi_x, \psi_x^\dagger$ are constructed via the unitary Fourier transform, leaving $c_k, c_k^\dagger$ strictly reserved for momentum modes.
-    \item Spatial operators satisfy exact local CAR relations $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$ without non-local Jordan--Wigner strings.
-    \item Total particle number is strictly conserved across representations: $\hat{N}_{\mathrm{tot}} = \sum_k c_k^\dagger c_k = \sum_x \psi_x^\dagger \psi_x$.
-    \item The half-filled Dirac sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$ provides a finite ground state $|\Omega\rangle$ with exact finite energy $E_\Omega = -h(h-1)/2$.
-    \item The physical momentum Hamiltonian $\hat{P} = H_0 - E_\Omega I$ generates exact energy shifts $[P, c_p^\dagger] = p c_p^\dagger$.
+    \item Spatial fermionic operators $\psi_x, \psi_x^\dagger$ are constructed via the discrete Fourier transform of momentum modes $c_k, c_k^\dagger$.
+    \item Spatial operators satisfy local CAR relations $\{\psi_x, \psi_y^\dagger\} = \delta_{x, y} I$ as a consequence of finite character orthogonality.
+    \item Total particle number is conserved across representations: $\hat{N}_{\mathrm{tot}} = \sum_k c_k^\dagger c_k = \sum_x \psi_x^\dagger \psi_x$.
+    \item The half-filled Dirac sea $\mathcal{S}_0$ provides a finite ground state $|\Omega\rangle$ with finite energy $E_\Omega = -h(h-1)/2$.
+    \item The physical momentum Hamiltonian $\hat{P} = H_0 - E_\Omega I$ generates energy shifts $[\hat{P}, c_p^\dagger] = p c_p^\dagger$.
 \end{itemize}
 
 \paragraph{Comparison with Standard Continuum Literature.}
-In standard physics texts, such as Giamarchi~\cite{giamarchi2004} and Gogolin et al.~\cite{gogolin1998}, spatial fermions $\psi(x)$ and momentum modes $c_k$ are introduced simultaneously with continuous spatial indices $x \in [0, \mathcal{L}]$. Field operators satisfy singular anticommutators $\{\psi(x), \psi^\dagger(y)\} = \delta(x-y)$. In contrast, our finite lattice fermions $\psi_x$ are bounded operators on a finite-dimensional Hilbert space of dimension $2^L$. All sums are finite, operator products are well-defined, and the Dirac sea is mathematically regular, setting the stage for the Algebraic Quantum Field Theory local net in Chapter~\ref{ch:lattice_aqft_net}.
+In texts such as Giamarchi~\cite{giamarchi2004} and Gogolin et al.~\cite{gogolin1998}, spatial fermions $\psi(x)$ and momentum modes $c_k$ are often introduced with continuous spatial indices $x \in [0, \mathcal{L}]$. Field operators then satisfy distributional anticommutators $\{\psi(x), \psi^\dagger(y)\} = \delta(x-y)$. In the finite formulation used here, the lattice fermions $\psi_x$ are bounded operators on a finite-dimensional Hilbert space. All sums are finite, operator products are mathematically well-defined, and the Dirac sea is a bounded set.
+
+These spatial fermions provide the foundation for building observable algebras localized to spatial intervals. In Chapter~\ref{ch:lattice_aqft_net}, we use these operators to construct a graded local net, distinguishing between the field locality of the anticommuting fermions and the ordinary spatial locality of even observables.
