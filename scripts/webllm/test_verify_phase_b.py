@@ -8,6 +8,29 @@ import verify_phase_b as verifier
 
 
 class Tests(unittest.TestCase):
+    def test_private_axiom_output_and_multiline_lists(self):
+        verifier.check_axiom_output(
+            "'_private.BosonizeStubs.Fixture.0.Fixture.helper' depends on axioms: [\n"
+            "  propext, Classical.choice,\n  Quot.sound]\n"
+            "'Fixture.public' does not depend on any axioms\n",
+            ["Fixture.helper", "Fixture.public"])
+        verifier.check_axiom_output(
+            "'_private.BosonizeStubs.Fixture.12.Fixture.helper' does not depend on any axioms\n",
+            ["Fixture.helper"])
+
+    def test_axiom_output_rejects_missing_or_wrong_declaration(self):
+        for output in ("", "'Other.Fixture.helper' does not depend on any axioms\n",
+                       "'_private.Module.zero.Fixture.helper' does not depend on any axioms\n",
+                       "'_private.Module.0.Fixture.helper_extra' does not depend on any axioms\n"):
+            with self.subTest(output=output), self.assertRaisesRegex(ValueError, "Missing fresh"):
+                verifier.check_axiom_output(output, ["Fixture.helper"])
+
+    def test_private_axiom_output_rejects_nonstandard_axioms(self):
+        output = ("'_private.Module.0.Fixture.helper' depends on axioms: [\n"
+                  "propext,\n sorryAx]\n")
+        with self.assertRaisesRegex(ValueError, "Nonstandard.*sorryAx"):
+            verifier.check_axiom_output(output, ["Fixture.helper"])
+
     def test_dependency_order_and_cycle(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
@@ -27,7 +50,8 @@ class Tests(unittest.TestCase):
             (root / "BosonizeStubs").mkdir()
             a, b = root / "BosonizeStubs/A.lean", root / "BosonizeStubs/B.lean"
             a.write_text("import Bosonize\nnamespace WebLLMProofFixture\ndef value : Nat := 1\n"
-                         "lemma value_eq : value = 1 := by rfl\nend WebLLMProofFixture\n")
+                         "private lemma helper : value = 1 := by rfl\n"
+                         "lemma value_eq : value = 1 := by exact helper\nend WebLLMProofFixture\n")
             b.write_text("import BosonizeStubs.A\nnamespace WebLLMProofFixture\n"
                          "lemma consumer : value = 1 := by exact value_eq\nend WebLLMProofFixture\n")
             order = verifier.dependencies(root, ["BosonizeStubs/B.lean"])
