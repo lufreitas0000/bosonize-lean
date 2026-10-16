@@ -3,9 +3,9 @@
 
 \section{Introduction and the Energy Budget Philosophy}
 
-In continuum quantum field theory, the Dirac sea has infinite negative depth. Attempting to define particle-hole operators, charges, and Hamiltonians directly in the continuum leads immediately to divergent vacuum expectations and unbounded operators. 
+In standard continuum treatments of the Dirac sea, the negative-energy modes have infinite depth, and defining particle-hole operators, charges, and Hamiltonians typically requires regularization to manage the resulting expectations and operator domains. 
 
-To formalize bosonization constructively without topological approximations or divergent series, we introduce the \emph{Energy Budget regularization scheme}. The entire state space is decomposed into finite-dimensional subspaces governed by two discrete parameters:
+To construct these operators explicitly on a finite lattice, we organize the finite CAR representation using the \emph{Energy Budget regularization scheme}. This setup avoids immediate analytic completion by decomposing the finite state space into orthogonal finite-dimensional subspaces governed by two discrete parameters:
 \begin{enumerate}
     \item Net charge sector deviation $N \in \mathbb{Z}$.
     \item Maximum excitation energy cutoff $K \in \mathbb{N}$.
@@ -15,7 +15,7 @@ Throughout this chapter, let $L = 2h$ with $h \ge 1$ be an even positive integer
 
 \section{Admissible Charge Sectors and Sector Grounds}
 
-Because the single-particle band $\Lambda^*$ contains exactly $2h$ modes, an occupation configuration $S \subseteq \Lambda^*$ can have particle number $\#S$ between $0$ and $2h$. 
+Because the single-particle band $\Lambda^*$ contains exactly $2h$ modes, an occupation configuration $S \subseteq \Lambda^*$ can have particle number $\#S$ between $0$ and $2h$. We organize these configurations by their particle count relative to half-filling.
 
 \begin{definition}[Admissible Charge Sectors]
 The net charge deviation $N \in \mathbb{Z}$ of an occupation configuration $S \subseteq \Lambda^*$ relative to half-filling is defined by:
@@ -72,13 +72,13 @@ For any configuration $S \subseteq \Lambda^*$:
 \end{definition}
 
 \paragraph{Physical Intuition for the Ground Energy Offset $E_0(N)$.}
-Why does the ground state of charge sector $N$ carry energy $E_0(N) = N(N+1)/2$?
-Consider adding $N > 0$ particles to the half-filled Dirac sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$. To minimize total kinetic energy, the particles must occupy the lowest available empty modes immediately above the Fermi surface, which are the consecutive positive modes $k = 1, 2, \dots, N$. The total momentum added is:
+The ground state of charge sector $N$ carries energy $E_0(N) = N(N+1)/2$ relative to the half-filled reference.
+When adding $N > 0$ particles to the reference sea $\mathcal{S}_0 = \{-h+1, \dots, 0\}$, minimizing the bare momentum energy requires occupying the lowest available empty modes immediately above the Fermi surface, which are the consecutive positive modes $k = 1, 2, \dots, N$. The total momentum added is:
 \[
 \sum_{k=1}^N k = 1 + 2 + \dots + N = \frac{N(N+1)}{2}.
 \]
-Similarly, if $N < 0$ particles are removed, the lowest-energy configuration removes the highest occupied modes $k = 0, -1, \dots, N+1$ from the sea. The net momentum change is $-\sum_{k=N+1}^0 k = \frac{|N|(|N|-1)}{2} + |N| = \frac{N(N+1)}{2}$.
-In 1D physics, this quadratic term $E_0(N) = \frac{1}{2} N^2 + \frac{1}{2} N$ reflects the macroscopic charging energy of a 1D Luttinger liquid: adding particles increases the Fermi momentum $k_F \propto N$, so the total kinetic energy increases quadratically as $\int_0^N k \, dk \sim \frac{1}{2} N^2$.
+Similarly, if $N < 0$ particles are removed, the lowest-energy configuration removes the highest occupied modes $k = 0, -1, \dots, N+1$ from the sea. The net momentum change is $-\sum_{k=N+1}^0 k = \frac{|N|(|N|-1)}{2} = \frac{N(N+1)}{2}$.
+This quadratic term $E_0(N) = \frac{1}{2} N^2 + \frac{1}{2} N$ models the macroscopic charging energy often found in 1D Luttinger liquid treatments, where adding particles shifts the Fermi momentum $k_F \propto N$ and increases the total kinetic energy quadratically.
 
 \begin{definition}[Operator Observables]
 The relative charge observable $\hat{N}$ and excitation energy observable $\hat{E}$ are diagonal linear operators on $\mathcal{F}(L)$ defined on basis states by:
@@ -297,9 +297,9 @@ Applying a mode shift of size $M$, the shifted momentum must not exceed the top 
 In the verified Lean~4 core, all 114 lemmas on energy gradings, projections, and ground states are verified in the Lean 4 kernel. The rank formula and displacement monotonicity are proved by finite sorting induction, ensuring that the entire regularized framework is constructive and mathematically rigid.
 \end{remark}
 
-\section{Chapter Summary and Literature Comparison}
+\section{Chapter Summary and Bridge to Bosonic Carriers}
 
-In this chapter, we developed the Energy Budget regularization scheme:
+In this chapter, we developed the finite Energy Budget regularization scheme:
 \begin{itemize}
     \item Admissible charge sectors $N \in \{-h, \dots, h\}$ possess unique ground configurations $\mathcal{S}_N = \{-h+1, \dots, N\}$.
     \item The sector ground reference offset $E_0(N) = N(N+1)/2$ evaluates the macroscopic charging energy in exact integer arithmetic.
@@ -309,7 +309,7 @@ In this chapter, we developed the Energy Budget regularization scheme:
     \item Defined budget subspaces $B(N, K) = \bigoplus_{E=0}^K \mathcal{H}(N, E)$, formalized filtered operator parameters $(q, d)$, and proved the Unified Margin Inequality $2M + K + K_{\mathrm{excursion}} + N_{\max} \le h$.
 \end{itemize}
 
-\paragraph{Comparison with Standard Continuum Literature.}
-In standard continuum bosonization (Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), energy cutoffs are applied after the fact using smooth exponential damping factors $e^{-\alpha |k|}$ or soft Gaussian filters. While convenient for computing momentum integrals, soft cutoffs create non-orthogonal states and leave open whether the underlying Hilbert space is genuinely finite-dimensional.
+The energy budget structures introduced here operate strictly within the finite fermionic Fock space. With these bounded, exact, finite-dimensional carrier spaces established, Chapter~\ref{ch:boson_fock} will introduce an ambient bosonic polynomial algebra. We must keep these two carriers distinct: while the ambient polynomial space will help express structural identities elegantly, the actual physical state projections will remain within the finite fermionic budgets $B(N, K)$ characterized here.
 
-In our constructive framework, the energy budget $B(N, K)$ is an exact finite-dimensional orthogonal subspace. As shown in Theorem~\ref{thm:unified_margin}, when the unified margin condition is satisfied, the finite boundary does not introduce any distortion: operators act on $B(N, K)$ exactly as they do in the continuum, but with strictly finite-dimensional matrix representations.
+\paragraph{Comparison with Standard Continuum Literature.}
+For context, in standard continuum bosonization (Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), energy cutoffs are often applied after the fact using smooth exponential damping factors or soft Gaussian filters. While convenient for computing momentum integrals over the continuous band, soft cutoffs create non-orthogonal filtered states. Here we use an explicit integer margin condition on the exact finite-dimensional orthogonal subspace $B(N, K)$, which avoids introducing any distortion to the finite representation when the margin condition is satisfied.
