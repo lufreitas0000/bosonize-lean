@@ -1,6 +1,6 @@
 {
   "dispatch_base": "4e28060",
-  "stage": "5/15 current candidates mechanically verified; remaining sessions/corrections pending; no manuscript rewrite accepted into main",
+  "stage": "13/15 current candidates mechanically verified; two fresh native sessions pending; no manuscript rewrite accepted into main",
   "chapter_strategy": "One chapter per session; a separate session owns main.tex frontmatter/roadmap only.",
   "jobs": [
     {
@@ -8,50 +8,62 @@
       "task": "bosonize-lean--rewrite-ch01-wave1",
       "session": "https://jules.google.com/session/16033437896827980283",
       "dispatched_at": "2026-10-16T00:35:07.981449+00:00",
-      "controller_status": "waiting_jules",
-      "verification_attempts": 0,
-      "candidate_commit": null,
-      "editorially_accepted": false
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "b1d3eb206e60d27f0cc821f2ac9e5bea97037061",
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH02",
       "task": "bosonize-lean--rewrite-ch02-wave1",
-      "session": "https://jules.google.com/session/4349361890691014354",
+      "session": "https://jules.google.com/session/17549436250568065731",
       "dispatched_at": "2026-10-16T00:35:11.612046+00:00",
       "controller_status": "waiting_jules",
       "verification_attempts": 0,
       "candidate_commit": null,
-      "editorially_accepted": false
+      "editorially_accepted": false,
+      "authoring_sessions": 2,
+      "previous_sessions": [
+        "https://jules.google.com/session/4349361890691014354"
+      ]
     },
     {
       "chapter": "CH03",
       "task": "bosonize-lean--rewrite-ch03-wave1",
       "session": "https://jules.google.com/session/11096842965569419421",
       "dispatched_at": "2026-10-16T00:35:15.631468+00:00",
-      "controller_status": "waiting_jules",
-      "verification_attempts": 0,
-      "candidate_commit": null,
-      "editorially_accepted": false
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "d426dd0932abe899e8c578e15bb9ff4bf9e7042e",
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH04",
       "task": "bosonize-lean--rewrite-ch04-wave1",
       "session": "https://jules.google.com/session/13640349422861630672",
       "dispatched_at": "2026-10-16T00:35:19.536143+00:00",
-      "controller_status": "waiting_jules",
-      "verification_attempts": 0,
-      "candidate_commit": null,
-      "editorially_accepted": false
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "8767c4d06505bfb441c05f5ba821ffc570c0545d",
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH05",
       "task": "bosonize-lean--rewrite-ch05-wave1",
       "session": "https://jules.google.com/session/4953799156936034531",
       "dispatched_at": "2026-10-16T00:35:23.821299+00:00",
-      "controller_status": "waiting_jules",
-      "verification_attempts": 0,
-      "candidate_commit": null,
-      "editorially_accepted": false
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "059342c47965d67f79fddc6247f3ca95ea8a2b4e",
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH06",
@@ -61,17 +73,21 @@
       "controller_status": "verified",
       "verification_attempts": 1,
       "candidate_commit": "0a48cf04470d0d1a7278761e02401750d10d87c5",
-      "editorially_accepted": false
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH07",
       "task": "bosonize-lean--rewrite-ch07-wave1",
       "session": "https://jules.google.com/session/6628946825800271795",
       "dispatched_at": "2026-10-16T00:35:31.471559+00:00",
-      "controller_status": "waiting_jules",
-      "verification_attempts": 0,
-      "candidate_commit": null,
-      "editorially_accepted": false
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "e68b55dfce304a75fb3cdfe3d4910ed8cbb6b419",
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH08",
@@ -81,37 +97,45 @@
       "controller_status": "verified",
       "verification_attempts": 1,
       "candidate_commit": "98c96ac724ac1176f62c238f5f51a9efe669ae5e",
-      "editorially_accepted": false
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH09",
       "task": "bosonize-lean--rewrite-ch09-wave1",
       "session": "https://jules.google.com/session/3417474204592107079",
       "dispatched_at": "2026-10-16T00:35:39.855997+00:00",
-      "controller_status": "waiting_jules",
-      "verification_attempts": 0,
-      "candidate_commit": null,
-      "editorially_accepted": false
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "32c3de0092a65c8dea74dd528e9af4219bdfa684",
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH10",
       "task": "bosonize-lean--rewrite-ch10-wave1",
       "session": "https://jules.google.com/session/4064820356513671914",
       "dispatched_at": "2026-10-16T00:35:44.075476+00:00",
-      "controller_status": "waiting_jules",
-      "verification_attempts": 1,
-      "candidate_commit": "45628fa1ad9b55f49f9e6063335bb8d4066608e5",
-      "editorially_accepted": false
+      "controller_status": "verified",
+      "verification_attempts": 2,
+      "candidate_commit": "a30d5885f9061c45cc8ebed5e9719806fa01ad79",
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH11",
       "task": "bosonize-lean--rewrite-ch11-wave1",
       "session": "https://jules.google.com/session/4427945683332135247",
       "dispatched_at": "2026-10-16T00:35:48.368543+00:00",
-      "controller_status": "waiting_jules",
-      "verification_attempts": 0,
-      "candidate_commit": null,
-      "editorially_accepted": false
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "c4c8992986710ff16ba5370bd92f78b2a1f91cea",
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH19",
@@ -121,7 +145,9 @@
       "controller_status": "verified",
       "verification_attempts": 2,
       "candidate_commit": "1a3690c72fb292b593fabb856bf26b8c4ef43236",
-      "editorially_accepted": false
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH20",
@@ -131,7 +157,9 @@
       "controller_status": "verified",
       "verification_attempts": 1,
       "candidate_commit": "d6f972c6eb52683ba4d09efa647a9dc91f683fc4",
-      "editorially_accepted": false
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "CH21",
@@ -141,17 +169,23 @@
       "controller_status": "verified",
       "verification_attempts": 1,
       "candidate_commit": "f28662ddcfb63282afe1a0c16c8a131431ffa90a",
-      "editorially_accepted": false
+      "editorially_accepted": false,
+      "authoring_sessions": 1,
+      "previous_sessions": []
     },
     {
       "chapter": "Frontmatter",
       "task": "bosonize-lean--rewrite-frontmatter-wave1",
-      "session": "https://jules.google.com/session/3208893926813201988",
+      "session": "https://jules.google.com/session/186204675084124999",
       "dispatched_at": "2026-10-16T00:36:06.574685+00:00",
       "controller_status": "waiting_jules",
       "verification_attempts": 1,
       "candidate_commit": "02c3c62526efd01a8955436b1fab13e03a6ed804",
-      "editorially_accepted": false
+      "editorially_accepted": false,
+      "authoring_sessions": 2,
+      "previous_sessions": [
+        "https://jules.google.com/session/3208893926813201988"
+      ]
     }
   ],
   "checks_completed": [
@@ -166,7 +200,7 @@
     "Integrate disjoint reviewed changes and compile the combined book",
     "Push accepted sources and check the CI PDF source receipt"
   ],
-  "checked_at": "2026-10-16T00:54:21.310514+00:00",
+  "checked_at": "2026-10-16T01:18:50.532222+00:00",
   "mechanical_verification_is_not_editorial_or_mathematical_acceptance": true,
   "coordination_findings": [
     "CH01 requested fuller chapter edits and limited protected-algebra wording instead of continuum dynamics claims.",
@@ -176,5 +210,12 @@
     "CH19 requested restoration of the missing finite interacting-state comparison caveat.",
     "Ancillary files in five provisional patches were returned to their original Jules sessions for whitelist cleanup; none are accepted."
   ],
-  "independent_review_plan": "Three separate Jules review sessions for foundations, currents/budgets, and later interactions/frontmatter; prepared, not dispatched until the checked candidate book is assembled."
+  "independent_review_plan": "Three separate Jules review sessions for foundations, currents/budgets, and later interactions/frontmatter; prepared, not dispatched until the checked candidate book is assembled.",
+  "authoring_sessions_dispatched": 17,
+  "native_transport_fix": {
+    "hub_commit": "26cc1c7",
+    "offline_tests_passed": 48,
+    "change": "Replace browser JSON response contract for native Jules repository editing; keep acceptance gates unchanged."
+  },
+  "bounded_retries": "CH02 and frontmatter each received one fresh native session only after the earlier session was terminal and still supplied no new observable source. Original handles and evidence are retained."
 }
