@@ -5,13 +5,13 @@
 
 The discrete Fourier transform is the central kinematic bridge of quantum field theory on a lattice. It connects the spatial coordinate representation on the periodic lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ to the dual momentum representation on the centered band $\Lambda^* = \{-h+1, \dots, h\}$ (for even $L = 2h$).
 
-In standard physics presentations, the Fourier transform is defined immediately on complex functions using transcendental exponentials $e^{2\pi i k x / L}$ and the unitary normalization factor $1/\sqrt{L}$. While physically standard, this conflates two distinct mathematical layers:
+In standard physics presentations, the Fourier transform is often defined immediately on complex functions using transcendental exponentials $e^{2\pi i k x / L}$ and the unitary normalization factor $1/\sqrt{L}$. Here, we separate two distinct mathematical layers to clarify the role of the normalization factor:
 \begin{enumerate}
-    \item \textbf{The algebraic character layer:} Character orthogonality and algebraic Fourier inversion require only a commutative field $K$ containing a primitive $L$-th root of unity $\zeta$, and the invertibility of the lattice size ($L \cdot 1_K \neq 0$, meaning the characteristic of $K$ does not divide $L$). Square roots, analytic limits, and metric structures are completely unnecessary at this level.
-    \item \textbf{The Hilbert unitary layer:} To make the Fourier transform an exact isometry that preserves Canonical Anticommutation Relations (CAR) between position and momentum fermions without spurious factors of $\sqrt{L}$, we instantiate $K = \mathbb{C}$ and introduce the metric normalization $a = 1/\sqrt{L}$.
+    \item \textbf{The algebraic character layer:} Character orthogonality and algebraic Fourier inversion require only a commutative field $K$ containing a primitive $L$-th root of unity $\zeta$, and the invertibility of the lattice size ($L \cdot 1_K \neq 0$). Square roots, analytic limits, and metric structures are not required at this level.
+    \item \textbf{The Hilbert unitary layer:} To make the Fourier transform an exact isometry that preserves Canonical Anticommutation Relations (CAR) between position and momentum fermions (developed in Chapters~\ref{ch:car_fock} and~\ref{ch:fermions}), we instantiate $K = \mathbb{C}$ and introduce the metric normalization $a = 1/\sqrt{L}$. This leads to the unitary change of one-particle basis underlying those CAR operators.
 \end{enumerate}
 
-In this chapter, we develop both layers in full mathematical rigor, following the verified constructive formalization.
+In this chapter, we develop both layers, preparing the groundwork for the exact operator mappings that follow.
 
 \section{Generic Character Algebra over Fields}
 
@@ -72,7 +72,7 @@ We define the $K$-linear transforms:
 \end{enumerate}
 \end{definition}
 
-Note that $\chi(-k, x) = \zeta^{-k x_{\mathrm{val}}} = (\zeta^{k x_{\mathrm{val}}})^{-1} = \chi(k, x)^{-1}$. By Lemma~\ref{lem:rep_independence}, evaluating at $-k \in \mathbb{Z}$ agrees with evaluating at the transported band negation $\ominus k \in \Lambda^*$, ensuring algebraic consistency even when $-k \notin \Lambda^*$.
+Note that $\chi(-k, x) = \zeta^{-k x_{\mathrm{val}}} = (\zeta^{k x_{\mathrm{val}}})^{-1} = \chi(k, x)^{-1}$. By Lemma~\ref{lem:rep_independence}, evaluating at $-k \in \mathbb{Z}$ agrees with evaluating at the transported band negation $\ominus k \in \Lambda^*$, ensuring algebraic consistency even when $-k \notin \Lambda^*$. The opposite signs chosen for the analysis and synthesis transforms correspond exactly to the algebraic inversion, balancing the sum of roots of unity when composed.
 
 \section{Dual Character Orthogonality and Algebraic Inversion}
 
@@ -232,14 +232,14 @@ Using the trigonometric identity $\cos\theta = 1 - 2 \sin^2(\theta/2)$:
 \]
 \end{proof}
 
-\paragraph{Formal Correctness vs.\ Physical Implications: Trigonometric Truncation vs.\ Continuum Dispersion.}
-In continuum physics, the spatial kinetic operator is $-\partial_x^2$, whose Fourier transform yields the quadratic dispersion $p_{\mathrm{phys}}^2 = (2\pi k / L)^2$. In the long-wavelength continuum limit where the mode index is small compared to the lattice size ($|k| \ll L$), we approximate $\sin(\pi k / L) \approx \frac{\pi k}{L}$, and the exact lattice dispersion becomes:
+\paragraph{Fixed Lattice Regularization.}
+In continuum physics, the spatial kinetic operator is $-\partial_x^2$, whose Fourier transform yields the quadratic dispersion $p_{\mathrm{phys}}^2 = (2\pi k / L)^2$. In the long-wavelength regime where the mode index is small compared to the lattice size ($|k| \ll L$), we approximate $\sin(\pi k / L) \approx \frac{\pi k}{L}$, and the exact lattice dispersion becomes:
 \begin{equation}
 -4 \sin^2\left(\frac{\pi k}{L}\right) \approx -4 \left(\frac{\pi k}{L}\right)^2 = -\left(\frac{2\pi k}{L}\right)^2 = -p_{\mathrm{phys}}^2,
 \end{equation}
-recovering the continuous kinetic Laplacian $-\partial_x^2$. 
+corresponding to the continuous kinetic Laplacian. 
 
-On the discrete lattice, the trigonometric dispersion $-4 \sin^2(\pi k / L)$ is bounded between $-4$ and $0$ for all modes in the Brillouin zone. High-momentum modes near the Brillouin zone edge do not diverge quadratically; their energy saturates at $-4$. This natural trigonometric bending provides an intrinsic, exact ultraviolet regularization that eliminates divergences without needing arbitrary momentum cutoffs.
+On the discrete lattice, the trigonometric dispersion $-4 \sin^2(\pi k / L)$ is bounded between $-4$ and $0$ for all modes in the Brillouin zone. High-momentum modes near the Brillouin zone edge do not diverge quadratically; their energy saturates at $-4$. This provides a fixed lattice regularization that bounds the kinetic energy per particle. We emphasize that this fixed dispersion is not an elimination of every divergence in an interacting model; correlation length phenomena and state overlaps require separate careful handling.
 
 \section{Chapter Summary and Literature Comparison}
 
@@ -247,11 +247,9 @@ In this chapter, we developed the finite Fourier transform bridging spatial and 
 \begin{itemize}
     \item The algebraic character layer is defined over any commutative field $K$ containing a primitive $L$-th root $\zeta$, requiring only $L \cdot 1_K \neq 0$.
     \item Dual character orthogonality yields two-sided algebraic inversion $T \circ S = S \circ T = L I$.
-    \item In the complex Hilbert setting ($K = \mathbb{C}$), scaling by $1/\sqrt{L}$ yields the unitary Fourier isometry $U$, satisfying the Parseval/Plancherel identity.
+    \item In the complex Hilbert setting ($K = \mathbb{C}$), scaling by $1/\sqrt{L}$ yields the unitary Fourier isometry $U$, satisfying the Parseval/Plancherel identity. This establishes the complex-unitary layer needed for the unitary change of one-particle basis underlying the CAR in Chapters~\ref{ch:car_fock} and~\ref{ch:fermions}.
     \item The discrete difference operators and Laplacian $\Delta\nabla$ are diagonalized by characters, yielding the exact bounded lattice dispersion $-4\sin^2(\pi k / L)$.
 \end{itemize}
 
-\paragraph{Comparison with Standard Continuum Literature.}
-In standard condensed matter treatments of 1D systems, such as Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the Fourier transform is formulated with continuous plane waves $e^{i k x}$, integrating over a continuous wire $[0, \mathcal{L}]$. Field commutators are delta functions $[\psi(x), \psi^\dagger(y)] = \delta(x-y)$, which are singular distributions requiring smearing with test functions.
-
-In our constructive framework, all transforms are finite sums over the discrete group $\Lambda$. Kronecker deltas $\delta_{x, y}$ replace Dirac delta distributions, characters $\chi(k, x)$ are finite algebraic roots of unity, and the Fourier transform is a strictly unitary operator on finite-dimensional spaces. This ensures that when we construct spatial fermionic operators in Chapter~\ref{ch:fermions}, the CAR relations are preserved exactly with zero distribution-theoretic artifacts.
+\paragraph{Comparison with Selected Literature.}
+In standard condensed matter treatments of 1D systems, such as Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}, the Fourier transform is often formulated with continuous plane waves $e^{i k x}$, integrating over a continuous wire $[0, \mathcal{L}]$. In our lattice framework, all transforms are finite sums over the discrete group $\Lambda$. Kronecker deltas $\delta_{x, y}$ naturally replace delta distributions, characters $\chi(k, x)$ are finite algebraic roots of unity, and the Fourier transform acts as a strictly unitary operator on finite-dimensional spaces. This sets up the discrete spatial fermionic operators in Chapter~\ref{ch:fermions} using a finite change of basis from the momentum CAR.
