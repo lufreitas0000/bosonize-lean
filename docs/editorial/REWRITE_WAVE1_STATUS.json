@@ -1,6 +1,6 @@
 {
   "dispatch_base": "4e28060",
-  "stage": "13/15 current candidates mechanically verified; two fresh native sessions pending; no manuscript rewrite accepted into main",
+  "stage": "Paused by user on 2026-10-16. All 15 author candidates are mechanically verified; manuscript acceptance and final main release are pending.",
   "chapter_strategy": "One chapter per session; a separate session owns main.tex frontmatter/roadmap only.",
   "jobs": [
     {
@@ -20,9 +20,9 @@
       "task": "bosonize-lean--rewrite-ch02-wave1",
       "session": "https://jules.google.com/session/17549436250568065731",
       "dispatched_at": "2026-10-16T00:35:11.612046+00:00",
-      "controller_status": "waiting_jules",
+      "controller_status": "verified",
       "verification_attempts": 0,
-      "candidate_commit": null,
+      "candidate_commit": "b9a5a76426579d217740924d77762bf7f120cd3d",
       "editorially_accepted": false,
       "authoring_sessions": 2,
       "previous_sessions": [
@@ -84,7 +84,7 @@
       "dispatched_at": "2026-10-16T00:35:31.471559+00:00",
       "controller_status": "verified",
       "verification_attempts": 1,
-      "candidate_commit": "e68b55dfce304a75fb3cdfe3d4910ed8cbb6b419",
+      "candidate_commit": "edeab0258cb2cd28a3d4f9bb97266ee07b572bda",
       "editorially_accepted": false,
       "authoring_sessions": 1,
       "previous_sessions": []
@@ -166,7 +166,7 @@
       "task": "bosonize-lean--rewrite-ch21-wave1",
       "session": "https://jules.google.com/session/2452652107077444780",
       "dispatched_at": "2026-10-16T00:36:02.465898+00:00",
-      "controller_status": "verified",
+      "controller_status": "waiting_jules",
       "verification_attempts": 1,
       "candidate_commit": "f28662ddcfb63282afe1a0c16c8a131431ffa90a",
       "editorially_accepted": false,
@@ -178,9 +178,9 @@
       "task": "bosonize-lean--rewrite-frontmatter-wave1",
       "session": "https://jules.google.com/session/186204675084124999",
       "dispatched_at": "2026-10-16T00:36:06.574685+00:00",
-      "controller_status": "waiting_jules",
+      "controller_status": "verified",
       "verification_attempts": 1,
-      "candidate_commit": "02c3c62526efd01a8955436b1fab13e03a6ed804",
+      "candidate_commit": "9bf50dd9f58cfcb6d32cd64b640b4268fed82731",
       "editorially_accepted": false,
       "authoring_sessions": 2,
       "previous_sessions": [
@@ -194,13 +194,12 @@
     "Mutation checks reject changed mathematical blocks, removed labels and non-owned Lean edits"
   ],
   "acceptance_pending": [
-    "Collect final candidate patches through agentctl",
-    "Inspect changed prose and mathematical scope",
-    "Compile isolated candidates in the sandbox",
-    "Integrate disjoint reviewed changes and compile the combined book",
-    "Push accepted sources and check the CI PDF source receipt"
+    "Resume the three paused same-session Jules tasks (CH21 author, foundations reviewer, currents reviewer); do not dispatch replacement sessions.",
+    "Resolve and inspect the four CH21 tone/precision findings and the three independent reviewer reports against final source diffs.",
+    "Bind independent reviews to exact final candidate hashes; integrate only after source, preservation, and combined-book checks pass.",
+    "Push accepted main and verify exact main CI plus the latest release PDF and source receipt."
   ],
-  "checked_at": "2026-10-16T01:18:50.532222+00:00",
+  "checked_at": "2026-10-16T18:52:45.993675+00:00",
   "mechanical_verification_is_not_editorial_or_mathematical_acceptance": true,
   "coordination_findings": [
     "CH01 requested fuller chapter edits and limited protected-algebra wording instead of continuum dynamics claims.",
@@ -217,5 +216,12 @@
     "offline_tests_passed": 48,
     "change": "Replace browser JSON response contract for native Jules repository editing; keep acceptance gates unchanged."
   },
-  "bounded_retries": "CH02 and frontmatter each received one fresh native session only after the earlier session was terminal and still supplied no new observable source. Original handles and evidence are retained."
+  "bounded_retries": "CH02 and frontmatter each received one fresh native session only after the earlier session was terminal and still supplied no new observable source. Original handles and evidence are retained.",
+  "pause_checkpoint": "REWRITE_WAVE1_CHECKPOINT_2026-10-16.md",
+  "review_status_at_pause": {
+    "foundations": "waiting_jules; pause instruction sent; no report candidate collected",
+    "currents": "candidate 2d543e5a46ab0a91ba28cc383a28393caf21cff6; coordinator REVISE correction sent; paused",
+    "interactions": "candidate e7432c1fbc5f14403dcd09c0dc379bf807fd5ac3; mechanically verified, coordinator findings unresolved",
+    "ch21_author": "candidate f28662ddcfb63282afe1a0c16c8a131431ffa90a; narrow correction sent; paused"
+  }
 }
