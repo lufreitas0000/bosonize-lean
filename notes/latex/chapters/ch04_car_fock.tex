@@ -9,7 +9,7 @@ Let $\iota$ be a non-empty, finite index set equipped with a linear order:
 \begin{equation}
 \iota = \{1, 2, \dots, d\}, \quad d \coloneqq \#\iota \ge 1.
 \end{equation}
-The choice of a total linear order $\le$ on $\iota$ is physically unobservable but mathematically essential: it fixes the sign conventions acquired during the permutation of fermionic creation operators, eliminating sign ambiguities.
+The choice of a total linear order $\le$ on $\iota$ is an occupation-basis convention: it fixes the sign factors acquired during the permutation of fermionic creation operators, avoiding sign ambiguities.
 
 Typical physical realizations of $\iota$ include:
 \begin{enumerate}
@@ -30,7 +30,7 @@ Let $V$ be a complex vector space. An \emph{Algebraic CAR representation} over $
 \end{align}
 \end{definition}
 
-Without assuming any inner product, adjoint operation, or topological structure on $V$, the algebraic relations alone imply fundamental commutation theorems.
+Without assuming any inner product, adjoint operation, or topological structure on $V$, the algebraic relations alone imply the standard commutation identities.
 
 \begin{theorem}[Purely Algebraic CAR Identities]
 \label{thm:algebraic_car}
@@ -92,7 +92,7 @@ In Dirac bra-ket notation, for any states $|u\rangle, |v\rangle \in V$ and linea
 \begin{equation}
 \langle u \mid A \mid v \rangle \coloneqq \langle u \mid A v \rangle \equiv \langle A^\dagger u \mid v \rangle.
 \end{equation}
-This notation is completely rigorous: the placement of the operator between the bra and ket reflects the self-adjointness of the inner product pairing, meaning that acting forward on the ket with $A$ is identical to acting backward on the bra with $A^\dagger$.
+In this notation, the placement of the operator between the bra and ket reflects the self-adjointness of the inner product pairing, meaning that acting forward on the ket with $A$ is identical to acting backward on the bra with $A^\dagger$.
 
 \begin{remark}[Formalization Note]
 In the verified Lean formalization (\texttt{Bosonize.A02}), the separation between \texttt{AlgebraicCAR} and \texttt{CAR} is strictly maintained. Adjoint compatibility is an independent geometric axiom: if $(c, c^\dagger)$ is an algebraic CAR pair and $S$ is an invertible non-unitary operator, the similarity transform $\tilde{c}_i \coloneqq S c_i S^{-1}$ and $\tilde{c}_i^\dagger \coloneqq S c_i^\dagger S^{-1}$ preserves all anticommutators, but $\tilde{c}_i^\dagger \neq (\tilde{c}_i)^\dagger$. Thus, adjointness is an essential condition that fixes the physical Hilbert space metric.
@@ -124,7 +124,7 @@ For each subset $S \subseteq \iota$, the basis vector $|S\rangle$ is the indicat
 \end{enumerate}
 \end{proposition}
 
-\section{Exact Fermionic Sign Mechanics}
+\section{Fermionic Sign Mechanics}
 
 To define creation and annihilation operators on $\mathcal{F}(\iota)$ that satisfy anticommutation, we must account for the permutation phase acquired when inserting or removing a fermion.
 
@@ -142,7 +142,7 @@ Let $\iota$ be linearly ordered by $\le$. For any mode $i \in \iota$ and any occ
 \end{enumerate}
 \end{definition}
 
-To maintain strict mathematical precision, the domain of the count $\sigma(i, S)$ is defined in $\mathbb{N}$, and arithmetic evaluations are carried out additively via disjoint unions.
+The domain of the count $\sigma(i, S)$ is defined in $\mathbb{N}$, and arithmetic evaluations are carried out additively via disjoint unions.
 
 \begin{lemma}[Additive Atomic Counts]
 \label{lem:atomic_counts}
@@ -177,7 +177,7 @@ When two operations are performed sequentially, say creating mode $j$ and then c
     \item \textbf{Creating $j$ then $i$:} When $j$ is created first, it enters the state with phase $\epsilon(j, S)$. When $i$ is created next, mode $j$ is already present in the configuration. Because $j < i$, mode $j$ contributes $+1$ to the count of particles preceding $i$, so the second phase is $(-1)^{\sigma(i, S) + 1} = -\epsilon(i, S)$.
     \item \textbf{Creating $i$ then $j$:} When $i$ is created first, it enters with phase $\epsilon(i, S)$. When $j$ is created next, although $i$ is now in the configuration, $i > j$ does \emph{not} precede $j$! Thus the count of particles preceding $j$ is unaffected: $\sigma(j, S \cup \{i\}) = \sigma(j, S)$, so the phase remains $\epsilon(j, S)$.
 \end{enumerate}
-Comparing the two composite phases reveals a relative factor of $-1$. This fundamental sign discrepancy is the exact combinatorial origin of $\{c_i^\dagger, c_j^\dagger\} = 0$.
+Comparing the two composite phases reveals a relative factor of $-1$. This fundamental sign discrepancy is the combinatorial origin of $\{c_i^\dagger, c_j^\dagger\} = 0$.
 
 Figure~\ref{fig:sign_mechanics} illustrates this asymmetric count shift visually.
 
@@ -358,19 +358,18 @@ Under this correspondence, the global parity operator $\Gamma$ is proportional t
 By the representation theory of complex Clifford algebras, $\mathcal{C}\ell(2d, \mathbb{C}) \cong \mathrm{End}(\mathbb{C}^{2^d})$, and the Fock space $\mathcal{F}(\iota)$ is its unique irreducible spin representation. A planned supporting appendix will develop this Clifford representation theory systematically, providing an alternative algebraic proof of Fock space irreducibility and parity grading.
 \end{remark}
 
-\section{Chapter Summary and Literature Comparison}
+\section{Summary and Transition to Spatial Fermions}
 
-In this chapter, we developed the exact theory of fermions on finite index sets:
+In this chapter, we formulated fermions on finite index sets:
 \begin{itemize}
-    \item Established the two-tiered hierarchy separating algebraic CAR identities from Hilbert space adjoint compatibility.
-    \item Clarified Dirac bra-ket notation and operator matrix elements $\langle u \mid A \mid v \rangle$.
-    \item Proved that fermionic sign factors $\epsilon(i, S) = (-1)^{\sigma(i, S)}$ satisfy exact sign exchange identities, eliminating sign ambiguities without software heuristics.
-    \item Provided a visual TikZ specification of fermionic sign mechanics for creation, annihilation, and mixed pairs.
-    \item Constructed the concrete $2^d$-dimensional Fock space $\mathcal{F}(\iota)$ and proved that it forms an exact Hilbert CAR representation.
-    \item Defined the global fermion parity operator $\Gamma$ and contextualized it within Clifford representation theory.
+    \item Separated algebraic CAR identities from Hilbert space adjoint compatibility.
+    \item Described Dirac bra-ket notation and operator matrix elements $\langle u \mid A \mid v \rangle$.
+    \item Verified that fermionic sign factors $\epsilon(i, S) = (-1)^{\sigma(i, S)}$ satisfy sign exchange identities.
+    \item Illustrated fermionic sign mechanics for creation, annihilation, and mixed pairs.
+    \item Constructed the $2^d$-dimensional Fock space $\mathcal{F}(\iota)$ and showed that it provides a Hilbert CAR representation.
+    \item Defined the global fermion parity operator $\Gamma$ and related it to Clifford representation theory.
 \end{itemize}
 
-\paragraph{Comparison with Standard Continuum Literature.}
-In standard condensed matter physics literature (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}), fermionic creation and annihilation operators are introduced directly through continuum field operators $\psi(x)$ or Fourier modes $c_k$ without establishing the underlying finite-dimensional representation theory. Permutation signs are handled implicitly using anticommuting Grassmann variables or Jordan--Wigner strings $\exp(i \pi \sum_{j < i} n_j)$.
+Standard condensed matter literature (e.g., Giamarchi~\cite{giamarchi2004}, Gogolin et al.~\cite{gogolin1998}, and von Delft and Schoeller~\cite{vondelft1998}) typically introduces fermionic creation and annihilation operators through continuum field operators $\psi(x)$ or Fourier modes $c_k$. Permutation signs are often handled implicitly using anticommuting Grassmann variables or Jordan--Wigner strings $\exp(i \pi \sum_{j < i} n_j)$.
 
-As demonstrated in this chapter, our constructive formulation defines the sign factors $\epsilon(i, S)$ directly on discrete subsets, proving all sign identities algebraically without infinite operator exponentials. This ensures that the Fock space carrier is well-defined and ready to host the position and momentum fermions developed in Chapter~\ref{ch:fermions}.
+In our formulation, the sign factors $\epsilon(i, S)$ are defined explicitly on discrete subsets. This finite-dimensional construction ensures that the Fock space carrier is well-defined. Having established the general algebraic properties of the CAR on an arbitrary ordered finite set $\iota$, Chapter~\ref{ch:fermions} will specialize this construction to the momentum band $\Lambda^*$ and apply the spatial Fourier transform to define position-space fermions, bridging the abstract algebraic structure with the spatial lattice geometry without repeating the CAR derivation.
