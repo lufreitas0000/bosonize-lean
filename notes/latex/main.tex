@@ -2,10 +2,10 @@
 
 \input{preamble}
 
-\title{\textbf{Constructive 1+1D Lattice Bosonization}\\
-\Large Exact Foundations, Algebraic Quantum Field Theory, and Haldane Completeness}
+\title{\textbf{1+1D Lattice Bosonization}\\
+\Large Explicit Finite-Lattice and Finite-Budget Models}
 \author{\textbf{Bosonize-Lean Project}\\
-\normalsize Formally Verified Lattice AQFT Monograph}
+\normalsize A Pedagogical Monograph}
 \date{\today\\\small Source revision: \texttt{\BuildRevision}}
 
 \begin{document}
@@ -20,22 +20,15 @@
 \chapter*{Preface}
 \markboth{Preface}{Preface}
 
-This monograph presents a complete, self-contained mathematical exposition of $1+1$-dimensional lattice bosonization formulated within constructive Algebraic Quantum Field Theory (AQFT). 
+This monograph presents a pedagogical rederivation of selected results from the $1+1$-dimensional bosonization literature. We follow the standard bosonization program, keeping the lattice size and the energy restrictions explicit. At fixed size, the fermionic constructions use finite-dimensional CAR Fock spaces and finite sums. Some bosonic identities are most naturally expressed on an ambient polynomial algebra; we state separately when those identities apply to a finite energy budget.
 
-In traditional condensed matter physics and quantum field theory, bosonization is frequently presented using formal functional integrals, divergent operator products, and heuristic infinite-dimensional limits. While physically intuitive, these heuristics often obscure essential mathematical structures, such as boundary holonomies, Umklapp wrapping, operator domain restrictions, and the exact combinatorial nature of the Schwinger anomaly.
+This presentation is intended to make the algebra and its assumptions accessible. By maintaining explicit finite lattices and bounded cutoffs, we highlight algebraic structures such as boundary holonomies, Umklapp wrapping, and operator domain restrictions. However, this explicit finite framework also imposes limitations. It does not by itself establish a continuum limit, a thermodynamic limit, or replace the broader analytic treatments found in the established literature.
 
-The research program documented here resolves these issues by developing bosonization as a system of \emph{exact algebraic theorems} on strictly finite lattices, finite-dimensional CAR Fock spaces, and graded polynomial algebras. Every theorem, lemma, and proposition appearing in Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} and Appendices~\ref{app:fourier_characters} through~\ref{app:density_partitions} has been fully formalized and verified by the Lean 4 interactive theorem prover without placeholders, unproved assertions, or non-standard axioms.
+The material presented in Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} and Appendices~\ref{app:fourier_characters} through~\ref{app:density_partitions} corresponds to an implemented Lean 4 formalization. Note that Lean proof coverage applies strictly to the actual mathematical declarations and their explicit hypotheses, not automatically to every explanatory sentence in the text.
 
-The later Chapters~\ref{ch:correlations}--\ref{ch:spinful} are manuscript
-drafts awaiting independent mathematical and editorial review. Chapter~19 uses
-the accepted Phase-B CH19/A08 development, whose Core promotion remains open.
-Chapters~20 and~21 do not yet have implemented chapter Lean modules. Their
-mathematical derivations, formal-series constructions and finite comparisons
-must therefore be read with the scope and limitations stated in those chapters;
-compilation of this book does not certify their mathematics. Chapters~12--18
-have separate private drafts and are not included in this edition.
+The later Chapters~\ref{ch:correlations}--\ref{ch:spinful} are manuscript drafts awaiting independent mathematical and editorial review. Chapter~19 uses the accepted Phase-B CH19/A08 development, whose Core promotion remains open. Chapters~20 and~21 do not yet have implemented chapter Lean modules. Their mathematical derivations, formal-series constructions, and finite comparisons must therefore be read with the scope and limitations stated in those chapters; compilation of this book does not certify their mathematics. Chapters~12--18 have separate private drafts and are not included in this edition, leaving an expository and prerequisite gap before reaching Chapter~19, although their implemented Lean formalizations are already promoted.
 
-Unlike formal code repositories or proof scripts, these lecture notes are designed to be read as a standalone mathematical book. The exposition employs standard mathematical language and rigorous prose. At the same time, dedicated \emph{Formalization Notes} explain the constructive mathematical insights that emerge when physical heuristics are translated into verified code.
+These notes are designed to be read by readers familiar with undergraduate quantum mechanics and linear algebra. Where our expository choices deviate from convention, or where specific structural insights emerge from the finite setting, dedicated \emph{Formalization Notes} discuss the exact definitions employed.
 
 \tableofcontents
 
@@ -66,16 +59,16 @@ Unlike formal code repositories or proof scripts, these lecture notes are design
 \addcontentsline{toc}{chapter}{The Forward Research Roadmap}
 \label{ch:roadmap}
 
-Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} establish the complete, verified algebraic foundation of lattice bosonization: from discrete spatial geometry, Fourier transforms, and CAR Fock spaces, to the exact Heisenberg Kac--Moody current algebra and Haldane completeness on the whole energy budget $B(N, K)$.
+Chapters~\ref{ch:lattice_band} through~\ref{ch:haldane_completeness} establish the foundational discrete kinematics of our models: from spatial lattices and Fourier transforms to finite-dimensional CAR Fock spaces, the Heisenberg algebra of density modes, and Haldane completeness on the finite energy budget $B(N, K)$.
 
-The subsequent chapters of the ongoing research program extend this foundation to dynamic and interacting models:
+The subsequent chapters outline the steps to extend this foundation toward interacting models. As noted in the Preface, Chapters~12--18 are not included in this edition. While their implemented Lean developments are already promoted, their full textbook derivations remain unpublished here. We map their intended coverage here to identify the missing prerequisites for the later text:
 \begin{itemize}
-    \item \textbf{Chapter 12 (Sugawara Construction):} Proves the algebraic equivalence between the fermionic kinetic energy operator and the bosonic Sugawara Hamiltonian $H_{\mathrm{sug}}^{(M)} = \sum_{m=1}^M \rho_{-m} \rho_m$ on the whole budget $B(N, K)$.
-    \item \textbf{Chapter 13 (Klein Factors and Multi-Species Fermions):} Introduces multi-species branch fermions with explicit ground-ket sign factors to intertwine charge and chirality across commuting budget squares.
-    \item \textbf{Chapter 14 (The Projected Mattis--Mandelstam Formula):} Defines exact finite vertex operators via nilpotent polynomial exponentials and establishes the conditional cyclic-span criterion.
-    \item \textbf{Chapters 15--16 (Dual Fields and Lattice Hamiltonians):} Formulates Hermitian phase and density fields $\phi(x), \theta(x)$ and computes the spatial collapse of lattice gradients and dispersion errors.
-    \item \textbf{Chapters 17--18 (Interactions and Bogoliubov Transformations):} Analyzes forward scattering, the Luttinger liquid Hamiltonian, and the exact canonical Bogoliubov transformation on budget vectors.
-    \item \textbf{Chapters 19--21 (Correlations, Duality, and Spinful Systems):} Develops correlation functions, explicitly specified algebraic model duality, and spinful finite constructions. CH19 Phase B is accepted; CH20--21 remain manuscript/interface drafts rather than completed Lean chapters.
+    \item \textbf{Chapter 12 (Sugawara Construction):} Compares the fermionic kinetic energy operator with the bosonic Sugawara Hamiltonian $H_{\mathrm{sug}}^{(M)} = \sum_{m=1}^M \rho_{-m} \rho_m$ on the finite budget $B(N, K)$.
+    \item \textbf{Chapter 13 (Klein Factors and Multi-Species Fermions):} Introduces multi-species branch fermions with explicit ground-ket sign factors to map charge and chirality across commuting budget squares.
+    \item \textbf{Chapter 14 (The Projected Mattis--Mandelstam Formula):} Explores finite vertex operators using nilpotent polynomial exponentials and discusses the conditional cyclic-span criterion.
+    \item \textbf{Chapters 15--16 (Dual Fields and Lattice Hamiltonians):} Examines Hermitian phase and density fields $\phi(x), \theta(x)$ and computes the spatial lattice gradients and dispersion errors.
+    \item \textbf{Chapters 17--18 (Interactions and Bogoliubov Transformations):} Analyzes forward scattering models and the exact canonical Bogoliubov transformation on budget vectors.
+    \item \textbf{Chapters 19--21 (Correlations, Duality, and Spinful Systems):} Develops correlation functions, explicitly specified algebraic model duality, and spinful finite constructions. CH19 Phase B is accepted but not Core promoted; CH20--21 remain manuscript drafts and do not yet have implemented Lean modules.
 \end{itemize}
 
 % Manuscript drafts imported from individually supplied standalone sections.
