@@ -1,30 +1,13 @@
 \section{Exact Finite CAR Products: Density Waves and Pairing}
 \label{sec:ch20-projected-products}
 
-A single fermion field changes particle number by one.  A charge-density-wave
-(CDW) operator, by contrast, removes a left-moving fermion and creates a
-right-moving fermion; a superconducting (SC) pair-annihilation operator removes
-one fermion of each chirality.  Both are products of two fields.  This simple
-observation raises a question which does not arise for a single field:
-\emph{what happens between the first operation and the second when our
-calculation is confined to an energy-budget subspace?}
+A single fermion field changes the total particle number by one. By contrast, a charge-density-wave (CDW) operator removes a left-moving fermion and creates a right-moving fermion, while a superconducting (SC) pair-annihilation operator removes one fermion of each chirality. Both are composite operators formed by multiplying two fields. This composition introduces a question that does not arise for single fields: \emph{what happens to the intermediate states between the first and second operations when calculations are restricted to a specific energy-budget subspace?}
 
-The full finite fermionic Fock space has an unambiguous answer: multiply the
-operators in their stated order.  Budget restrictions introduce a different
-operation, however.  The product of \emph{individually projected} fields
-passes through a selected intermediate subspace, whereas a projection of the
-\emph{full product} allows intermediate states to leave that subspace and
-return before the final projection.  Those discarded paths form an explicit
-remainder.  Keeping the remainder is the purpose of this section.  The
-construction also provides a convenient setting in which to check chirality,
-charge labels, Fourier phases, and fermionic signs before introducing the
-formal vertex operators of Section~\ref{sec:ch20-formal-vertices}.
+In the full, unrestricted finite fermionic Fock space, we multiply the operators in their defined order. Imposing a strict energy budget changes the situation. Multiplying two \emph{individually projected} fields forces the system to pass entirely through a chosen intermediate budget subspace. In contrast, projecting the \emph{full product} allows intermediate states to exceed the budget, provided they return to an allowed state before the final projection. These temporary excursions out of the intermediate budget produce an explicit mathematical remainder. 
 
-Throughout this section, all identities concerning finite fermion operators
-are elementary statements on a finite-dimensional Hilbert space; their
-application to the chapter's proposed bosonization dictionary remains a
-separate mathematical verification task.  In particular, no new Chapter~20
-Lean theorem is being claimed here.
+This section isolates and tracks this remainder. Working out this finite-lattice product provides a setting to clarify chirality, charge labels, Fourier phases, and fermionic ordering signs. These details must be established before defining formal vertex operators in Section~\ref{sec:ch20-formal-vertices}. 
+
+Throughout this section, all identities involving finite fermion operators are elementary statements within a finite-dimensional Hilbert space. Applying them to establish a complete bosonization dictionary remains a separate problem. There is currently no implemented Lean formalization for Chapter 20, and the results here are presented as unverified draft mathematics.
 
 \subsection{The ambient finite-CAR system}
 \label{subsec:ch20-ambient}
@@ -662,11 +645,6 @@ especially important for later pairing, duality and spinful/Umklapp
 constructions: a scalar agreement on sector grounds does not certify an
 operator identity on all excited budget states.
 
-Finally, the sign and phase conventions fixed here are provisional
-cross-chapter conventions: \(R<L\), common positive-exponent finite
-annihilation Fourier transform, left field acting first, source charge
-phases, and separate cutoffs for each arrow.  Their compatibility with
-future chapter integrations must be reviewed against the actual committed
-interfaces.  Neither a thermodynamic limit nor continuum scaling,
-spectral equivalence or a finite interacting-state identification has
-been established in this section.
+Finally, the sign and phase conventions fixed here are provisional cross-chapter conventions: \(R<L\), common positive-exponent finite annihilation Fourier transform, left field acting first, source charge phases, and separate cutoffs for each arrow. Their compatibility with future chapter integrations must be reviewed against the actual committed interfaces. Neither a thermodynamic limit nor continuum scaling, spectral equivalence, or a finite interacting-state identification has been established in this section.
+
+We have now established the finite-lattice CAR products and isolated their projected residuals. To connect these results with the standard literature, we turn in Section~\ref{sec:ch20-formal-vertices} to the construction of formal vertex series. We keep the finite projected CAR identities and these formal vertex series in strictly separate stages, explicitly maintaining the unproved comparison gap between the finite matrices and the formal oscillator evaluations.

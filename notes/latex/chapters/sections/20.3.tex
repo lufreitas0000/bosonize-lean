@@ -4,35 +4,11 @@
 \subsection{Why the order-parameter exchange needs a map of algebras}
 \label{subsec:ch20c-motivation}
 
-In the preceding section, the charge-density-wave (CDW) and
-superconducting (SC) vertices were defined as formal series in an
-\emph{uncompressed} oscillator--charge algebra.  Their oscillator
-correlators involve the reciprocal parameters $g$ and $g^{-1}$,
-suggesting a duality between density-wave and pairing channels.  The
-similarity of two correlation formulas is not, by itself, a duality
-proof.  We must give one map that acts consistently on all the
-oscillator generators, charge labels, fermionic Klein signs, and
-ordered position-dependent phases; only then can we transport
-Hamiltonians and states.
+In Section~\ref{sec:ch20-formal-vertices}, we defined the charge-density-wave (CDW) and superconducting (SC) vertices as formal series within an uncompressed oscillator--charge algebra. Their evaluated oscillator correlators depend on the reciprocal interaction parameters $g$ and $g^{-1}$, suggesting a duality between the density-wave and pairing channels. However, the similarity between two resulting formulas does not constitute a proof of duality. To establish duality, we construct a single, well-defined algebraic map that consistently transforms all oscillator generators, charge labels, fermionic Klein signs, and ordered position-dependent phases. This explicit map allows us to transport Hamiltonians and states between the two models.
 
-The charge sectors reveal a possible obstruction before any algebra
-is done.  The CDW Klein word changes the source charge by
-$e_R-e_L=(1,-1)$, whereas our SC word is an \emph{annihilation}
-pair and changes charge by $-e_R-e_L=(-1,-1)$.  Reflecting the left
-charge sends $(1,-1)$ to $(1,1)$, which is the charge shift of
-$W_{\mathrm{SC}}^*$, \emph{not} of $W_{\mathrm{SC}}$.  Therefore a
-correct exchange must involve an adjoint.  The remaining source-phase
-mismatch will turn out to be exactly $\zeta^x$.  This observation
-also explains why a bare substitution $g\leftrightarrow g^{-1}$ is
-insufficient.
+The charge sectors reveal a structural hurdle before analyzing the oscillators. The CDW Klein word shifts the source charge by $e_R-e_L=(1,-1)$. In contrast, our SC word is an annihilation pair, shifting the charge by $-e_R-e_L=(-1,-1)$. A simple reflection of the left charge maps $(1,-1)$ to $(1,1)$, which is the charge shift of the adjoint operator $W_{\mathrm{SC}}^*$, not $W_{\mathrm{SC}}$ itself. Consequently, any algebraic exchange must incorporate an adjoint operation. We will also see that resolving the remaining source-phase mismatch requires a factor of $\zeta^x$. This complexity shows why simply swapping $g$ and $g^{-1}$ is insufficient.
 
-We work with an even finite lattice length $L=2h$ ($h\geq1$), an
-integer position $x$ interpreted modulo $L$, the canonical root
-$\zeta=e^{2\pi i/L}$, and an oscillator-mode set $1\leq m\leq M$
-with $M\geq1$ finite.  The chiralities are ordered $R<L$.  We recall
-only the definitions needed to make the duality transparent; the
-construction of the positive polynomial vacuum and coefficientwise
-formal vertices belongs to Section~\ref{sec:ch20-formal-vertices}.
+We consider an even finite lattice length $L=2h$ ($h\geq1$), an integer position $x$ modulo $L$, the canonical phase $\zeta=e^{2\pi i/L}$, and a finite oscillator-mode cutoff $1\leq m\leq M$ ($M\geq1$). The left and right chiralities remain ordered as $R<L$. We briefly recall the definitions required to make this duality explicit, relying on the positive polynomial vacuum and formal vertices from Section~\ref{sec:ch20-formal-vertices}.
 
 An \emph{algebra automorphism} is a bijective linear map preserving
 products and the unit.  A \emph{star automorphism} also satisfies
@@ -795,12 +771,6 @@ $\omega_{P,N}$ automatically identify with a ground-state
 expectation of an interacting finite-CAR Hamiltonian.
 \end{enumerate}
 
-In summary, the involution has been proved on the algebra specified
-here: bare generators, their dressed families, signed charge shifts,
-ordered characters, finite polynomial Hamiltonians, charge-indexed
-positive states, and coefficientwise Weyl-type vertices.  Its
-interpretation as a physical duality between fermionic models is a
-separate mathematical problem.  This section is a monograph draft;
-there is no implemented Chapter~20 Lean module certifying its
-statements, and an independent check of the conventions and proofs
-is required before book integration.
+In summary, the duality involution has been explicitly verified on the formal algebra constructed here. We have mapped the bare generators, their dressed families, the signed charge shifts, the ordered characters, the finite polynomial Hamiltonians, the charge-indexed positive states, and the coefficientwise Weyl-type vertices. Crucially, this algebraic model duality is not a statement of full interacting-CAR equivalence. Extending this formal mapping into a proven unitary symmetry of the finite-lattice CAR Hamiltonian, or evaluating it as a continuum dynamical equivalence, remains an open problem. As throughout Chapter 20, these derivations are unverified mathematical drafts awaiting formalization in Lean.
+
+The models discussed in this chapter incorporate only two species of fermions (right and left movers). Physical models often include spin, which doubles the mode content to four species. In Chapter~21, we will motivate this four-species extension, establishing the species ordering, charge shifts, and parity conventions needed to define spinful interacting systems without ambiguity.

@@ -1,27 +1,9 @@
 \section{Constructed Formal Vertices and Coefficientwise Correlators}
 \label{sec:ch20-formal-vertices}
 
-Section~\ref{sec:ch20-projected-products} treated density-wave and pairing
-operators as \emph{literal products of finite-lattice fermion fields}.  We
-could evaluate these products on the full CAR Fock space, and we saw why an
-intermediate energy-budget projection introduces an explicit residual.  We
-now ask a related but mathematically different question: can we construct a
-model in which the oscillator expressions suggested by bosonization are
-well-defined, possess an actual positive vacuum functional, and admit
-exactly computable two-point functions?
+Section~\ref{sec:ch20-projected-products} analyzed density-wave and pairing operators as products of finite-lattice fermion fields. By evaluating these products on the full CAR Fock space, we saw that intermediate energy-budget projections introduce an explicit residual. We now ask a related but mathematically distinct question: can we construct an algebraic model where the oscillator expressions used in the bosonization literature are well-defined, possess a positive vacuum functional, and allow us to compute two-point correlation functions?
 
-A tempting shortcut would be to replace each fermion field by its
-Mattis--Mandelstam expression, multiply exponentials, and invoke Gaussian
-averaging.  This is not justified by the preceding finite-CAR calculation:
-the projected product may have a nonzero residual, and compression does not
-preserve every exponential identity.  Instead we shall \emph{construct a
-second carrier}, with uncompressed canonical commutation relations (CCR),
-independent charge shifts, and a formal-power-series parameter.  It makes
-the algebraic steps behind the familiar vertex correlation formula exact,
-while keeping the comparison with a finite interacting fermion state open.
-The uncompressed oscillator and charge construction is the one developed
-in Appendix~A08 of the project notes; we give the arguments needed here at
-the point where they first enter the calculation.
+A common shortcut is to replace each fermion field with an exponential Mattis--Mandelstam expression, multiply the resulting exponentials, and compute a Gaussian average. However, the finite-CAR calculation showed that projected products contain residuals, and projection does not universally preserve exponential identities. Instead of evaluating these objects directly on the finite lattice, we construct a second, distinct algebraic carrier. This carrier is endowed with uncompressed canonical commutation relations (CCR), independent charge shifts, and a formal power-series parameter. This approach clarifies the algebraic steps of the vertex correlation formulas. It leaves the comparison between these formal series and an actual finite interacting fermion state as a clearly defined open question. We use the uncompressed oscillator and charge construction developed in Appendix~A08, introducing the necessary algebraic components as they enter the calculation.
 
 \subsection{An uncompressed oscillator algebra and its positive vacuum}
 \label{subsec:ch20b-oscillator}
@@ -806,11 +788,6 @@ Section~\ref{sec:ch20-model-duality}: a star-algebra substitution may
 transport this \emph{family} of formal states without being a unitary
 symmetry of every finite-charge fermionic sector.
 
-Finally, the relative normalization of raw charge/spin currents in a
-later multicomponent theory cannot be changed silently by inserting a
-\(1/\sqrt2\); and any use of the Fourier or Klein convention must
-retain the stated orientation and source action.  Both conventions are
-explicit here to make a future integration audit possible.  As with
-Section~20.1, the derivations in this section are mathematical drafts
-awaiting independent review and potential Lean formalization; they are
-not claims that a Chapter~20 Lean module has already verified them.
+Finally, the relative normalization of raw charge/spin currents in a later multicomponent theory cannot be changed silently by inserting a \(1/\sqrt2\); and any use of the Fourier or Klein convention must retain the stated orientation and source action. Both conventions are explicit here to make a future integration audit possible. As with Section~20.1, the derivations in this section are mathematical drafts awaiting independent review and potential Lean formalization; they are not claims that a Chapter~20 Lean module has already verified them.
+
+With the formal vertex models constructed and their correlators evaluated algebraically, we can examine how these correlators relate to one another. The structural similarity between the density-wave and pairing correlation formulas suggests an underlying symmetry. In Section~\ref{sec:ch20-model-duality}, we construct an explicit algebraic duality map that exchanges these operators while preserving the underlying algebra.
