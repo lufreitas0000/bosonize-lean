@@ -3,20 +3,19 @@
 
 \section{Introduction and the Algebraic Origin of the Schwinger Anomaly}
 
-The central mathematical miracle of quantum bosonization is that bilinear products of fermionic field operators satisfy bosonic canonical commutation relations. In continuous quantum field theory, this phenomenon is expressed by the affine Lie algebra $\widehat{\mathfrak{u}}(1)$ (the $U(1)$ Kac--Moody current algebra):
+A key step in the standard bosonization program is establishing that bilinear products of fermionic field operators satisfy bosonic canonical commutation relations (CCR). In continuous quantum field theory, this phenomenon is expressed by the affine Lie algebra $\widehat{\mathfrak{u}}(1)$ (the $U(1)$ Kac--Moody current algebra):
 \begin{equation}
 [J_m, J_n] = m\, \delta_{m+n, 0}\, I.
 \end{equation}
-The central term $m\, \delta_{m+n, 0}$, known as the \emph{Schwinger term} or the chiral anomaly, is traditionally derived via heuristic point-splitting, formal normal ordering, or infinite Dirac sea subtractions.
+The central term $m\, \delta_{m+n, 0}$, known as the \emph{Schwinger term} or the chiral anomaly, is traditionally derived in infinite-dimensional settings via point-splitting, formal normal ordering, or infinite Dirac sea subtractions.
 
-On our discrete lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$), the situation is fundamentally clarified. 
-As proven by the No-Go Theorem~\ref{thm:no_go}, no finite-dimensional matrix algebra can admit operators satisfying $[A, B] = I$ because the trace of any commutator must vanish identically. How, then, can fermionic density operators on the finite Fock space $\mathcal{F}(L)$ satisfy bosonic commutation relations?
+Our model operates on a discrete lattice $\Lambda = \mathbb{Z}/L\mathbb{Z}$ ($L = 2h$, $h \ge 1$) with strictly finite-dimensional carrier spaces. As stated by the No-Go Theorem~\ref{thm:no_go}, a global nonzero scalar canonical commutation relation cannot hold for finite matrices, because the trace of any commutator must vanish identically on a finite-dimensional space. We must therefore carefully distinguish between a dynamical identity on the full finite Fock space $\mathcal{F}(L)$, a protected-budget identity valid only on restricted subspaces, and the ambient polynomial algebra.
 
-The answer lies in the \emph{Energy Budget regularization}:
+To recover the exact Schwinger term, we rely on the \emph{Energy Budget regularization} applied to finite subspaces:
 \begin{enumerate}
-    \item On the full Fock space $\mathcal{F}(L)$, the commutator $[\rho_{-m}, \rho_m]$ is not a scalar, but a non-trivial dynamical operator given by the difference between the fermion occupations at the bottom and top edges of the band.
-    \item When evaluated on vectors in the energy budget subspace $B(N, K)$ satisfying explicit \emph{margin inequalities}, the deep Fermi sea is frozen full and the high momentum band is frozen empty.
-    \item Consequently, the edge operators evaluate to the exact positive integer $m$ on budget states, realizing the exact Kac--Moody algebra without any infinite-dimensional or topological approximations.
+    \item On the full finite-dimensional Fock space $\mathcal{F}(L)$, the commutator $[\rho_{-m}, \rho_m]$ is not a scalar. Instead, it is a dynamical operator determined by the difference between the fermion occupations at the global bottom and top edges of the momentum band. We evaluate these global edge terms explicitly before considering any subspace restrictions.
+    \item We then restrict our attention to the energy budget subspace $B(N, K)$. Provided the parameters satisfy explicit \emph{margin inequalities}, the deep Fermi sea remains rigidly full and the high momentum band remains rigidly empty.
+    \item As a result, the dynamical edge operators evaluate to exactly $m$ when acting on these protected budget states. This establishes a protected-budget CCR identity that locally matches the Kac--Moody algebra, even though the global operator on $\mathcal{F}(L)$ remains traceless.
 \end{enumerate}
 
 \section{The Exact Diagonal Edge Formula on Fock Space}
@@ -95,7 +94,7 @@ Both sets contain exactly $m$ momentum modes: $\#\mathcal{E}_{\mathrm{bot}}(m) =
 
 \section{Regime M1: The Diagonal Buffer Zone and the Schwinger Term}
 
-We now evaluate the edge formula on states belonging to the energy budget subspace $B(N, K)$.
+Having established the global edge formula for $[\rho_{-m}, \rho_m]$ on the unrestricted Fock space, we now evaluate its action on states belonging to the constrained energy budget subspace $B(N, K)$. By introducing a margin condition (M1), we ensure that the global edge terms act on regions of the momentum band where particle occupations are rigidly blocked by the finite budget.
 
 \begin{theorem}[Regime M1: Exact Diagonal Schwinger Term]
 \label{thm:regime_m1}
@@ -153,7 +152,7 @@ Extending by linearity to all $\psi \in B(N, K)$ completes the proof.
 
 \section{Regime M2: Off-Diagonal Suppression and Pauli Blocking}
 
-We now examine off-diagonal commutators $[\rho_m, \rho_n]$ where $m + n \neq 0$.
+The diagonal case analyzed in Regime M1 successfully resolves the Schwinger term for opposing density modes. We now turn to the off-diagonal commutators $[\rho_m, \rho_n]$ where $m + n \neq 0$. Here, we demonstrate how an extended margin condition (M2) ensures that any single-particle hopping terms connecting the opposing band edges are annihilated by Pauli blocking on the rigid ground sea configurations.
 
 \begin{theorem}[Regime M2: Off-Diagonal Suppression]
 \label{thm:regime_m2}
@@ -181,7 +180,7 @@ We divide into two cases:
 
 \section[The Exact U(1) Kac--Moody Algebra on the Budget Subspace]{The Exact $U(1)$ Kac--Moody Algebra on the Budget Subspace}
 
-Combining Regimes M1 and M2 yields the central theorem of constructive bosonization.
+Combining the diagonal Schwinger term from Regime M1 and the off-diagonal suppression from Regime M2 yields a protected commutation relation on the finite budget. Note the choice of sign and index order in the resulting relation: the theorem establishes $[\rho_m, \rho_n] = -m \delta_{m+n, 0}$ for normal-ordered modes. This negative sign stems from the explicit definitions of our finite shift operations on the spatial lattice and the orientation of the modes; it must be mapped carefully when comparing to literature conventions that assume positive scalars.
 
 \begin{theorem}[$U(1)$ Kac--Moody Current Algebra on $B(N, K)$]
 \label{thm:kac_moody}
@@ -226,7 +225,7 @@ Under the margin condition of Theorem~\ref{thm:kac_moody}, these operators satis
 
 \section{Word-Excursion Tracking in Composed Products}
 
-When evaluating products of density operators $\rho_{a_1} \rho_{a_2} \cdots \rho_{a_s}$ (such as in vertex operators or multi-mode partition states), intermediate states undergo transient energy fluctuations.
+When sequentially applying multiple density operators $\rho_{a_1} \rho_{a_2} \cdots \rho_{a_s}$ to a state (a procedure required to build vertex operators or multi-mode partition states), the intermediate states undergo transient energy fluctuations. For the protected budget commutator to hold universally across the entire evaluation of such an operator word, the intermediate states are not required to remain in the original initial budget $B(N, K)$. Instead, they enter an enlarged budget controlled by the \emph{maximum upward energy excursion} encountered during the sequential application. The overall margin inequality involving the finite band edge $h$ must hold for this enlarged maximum budget.
 
 \begin{definition}[Application Order and Cumulative Energy Excursion]
 For a written operator product $W = \rho_{a_1} \rho_{a_2} \cdots \rho_{a_s}$, the operators act from right to left in the sequence of signed transfers $(a_s, a_{s-1}, \dots, a_1)$.
@@ -259,3 +258,9 @@ Since $2M + (K + X(W)) + |N| \le h$, each intermediate state satisfies the unifo
 \begin{remark}[Formalization Note]
 In the verified Lean~4 development (as formalized in Chapter~10 and Appendix~A04), all edge formulas, margin bounds, and excursion trackers are certified constructively without noncomputable axioms. The reconciliation of the finite-dimensional trace obstruction is precise: on the bare empty state $|\emptyset\rangle$, the commutator $[\rho_{-m}, \rho_m] |\emptyset\rangle = 0 \neq m |\emptyset\rangle$. The commutator is strictly traceless across the full Fock carrier $\mathcal{F}(L)$, yet evaluates identically to the non-zero central scalar $m I$ on the physical low-energy budget subspace $B(N, K)$.
 \end{remark}
+
+\section{From Protected Algebra to State Space Spanning}
+
+The margin-protected identity in Theorem~\ref{thm:kac_moody} is an input-restricted ambient-operator identity, not a closed finite-dimensional endomorphism representation of the CCR. Because raising currents generally map states out of a fixed budget, composition of multiple modes is performed in the ambient finite CAR space with explicitly tracked margins. Establishing that these density modes locally obey a bosonic algebra subject to these margins does not immediately imply that the multi-mode excitations they generate are sufficient to describe every valid state. 
+
+A critical question remains: when we apply the positive density modes $\rho_m$ to the sector ground state $|N\rangle_0$, do the resulting bosonic partition states span the entirety of the protected budget subspace $B(N, K)$, or are there hidden fermionic degrees of freedom left out? To answer this, we must compare the dimension of the subspace created by these bosonic operators with the exact combinatorics of the underlying fermionic particle-hole excitations. This counting problem, which determines the completeness of the bosonization map on the finite lattice, is the subject of Chapter~\ref{ch:haldane_completeness}.
