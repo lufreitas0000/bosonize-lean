@@ -1,0 +1,297 @@
+\chapter{Interacting Luttinger Models}
+\label{ch:luttinger_models}
+
+\section{Introduction and Physical Context}
+
+In Chapter~\ref{ch:sugawara}, we established the exact Sugawara construction on the whole energy budget: the free fermionic kinetic Hamiltonian on a discrete periodic chain agrees identically on low-energy states with the non-interacting quadratic bosonic current Hamiltonian. Furthermore, Chapters~\ref{ch:dual_fields} and~\ref{ch:field_hamiltonian} constructed the local dual phase and density fields $\phi(x)$ and $\theta(x)$, identifying the spatial gradient errors that separate continuum field theory from the discrete lattice net.
+
+\begin{remark}[Continuum picture and finite-lattice distinctions]
+A central theme in one-dimensional bosonization is its application to \emph{interacting} many-body systems. For spinless fermions in one spatial dimension, the Fermi surface consists of two points, $k=\pm k_F$, and low-energy interactions are often organized by forward-scattering processes with small momentum transfer:
+\begin{enumerate}
+    \item \textbf{Intra-branch scattering ($g_4$):} Two fermions on the same chiral branch scatter forward without changing branch ($R + R \to R + R$ and $L + L \to L + L$).
+    \item \textbf{Inter-branch scattering ($g_2$):} Two fermions on opposite chiral branches exchange momentum without backscattering ($R + L \to R + L$).
+\end{enumerate}
+In the continuum heuristic literature, Tomonaga and Luttinger argued that such forward interactions can be rewritten as bilinear products of density currents. Because the density modes satisfy canonical commutation relations, the resulting interacting Hamiltonian remains strictly quadratic in the bosonic operators and can be diagonalized by a Bogoliubov transformation.
+
+A finite-lattice treatment must account for several additional mathematical features:
+\begin{itemize}
+    \item \textbf{Lattice edge effects and Umklapp contamination:} Momentum transfers on a discrete circle $\mathbb{Z}/L\mathbb{Z}$ risk wrapping non-physically around the Brillouin zone unless transfers are constrained to an explicit non-wrapping domain.
+    \item \textbf{Fermionic sea ordering vs.\ current bilinears:} Replacing a 4-fermion interaction $:c^\dagger c c^\dagger c:$ by a product of quadratic currents $:\!c^\dagger c\!:\,:\!c^\dagger c\!:$ is not an equality of operators. Full normal ordering relative to the filled Dirac sea generates non-trivial one-body contraction corrections.
+    \item \textbf{Hopping vs.\ Pairing ambiguity:} The raw opposite-transfer inter-branch interaction factors into a number-conserving \emph{hopping} form ($C_R A_L + A_R C_L$), which annihilates the non-interacting Fermi sea. The hyperbolic \emph{pairing} model ($C_R C_L + A_R A_L$) required for Bogoliubov mixing is an independent quadratic model.
+\end{itemize}
+\end{remark}
+
+In this chapter, we develop the finite-lattice theory of interacting Luttinger models. We define the filtered transfer domains on the finite band, derive the exact finite sea-Wick contraction relating raw 4-fermion interactions to current bilinears, and prove the exact operator equivalence between the fermionic Hamiltonian and the current-mode Luttinger Hamiltonian on the whole budget subspace.
+
+\section{Transfer Domains and 4-Fermion Interactions}
+
+Let $h \ge 1$ be the half-length of the lattice, so the number of spatial lattice sites is $L = 2h$. The discrete centered momentum band is $B = \{-h+1, \dots, h\}$. We consider a multi-species system with two chiral branches, labeled by $\nu \in \{R, L\}$ (or more generally, distinct species indices in an ordered finite set $\sigma$).
+All charge, momentum, current, and Hamiltonian operators below act on the finite Fock space $\mathcal{F}_\sigma(L)$; their budget restrictions are stated separately.
+
+\begin{definition}[Filtered Transfer Domain]
+To prevent non-physical modular wrapping across the Brillouin zone boundaries, momentum transfers are restricted to an integer range $-M \le m \le M$ for a fixed transfer cutoff $M \ge 0$.
+For each transfer $m \in \mathbb{Z}$, the set of valid transfer pairs in $B$ is:
+\begin{equation}
+D_m \coloneqq \left\{ (p, k) \in B \times B \;\middle|\; p = k + m \right\}.
+\end{equation}
+Every transfer is evaluated by genuine integer arithmetic in $B$; there is no quotient wrapping $\bmod\, L$.
+\end{definition}
+
+\begin{definition}[Sea Quasiparticle Normal Ordering]
+Let $S_0 = \{k \in B \mid k \le 0\}$ denote the half-filled Dirac sea, with indicator $s_k \coloneqq \mathbf{1}_{k \le 0}$.
+For each mode $k \in B$, the sea quasiparticle annihilator $q_k$ is defined by:
+\begin{equation}
+q_k \coloneqq \begin{cases} c_k, & \text{if } k > 0 \quad (s_k = 0), \\ c_k^\dagger, & \text{if } k \le 0 \quad (s_k = 1), \end{cases}
+\end{equation}
+and $q_k^\dagger$ is its Hilbert adjoint. Every $q_k$ annihilates the Dirac sea vacuum: $q_k |\Omega\rangle = 0$.
+For any raw word of creation and annihilation operators, full \emph{sea-Wick normal ordering} moves all $q^\dagger$ letters to the left of all $q$ letters in a fixed stable order, multiplied by the fermionic permutation sign $(-1)^{\mathrm{inv}}$, omitting all contraction terms.
+\end{definition}
+
+For bilinears, sea normal ordering produces the vacuum-subtracted density mode:
+\begin{equation}
+:\! c_a^\dagger c_b \!: \;\coloneqq c_a^\dagger c_b - \delta_{a, b} s_a I = \begin{cases} c_a^\dagger c_b, & \text{if } a \neq b, \\ c_a^\dagger c_a, & \text{if } a = b \text{ and } a > 0, \\ - c_a c_a^\dagger, & \text{if } a = b \text{ and } a \le 0. \end{cases}
+\end{equation}
+In particular, the total charge operator $N_\nu \in \operatorname{End}_{\mathbb{C}}(\mathcal{F}_\sigma(L))$ for species $\nu$ is $N_\nu = \sum_{k \in B} :\! c_{\nu, k}^\dagger c_{\nu, k} \!:$.
+
+\begin{definition}[Raw 4-Fermion Interactions]
+Let $g_4, g_2 \in \mathbb{R}$ be interaction coupling constants.
+\begin{enumerate}
+    \item The \emph{raw intra-branch interaction} involves particles of the same species:
+    \begin{equation}
+    H_{4, \mathrm{raw}} \coloneqq \frac{g_4}{2L} \sum_{\nu \in \{R, L\}} \sum_{m=-M}^M \sum_{(k+m, k) \in D_m} \sum_{(p-m, p) \in D_{-m}} :\! c_{\nu, k+m}^\dagger c_{\nu, k} c_{\nu, p-m}^\dagger c_{\nu, p} \!:.
+    \end{equation}
+    \item The \emph{raw inter-branch interaction} involves momentum transfer between opposite branches:
+    \begin{equation}
+    H_{2, \mathrm{raw}} \coloneqq \frac{g_2}{L} \sum_{m=-M}^M \left( \sum_{(k+m, k) \in D_m} :\! c_{R, k+m}^\dagger c_{R, k} \!: \right) \left( \sum_{(p-m, p) \in D_{-m}} :\! c_{L, p-m}^\dagger c_{L, p} \!: \right).
+    \end{equation}
+\end{enumerate}
+\end{definition}
+
+Even-degree fermionic bilinears of distinct species commute identically on the multi-species Fock space $\mathcal{F}_\sigma(L)$, despite fundamental fermions anticommuting across species. Consequently, the inter-branch normal ordering in $H_{2, \mathrm{raw}}$ factors cleanly into the product of single-branch current operators.
+
+\section{Reduction of 4-Fermion Interactions to Current Bilinears}
+
+In the continuum, the 4-fermion operator $:c^\dagger c c^\dagger c:$ is formally replaced by the product of normal-ordered currents $:\!c^\dagger c\!:\,:\!c^\dagger c\!:$. On a finite lattice, the exact relationship is governed by the CAR algebra.
+
+\begin{lemma}[Exact Sea-Wick Contraction Identity]
+\label{lem:sea_wick_contraction}
+For a single species $\nu$, let $m \in \mathbb{Z}$ and let $(k+m, k) \in D_m$ and $(p-m, p) \in D_{-m}$.
+Then as endomorphisms on the finite CAR Fock space:
+\begin{equation}
+\label{eq:quartic_wick_id}
+:\! c_{k+m}^\dagger c_k c_{p-m}^\dagger c_p \!: \;= \;:\! c_{k+m}^\dagger c_k \!:\, : \! c_{p-m}^\dagger c_p \!: \;+ \; \delta_{p, k+m} \Big[ s_p t_k - (1-s_k) t_p - s_p(1-s_k) I \Big],
+\end{equation}
+where $t_k \coloneqq c_k^\dagger c_k - s_k I$ is the sea-subtracted occupation number.
+In particular, when $m = 0$ and $p = k$, the identity reduces to $t_k^2 + (2s_k - 1)t_k = 0$, reflecting the nilpotence of fermionic creation and annihilation operators.
+\end{lemma}
+
+\begin{proof}
+The separate sea-normal-ordered bilinears differ from the joint sea-Wick ordering only when the middle annihilator crosses the next creator. Since the transfers are opposite, this crossing contributes the single contraction $\delta_{d,a}$; expressing diagonal occupations as $c_k^\dagger c_k=s_k I+t_k$ gives precisely the sea-subtracted correction in~\eqref{eq:quartic_wick_id}. In the repeated single-mode case, $t_k^2+(2s_k-1)t_k=0$ follows from $n_k^2=n_k$ and records fermionic exclusion.
+\end{proof}
+
+Summing equation~\eqref{eq:quartic_wick_id} over all transfers $m \in [-M, M]$ and valid pairs generates an exact one-body diagonal correction operator.
+
+\begin{definition}[Diagonal Sea-Wick Correction]
+For a chiral branch $\nu$, the \emph{diagonal one-body correction operator} $Q_{M, \nu}$ is defined on the finite band $B$ by:
+\begin{equation}
+Q_{M, \nu} \coloneqq \sum_{k \le 0} \Big( 1 + 2\min(M, -k) \Big) (I - n_{\nu k}) + \sum_{k > 0} \Big( 1 + 2\min(M, k-1) \Big) n_{\nu k},
+\end{equation}
+where $n_{\nu k} = c_{\nu k}^\dagger c_{\nu k}$ is the number operator.
+\end{definition}
+
+\begin{theorem}[Raw vs.\ Current Intra-Branch Equivalence]
+\label{thm:raw_vs_current_intra}
+Let $M \ge 0$. The raw intra-branch interaction decomposes on the full finite Fock space $\mathcal{F}_\sigma(L)$ as:
+\begin{equation}
+H_{4, \mathrm{raw}} = H_{4, \mathrm{current}} - \frac{g_4}{2L} \sum_{\nu \in \{R, L\}} Q_{M, \nu},
+\end{equation}
+where $H_{4, \mathrm{current}}$ is the standard quadratic current interaction:
+\begin{equation}
+H_{4, \mathrm{current}} \coloneqq \frac{g_4}{L} \sum_{\nu \in \{R, L\}} \sum_{m=1}^M \rho_{m, \nu} \rho_{-m, \nu} + \frac{g_4}{2L} \left( N_R^2 + N_L^2 \right).
+\end{equation}
+Furthermore:
+\begin{enumerate}
+    \item On the reference Dirac sea $|\Omega\rangle = |\vec{0}\rangle_0$, the correction vanishes identically: $Q_{M, \nu} |\Omega\rangle = 0$.
+    \item When the transfer cutoff covers the half-band ($M \ge h - 1$), the weights saturate and $Q_{M, \nu}$ simplifies to the exact global operator identity:
+    \begin{equation}
+    Q_{M, \nu} = 2P_\nu - N_\nu,
+    \end{equation}
+    where $P_\nu \coloneqq \sum_{k \in B} k (n_{\nu k} - s_k I)$ is the vacuum-subtracted vacuum-subtracted momentum.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Exact finite-carrier identity]
+The contraction identity is an exact consequence of the CAR algebra and the chosen sea ordering on the finite Fock space. Its correction terms are determined combinatorially by the transfer domain and the sea-subtracted occupations; no continuum limit is assumed.
+\end{remark}
+
+\section{Inter-Branch Interaction: Hopping vs.\ Pairing Models}
+
+Next, consider the inter-branch scattering $H_{2, \mathrm{raw}}$. Because distinct-species currents commute, the product factors into positive and negative transfers:
+\begin{align}
+H_{2, \mathrm{raw}} &= \frac{g_2}{L} \sum_{m=-M}^M \rho_{m, R} \rho_{-m, L} \\
+&= \frac{g_2}{L} \left[ N_R N_L + \sum_{m=1}^M \left( \rho_{m, R} \rho_{-m, L} + \rho_{-m, R} \rho_{m, L} \right) \right]. \label{eq:h2_hopping}
+\end{align}
+In terms of the current creators $C_\nu \coloneqq \rho_{m, \nu}$ and annihilators $A_\nu \coloneqq \rho_{-m, \nu}$ ($m \ge 1$), the cross-branch term in~\eqref{eq:h2_hopping} has the number-conserving \emph{hopping form}:
+\begin{equation}
+H_{2, \mathrm{hop}}^{(m)} \coloneqq C_R A_L + A_R C_L.
+\end{equation}
+Crucially, when acting on any joint sector ground state $|\vec{N}\rangle_0$, both $A_L$ and $A_R$ annihilate the state by rightmost lowering:
+\begin{equation}
+\left( C_R A_L + A_R C_L \right) |\vec{N}\rangle_0 = 0.
+\end{equation}
+Thus, the raw opposite-transfer interaction does not mix states of different bosonic excitation numbers and cannot generate pairing correlations from the Fermi sea.
+
+In contrast, the solvable Luttinger liquid Hamiltonian in condensed matter physics requires the hyperbolic \emph{pairing interaction}:
+\begin{equation}
+H_{2, \mathrm{pair}} \coloneqq \frac{g_2}{L} \left[ N_R N_L + \sum_{m=1}^M \left( \rho_{m, R} \rho_{m, L} + \rho_{-m, R} \rho_{-m, L} \right) \right] = \frac{g_2}{L} \left[ N_R N_L + \sum_{m=1}^M \left( C_R C_L + A_R A_L \right) \right].
+\end{equation}
+Here, the operator $C_R C_L$ creates a pair of right-moving and left-moving density excitations out of the vacuum:
+\begin{equation}
+\left( C_R C_L + A_R A_L \right) |\vec{N}\rangle_0 = \rho_{m, R} \rho_{m, L} |\vec{N}\rangle_0 \neq 0,
+\end{equation}
+provided the system parameters satisfy the branch margin condition $2M + m + |N_\nu| \le h$.
+
+Because hopping and pairing represent structurally different quadratic models on the same finite Fock space, we do not identify these distinct operators by relabeling currents by relabeling computational currents. Instead, the solvable interacting Luttinger model is defined directly using the pairing interaction $H_{2, \mathrm{pair}}$, while the exact reduction of $H_{2, \mathrm{raw}}$ to the hopping form is established as an independent theorem.
+
+\section{The Current-Mode Luttinger Hamiltonian}
+
+We now assemble the full interacting Luttinger Hamiltonian. We consider the model comprising:
+\begin{enumerate}
+    \item The free fermionic kinetic energy $H_0 \coloneqq \frac{2\pi v_F}{L} (P_R + P_L)$,
+    \item The chosen quadratic intra-branch current interaction $H_{4, \mathrm{current}}$,
+    \item The chosen pairing inter-branch interaction $H_{2, \mathrm{pair}}$,
+    \item A chemical potential term $-\mu(N_R + N_L)$.
+\end{enumerate}
+
+\begin{definition}[Luttinger Velocities and Canonical Chemical Potential]
+Let $v_F > 0$ and $g_4, g_2 \in \mathbb{R}$.
+The renormalized bosonic velocities $v_1$ and $v_2$ are:
+\begin{equation}
+v_1 \coloneqq v_F + \frac{g_4}{2\pi}, \qquad v_2 \coloneqq \frac{g_2}{2\pi}.
+\end{equation}
+The \emph{canonical chemical potential} is defined by:
+\begin{equation}
+\mu_{\mathrm{canon}} \coloneqq \frac{\pi v_F}{L}.
+\end{equation}
+\end{definition}
+
+\begin{definition}[Luttinger Parameter Margins]
+For lattice half-length $h$, transfer cutoff $M$, energy cutoff $K$, and sector charges $\vec{N} = (N_R, N_L)$, the \emph{Sugawara margin condition} is:
+\begin{equation}
+K \le M, \qquad K + |N_R| < h, \qquad K + |N_L| < h.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Canonical Cancellation of Linear Charge Terms]
+\label{lem:zero_mode_canonical}
+Let $N_R, N_L \in \mathbb{Z}$. The bare zero-mode energy is:
+\begin{equation}
+E_{\mathrm{zero}}(\mu) \coloneqq \frac{2\pi v_F}{L} \left( \frac{N_R(N_R+1)}{2} + \frac{N_L(N_L+1)}{2} \right) + \frac{g_4}{2L}(N_R^2 + N_L^2) + \frac{g_2}{L} N_R N_L - \mu(N_R + N_L).
+\end{equation}
+Setting $\mu = \mu_{\mathrm{canon}} = \frac{\pi v_F}{L}$ cancels the linear term $\frac{\pi v_F}{L}(N_R + N_L)$, yielding the exact symmetric quadratic form:
+\begin{equation}
+E_{\mathrm{zero}}(\mu_{\mathrm{canon}}) = \frac{\pi v_1}{L} \left( N_R^2 + N_L^2 \right) + \frac{g_2}{L} N_R N_L.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At $\mu=\mu_{\mathrm{canon}}$, the chemical-potential term cancels the linear contribution $\frac{\pi v_F}{L}(N_R+N_L)$ from the two free zero modes. The remaining quadratic coefficients combine to $\frac{\pi v_1}{L}(N_R^2+N_L^2)+\frac{g_2}{L}N_RN_L$, as stated.
+\end{proof}
+
+\begin{theorem}[Free Fermion Kinetic Energy vs.\ Sugawara Form on Budget]
+\label{thm:free_kinetic_sugawara}
+Let $h \ge 1$ and let $\vec{N}$ be admissible charges ($-h \le N_\nu \le h$).
+Assume the Sugawara margin condition $K \le M$ and $K + |N_\nu| < h$ for $\nu \in \{R, L\}$.
+Then for every state $v \in B(\vec{N}, K)$ in the joint budget subspace:
+\begin{equation}
+\frac{2\pi v_F}{L} \sum_{\nu \in \{R, L\}} P_\nu \, v = \left[ \frac{2\pi v_F}{L} \sum_{\nu \in \{R, L\}} \sum_{m=1}^M \rho_{m, \nu} \rho_{-m, \nu} + \frac{2\pi v_F}{L} \sum_{\nu \in \{R, L\}} \frac{N_\nu(N_\nu + 1)}{2} \right] v.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The full-band quartic sea-Wick sum vanishes by antisymmetry under exchange of the two creators, which together with the raw-to-current identity gives the global operator relation $\sum_{m=1}^{2h}\rho_{m,\nu}\rho_{-m,\nu}+\frac12N_\nu(N_\nu+1)=P_\nu$. On $B(\vec N,K)$, every lowering mode with $m>K$ annihilates the state, so under $K\le M$ the full-band sum truncates to the displayed range and yields the claimed budget identity.
+\end{proof}
+
+\begin{theorem}[The Interacting Luttinger Hamiltonian on Budget]
+\label{thm:luttinger_hamiltonian_budget}
+Let $h \ge 1$, $\vec{N}$ be admissible, and assume the Sugawara margin conditions $K \le M$ and $K+|N_R|,K+|N_L|<h$.
+For any state $v \in B(\vec{N}, K)$ in the joint energy budget, the full interacting fermionic model evaluates to:
+\begin{equation}
+H_{\mathrm{Lutt}} \, v = \left[ \frac{2\pi}{L} \sum_{m=1}^M \mathcal{M}_m(v_1, v_2) + E_{\mathrm{zero}}(\mu) \right] v,
+\end{equation}
+where $\mathcal{M}_m(v_1, v_2)$ is the coupled pairing mode operator:
+\begin{equation}
+\mathcal{M}_m(v_1, v_2) \coloneqq v_1 \left( \rho_{m, R} \rho_{-m, R} + \rho_{m, L} \rho_{-m, L} \right) + v_2 \left( \rho_{m, R} \rho_{m, L} + \rho_{-m, R} \rho_{-m, L} \right).
+\end{equation}
+When $\mu = \mu_{\mathrm{canon}}$, the zero-mode energy is identically $E_{\mathrm{zero}}(\mu_{\mathrm{canon}}) = \frac{\pi v_1}{L}(N_R^2 + N_L^2) + \frac{g_2}{L} N_R N_L$.
+\end{theorem}
+
+\begin{proof}
+Applying Theorem~\ref{thm:free_kinetic_sugawara} and substituting the current and pairing interactions directly regroups the oscillator coefficients into $v_1=v_F+g_4/(2\pi)$ and $v_2=g_2/(2\pi)$. The charge terms combine into the scalar $E_{\mathrm{zero}}(\mu)$.
+\end{proof}
+
+\begin{theorem}[Action with Raw Intra-Branch Interaction]
+\label{thm:luttinger_raw_budget}
+If the chosen current interaction $H_{4, \mathrm{current}}$ is replaced by the raw 4-fermion interaction $H_{4, \mathrm{raw}}$, then under the same hypotheses as Theorem~\ref{thm:luttinger_hamiltonian_budget}, for every $v \in B(\vec{N}, K)$:
+\begin{equation}
+\Big( H_0 + H_{4, \mathrm{raw}} + H_{2, \mathrm{pair}} - \mu(N_R + N_L) \Big) v = H_{\mathrm{Lutt}} \, v - \frac{g_4}{2L} \sum_{\nu \in \{R, L\}} Q_{M, \nu} \, v.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Follows immediately from Theorem~\ref{thm:raw_vs_current_intra} and Theorem~\ref{thm:luttinger_hamiltonian_budget}.
+\end{proof}
+
+\section{Non-Vacuity and Ground Action Witness}
+
+To show that the mathematical statements above have nontrivial content, we give a concrete finite-lattice witness.
+
+\begin{proposition}[Concrete Non-Vacuous Witness]
+\label{prop:concrete_witness}
+Set $h = 8$ (lattice size $L = 16$), transfer cutoff $M = 2$, budget cutoff $K = 2$, sector charges $N_R = N_L = 0$, Fermi velocity $v_F = 1$, couplings $g_4 = g_2 = 6\pi$ (so $v_1 = 4, v_2 = 3$), and chemical potential $\mu = \mu_{\mathrm{canon}} = \pi / 16$.
+Then:
+\begin{enumerate}
+    \item The sector charges are admissible, the branch margins $2M + K + |N_\nu| = 6 \le 8$ hold, and the Sugawara margin $K \le M$ and $K + |N_\nu| = 2 < 8$ holds.
+    \item The sector ground state $|\vec{0}\rangle_0$ is non-zero and belongs to the budget space $B(\vec{0}, 2)$.
+    \item The action of the current-mode Luttinger Hamiltonian on $|\vec{0}\rangle_0$ is non-zero:
+    \begin{equation}
+    H_{\mathrm{Lutt}} \, |\vec{0}\rangle_0 \neq 0.
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The margins are $2M+K=6\le8$, $K\le M$, and $K+|N_\nu|=2<8$, while $|\vec 0\rangle_0$ is a nonzero ground-state basis vector in $B(\vec 0,2)$. The zero-mode scalar vanishes, and the lowering currents isolate the $m=1$ pairing contribution:
+\begin{equation}
+\rho_{-1,R}\rho_{-1,L}\bigl(H_{\mathrm{Lutt}}|\vec 0\rangle_0\bigr)=\frac{2\pi v_2}{L}|\vec 0\rangle_0=\frac{6\pi}{16}|\vec 0\rangle_0\ne0.
+\end{equation}
+Hence the Hamiltonian acts nontrivially on the stated ground state.
+\end{proof}
+
+\begin{remark}[Non-vacuity of the finite witness]
+The ground state is a nonzero occupation-basis vector in the stated finite budget, and the displayed lowering-current matrix element is strictly positive. Thus the interaction acts nontrivially on an explicitly admissible state, without appealing to a continuum limit.
+\end{remark}
+
+\section{Discussion and Forward Outlook}
+
+\subsection{Physical Pairing Channel vs.\ Computational Currents}
+\begin{remark}[Physical interpretation of the pairing channel]
+Identifying the pairing Hamiltonian $H_{2, \mathrm{pair}}$ with a physical backscattering or umklapp channel requires a precise orientation dictionary and Klein factor intertwiners (Chapters~\ref{ch:klein_factors} and~\ref{ch:mandelstam}). In the finite current convention, $\rho_{m, \nu}$ acts as a creator for $m>0$ on both branches. The raw opposite-transfer interaction reduces to hopping, whereas the distinct pairing model represents the hyperbolic interaction used in Luttinger-liquid theory.
+\end{remark}
+
+\subsection{Diagonalization and Energy-Shell Renormalization}
+\begin{remark}[Finite diagonalization and energy shells]
+The quadratic pairing Hamiltonian $\mathcal{M}_m(v_1, v_2)$ is diagonalized by a canonical Bogoliubov transformation on the budget subspace, developed in Chapter~\ref{ch:bogoliubov}. When an interaction couples states across different energy shells, Section~\ref{sec:ch21-finite-effective} gives the corresponding finite Schrieffer--Wolff reduction. Additional derivations and matrix examples are collected in the appendices.
+\end{remark}
+
+
+\section{Chapter Summary}
+This chapter distinguishes raw fermionic interactions from their current
+and pairing descriptions, proves the stated budget identities, and gives
+non-vacuous witnesses for the interacting action. The orientation and
+Klein-factor dictionary remains essential when interpreting the pairing
+channel physically; a resemblance between two quadratic expressions
+does not by itself identify their microscopic scattering processes. The
+results connect the finite construction to the standard Luttinger-liquid
+picture while leaving the continuum thermodynamic comparison to an explicit
+limit analysis.
