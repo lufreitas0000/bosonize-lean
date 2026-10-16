@@ -1,97 +1,157 @@
 {
   "dispatch_base": "4e28060",
-  "stage": "Dispatched: candidate rewrites are not yet accepted or published",
+  "stage": "5/15 current candidates mechanically verified; remaining sessions/corrections pending; no manuscript rewrite accepted into main",
   "chapter_strategy": "One chapter per session; a separate session owns main.tex frontmatter/roadmap only.",
   "jobs": [
     {
       "chapter": "CH01",
       "task": "bosonize-lean--rewrite-ch01-wave1",
       "session": "https://jules.google.com/session/16033437896827980283",
-      "dispatched_at": "2026-10-16T00:35:07.981449+00:00"
+      "dispatched_at": "2026-10-16T00:35:07.981449+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 0,
+      "candidate_commit": null,
+      "editorially_accepted": false
     },
     {
       "chapter": "CH02",
       "task": "bosonize-lean--rewrite-ch02-wave1",
       "session": "https://jules.google.com/session/4349361890691014354",
-      "dispatched_at": "2026-10-16T00:35:11.612046+00:00"
+      "dispatched_at": "2026-10-16T00:35:11.612046+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 0,
+      "candidate_commit": null,
+      "editorially_accepted": false
     },
     {
       "chapter": "CH03",
       "task": "bosonize-lean--rewrite-ch03-wave1",
       "session": "https://jules.google.com/session/11096842965569419421",
-      "dispatched_at": "2026-10-16T00:35:15.631468+00:00"
+      "dispatched_at": "2026-10-16T00:35:15.631468+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 0,
+      "candidate_commit": null,
+      "editorially_accepted": false
     },
     {
       "chapter": "CH04",
       "task": "bosonize-lean--rewrite-ch04-wave1",
       "session": "https://jules.google.com/session/13640349422861630672",
-      "dispatched_at": "2026-10-16T00:35:19.536143+00:00"
+      "dispatched_at": "2026-10-16T00:35:19.536143+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 0,
+      "candidate_commit": null,
+      "editorially_accepted": false
     },
     {
       "chapter": "CH05",
       "task": "bosonize-lean--rewrite-ch05-wave1",
       "session": "https://jules.google.com/session/4953799156936034531",
-      "dispatched_at": "2026-10-16T00:35:23.821299+00:00"
+      "dispatched_at": "2026-10-16T00:35:23.821299+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 0,
+      "candidate_commit": null,
+      "editorially_accepted": false
     },
     {
       "chapter": "CH06",
       "task": "bosonize-lean--rewrite-ch06-wave1",
       "session": "https://jules.google.com/session/16072594996072518752",
-      "dispatched_at": "2026-10-16T00:35:27.914374+00:00"
+      "dispatched_at": "2026-10-16T00:35:27.914374+00:00",
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "0a48cf04470d0d1a7278761e02401750d10d87c5",
+      "editorially_accepted": false
     },
     {
       "chapter": "CH07",
       "task": "bosonize-lean--rewrite-ch07-wave1",
       "session": "https://jules.google.com/session/6628946825800271795",
-      "dispatched_at": "2026-10-16T00:35:31.471559+00:00"
+      "dispatched_at": "2026-10-16T00:35:31.471559+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 0,
+      "candidate_commit": null,
+      "editorially_accepted": false
     },
     {
       "chapter": "CH08",
       "task": "bosonize-lean--rewrite-ch08-wave1",
       "session": "https://jules.google.com/session/13648113474117759430",
-      "dispatched_at": "2026-10-16T00:35:35.498030+00:00"
+      "dispatched_at": "2026-10-16T00:35:35.498030+00:00",
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "98c96ac724ac1176f62c238f5f51a9efe669ae5e",
+      "editorially_accepted": false
     },
     {
       "chapter": "CH09",
       "task": "bosonize-lean--rewrite-ch09-wave1",
       "session": "https://jules.google.com/session/3417474204592107079",
-      "dispatched_at": "2026-10-16T00:35:39.855997+00:00"
+      "dispatched_at": "2026-10-16T00:35:39.855997+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 0,
+      "candidate_commit": null,
+      "editorially_accepted": false
     },
     {
       "chapter": "CH10",
       "task": "bosonize-lean--rewrite-ch10-wave1",
       "session": "https://jules.google.com/session/4064820356513671914",
-      "dispatched_at": "2026-10-16T00:35:44.075476+00:00"
+      "dispatched_at": "2026-10-16T00:35:44.075476+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 1,
+      "candidate_commit": "45628fa1ad9b55f49f9e6063335bb8d4066608e5",
+      "editorially_accepted": false
     },
     {
       "chapter": "CH11",
       "task": "bosonize-lean--rewrite-ch11-wave1",
       "session": "https://jules.google.com/session/4427945683332135247",
-      "dispatched_at": "2026-10-16T00:35:48.368543+00:00"
+      "dispatched_at": "2026-10-16T00:35:48.368543+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 0,
+      "candidate_commit": null,
+      "editorially_accepted": false
     },
     {
       "chapter": "CH19",
       "task": "bosonize-lean--rewrite-ch19-wave1",
       "session": "https://jules.google.com/session/9102733825150575766",
-      "dispatched_at": "2026-10-16T00:35:52.962777+00:00"
+      "dispatched_at": "2026-10-16T00:35:52.962777+00:00",
+      "controller_status": "verified",
+      "verification_attempts": 2,
+      "candidate_commit": "1a3690c72fb292b593fabb856bf26b8c4ef43236",
+      "editorially_accepted": false
     },
     {
       "chapter": "CH20",
       "task": "bosonize-lean--rewrite-ch20-wave1",
       "session": "https://jules.google.com/session/14798661373269291327",
-      "dispatched_at": "2026-10-16T00:35:57.377721+00:00"
+      "dispatched_at": "2026-10-16T00:35:57.377721+00:00",
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "d6f972c6eb52683ba4d09efa647a9dc91f683fc4",
+      "editorially_accepted": false
     },
     {
       "chapter": "CH21",
       "task": "bosonize-lean--rewrite-ch21-wave1",
       "session": "https://jules.google.com/session/2452652107077444780",
-      "dispatched_at": "2026-10-16T00:36:02.465898+00:00"
+      "dispatched_at": "2026-10-16T00:36:02.465898+00:00",
+      "controller_status": "verified",
+      "verification_attempts": 1,
+      "candidate_commit": "f28662ddcfb63282afe1a0c16c8a131431ffa90a",
+      "editorially_accepted": false
     },
     {
       "chapter": "Frontmatter",
       "task": "bosonize-lean--rewrite-frontmatter-wave1",
       "session": "https://jules.google.com/session/3208893926813201988",
-      "dispatched_at": "2026-10-16T00:36:06.574685+00:00"
+      "dispatched_at": "2026-10-16T00:36:06.574685+00:00",
+      "controller_status": "waiting_jules",
+      "verification_attempts": 1,
+      "candidate_commit": "02c3c62526efd01a8955436b1fab13e03a6ed804",
+      "editorially_accepted": false
     }
   ],
   "checks_completed": [
@@ -105,5 +165,16 @@
     "Compile isolated candidates in the sandbox",
     "Integrate disjoint reviewed changes and compile the combined book",
     "Push accepted sources and check the CI PDF source receipt"
-  ]
+  ],
+  "checked_at": "2026-10-16T00:54:21.310514+00:00",
+  "mechanical_verification_is_not_editorial_or_mathematical_acceptance": true,
+  "coordination_findings": [
+    "CH01 requested fuller chapter edits and limited protected-algebra wording instead of continuum dynamics claims.",
+    "CH08 restored a useful inline comparison and clarified nilpotent versus finite compressed exponentials.",
+    "Frontmatter requested correction of the false implication that CH12\u201318 have a gap in Lean implementation.",
+    "CH10 requested input-restricted CCR and enlarged intermediate-budget wording.",
+    "CH19 requested restoration of the missing finite interacting-state comparison caveat.",
+    "Ancillary files in five provisional patches were returned to their original Jules sessions for whitelist cleanup; none are accepted."
+  ],
+  "independent_review_plan": "Three separate Jules review sessions for foundations, currents/budgets, and later interactions/frontmatter; prepared, not dispatched until the checked candidate book is assembled."
 }
