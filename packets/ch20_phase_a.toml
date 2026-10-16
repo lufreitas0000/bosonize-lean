@@ -56,7 +56,7 @@ context = [
   "Bosonize/Core/Ch18Bogoliubov.lean",
   "Bosonize/Core/A05MultiSpecies.lean",
   "Bosonize/Core/A06ChiralFields.lean",
-  "Bosonize/Core/A07Interactions.lean",
+  "Bosonize/Core/A07InteractionsAndBogoliubov.lean",
   "scripts/webllm/verify_phase_a.py",
   "lean-toolchain",
   "lakefile.toml"
