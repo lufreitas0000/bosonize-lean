@@ -13235,6 +13235,294 @@
           "text": "lemma witnessZero_admissible : A05.admissible 2 witnessZero"
         }
       }
+    },
+    "BosonizeStubs/V1S1OrderedWick.lean": {
+      "commands": [
+        {
+          "hash": "5177d3ad02b6233cd18b2e3198348979a77671b9599974dc5a27836a19928643",
+          "kind": "import",
+          "label": "import Bosonize.Core.A08OscillatorStates",
+          "text": "import Bosonize.Core.A08OscillatorStates"
+        },
+        {
+          "hash": "09b1781da4ccbc34bb9462068f9c3ba588fb8d77e4e7636a571b48814e4a34dc",
+          "kind": "namespace",
+          "label": "namespace Bosonize.V1S1",
+          "text": "namespace Bosonize.V1S1"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "86f76224f461058f3c7a64b8ecb73dd2c43d4c8524bdc289f72669283039e402",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S1.OscLinearForm",
+          "text": "abbrev OscLinearForm (M : \u2115) := Bosonize.A08.OscGen M \u2192\u2080 \u2102"
+        },
+        {
+          "hash": "4363caa83010c64c15457b6a520f2a4aa2d081d21520a739ad6ef0d0933dc120",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.linearElement",
+          "text": "def linearElement {M : \u2115} (f : OscLinearForm M) : Bosonize.A08.OscAlgebra M :=\n  \u2211 g \u2208 f.support, (f g) \u2022 FreeAlgebra.\u03b9 \u2102 g"
+        },
+        {
+          "hash": "ade129ff008010aa5a29379bce3b150fdc52bbe4e02aba8fa90540b6075947e5",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.formOfGenerator",
+          "text": "noncomputable def formOfGenerator {M : \u2115} (g : Bosonize.A08.OscGen M) : OscLinearForm M :=\n  Finsupp.single g 1"
+        },
+        {
+          "hash": "7a3a74d85fcff81fd3a8291502ad5347437cc9cb0daaa71a868efa9808f3335e",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.wordElement",
+          "text": "def wordElement {M : \u2115} (w : List (OscLinearForm M)) : Bosonize.A08.OscAlgebra M :=\n  (w.map linearElement).prod"
+        },
+        {
+          "hash": "776925518401afa5213c0628a7231ae2e622bc42b5f9be307a2fb64b7cd7488d",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.contraction",
+          "text": "noncomputable def contraction {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f g : OscLinearForm M) : \u2102 :=\n  Bosonize.A08.omegaP M hp (linearElement f * linearElement g)"
+        },
+        {
+          "hash": "6be5e9ce451623f97be31da64709a6aaf643041c32c8532a920defe8dee31c9b",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.wordForms",
+          "text": "def wordForms {M : \u2115} {n : \u2115} (f : Fin n \u2192 OscLinearForm M) :\n    List (OscLinearForm M) := List.ofFn f"
+        },
+        {
+          "hash": "a3c24e71eca23effc573175386e27dc2348edc1b63939b5c5ea25b464217eb04",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S1.Pairing",
+          "text": "abbrev Pairing (n : \u2115) := Finset (Fin n \u00d7 Fin n)"
+        },
+        {
+          "hash": "337abcb8782f0f32325707921813bf1842ce03f79e9a874086195df3d9198911",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.IsPairing",
+          "text": "def IsPairing {n : \u2115} (P : Pairing n) : Prop :=\n  (\u2200 e \u2208 P, e.1 < e.2) \u2227\n  (\u2200 i : Fin n, \u2203! j : Fin n, (i, j) \u2208 P \u2228 (j, i) \u2208 P)"
+        },
+        {
+          "hash": "b09bcf8ca0da369bfd01519cbcbeb296eb941110276376e1bf90b98fdccce42c",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.pairingWeight",
+          "text": "noncomputable def pairingWeight {M n : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f : Fin n \u2192 OscLinearForm M) (P : Pairing n) : \u2102 :=\n  \u220f e \u2208 P, contraction hp (f e.1) (f e.2)"
+        },
+        {
+          "hash": "e6cf142c7e61845a89bb86b6a8a12d2d20ab1ccca83e50c30cf27f774ecc5ca5",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.orderedPairingSum",
+          "text": "noncomputable def orderedPairingSum {M n : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f : Fin n \u2192 OscLinearForm M) : \u2102 := by\n  classical\n  exact \u2211 P : Pairing n, if IsPairing P then pairingWeight hp f P else 0"
+        },
+        {
+          "hash": "7410ca92e9f5a12cd1fa164735a93073dc4a18f02e8c8875109c7391c507874e",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.dressedLinearElement",
+          "text": "noncomputable def dressedLinearElement {M : \u2115} (c s : \u211d)\n    (f : OscLinearForm M) : Bosonize.A08.OscAlgebra M :=\n  \u2211 g \u2208 f.support, (f g) \u2022\n    Bosonize.A08.bogoliubovMap M c s (FreeAlgebra.\u03b9 \u2102 g)"
+        },
+        {
+          "hash": "b34f277461b7c0ede85e9c72fe6c07489c4dcda58fadcf0855deba9d7e17f7cc",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.dressedGeneratorForm",
+          "text": "noncomputable def dressedGeneratorForm {M : \u2115} (c s : \u211d)\n    (g : Bosonize.A08.OscGen M) : OscLinearForm M :=\n  (c : \u2102) \u2022 Finsupp.single g 1 + (s : \u2102) \u2022\n    Finsupp.single (!g.1, (Bosonize.A07Interactions.oppositeOrientation g.2.1, g.2.2)) 1"
+        },
+        {
+          "hash": "32acb370b4b4823959f8d438faf2baeaa3292b1b97ac60c0d3fca4e22b45e99c",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.dressedForm",
+          "text": "noncomputable def dressedForm {M : \u2115} (c s : \u211d) (f : OscLinearForm M) : OscLinearForm M :=\n  \u2211 g \u2208 f.support, (f g) \u2022 dressedGeneratorForm c s g"
+        },
+        {
+          "hash": "1b55b6f606c99cf910f54e24db3c75a97bf8013b917dafe3962e969d1ad16e0b",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.deleteFin",
+          "text": "def deleteFin {M : \u2115} (xs : List (OscLinearForm M)) (i : Fin xs.length) :=\n  xs.take i.val ++ xs.drop (i.val + 1)"
+        },
+        {
+          "hash": "3af802b6ca5e771144ead1be25b41febb962056ff502a9cde92a54843ce639a9",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.generatorContractionExpected",
+          "text": "noncomputable def generatorContractionExpected {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (g h : Bosonize.A08.OscGen M) : \u2102 := by\n  classical\n  by_cases hg : g.1 = false\n  \u00b7 by_cases hh : h.1 = false\n    \u00b7 exact if g.2.2 = h.2.2 \u2227 h.2.1 = Bosonize.A07Interactions.oppositeOrientation g.2.1\n        then -(\u2191(g.2.2.val + 1) * (hp.c : \u2102) * (hp.s : \u2102)) else 0\n    \u00b7 exact if g.2.2 = h.2.2 \u2227 g.2.1 = h.2.1\n        then \u2191(g.2.2.val + 1) * (hp.c : \u2102) ^ 2 else 0\n  \u00b7 by_cases hh : h.1 = false\n    \u00b7 exact if g.2.2 = h.2.2 \u2227 g.2.1 = h.2.1\n        then \u2191(g.2.2.val + 1) * (hp.s : \u2102) ^ 2 else 0\n    \u00b7 exact if g.2.2 = h.2.2 \u2227 h.2.1 = Bosonize.A07Interactions.oppositeOrientation g.2.1\n        then -(\u2191(g.2.2.val + 1) * (hp.c : \u2102) * (hp.s : \u2102)) else 0"
+        },
+        {
+          "hash": "7242c3afe9454662f4044a4915770b4772f3fdf5fdc60963729af00a6d8bf9ba",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.freePair",
+          "text": "def freePair : Bosonize.Ch18.HyperbolicPair := \u27e81, 0, by norm_num\u27e9"
+        },
+        {
+          "hash": "08df8317da6a2cfc6e2ea6bc43e618e05d6fd0d6cc1da1ea4c10a703d2706f83",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.squeezedPair",
+          "text": "noncomputable def squeezedPair : Bosonize.Ch18.HyperbolicPair :=\n  \u27e8(5 / 3 : \u211d), (4 / 3 : \u211d), by norm_num\u27e9"
+        },
+        {
+          "hash": "dae4e926bd76d6b138744d7d980b34198dd778486a5fc46fe458820dd39d79ec",
+          "kind": "def",
+          "label": "def Bosonize.V1S1.squeezedTestForm",
+          "text": "noncomputable def squeezedTestForm : OscLinearForm 1 :=\n  formOfGenerator (false, (.right, 0)) + formOfGenerator (true, (.right, 0)) +\n  formOfGenerator (false, (.left, 0)) + formOfGenerator (true, (.left, 0))"
+        },
+        {
+          "hash": "dc0ec4f7e903d3da534319ce7ef0952071f81704096d3f7b65ba5a37a6ebc1f6",
+          "kind": "end",
+          "label": "end Bosonize.V1S1",
+          "text": "end Bosonize.V1S1"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.V1S1.bare_in_dressed_coordinates": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "210961dd83c4a5e5c206b1aa8a018bed0a7acde264bf97c12074a745afc7a550",
+          "kind": "theorem",
+          "text": "theorem bare_in_dressed_coordinates (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : Bosonize.A08.bogoliubovMap M hp.c hp.s (dressedLinearElement hp.c (-hp.s) f) = linearElement f"
+        },
+        "Bosonize.V1S1.bare_to_dressed_conversion": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "6674dd0f0d5b96e8ec65a31482da07b9fae301c589ec78701dc9fe2d89853927",
+          "kind": "theorem",
+          "text": "theorem bare_to_dressed_conversion (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : Bosonize.A08.bogoliubovMap M hp.c hp.s (linearElement f) = dressedLinearElement hp.c hp.s f"
+        },
+        "Bosonize.V1S1.contraction_bilinear_left": {
+          "ctx": "745229d5dd139e37d2cef6b338ec81491a9d271639677000ccec7e54fe76cbdf",
+          "hash": "0cdb9e38553a9d4cd3a788919c0474e15eed737897304b338625299f04d9f29b",
+          "kind": "theorem",
+          "text": "theorem contraction_bilinear_left (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (a b c : OscLinearForm M) : contraction hp (a + b) c = contraction hp a c + contraction hp b c"
+        },
+        "Bosonize.V1S1.contraction_bilinear_right": {
+          "ctx": "745229d5dd139e37d2cef6b338ec81491a9d271639677000ccec7e54fe76cbdf",
+          "hash": "015f1d27a3894430f7ffa6c18754adf01e369c214b0ede896157f28aa11c1b36",
+          "kind": "theorem",
+          "text": "theorem contraction_bilinear_right (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (a b c : OscLinearForm M) : contraction hp a (b + c) = contraction hp a b + contraction hp a c"
+        },
+        "Bosonize.V1S1.contraction_coeff_formula": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "c79da76f79d164ff8c1e83747cd0f6c3dcc348fc5ac9907504258bb5b3e0af9a",
+          "kind": "theorem",
+          "text": "theorem contraction_coeff_formula (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f g : OscLinearForm M) : contraction hp f g = \u2211 i \u2208 f.support, \u2211 j \u2208 g.support, f i * g j * generatorContractionExpected hp i j"
+        },
+        "Bosonize.V1S1.contraction_zero_left": {
+          "ctx": "745229d5dd139e37d2cef6b338ec81491a9d271639677000ccec7e54fe76cbdf",
+          "hash": "4d337619d72814c7c7940d2c47d7719717440b04532007f39b78a96b29eb6e01",
+          "kind": "theorem",
+          "text": "theorem contraction_zero_left (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : contraction hp 0 f = 0"
+        },
+        "Bosonize.V1S1.contraction_zero_right": {
+          "ctx": "745229d5dd139e37d2cef6b338ec81491a9d271639677000ccec7e54fe76cbdf",
+          "hash": "35516836eb12e95a84575c1893b12b2be85104cf1ee1cb1bf2d7854282d9ca0f",
+          "kind": "theorem",
+          "text": "theorem contraction_zero_right (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : contraction hp f 0 = 0"
+        },
+        "Bosonize.V1S1.dressed_conversion_preserves_free_expectation": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "7dad4160c6babebfbee8c6c0ccb5d3901f43ddb6a63a05c395f3687c9b86dc5e",
+          "kind": "theorem",
+          "text": "theorem dressed_conversion_preserves_free_expectation (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f g : OscLinearForm M) : Bosonize.A08.omegaP M hp (dressedLinearElement hp.c hp.s f * dressedLinearElement hp.c hp.s g) = Bosonize.A08.omega0 M (linearElement f * linearElement g)"
+        },
+        "Bosonize.V1S1.dressed_form_evaluation": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "88592938fbde695e3d51e33a7559d6a8ba78433075a451dc78d0d66a6d483bb2",
+          "kind": "theorem",
+          "text": "theorem dressed_form_evaluation (M : \u2115) (c s : \u211d) (f : OscLinearForm M) : linearElement (dressedForm c s f) = dressedLinearElement c s f"
+        },
+        "Bosonize.V1S1.free_vacuum_order_sensitive": {
+          "ctx": "00b87e9cafe07a89bb9e4c472cb94a70b0d6d95c78a40652c06a48fdd4abb96f",
+          "hash": "ff7abf110de3cb2cb2ebc5539fb6d3bff3b88b32d13bef6918da5d0ebd1fe866",
+          "kind": "theorem",
+          "text": "theorem free_vacuum_order_sensitive (i : Fin 1) : Bosonize.A08.omegaP 1 freePair (wordElement [formOfGenerator (false, (.right, i)), formOfGenerator (true, (.right, i)), formOfGenerator (false, (.right, i)), formOfGenerator (true, (.right, i))]) = 1"
+        },
+        "Bosonize.V1S1.generator_contraction": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "a0a177e7aa932bae702657b2676db4b4aaa43e4bfebd0e180415d0519bdfdde4",
+          "kind": "theorem",
+          "text": "theorem generator_contraction (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (g h : Bosonize.A08.OscGen M) : contraction hp (formOfGenerator g) (formOfGenerator h) = generatorContractionExpected hp g h"
+        },
+        "Bosonize.V1S1.linearElement_add": {
+          "ctx": "745229d5dd139e37d2cef6b338ec81491a9d271639677000ccec7e54fe76cbdf",
+          "hash": "172c0f2b1a44997e4908cef4cd1ad6baf6b1e51ef8c860f9afae493ab23dd0fb",
+          "kind": "theorem",
+          "text": "theorem linearElement_add (M : \u2115) (f g : OscLinearForm M) : linearElement (f + g) = linearElement f + linearElement g"
+        },
+        "Bosonize.V1S1.linearElement_zero": {
+          "ctx": "745229d5dd139e37d2cef6b338ec81491a9d271639677000ccec7e54fe76cbdf",
+          "hash": "f47ee4e9bb1fa762f3d379b9fb55a1cc28105460075767e395c04f0d53b77009",
+          "kind": "theorem",
+          "text": "theorem linearElement_zero (M : \u2115) : linearElement (0 : OscLinearForm M) = 0"
+        },
+        "Bosonize.V1S1.linearElement_zero_mode": {
+          "ctx": "745229d5dd139e37d2cef6b338ec81491a9d271639677000ccec7e54fe76cbdf",
+          "hash": "59133d87eacc5d84f8484302e31211d5bffdc8e29690134395a7a8a5f5f38cce",
+          "kind": "theorem",
+          "text": "theorem linearElement_zero_mode (f : OscLinearForm 0) : linearElement f = 0"
+        },
+        "Bosonize.V1S1.mixed_bare_dressed_word": {
+          "ctx": "91c9815b02e14440fbce1d2cf3120bf46c5621c3fafc79ddb79027fe1c1e9331",
+          "hash": "22bc977b597bc81504c76afab8966ab6ea5e21219e9b5c595087de119673c7a9",
+          "kind": "theorem",
+          "text": "theorem mixed_bare_dressed_word (i : Fin 1) : Bosonize.A08.omegaP 1 squeezedPair (wordElement [formOfGenerator (false, (.right, i)), dressedForm squeezedPair.c squeezedPair.s (formOfGenerator (true, (.right, i)))]) = (((i.val + 1 : \u2115) : \u2102) * (squeezedPair.c : \u2102))"
+        },
+        "Bosonize.V1S1.omegaP_empty_word": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "0b1a3e31a39857630a499a7d4e9393b3345b876cf6a35c151864b7e0e08ce29f",
+          "kind": "theorem",
+          "text": "theorem omegaP_empty_word (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) : Bosonize.A08.omegaP M hp (wordElement ([] : List (OscLinearForm M))) = 1"
+        },
+        "Bosonize.V1S1.omegaP_odd_word_zero": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "7a0e89474e89792c01377296fdbc34f76ccda13e1e764bd8bfa9cc748d396288",
+          "kind": "theorem",
+          "text": "theorem omegaP_odd_word_zero (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (w : List (OscLinearForm M)) (hodd : Odd w.length) : Bosonize.A08.omegaP M hp (wordElement w) = 0"
+        },
+        "Bosonize.V1S1.omegaP_ordered_wick": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "c43ca3f50deaff38c6fcd1e9788a405795daaae6e4c70d60e3a7524bfb8672b5",
+          "kind": "theorem",
+          "text": "theorem omegaP_ordered_wick (M n : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : Fin n \u2192 OscLinearForm M) : Bosonize.A08.omegaP M hp (wordElement (wordForms f)) = orderedPairingSum hp f"
+        },
+        "Bosonize.V1S1.omegaP_pull_through": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "e1d34587fbcc5c3d50a916c4041b47a849e442c0a16689a36302090c9aafb35f",
+          "kind": "theorem",
+          "text": "theorem omegaP_pull_through (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (tail : List (OscLinearForm M)) : Bosonize.A08.omegaP M hp (wordElement (f :: tail)) = \u2211 i : Fin tail.length, contraction hp f (tail.get i) * Bosonize.A08.omegaP M hp (wordElement (deleteFin tail i))"
+        },
+        "Bosonize.V1S1.omegaP_single_even_moment": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "467ff77b81a27fd11e12cd287bd539facfb4692bd1cf714ddff4645e4afc1eda",
+          "kind": "theorem",
+          "text": "theorem omegaP_single_even_moment (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (k : \u2115) : Bosonize.A08.omegaP M hp ((linearElement f) ^ (2 * k)) = ((((2 * k).factorial : \u2115) : \u2102) / (((2 ^ k) * k.factorial : \u2115) : \u2102)) * (contraction hp f f) ^ k"
+        },
+        "Bosonize.V1S1.omegaP_single_odd_moment": {
+          "ctx": "da91775bf7b9b6b7f712cf8a9f98c4a848ca85d0f3b658b25fdca8aa87699cde",
+          "hash": "a7e4a98aaca9d15d5490e87c1d6fd22f0a17e06a39e2133b88c27d3e6db574c6",
+          "kind": "theorem",
+          "text": "theorem omegaP_single_odd_moment (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (k : \u2115) : Bosonize.A08.omegaP M hp ((linearElement f) ^ (2 * k + 1)) = 0"
+        },
+        "Bosonize.V1S1.pairing_representation_ext": {
+          "ctx": "af8ae92dcd5576a5ba57dd220484962b5579e62885500ebcb75e94d3c3019de6",
+          "hash": "1bd642412ae346a5298e3b37c6ad5ea8b3f7fd317c9853e253ba22e9c90e077a",
+          "kind": "theorem",
+          "text": "theorem pairing_representation_ext {n : \u2115} (P Q : Pairing n) (h : \u2200 e, e \u2208 P \u2194 e \u2208 Q) : P = Q"
+        },
+        "Bosonize.V1S1.squeezed_test_fourth_moment": {
+          "ctx": "91c9815b02e14440fbce1d2cf3120bf46c5621c3fafc79ddb79027fe1c1e9331",
+          "hash": "f95d3d50121d12f10068b376ed772a75a71d5a9b51a86b808b544ee51d2dcb67",
+          "kind": "theorem",
+          "text": "theorem squeezed_test_fourth_moment : Bosonize.A08.omegaP 1 squeezedPair ((linearElement squeezedTestForm) ^ 4) = (4 / 27 : \u2102)"
+        },
+        "Bosonize.V1S1.squeezed_test_variance": {
+          "ctx": "91c9815b02e14440fbce1d2cf3120bf46c5621c3fafc79ddb79027fe1c1e9331",
+          "hash": "bc2da91e92ae1129b69d818c398fbd5cc27c14a103c8e84fa7fc2ab374084545",
+          "kind": "theorem",
+          "text": "theorem squeezed_test_variance : contraction squeezedPair squeezedTestForm squeezedTestForm = (2 / 9 : \u2102)"
+        },
+        "Bosonize.V1S1.zero_mode_form_eq_zero": {
+          "ctx": "745229d5dd139e37d2cef6b338ec81491a9d271639677000ccec7e54fe76cbdf",
+          "hash": "843957f8f67f08ef3a6139ab963939c9348d71be15845c399448f9ef98a44189",
+          "kind": "theorem",
+          "text": "theorem zero_mode_form_eq_zero (f : OscLinearForm 0) : f = 0"
+        }
+      }
     }
   },
   "version": 2
