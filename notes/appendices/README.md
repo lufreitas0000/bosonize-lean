@@ -2,7 +2,7 @@
 
 Status: Source and proof-suggestion reconciliation completed on 2026-10-09 within the explicit algebraic scope. See the [completion ledger](../../note/notes_review_completion_2026-10-09.md), [proof revision guide](../../note/proof_suggestions_revision_2026-10-09.md), and [adaptive roadmap](../../adaptative_roadmap.md).
 
-Current status (2026-10-17): 34 frozen Core files cover CH01–20 within their reviewed scopes and implemented support. CH19/A08 (62 contracts) and finite CH20 (64 contracts) are Phase C complete. CH20b is the working label for the open Chapter 20 completion bridge, not another numbered chapter. CH21 has an R&D proposal but no accepted Lean interface. Polynomial CCR, formal-series results and finite CAR comparisons remain distinct. The book master includes CH01–21; manuscript inclusion does not imply proof acceptance. The CH14 field criterion remains conditional on cyclicity, full ground equality and common residual recurrences.
+Current status (2026-10-17): 36 frozen Core files cover CH01–20 within their reviewed scopes and implemented support. CH19/A08 (62 contracts) and finite CH20 (64 contracts) are Phase C complete. S1 ordered oscillator Wick/moments is also Phase C complete; the remaining Chapter 20 bridge is separate. CH20b is the working label for the open Chapter 20 completion bridge, not another numbered chapter. CH21 has an R&D proposal but no accepted Lean interface. Polynomial CCR, formal-series results and finite CAR comparisons remain distinct. The book master includes CH01–21; manuscript inclusion does not imply proof acceptance. The CH14 field criterion remains conditional on cyclicity, full ground equality and common residual recurrences.
 
 | Appendix | Subject | Chapters |
 | --- | --- | --- |

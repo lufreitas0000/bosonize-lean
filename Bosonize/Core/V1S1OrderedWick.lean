@@ -1,10 +1,10 @@
 import Bosonize.Core.A08OscillatorStates
-import BosonizeStubs.V1S1PairingCombinatorics
+import Bosonize.Core.V1S1PairingCombinatorics
 
 /-!
 # V1-S1: ordered Wick theorem for the existing oscillator functional
 
-Phase A candidate. The carrier is the uncompressed free oscillator algebra;
+The carrier is the uncompressed free oscillator algebra;
 CCR are used only through the contextual descent facts in A08.
 -/
 

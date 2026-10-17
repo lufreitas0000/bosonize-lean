@@ -362,3 +362,16 @@ Next revision round is **planned only** in `docs/webllm/JULES_REVISION_PLAN.md`:
 pilot CH01–03 as a bundle, CH07–08 as a pair, and use one chapter per task for the
 more technical chapters, with only relevant appendix context and explicit owners
 for material moved into the main text. No Jules/API tasks have been dispatched.
+
+
+## V1-S1 accepted checkpoint — 2026-10-17
+
+S1 completed its independently reviewed A–B–C cycle. Two additive Core modules
+prove ordered bilinear contractions, pull-through, explicit all-pairings Wick
+factorization, odd vanishing and factorial moments for the existing uncompressed
+oscillator functional. All 57 new declarations and 14 relevant A08 dependencies
+audit with permitted standard axioms only. Local CI passes, strict locks verify
+1114 statements/1126 commands, and all 34 earlier Core sources are preserved
+within the 36-source freeze. The independent pedagogical review passes.
+See [the accepted companion](docs/companion/Bosonize/Core/V1S1OrderedWick.md).
+This completes S1 only; S2 and the broader Chapter 20 bridge remain separate.

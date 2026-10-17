@@ -142,3 +142,7 @@ The first power-intertwining scratch proof encountered the known stored coordina
 | Date | Module/Context | Obstruction | Pivot/Resolution | Status |
 | --- | --- | --- | --- | --- |
 | 2026-10-15 | CH17 B/C historical branches | Four unique checkpoint commits; normal merge would resurrect moved stubs and conflict with accepted Core companions/roadmap. | Preserve both tips as merge parents using the current main tree as authoritative. Old source and review material remains accessible through Git history; no Core or lock changes. | Consolidation authorized; superseded checkpoints |
+
+## 2026-10-17 V1-S1 pairing proof integration
+
+The explicit finite-pairing bijection and Wick proof compile in `/tmp/S1Pair.lean`. Inlining all combinatorial definitions as local lets in the locked theorem repeatedly causes deterministic 200000-heartbeat `isDefEq`/`whnf` timeouts (especially the weighted-sum reindexing); full diagnostics are retained in `/tmp/s1-current.log`. The mathematical approach is unchanged. Prepare a narrowly scoped additive helper-module/import amendment and obtain independent review before changing the S1 interface lock. Existing public data and theorem statements remain unchanged.

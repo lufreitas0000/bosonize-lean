@@ -1,6 +1,6 @@
 # BOSONIZE-LEAN: Master Table of Contents
 
-This document is the structural roadmap for the mathematical notes. Current status (2026-10-17): 34 frozen Core files cover CH01–20 within their reviewed scopes and implemented support. CH19/A08 (62 contracts) and finite CH20 (64 contracts) are Phase C complete. CH20b is the working label for the open Chapter 20 completion bridge, not another numbered chapter. CH21 has an R&D proposal but no accepted Lean interface. Polynomial CCR, formal-series results and finite CAR comparisons remain distinct. The book master includes CH01–21; manuscript inclusion does not imply proof acceptance.
+This document is the structural roadmap for the mathematical notes. Current status (2026-10-17): 36 frozen Core files cover CH01–20 within their reviewed scopes and implemented support. CH19/A08 (62 contracts) and finite CH20 (64 contracts) are Phase C complete. S1 ordered oscillator Wick/moments is also Phase C complete; the remaining Chapter 20 bridge is separate. CH20b is the working label for the open Chapter 20 completion bridge, not another numbered chapter. CH21 has an R&D proposal but no accepted Lean interface. Polynomial CCR, formal-series results and finite CAR comparisons remain distinct. The book master includes CH01–21; manuscript inclusion does not imply proof acceptance.
 
 The notes distinguish three kinds of content:
 1. **Promoted finite results:** Exact algebraic identities on stated finite CAR/Fock or budget carriers, with their actual hypotheses and boundary margins.

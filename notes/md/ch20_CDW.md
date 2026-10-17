@@ -224,8 +224,22 @@ is proved symmetric, nonnegative and zero at equal arguments. Its elementary
 proof uses evenness of cosine and $\cos t\le1$ term by term; for $h=2$, $M=1$,
 $x=1$, $y=0$ its value is one. This finite kernel is available for a subsequent
 correlator construction. Constructing formal vertices, proving their Hermitian
-and Gaussian/Wick properties, the full tensor-algebra duality and vertex law,
+properties and formal correlations, the full tensor-algebra duality and vertex law,
 and state transport remain CH20b obligations. The finite results do not yet
 supply the formal correlations (20.8)–(20.9), evaluation of a formal parameter
 at one, or a continuum power law. The reference formulas above remain the
 stated targets for those further constructions.
+
+
+### S1 input for the remaining formal correlator construction
+
+The [A08 S1 extension](../appendices/a08_states_and_correlations.md#ordered-wick-theorem-and-moments-s1-oscillator-extension)
+now supplies the ordered Wick theorem and all polynomial moments for arbitrary
+homogeneous oscillator linear forms in the existing uncompressed state.
+Contractions retain their order, $Q(Y,Z)=\omega_P(YZ)$, and are complex bilinear.
+For $q=\omega_P(Y^2)$, the even moments are $(2k)!q^k/(2^k k!)$ and odd moments
+vanish. The explicit perfect-pairing sum is connected to pull-through by the
+unique partner of the first position. This provides the oscillator moment
+input for a later coefficientwise construction. The charge carrier, formal
+vertices, full formal correlations, and comparisons with finite interacting
+states remain separate Chapter 20 obligations.
