@@ -1,4 +1,5 @@
 import Bosonize.Core.A08OscillatorStates
+import BosonizeStubs.V1S1PairingCombinatorics
 
 /-!
 # V1-S1: ordered Wick theorem for the existing oscillator functional
@@ -452,7 +453,85 @@ theorem omegaP_ordered_wick (M n : ℕ) (hp : Bosonize.Ch18.HyperbolicPair)
     (f : Fin n → OscLinearForm M) :
     Bosonize.A08.omegaP M hp (wordElement (wordForms f)) =
       orderedPairingSum hp f := by
-  sorry
+  classical
+  have good_univ_iff (n : ℕ) (P : Bosonize.V1S1.Pairing n) :
+      Pairings.Good Finset.univ P ↔ Bosonize.V1S1.IsPairing P := by
+    constructor
+    · rintro ⟨hord,h⟩
+      refine ⟨hord,?_⟩
+      intro i
+      obtain ⟨j,hj⟩ := (h i).1.mp (Finset.mem_univ i)
+      exact ⟨j,hj, fun k hk => (h i).2 k j hk hj⟩
+    · rintro ⟨hord,h⟩
+      refine ⟨hord,?_⟩
+      intro i
+      obtain ⟨j,hj,hu⟩ := h i
+      exact ⟨⟨fun _ => ⟨j,hj⟩,fun _ => Finset.mem_univ i⟩,
+        fun a b ha hb => (hu a ha).trans (hu b hb).symm⟩
+  have label_recurrence (M n : ℕ) (hp : Bosonize.Ch18.HyperbolicPair)
+      (F : Fin n → OscLinearForm M) (x : Fin n) (L : List (Fin n)) (hn : L.Nodup) :
+      Bosonize.A08.omegaP M hp (wordElement ((x::L).map F)) =
+        ∑ i : Fin L.length, contraction hp (F x) (F (L.get i)) *
+          Bosonize.A08.omegaP M hp (wordElement ((L.erase (L.get i)).map F)) := by
+    classical
+    have h := omegaP_pull_through M hp (F x) (L.map F)
+    change Bosonize.A08.omegaP M hp (wordElement ((x::L).map F)) = _ at h
+    convert h using 1
+    apply Fintype.sum_equiv (finCongr (List.length_map F).symm)
+    intro i
+    have hd : deleteFin (L.map F) ((finCongr (List.length_map F).symm) i) =
+        (L.erase (L.get i)).map F := by
+      rw [hn.erase_get, List.eraseIdx_eq_take_drop_succ]
+      simp [deleteFin,List.map_append]
+    rw [hd]
+    simp [List.get_eq_getElem]
+  have wick_list (M n : ℕ) (hp : Bosonize.Ch18.HyperbolicPair)
+      (F : Fin n → OscLinearForm M) : ∀ k : ℕ, ∀ L : List (Fin n), L.length=k →
+      List.Pairwise (·<·) L →
+      Bosonize.A08.omegaP M hp (wordElement (L.map F)) =
+        Pairings.sumOn (fun i j => contraction hp (F i) (F j)) L.toFinset := by
+    classical
+    intro k
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+      intro L hlen hs
+      cases L with
+      | nil => simp [wordElement,Bosonize.A08.omegaP_one,Pairings.sumOn_empty]
+      | cons x L =>
+        obtain ⟨hmin,hsL⟩ := List.pairwise_cons.mp hs
+        have hn := hsL.nodup
+        have hx : x∉L.toFinset := by
+          simp only [List.mem_toFinset]
+          intro hx
+          exact (lt_irrefl x) (hmin x hx)
+        rw [label_recurrence M n hp F x L hn, List.toFinset_cons,
+          Pairings.sumOn_first _ _ _ hx (by simpa using hmin)]
+        let E : Fin L.length ≃ {y // y∈L.toFinset} := Equiv.ofBijective
+          (fun i => ⟨L.get i,by simp⟩)
+          ⟨fun i j hij => (List.nodup_iff_injective_get.mp hn) (congrArg Subtype.val hij),
+            by intro y; obtain ⟨i,hi⟩ := List.get_of_mem (List.mem_toFinset.mp y.property)
+               exact ⟨i,Subtype.ext hi⟩⟩
+        apply Fintype.sum_equiv E
+        intro i
+        change contraction hp (F x) (F (L.get i)) * _ =
+          contraction hp (F x) (F (L.get i)) * _
+        congr 1
+        have hl : (L.erase (L.get i)).length < k := by
+          have he := List.length_erase_of_mem (List.get_mem L i)
+          simp only [List.length_cons] at hlen
+          omega
+        rw [ih _ hl _ rfl (hsL.sublist List.erase_sublist)]
+        congr 1
+        ext z
+        simp [hn.mem_erase_iff,E]
+  classical
+  have h := wick_list M n hp f n (List.ofFn (id : Fin n → Fin n))
+    (by simp) (List.pairwise_ofFn.mpr (by intro i j hij; exact hij))
+  have hv : (List.ofFn (id : Fin n → Fin n)).toFinset = Finset.univ := by
+    ext i
+    simp
+  simpa [List.map_ofFn,wordForms,hv,Pairings.sumOn_as_sum,good_univ_iff,
+    orderedPairingSum,pairingWeight] using h
 
 theorem omegaP_odd_word_zero (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair)
     (w : List (OscLinearForm M)) (hodd : Odd w.length) :

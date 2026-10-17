@@ -1,7 +1,7 @@
 # V1-S1 ordered Wick theorem — Phase A companion
 
-Status: **Phase A interface independently reviewed and passed; reviewed lock
-is the next gate. The theorem contracts remain unproved.**
+Status: **Phase A independently reviewed and locked; Phase B complete.
+Phase C promotion and pedagogical review pending.**
 
 The proposed result is an algebraic theorem on the existing uncompressed
 `OscAlgebra M = FreeAlgebra ℂ (OscGen M)` carrier, evaluated by the existing
@@ -29,11 +29,9 @@ recurrence and explicit sum remains a theorem obligation.
 
 The module declares 18 complete data items and 25 theorem declarations.
 Phase A independently reviewed and locked all 25 statements. During Phase B,
-24 theorem declarations now have complete kernel-checked proof bodies, including
-pull-through, odd-word vanishing, both single-form moment formulas, and the
-nonzero-squeeze fourth moment. The sole remaining placeholder is
-`omegaP_ordered_wick`, the explicit sum over perfect pairings. The first-partner
-pairing decomposition remains the outstanding combinatorial obligation.
+All 25 theorem declarations now have complete kernel-checked proof bodies.
+The explicit ordered pairing formula is proved by a finite first-partner
+bijection, followed by induction on the sorted list of distinct position labels.
 See the exact Lean signatures in
 [`V1S1OrderedWick.lean`](../../BosonizeStubs/V1S1OrderedWick.lean)
 and the natural-language review packet at
@@ -150,3 +148,31 @@ Phase A elaboration and data axioms, not theorem correctness or proof.
 - `lake build Bosonize BosonizeStubs`: PASS, 3421 jobs. Existing replayed
   dependencies emitted informational tactic-suggestion messages; no build
   failure occurred.
+
+
+## Phase B acceptance and reviewed scoped amendment
+
+The full proof candidate was independently reviewed by
+`/root/s1_interface_review`, verdict **PASS**, at main source SHA-256
+`a98a25d2ff6ee1c1414bdba5c0091790579c61d9c079ce6c2c8f66818aa26d44`
+and helper source SHA-256
+`33fefe1fafbdde6c544925a641ac8cdec496ce571f3036558500a53ddb0ddeff`.
+The helper `V1S1PairingCombinatorics.lean` supplies 14 definitions/lemmas for
+canonical edge sets on finite vertex subsets, removal/insertion, the bijection
+`extendPair_bijective`, and its weighted sum identity `sumOn_first`.
+Separating these declarations avoids the documented local-let elaboration
+blowup. All existing public S1 data and theorem statement hashes are preserved.
+Only that helper and its main import were added to the reviewed lock; all
+unrelated entries are byte-for-byte equal as JSON values. The amended lock
+SHA-256 is `c445d217e8e3822cdcaa9cf5f9d8d473533d8d0a823a09e060cdc182c82dd9c0`.
+Strict verification passes 1114 statements and 1126 frozen commands.
+
+The accepted staging module builds with zero warnings and zero placeholders.
+Fresh audits of all 57 declarations report only `propext`, `Classical.choice`,
+and `Quot.sound`. The independent review checks that the first vertex is the
+minimum remaining label, its partner is unique, removing/reinserting the edge
+are inverse, and each weight retains the smaller position first. Word deletion
+uses distinct position labels, so repeated forms do not collapse positions.
+No symmetrization, literal free-algebra CCR, or change of functional is used.
+This accepts Phase B; Phase C still requires promotion, integration checks,
+and the pedagogical/migration review.
