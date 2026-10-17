@@ -59,8 +59,7 @@ and explicit human approval precede integration. The author cannot self-approve.
 
 ## Current manuscript and section identifiers
 
-The supplied CH19–21 drafts are now in the master as numbered section files:
-19.1–19.4, 20.1–20.3 and 21.1–21.4. Use numeric identifiers in task menus and
+The master includes CH01–21. CH19 uses its complete replacement chapter; the earlier 19.1–19.4 files are superseded provenance. CH20–21 use included numbered section files 20.1–20.3 and 21.1–21.4. Use numeric identifiers in task menus and
 filenames, while retaining descriptive book headings and stable semantic labels.
 These are manuscript drafts with independent mathematical/editorial review pending.
 The user-requested batch import does not imply a passing independent review or

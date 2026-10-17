@@ -1,5 +1,26 @@
 # Bosonize-Lean — Strategy v2
 
+## Current scientific principles and version boundary — 2026-10-17
+
+The historical Strategy v2 below is a 2026-10-06 design snapshot, not the active
+provider, scope or phase authority. The current roadmap and formalizer rules
+supersede its operational roster and draft-status wording.
+
+Scientific value comes from parameterized structural proofs, explicit hypotheses
+and regulator residuals across admissible lattice sizes, charges and budgets.
+Finite examples are non-vacuity and falsification evidence; numerical exploration
+and a single matrix calculation do not replace a regulator-family theorem.
+Keep source/target carriers, true adjoints, intermediate projections and every
+nonzero residual explicit. Separate finite CAR, uncompressed polynomial CCR,
+coefficientwise formal series and analytic limits. A proved conditional criterion
+does not supply its physical hypotheses. Prove state existence and positivity
+before evaluating observables against that state.
+
+Version 1 stays standalone: resolve the agreed CH20 bridge scope, complete finite
+CH21 and the closure audit. Current work is status reconciliation and independent
+theory prompts, with new Lean implementation paused. Version 2 is a future complete
+refactor built on finiteQMB; migration and dependency changes are deferred.
+
 **Status:** draft for approval · **Date:** 2026-10-06
 **Supersedes:** the colour-team roster (Yellow/Blue/Red/Purple) and the six-agent roster of the external cheat-sheet.
 **Scope:** how agents, tools, scripts and documentation fit together to formalize `../lean-bosonization-notes` into Lean 4 + Mathlib, one chapter per Lean entry file, driven from Google Antigravity on VS Code + WSL2.

@@ -1,0 +1,13 @@
+{
+  "baseline": "40dea8bfbdc849417c072e490480d4f72536116a",
+  "role": "Theory discussion context only; no accepted new interface",
+  "sha256": {
+    "Bosonize/Core/Ch14Mandelstam.lean": "0d3feed562023e5d8a20027021014cc56512d636b58848fa7a8122b61cc320fc",
+    "Bosonize/Core/A08OscillatorStates.lean": "ed3ef9f87c9be26460004fd52efbdd7f0a2490b544c990cc89e6178f0a97ee35",
+    "Bosonize/Core/Ch19Correlations.lean": "845e95b619fca515b25c2a103071ba1fa0fdfa46ddd12081440ddfbdae902339",
+    "Bosonize/Core/Ch20CDW.lean": "00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f",
+    "notes/latex/chapters/sections/20.1.tex": "db4b1b776ea1d8c507b4c04ee1a54efe983a066e6a2a8d443b0b9ec869b877b4",
+    "notes/latex/chapters/sections/20.2.tex": "70a2b1ef8005f75046ea435806f3f14355fef2d690b06903d0861c07d08b1c22",
+    "notes/latex/chapters/sections/20.3.tex": "e4adcc2ce13b508abb2d8e78ea21e816dfd07eff5e92ccb145ab9ba584ab5245"
+  }
+}

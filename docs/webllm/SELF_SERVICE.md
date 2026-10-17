@@ -39,17 +39,13 @@ Run one cycle command at a time. Supported chapter presets are 15–21.
 
 ## Current checkpoint and optional check-before-finish
 
-CH18 is promoted. CH19/A08 has 62 proved contracts accepted in Phase B; Phase C
-is waiting. CH20–21 remain reviewed drafts, not completed proofs. Use `make work`
-for a local menu, or start/check/finish CH19 C explicitly:
-
-```bash
-make lean-start-phaseC 19
-# Send packet.md to your chosen chatbot; download the complete response.
-make lean-check 19 LEAN_PHASE=C
-# Fix failures with feedback.md; repeat check. After the required review:
-make lean-finish-phaseC 19
-```
+CH01–20 and implemented support are promoted within their reviewed scopes.
+CH19/A08 and finite CH20 are Phase C complete; do not rerun CH19 promotion as
+the next task. CH20b and CH21 are pending. The current user direction is status
+reconciliation and independent theoretical discussion before implementation.
+Use `make work` to inspect existing tasks; consult the
+[question register](../plans/ch20-theory/README.md) before preparing new proof work.
+The commands below describe the generic mechanism, not a currently pending phase.
 
 Check does not approve, merge or push. Finish is the explicit approval and
 phase-integration action. API/Jules authors may also supply candidates; transport

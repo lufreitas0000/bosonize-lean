@@ -12,9 +12,48 @@ Bosonize-Lean develops exact algebraic results for one-dimensional lattice boson
 | CH01–18 and implemented support | Phase C complete; promoted and frozen | See the chapter records under `docs/webllm/chapters/` and the [adaptive roadmap](adaptative_roadmap.md). |
 | CH19/A08 | Phase C complete; 62 theorem contracts promoted | Fresh build, strict locks, standard-axiom audits, and independent migration and pedagogy reviews are recorded in [the validation report](note/ch19_phase_c_validation_2026-10-16.md). General-orientation Wick contractions, analytic vertex evaluation, finite interacting-state equivalence, and continuum power laws remain outside its scope. |
 | CH20 finite order parameters and duality | Phase C complete; 64 theorem contracts promoted and frozen | Local Phase C evidence and independent review are in [the validation report](note/ch20_phase_c_validation_2026-10-16.md). That is Lean acceptance evidence; the LaTeX book has a separate GitHub Actions build and release workflow. |
-| CH21 and dependent CH20b work | Pending | See the [roadmap](adaptative_roadmap.md) for current dependencies and acceptance gates. |
+| CH20 completion bridge (working label CH20b) | Open theoretical questions; no accepted interface | The finite CH20 package is complete. Formal vertices, state transport and finite-CAR comparison are separate open obligations; see the [question register and independent prompts](docs/plans/ch20-theory/README.md). |
+| CH21 | R&D proposal only; no accepted Lean interface | The historical draft count is not a current acceptance count; see the [CH21 plan](docs/plans/CH21_PARALLEL_WEB_RND.md). |
 
-Lean completion and book completion are tracked separately. The LaTeX master currently includes Chapters 1–19 and Appendix A07. The full Chapter 19 replacement follows Chapter 18; its source compiles in the book, while independent editorial review of this replacement remains pending. Chapters 20–21 have staged LaTeX sections that are not yet included in the master. Therefore the released PDF is a working manuscript, not the complete 21-chapter monograph.
+Status reconciled on 2026-10-17: Core contains 34 frozen modules and 1,079
+theorem/lemma declarations. CH19/A08 and finite CH20 are Phase C complete.
+The LaTeX master includes Chapters 1–21, with A01–A03 material integrated into
+the narrative and appendix files A04–A10. CH19's replacement and the CH20–21
+sources are included. Book inclusion and successful compilation do not establish
+Lean coverage or complete mathematical/editorial review. Dated acceptance reports
+and archived import hashes retain their original snapshot meaning.
+
+## Scientific principles
+
+The project's scientific value lies in parameterized structural proofs, explicit
+hypotheses and regulator residuals: identities and comparisons valid for every
+admissible lattice size, charge and energy budget. Concrete examples and finite
+matrix checks remain useful witnesses and falsification tools. Numerical
+exploration belongs in dedicated numerical tools; the formal library establishes
+what holds across the regulator family and exactly where it can fail.
+
+Keep every projection remainder until it is proved zero. Distinguish finite CAR,
+uncompressed polynomial CCR and coefficientwise formal-series carriers. State
+existence, positivity, comparison and analytic limits require their own arguments.
+These principles also govern [the strategy](docs/strategy.md) and
+[project rules](.agents/rules/bosonize_principles.md).
+
+## Version 1 and version 2
+
+**Version 1 is a standalone project.** Finish the agreed Chapter 20 bridge scope,
+the finite CH21 R&D and A–B–C cycle, then the coverage, documentation and release
+audits. A reviewed obstruction or explicitly agreed exclusion must be recorded;
+calling the finite CH20 package complete does not silently close its broader
+research questions. There is no new finiteQMB dependency in version 1.
+
+**Version 2 is a future complete refactor built on finiteQMB.** It will reuse a
+reviewed finite many-body foundation rather than extend the current chapter-based
+architecture indefinitely. Dependency selection, migration, API changes and proof
+transport are deferred until version 1 is accepted; no refactor starts now.
+
+**Current focus:** reconcile status and Git history and prepare independent
+theoretical questions. No new CH20b/CH21 Lean implementation begins before a clear,
+reviewed mathematical strategy and renewed implementation direction.
 
 Download the [latest compiled monograph PDF](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf). Its [build receipt](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/book-build.json) records the source revision and PDF hash.
 

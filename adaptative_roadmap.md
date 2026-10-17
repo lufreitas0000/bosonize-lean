@@ -1,21 +1,43 @@
 # Adaptive roadmap and Kanban pipeline
 
-Updated: 2026-10-16. **Current goal:** the user authorized sequential completion of the canonical Lean A–B–C scope through CH19/A08, CH20, CH20b, CH21 and the closure audit. The work proceeds without paid-provider calls or Antigravity/desktop subagents, and keeps each chapter's independent review and proof gates. The remaining-work plan below supersedes older next-action prose in historical checkpoints.
+Updated: 2026-10-17. **Current goal:** the user authorized sequential completion of the canonical Lean A–B–C scope through CH19/A08, CH20, CH20b, CH21 and the closure audit. The work proceeds without paid-provider calls or Antigravity/desktop subagents, and keeps each chapter's independent review and proof gates. The remaining-work plan below supersedes older next-action prose in historical checkpoints.
 
 This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures. The requested execution policy for the next implementation is external-first (Jules and account-eligible OpenAI API), with no default Antigravity author/reviewer or desktop-subagent fallback. Skills/rules and the direct judge entrypoints now enforce that default policy within the controller; the desktop account itself remains outside its control.
 
-Current document sprint (2026-10-16): CH19's complete replacement is included
-immediately after Chapter 18 in the LaTeX master. The source compiles in the
-full book; its independent editorial review remains pending. CH19/A08 and CH20
-Lean Phase C are complete. CH20–21 LaTeX sections remain staged outside the
-master; the writing and acceptance conventions are in the
-[LaTeX workflow](docs/webllm/LATEX_WORKFLOW.md).
+## Current focus and version boundary — 2026-10-17
+
+The latest user instruction pauses new Lean implementation: reconcile current
+status/Git records and prepare independent theoretical review prompts first.
+The earlier sequential A–B–C authorization remains a future plan, not permission
+to skip this theory gate. The [CH20 question register](docs/plans/ch20-theory/README.md)
+defines the open questions; no web response is an accepted theorem or interface.
+
+Version 1 remains completely standalone. Its exit is the agreed CH20 completion
+scope, finite CH21 through Phase C, and R6–R9 closure checks. Finishing CH21 R&D
+sets the final chapter scope; proof acceptance and the release audit still follow.
+Resolve each CH20 question by an accepted construction, a reviewed obstruction,
+or an explicit scope decision. Do not promise that every proposed equivalence is true.
+
+Version 2 is a later complete refactor built on finiteQMB. Do not add a finiteQMB
+dependency, reorganize frozen Core or design migration code during version 1.
+Preserve a theorem/assumption/carrier map to support that future migration.
+
+The current master includes CH01–21 and A04–A10 appendix files, with A01–A03
+topics in the narrative. CH19's replacement and CH20–21 sections are included.
+Manuscript inclusion, independent prose review, Lean promotion and publication
+are distinct statuses; consult the source graph and import manifest separately.
 
 ## Baseline and mathematical scope
 
-At reviewed commit `05c25e4`, CH01–CH18 and their implemented support were promoted into 31 frozen Core modules. On 2026-10-16, CH19/A08's 62 Phase B contracts passed fresh post-migration audits and were promoted as `Bosonize/Core/A08OscillatorStates.lean` and `Bosonize/Core/Ch19Correlations.lean`; the fresh evidence and review are in `note/ch19_phase_c_validation_2026-10-16.md`. CH20's 64 reviewed finite contracts are promoted and frozen in Core after local Phase C audits, full CI and independent pedagogical review. CH21's reported 47-contract draft still requires source/interface revalidation. CH20b remains a separately scoped dependent package. Thus 21 planned chapter notes do not mean 21 completed Lean chapters.
+At reviewed commit `05c25e4`, CH01–CH18 and their implemented support were promoted into 31 frozen Core modules. On 2026-10-16, CH19/A08's 62 Phase B contracts passed fresh post-migration audits and were promoted as `Bosonize/Core/A08OscillatorStates.lean` and `Bosonize/Core/Ch19Correlations.lean`; the fresh evidence and review are in `note/ch19_phase_c_validation_2026-10-16.md`. CH20's 64 reviewed finite contracts are promoted and frozen in Core after local Phase C audits, full CI and independent pedagogical review. CH21 has an R&D proposal but no accepted Lean interface in the current checkout; the historical 47-contract count is not an acceptance count. CH20b remains a separately scoped dependent package. Thus 21 planned chapter notes do not mean 21 completed Lean chapters.
 
-The current validation evidence is in [the CH18 and orchestration audit](note/ch18_and_orchestration_audit_2026-10-15.md): local CI, 968 statement locks, 1020 command locks, 31 Core locks, all 55 CH18 declaration axiom checks, and 90 offline orchestrator tests passed. CH18 prose, shared notation, ignored LaTeX sources and full-book integration still require correction. These tests were run earlier in the same review session; this planning update does not claim another complete build.
+Current baseline: 34 frozen Core files, 1,079 theorem/lemma declarations and
+1,093 frozen commands. On 2026-10-17 the strict interface guard, Core guard and
+`lake build Bosonize BosonizeStubs` passed (3,421 jobs). Acceptance-time axiom
+and independent review receipts remain in the CH19 and CH20 validation reports.
+The [CH20 main-merge receipt](docs/verification/ch20-main-merge-20261016/receipt.json)
+supersedes the earlier local-only/no-push checkpoint. Historical reports retain
+their original counts and scope; they are not current global totals.
 
 The 21 chapter notes, A01–A10, and proof suggestions have a historical reconciled source baseline described in [the completion ledger](note/notes_review_completion_2026-10-09.md). That checkpoint is not a section-by-section proof of coverage of Miranda, von Delft–Schoeller, Sénéchal, or Giamarchi. A current literature-to-result coverage ledger is a remaining release gate.
 
@@ -33,9 +55,9 @@ The detailed [book and source-coverage plan](docs/BOOK_AND_SOURCE_COVERAGE_PLAN.
 | I0–I2 — General external task infrastructure (offline complete) | Reconcile agent instructions; task identities, budgets, author ownership, Jules document patches, OpenAI review transport, isolated deterministic verification, complete receipts. | Offline browser/Jules/API and mutation tests passed; the bounded live trial remains I3. No Antigravity fallback, no paid OpenAI substitution. |
 | R1 — CH18/documentation issue sprint | Correct cutoff positivity qualification, commutator transcription, vacuum scope, current signs/direction, Sugawara ordering and stale status/provenance. | Independent external review; exact before/after source references; unchanged frozen Core unless a separately reviewed issue demonstrates a defect. |
 | R2 — CH19/A08 Phase C | Done 2026-10-16. Promoted 62 accepted contracts with pedagogical and migration review. | [Validation](note/ch19_phase_c_validation_2026-10-16.md); commit recorded after scoped integration. |
-| R3 — CH20 finite order parameters and duality | Phase C complete locally; frozen Core. | Byte-identical promotion; 159-declaration fresh source audit and 91-public-declaration Core aggregator audit, strict locks, 34 Core hashes, full CI and independent pedagogical review pass. See [validation](note/ch20_phase_c_validation_2026-10-16.md). No push. |
+| R3 — CH20 finite order parameters and duality | Phase C complete; frozen Core and integrated into main history. | Byte-identical promotion; 159-declaration fresh source audit and 91-public-declaration Core aggregator audit, strict locks, 34 Core hashes, full CI and independent pedagogical review pass. See [validation](note/ch20_phase_c_validation_2026-10-16.md) and the subsequent [main-merge receipt](docs/verification/ch20-main-merge-20261016/receipt.json). |
 | R4 — CH20b/A08–A09 dependent bridge | Assess missing Wick moments, formal vertices, algebra/state transport and finite compressed comparisons; freeze/prove only independently reviewed targets. | CH19 support; exact carriers, degree/budget hypotheses and residuals; no analytic evaluation or automatic finite-CAR equality. |
-| R5 — CH21/A09–A10 | Revalidate/freeze the 47-contract draft; prove spin/charge, parity, Cooper and Umklapp obligations; review deferrals. | A–B–C gates; actual leakage coefficient and witnesses; no inference of a thermodynamic Mott gap from a charge shift. |
+| R5 — CH21/A09–A10 | Design and independently review one current interface; derive its contract count from that artifact; prove spin/charge, parity, Cooper and Umklapp obligations; review deferrals. | A–B–C gates; actual leakage coefficient and witnesses; no inference of a thermodynamic Mott gap from a charge shift. |
 | R6 — Canonical Lean closure | Whole-project placeholder, axiom, dependency, lock and source-adequacy audit; check all required support obligations, not just module counts. | CH01–21 and necessary subpackages accepted; reproducible local/CI checks and local/remote equality at the release commit. |
 | R7 — Detailed book | Integrate supporting mathematics into the 21-chapter narrative; write all proofs, prerequisite explanations and finite constructions; revise existing drafts and complete later ones. | Per-batch external review, source-to-theorem map, full PDF, strict reference/notation checks, proof-preserving review. More than 200 pages is acceptable; no target maximum. |
 | R8 — Literature coverage closure | Close or explicitly decide every Miranda/vDS/Sénéchal section and the selected Giamarchi sections; implement needed finite extensions under new reviewed scope. | Exact source/claim/finite-model/Lean/book ledger. R6 alone does not establish comprehensive literature coverage. |
@@ -79,13 +101,13 @@ Current board snapshot (counts within older completed cards are historical evide
 | CH13/A05 — Joint species and Klein maps | Done | C complete; frozen | 53 complete theorem proofs,42 data constants; fresh standard-axiom audits, warning-free CI and independently reviewed lectures;21 Core modules/756 proved statements. [Review](note/ch13_phase_a_review_2026-10-11.md). | Next CH14/A05 conditional field support; preserve explicit twists, source/target budgets and residuals. |
 | CH14/A05 — Conditional field criterion and finite exponentials | Done | C complete; frozen | 37 proofs and 20 data declarations; actual phase nilpotency, typed adjoints, holonomy, full ground expansion and cyclic comparison criterion. Independent lecture review passes. | Keep unconditional physical field–vertex comparison outside the verified claim. |
 | CH15/A06 — Dual fields and lattice kernels | Done | C complete; frozen | 23 proved contracts and 15 data declarations; exact source/import migration, independent pedagogical review, fresh standard-axiom audits and CI pass. All 23 prior Core sources remain unchanged; Core now has 25 modules and 816 statements. [Validation](note/ch15_phase_c_validation_2026-10-13.md). | Reuse the frozen finite kernels and qualified actions; CH16/A07 completed its separately authorized A–B–C cycle; see the next card. |
-| CH16/A07 — Normal ordering and field energy | Done | C complete; frozen | 19 proofs and 29 data declarations; exact symbol/Fourier collapse, factor-four energy, qualified errors and nonzero single-excitation witnesses. Independent reviews, fresh standard-axiom audits and CI pass; prior 25 Core sources unchanged. [Validation](note/ch16_phase_c_validation_2026-10-13.md). | Reuse the frozen finite results; CH17 remains unstarted and requires a separately authorized scope. |
+| CH16/A07 — Normal ordering and field energy | Done | C complete; frozen | 19 proofs and 29 data declarations; exact symbol/Fourier collapse, factor-four energy, qualified errors and nonzero single-excitation witnesses. Independent reviews, fresh standard-axiom audits and CI pass; prior 25 Core sources unchanged. [Validation](note/ch16_phase_c_validation_2026-10-13.md). | Reuse the frozen finite results; CH17 is also promoted; reuse the accepted chain without reopening frozen sources. |
 | CH17 — Luttinger models | Done | C complete; frozen | 37 proved contracts; finite g2/g4 Luttinger Hamiltonians on budget vectors, concrete witness; 107 standard-axiom audits, 30 Core hashes and CI pass. | Reuse in CH18 (dressed oscillators, Hamiltonian on budget). |
 | CH18 — Bogoliubov transformation | Formal scope done; prose issues open | C complete | 34 proved contracts; promoted Core; 55 declarations freshly audited. [Audit](note/ch18_and_orchestration_audit_2026-10-15.md). | R1 issue sprint after authorization; preserve frozen contracts. |
 | CH19/A08 — Correlations, states | Done | C complete; frozen | 62 contracts; fresh 90-declaration axiom audit, 62-declaration Bosonize aggregator audit, `make ci`, strict locks and independent pedagogy/migration review pass. [Validation](note/ch19_phase_c_validation_2026-10-16.md). | CH20b retains the general-orientation Wick and finite-comparison obligations; CH19 proves only the stated zero-squeeze scalar comparison. |
-| CH20 — Finite order parameters and duality | Done | C complete locally; frozen | 64 original contracts; 159-declaration source and 91-declaration Core aggregator audits, strict locks, 34 Core hashes, full CI and independent pedagogical review pass. [Validation](note/ch20_phase_c_validation_2026-10-16.md). | CH20b formal-vertex/state transport remains separate. |
+| CH20 — Finite order parameters and duality | Done | C complete; frozen | 64 original contracts; 159-declaration source and 91-declaration Core aggregator audits, strict locks, 34 Core hashes, full CI and independent pedagogical review pass. [Validation](note/ch20_phase_c_validation_2026-10-16.md). | CH20b formal-vertex/state transport remains separate. |
 | CH20b — Formal vertices and comparison | Coverage gap | Not accepted | Dependent work explicitly deferred in CH20 source guidance. | R4; design finite comparisons without claiming uncompressed CCR is a finite model. |
-| CH21/A09–A10 — Spin, leakage, SW | Reviewed draft; not frozen | Phase A draft only | Saved round-2 review reports 47 stubs and 32 data declarations. | R5; retain actual finite witnesses and source-coverage obligations. |
+| CH21/A09–A10 — Spin, leakage, SW | R&D proposal; no accepted Lean interface | Before accepted Phase A | [Current plan](docs/plans/CH21_PARALLEL_WEB_RND.md); historical stub counts are not current contracts. | R5 after the theory gate; retain actual finite witnesses and source-coverage obligations. |
 
 A support appendix is read and implemented as needed alongside its dependent chapter; implementing every appendix before Fourier is unnecessary. Dates are review points, not promises about proof-search duration. Limit a sprint by an explicit goal and stopping condition; reassess at each completed chapter or issue resolution.
 

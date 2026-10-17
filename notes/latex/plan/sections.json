@@ -267,7 +267,7 @@
       "sections": [
         "Private local draft exists; sections withheld pending review"
       ],
-      "writing_status": "private LaTeX draft; review/integration later"
+      "writing_status": "included manuscript draft; independent mathematical/editorial review tracked separately"
     },
     {
       "chapter": 13,
@@ -284,7 +284,7 @@
       "sections": [
         "Private local draft exists; sections withheld pending review"
       ],
-      "writing_status": "private LaTeX draft; review/integration later"
+      "writing_status": "included manuscript draft; independent mathematical/editorial review tracked separately"
     },
     {
       "chapter": 14,
@@ -301,7 +301,7 @@
       "sections": [
         "Private local draft exists; sections withheld pending review"
       ],
-      "writing_status": "private LaTeX draft; review/integration later"
+      "writing_status": "included manuscript draft; independent mathematical/editorial review tracked separately"
     },
     {
       "chapter": 15,
@@ -318,7 +318,7 @@
       "sections": [
         "Private local draft exists; sections withheld pending review"
       ],
-      "writing_status": "private LaTeX draft; review/integration later"
+      "writing_status": "included manuscript draft; independent mathematical/editorial review tracked separately"
     },
     {
       "chapter": 16,
@@ -335,7 +335,7 @@
       "sections": [
         "Private local draft exists; sections withheld pending review"
       ],
-      "writing_status": "private LaTeX draft; review/integration later"
+      "writing_status": "included manuscript draft; independent mathematical/editorial review tracked separately"
     },
     {
       "chapter": 17,
@@ -352,7 +352,7 @@
       "sections": [
         "Private local draft exists; sections withheld pending review"
       ],
-      "writing_status": "private LaTeX draft; review/integration later"
+      "writing_status": "included manuscript draft; independent mathematical/editorial review tracked separately"
     },
     {
       "chapter": 18,
@@ -369,7 +369,7 @@
       "sections": [
         "Private local draft exists; sections withheld pending review"
       ],
-      "writing_status": "private LaTeX draft; review/integration later"
+      "writing_status": "included manuscript draft; independent mathematical/editorial review tracked separately"
     },
     {
       "chapter": 19,
@@ -392,7 +392,7 @@
         "Spatial correlations on a finite ring",
         "Returning to the finite fermionic sea"
       ],
-      "writing_status": "complete replacement included after Chapter 18; independent editorial review pending",
+      "writing_status": "complete replacement included after Chapter 18; compilation passed; independent review coverage tracked separately",
       "supersedes": [
         "notes/latex/chapters/sections/19.1.tex",
         "notes/latex/chapters/sections/19.2.tex",
@@ -420,7 +420,7 @@
         "20.2 Constructed Formal Vertices and Exact Formal Correlators",
         "20.3 Explicit Algebraic Model Duality"
       ],
-      "writing_status": "Lean Phase C complete; LaTeX sections staged but not yet included in master; independent manuscript review pending",
+      "writing_status": "Lean finite Phase C complete; sections 20.1–20.3 included in master; formal-vertex/comparison prose exceeds accepted Lean coverage",
       "section_numbers": [
         "20.1",
         "20.2",
@@ -429,7 +429,7 @@
     },
     {
       "chapter": 21,
-      "status": "draft/pending (see roadmap)",
+      "status": "R&D proposal only; no accepted Lean interface",
       "markdown": [
         "notes/md/ch21_spinful_models.md"
       ],

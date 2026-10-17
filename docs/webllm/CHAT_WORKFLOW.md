@@ -178,7 +178,9 @@ completes C. Read `.agents/workflows/freeze_chapter.md` for the precise procedur
 This is the dependency queue, not a promise that every source claim can be proved.
 Every chapter gets its own A baseline, B evidence and C promotion checkpoint.
 
-## Current evidence and limits
+## Historical CH15 Phase A evidence and limits (superseded)
+
+Current status, 2026-10-17: A06/CH15, CH19/A08 and finite CH20 are promoted. CH20b and CH21 remain open; new implementation is paused for theoretical strategy review. The original workflow evidence below is retained as a dated snapshot.
 
 The actual Chat response has passed elaboration and independent mathematical
 review. Its exact declarations are staged and frozen: 16 A06 contracts/13 data

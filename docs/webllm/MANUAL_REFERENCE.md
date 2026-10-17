@@ -69,8 +69,7 @@ make chapter-task CHAPTER=15 PHASE=B
 
 This prepares `packets/ch15_phase_b_auto.toml` and
 `docs/webllm/generated/ch15_phase_b_auto_core_api.md` in Bosonize-Lean. It selects
-A06 first because CH15 imports it and A06 still has unproved contracts. After A06
-is proved, reviewed and merged, the next B task selects CH15. Preparation checks
+A06 first in the historical CH15 workflow because CH15 imports it. A06 and CH15 are now promoted; these commands are historical examples, not a pending proof batch. Preparation checks
 source presence, frozen interfaces, Core hashes and dependency order; it does
 not establish mathematical truth or compiler acceptance.
 

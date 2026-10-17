@@ -4,11 +4,11 @@ Start `make work` for the arrow-key interface. The shared full guide is
 `/home/lucas/Projects/orchestrator/docs/LATEX_BROWSER_WORKFLOW.md`.
 For the original typed menu use `make work PLAIN=1`.
 
-Current manuscript: the eleven downloaded sections of CH19–21 are imported as numbered source files (`19.1.tex`–`21.4.tex`), with independent mathematical/editorial review pending. The master explicitly includes each file; CI verifies that input graph and binds its publication receipt to the compiled PDF hash. Original downloads remain private; [import provenance](../../notes/latex/plan/imported_sections.json) records hashes and mappings.
+Current manuscript (2026-10-17): the master includes CH01–21. CH19 is a complete replacement chapter; its four earlier numbered files are superseded and retained as provenance. CH20–21 use included numbered section sources (`20.1.tex`–`21.4.tex`). Independent review is tracked separately from compilation. CI verifies the active input graph; CI verifies that input graph and binds its publication receipt to the compiled PDF hash. Original downloads remain private; [import provenance](../../notes/latex/plan/imported_sections.json) records hashes and mappings.
 
-The [Jules second-round plan](JULES_REVISION_PLAN.md) is prepared only; no task has been dispatched.
+The [Jules second-round plan](JULES_REVISION_PLAN.md) is a historical plan. It does not report the later rewrite wave or authorize a new dispatch; consult the editorial receipts and current roadmap.
 
-Earlier writing priority: CH19 had no LaTeX draft. CH01–11 are published drafts and will
+Historical writing priority (superseded by the current master): CH19 had no LaTeX draft. CH01–11 are published drafts and will
 be revised later through Jules. CH12–18 have private local drafts to preserve
 for later review/integration. This sprint does not rewrite those chapters.
 
@@ -62,7 +62,7 @@ calls. Optional Jules/API dispatch remains an explicit budgeted CLI operation.
 The user explicitly requested organizing, compiling, committing and publishing
 all eleven supplied downloads without first operating the per-section review
 menu. This is recorded as a user-requested **manuscript draft import**. It does
-not invent an independent PASS review or mark CH19 Phase C / CH20–21 Lean complete.
+not itself establish independent PASS review or Lean acceptance. Subsequent CH19/A08 and finite CH20 Phase C acceptance has separate receipts; CH21 remains unimplemented.
 The older single-section candidate remains in history and is superseded by this
 batch's numeric source mapping; its original branch is preserved.
 

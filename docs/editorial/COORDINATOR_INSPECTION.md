@@ -1,5 +1,7 @@
 # Coordinator inspection of Jules's first editorial review
 
+> Historical review/plan snapshot. Status update 2026-10-17: CH19/A08 and finite CH20 are now promoted; the master includes CH01–21. The original findings below describe their reviewed source revision, not the current implementation or dispatch state. See the [current roadmap](../../adaptative_roadmap.md).
+
 ## Decision and boundary
 
 This is an inspection of the 24-observation final Jules report obtained from the completed session

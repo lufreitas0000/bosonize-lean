@@ -32,10 +32,10 @@ hypothesis and equation already make the point.
   of the literature, a general interacting-state identification or a gap theorem.
 - A positive algebraic state, a finite vector/density-matrix expectation and a
   coefficientwise formal-series evaluation are not interchangeable.
-- CH01–18 implemented Lean is promoted; CH19/A08 Phase B is accepted and Core
-  promotion remains open; CH20–21 chapter Lean is unimplemented. The current PDF
-  includes CH01–11 and CH19–21, with A01–A04; CH12–18 LaTeX drafts remain private.
-  Identify narrative gaps rather than assuming those chapters are in this edition.
+- CH01–20 implemented Lean is promoted within its reviewed scopes, including
+  CH19/A08 and finite CH20. The CH20 completion bridge and CH21 remain open.
+  The master includes CH01–21 and A04–A10 appendix files, with A01–A03 topics
+  in the narrative. Inclusion does not certify all prose or every source claim.
 - Compiling LaTeX validates document mechanics, not mathematical truth or faithful
   source coverage. Lean proof coverage applies to actual declarations and their
   hypotheses, not automatically to every sentence or displayed formula nearby.

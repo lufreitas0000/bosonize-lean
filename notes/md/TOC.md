@@ -1,10 +1,10 @@
 # BOSONIZE-LEAN: Master Table of Contents
 
-This document is the structural roadmap for the Bosonize-Lean mathematical notes. Status is based on the current Lean source and chapter records, not on the presence of a chapter in this table. The project currently has 31 locked Core Lean files covering Chapters 1–18 and implemented portions of Appendices A01–A07 and A10. Chapter 19 has a Phase-B-complete candidate and remains unpromoted. Chapters 20–21 and Appendix A09 do not have promoted chapter implementations; Appendix A08 and CH19 state work remain staging/candidate material. The `lake build`/Core locks establish source compilation and preservation, not independent correctness of every physical interpretation in the prose.
+This document is the structural roadmap for the mathematical notes. Current status (2026-10-17): 34 frozen Core files cover CH01–20 within their reviewed scopes and implemented support. CH19/A08 (62 contracts) and finite CH20 (64 contracts) are Phase C complete. CH20b is the working label for the open Chapter 20 completion bridge, not another numbered chapter. CH21 has an R&D proposal but no accepted Lean interface. Polynomial CCR, formal-series results and finite CAR comparisons remain distinct. The book master includes CH01–21; manuscript inclusion does not imply proof acceptance.
 
 The notes distinguish three kinds of content:
 1. **Promoted finite results:** Exact algebraic identities on stated finite CAR/Fock or budget carriers, with their actual hypotheses and boundary margins.
-2. **Staging and specified algebraic models:** Weighted polynomial CCR states, formal power series, charge-lattice constructions, and duality maps whose Lean development or Core promotion is incomplete.
+2. **Specified algebraic models and open extensions:** Some polynomial CCR state results are promoted in A08/CH19; the remaining formal vertices, charge/state transport and finite comparisons must be checked individually against the current Core.
 3. **Conditional criteria and physical context:** Leakage needs a nonzero outward component; continuum scaling and thermodynamic gaps need additional constructions and estimates.
 
 The [adaptive roadmap](../../adaptative_roadmap.md) records cross-chapter status and sequencing. Historical completion ledgers and reviews are dated snapshots and should not override the current source or chapter machine records.

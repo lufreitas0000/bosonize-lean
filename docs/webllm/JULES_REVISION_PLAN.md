@@ -1,5 +1,7 @@
 # Planned second revision round with Jules — not dispatched
 
+> Historical review/plan snapshot. Status update 2026-10-17: CH19/A08 and finite CH20 are now promoted; the master includes CH01–21. The original findings below describe their reviewed source revision, not the current implementation or dispatch state. See the [current roadmap](../../adaptative_roadmap.md).
+
 This is a plan only. No Jules sessions, API calls or chapter rewrites are
 started by preparing or committing it. The current baseline is the compiled
 manuscript containing CH01–11, CH19–21 and A01–A04. CH12–18 LaTeX drafts remain

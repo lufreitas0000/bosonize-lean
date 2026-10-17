@@ -16,14 +16,9 @@ it does not mean the Lean development avoids its permitted classical axioms.
 A shorter academic review paper is a distinct backlog deliverable. Derive it later
 from the accepted book and theorem map, rather than writing two versions in parallel.
 
-At `05c25e4`, CH01–18 are promoted, CH19/A08 Phase B is accepted (62 contracts),
-CH20 has a reviewed 48-contract stub draft, and CH21 a reviewed 47-contract stub
-draft. CH20b's formal-state/vertex bridge is not covered by those draft counts.
-There is no current evidence that all 21 chapters are proved and promoted.
-The existing master builds a 110-page CH01–11/A01–A04 book. Eleven ignored later
-LaTeX sources exist. An audit-only temporary expanded master produced 185 pages
-but retained 13 unresolved reference occurrences and one duplicate label.
-These are snapshot observations, not accepted complete-book evidence.
+Current status (2026-10-17): 34 frozen Core files cover CH01–20 within their reviewed scopes and implemented support. CH19/A08 (62 contracts) and finite CH20 (64 contracts) are Phase C complete. CH20b is the working label for the open Chapter 20 completion bridge, not another numbered chapter. CH21 has an R&D proposal but no accepted Lean interface. Polynomial CCR, formal-series results and finite CAR comparisons remain distinct. The book master includes CH01–21; manuscript inclusion does not imply proof acceptance.
+
+Version 1 closes the agreed CH20 bridge, finite CH21 and release/coverage gates as a standalone project. Version 2 is a future complete refactor built on finiteQMB, after version 1 acceptance. The immediate scope is status reconciliation and theory prompts; no new Lean R&D starts now. The earlier page counts and draft inventories were planning snapshots, not current build measurements.
 
 ## Narrative and appendix integration
 
