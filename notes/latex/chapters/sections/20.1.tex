@@ -20,11 +20,16 @@ construction also provides a convenient setting in which to check chirality,
 charge labels, Fourier phases, and fermionic signs before introducing the
 formal vertex operators of Section~\ref{sec:ch20-formal-vertices}.
 
-Throughout this section, all identities concerning finite fermion operators
-are elementary statements on a finite-dimensional Hilbert space; their
-application to the chapter's proposed bosonization dictionary remains a
-separate mathematical verification task.  In particular, no new Chapter~20
-Lean theorem is being claimed here.
+The finite-operator arguments below take place on the finite-dimensional
+CAR Fock space and on explicitly typed charge-budget subspaces.  The promoted
+Chapter~20 Core module verifies the charge commutators, the two projected
+product decompositions with their retained intermediate residuals, the
+reversed-carrier adjoint for the CDW creation arrow, and the periodic-twist
+ground coefficients under their stated admissibility and band-edge hypotheses.
+Its concrete four-site witness confirms that the CDW residual can be nonzero
+when the intermediate cutoff is zero and the target cutoff is one.  These
+finite results do not identify the CAR products with formal oscillator
+vertices; that construction begins in Section~\ref{sec:ch20-formal-vertices}.
 
 \subsection{The ambient finite-CAR system}
 \label{subsec:ch20-ambient}
@@ -379,6 +384,183 @@ identity for \emph{compressed exponentials} follows from
 \eqref{eq:ch20-cdw-residual}--\eqref{eq:ch20-sc-residual}.
 \end{remark}
 
+\subsection{The finite-charge unitary lowering obstruction and Jordan--Wigner cocycles}
+\label{subsec:ch20-charge-nogo-cocycles}
+
+Before evaluating specific matrix elements, we address a foundational question in
+constructive bosonization: \emph{can a Klein factor be realized as a unitary charge-lowering
+operator on a finite-dimensional charge space?}
+
+In continuum field theory, Klein factors are frequently written as unitary operators
+$F_\nu$ satisfying $F_\nu^\dagger F_\nu = I$ and $[N_\nu, F_\nu] = -F_\nu$.
+In our constructive lattice setting, this formal identification meets an insurmountable
+trace obstruction:
+
+\begin{theorem}[Finite-Charge Unitary Lowering No-Go Theorem]
+\label{thm:ch20-charge-no-go}
+Let $\mathcal H$ be a finite-dimensional complex Hilbert space with $\dim\mathcal H = d \in \mathbb N_{>0}$.
+Let $N \in \mathcal B(\mathcal H)$ be a self-adjoint operator, and let $F \in \mathcal B(\mathcal H)$ be unitary,
+so that $F^\dagger F = F F^\dagger = I$.
+Then the lowering commutation relation
+\begin{equation}
+ [N, F] = -F
+ \label{eq:ch20-lowering-comm}
+\end{equation}
+cannot hold.
+\end{theorem}
+\begin{proof}
+Suppose \eqref{eq:ch20-lowering-comm} holds on $\mathcal H$.
+Multiply both sides from the left by $F^\dagger$:
+\[
+ F^\dagger [N, F] = F^\dagger(NF - FN) = F^\dagger N F - F^\dagger F N = F^\dagger N F - N.
+\]
+The right-hand side is $F^\dagger(-F) = -F^\dagger F = -I$.
+Therefore,
+\[
+ F^\dagger N F = N - I.
+\]
+Now take the matrix trace $\operatorname{Tr}$ of both sides.
+By cyclicity of the trace,
+$\operatorname{Tr}(F^\dagger N F) = \operatorname{Tr}(N F F^\dagger) = \operatorname{Tr}(N I) = \operatorname{Tr} N$.
+On the other hand, by linearity of the trace,
+$\operatorname{Tr}(N - I) = \operatorname{Tr} N - \operatorname{Tr} I = \operatorname{Tr} N - d$.
+Equating both sides gives
+\[
+ \operatorname{Tr} N = \operatorname{Tr} N - d \implies d = 0,
+\]
+which contradicts the hypothesis $d > 0$.
+\end{proof}
+
+Theorem~\ref{thm:ch20-charge-no-go} shows that exact unitary charge-lowering operators cannot
+act on any nonzero finite-dimensional carrier.  On a bounded charge interval, any attempted
+lowering matrix inevitably leaves boundary defects at the lowest charge eigenvalue.
+
+How, then, are fermionic signs rigorously generated on the finite physical CAR space $\mathcal F$?
+The constructive answer realized in our Lean Core library is via
+\textbf{Jordan--Wigner basis-occupation signs (cocycles)}.
+
+Let $\text{Mode}$ be a finite linearly ordered set of orbitals (e.g., ordered species $R < L$,
+followed by increasing momentum within each species).
+The finite occupation space is $\text{Config} = \mathcal P(\text{Mode})$.
+For any orbital $i \in \text{Mode}$ and occupation configuration $S \subseteq \text{Mode}$, define the
+basis-occupation parity sign
+\begin{equation}
+ \epsilon(i, S) := (-1)^{\#\{j \in S : j < i\}}.
+ \label{eq:ch20-jw-parity}
+\end{equation}
+The fermionic creation and annihilation operators act on the occupation basis $\{|S\rangle\}_{S \subseteq \text{Mode}}$ by
+\begin{equation}
+ c_i |S\rangle := \begin{cases}
+  \epsilon(i, S) |S \setminus \{i\}\rangle, & \text{if } i \in S, \\
+  0, & \text{if } i \notin S,
+ \end{cases}
+ \qquad
+ c_i^\dagger |S\rangle := \begin{cases}
+  \epsilon(i, S) |S \cup \{i\}\rangle, & \text{if } i \notin S, \\
+  0, & \text{if } i \in S.
+ \end{cases}
+ \label{eq:ch20-basis-action}
+\end{equation}
+
+\begin{theorem}[Constructive Finite CAR from Occupation Signs]
+\label{thm:ch20-constructive-car}
+The linear operators $c_i, c_i^\dagger$ defined by \eqref{eq:ch20-basis-action} satisfy the
+canonical anticommutation relations identically on $\mathcal F$:
+\begin{equation}
+ \{c_i, c_j\} = 0, \qquad
+ \{c_i^\dagger, c_j^\dagger\} = 0, \qquad
+ \{c_i, c_j^\dagger\} = \delta_{ij} I.
+ \label{eq:ch20-exact-car-basis}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let $|S\rangle$ be an arbitrary occupation basis ket.
+Consider first $c_i c_j$ for $i < j$.
+If either $i \notin S$ or $j \notin S$, both $c_i c_j |S\rangle$ and $c_j c_i |S\rangle$ vanish.
+Suppose $\{i, j\} \subseteq S$.
+When $c_j$ acts first, it removes $j$, contributing the sign $(-1)^{\#\{k \in S : k < j\}}$.
+In the resulting state $S \setminus \{j\}$, the operator $c_i$ then removes $i$.
+Since $i < j$, the presence or absence of $j$ does not alter the number of elements smaller than $i$.
+Thus $c_i$ contributes $(-1)^{\#\{k \in S : k < i\}}$, yielding
+\[
+ c_i c_j |S\rangle = (-1)^{\#\{k \in S : k < j\} + \#\{k \in S : k < i\}} |S \setminus \{i, j\}\rangle.
+\]
+In the reverse product $c_j c_i |S\rangle$, $c_i$ acts first, contributing $(-1)^{\#\{k \in S : k < i\}}$.
+The subsequent action of $c_j$ removes $j$ from $S \setminus \{i\}$.
+Because $i \in S$ and $i < j$, the set of elements in $S \setminus \{i\}$ smaller than $j$ has cardinality
+exactly $\#\{k \in S : k < j\} - 1$.
+Therefore $c_j$ contributes $(-1)^{\#\{k \in S : k < j\} - 1} = -(-1)^{\#\{k \in S : k < j\}}$, yielding
+\[
+ c_j c_i |S\rangle = - c_i c_j |S\rangle \implies \{c_i, c_j\}|S\rangle = 0.
+\]
+The displayed creator is the Hilbert-space adjoint of the annihilator.  Indeed,
+the occupation kets are orthonormal, and the only nonzero matrix elements
+pair $S$ with $S\setminus\{i\}$; adding or removing $i$ does not change
+the number of occupied modes strictly below $i$, so both matrix elements
+have the same sign $\epsilon(i,S)$.  Taking adjoints of
+$\{c_i,c_j\}=0$ therefore gives $\{c_i^\dagger,c_j^\dagger\}=0$.
+For the mixed relation with $i=j$, exactly one of $c_i c_i^\dagger|S\rangle$
+and $c_i^\dagger c_i|S\rangle$ equals $|S\rangle$, so their sum is
+$|S\rangle$.  If $i\ne j$, both products vanish unless $i\in S$ and
+$j\notin S$.  In that remaining case,
+\begin{align*}
+ c_i c_j^\dagger|S\rangle
+ &=\epsilon(j,S)\epsilon(i,S\cup\{j\})
+       |(S\setminus\{i\})\cup\{j\}\rangle,\\
+ c_j^\dagger c_i|S\rangle
+ &=\epsilon(i,S)\epsilon(j,S\setminus\{i\})
+       |(S\setminus\{i\})\cup\{j\}\rangle.
+\end{align*}
+If $j<i$, adjoining $j$ flips the first product's $i$-sign while removing
+$i$ leaves the second product's $j$-sign unchanged.  If $i<j$, adjoining
+$j$ leaves the first product's $i$-sign unchanged while removing $i$ flips
+the second product's $j$-sign.  Thus these two coefficients are negatives
+in either ordering, proving $\{c_i,c_j^\dagger\}|S\rangle=0$.
+\end{proof}
+
+\begin{theorem}[Exact Discrete Fourier CAR on the Finite Lattice]
+\label{thm:ch20-discrete-fourier-car}
+On a periodic lattice of $L$ sites with coordinates $x_j = j$, retain \emph{all} $L$
+discrete Fourier modes $k \in \mathcal B_L$.  Define the lattice site field
+\begin{equation}
+ \psi(x_j) := \frac{1}{\sqrt L}\sum_{k \in \mathcal B_L} e^{i k x_j} c_k.
+ \label{eq:ch20-fourier-site-field}
+\end{equation}
+Then the spatial fields satisfy exact discrete CAR:
+\begin{equation}
+ \{\psi(x_j), \psi^\dagger(x_l)\} = \delta_{jl} I, \qquad
+ \{\psi(x_j), \psi(x_l)\} = 0.
+ \label{eq:ch20-exact-lattice-car}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Expand using momentum CAR $\{c_k, c_p^\dagger\} = \delta_{kp} I$:
+\[
+ \{\psi(x_j), \psi^\dagger(x_l)\}
+  = \frac{1}{L}\sum_{k, p \in \mathcal B_L} e^{i (k x_j - p x_l)} \{c_k, c_p^\dagger\}
+  = \frac{1}{L}\sum_{k \in \mathcal B_L} e^{i k (x_j - x_l)} I.
+\]
+Because $\mathcal B_L$ contains a complete set of $L$ consecutive momentum residues modulo $L$,
+orthogonality of characters on the cyclic group $\mathbb Z / L \mathbb Z$ yields
+$\frac{1}{L}\sum_{k \in \mathcal B_L} e^{i k (x_j - x_l)} = \delta_{jl}$.  For the
+same-species annihilator anticommutator, direct expansion gives
+\[
+ \{\psi(x_j),\psi(x_l)\}
+ =\frac1L\sum_{k,p\in\mathcal B_L}e^{i(kx_j+px_l)}\{c_k,c_p\}=0.
+\]
+\end{proof}
+
+\begin{remark}[Completeness vs. Mode Truncation]
+\label{rem:ch20-fourier-truncation}
+Theorem~\ref{thm:ch20-discrete-fourier-car} holds strictly because \emph{all} $L$ modes are retained.
+If the momentum sum is truncated to a proper band $[-M, M]$ with $M < h$, the sum
+$\frac{1}{L}\sum_{k=-M}^M e^{ik(x_j - x_l)}$ is the Dirichlet reproducing kernel
+$\frac{\sin((2M+1)\pi(x_j-x_l)/L)}{L\sin(\pi(x_j-x_l)/L)}$, with its removable value
+$(2M+1)/L$ when $x_j-x_l$ is a multiple of $L$; it is not the Kronecker delta $\delta_{jl}$.
+Similarly, on the continuum circle, the contact CAR is an operator-valued distribution $\delta(x-y)$,
+not an equality between bounded pointwise operators.
+\end{remark}
+
 \subsection{Charge phases and the ordered Klein signs}
 \label{subsec:ch20-klein}
 
@@ -662,11 +844,13 @@ especially important for later pairing, duality and spinful/Umklapp
 constructions: a scalar agreement on sector grounds does not certify an
 operator identity on all excited budget states.
 
-Finally, the sign and phase conventions fixed here are provisional
-cross-chapter conventions: \(R<L\), common positive-exponent finite
-annihilation Fourier transform, left field acting first, source charge
-phases, and separate cutoffs for each arrow.  Their compatibility with
-future chapter integrations must be reviewed against the actual committed
-interfaces.  Neither a thermodynamic limit nor continuum scaling,
-spectral equivalence or a finite interacting-state identification has
-been established in this section.
+The formalized finite scope is specific.  The charge commutators and
+projection-residual identities hold for the actual twisted finite fields,
+all source charges and all three cutoffs; no budget-margin hypothesis is
+needed for that decomposition.  The ground-to-ground coefficient theorems
+use the periodic twist, a positive half-length, an admissible source charge,
+and the indicated strict band-edge conditions for the required removals and
+creation.  The four-site example is a separate explicit nonzero witness,
+not a claim that every residual is nonzero.  Nothing here proves a finite-Fock
+unitary duality, a finite interacting-state identification, an analytic
+evaluation of the formal vertices, or a thermodynamic or continuum limit.
