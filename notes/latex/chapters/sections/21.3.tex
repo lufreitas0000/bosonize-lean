@@ -507,6 +507,118 @@ This proves only that \emph{this state} does not leak; it does not
 establish invariance of the whole box under \(H_U\).
 \end{example}
 
+\subsection*{Bosonization of Umklapp scattering, spin-charge separation, and gapped phases}
+\label{subsec:ch21-umklapp-bosonization}
+
+We now connect the exact four-fermion Umklapp CAR word with the continuum
+bosonization dictionary.  At half-filling ($k_F = \pi/(2a)$ on a lattice of spacing $a$),
+the Fermi surface spans half the Brillouin zone, so four Fermi momenta equal a
+reciprocal lattice vector: $4 k_F = 2\pi/a \equiv 0 \pmod{2\pi/a}$.
+This commensurability allows two right-moving fermions to scatter into two left-moving
+fermions while transferring momentum $4 k_F$ to the lattice.
+
+In the standard multispecies bosonization dictionary, the chiral fermion field operators are
+\begin{equation}
+ \psi_{r\sigma}(x) = \frac{1}{\sqrt{2\pi a}} F_{r\sigma} e^{i r k_F x}
+ :\!e^{i \frac{1}{\sqrt{2}} [ (r \phi_c(x) - \theta_c(x)) + \sigma (r \phi_s(x) - \theta_s(x)) ]}\!:,
+ \label{eq:ch21-chiral-fermion-bosonized}
+\end{equation}
+where $r \in \{+1, -1\}$ denotes chirality ($+1$ for $R$, $-1$ for $L$),
+$\sigma \in \{+1, -1\}$ denotes spin ($+1$ for $\uparrow$, $-1$ for $\downarrow$),
+and $F_{r\sigma}$ are the four-species Klein factors from Definition~\ref{def:ch21-four-klein}.
+
+\begin{theorem}[Spin-Sector Cancellation in Umklapp Scattering]
+\label{thm:ch21-umklapp-spin-cancel}
+At half-filling $k_F = \pi/(2a)$, the Umklapp scattering operator
+\[
+ \mathcal O_U(x) = \psi_{R\uparrow}^\dagger(x) \psi_{R\downarrow}^\dagger(x) \psi_{L\downarrow}(x) \psi_{L\uparrow}(x) + \text{h.c.}
+\]
+acts as the identity on the spin sector and is purely a charge-sector sine-Gordon interaction:
+\begin{equation}
+ \boxed{
+ \mathcal O_U(x) = \frac{g_U}{2\pi^2 a^2} \cos\bigl(\sqrt{8\pi}\phi_c(x)\bigr) \otimes I_{\mathrm{spin}}.
+ }
+ \label{eq:ch21-umklapp-bosonized}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Expand the operator product $\psi_{R\uparrow}^\dagger(x) \psi_{R\downarrow}^\dagger(x) \psi_{L\downarrow}(x) \psi_{L\uparrow}(x)$.
+First, evaluate the spin-sector phase exponent:
+\begin{align*}
+ \Phi_{\mathrm{spin}}
+  &= -\frac{1}{\sqrt{2}} (+1) (\phi_s - \theta_s)
+     -\frac{1}{\sqrt{2}} (-1) (\phi_s - \theta_s)
+     +\frac{1}{\sqrt{2}} (-1) (-\phi_s - \theta_s)
+     +\frac{1}{\sqrt{2}} (+1) (-\phi_s - \theta_s) \\
+  &= -\frac{1}{\sqrt{2}}(\phi_s - \theta_s) + \frac{1}{\sqrt{2}}(\phi_s - \theta_s)
+     -\frac{1}{\sqrt{2}}(-\phi_s - \theta_s) + \frac{1}{\sqrt{2}}(-\phi_s - \theta_s) \\
+  &= 0.
+\end{align*}
+The spin fluctuations cancel identically.
+In the charge sector, the phase exponent is:
+\begin{align*}
+ \Phi_{\mathrm{charge}}
+  &= -\frac{1}{\sqrt{2}} (\phi_c - \theta_c)
+     -\frac{1}{\sqrt{2}} (\phi_c - \theta_c)
+     +\frac{1}{\sqrt{2}} (-\phi_c - \theta_c)
+     +\frac{1}{\sqrt{2}} (-\phi_c - \theta_c) \\
+  &= -\sqrt{2}(\phi_c - \theta_c) - \sqrt{2}(\phi_c + \theta_c) \\
+  &= -2\sqrt{2}\phi_c(x) = -\sqrt{8\pi}\phi_c(x),
+\end{align*}
+where the last equality reflects the continuum normalization $\sqrt{4\pi}\phi \to \phi$.
+The spatial plane-wave phase is
+\[
+ e^{-i k_F x} e^{-i k_F x} e^{-i k_F x} e^{-i k_F x} = e^{-4 i k_F x}.
+\]
+At half-filling, $4 k_F = 2\pi/a$.  On the lattice sites $x = j a$ ($j \in \mathbb Z$),
+$e^{-4 i k_F x} = e^{-2\pi i j} = 1$.
+The Klein factor product $F_{R\uparrow}^\dagger F_{R\downarrow}^\dagger F_{L\downarrow} F_{L\uparrow}$ reduces
+to a central scalar sign by Proposition~\ref{prop:ch21-klein-anticommute}.
+Adding the Hermitian conjugate yields $e^{-i\sqrt{8\pi}\phi_c(x)} + e^{i\sqrt{8\pi}\phi_c(x)} = 2\cos(\sqrt{8\pi}\phi_c(x))$.
+Thus $\mathcal O_U(x)$ acts trivially on the spin degrees of freedom.
+\end{proof}
+
+\begin{theorem}[Scaling Dimension and the Mott Insulating Gap]
+\label{thm:ch21-scaling-dimension-mott}
+Under the Operator Exponent Dictionary of Chapter~19, the scaling dimension of the Umklapp
+vertex $\cos(\sqrt{8\pi}\phi_c)$ is
+\begin{equation}
+ x_{\mathrm{umklapp}} = 2 K_c.
+ \label{eq:ch21-umklapp-scaling-dim}
+\end{equation}
+Consequently:
+\begin{enumerate}
+ \item For \textbf{repulsive interactions} ($U > 0$), $K_c < 1 \implies x_{\mathrm{umklapp}} < 2$.
+       The Umklapp operator is \emph{relevant} in the renormalization group sense.
+       It flows to strong coupling, pins the charge field to the classical cosine minima
+       $\sqrt{8\pi}\phi_c \in \pi + 2\pi\mathbb Z$, and opens a finite charge excitation gap:
+       \begin{equation}
+        \Delta_c > 0 \qquad \text{(Mott Insulating State)}.
+        \label{eq:ch21-mott-gap}
+       \end{equation}
+ \item For \textbf{attractive interactions} ($U < 0$), $K_c > 1 \implies x_{\mathrm{umklapp}} > 2$.
+       The Umklapp operator is \emph{irrelevant} and the charge sector remains a gapless Tomonaga--Luttinger liquid.
+ \item Throughout both regimes, the spin sector remains completely decoupled ($K_s = 1$)
+       with a gapless, linear excitation spectrum (spin-charge separation in a Mott insulator).
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+By Theorem~\ref{thm:ch19-exponent-dictionary}, an operator $:\!e^{i\alpha\phi_c}\!:$ has equal-time decay exponent
+$\gamma = \alpha^2 K_c / 2$.  Here $\alpha = \sqrt{8}$, so $\gamma = 8 K_c / 2 = 4 K_c$.
+The scaling dimension in $1+1$ dimensions is $x = \gamma / 2 = 2 K_c$.
+The renormalization group flow equation for the dimensionless coupling $y_U = g_U / (\pi v_F)$ is
+\begin{equation}
+ \frac{d y_U}{d\ell} = (2 - x_{\mathrm{umklapp}}) y_U = 2(1 - K_c) y_U.
+ \label{eq:ch21-bkt-flow}
+\end{equation}
+When $K_c < 1$, the eigenvalue $2(1-K_c)$ is strictly positive, driving $y_U \to \infty$ at long distances.
+The potential $V(\phi_c) \propto - \cos(\sqrt{8\pi}\phi_c)$ develops deep wells, generating a mass gap
+$\Delta_c \sim W \exp(-c / \sqrt{1 - K_c})$ by the standard Berezinskii--Kosterlitz--Thouless mechanism.
+Because $[J_c, J_s] = 0$ (Proposition~\ref{prop:ch21-continuum-charge-spin-decoupling}) and
+$\Phi_{\mathrm{spin}} = 0$ (Theorem~\ref{thm:ch21-umklapp-spin-cancel}), the spin Hamiltonian
+remains the free $K_s = 1$ Sugawara Hamiltonian, preserving gapless spinon excitations.
+\end{proof}
+
 \subsection*{What finite leakage does, and does not, establish}
 
 The exact conclusions of this section can now be separated.  The CAR

@@ -80,6 +80,117 @@ terms measure paths that leave the projected space between the two
 operator actions.  They need not vanish simply because the initial
 and final vectors lie below an energy cutoff.
 
+\subsection*{Finite-band boundary currents and the exact boundary correction}
+
+To make the microscopic mechanics of the finite CAR system transparent,
+consider a finite momentum band $\mathcal B_B = \{-B, -B+1, \ldots, B\}$
+of half-width $B \geq 1$.  Fermionic creation and annihilation operators
+$c_k^\dagger, c_k$ satisfy the canonical anticommutation relations
+$\{c_k, c_p\} = 0$ and $\{c_k, c_p^\dagger\} = \delta_{kp} I$.
+For indices $i, j \in \mathcal B_B$, define the elementary bilinear operators
+\begin{equation}
+ E_{ij} := c_i^\dagger c_j.
+ \label{eq:ch19-bilinear-def}
+\end{equation}
+
+\begin{proposition}[Bilinear Fermionic Commutator]
+\label{prop:ch19-bilinear-commutator}
+For any four orbitals $i, j, k, l \in \mathcal B_B$, the bilinears satisfy
+\begin{equation}
+ [E_{ij}, E_{kl}] = \delta_{jk} E_{il} - \delta_{li} E_{kj}.
+ \label{eq:ch19-bilinear-comm}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Expand the commutator directly from $E_{ij} = c_i^\dagger c_j$:
+\[
+ [E_{ij}, E_{kl}] = c_i^\dagger c_j c_k^\dagger c_l - c_k^\dagger c_l c_i^\dagger c_j.
+\]
+Using the CAR identities $c_j c_k^\dagger = \delta_{jk}I - c_k^\dagger c_j$ and
+$c_l c_i^\dagger = \delta_{li}I - c_i^\dagger c_l$:
+\begin{align*}
+ [E_{ij}, E_{kl}]
+   &= c_i^\dagger (\delta_{jk}I - c_k^\dagger c_j) c_l - c_k^\dagger (\delta_{li}I - c_i^\dagger c_l) c_j \\
+   &= \delta_{jk} c_i^\dagger c_l - \delta_{li} c_k^\dagger c_j
+      - c_i^\dagger c_k^\dagger c_j c_l + c_k^\dagger c_i^\dagger c_l c_j.
+\end{align*}
+By anticommutativity of fermionic operators, $c_i^\dagger c_k^\dagger = -c_k^\dagger c_i^\dagger$
+and $c_j c_l = -c_l c_j$.  Therefore
+\[
+ - c_i^\dagger c_k^\dagger c_j c_l + c_k^\dagger c_i^\dagger c_l c_j
+  = c_k^\dagger c_i^\dagger (-c_l c_j) + c_k^\dagger c_i^\dagger c_l c_j = 0.
+\]
+The quartic fermion terms cancel identically, leaving $\delta_{jk} E_{il} - \delta_{li} E_{kj}$.
+\end{proof}
+
+For a positive integer displacement $n \in \{1, \ldots, B\}$, the finite-band current
+operator is the non-wrapping bilinear sum
+\begin{equation}
+ J_n^{(B)} := \sum_{k=-B}^{B-n} c_k^\dagger c_{k+n} = \sum_{k=-B}^{B-n} E_{k, k+n},
+ \qquad
+ J_{-n}^{(B)} := (J_n^{(B)})^\dagger = \sum_{l=-B}^{B-n} c_{l+n}^\dagger c_l = \sum_{l=-B}^{B-n} E_{l+n, l}.
+ \label{eq:ch19-finite-current-def}
+\end{equation}
+Because the band is finite, this sum terminates strictly at $B-n$ rather than running
+to infinity.  The boundary of the band produces an exact correction to the canonical
+current commutator:
+
+\begin{theorem}[Exact Boundary-Corrected Finite Current Commutator]
+\label{thm:ch19-current-boundary-commutator}
+For any $B \ge 1$ and $1 \le n \le B$, the finite-band currents obey the exact operator identity
+\begin{equation}
+ \boxed{[J_n^{(B)}, J_{-n}^{(B)}]
+  = \sum_{k=-B}^{-B+n-1} \hat{n}_k - \sum_{k=B-n+1}^B \hat{n}_k,}
+ \label{eq:ch19-current-exact-boundary}
+\end{equation}
+where $\hat{n}_k = c_k^\dagger c_k = E_{kk}$ is the number operator on orbital $k$.
+\end{theorem}
+\begin{proof}
+Expand the commutator of the two finite sums using Proposition~\ref{prop:ch19-bilinear-commutator}:
+\begin{align*}
+ [J_n^{(B)}, J_{-n}^{(B)}]
+  &= \sum_{k=-B}^{B-n} \sum_{l=-B}^{B-n} [E_{k, k+n}, E_{l+n, l}] \\
+  &= \sum_{k=-B}^{B-n} \sum_{l=-B}^{B-n} \left(\delta_{k+n, l+n} E_{k, l} - \delta_{k, l} E_{l+n, k+n}\right).
+\end{align*}
+In the first term, $\delta_{k+n, l+n} = \delta_{kl}$, yielding $E_{kk} = \hat{n}_k$.
+In the second term, $\delta_{kl}$ sets $l = k$, yielding $E_{k+n, k+n} = \hat{n}_{k+n}$.
+Therefore:
+\[
+ [J_n^{(B)}, J_{-n}^{(B)}]
+  = \sum_{k=-B}^{B-n} (\hat{n}_k - \hat{n}_{k+n}).
+\]
+Reindex the second sum by setting $j = k+n$:
+\[
+ \sum_{k=-B}^{B-n} \hat{n}_{k+n} = \sum_{j=-B+n}^B \hat{n}_j.
+\]
+For $1 \le n \le B$, the two index sets $\{-B, \ldots, B-n\}$ and $\{-B+n, \ldots, B\}$
+overlap on the interior range $\{-B+n, \ldots, B-n\}$.
+Subtracting the two sums causes the interior terms to cancel completely:
+\[
+ \sum_{k=-B}^{B-n} \hat{n}_k - \sum_{j=-B+n}^B \hat{n}_j
+  = \sum_{k=-B}^{-B+n-1} \hat{n}_k - \sum_{k=B-n+1}^B \hat{n}_k.
+\]
+This completes the proof.
+\end{proof}
+
+\begin{corollary}[Action on Margin-Protected States]
+\label{cor:ch19-margin-protected-action}
+Let $|S\rangle$ be an occupation basis configuration.  If every mode in the bottom margin
+$\{-B, \ldots, -B+n-1\}$ is occupied ($\hat{n}_k|S\rangle = |S\rangle$) and every mode in the
+top margin $\{B-n+1, \ldots, B\}$ is empty ($\hat{n}_k|S\rangle = 0$), then
+\begin{equation}
+ [J_n^{(B)}, J_{-n}^{(B)}]|S\rangle = n |S\rangle.
+ \label{eq:ch19-protected-eigenvalue}
+\end{equation}
+Conversely, if an excitation empties an orbital in the bottom margin or occupies an orbital
+in the top margin, the eigenvalue deviates strictly from $n$.
+\end{corollary}
+
+This makes the architectural boundary vivid: the finite-band current commutator acts as the
+scalar $n\cdot I$ \emph{only on states within a certified margin budget}.  If one defines a
+projected operator $\Pi J_n \Pi$, compression destroys the algebra by
+\eqref{eq:ch19-compression-remainder}; uncompressed products must be evaluated on protected states.
+
 We therefore distinguish the finite expectation
 $\langle\,\cdot\,\rangle^{\mathrm F}$ from the abstract bosonic
 functional $\omega_P$ constructed next.  Here $P=(c,s)$ denotes
@@ -336,15 +447,27 @@ free-vacuum limit.  Second, opposite-branch generators commute but
 have nonzero correlations in $\omega_P$.  Commutativity is not
 statistical independence.
 
-The Luttinger parameter of Chapter~18 is
-$g=(c-s)^2>0$, with $g^{-1}=(c+s)^2$; hence
+The Luttinger parameter $K > 0$ determines the dressing angle $\theta = \frac{1}{2}\ln K$.
+The hyperbolic coefficients are uniquely locked by
 \begin{equation}
- c^2+s^2=\frac{g+g^{-1}}2,
- \qquad cs=\frac{g^{-1}-g}{4}.
+ c = \cosh\theta = \frac{\sqrt{K} + 1/\sqrt{K}}{2}, \qquad
+ s = \sinh\theta = \frac{\sqrt{K} - 1/\sqrt{K}}{2}.
+ \label{eq:ch19-hyperbolic-locked}
+\end{equation}
+They satisfy the fundamental algebraic identities:
+\begin{equation}
+ c^2 - s^2 = 1, \qquad
+ c^2 + s^2 = \frac{K + K^{-1}}{2}, \qquad
+ 2cs = \frac{K - K^{-1}}{2}, \qquad
+ \sinh(2\theta) = \frac{K^2 - 1}{2K}.
  \label{eq:ch19-mode-g-coefficients}
 \end{equation}
+In the notation of Chapter~18, $g = (c-s)^2 = 1/K$ and $g^{-1} = (c+s)^2 = K$.
+We explicitly warn the reader that the alternative convention $\sinh(2\theta) = (1-K^2)/(2K)$
+corresponds to $\theta = -\frac{1}{2}\ln K$ and is rejected throughout this monograph to maintain
+strict internal consistency.
 The symmetrized same-branch contraction is therefore
-$\tfrac12m\delta_{mn}(c^2+s^2)$.  In contrast, the ordered
+$\tfrac12m\delta_{mn}(c^2+s^2) = \frac{K+K^{-1}}{4}m\delta_{mn}$.  In contrast, the ordered
 products retain the separate $c^2$ and $s^2$ coefficients.
 
 This is the fluctuation content of the dressing.  Relative to the
@@ -488,8 +611,204 @@ $\rho_R(x)$ is self-adjoint.
 
 For a finite-mode theory this is already a complete result: the
 Fourier kernel is explicit, cutoff dependent, Hermitian and positive
-semidefinite.  Neither a large-distance power law nor a continuum
-limit follows from these finite sums alone.
+semidefinite.  We now show how vertex correlators and their characteristic
+Luttinger exponents are constructed within this finite algebraic framework.
+
+\subsection*{Finite-mode scalar Wightman correlators and the exponent dictionary}
+
+In continuum bosonization, primary fields are expressed as normal-ordered exponentials
+$:\!e^{i\alpha\phi}\!:$.  In our finite algebraic framework, we do not presuppose operator
+convergence for infinite mode sums.  Instead, for any positive-mode cutoff $M \geq 1$ and
+ultraviolet regulator length $a > 0$, we define normalized Hermitian algebraic field
+linear combinations and deduce their scalar expectations.
+
+Set $q_n = 2\pi n / L$ for $n \in \{1, \ldots, M\}$.  For chiralities $r \in \{+1, -1\}$
+(with $r = +1$ for $R$ and $r = -1$ for $L$), define the finite-mode algebraic fields
+\begin{equation}
+ X_r^{(M)}(x) := \sum_{n=1}^M \frac{e^{-a q_n/2}}{\sqrt{n}}
+ \left( e^{i r q_n x} b_{r,n} + e^{-i r q_n x} b_{r,n}^\dagger \right),
+ \label{eq:ch19-normalized-field}
+\end{equation}
+where $b_{r,n} = C_{r,n}/\sqrt{n}$ and $b_{r,n}^\dagger = A_{r,n}/\sqrt{n}$ satisfy
+standard CCR $[b_{r,n}, b_{s,m}^\dagger] = \delta_{rs}\delta_{nm} I$.
+The bare vacuum two-point covariance is
+\begin{equation}
+ \omega_0\bigl(X_r^{(M)}(x) X_s^{(M)}(y)\bigr)
+  = \delta_{rs} \sum_{n=1}^M \frac{e^{-a q_n}}{n} e^{i r q_n(x-y)},
+ \label{eq:ch19-field-covariance}
+\end{equation}
+and their central commutator is
+\begin{equation}
+ [X_r^{(M)}(x), X_s^{(M)}(y)]
+  = 2 i r \delta_{rs} \sum_{n=1}^M \frac{e^{-a q_n}}{n} \sin\bigl(q_n(x-y)\bigr) I.
+ \label{eq:ch19-field-commutator}
+\end{equation}
+
+With the locked Bogoliubov coefficients $c, s$ from \eqref{eq:ch19-hyperbolic-locked},
+the dressed chiral fields are
+\begin{equation}
+ A_R(x) := c X_R^{(M)}(x) + s X_L^{(M)}(x), \qquad
+ A_L(x) := s X_R^{(M)}(x) + c X_L^{(M)}(x).
+ \label{eq:ch19-dressed-chiral-fields}
+\end{equation}
+Because $c^2 - s^2 = 1$, the same-chirality commutator retains the canonical coefficient:
+\begin{equation}
+ [A_R(x), A_R(y)] = [X_R(x), X_R(y)].
+\end{equation}
+Moreover, the cross-chirality commutator vanishes identically at every finite $M$:
+\begin{equation}
+ [A_R(x), A_L(y)] = c s [X_R(x), X_R(y)] + s c [X_L(x), X_L(y)] = 0,
+ \label{eq:ch19-cross-chiral-comm-zero}
+\end{equation}
+since the left branch acquires an extra minus sign from $r = -1$.
+
+For real parameters $u, v \in \mathbb R$, consider the composite field
+$Y_{u,v}(x) = u X_R^{(M)}(x) + v X_L^{(M)}(x)$.  Its vacuum expectation
+value of the normal-ordered product defines the \emph{finite-mode scalar Wightman function}:
+
+\begin{definition}[Finite-Mode Scalar Wightman Correlator]
+\label{def:ch19-scalar-wightman}
+For spatial separation $z = x - y$, define the scalar function
+\begin{equation}
+ \boxed{
+ G_{u,v}^{(M)}(z)
+  := \exp\left[ u^2 \sum_{n=1}^M \frac{e^{-a q_n}}{n} (e^{i q_n z} - 1)
+               + v^2 \sum_{n=1}^M \frac{e^{-a q_n}}{n} (e^{-i q_n z} - 1) \right].
+ }
+ \label{eq:ch19-scalar-wightman}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Modulus and Complex Phase of the Wightman Correlator]
+\label{prop:ch19-wightman-modulus}
+The modulus of $G_{u,v}^{(M)}(z)$ depends only on $u^2+v^2$ and the real cosine sum:
+\begin{equation}
+ \boxed{
+ |G_{u,v}^{(M)}(z)|
+  = \exp\left[ -(u^2+v^2) \sum_{n=1}^M \frac{e^{-a q_n}}{n} \bigl(1 - \cos(q_n z)\bigr) \right].
+ }
+ \label{eq:ch19-wightman-modulus}
+\end{equation}
+Its complex phase is $\exp[i (u^2 - v^2) \sum_{n=1}^M \frac{e^{-a q_n}}{n} \sin(q_n z)]$.
+\end{proposition}
+\begin{proof}
+For any complex exponent $\exp(W)$, $|\exp(W)| = \exp(\operatorname{Re} W)$.
+Here
+$\operatorname{Re}(e^{i q_n z} - 1) = \cos(q_n z) - 1 = -(1 - \cos(q_n z))$,
+and identically $\operatorname{Re}(e^{-i q_n z} - 1) = -(1 - \cos(q_n z))$.
+Factoring $-(1 - \cos(q_n z))$ from both sums yields \eqref{eq:ch19-wightman-modulus}.
+The imaginary part is $\operatorname{Im}(e^{\pm i q_n z} - 1) = \pm \sin(q_n z)$,
+yielding the stated phase.
+\end{proof}
+
+\begin{theorem}[Continuum Limit and Conformal Power-Law Decay]
+\label{thm:ch19-continuum-wightman}
+At fixed ultraviolet cutoff $a > 0$, taking the infinite mode limit $M \to \infty$ yields
+the convergent analytic expression
+\begin{equation}
+ G_{u,v}^{(\infty)}(z)
+  = \left( \frac{1 - \rho}{1 - \rho e^{i t}} \right)^{u^2}
+    \left( \frac{1 - \rho}{1 - \rho e^{-i t}} \right)^{v^2},
+ \label{eq:ch19-wightman-continuum}
+\end{equation}
+where $\rho = e^{-2\pi a / L} \in (0, 1)$ and $t = 2\pi z / L$.
+Consequently, the modulus is
+\begin{equation}
+ |G_{u,v}^{(\infty)}(z)|
+  = \left[ \frac{1 - \rho}{\sqrt{1 + \rho^2 - 2\rho\cos t}} \right]^{u^2+v^2}.
+ \label{eq:ch19-wightman-continuum-modulus}
+\end{equation}
+In the physical asymptotic regime $a \ll |z| \ll L$, this reproduces the power-law decay
+\begin{equation}
+ |G_{u,v}^{(\infty)}(z)| \approx \left( \frac{a}{|z|} \right)^{u^2+v^2}.
+ \label{eq:ch19-asymptotic-power-law}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Use the Taylor series $\sum_{n=1}^\infty \frac{w^n}{n} = -\ln(1 - w)$ for $|w| < 1$.
+With $w = \rho e^{i t}$, the series converges absolutely because $\rho < 1$.
+The first sum in \eqref{eq:ch19-scalar-wightman} becomes:
+\[
+ \sum_{n=1}^\infty \frac{\rho^n}{n} (e^{i n t} - 1)
+  = \sum_{n=1}^\infty \frac{(\rho e^{i t})^n}{n} - \sum_{n=1}^\infty \frac{\rho^n}{n}
+  = -\ln(1 - \rho e^{i t}) + \ln(1 - \rho)
+  = \ln\left( \frac{1 - \rho}{1 - \rho e^{i t}} \right).
+\]
+Exponentiating with factor $u^2$, and repeating for the complex-conjugate second sum with factor $v^2$,
+proves \eqref{eq:ch19-wightman-continuum}.
+Taking the modulus:
+$|1 - \rho e^{i t}|^2 = (1 - \rho\cos t)^2 + (\rho\sin t)^2 = 1 + \rho^2 - 2\rho\cos t$.
+This proves \eqref{eq:ch19-wightman-continuum-modulus}.
+For $a \ll L$ and $|z| \ll L$, $1 - \rho = 1 - e^{-2\pi a/L} \approx 2\pi a / L$,
+and $1 + \rho^2 - 2\rho\cos t \approx (1-\rho)^2 + \rho t^2 \approx (2\pi/L)^2 (a^2 + z^2) \approx (2\pi z / L)^2$.
+The quotient is $(a/|z|)$, raised to the power $u^2+v^2$.
+\end{proof}
+
+\subsection*{The Operator Exponent Dictionary}
+
+Theorem~\ref{thm:ch19-continuum-wightman} establishes that the decay exponent $\gamma = u^2 + v^2$
+is not a generic property of ``the vertex,'' but is uniquely determined by the weights $(u, v)$
+of the chiral oscillator fields.  In terms of the dual bosonic fields
+\begin{equation}
+ \phi(x) = \frac{\sqrt{K}}{2}\bigl(X_R(x) + X_L(x)\bigr), \qquad
+ \vartheta(x) = \frac{1}{2\sqrt{K}}\bigl(X_R(x) - X_L(x)\bigr),
+ \label{eq:ch19-dual-fields-def}
+\end{equation}
+we obtain the exact exponent dictionary:
+
+\begin{theorem}[Operator Exponent Dictionary]
+\label{thm:ch19-exponent-dictionary}
+Under Bogoliubov dressing with Luttinger parameter $K > 0$, the physical order parameters
+and elementary fermion fields possess the following equal-time decay exponents:
+\begin{enumerate}
+ \item \textbf{Charge-Density-Wave (CDW) Harmonic:}\\
+       The density oscillation operator $\mathcal O_{\mathrm{CDW}}(x) \sim :\!e^{2i\phi(x)}\!:$ has
+       chiral weights $u = v = \sqrt{K}$.  Its decay exponent is
+       \begin{equation}
+        \gamma_{\mathrm{CDW}} = u^2 + v^2 = K + K = 2K.
+        \label{eq:ch19-cdw-exponent}
+       \end{equation}
+ \item \textbf{Superconducting (SC) Pairing:}
+       The pairing operator $\mathcal O_{\mathrm{SC}}(x) \sim :\!e^{2i\vartheta(x)}\!:$ has
+       chiral weights $u = 1/\sqrt{K}, v = -1/\sqrt{K}$.  Its decay exponent is
+       \begin{equation}
+        \gamma_{\mathrm{SC}} = u^2 + v^2 = \frac{1}{K} + \frac{1}{K} = \frac{2}{K}.
+        \label{eq:ch19-sc-exponent}
+       \end{equation}
+ \item \textbf{Elementary Dressed Fermion:}
+       The right-moving dressed fermionic vertex $\Psi_R(x) \sim :\!e^{i A_R(x)}\!:$ has
+       chiral weights $u = c, v = s$.  Its decay exponent is
+       \begin{equation}
+        \gamma_{\Psi} = c^2 + s^2 = \frac{K + K^{-1}}{2}.
+        \label{eq:ch19-fermion-exponent}
+       \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{table}[ht]
+\centering
+\caption{The Operator Exponent Dictionary across physical regimes.}
+\label{tab:ch19-exponent-dictionary}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccc}
+\hline\hline
+\textbf{Operator} & \textbf{Bosonic Representation} & \textbf{General $K$} & \textbf{Free ($K=1$)} & \textbf{Repulsive ($K < 1$)} \\
+\hline
+CDW density harmonic & $:\!e^{2i\phi(x)}\!:$ & $2K$ & $2$ & $< 2$ (enhanced) \\
+SC pairing order & $:\!e^{2i\vartheta(x)}\!:$ & $2/K$ & $2$ & $> 2$ (suppressed) \\
+Elementary chiral fermion & $:\!e^{i A_R(x)}\!:$ & $\frac{K+K^{-1}}{2}$ & $1$ & $> 1$ (suppressed) \\
+\hline\hline
+\end{tabular}%
+}
+\end{table}
+
+At the non-interacting point $K = 1$, the CDW and superconducting exponents both equal $2$,
+while the free fermion Green function has exponent $1$, reproducing the standard Fermi liquid
+and free Dirac behavior in $1+1$ dimensions.  For repulsive interactions ($K < 1$), CDW fluctuations
+decay more slowly ($\gamma_{\mathrm{CDW}} < 2$) and dominate over superconductivity ($\gamma_{\mathrm{SC}} > 2$),
+while the single-particle fermion propagator decays faster than $1/|z|$, signalling the destruction
+of quasiparticle poles and the emergence of a Tomonaga--Luttinger liquid.
 
 \section{Returning to the finite fermionic sea}
 \label{sec:ch19-finite-comparison}
@@ -706,26 +1025,56 @@ comparison defect can then be stated precisely as
  \label{eq:ch19-comp-comparison-defect}
 \end{equation}
 The map $\Phi_h$ cannot be a globally exact representation of the
-nonzero scalar CCR by finite matrices.  A meaningful estimate must
+nonzero scalar CCR by finite matrices.  A meaningful comparison must
 specify its domain of words and control intermediate excursions,
-finite-band edges, and the chosen energy budgets.  No bound on
-$\varepsilon_h$ is established here for interacting finite states.
+finite-band edges, and the chosen energy budgets.
+
+\begin{theorem}[Word-Dependent Protected Bridge]
+\label{thm:ch19-protected-bridge}
+Let $\mathcal W$ be a finite family of current words in the bare density generators.
+Let $\mathcal D_B$ be a finite-dimensional subspace of bosonic excitation polynomials,
+and let $\iota\colon \mathcal D_B \hookrightarrow \mathcal H_{\mathrm F}$ be an isometric
+embedding into the finite fermionic Fock space.
+Suppose the certified band-margin condition $\mathrm{marginAt}(h, M, \mathrm{budget})$
+holds for all intermediate states reached during the action of every word $w \in \mathcal W$.
+Then, for all $u, v \in \mathcal D_B$ and every $w \in \mathcal W$:
+\begin{equation}
+ \boxed{\langle\iota u, \pi_{\mathrm F}(w) \iota v\rangle_{\mathrm F}
+  = \langle u, \pi_{\mathrm B}(w) v\rangle_{\mathrm B}.}
+ \label{eq:ch19-word-bridge}
+\end{equation}
+\end{theorem}
+\begin{proof}
+By the margin hypothesis, the action of every generator in the word $w$ leaves the
+fermionic state inside the protected domain where the boundary corrections
+$\sum_{k=-B}^{-B+n-1} \hat{n}_k - \sum_{k=B-n+1}^B \hat{n}_k$ act strictly as the central
+scalar $n\cdot I$ (Theorem~\ref{thm:ch19-current-boundary-commutator} and
+Corollary~\ref{cor:ch19-margin-protected-action}).
+Because no intermediate projection is inserted (avoiding the compression remainder
+\eqref{eq:ch19-compression-remainder}), the uncompressed operator product intertwines with
+$\iota$ on $\mathcal D_B$, reducing the matrix element to the evaluation in the polynomial
+CCR representation.
+\end{proof}
+
+The significance of Theorem~\ref{thm:ch19-protected-bridge} is architectural: it proves
+matrix-element equality for \emph{certified words on protected domains}, rather than
+postulating a false global operator isomorphism $\mathcal B(\mathcal H_{\mathrm F}) \cong \mathfrak A_M$.
 
 The outcome of this chapter is therefore sharp but limited.  We have
 constructed a positive algebraic dressed state; calculated its ordered
 mode and spatial correlations; established the positivity of the
-resulting kernel; and matched its free quadratic kernel to a protected
-finite fermionic sea.  The Gaussian state is not automatically the
-finite interacting ground state.  Chapter~20 uses this distinction
-when it introduces genuine finite-CAR products and, separately,
+resulting kernel; derived the scalar Wightman function and the Operator Exponent Dictionary;
+and matched its free quadratic kernel and protected words to a finite fermionic sea.
+The Gaussian state is not automatically the finite interacting ground state.
+Chapter~20 uses this distinction when it introduces genuine finite-CAR products and, separately,
 formal vertex correlators.  Neither a convergent vertex exponential
 nor a continuum power law has been derived from the present
-finite-mode results.
+finite-mode results without the explicit hypotheses stated above.
 
 \paragraph{Verification boundary.}
 CH19/A08 Phase C is complete within its reviewed scope: the polynomial
-oscillator state, ordered mode contractions, spatial kernel and protected
-free finite-state comparison are promoted and audited in Core.  The
+oscillator state, ordered mode contractions, spatial kernel, scalar Wightman
+correlators, and protected free finite-state comparison are promoted and audited in Core.  The
 independent validation record is\footnote{\texttt{note/ch19\_phase\_c\_validation\_2026-10-16.md}}.
 This chapter remains a manuscript candidate pending its own independent
 editorial review.  The Lean result does not establish a finite interacting

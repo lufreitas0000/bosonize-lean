@@ -38,7 +38,7 @@ For any momentum $k \in \mathbb{Z}$ and site $x \in \mathbb{Z}/(2h)\mathbb{Z}$:
 \end{lemma}
 
 \begin{proof}
-Let $\pi : \mathbb{Z} \to \mathbb{Z}/(2h)\mathbb{Z}$ denote the quotient map. By Lemma~\ref{lem:a01_rep_independence}, $\chi_k(x)$ is the evaluation of the residue character on $k \bmod 2h$ and $x$. By the homomorphism property of characters on abelian groups (Appendix~\ref{app:fourier_characters}):
+Let $\pi : \mathbb{Z} \to \mathbb{Z}/(2h)\mathbb{Z}$ denote the quotient map. By Lemma~\ref{lem:rep_independence}, $\chi_k(x)$ is the evaluation of the residue character on $k \bmod 2h$ and $x$. By the homomorphism property of characters on abelian groups (Theorem~\ref{thm:character_homomorphisms}):
 \[
 \chi_k(x + 1) = \chi_k(x) \cdot \chi_k(1) = \chi_k(x) \cdot \zeta^{k \cdot 1} = \zeta^k\, \chi_k(x).
 \]
@@ -247,7 +247,7 @@ Exchange the finite sums over $y$ and $m$:
 \[
 \sum_{y \in \Lambda} \delta_M(x, y) = \frac{1}{2h} \sum_{m = -M}^M \left( \sum_{y \in \Lambda} \chi_m(x - y) \right).
 \]
-Reindexing $y \mapsto x - y$, the inner sum is $\sum_{z \in \Lambda} \chi_m(z)$. By character orthogonality (Appendix~\ref{app:fourier_characters}), this sum equals $2h$ if $m \equiv 0 \pmod{2h}$, and $0$ otherwise.
+Reindexing $y \mapsto x - y$, the inner sum is $\sum_{z \in \Lambda} \chi_m(z)$. By character orthogonality (Theorem~\ref{thm:fourier_orthogonality} and Lemma~\ref{lem:geom_sum}), this sum equals $2h$ if $m \equiv 0 \pmod{2h}$, and $0$ otherwise.
 Since $m \in \{-M, \dots, M\}$ and $2M < 2h$, $|m| \le M < h < 2h$. The only multiple of $2h$ in this interval is $m = 0$. Therefore, the sum over $m$ has only one non-zero term ($m = 0$):
 \[
 \sum_{y \in \Lambda} \delta_M(x, y) = \frac{1}{2h} \cdot (2h) = 1.

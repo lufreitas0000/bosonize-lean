@@ -298,6 +298,30 @@ This proves all statements without postulating a finite-dimensional
 Heisenberg representation.
 \end{proof}
 
+\begin{proposition}[Decoupling of Continuum Charge and Spin Currents and $SU(2)$ Symmetry]
+\label{prop:ch21-continuum-charge-spin-decoupling}
+In the algebraic continuum limit, define the normalized chiral charge and spin currents:
+\begin{equation}
+ J_{r,c}(x) := \frac{J_{r\uparrow}(x) + J_{r\downarrow}(x)}{\sqrt{2}}, \qquad
+ J_{r,s}(x) := \frac{J_{r\uparrow}(x) - J_{r\downarrow}(x)}{\sqrt{2}}.
+ \label{eq:ch21-normalized-chiral-currents}
+\end{equation}
+Because the raw spin currents obey independent $U(1)$ current algebras $[J_{r\sigma}(x), J_{r'\sigma'}(y)] = \frac{i r}{2\pi}\delta_{rr'}\delta_{\sigma\sigma'}\delta'(x-y)$,
+the cross-commutator vanishes identically as an operator distribution:
+\begin{equation}
+ [J_{r,c}(x), J_{r',s}(y)] = \frac{1}{2}\left( [J_{r\uparrow}(x), J_{r'\uparrow}(y)] - [J_{r\downarrow}(x), J_{r'\downarrow}(y)] \right) = 0.
+ \label{eq:ch21-charge-spin-zero-dist}
+\end{equation}
+Moreover, for any spin-rotationally invariant interaction (such as the standard 1D Hubbard model),
+$SU(2)$ symmetry strictly forbids a renormalization of the spin-sector velocity and stiffness,
+pinning the spin Luttinger parameter to
+\begin{equation}
+ K_s = 1,
+ \label{eq:ch21-Ks-pinned}
+\end{equation}
+while the charge Luttinger parameter $K_c$ varies continuously with the interaction strength $U$.
+\end{proposition}
+
 For all $1\leq m,n\leq M$, the simple \emph{sufficient} uniform
 condition
 \begin{equation}
@@ -467,6 +491,78 @@ point of $\mathbb R^2$ but not a finite fermionic charge sector.
 This is why replacing integer charges by two unconstrained
 independent bosonic zero modes changes the state-label set.
 \end{example}
+
+\subsection*{The four-species Klein 2-cocycle on $\mathbb Z^4$}
+\label{subsec:ch21-four-species-cocycle}
+
+When four fermion species are present, mutual anticommutation between distinct species
+requires a consistent grading structure.  On the four-dimensional integer charge lattice
+$\mathbb Z^4$ indexed by the species ordering $(L\uparrow, L\downarrow, R\uparrow, R\downarrow) \leftrightarrow (1, 2, 3, 4)$,
+define the bilinear sign function:
+
+\begin{theorem}[Four-Species Klein 2-Cocycle Identity]
+\label{thm:ch21-cocycle-identity}
+For any integer charge vectors $p, q \in \mathbb Z^4$, define
+\begin{equation}
+ \varepsilon(p, q) := (-1)^{\sum_{1 \le i < j \le 4} p_j q_i}.
+ \label{eq:ch21-cocycle-def}
+\end{equation}
+Then $\varepsilon$ satisfies the group 2-cocycle identity:
+\begin{equation}
+ \varepsilon(p, q) \varepsilon(p+q, t) = \varepsilon(q, t) \varepsilon(p, q+t)
+ \qquad (\forall p, q, t \in \mathbb Z^4).
+ \label{eq:ch21-cocycle-law}
+\end{equation}
+\end{theorem}
+\begin{proof}
+It suffices to verify equality of the exponents modulo 2.
+The exponent of the left-hand side is
+\[
+ \Phi_L = \sum_{1 \le i < j \le 4} \left( p_j q_i + (p_j + q_j) t_i \right)
+        = \sum_{1 \le i < j \le 4} \left( p_j q_i + p_j t_i + q_j t_i \right).
+\]
+The exponent of the right-hand side is
+\[
+ \Phi_R = \sum_{1 \le i < j \le 4} \left( q_j t_i + p_j (q_i + t_i) \right)
+        = \sum_{1 \le i < j \le 4} \left( q_j t_i + p_j q_i + p_j t_i \right).
+\]
+Term by term, $\Phi_L = \Phi_R$ identically in $\mathbb Z$.
+Therefore $(-1)^{\Phi_L} = (-1)^{\Phi_R}$ in $\mathbb C$.
+\end{proof}
+
+\begin{definition}[Four-Species Klein Operators]
+\label{def:ch21-four-klein}
+On the auxiliary charge space $\mathbb C^{(\mathbb Z^4)}$ with basis $|\mathbf n\rangle = |n_1, n_2, n_3, n_4\rangle$,
+define the unitary charge translation operators $T_i$ ($T_i |\mathbf n\rangle = |\mathbf n - e_i\rangle$)
+and the preceding parity operators
+\begin{equation}
+ P_{<i} := \prod_{j < i} (-1)^{n_j}.
+ \label{eq:ch21-preceding-parity}
+\end{equation}
+The four-species Klein factors are
+\begin{equation}
+ F_i := P_{<i} T_i \qquad (i \in \{1, 2, 3, 4\}).
+ \label{eq:ch21-four-klein-def}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Mutual Anticommutation of Four Species Klein Factors]
+\label{prop:ch21-klein-anticommute}
+For all $i \ne j \in \{1, 2, 3, 4\}$, the Klein operators satisfy
+\begin{equation}
+ \{F_i, F_j\} = 0, \qquad \{F_i, F_j^\dagger\} = 0, \qquad [N_i, F_j] = -\delta_{ij} F_j.
+ \label{eq:ch21-klein-anticomm-relations}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Without loss of generality, assume $i < j$.
+When $F_j$ acts, $P_{<j}$ measures the occupation parity of all species $k < j$, including species $i$.
+The subsequent action of $F_i = P_{<i} T_i$ shifts $n_i \to n_i - 1$.
+In the reverse order $F_i F_j$, $F_i$ acts first and shifts $n_i \to n_i - 1$ \emph{before} $P_{<j}$ is evaluated.
+Since $(-1)^{n_i - 1} = -(-1)^{n_i}$, the factor $P_{<j}$ picks up an exact minus sign.
+Therefore $F_i F_j = - F_j F_i$, proving $\{F_i, F_j\} = 0$.
+The adjoint relation $\{F_i, F_j^\dagger\} = 0$ follows identically.
+\end{proof}
 
 \subsection*{What factorizes, and what does not}
 

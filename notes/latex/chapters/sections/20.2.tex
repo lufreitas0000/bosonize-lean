@@ -242,6 +242,66 @@ its inverse and adjoint both have the displayed raising action.
 Crucially, the left sign depends on the right charge, which encodes
 the interspecies fermionic ordering.
 
+\begin{theorem}[Anticommutation of Auxiliary Charge Shifts]
+\label{thm:ch20b-shift-anticommute}
+On the unbounded auxiliary module $\mathcal C = \mathbb C^{(\mathbb Z^2)}$, the charge shifts
+satisfy exact mixed anticommutation and number shift relations:
+\begin{equation}
+ \{F_R, F_L\} = 0, \qquad
+ \{F_R, F_L^*\} = 0, \qquad
+ [N_\nu, F_\eta] = -\delta_{\nu\eta} F_\eta.
+ \label{eq:ch20b-shift-car}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Evaluate both operator orders on a basis vector $\delta_N$:
+\begin{align*}
+ F_R F_L \delta_N
+  &= F_R \bigl(P_L(N) \delta_{N-e_L}\bigr)
+   = P_L(N) P_R(N-e_L) \delta_{N-e_R-e_L}, \\
+ F_L F_R \delta_N
+  &= F_L \bigl(P_R(N) \delta_{N-e_R}\bigr)
+   = P_R(N) P_L(N-e_R) \delta_{N-e_R-e_L}.
+\end{align*}
+By \eqref{eq:ch20b-signed-shift}, $P_R(N) = (-1)^{h+N_R-1}$, which is completely independent of $N_L$;
+hence $P_R(N-e_L) = P_R(N)$.
+On the other hand, $P_L(N) = (-1)^{(h+N_R) + (h+N_L-1)}$, which depends directly on $N_R$.
+Shifting $N_R \to N_R - 1$ flips the parity:
+\[
+ P_L(N-e_R) = (-1)^{(h+N_R-1) + (h+N_L-1)} = - P_L(N).
+\]
+Therefore,
+\[
+ P_R(N) P_L(N-e_R) = - P_R(N) P_L(N) = - P_L(N) P_R(N-e_L),
+\]
+which proves $F_L F_R \delta_N = - F_R F_L \delta_N$ for all $N$, so $\{F_R, F_L\} = 0$.
+The adjoint anticommutator $\{F_R, F_L^*\} = 0$ follows by an identical sign calculation.
+Finally, since $F_\eta$ maps $\delta_N$ to $\delta_{N-e_\eta}$,
+$[N_\nu, F_\eta]\delta_N = (N_\nu - \delta_{\nu\eta})F_\eta\delta_N - N_\nu F_\eta\delta_N = -\delta_{\nu\eta}F_\eta\delta_N$.
+\end{proof}
+
+\begin{theorem}[General Group 2-Cocycle Identity]
+\label{thm:ch20b-cocycle-identity}
+For arbitrary integer charge vectors $p, q \in \mathbb Z^d$, define the bilinear sign functional
+\begin{equation}
+ \varepsilon(p, q) := (-1)^{\sum_{1 \le i < j \le d} p_j q_i}.
+ \label{eq:ch20b-cocycle-general}
+\end{equation}
+Then $\varepsilon$ satisfies the 2-cocycle condition:
+\begin{equation}
+ \varepsilon(p, q) \varepsilon(p+q, t) = \varepsilon(q, t) \varepsilon(p, q+t)
+ \qquad (\forall p, q, t \in \mathbb Z^d).
+ \label{eq:ch20b-cocycle-identity}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Evaluating the exponent of the left-hand side modulo $2$ gives
+$\sum_{i<j} [ p_j q_i + (p_j + q_j) t_i ] = \sum_{i<j} [ p_j q_i + p_j t_i + q_j t_i ]$.
+The exponent of the right-hand side modulo $2$ is
+$\sum_{i<j} [ q_j t_i + p_j (q_i + t_i) ] = \sum_{i<j} [ q_j t_i + p_j q_i + p_j t_i ]$.
+These two sums are identical in $\mathbb Z$, proving the cocycle identity in $\mathbb C$.
+\end{proof}
+
 Let \(\mathfrak A_{\mathrm{ch}}\) be the \emph{generated} star algebra of
 these operators and their finite sums and products, and set
 \(\mathfrak A=\mathfrak A_{\mathrm{ch}}\otimes_{\mathbb C}
@@ -781,6 +841,101 @@ with different operator normalization prescriptions.  The value
 \(1/4\) is an example-specific finite-state calculation, not a
 universal CAR identity.
 \end{example}
+
+\subsection{Vertex exchange, zero modes, and finite-cutoff approximations}
+\label{subsec:ch20b-vertex-exchange}
+
+We now examine how fermionic statistics are reconstructed from bosonic vertices.
+Consider bare normal-ordered oscillator vertices $V_R(x) := :\!e^{i X_R(x)}\!:$ and
+$V_L(y) := :\!e^{i X_L(y)}\!:$.
+Because $[b_{R,n}, b_{L,m}^\dagger] = 0$, the two oscillator families commute.
+By the normal-ordering multiplication law \eqref{eq:ch19-compression-remainder},
+\[
+ V_R(x) V_L(y) = :\!e^{i X_R(x) + i X_L(y)}\!: = V_L(y) V_R(x).
+\]
+Therefore, naive oscillator vertices are strictly \emph{commuting}:
+\begin{equation}
+ [V_R(x), V_L(y)] = 0, \qquad \{V_R(x), V_L(y)\} = 2 V_R(x) V_L(y) \ne 0.
+ \label{eq:ch20b-naive-commuting}
+\end{equation}
+Bogoliubov dressing does not alter this: by \eqref{eq:ch19-cross-chiral-comm-zero},
+$[A_R(x), A_L(y)] = 0$ as well.
+
+\begin{theorem}[Mixed-Species Fermionic Anticommutation]
+\label{thm:ch20b-mixed-car}
+Let $\Psi_r(x) := F_r V_r(x)$ be the Klein-dressed vertex operators on
+$\mathcal C \otimes \mathcal P$.  Then the mixed-species fields satisfy exact CAR:
+\begin{equation}
+ \{\Psi_R(x), \Psi_L(y)\} = 0, \qquad \{\Psi_R(x), \Psi_L^*(y)\} = 0.
+ \label{eq:ch20b-mixed-car}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Because oscillator modes and charge shifts live in independent tensor factors,
+$F_R$ commutes with $V_L(y)$, and $F_L$ commutes with $V_R(x)$.  Using
+$[V_R(x), V_L(y)] = 0$ and Theorem~\ref{thm:ch20b-shift-anticommute}:
+\begin{align*}
+ \Psi_R(x) \Psi_L(y) + \Psi_L(y) \Psi_R(x)
+  &= F_R V_R(x) F_L V_L(y) + F_L V_L(y) F_R V_R(x) \\
+  &= (F_R F_L + F_L F_R) V_R(x) V_L(y) = 0.
+\end{align*}
+The adjoint relation $\{\Psi_R(x), \Psi_L^*(y)\} = 0$ follows identically from $\{F_R, F_L^*\} = 0$.
+\end{proof}
+
+Next, consider \textbf{same-chirality exchange}.
+For $x \ne y$, let $t = 2\pi(x-y)/L$ with $0 < t < 2\pi$.
+Using the central commutator \eqref{eq:ch19-field-commutator}, Baker--Campbell--Hausdorff
+multiplication yields
+\begin{equation}
+ V_R(x) V_R(y) = \exp\left( -2i \sum_{n=1}^M \frac{e^{-a q_n}}{n} \sin(q_n(x-y)) \right) V_R(y) V_R(x).
+ \label{eq:ch20b-finite-osc-phase}
+\end{equation}
+In the continuum limit ($M \to \infty, a \to 0^+$), we use the Fourier sawtooth series:
+\begin{equation}
+ \sum_{n=1}^\infty \frac{\sin(n t)}{n} = \frac{\pi - t}{2} \qquad (0 < t < 2\pi).
+ \label{eq:ch20b-sawtooth}
+\end{equation}
+The continuum oscillator exchange phase is therefore
+\[
+ \exp\left( -2i \frac{\pi - t}{2} \right) = e^{-i(\pi - t)} = -e^{it}.
+\]
+Notice that the oscillator phase $-e^{it}$ alone is \emph{not} equal to $-1$: it contains
+an extra coordinate-dependent factor $e^{it}$.
+
+The remaining factor is canceled by the zero-mode charge shift.
+On the charge lattice $\mathcal C$, define the position-dependent zero-mode operator
+\begin{equation}
+ Z_R(x) := F_R \exp\left( i \frac{2\pi}{L}(N_R + \nu_R) x \right), \qquad \nu_R \in \{0, \tfrac{1}{2}\}.
+ \label{eq:ch20b-zero-mode-field}
+\end{equation}
+Because $[N_R, F_R] = -F_R$, moving $F_R$ past $\exp(i \frac{2\pi}{L} N_R y)$ shifts $N_R \to N_R - 1$, yielding
+\begin{equation}
+ Z_R(x) Z_R(y) = e^{-it} Z_R(y) Z_R(x), \qquad t = \frac{2\pi(x-y)}{L}.
+ \label{eq:ch20b-zero-mode-exchange}
+\end{equation}
+Combining the zero-mode and continuum oscillator factors for the full field $\Psi_R(x) = Z_R(x) V_R(x)$:
+\begin{equation}
+ \Psi_R(x) \Psi_R(y) = (-e^{it})(e^{-it}) \Psi_R(y) \Psi_R(x) = -\Psi_R(y) \Psi_R(x) \qquad (x \ne y \pmod L).
+ \label{eq:ch20b-separated-fermion-exchange}
+\end{equation}
+The spin structure offset $\nu_R$ selects periodic ($\nu_R = 1/2$) or antiperiodic ($\nu_R = 0$) boundary conditions.
+
+\begin{note}[Finite Mode Cutoff Warning]
+\label{warn:ch20b-finite-cutoff-exchange}
+Identity \eqref{eq:ch20b-separated-fermion-exchange} holds \textbf{only in the continuum limit}
+$M \to \infty, a \to 0^+$.  At finite mode cutoff $M < \infty$, the finite Fourier sum
+$\sum_{n=1}^M \frac{\sin(nt)}{n}$ differs from the sawtooth line $(\pi-t)/2$ by the Gibbs
+oscillation residual:
+\[
+ \Delta_M(t) := \frac{\pi - t}{2} - \sum_{n=1}^M \frac{\sin(nt)}{n} \ne 0.
+\]
+Consequently, at finite $M$, the exchange of two right-moving vertex operators acquires
+the non-fermionic phase factor $-e^{2i\Delta_M(t)} \ne -1$.
+A finite-mode oscillator vertex is therefore \emph{an approximation to a fermion field},
+not an exact fermionic operator.  Exact CAR on the finite lattice is provided exclusively
+by the discrete Fourier CAR of Theorem~\ref{thm:ch20-discrete-fourier-car} and the
+Jordan--Wigner occupation cocycle of Theorem~\ref{thm:ch20-constructive-car}.
+\end{note}
 
 \subsection{Scope and remaining comparison problem}
 \label{subsec:ch20b-scope}

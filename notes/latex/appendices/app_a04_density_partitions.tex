@@ -50,7 +50,7 @@ Expanding the commutator of bilinears:
 \[
 [d\Gamma(A), d\Gamma(B)] = \sum_{p, k, q, l \in B} A_{p, k} B_{q, l} \left[ c_p^\dagger c_k, \; c_q^\dagger c_l \right].
 \]
-By the CAR bilinear commutator identity (Theorem~\ref{thm:app_bilinear_commutator}):
+By the CAR bilinear commutator identity (Theorem~\ref{thm:algebraic_car}(1)):
 \[
 [c_p^\dagger c_k, \; c_q^\dagger c_l] = \delta_{k, q} c_p^\dagger c_l - \delta_{p, l} c_q^\dagger c_k.
 \]
@@ -241,7 +241,7 @@ Its explicit two-sided inverse $\Psi: \lambda \mapsto S$ is given by:
 \end{theorem}
 
 \begin{proof}
-By Theorem~\ref{thm:app_rank_formula}, $0 \le d_0 \le \dots \le d_{n-1} \le 2h - n = h - N$, and $\sum d_i = e(S) = E$.
+By the rank formula (Theorem~\ref{thm:rank_formula}), $0 \le d_0 \le \dots \le d_{n-1} \le 2h - n = h - N$, and $\sum d_i = e(S) = E$.
 Conversely, given any bounded partition $\lambda \subseteq n \times (h-N)$, padding with $n - \ell(\lambda) \ge 0$ zeros yields a non-decreasing sequence $0 \le d_0 \le \dots \le d_{n-1} \le h - N$.
 The reconstructed values $s_i$ satisfy:
 \[
