@@ -3,14 +3,16 @@
 
 \section{Status and scope}
 
-This appendix records the proposed uncompressed oscillator and charge-algebra
-constructions used by Chapter~\ref{ch:correlations}. Some related declarations
-are present in the CH19 staging files, and the CH19 proof batch is recorded as
-Phase-B complete; neither fact is Core promotion. The constructions and
-derivations below are therefore mathematical manuscript material, not a claim
-that the current Lean Core certifies an abstract state, every displayed
-correlator, or a comparison with finite CAR states. The distinction between
-the two carriers is part of the result's meaning.
+This appendix collects uncompressed oscillator and charge-algebra constructions
+used by Chapter~\ref{ch:correlations} and the formal vertices of Chapter~20.
+The reviewed A08/CH19 package has completed Phase~C: its polynomial oscillator
+state, positivity and specified ordered kernels are promoted to frozen Lean
+Core. Its finite-CAR comparison is limited to the stated free, zero-squeeze
+scalar kernel. The further charge-algebra and coefficientwise vertex
+constructions described here retain separate manuscript and proof obligations;
+promotion of A08/CH19 does not certify every displayed formula in this appendix.
+In particular, an interacting finite-CAR state identification is not established.
+The distinction between the carriers is part of each result's meaning.
 
 \section{Polynomial oscillator carrier and its vacuum functional}
 
@@ -195,8 +197,8 @@ claim without a spectral theorem.
 \begin{remark}[Formalization boundary]
 The polynomial model, charge lattice, state pullback, coefficientwise
 correlators, and the compressed finite example have distinct carriers and
-proof obligations. The CH19 staging status does not establish that every
-construction here has passed Core promotion. Power-law asymptotics, analytic
+proof obligations. The accepted A08/CH19 Core scope does not establish that every
+further construction here has passed formal verification. Power-law asymptotics, analytic
 exponentials, and equality with finite fermionic expectations remain separate
 problems.
 \end{remark}
