@@ -127,3 +127,116 @@ claims are logically independent and a minimal defensible version-1 target.
 6. Remaining clarifying questions and references whose identifiers you verified.
 
 Do not claim that a proposed theorem was checked by Lean. Do not move to coding.
+
+## Read-only source evidence for exact finite conventions
+
+The following existing definitions are context for mathematical analysis, not a
+request to write or run code. They disambiguate the exact candidate and model.
+Source names not expanded here denote the occupation CAR construction and actual
+partition states described below. If a further implementation detail is needed,
+name it precisely rather than assigning a convenient alternative definition.
+
+For a configuration S, each occupied mode has a fixed species/momentum order;
+annihilating j gives zero if j is absent, otherwise (-1) to the number of occupied
+modes before j times the ket with j removed. Creation is its adjoint.
+The excitation energy is summed across species. The partition ket p_N is the
+ordered product of positive raw currents on the actual sea with occupied n<=N;
+its squared norm is z_p=∏_{species,m} m^{k_m} k_m!. The kleinKernel below sends
+p_N to kleinPhase(N) p_{N-eν} on the complete partition basis under pairMargin.
+The Gram-kernel formula specifies the ambient map even outside that regime.
+A01.normalization(L)=1/sqrt(L); characters, twists and validPairs retain their
+actual source definitions. The wPlus/wMinus order must not be replaced by the
+Weyl-type formal vertex order from another question.
+
+Source: Bosonize/Core/Ch07VacuumBudget.lean
+
+```lean
+def relativeCharge (h : ℕ) (S : Occupation h) : ℤ := (S.card : ℤ)-(h : ℤ)
+
+def excitationEnergy (h : ℕ) (S : Occupation h) : ℤ :=
+  relativeEnergy h S - groundEnergy (relativeCharge h S)
+
+def groundConfiguration (h : ℕ) (N : ℤ) : Occupation h :=
+  Finset.univ.filter (fun k => k.val ≤ N)
+```
+
+Source: Bosonize/Core/A05MultiSpecies.lean
+
+```lean
+def r2 (h K : ℕ) (Ns : σ → ℤ) : Prop := ∀ ν, 2*(K : ℤ)+|Ns ν| ≤ (h : ℤ)
+
+noncomputable def rho (h : ℕ) (ν : σ) (m : ℤ) : Operators σ h :=
+  ∑ z ∈ A04.validPairs (2*h) m, Ch04.hopping (ν,z.1) (ν,z.2)
+
+noncomputable def liftedAnnihilation (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))
+    (ν : σ) (x : ℤ) : Operators σ h :=
+  (A01.normalization (2*h) : ℂ) •
+    ∑ k : Ch01.Band (2*h), Ch06Ext.twistedCharacter (2*h) (b ν) k x • annihilation h ν k
+
+omit [Fintype σ] in
+```
+
+Source: Bosonize/Core/Ch13KleinFactors.lean
+
+```lean
+def phaseExponent (h : ℕ) (Ns : σ → ℤ) (ν : σ) : ℤ :=
+  (∑ η ∈ Finset.univ.filter (· < ν), ((h : ℤ)+Ns η)) + ((h : ℤ)+Ns ν-1)
+
+noncomputable def kleinPhase (h : ℕ) (Ns : σ → ℤ) (ν : σ) : ℂ :=
+  (-1 : ℂ) ^ phaseExponent h Ns ν
+
+def pairMargin (h K : ℕ) (Ns : σ → ℤ) (ν : σ) : Prop :=
+  A05.r2 h K Ns ∧ A05.r2 h K (lowerCharge Ns ν)
+
+noncomputable def kleinKernel (h : ℕ) (Ns : σ → ℤ) (ν : σ) (K : ℕ) : Operators σ h :=
+  ∑ p : A05.JointPartitions σ K,
+    (kleinPhase h Ns ν / (A05.jointNormalization p : ℂ)) •
+      ((innerₛₗ ℂ (A05.partitionState h Ns p)).smulRight
+        (A05.partitionState h (lowerCharge Ns ν) p))
+```
+
+Source: Bosonize/Core/Ch17LuttingerModels.lean
+
+```lean
+noncomputable def v1Velocity (vF g4 : ℝ) : ℝ :=
+  vF + g4 / (2 * Real.pi)
+
+noncomputable def v2Velocity (g2 : ℝ) : ℝ :=
+  g2 / (2 * Real.pi)
+
+noncomputable def zeroModeEnergyScalar {σ : Type*} (h : ℕ)
+    (vF g4 g2 mu : ℝ) (branches : A06.Branches σ) (Ns : σ → ℤ) : ℝ :=
+  let L : ℝ := ((2 * h : ℕ) : ℝ)
+  let nr : ℝ := (Ns branches.rightSpecies : ℝ)
+  let nl : ℝ := (Ns branches.leftSpecies : ℝ)
+  (2 * Real.pi * vF / L) * (nr * (nr + 1) / 2 + nl * (nl + 1) / 2) +
+    (g4 / (2 * L)) * (nr ^ 2 + nl ^ 2) +
+    (g2 / L) * nr * nl -
+    mu * (nr + nl)
+
+noncomputable def luttingerOscillatorOp (h M : ℕ) (vF g4 g2 : ℝ)
+    (branches : A06.Branches σ) : A05.Operators σ h :=
+  (((2 * Real.pi : ℝ) : ℂ) / ((2 * h : ℕ) : ℂ)) •
+    ∑ m ∈ Finset.Icc 1 M,
+      A07Interactions.pairingMode h m
+        (v1Velocity vF g4) (v2Velocity g2) branches
+
+noncomputable def luttingerBosonizedHamiltonian (h M : ℕ)
+    (vF g4 g2 mu : ℝ) (branches : A06.Branches σ) :
+    A05.Operators σ h :=
+  luttingerOscillatorOp h M vF g4 g2 branches +
+    zeroModeEnergyOp h vF g4 g2 mu branches
+```
+
+Source: Bosonize/Core/A07InteractionsAndBogoliubov.lean
+
+```lean
+noncomputable def pairingMode (h m : ℕ) (v1 v2 : ℝ)
+    (branches : A06.Branches σ) : A05.Operators σ h :=
+  let r := branches.rightSpecies
+  let l := branches.leftSpecies
+  (v1 : ℂ) • (A05.rho h r (m : ℤ) * A05.rho h r (-(m : ℤ)) +
+    A05.rho h l (m : ℤ) * A05.rho h l (-(m : ℤ))) +
+  (v2 : ℂ) • (A05.rho h r (m : ℤ) * A05.rho h l (m : ℤ) +
+    A05.rho h r (-(m : ℤ)) * A05.rho h l (-(m : ℤ)))
+```

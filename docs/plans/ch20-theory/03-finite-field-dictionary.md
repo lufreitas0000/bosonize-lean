@@ -97,7 +97,7 @@ must be fixed before claiming equality. The Weyl-type W_J of prompt context is
 not automatically this normal-ordered field. Do not assume a Gaussian kernel
 implies CAR or an entire operator equality.
 
-Construct a precise candidate (or show what indispensable definition is missing),
+Use the exact vertexCandidate supplied in the read-only source appendix,
 then analyze the three genuinely missing steps: full ground-vector action,
 actual common residual recurrences, and cyclicity on the same typed source.
 Explain whether any numerical h,K,N,M inequalities suffice, and derive them
@@ -129,3 +129,122 @@ a theorem whose conclusion is placed in its hypotheses is not a solution.
 6. Remaining clarifying questions and references whose identifiers you verified.
 
 Do not claim that a proposed theorem was checked by Lean. Do not move to coding.
+
+## Read-only source evidence for exact finite conventions
+
+The following existing definitions are context for mathematical analysis, not a
+request to write or run code. They disambiguate the exact candidate and model.
+Source names not expanded here denote the occupation CAR construction and actual
+partition states described below. If a further implementation detail is needed,
+name it precisely rather than assigning a convenient alternative definition.
+
+For a configuration S, each occupied mode has a fixed species/momentum order;
+annihilating j gives zero if j is absent, otherwise (-1) to the number of occupied
+modes before j times the ket with j removed. Creation is its adjoint.
+The excitation energy is summed across species. The partition ket p_N is the
+ordered product of positive raw currents on the actual sea with occupied n<=N;
+its squared norm is z_p=∏_{species,m} m^{k_m} k_m!. The kleinKernel below sends
+p_N to kleinPhase(N) p_{N-eν} on the complete partition basis under pairMargin.
+The Gram-kernel formula specifies the ambient map even outside that regime.
+A01.normalization(L)=1/sqrt(L); characters, twists and validPairs retain their
+actual source definitions. The wPlus/wMinus order must not be replaced by the
+Weyl-type formal vertex order from another question.
+
+Source: Bosonize/Core/Ch07VacuumBudget.lean
+
+```lean
+def relativeCharge (h : ℕ) (S : Occupation h) : ℤ := (S.card : ℤ)-(h : ℤ)
+
+def excitationEnergy (h : ℕ) (S : Occupation h) : ℤ :=
+  relativeEnergy h S - groundEnergy (relativeCharge h S)
+
+def groundConfiguration (h : ℕ) (N : ℤ) : Occupation h :=
+  Finset.univ.filter (fun k => k.val ≤ N)
+```
+
+Source: Bosonize/Core/A05MultiSpecies.lean
+
+```lean
+def r2 (h K : ℕ) (Ns : σ → ℤ) : Prop := ∀ ν, 2*(K : ℤ)+|Ns ν| ≤ (h : ℤ)
+
+noncomputable def rho (h : ℕ) (ν : σ) (m : ℤ) : Operators σ h :=
+  ∑ z ∈ A04.validPairs (2*h) m, Ch04.hopping (ν,z.1) (ν,z.2)
+
+noncomputable def liftedAnnihilation (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))
+    (ν : σ) (x : ℤ) : Operators σ h :=
+  (A01.normalization (2*h) : ℂ) •
+    ∑ k : Ch01.Band (2*h), Ch06Ext.twistedCharacter (2*h) (b ν) k x • annihilation h ν k
+
+omit [Fintype σ] in
+```
+
+Source: Bosonize/Core/Ch13KleinFactors.lean
+
+```lean
+def phaseExponent (h : ℕ) (Ns : σ → ℤ) (ν : σ) : ℤ :=
+  (∑ η ∈ Finset.univ.filter (· < ν), ((h : ℤ)+Ns η)) + ((h : ℤ)+Ns ν-1)
+
+noncomputable def kleinPhase (h : ℕ) (Ns : σ → ℤ) (ν : σ) : ℂ :=
+  (-1 : ℂ) ^ phaseExponent h Ns ν
+
+def pairMargin (h K : ℕ) (Ns : σ → ℤ) (ν : σ) : Prop :=
+  A05.r2 h K Ns ∧ A05.r2 h K (lowerCharge Ns ν)
+
+noncomputable def kleinKernel (h : ℕ) (Ns : σ → ℤ) (ν : σ) (K : ℕ) : Operators σ h :=
+  ∑ p : A05.JointPartitions σ K,
+    (kleinPhase h Ns ν / (A05.jointNormalization p : ℂ)) •
+      ((innerₛₗ ℂ (A05.partitionState h Ns p)).smulRight
+        (A05.partitionState h (lowerCharge Ns ν) p))
+```
+
+Source: Bosonize/Core/Ch14Mandelstam.lean
+
+```lean
+noncomputable def projectedMap (h : ℕ) (Ns Nt : σ → ℤ) (Kin Kout : ℕ)
+    (A : A05.Operators σ h) : A05.jointBudget h Ns Kin →ₗ[ℂ] A05.jointBudget h Nt Kout :=
+  (projection h Nt Kout * A).domRestrict (A05.jointBudget h Ns Kin) |>.codRestrict
+    (A05.jointBudget h Nt Kout) (fun v => by
+      change projection h Nt Kout (A v.val) ∈ A03.coordinateSpace (budgetSet h Nt Kout)
+      rw [← A03.projection_range]
+      exact ⟨A v.val, rfl⟩)
+
+noncomputable def wPlus (h M : ℕ) (ν : σ) (x : ℤ) : A05.Operators σ h :=
+  ∑ m ∈ Finset.range M, (A01.integerCharacter (A01.canonicalRoot (2*h)) ((m+1 : ℕ) : ℤ) x /
+    (m+1 : ℂ)) • A05.rho h ν (-((m+1 : ℕ) : ℤ))
+
+noncomputable def wMinus (h M : ℕ) (ν : σ) (x : ℤ) : A05.Operators σ h :=
+  -∑ m ∈ Finset.range M, (A01.integerCharacter (A01.canonicalRoot (2*h)) (-((m+1 : ℕ) : ℤ)) x /
+    (m+1 : ℂ)) • A05.rho h ν ((m+1 : ℕ) : ℤ)
+
+noncomputable def zeroScalar (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))
+    (Ns : σ → ℤ) (ν : σ) (x : ℤ) : ℂ :=
+  Ch06Ext.liftPhase (2*h) (b ν) x * A01.integerCharacter (A01.canonicalRoot (2*h)) (Ns ν) x
+
+noncomputable def zeroMode (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))
+    (Ns : σ → ℤ) (ν : σ) (x : ℤ) (K : ℕ) : Module.End ℂ (A05.jointBudget h Ns K) :=
+  zeroScalar h b Ns ν x • LinearMap.id
+
+noncomputable def physicalMap (h : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))
+    (Ns : σ → ℤ) (ν : σ) (x : ℤ) (Kin Kout : ℕ) :
+    A05.jointBudget h Ns Kin →ₗ[ℂ] A05.jointBudget h (Ch13.lowerCharge Ns ν) Kout :=
+  projectedMap h Ns (Ch13.lowerCharge Ns ν) Kin Kout (A05.liftedAnnihilation h b ν x)
+
+noncomputable def vertexCandidate (h M : ℕ) (b : σ → Ch06Ext.BoundaryTwist (2*h))
+    (Ns : σ → ℤ) (ν : σ) (x : ℤ) (Kin Kout : ℕ) :
+    A05.jointBudget h Ns Kin →ₗ[ℂ] A05.jointBudget h (Ch13.lowerCharge Ns ν) Kout :=
+  let Nt := Ch13.lowerCharge Ns ν
+  (A01.normalization (2*h) : ℂ) •
+    (A05Exp.finiteTaylor Kout (projectedMap h Nt Nt Kout Kout (wMinus h M ν x))).comp
+      ((projectedMap h Nt Nt Kin Kout LinearMap.id).comp
+        ((A05Exp.finiteTaylor Kin (projectedMap h Nt Nt Kin Kin (wPlus h M ν x))).comp
+          ((projectedMap h Ns Nt Kin Kin (Ch13.kleinKernel h Ns ν Kin)).comp
+            (zeroMode h b Ns ν x Kin))))
+```
+
+Source: Bosonize/Core/A05FiniteExponentials.lean
+
+```lean
+noncomputable def finiteTaylor {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (d : ℕ) (A : Module.End ℂ V) : Module.End ℂ V :=
+  ∑ j ∈ Finset.range (d + 1), ((j.factorial : ℂ)⁻¹) • A ^ j
+```
