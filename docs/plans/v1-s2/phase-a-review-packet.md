@@ -273,15 +273,15 @@ the minimal charge/vector, position/phase, represented oscillator-field,
 coefficientwise series, adjoint, and formal correlator interface. The
 independent mathematical/interface review passed for the exact source and
 document hashes recorded above; the scoped lock was committed in
-`0610d1495ebc4e95dec323c27faf22966e55e9d2`. Phase B's current proof inventory is recorded in
-[`phase-b-checkpoint.md`](phase-b-checkpoint.md). The October 17 resumption
-completed 18 further contracts, leaving eight unchanged placeholders; 31 S2
-theorem declarations are proved in total. The exact partial package at source
-SHA-256 `a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03` passed
-independent review. Fresh strict/Core guards pass; the staging build succeeds
-with exactly eight placeholder warnings; the 31 completed theorem closures
-use only the three permitted standard axioms. The main correlator, variance,
-remaining field identities and normal-ordering theorems are still unproved.
-The packet's mathematical interface and earlier Phase A review provenance
-are retained; the resumption is not a full Phase B or Phase C verdict.
-This packet does not start S3.
+`0610d1495ebc4e95dec323c27faf22966e55e9d2`. Phase B's current inventory is in
+[`phase-b-checkpoint.md`](phase-b-checkpoint.md). The scheduled resumption
+proved 23 further contracts, leaving the Weyl correlator and two normal-ordering
+contracts as three unchanged placeholders; 36 S2 theorem declarations are
+proved in total. Independent review covers all 23 changed proofs in two
+partial packages; the current source SHA-256 is
+`0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233`. The five-proof receipt records the independently reviewed hash and the
+subsequent four-blank-line whitespace cleanup. Strict/Core guards
+pass; the staging build has exactly three placeholder warnings; all 36
+completed theorem closures use only the permitted standard axioms. The
+reviewed mathematical interface and Phase A provenance above remain intact.
+This is not full Phase B or Phase C acceptance and does not start S3.

@@ -974,10 +974,70 @@ theorem same_channel_commutator_contract {M h : ℕ} (_hh : 0 < h)
       (if channel then xSForm (M := M) hp y else xDForm (M := M) hp y) =
     Bosonize.V1S1.contraction hp
       (if channel then xSForm (M := M) hp y else xDForm (M := M) hp y)
-      (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x) := by sorry
+      (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x) := by
+  classical
+  let L := 2 * h
+  let : Fintype Bosonize.A06.Orientation :=
+    ⟨{Bosonize.A06.Orientation.right, Bosonize.A06.Orientation.left}, by
+      intro ν; cases ν <;> simp⟩
+  have hq (c s : ℝ) (x : Position L) (b : Bool)
+      (ν μ : Bosonize.A06.Orientation) (i : Fin M) :
+      qForm c s ν x (b, (μ, i)) =
+        (if μ = ν then (c : ℂ) *
+          (Bosonize.A01.canonicalRoot L) ^
+            ((if b then -(epsilon ν) else epsilon ν) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+            ((i.val : ℂ) + 1) else 0) +
+        (if μ = Bosonize.A07Interactions.oppositeOrientation ν then (s : ℂ) *
+          (Bosonize.A01.canonicalRoot L) ^
+            ((if b then epsilon ν else -(epsilon ν)) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+            ((i.val : ℂ) + 1) else 0) := by
+    classical
+    cases b <;> cases ν <;> cases μ <;>
+      simp [qForm, dressedModeForm, Bosonize.V1S1.dressedGeneratorForm,
+        epsilon, Bosonize.A07Interactions.oppositeOrientation, Finsupp.single_apply] <;> ring
 
-/-- The commutation claim is on the A08 polynomial representation, not a
-literal CCR equality in its free-algebra syntax. -/
+
+  have hfield (hp : Bosonize.Ch18.HyperbolicPair) (x : Position L)
+      (channel b : Bool) (ν : Bosonize.A06.Orientation) (i : Fin M) :
+      (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x) (b, (ν, i)) =
+        (if channel && (ν == Bosonize.A06.Orientation.left) then (-1 : ℂ) else 1) *
+        (Bosonize.A01.canonicalRoot L) ^
+          ((if b then -(epsilon ν) else epsilon ν) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+          ((i.val : ℂ) + 1) := by
+    have hc : (hp.c : ℂ) ^ 2 - (hp.s : ℂ) ^ 2 = 1 := by exact_mod_cast hp.hyperbolic_id
+    cases channel <;> cases b <;> cases ν <;>
+      simp [xDForm, xSForm, hq, epsilon,
+        Bosonize.A07Interactions.oppositeOrientation] <;>
+      ring_nf <;>
+      rw [show (hp.c : ℂ) ^ 2 = 1 + (hp.s : ℂ) ^ 2 by linear_combination hc] <;>
+      ring
+  have hfull (f g : Bosonize.V1S1.OscLinearForm M) :
+      Bosonize.V1S1.contraction hp f g =
+        ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+          f i * g j * Bosonize.V1S1.generatorContractionExpected hp i j := by
+    rw [Bosonize.V1S1.contraction_coeff_formula]
+    have hg (i : Bosonize.A08.OscGen M) :
+        (∑ j ∈ g.support, f i * g j * Bosonize.V1S1.generatorContractionExpected hp i j) =
+        ∑ j : Bosonize.A08.OscGen M, f i * g j * Bosonize.V1S1.generatorContractionExpected hp i j := by
+      apply Finset.sum_subset (Finset.subset_univ _)
+      intro j _ hj
+      simp [Finsupp.notMem_support_iff.mp hj]
+    simp_rw [hg]
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro i _ hi
+    simp [Finsupp.notMem_support_iff.mp hi]
+  have hsumO (f : Bosonize.A06.Orientation → ℂ) :
+      (∑ ν, f ν) = f .right + f .left := by
+    change (∑ ν ∈ ({.right, .left} : Finset Bosonize.A06.Orientation), f ν) = _
+    simp
+  rw [hfull, hfull]
+  simp only [Fintype.sum_prod_type, Fintype.sum_bool, hsumO, hfield]
+  cases channel <;>
+    simp [Bosonize.V1S1.generatorContractionExpected,
+      Bosonize.A07Interactions.oppositeOrientation, epsilon, mul_ite] <;>
+    simp only [← Finset.sum_add_distrib] <;>
+    apply Finset.sum_congr rfl <;> intro i hi <;> ring
+
 theorem represented_same_channel_commutator_contract {M h : ℕ} (_hh : 0 < h)
     (hp : Bosonize.Ch18.HyperbolicPair) (x y : Position (2 * h)) (channel : Bool) :
     Bosonize.A08.oscRep M
@@ -991,7 +1051,128 @@ theorem represented_same_channel_commutator_contract {M h : ℕ} (_hh : 0 < h)
           (if channel then xSForm (M := M) hp y else xDForm (M := M) hp y)) *
       Bosonize.A08.oscRep M
         (Bosonize.V1S1.linearElement
-          (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)) := by sorry
+          (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)) := by
+  classical
+  let : Fintype Bosonize.A06.Orientation :=
+    ⟨{Bosonize.A06.Orientation.right, Bosonize.A06.Orientation.left}, by
+      intro ν; cases ν <;> simp⟩
+  let R (g : Bosonize.A08.OscGen M) := Bosonize.A08.oscRep M (FreeAlgebra.ι ℂ g)
+  let E := Bosonize.V1S1.generatorContractionExpected (M := M) hp
+  have hc : (hp.c : ℂ) ^ 2 = 1 + (hp.s : ℂ) ^ 2 := by
+    have hh : (hp.c : ℂ) ^ 2 - (hp.s : ℂ) ^ 2 = 1 := by exact_mod_cast hp.hyperbolic_id
+    linear_combination hh
+  have haa (p q : Bosonize.A08.OscMode M) :
+      Bosonize.A08.oscAnnihilation M p * Bosonize.A08.oscAnnihilation M q -
+      Bosonize.A08.oscAnnihilation M q * Bosonize.A08.oscAnnihilation M p = 0 :=
+    Bosonize.A08.osc_annihilators_commute M p q
+  have hcc (p q : Bosonize.A08.OscMode M) :
+      Bosonize.A08.oscCreation M p * Bosonize.A08.oscCreation M q -
+      Bosonize.A08.oscCreation M q * Bosonize.A08.oscCreation M p = 0 :=
+    Bosonize.A08.osc_creators_commute M p q
+  have hac (p q : Bosonize.A08.OscMode M) :
+      Bosonize.A08.oscAnnihilation M p * Bosonize.A08.oscCreation M q -
+      Bosonize.A08.oscCreation M q * Bosonize.A08.oscAnnihilation M p =
+        (if p = q then (Bosonize.A08.oscWeight p : ℂ) else 0) •
+          (1 : Module.End ℂ (Bosonize.A08.OscPoly M)) := by
+    simpa only [Bosonize.A02.commutator, ite_smul, zero_smul] using Bosonize.A08.osc_ccr M p q
+  have hca (p q : Bosonize.A08.OscMode M) :
+      Bosonize.A08.oscCreation M p * Bosonize.A08.oscAnnihilation M q -
+      Bosonize.A08.oscAnnihilation M q * Bosonize.A08.oscCreation M p =
+        -((if q = p then (Bosonize.A08.oscWeight q : ℂ) else 0) •
+          (1 : Module.End ℂ (Bosonize.A08.OscPoly M))) := by
+    rw [← hac q p]
+    abel
+  have hkernel (i j : Bosonize.A08.OscGen M) :
+      R i * R j - R j * R i = (E i j - E j i) •
+        (1 : Module.End ℂ (Bosonize.A08.OscPoly M)) := by
+    rcases i with ⟨b, ν, i⟩
+    rcases j with ⟨d, μ, j⟩
+    cases b <;> cases d <;>
+      simp only [R, Bosonize.A08.oscRep, FreeAlgebra.lift_ι_apply, Bool.false_eq_true,
+        ite_false, ite_true] <;>
+      first | rw [haa] | rw [hac] | rw [hca] | rw [hcc]
+    all_goals
+      cases ν <;> cases μ
+      all_goals
+        by_cases hij : i = j
+        · subst j
+          simp [E, Bosonize.V1S1.generatorContractionExpected,
+            Bosonize.A07Interactions.oppositeOrientation, Bosonize.A08.oscWeight, hc] <;> module
+        · simp [E, Bosonize.V1S1.generatorContractionExpected,
+            Bosonize.A07Interactions.oppositeOrientation, hij, Ne.symm hij]
+  have hrep (a : Bosonize.V1S1.OscLinearForm M) :
+      Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement a) =
+        ∑ g : Bosonize.A08.OscGen M, a g • R g := by
+    simp only [Bosonize.V1S1.linearElement, map_sum, map_smul]
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro g _ hg
+    simp [Finsupp.notMem_support_iff.mp hg]
+  have hfull (f g : Bosonize.V1S1.OscLinearForm M) :
+      Bosonize.V1S1.contraction hp f g =
+        ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+          f i * g j * E i j := by
+    rw [Bosonize.V1S1.contraction_coeff_formula]
+    change (∑ i ∈ f.support, ∑ j ∈ g.support, f i * g j * E i j) = _
+    have hg (i : Bosonize.A08.OscGen M) :
+        (∑ j ∈ g.support, f i * g j * E i j) =
+        ∑ j : Bosonize.A08.OscGen M, f i * g j * E i j := by
+      apply Finset.sum_subset (Finset.subset_univ _)
+      intro j _ hj
+      simp [Finsupp.notMem_support_iff.mp hj]
+    simp_rw [hg]
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro i _ hi
+    simp [Finsupp.notMem_support_iff.mp hi]
+  let f := if channel then xSForm (M := M) hp x else xDForm (M := M) hp x
+  let g := if channel then xSForm (M := M) hp y else xDForm (M := M) hp y
+  have hprod (a b : Bosonize.V1S1.OscLinearForm M) :
+      Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement a) *
+      Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement b) =
+        ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+          (a i * b j) • (R i * R j) := by
+    simp only [hrep, Finset.sum_mul_sum, smul_mul_smul_comm]
+  have hrev : Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement g) *
+      Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement f) =
+      ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+        (f i * g j) • (R j * R i) := by
+    rw [hprod, Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [mul_comm]
+  have hreverse : (∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+      f i * g j * E j i) = Bosonize.V1S1.contraction hp g f := by
+    rw [hfull, Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hscalar : (∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+      (f i * g j) * (E i j - E j i)) = 0 := by
+    simp_rw [mul_sub, Finset.sum_sub_distrib]
+    rw [← hfull, hreverse, same_channel_commutator_contract _hh hp x y channel, sub_self]
+  apply sub_eq_zero.mp
+  change Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement f) *
+      Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement g) -
+      Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement g) *
+      Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement f) = 0
+  rw [hprod, hrev]
+  simp only [← Finset.sum_sub_distrib]
+  calc
+    _ = ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+        ((f i * g j) * (E i j - E j i)) • (1 : Module.End ℂ (Bosonize.A08.OscPoly M)) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      simpa only [smul_sub, smul_smul] using
+        congrArg (fun z : Module.End ℂ (Bosonize.A08.OscPoly M) => (f i * g j) • z) (hkernel i j)
+    _ = (∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+        (f i * g j) * (E i j - E j i)) • (1 : Module.End ℂ (Bosonize.A08.OscPoly M)) := by
+      simp only [Finset.sum_smul]
+    _ = 0 := by rw [hscalar, zero_smul]
 
 theorem field_adjoint_on_polynomials_contract {M L : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (x : Position L) (channel : Bool)
@@ -1001,7 +1182,99 @@ theorem field_adjoint_on_polynomials_contract {M L : ℕ}
         (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)) q) =
     Bosonize.A08.oscPairing M
       (Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement
-        (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)) p) q := by sorry
+        (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)) p) q := by
+  classical
+  let : Fintype Bosonize.A06.Orientation :=
+    ⟨{Bosonize.A06.Orientation.right, Bosonize.A06.Orientation.left}, by
+      intro ν; cases ν <;> simp⟩
+  have padd (r s t : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M r (s + t) =
+        Bosonize.A08.oscPairing M r s + Bosonize.A08.oscPairing M r t := by
+    simp only [Bosonize.A08.oscPairing, map_add, mul_add, Finset.sum_add_distrib]
+  have psmul (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M r (z • s) = z * Bosonize.A08.oscPairing M r s := by
+    simp only [Bosonize.A08.oscPairing, map_smul, smul_eq_mul]
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro k _
+    ring
+  have paddleft (r s t : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M (r + s) t =
+        Bosonize.A08.oscPairing M r t + Bosonize.A08.oscPairing M s t := by
+    rw [← Bosonize.A08.oscPairing_conj, padd, star_add,
+      Bosonize.A08.oscPairing_conj, Bosonize.A08.oscPairing_conj]
+  have psmulleft (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M (z • r) s = star z * Bosonize.A08.oscPairing M r s := by
+    rw [← Bosonize.A08.oscPairing_conj, psmul, star_mul, Bosonize.A08.oscPairing_conj, mul_comm]
+  have hq (c s : ℝ) (x : Position L) (b : Bool)
+    (ν μ : Bosonize.A06.Orientation) (i : Fin M) :
+    qForm c s ν x (b, (μ, i)) =
+      (if μ = ν then (c : ℂ) *
+        (Bosonize.A01.canonicalRoot L) ^
+          ((if b then -(epsilon ν) else epsilon ν) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+          ((i.val : ℂ) + 1) else 0) +
+      (if μ = Bosonize.A07Interactions.oppositeOrientation ν then (s : ℂ) *
+        (Bosonize.A01.canonicalRoot L) ^
+          ((if b then epsilon ν else -(epsilon ν)) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+          ((i.val : ℂ) + 1) else 0) :=   by
+    classical
+    cases b <;> cases ν <;> cases μ <;>
+      simp [qForm, dressedModeForm, Bosonize.V1S1.dressedGeneratorForm,
+        epsilon, Bosonize.A07Interactions.oppositeOrientation, Finsupp.single_apply] <;> ring
+  have psumright (t : Finset (Bosonize.A08.OscGen M)) (v : Bosonize.A08.OscGen M → Bosonize.A08.OscPoly M)
+      (r : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M r (∑ g ∈ t, v g) = ∑ g ∈ t, Bosonize.A08.oscPairing M r (v g) := by
+    simp only [Bosonize.A08.oscPairing, map_sum]
+    simp_rw [Finset.mul_sum]
+    exact Finset.sum_comm
+  have psumleft (t : Finset (Bosonize.A08.OscGen M)) (v : Bosonize.A08.OscGen M → Bosonize.A08.OscPoly M)
+      (r : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M (∑ g ∈ t, v g) r = ∑ g ∈ t, Bosonize.A08.oscPairing M (v g) r := by
+    rw [← Bosonize.A08.oscPairing_conj, psumright, star_sum]
+    apply Finset.sum_congr rfl
+    intro g _
+    exact Bosonize.A08.oscPairing_conj M r (v g)
+  have hroot : (starRingEnd ℂ) (Bosonize.A01.canonicalRoot L) = (Bosonize.A01.canonicalRoot L)⁻¹ := by
+    unfold Bosonize.A01.canonicalRoot
+    rw [← Complex.exp_neg]
+    rw [← Complex.exp_conj]
+    congr 1
+    have htwo : (starRingEnd ℂ) (2 : ℂ) = 2 := Complex.conj_ofReal 2
+    simp [htwo]
+    ring
+  let f := if channel then xSForm (M := M) hp x else xDForm (M := M) hp x
+  have hherm (g : Bosonize.A08.OscGen M) : star (f g) = f (!g.1, g.2) := by
+    rcases g with ⟨b, ν, i⟩
+    cases channel <;> cases b <;> cases ν <;>
+      simp [f, xDForm, xSForm, hq, epsilon, Bosonize.A07Interactions.oppositeOrientation,
+        star_div₀, star_zpow₀, hroot, -zpow_neg, neg_mul] <;> ring <;> simp
+  have hrep (a : Bosonize.V1S1.OscLinearForm M) :
+      Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement a) =
+        ∑ g : Bosonize.A08.OscGen M, a g • Bosonize.A08.oscRep M (FreeAlgebra.ι ℂ g) := by
+    simp only [Bosonize.V1S1.linearElement, map_sum, map_smul]
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro g _ hg
+    simp [Finsupp.notMem_support_iff.mp hg]
+  have hgen (g : Bosonize.A08.OscGen M) :
+      Bosonize.A08.oscPairing M p (Bosonize.A08.oscRep M (FreeAlgebra.ι ℂ g) q) =
+      Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (FreeAlgebra.ι ℂ (!g.1, g.2)) p) q := by
+    simpa [Bosonize.A08.wordElement, Bosonize.A08.wordDagger, Bosonize.A08.bogoliubovMap] using
+      Bosonize.A08.bogoliubovMap_word_adjoint M 1 0 [(!g.1, g.2)] p q
+  let e : Bosonize.A08.OscGen M ≃ Bosonize.A08.OscGen M :=
+    { toFun := fun g => (!g.1, g.2)
+      invFun := fun g => (!g.1, g.2)
+      left_inv := by intro g; simp
+      right_inv := by intro g; simp }
+  change Bosonize.A08.oscPairing M p (Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement f) q) =
+    Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement f) p) q
+  rw [hrep]
+  simp only [LinearMap.sum_apply, LinearMap.smul_apply, psumright, psumleft, psmul, psmulleft]
+  rw [← Equiv.sum_comp e (fun g => star (f g) *
+    Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (FreeAlgebra.ι ℂ g) p) q)]
+  apply Finset.sum_congr rfl
+  intro g _
+  rw [hgen, hherm]
+  simp [e]
 
 theorem oscillatorExp_adjoint_coefficient_contract {M h : ℕ} (_hh : 0 < h)
     (hp : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) (channel : Bool)
@@ -1013,7 +1286,162 @@ theorem oscillatorExp_adjoint_coefficient_contract {M h : ℕ} (_hh : 0 < h)
     Bosonize.A08.oscPairing M
       (Bosonize.A08.oscRep M
         (Bosonize.A08.bogoliubovMap M hp.c (-hp.s)
-          (oscSyntaxEval (oscillatorExpWithScalar hp x channel (-Complex.I) n))) p) q := by sorry
+          (oscSyntaxEval (oscillatorExpWithScalar hp x channel (-Complex.I) n))) p) q := by
+  classical
+  let L := 2 * h
+  let f := if channel then xSForm (M := M) hp x else xDForm (M := M) hp x
+  let O := Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s)
+    (Bosonize.V1S1.linearElement f))
+  have hO (p q : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M p (O q) = Bosonize.A08.oscPairing M (O p) q := by
+    classical
+    let : Fintype Bosonize.A06.Orientation :=
+      ⟨{Bosonize.A06.Orientation.right, Bosonize.A06.Orientation.left}, by
+        intro ν; cases ν <;> simp⟩
+    have padd (r s t : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M r (s + t) =
+          Bosonize.A08.oscPairing M r s + Bosonize.A08.oscPairing M r t := by
+      simp only [Bosonize.A08.oscPairing, map_add, mul_add, Finset.sum_add_distrib]
+    have psmul (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M r (z • s) = z * Bosonize.A08.oscPairing M r s := by
+      simp only [Bosonize.A08.oscPairing, map_smul, smul_eq_mul]
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro k _
+      ring
+    have paddleft (r s t : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M (r + s) t =
+          Bosonize.A08.oscPairing M r t + Bosonize.A08.oscPairing M s t := by
+      rw [← Bosonize.A08.oscPairing_conj, padd, star_add,
+        Bosonize.A08.oscPairing_conj, Bosonize.A08.oscPairing_conj]
+    have psmulleft (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M (z • r) s = star z * Bosonize.A08.oscPairing M r s := by
+      rw [← Bosonize.A08.oscPairing_conj, psmul, star_mul, Bosonize.A08.oscPairing_conj, mul_comm]
+    have hq (c s : ℝ) (x : Position L) (b : Bool)
+      (ν μ : Bosonize.A06.Orientation) (i : Fin M) :
+      qForm c s ν x (b, (μ, i)) =
+        (if μ = ν then (c : ℂ) *
+          (Bosonize.A01.canonicalRoot L) ^
+            ((if b then -(epsilon ν) else epsilon ν) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+            ((i.val : ℂ) + 1) else 0) +
+        (if μ = Bosonize.A07Interactions.oppositeOrientation ν then (s : ℂ) *
+          (Bosonize.A01.canonicalRoot L) ^
+            ((if b then epsilon ν else -(epsilon ν)) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+            ((i.val : ℂ) + 1) else 0) :=   by
+      classical
+      cases b <;> cases ν <;> cases μ <;>
+        simp [qForm, dressedModeForm, Bosonize.V1S1.dressedGeneratorForm,
+          epsilon, Bosonize.A07Interactions.oppositeOrientation, Finsupp.single_apply] <;> ring
+    have psumright (t : Finset (Bosonize.A08.OscGen M)) (v : Bosonize.A08.OscGen M → Bosonize.A08.OscPoly M)
+        (r : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M r (∑ g ∈ t, v g) = ∑ g ∈ t, Bosonize.A08.oscPairing M r (v g) := by
+      simp only [Bosonize.A08.oscPairing, map_sum]
+      simp_rw [Finset.mul_sum]
+      exact Finset.sum_comm
+    have psumleft (t : Finset (Bosonize.A08.OscGen M)) (v : Bosonize.A08.OscGen M → Bosonize.A08.OscPoly M)
+        (r : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M (∑ g ∈ t, v g) r = ∑ g ∈ t, Bosonize.A08.oscPairing M (v g) r := by
+      rw [← Bosonize.A08.oscPairing_conj, psumright, star_sum]
+      apply Finset.sum_congr rfl
+      intro g _
+      exact Bosonize.A08.oscPairing_conj M r (v g)
+    have hroot : (starRingEnd ℂ) (Bosonize.A01.canonicalRoot L) = (Bosonize.A01.canonicalRoot L)⁻¹ := by
+      unfold Bosonize.A01.canonicalRoot
+      rw [← Complex.exp_neg]
+      rw [← Complex.exp_conj]
+      congr 1
+      have htwo : (starRingEnd ℂ) (2 : ℂ) = 2 := Complex.conj_ofReal 2
+      simp [htwo]
+      ring
+    let f := if channel then xSForm (M := M) hp x else xDForm (M := M) hp x
+    have hherm (g : Bosonize.A08.OscGen M) : star (f g) = f (!g.1, g.2) := by
+      rcases g with ⟨b, ν, i⟩
+      cases channel <;> cases b <;> cases ν <;>
+        simp [f, xDForm, xSForm, hq, epsilon, Bosonize.A07Interactions.oppositeOrientation,
+          star_div₀, star_zpow₀, hroot, -zpow_neg, neg_mul] <;> ring <;> simp
+    have hrep (a : Bosonize.V1S1.OscLinearForm M) :
+        Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (Bosonize.V1S1.linearElement a)) =
+          ∑ g : Bosonize.A08.OscGen M, a g • Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (FreeAlgebra.ι ℂ g)) := by
+      simp only [Bosonize.V1S1.linearElement, map_sum, map_smul]
+      apply Finset.sum_subset (Finset.subset_univ _)
+      intro g _ hg
+      simp [Finsupp.notMem_support_iff.mp hg]
+    have hgen (g : Bosonize.A08.OscGen M) :
+        Bosonize.A08.oscPairing M p (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (FreeAlgebra.ι ℂ g)) q) =
+        Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (FreeAlgebra.ι ℂ (!g.1, g.2))) p) q := by
+      simpa [Bosonize.A08.wordElement, Bosonize.A08.wordDagger] using
+        Bosonize.A08.bogoliubovMap_word_adjoint M hp.c (-hp.s) [(!g.1, g.2)] p q
+    let e : Bosonize.A08.OscGen M ≃ Bosonize.A08.OscGen M :=
+      { toFun := fun g => (!g.1, g.2)
+        invFun := fun g => (!g.1, g.2)
+        left_inv := by intro g; simp
+        right_inv := by intro g; simp }
+    change Bosonize.A08.oscPairing M p (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (Bosonize.V1S1.linearElement f)) q) =
+      Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (Bosonize.V1S1.linearElement f)) p) q
+    rw [hrep]
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, psumright, psumleft, psmul, psmulleft]
+    rw [← Equiv.sum_comp e (fun g => star (f g) *
+      Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (FreeAlgebra.ι ℂ g)) p) q)]
+    apply Finset.sum_congr rfl
+    intro g _
+    rw [hgen, hherm]
+    simp [e]
+  let wordMap : List (Bosonize.A08.OscGen M) →* Bosonize.A08.OscAlgebra M :=
+    { toFun := Bosonize.A08.wordElement M
+      map_one' := by
+        change Bosonize.A08.wordElement M ([] : List (Bosonize.A08.OscGen M)) = 1
+        simp [Bosonize.A08.wordElement]
+      map_mul' := by
+        intro x y
+        change Bosonize.A08.wordElement M (x ++ y) =
+          Bosonize.A08.wordElement M x * Bosonize.A08.wordElement M y
+        simp [Bosonize.A08.wordElement, List.map_append, List.prod_append] }
+  let evalHom := MonoidAlgebra.lift ℂ (Bosonize.A08.OscAlgebra M)
+    (List (Bosonize.A08.OscGen M)) wordMap
+  have heval (x : OscSyntax M) : oscSyntaxEval x = evalHom x := by
+    simp [oscSyntaxEval, evalHom, MonoidAlgebra.lift_apply, wordMap]
+  have padd (r s t : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M r (s + t) =
+        Bosonize.A08.oscPairing M r s + Bosonize.A08.oscPairing M r t := by
+    simp only [Bosonize.A08.oscPairing, map_add, mul_add, Finset.sum_add_distrib]
+  have psmul (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M r (z • s) = z * Bosonize.A08.oscPairing M r s := by
+    simp only [Bosonize.A08.oscPairing, map_smul, smul_eq_mul]
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro k _
+    ring
+  have paddleft (r s t : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M (r + s) t =
+        Bosonize.A08.oscPairing M r t + Bosonize.A08.oscPairing M s t := by
+    rw [← Bosonize.A08.oscPairing_conj, padd, star_add,
+      Bosonize.A08.oscPairing_conj, Bosonize.A08.oscPairing_conj]
+  have psmulleft (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M (z • r) s = star z * Bosonize.A08.oscPairing M r s := by
+    rw [← Bosonize.A08.oscPairing_conj, psmul, star_mul, Bosonize.A08.oscPairing_conj, mul_comm]
+  have hseries (ι : ℂ) (k : ℕ) :
+      Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s)
+        (oscSyntaxEval (oscillatorExpWithScalar hp x channel ι k))) =
+      (((k.factorial : ℂ)⁻¹) * ι ^ k) • O ^ k := by
+    simp only [oscillatorExpWithScalar, heval, map_smul, map_pow]
+    rw [← heval, oscSyntax_roundtrip_freeAlgebra_contract]
+    simp only [smul_pow, smul_smul]
+    rfl
+  have hpowers (k : ℕ) (p q : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M p ((O ^ k) q) =
+      Bosonize.A08.oscPairing M ((O ^ k) p) q := by
+    induction k generalizing p q with
+    | zero => simp
+    | succ k ih =>
+        rw [pow_succ', Module.End.mul_apply, hO, ih]
+        rw [← Module.End.mul_apply, ← pow_succ, pow_succ']
+  unfold oscillatorExp
+  rw [hseries, hseries]
+  simp only [LinearMap.smul_apply, psmul, psmulleft]
+  rw [hpowers]
+  have hI : star (-Complex.I) = Complex.I := by simp
+  simp only [star_mul, star_inv₀, star_natCast, star_pow, hI]
+  ring
 
 theorem oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair)
@@ -1123,6 +1551,144 @@ theorem difference_variance_contract {M h : ℕ} (_hh : 0 < h)
       (if channel then xSForm (M := M) hp y - xSForm (M := M) hp x
         else xDForm (M := M) hp y - xDForm (M := M) hp x) =
       (4 : ℂ) * (if channel then gainS hp else gainD hp : ℂ) *
-        (dirichletCutoff (2 * h) M x y : ℂ) := by sorry
+        (dirichletCutoff (2 * h) M x y : ℂ) := by
+  classical
+  let L := 2 * h
+  let : Fintype Bosonize.A06.Orientation :=
+    ⟨{Bosonize.A06.Orientation.right, Bosonize.A06.Orientation.left}, by
+      intro ν; cases ν <;> simp⟩
+  have hq (c s : ℝ) (x : Position L) (b : Bool)
+      (ν μ : Bosonize.A06.Orientation) (i : Fin M) :
+      qForm c s ν x (b, (μ, i)) =
+        (if μ = ν then (c : ℂ) *
+          (Bosonize.A01.canonicalRoot L) ^
+            ((if b then -(epsilon ν) else epsilon ν) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+            ((i.val : ℂ) + 1) else 0) +
+        (if μ = Bosonize.A07Interactions.oppositeOrientation ν then (s : ℂ) *
+          (Bosonize.A01.canonicalRoot L) ^
+            ((if b then epsilon ν else -(epsilon ν)) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+            ((i.val : ℂ) + 1) else 0) := by
+    classical
+    cases b <;> cases ν <;> cases μ <;>
+      simp [qForm, dressedModeForm, Bosonize.V1S1.dressedGeneratorForm,
+        epsilon, Bosonize.A07Interactions.oppositeOrientation, Finsupp.single_apply] <;> ring
+
+
+  have hfield (hp : Bosonize.Ch18.HyperbolicPair) (x : Position L)
+      (channel b : Bool) (ν : Bosonize.A06.Orientation) (i : Fin M) :
+      (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x) (b, (ν, i)) =
+        (if channel && (ν == Bosonize.A06.Orientation.left) then (-1 : ℂ) else 1) *
+        (Bosonize.A01.canonicalRoot L) ^
+          ((if b then -(epsilon ν) else epsilon ν) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+          ((i.val : ℂ) + 1) := by
+    have hc : (hp.c : ℂ) ^ 2 - (hp.s : ℂ) ^ 2 = 1 := by exact_mod_cast hp.hyperbolic_id
+    cases channel <;> cases b <;> cases ν <;>
+      simp [xDForm, xSForm, hq, epsilon,
+        Bosonize.A07Interactions.oppositeOrientation] <;>
+      ring_nf <;>
+      rw [show (hp.c : ℂ) ^ 2 = 1 + (hp.s : ℂ) ^ 2 by linear_combination hc] <;>
+      ring
+  have hfull (f g : Bosonize.V1S1.OscLinearForm M) :
+      Bosonize.V1S1.contraction hp f g =
+        ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+          f i * g j * Bosonize.V1S1.generatorContractionExpected hp i j := by
+    rw [Bosonize.V1S1.contraction_coeff_formula]
+    have hg (i : Bosonize.A08.OscGen M) :
+        (∑ j ∈ g.support, f i * g j * Bosonize.V1S1.generatorContractionExpected hp i j) =
+        ∑ j : Bosonize.A08.OscGen M, f i * g j * Bosonize.V1S1.generatorContractionExpected hp i j := by
+      apply Finset.sum_subset (Finset.subset_univ _)
+      intro j _ hj
+      simp [Finsupp.notMem_support_iff.mp hj]
+    simp_rw [hg]
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro i _ hi
+    simp [Finsupp.notMem_support_iff.mp hi]
+  have hsumO (f : Bosonize.A06.Orientation → ℂ) :
+      (∑ ν, f ν) = f .right + f .left := by
+    change (∑ ν ∈ ({.right, .left} : Finset Bosonize.A06.Orientation), f ν) = _
+    simp
+  let F (z : Position (2 * h)) := if channel then xSForm (M := M) hp z else xDForm (M := M) hp z
+  let ζ := Bosonize.A01.canonicalRoot (2 * h)
+  let a (i : Fin M) (z : Position (2 * h)) : ℤ := ((i.val : ℤ) + 1) * (z.val : ℤ)
+  have hdiff : (if channel then xSForm (M := M) hp y - xSForm (M := M) hp x
+      else xDForm (M := M) hp y - xDForm (M := M) hp x) = F y - F x := by
+    cases channel <;> rfl
+  have hsymbolic : Bosonize.V1S1.contraction hp (F y - F x) (F y - F x) =
+      (2 : ℂ) * (if channel then gainS hp else gainD hp : ℂ) *
+        ∑ i : Fin M, ((ζ ^ (a i y) - ζ ^ (a i x)) *
+          (ζ ^ (-(a i y)) - ζ ^ (-(a i x)))) / ((i.val : ℂ) + 1) := by
+    rw [hfull]
+    simp only [F, Fintype.sum_prod_type, Fintype.sum_bool, hsumO, Finsupp.sub_apply, hfield]
+    cases channel <;>
+      simp [Bosonize.V1S1.generatorContractionExpected,
+        Bosonize.A07Interactions.oppositeOrientation, epsilon, mul_ite, gainD, gainS, -zpow_neg] <;>
+      rw [Finset.mul_sum] <;>
+      simp only [← Finset.sum_add_distrib] <;>
+      apply Finset.sum_congr rfl <;> intro i hi
+    all_goals
+      have hm : (i.val : ℂ) + 1 ≠ 0 := by exact_mod_cast Nat.succ_ne_zero i.val
+      simp only [ζ, a, L]
+      field_simp [hm]
+      ring
+  rw [hdiff, hsymbolic]
+  have hcos (L : ℕ) (n : ℤ) :
+      (Bosonize.A01.canonicalRoot L) ^ n +
+        (Bosonize.A01.canonicalRoot L) ^ (-n) =
+        2 * (Real.cos (2 * Real.pi * (n : ℝ) / (L : ℝ)) : ℂ) := by
+    have hexp (a : ℝ) : Complex.exp ((a : ℂ) * Complex.I) +
+        Complex.exp (-((a : ℂ) * Complex.I)) = 2 * (Real.cos a : ℂ) := by
+      rw [show -((a : ℂ) * Complex.I) = ((-a : ℝ) : ℂ) * Complex.I by push_cast; ring]
+      rw [Complex.exp_mul_I, Complex.exp_mul_I]
+      simp
+      ring
+    simp only [Bosonize.A01.canonicalRoot, ← Complex.exp_int_mul]
+    convert hexp (2 * Real.pi * (n : ℝ) / (L : ℝ)) using 2 <;> push_cast <;> ring
+  have hne : ζ ≠ 0 := Complex.exp_ne_zero _
+  have hcross (u v : ℤ) : (ζ ^ v - ζ ^ u) * (ζ ^ (-v) - ζ ^ (-u)) =
+      2 * (1 - (Real.cos (2 * Real.pi * ((u - v : ℤ) : ℝ) / ((2 * h : ℕ) : ℝ)) : ℂ)) := by
+    have hp (r t : ℤ) : ζ ^ r * ζ ^ t = ζ ^ (r + t) := (zpow_add₀ hne r t).symm
+    have hsame (r : ℤ) : ζ ^ r * ζ ^ (-r) = 1 := by rw [hp]; simp
+    have hxy : ζ ^ u * ζ ^ (-v) = ζ ^ (u - v) := by rw [hp]; rfl
+    have hyx : ζ ^ v * ζ ^ (-u) = ζ ^ (-(u - v)) := by rw [hp]; congr 1; ring
+    calc
+      _ = 2 - (ζ ^ (u - v) + ζ ^ (-(u - v))) := by
+        linear_combination (hsame u) + (hsame v) - hxy - hyx
+      _ = _ := by rw [hcos]; ring
+  have hcut : (dirichletCutoff (2 * h) M x y : ℂ) =
+      ∑ i : Fin M, ((1 - Real.cos (2 * Real.pi * ((i.val : ℝ) + 1) *
+        ((x.val : ℤ) - (y.val : ℤ)) / ((2 * h : ℕ) : ℝ))) / ((i.val : ℝ) + 1) : ℝ) := by
+    unfold dirichletCutoff
+    push_cast
+    symm
+    apply Finset.sum_bij (fun i _ => i.val + 1)
+    · intro i _
+      simp only [Finset.mem_Icc]
+      omega
+    · intro i _ j _ hij
+      apply Fin.ext
+      omega
+    · intro n hn
+      simp only [Finset.mem_Icc] at hn
+      exact ⟨⟨n - 1, by omega⟩, Finset.mem_univ _, by change n - 1 + 1 = n; omega⟩
+    · intro i _
+      simp
+  have hsumvar : (∑ i : Fin M, ((ζ ^ (a i y) - ζ ^ (a i x)) *
+      (ζ ^ (-(a i y)) - ζ ^ (-(a i x)))) / ((i.val : ℂ) + 1)) =
+      2 * (dirichletCutoff (2 * h) M x y : ℂ) := by
+    rw [hcut]
+    push_cast
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [hcross]
+    have hangle : (2 * Real.pi * (((a i x - a i y : ℤ) : ℝ)) / ((2 * h : ℕ) : ℝ)) =
+        2 * Real.pi * ((i.val : ℝ) + 1) * ((x.val : ℤ) - (y.val : ℤ)) / ((2 * h : ℕ) : ℝ) := by
+      simp only [a, Int.cast_sub, Int.cast_mul, Int.cast_add, Int.cast_natCast, Int.cast_one]
+      ring
+    rw [hangle]
+    push_cast
+    ring
+  rw [hsumvar]
+  ring
 
 end Bosonize.V1S2

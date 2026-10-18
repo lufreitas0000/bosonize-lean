@@ -1,6 +1,6 @@
 # V1-S2 charge words and formal vertices — Phase A companion
 
-Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in progress.** The reviewed interface was committed in `0610d1495ebc4e95dec323c27faf22966e55e9d2`. The October 17 scheduled resumption completed 18 additional contracts: 31 S2 theorem declarations are now proved and eight contracts remain placeholders. S2 is not proof-complete. The current source SHA-256 is `a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03`. The exact 18-proof partial package passed independent review; the receipt and fresh validation are in [`phase-b-proof-review-2026-10-17.json`](../plans/v1-s2/phase-b-proof-review-2026-10-17.json).
+Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in progress.** The interface baseline is `0610d1495ebc4e95dec323c27faf22966e55e9d2`. This resumption proved 23 additional contracts: 36 S2 theorem declarations are now complete, with three placeholders remaining (the Weyl correlator and two normal-ordering results). Current source SHA-256: `0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233`. Independent review covers all 23 changed proofs through the two exact partial-package receipts linked in the current checkpoint. S2 is not proof-complete; no Phase C or S3 work has started.
 
 The detailed candidate mathematical interface, source hashes, convention
 derivations, conditional correlator proof, normal-ordering audit, and checks
@@ -106,7 +106,7 @@ The scoped lock was committed in `0610d1495ebc4e95dec323c27faf22966e55e9d2`.
 Phase B has proved `chargeWord_comp_action_contract`,
 `oscSyntaxEval_one_contract`, `oscSyntaxEval_mul_contract`,
 `jointCoeffFunctional_product_contract`, `chargeGauge_unitary_contract`, and
-`source_phase_product_contract`. The current staging build succeeds with 26
+`source_phase_product_contract`. That earlier staging build succeeded with 26
 placeholder warnings, and strict scoped-lock verification passes. The earlier
 data-only audit covered 81 data declarations with standard axioms only; a
 fresh final theorem/dependency axiom audit remains outstanding.
@@ -126,3 +126,16 @@ The detailed inventory, failed search routes and next proof dependencies are
 in the current checkpoint. The commutator, field/exponential adjoints, variance,
 Weyl correlator and both normal-ordering statements remain open. No Phase C,
 S3, continuum, finite-CAR identification or publication acceptance is claimed.
+
+
+## Field/variance proof batch after the first 18-proof checkpoint
+
+The same-channel contraction symmetry, represented polynomial commutator,
+field Hermiticity, inverse-pullback exponential-coefficient adjoint and exact
+difference variance have now passed sandboxed compilation/axiom/target-warning
+gates and independent review. The exact five-proof receipt is
+[`phase-b-field-review-2026-10-17.json`](../plans/v1-s2/phase-b-field-review-2026-10-17.json).
+A fresh staging build has three placeholder warnings; all 36 completed theorem
+closures have standard axioms only. The main correlator and both prefactor
+contracts remain open. Historical partial-package counts above describe their
+recorded snapshots; the current checkpoint contains the complete live inventory.

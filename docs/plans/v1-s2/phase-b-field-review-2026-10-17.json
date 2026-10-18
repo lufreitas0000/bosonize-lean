@@ -1,0 +1,72 @@
+{
+  "scope": "Second partial V1-S2 Phase B proof package; full Phase B remains incomplete",
+  "source_sha256": "0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233",
+  "previous_partial_commit": "c2da192b29e068f9ac40e0958c77d2d81e604adb",
+  "previous_source_sha256": "a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03",
+  "newly_reviewed_contracts": [
+    "same_channel_commutator_contract",
+    "represented_same_channel_commutator_contract",
+    "field_adjoint_on_polynomials_contract",
+    "oscillatorExp_adjoint_coefficient_contract",
+    "difference_variance_contract"
+  ],
+  "completed_theorem_count": 36,
+  "pending_contracts": [
+    "coefficientwise_weyl_correlator_contract",
+    "dressed_normal_prefactor_contract",
+    "bare_normal_prefactor_contract"
+  ],
+  "review": {
+    "verdict": "PASS",
+    "reviewed_sha256": "b54f7fdbe407d44455cf22eed03b9a85f6cc02d1bdd3ccacd85a67a15fcd2ce9",
+    "reviewed_contracts": [
+      "same_channel_commutator_contract",
+      "represented_same_channel_commutator_contract",
+      "field_adjoint_on_polynomials_contract",
+      "oscillatorExp_adjoint_coefficient_contract",
+      "difference_variance_contract"
+    ],
+    "actionable_findings": [],
+    "remaining_gates": [
+      "PASS applies only to this five-proof partial package; it does not certify full Sprint completion.",
+      "No additional gates were identified within the reviewed diff; unreviewed/outstanding targets remain outside this review scope."
+    ]
+  },
+  "review_provenance": {
+    "provider": "openai",
+    "requested_alias": "api-fast",
+    "returned_model": "gpt-5.4-mini-2026-03-17",
+    "reasoning": "medium",
+    "charged_tokens": 23872,
+    "usage": {
+      "input_tokens": 21872,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 2000,
+      "output_tokens_details": {
+        "reasoning_tokens": 1819
+      },
+      "total_tokens": 23872
+    }
+  },
+  "review_prompt_sha256": "cf2b60733420c45a06d2dc6b537626780e77097601e8d42b2fe406ddfd69d00a",
+  "review_response_sha256": "104ed23a75cee3a3023753ccc961943436cb240641b2a3b14ebe4d965b96b6f7",
+  "validation": {
+    "strict_lock": "PASS: 1153 statements and 1211 frozen commands",
+    "core_lock": "PASS: all 36 existing Core files",
+    "build": "lake build BosonizeStubs: PASS, exactly 3 placeholder warnings and no other warnings",
+    "axiom_audit": "36 completed theorems: only propext, Classical.choice, Quot.sound",
+    "phase_b_complete": false,
+    "phase_c_started": false,
+    "s3_started": false
+  },
+  "reviewed_source_sha256": "b54f7fdbe407d44455cf22eed03b9a85f6cc02d1bdd3ccacd85a67a15fcd2ce9",
+  "post_review_whitespace_cleanup": {
+    "reviewed_source_sha256": "b54f7fdbe407d44455cf22eed03b9a85f6cc02d1bdd3ccacd85a67a15fcd2ce9",
+    "cleaned_source_sha256": "0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233",
+    "change": "Removed spaces from exactly four otherwise blank lines; all nonblank lines byte-identical",
+    "changed_blank_lines": 4
+  }
+}
