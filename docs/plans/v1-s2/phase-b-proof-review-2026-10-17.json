@@ -1,0 +1,112 @@
+{
+  "scope": "Partial V1-S2 Phase B proof package; not Phase B completion or Phase C acceptance",
+  "baseline_head": "083df9dbd7148a5c71ef09cce5a46558825a3907",
+  "baseline_source_sha256": "f3056b313db9d90f10d238be1a0555460026173e979ae82a195fdc81ec8a6a07",
+  "source_sha256": "a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03",
+  "changed_contracts": [
+    "jointPairing_tmul_factor_contract",
+    "chargeWord_adjoint_pairing_contract",
+    "oscSyntax_roundtrip_freeAlgebra_contract",
+    "oscSyntaxDagger_involutive_contract",
+    "oscSyntaxDagger_mul_contract",
+    "jointCoeffAction_mul_contract",
+    "jointCoeffAction_adjoint_pairing_contract",
+    "jointCoeffFunctional_is_matrix_coefficient_contract",
+    "jointCoeffFunctional_adjoint_contract",
+    "gauge_adapter_right_contract",
+    "gauge_adapter_left_contract",
+    "gauge_adapter_left_klein_contract",
+    "charge_selection_D_contract",
+    "charge_selection_S_contract",
+    "canonical_charge_selection_D_contract",
+    "canonical_charge_selection_S_contract",
+    "oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract",
+    "vertexSeriesAdjoint_reverses_product_contract"
+  ],
+  "completed_theorem_count": 31,
+  "pending_contracts": [
+    "coefficientwise_weyl_correlator_contract",
+    "dressed_normal_prefactor_contract",
+    "bare_normal_prefactor_contract",
+    "same_channel_commutator_contract",
+    "represented_same_channel_commutator_contract",
+    "field_adjoint_on_polynomials_contract",
+    "oscillatorExp_adjoint_coefficient_contract",
+    "difference_variance_contract"
+  ],
+  "review": {
+    "verdict": "PASS",
+    "reviewed_sha256": "a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03",
+    "reviewed_contracts": [
+      "jointPairing_tmul_factor_contract",
+      "chargeWord_adjoint_pairing_contract",
+      "oscSyntax_roundtrip_freeAlgebra_contract",
+      "oscSyntaxDagger_involutive_contract",
+      "oscSyntaxDagger_mul_contract",
+      "jointCoeffAction_mul_contract",
+      "jointCoeffAction_adjoint_pairing_contract",
+      "jointCoeffFunctional_is_matrix_coefficient_contract",
+      "jointCoeffFunctional_product_contract",
+      "jointCoeffFunctional_adjoint_contract",
+      "gauge_adapter_right_contract",
+      "gauge_adapter_left_contract",
+      "gauge_adapter_left_klein_contract",
+      "source_phase_product_contract",
+      "charge_selection_D_contract",
+      "charge_selection_S_contract",
+      "canonical_charge_selection_D_contract",
+      "canonical_charge_selection_S_contract",
+      "oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract",
+      "vertexSeriesAdjoint_reverses_product_contract"
+    ],
+    "actionable_findings": [],
+    "open_gates": [
+      "Unchanged explicit stub: same_channel_commutator_contract",
+      "Unchanged explicit stub: represented_same_channel_commutator_contract",
+      "Unchanged explicit stub: field_adjoint_on_polynomials_contract",
+      "Unchanged explicit stub: oscillatorExp_adjoint_coefficient_contract",
+      "Unchanged explicit stub: coefficientwise_weyl_correlator_contract",
+      "Unchanged explicit stub: dressed_normal_prefactor_contract",
+      "Unchanged explicit stub: bare_normal_prefactor_contract",
+      "Unchanged explicit stub: difference_variance_contract"
+    ]
+  },
+  "review_provenance": {
+    "provider": "openai",
+    "requested_alias": "api-fast",
+    "returned_model": "gpt-5.4-mini-2026-03-17",
+    "reasoning": "medium",
+    "charged_tokens": 33026,
+    "usage": {
+      "input_tokens": 28490,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 4536,
+      "output_tokens_details": {
+        "reasoning_tokens": 4142
+      },
+      "total_tokens": 33026
+    }
+  },
+  "review_prompt_sha256": "b93df470cd99f2ffddbc2188c9dcd2b8654046ae4f49968430282c309c4718cb",
+  "review_response_sha256": "faa4904892030f367619d6924cd4f57269195ae83b7c43f56c881d4dcaca5e78",
+  "validation": {
+    "strict_lock": "PASS: 1153 statements and 1211 frozen commands",
+    "core_lock": "PASS: all 36 existing Core files",
+    "build": "lake build BosonizeStubs: PASS, exactly 8 declaration-uses-sorry warnings and no other warnings",
+    "axioms": {
+      "completed_theorems": 31,
+      "allowed": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unexpected": []
+    },
+    "phase_b_complete": false,
+    "phase_c_started": false,
+    "s3_started": false
+  }
+}

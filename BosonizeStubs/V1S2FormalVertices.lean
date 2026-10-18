@@ -166,7 +166,54 @@ noncomputable def chargePairing (v u : ChargeVec) : ℂ :=
 theorem jointPairing_tmul_factor_contract {M : ℕ}
     (v u : ChargeVec) (p q : Bosonize.A08.OscPoly M) :
     jointPairing (TensorProduct.tmul ℂ v p) (TensorProduct.tmul ℂ u q) =
-      chargePairing v u * Bosonize.A08.oscPairing M p q := by sorry
+      chargePairing v u * Bosonize.A08.oscPairing M p q := by
+  classical
+  let b := jointBasisOf M
+  have hrepr (r : ChargeVec) (s : Bosonize.A08.OscPoly M) (i : JointBasisIndex M) :
+      b.repr (TensorProduct.tmul ℂ r s) i = s.coeff i.2 * r i.1 := by
+    rcases i with ⟨N, k⟩
+    change (Module.Basis.tensorProduct Finsupp.basisSingleOne
+      (MvPolynomial.basisMonomials (Bosonize.A08.OscMode M) ℂ)).repr
+        (TensorProduct.tmul ℂ r s) (N, k) = _
+    rw [Module.Basis.tensorProduct_repr_tmul_apply]
+    rfl
+  have hleft (r s : JointCarrier M) : jointPairing r s =
+      ∑ i ∈ (b.repr r).support, star (b.repr r i) * jointBasisWeight i * b.repr s i := by
+    symm
+    apply Finset.sum_subset Finset.subset_union_left
+    intro i _ hi
+    simp [Finsupp.notMem_support_iff.mp hi]
+  have hcharge : chargePairing v u = ∑ N ∈ v.support, star (v N) * u N := by
+    symm
+    apply Finset.sum_subset Finset.subset_union_left
+    intro i _ hi
+    simp [Finsupp.notMem_support_iff.mp hi]
+  have hsupp : (b.repr (TensorProduct.tmul ℂ v p)).support ⊆ v.support ×ˢ p.support := by
+    intro i hi
+    have hn : p.coeff i.2 * v i.1 ≠ 0 := by
+      simpa only [Finsupp.mem_support_iff, hrepr] using hi
+    exact Finset.mem_product.mpr ⟨Finsupp.mem_support_iff.mpr (right_ne_zero_of_mul hn),
+      MvPolynomial.mem_support_iff.mpr (left_ne_zero_of_mul hn)⟩
+  rw [hleft]
+  calc
+    _ = ∑ i ∈ v.support ×ˢ p.support,
+        star (b.repr (TensorProduct.tmul ℂ v p) i) * jointBasisWeight i *
+          b.repr (TensorProduct.tmul ℂ u q) i := by
+      apply Finset.sum_subset hsupp
+      intro i _ hi
+      simp [Finsupp.notMem_support_iff.mp hi]
+    _ = (∑ N ∈ v.support, star (v N) * u N) *
+        Bosonize.A08.oscPairing M p q := by
+      simp only [Finset.sum_product, hrepr, jointBasisWeight, star_mul,
+        Bosonize.A08.oscPairing, MvPolynomial.lcoeff_apply]
+      rw [Finset.sum_mul]
+      apply Finset.sum_congr rfl
+      intro N _
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro k _
+      ring
+    _ = chargePairing v u * Bosonize.A08.oscPairing M p q := by rw [hcharge]
 
 def ChargeWord.comp (f g : ChargeWord) : ChargeWord where
   target := g.target.trans f.target
@@ -190,7 +237,48 @@ theorem chargeWord_comp_action_contract (f g : ChargeWord) (v : ChargeVec) :
 
 theorem chargeWord_adjoint_pairing_contract (f : ChargeWord) (v u : ChargeVec) :
     chargePairing (chargeWordAction f v) u =
-      chargePairing v (chargeWordAction (ChargeWord.adjoint f) u) := by sorry
+      chargePairing v (chargeWordAction (ChargeWord.adjoint f) u) := by
+  classical
+  have hleft (x y : ChargeVec) : chargePairing x y =
+      ∑ N ∈ x.support, star (x N) * y N := by
+    symm
+    apply Finset.sum_subset Finset.subset_union_left
+    intro N _ hN
+    simp [Finsupp.notMem_support_iff.mp hN]
+  have hright (x y : ChargeVec) : chargePairing x y =
+      ∑ N ∈ y.support, star (x N) * y N := by
+    symm
+    apply Finset.sum_subset Finset.subset_union_right
+    intro N _ hN
+    simp [Finsupp.notMem_support_iff.mp hN]
+  have hsingle (N : Charge) (z : ℂ) (y : ChargeVec) :
+      chargePairing (Finsupp.single N z) y = star z * y N := by
+    rw [hleft]
+    change (Finsupp.single N z).sum (fun N a => star a * y N) = _
+    exact Finsupp.sum_single_index (by simp)
+  have hadd (x y z : ChargeVec) :
+      chargePairing (x + y) z = chargePairing x z + chargePairing y z := by
+    simp only [hright, Finsupp.add_apply, star_add, add_mul, Finset.sum_add_distrib]
+  induction v using Finsupp.induction_linear with
+  | zero => simp [chargeWordAction, chargePairing]
+  | add v w hv hw =>
+      rw [chargeWordAction_add_contract, hadd, hadd, hv, hw]
+  | single N z =>
+      have haction (w : ChargeWord) (x : ChargeVec) (K : Charge) :
+          chargeWordAction w x K = x (w.target.symm K) * w.amplitude (w.target.symm K) := by
+        unfold chargeWordAction
+        rw [Finsupp.sum_apply]
+        simp only [Finsupp.smul_apply, smul_eq_mul, Finsupp.single_apply, mul_ite,
+          mul_one, mul_zero, ← Equiv.eq_symm_apply]
+        simpa using
+          (Finsupp.sum_eq_single (f := x) (w.target.symm K)
+            (g := fun b c => if b = w.target.symm K then c * w.amplitude b else 0)
+            (by intro b _ hne; simp [hne]) (by simp))
+      have hsact : chargeWordAction f (Finsupp.single N z) =
+          Finsupp.single (f.target N) (z * f.amplitude N) := by
+        simp [chargeWordAction]
+      rw [hsact, hsingle, hsingle, haction]
+      simp [ChargeWord.adjoint, star_mul, mul_assoc, mul_comm]
 
 noncomputable def kleinD (L : ℕ) (x : Position L) : ChargeWord where
   target := chargeShiftDEquiv
@@ -266,7 +354,26 @@ noncomputable def oscSyntaxEval {M : ℕ} (a : OscSyntax M) : Bosonize.A08.OscAl
 
 theorem oscSyntax_roundtrip_freeAlgebra_contract {M : ℕ}
     (a : Bosonize.A08.OscAlgebra M) :
-    oscSyntaxEval (oscFreeToSyntax M a) = a := by sorry
+    oscSyntaxEval (oscFreeToSyntax M a) = a := by
+  let wordMap : List (Bosonize.A08.OscGen M) →* Bosonize.A08.OscAlgebra M :=
+    { toFun := Bosonize.A08.wordElement M
+      map_one' := by
+        change Bosonize.A08.wordElement M ([] : List (Bosonize.A08.OscGen M)) = 1
+        simp [Bosonize.A08.wordElement]
+      map_mul' := by
+        intro x y
+        change Bosonize.A08.wordElement M (x ++ y) =
+          Bosonize.A08.wordElement M x * Bosonize.A08.wordElement M y
+        simp [Bosonize.A08.wordElement, List.map_append, List.prod_append] }
+  let evalHom := MonoidAlgebra.lift ℂ (Bosonize.A08.OscAlgebra M)
+    (List (Bosonize.A08.OscGen M)) wordMap
+  have heval (x : OscSyntax M) : oscSyntaxEval x = evalHom x := by
+    simp [oscSyntaxEval, evalHom, MonoidAlgebra.lift_apply, wordMap]
+  have hcomp : evalHom.comp (oscFreeToSyntax M) = AlgHom.id ℂ (Bosonize.A08.OscAlgebra M) := by
+    ext g
+    simp [oscFreeToSyntax, evalHom, wordMap, Bosonize.A08.wordElement]
+  rw [heval]
+  exact AlgHom.congr_fun hcomp a
 
 theorem oscSyntaxEval_one_contract {M : ℕ} :
     oscSyntaxEval (1 : OscSyntax M) = 1 := by
@@ -295,10 +402,48 @@ theorem oscSyntaxEval_mul_contract {M : ℕ} (a b : OscSyntax M) :
     (List (Bosonize.A08.OscGen M)) wordMap).map_mul a b
 
 theorem oscSyntaxDagger_involutive_contract {M : ℕ} (a : OscSyntax M) :
-    oscSyntaxDagger (oscSyntaxDagger a) = a := by sorry
+    oscSyntaxDagger (oscSyntaxDagger a) = a := by
+  classical
+  have hword (w : List (Bosonize.A08.OscGen M)) :
+      Bosonize.A08.wordDagger (Bosonize.A08.wordDagger w) = w := by
+    simp [Bosonize.A08.wordDagger, List.map_reverse, List.map_map, Function.comp_def]
+  simp only [oscSyntaxDagger, MonoidAlgebra.coeff_ofCoeff]
+  rw [Finsupp.sum_sum_index (by intro w; simp)
+    (by intro w x y; simp [star_add, Finsupp.single_add])]
+  have hs (w : List (Bosonize.A08.OscGen M)) (z : ℂ) :
+      (Finsupp.single w z).sum (fun v t => Finsupp.single (Bosonize.A08.wordDagger v) (star t)) =
+        Finsupp.single (Bosonize.A08.wordDagger w) (star z) :=
+    Finsupp.sum_single_index (by simp)
+  simp only [hs, star_star, hword]
+  simp
 
 theorem oscSyntaxDagger_mul_contract {M : ℕ} (a b : OscSyntax M) :
-    oscSyntaxDagger (a * b) = oscSyntaxDagger b * oscSyntaxDagger a := by sorry
+    oscSyntaxDagger (a * b) = oscSyntaxDagger b * oscSyntaxDagger a := by
+  classical
+  have hzero : oscSyntaxDagger (0 : OscSyntax M) = 0 := by simp [oscSyntaxDagger]
+  have hadd (x y : OscSyntax M) :
+      oscSyntaxDagger (x + y) = oscSyntaxDagger x + oscSyntaxDagger y := by
+    simp only [oscSyntaxDagger, MonoidAlgebra.coeff_add]
+    rw [Finsupp.sum_add_index' (by intro w; simp)
+      (by intro w z t; simp [star_add, Finsupp.single_add])]
+    exact MonoidAlgebra.ofCoeff_add _ _
+  have hsingle (w : List (Bosonize.A08.OscGen M)) (z : ℂ) :
+      oscSyntaxDagger (MonoidAlgebra.single w z) =
+        MonoidAlgebra.single (Bosonize.A08.wordDagger w) (star z) := by
+    simp [oscSyntaxDagger]
+  induction a using MonoidAlgebra.induction_linear with
+  | zero => simp [hzero]
+  | add x y hx hy => rw [add_mul, hadd, hx, hy, hadd, mul_add]
+  | single w z =>
+      induction b using MonoidAlgebra.induction_linear with
+      | zero => simp [hzero]
+      | add x y hx hy => rw [mul_add, hadd, hx, hy, hadd, add_mul]
+      | single v t =>
+          simp only [MonoidAlgebra.single_mul_single, hsingle]
+          change MonoidAlgebra.single (Bosonize.A08.wordDagger (w ++ v)) (star (z * t)) =
+            MonoidAlgebra.single (Bosonize.A08.wordDagger v ++ Bosonize.A08.wordDagger w)
+              (star t * star z)
+          simp [Bosonize.A08.wordDagger, mul_comm]
 
 def vertexCoeff (M : ℕ) := ChargeWord × OscSyntax M
 
@@ -402,7 +547,17 @@ noncomputable def jointCoeffFunctional {M : ℕ} (hp : Bosonize.Ch18.HyperbolicP
 theorem jointCoeffAction_mul_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (a b : vertexCoeff M) :
     jointCoeffAction hp (vertexCoeffMul a b) =
-      (jointCoeffAction hp a).comp (jointCoeffAction hp b) := by sorry
+      (jointCoeffAction hp a).comp (jointCoeffAction hp b) := by
+  rcases a with ⟨a, x⟩
+  rcases b with ⟨b, y⟩
+  apply TensorProduct.ext'
+  intro v p
+  simp only [jointCoeffAction, vertexCoeffMul, TensorProduct.map_tmul,
+    LinearMap.comp_apply, oscSyntaxEval_mul_contract, map_mul,
+    Module.End.mul_apply]
+  change TensorProduct.tmul ℂ (chargeWordAction (ChargeWord.comp a b) v) _ =
+    TensorProduct.tmul ℂ (chargeWordAction a (chargeWordAction b v)) _
+  rw [chargeWord_comp_action_contract]
 
 theorem jointCoeffAction_adjoint_factor_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (a : vertexCoeff M) :
@@ -420,12 +575,114 @@ theorem jointCoeffAction_adjoint_pairing_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (a : vertexCoeff M)
     (v u : JointCarrier M) :
     jointPairing (jointCoeffAction hp a v) u =
-      jointPairing v (jointCoeffAction hp (vertexCoeffAdjoint a) u) := by sorry
+      jointPairing v (jointCoeffAction hp (vertexCoeffAdjoint a) u) := by
+  classical
+  rcases a with ⟨f, s⟩
+  have hosc (a : OscSyntax M) (p q : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M p
+        (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval a)) q) =
+      Bosonize.A08.oscPairing M
+        (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s)
+          (oscSyntaxEval (oscSyntaxDagger a))) p) q := by
+    classical
+    have padd (r s t : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M r (s + t) =
+          Bosonize.A08.oscPairing M r s + Bosonize.A08.oscPairing M r t := by
+      simp only [Bosonize.A08.oscPairing, map_add, mul_add, Finset.sum_add_distrib]
+    have psmul (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M r (z • s) = z * Bosonize.A08.oscPairing M r s := by
+      simp only [Bosonize.A08.oscPairing, map_smul, smul_eq_mul]
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro k _
+      ring
+    have paddleft (r s t : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M (r + s) t =
+          Bosonize.A08.oscPairing M r t + Bosonize.A08.oscPairing M s t := by
+      rw [← Bosonize.A08.oscPairing_conj, padd, star_add,
+        Bosonize.A08.oscPairing_conj, Bosonize.A08.oscPairing_conj]
+    have psmulleft (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+        Bosonize.A08.oscPairing M (z • r) s = star z * Bosonize.A08.oscPairing M r s := by
+      rw [← Bosonize.A08.oscPairing_conj, psmul, star_mul, Bosonize.A08.oscPairing_conj, mul_comm]
+    have dadd (x y : OscSyntax M) :
+        oscSyntaxDagger (x + y) = oscSyntaxDagger x + oscSyntaxDagger y := by
+      simp only [oscSyntaxDagger, MonoidAlgebra.coeff_add]
+      rw [Finsupp.sum_add_index' (by intro w; simp)
+        (by intro w z t; simp [star_add, Finsupp.single_add])]
+      exact MonoidAlgebra.ofCoeff_add _ _
+    have dsingle (w : List (Bosonize.A08.OscGen M)) (z : ℂ) :
+        oscSyntaxDagger (MonoidAlgebra.single w z) =
+          MonoidAlgebra.single (Bosonize.A08.wordDagger w) (star z) := by
+      simp [oscSyntaxDagger]
+    have eadd (x y : OscSyntax M) : oscSyntaxEval (x + y) = oscSyntaxEval x + oscSyntaxEval y := by
+      simp only [oscSyntaxEval, MonoidAlgebra.coeff_add]
+      exact Finsupp.sum_add_index' (by intro w; simp) (by intro w z t; simp [add_smul])
+    have esingle (w : List (Bosonize.A08.OscGen M)) (z : ℂ) :
+        oscSyntaxEval (MonoidAlgebra.single w z) = z • Bosonize.A08.wordElement M w := by
+      simp [oscSyntaxEval]
+    have hword (w : List (Bosonize.A08.OscGen M)) :
+        Bosonize.A08.wordDagger (Bosonize.A08.wordDagger w) = w := by
+      simp [Bosonize.A08.wordDagger, List.map_reverse, List.map_map, Function.comp_def]
+    induction a using MonoidAlgebra.induction_linear with
+    | zero => simp [oscSyntaxDagger, oscSyntaxEval, Bosonize.A08.oscPairing]
+    | add x y hx hy =>
+        simp only [dadd, eadd, map_add, LinearMap.add_apply, padd, paddleft]
+        rw [hx, hy]
+    | single w z =>
+        rw [dsingle, esingle, esingle]
+        simp only [map_smul, LinearMap.smul_apply, psmul, psmulleft, star_star]
+        congr 1
+        simpa only [hword] using
+          Bosonize.A08.bogoliubovMap_word_adjoint M hp.c (-hp.s)
+            (Bosonize.A08.wordDagger w) p q
+  let b := jointBasisOf M
+  have hleft (r s : JointCarrier M) : jointPairing r s =
+      ∑ i ∈ (b.repr r).support, star (b.repr r i) * jointBasisWeight i * b.repr s i := by
+    symm
+    apply Finset.sum_subset Finset.subset_union_left
+    intro i _ hi
+    simp [Finsupp.notMem_support_iff.mp hi]
+  have hright (r s : JointCarrier M) : jointPairing r s =
+      ∑ i ∈ (b.repr s).support, star (b.repr r i) * jointBasisWeight i * b.repr s i := by
+    symm
+    apply Finset.sum_subset Finset.subset_union_right
+    intro i _ hi
+    simp [Finsupp.notMem_support_iff.mp hi]
+  have paddright (r s t : JointCarrier M) : jointPairing r (s + t) =
+      jointPairing r s + jointPairing r t := by
+    simp only [hleft, map_add, Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
+  have paddleft (r s t : JointCarrier M) : jointPairing (r + s) t =
+      jointPairing r t + jointPairing s t := by
+    simp only [hright, map_add, Finsupp.add_apply, star_add, add_mul, Finset.sum_add_distrib]
+  induction v using TensorProduct.inductionOn with
+  | add v w hv hw =>
+      simp only [map_add, paddleft, hv, hw]
+  | tmul v p =>
+      induction u using TensorProduct.inductionOn with
+      | add u w hu hw => simp only [map_add, paddright, hu, hw]
+      | tmul u q =>
+          simp only [jointCoeffAction, vertexCoeffAdjoint, TensorProduct.map_tmul,
+            jointPairing_tmul_factor_contract, chargeWordActionLinear]
+          change chargePairing (chargeWordAction f v) u * _ =
+            chargePairing v (chargeWordAction (ChargeWord.adjoint f) u) * _
+          rw [chargeWord_adjoint_pairing_contract]
+          congr 1
+          simpa only [oscSyntaxDagger_involutive_contract] using
+            (hosc (oscSyntaxDagger s) p q).symm
 
 theorem jointCoeffFunctional_is_matrix_coefficient_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) :
     jointCoeffFunctional hp N a =
-      jointPairing (jointBasis M N) (jointCoeffAction hp a (jointBasis M N)) := by sorry
+      jointPairing (jointBasis M N) (jointCoeffAction hp a (jointBasis M N)) := by
+  classical
+  have hcharge (v : ChargeVec) : chargePairing (Finsupp.single N 1) v = v N := by
+    simp [chargePairing, Finsupp.single_apply]
+  have hosc (p : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M 1 p = MvPolynomial.lcoeff ℂ 0 p := by
+    simp [Bosonize.A08.oscPairing, Bosonize.A08.oscMonomialNorm]
+  simp only [jointCoeffFunctional, jointCoeffAction, jointBasis,
+    TensorProduct.map_tmul, jointTensorFunctional_tmul,
+    jointPairing_tmul_factor_contract, hcharge, hosc]
 
 theorem jointCoeffFunctional_product_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) :
@@ -444,7 +701,20 @@ theorem jointCoeffFunctional_product_contract {M : ℕ}
 theorem jointCoeffFunctional_adjoint_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) :
     jointCoeffFunctional hp N (vertexCoeffAdjoint a) =
-      star (jointCoeffFunctional hp N a) := by sorry
+      star (jointCoeffFunctional hp N a) := by
+  classical
+  have hconj (v u : JointCarrier M) : star (jointPairing v u) = jointPairing u v := by
+    unfold jointPairing
+    simp only [star_sum, star_mul, star_star]
+    rw [Finset.union_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    simp only [jointBasisWeight, star_natCast]
+    ring
+  rw [jointCoeffFunctional_is_matrix_coefficient_contract,
+    jointCoeffFunctional_is_matrix_coefficient_contract,
+    ← jointCoeffAction_adjoint_pairing_contract]
+  exact (hconj _ _).symm
 
 noncomputable def jointSeriesCoeffFunctional {M : ℕ} (hp : Bosonize.Ch18.HyperbolicPair)
     (N : Charge) (a : vertexCoeff M) : ℂ := jointCoeffFunctional hp N a
@@ -549,16 +819,41 @@ theorem chargeGauge_unitary_contract (h : ℕ) (N : Charge) :
 
 theorem gauge_adapter_right_contract (h : ℕ) (N : Charge) :
     chargeGauge h (chargeShiftR N) / chargeGauge h N =
-      (-1 : ℂ) ^ (h + N.1 - 1) := by sorry
+      (-1 : ℂ) ^ (h + N.1 - 1) := by
+  have hdiff : chargeGaugeExponent h (chargeShiftR N) - chargeGaugeExponent h N =
+      -((h : ℤ) + N.1 - 1) := by
+    have hp : (N.1 - 1) * (N.1 - 1 - 1) = N.1 * (N.1 - 1) - 2 * (N.1 - 1) := by ring
+    unfold chargeGaugeExponent chargeShiftR
+    dsimp
+    have hlin : (h : ℤ) * (N.1 - 1) = (h : ℤ) * N.1 - h := by ring
+    rw [hp, hlin]
+    omega
+  unfold chargeGauge
+  rw [← zpow_sub₀ (by norm_num : (-1 : ℂ) ≠ 0), hdiff, zpow_neg]
+  rw [← inv_zpow]
+  norm_num
 
 theorem gauge_adapter_left_contract (h : ℕ) (N : Charge) :
     chargeGauge h (chargeShiftL N) / chargeGauge h N =
-      (-1 : ℂ) ^ (N.2 - 1) := by sorry
+      (-1 : ℂ) ^ (N.2 - 1) := by
+  have hdiff : chargeGaugeExponent h (chargeShiftL N) - chargeGaugeExponent h N =
+      -(N.2 - 1) := by
+    have hp : (N.2 - 1) * (N.2 - 1 - 1) = N.2 * (N.2 - 1) - 2 * (N.2 - 1) := by ring
+    unfold chargeGaugeExponent chargeShiftL
+    dsimp
+    rw [hp]
+    omega
+  unfold chargeGauge
+  rw [← zpow_sub₀ (by norm_num : (-1 : ℂ) ≠ 0), hdiff, zpow_neg, ← inv_zpow]
+  norm_num
 
 theorem gauge_adapter_left_klein_contract (h : ℕ) (N : Charge) :
     (-1 : ℂ) ^ N.1 *
         (chargeGauge h (chargeShiftL N) / chargeGauge h N) =
-      (-1 : ℂ) ^ (N.1 + N.2 - 1) := by sorry
+      (-1 : ℂ) ^ (N.1 + N.2 - 1) := by
+  rw [gauge_adapter_left_contract, ← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0)]
+  congr 1
+  omega
 
 theorem source_phase_product_contract (L : ℕ) (_hL : 0 < L) (a : ℤ)
     (x y : Position L) :
@@ -580,27 +875,97 @@ theorem charge_selection_D_contract (L : ℕ) (_hL : 0 < L) (x y : Position L) (
     chargeBasisExpectation N
       (ChargeWord.comp (kleinDAdj L x) (kleinD L y)) =
         Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L)
-          (aD N) ((y.val : ℤ) - (x.val : ℤ)) := by sorry
+          (aD N) ((y.val : ℤ) - (x.val : ℤ)) := by
+  have hinv : inverseShiftD (chargeShiftDEquiv N) = N := chargeShiftDEquiv.symm_apply_apply N
+  have hsign : (-1 : ℂ) ^ N.1 * star ((-1 : ℂ) ^ N.1) = 1 := by
+    rw [star_zpow₀, ← mul_zpow]
+    norm_num
+  change (if chargeShiftDEquiv.symm (chargeShiftDEquiv N) = N then
+    ((-1 : ℂ) ^ N.1 * chargePhase L (aD N) y) *
+      star ((-1 : ℂ) ^ (inverseShiftD (chargeShiftDEquiv N)).1 *
+        chargePhase L (aD (inverseShiftD (chargeShiftDEquiv N))) x) else 0) = _
+  rw [chargeShiftDEquiv.symm_apply_apply, hinv]
+  simp only [ite_true, eq_self, star_mul]
+  calc
+    _ = ((-1 : ℂ) ^ N.1 * star ((-1 : ℂ) ^ N.1)) *
+        (chargePhase L (aD N) y * star (chargePhase L (aD N) x)) := by ring
+    _ = _ := by rw [hsign, one_mul, source_phase_product_contract L _hL (aD N) y x]
 
 theorem charge_selection_S_contract (L : ℕ) (_hL : 0 < L) (x y : Position L) (N : Charge) :
     chargeBasisExpectation N
       (ChargeWord.comp (kleinSAdj L x) (kleinS L y)) =
         Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L)
-          (aS N) ((y.val : ℤ) - (x.val : ℤ)) := by sorry
+          (aS N) ((y.val : ℤ) - (x.val : ℤ)) := by
+  have hinv : inverseShiftS (chargeShiftSEquiv N) = N := chargeShiftSEquiv.symm_apply_apply N
+  have hsign : (-1 : ℂ) ^ N.1 * star ((-1 : ℂ) ^ N.1) = 1 := by
+    rw [star_zpow₀, ← mul_zpow]
+    norm_num
+  change (if chargeShiftSEquiv.symm (chargeShiftSEquiv N) = N then
+    ((-1 : ℂ) ^ N.1 * chargePhase L (aS N) y) *
+      star ((-1 : ℂ) ^ (inverseShiftS (chargeShiftSEquiv N)).1 *
+        chargePhase L (aS (inverseShiftS (chargeShiftSEquiv N))) x) else 0) = _
+  rw [chargeShiftSEquiv.symm_apply_apply, hinv]
+  simp only [ite_true, eq_self, star_mul]
+  calc
+    _ = ((-1 : ℂ) ^ N.1 * star ((-1 : ℂ) ^ N.1)) *
+        (chargePhase L (aS N) y * star (chargePhase L (aS N) x)) := by ring
+    _ = _ := by rw [hsign, one_mul, source_phase_product_contract L _hL (aS N) y x]
 
 theorem canonical_charge_selection_D_contract (h : ℕ) (L : ℕ) (_hL : 0 < L)
     (x y : Position L) (N : Charge) :
     chargeBasisExpectation N
       (ChargeWord.comp (canonicalKleinDAdj h L x) (canonicalKleinD h L y)) =
         Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L)
-          (aD N) ((y.val : ℤ) - (x.val : ℤ)) := by sorry
+          (aD N) ((y.val : ℤ) - (x.val : ℤ)) := by
+  have hinv : inverseShiftD (chargeShiftDEquiv N) = N := chargeShiftDEquiv.symm_apply_apply N
+  have hunit (k : ℤ) : (-1 : ℂ) ^ k * star ((-1 : ℂ) ^ k) = 1 := by
+    rw [star_zpow₀, ← mul_zpow]
+    norm_num
+  have hg (K : Charge) : chargeGauge h K * star (chargeGauge h K) = 1 := hunit _
+  change (if chargeShiftDEquiv.symm (chargeShiftDEquiv N) = N then
+    (chargeGauge h (chargeShiftD N) * ((-1 : ℂ) ^ N.1 * chargePhase L (aD N) y) *
+      star (chargeGauge h N)) *
+    star (chargeGauge h (chargeShiftD (inverseShiftD (chargeShiftDEquiv N))) *
+      ((-1 : ℂ) ^ (inverseShiftD (chargeShiftDEquiv N)).1 *
+        chargePhase L (aD (inverseShiftD (chargeShiftDEquiv N))) x) *
+      star (chargeGauge h (inverseShiftD (chargeShiftDEquiv N)))) else 0) = _
+  rw [chargeShiftDEquiv.symm_apply_apply, hinv]
+  simp only [ite_true, eq_self, star_mul, star_star]
+  calc
+    _ = (chargeGauge h (chargeShiftD N) * star (chargeGauge h (chargeShiftD N))) *
+        (chargeGauge h N * star (chargeGauge h N)) *
+        ((-1 : ℂ) ^ N.1 * star ((-1 : ℂ) ^ N.1)) *
+        (chargePhase L (aD N) y * star (chargePhase L (aD N) x)) := by ring
+    _ = _ := by rw [hg, hg, hunit, one_mul, one_mul, one_mul,
+      source_phase_product_contract L _hL (aD N) y x]
 
 theorem canonical_charge_selection_S_contract (h : ℕ) (L : ℕ) (_hL : 0 < L)
     (x y : Position L) (N : Charge) :
     chargeBasisExpectation N
       (ChargeWord.comp (canonicalKleinSAdj h L x) (canonicalKleinS h L y)) =
         Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L)
-          (aS N) ((y.val : ℤ) - (x.val : ℤ)) := by sorry
+          (aS N) ((y.val : ℤ) - (x.val : ℤ)) := by
+  have hinv : inverseShiftS (chargeShiftSEquiv N) = N := chargeShiftSEquiv.symm_apply_apply N
+  have hunit (k : ℤ) : (-1 : ℂ) ^ k * star ((-1 : ℂ) ^ k) = 1 := by
+    rw [star_zpow₀, ← mul_zpow]
+    norm_num
+  have hg (K : Charge) : chargeGauge h K * star (chargeGauge h K) = 1 := hunit _
+  change (if chargeShiftSEquiv.symm (chargeShiftSEquiv N) = N then
+    (chargeGauge h (chargeShiftS N) * ((-1 : ℂ) ^ N.1 * chargePhase L (aS N) y) *
+      star (chargeGauge h N)) *
+    star (chargeGauge h (chargeShiftS (inverseShiftS (chargeShiftSEquiv N))) *
+      ((-1 : ℂ) ^ (inverseShiftS (chargeShiftSEquiv N)).1 *
+        chargePhase L (aS (inverseShiftS (chargeShiftSEquiv N))) x) *
+      star (chargeGauge h (inverseShiftS (chargeShiftSEquiv N)))) else 0) = _
+  rw [chargeShiftSEquiv.symm_apply_apply, hinv]
+  simp only [ite_true, eq_self, star_mul, star_star]
+  calc
+    _ = (chargeGauge h (chargeShiftS N) * star (chargeGauge h (chargeShiftS N))) *
+        (chargeGauge h N * star (chargeGauge h N)) *
+        ((-1 : ℂ) ^ N.1 * star ((-1 : ℂ) ^ N.1)) *
+        (chargePhase L (aS N) y * star (chargePhase L (aS N) x)) := by ring
+    _ = _ := by rw [hg, hg, hunit, one_mul, one_mul, one_mul,
+      source_phase_product_contract L _hL (aS N) y x]
 
 theorem same_channel_commutator_contract {M h : ℕ} (_hh : 0 < h)
     (hp : Bosonize.Ch18.HyperbolicPair) (x y : Position (2 * h)) (channel : Bool) :
@@ -659,12 +1024,96 @@ theorem oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract {M
     Bosonize.A08.oscPairing M
       (Bosonize.A08.oscRep M
         (Bosonize.A08.bogoliubovMap M hp.c (-hp.s)
-          (oscSyntaxEval (oscSyntaxDagger a))) p) q := by sorry
+          (oscSyntaxEval (oscSyntaxDagger a))) p) q := by
+  classical
+  have padd (r s t : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M r (s + t) =
+        Bosonize.A08.oscPairing M r s + Bosonize.A08.oscPairing M r t := by
+    simp only [Bosonize.A08.oscPairing, map_add, mul_add, Finset.sum_add_distrib]
+  have psmul (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M r (z • s) = z * Bosonize.A08.oscPairing M r s := by
+    simp only [Bosonize.A08.oscPairing, map_smul, smul_eq_mul]
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro k _
+    ring
+  have paddleft (r s t : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M (r + s) t =
+        Bosonize.A08.oscPairing M r t + Bosonize.A08.oscPairing M s t := by
+    rw [← Bosonize.A08.oscPairing_conj, padd, star_add,
+      Bosonize.A08.oscPairing_conj, Bosonize.A08.oscPairing_conj]
+  have psmulleft (z : ℂ) (r s : Bosonize.A08.OscPoly M) :
+      Bosonize.A08.oscPairing M (z • r) s = star z * Bosonize.A08.oscPairing M r s := by
+    rw [← Bosonize.A08.oscPairing_conj, psmul, star_mul, Bosonize.A08.oscPairing_conj, mul_comm]
+  have dadd (x y : OscSyntax M) :
+      oscSyntaxDagger (x + y) = oscSyntaxDagger x + oscSyntaxDagger y := by
+    simp only [oscSyntaxDagger, MonoidAlgebra.coeff_add]
+    rw [Finsupp.sum_add_index' (by intro w; simp)
+      (by intro w z t; simp [star_add, Finsupp.single_add])]
+    exact MonoidAlgebra.ofCoeff_add _ _
+  have dsingle (w : List (Bosonize.A08.OscGen M)) (z : ℂ) :
+      oscSyntaxDagger (MonoidAlgebra.single w z) =
+        MonoidAlgebra.single (Bosonize.A08.wordDagger w) (star z) := by
+    simp [oscSyntaxDagger]
+  have eadd (x y : OscSyntax M) : oscSyntaxEval (x + y) = oscSyntaxEval x + oscSyntaxEval y := by
+    simp only [oscSyntaxEval, MonoidAlgebra.coeff_add]
+    exact Finsupp.sum_add_index' (by intro w; simp) (by intro w z t; simp [add_smul])
+  have esingle (w : List (Bosonize.A08.OscGen M)) (z : ℂ) :
+      oscSyntaxEval (MonoidAlgebra.single w z) = z • Bosonize.A08.wordElement M w := by
+    simp [oscSyntaxEval]
+  have hword (w : List (Bosonize.A08.OscGen M)) :
+      Bosonize.A08.wordDagger (Bosonize.A08.wordDagger w) = w := by
+    simp [Bosonize.A08.wordDagger, List.map_reverse, List.map_map, Function.comp_def]
+  induction a using MonoidAlgebra.induction_linear with
+  | zero => simp [oscSyntaxDagger, oscSyntaxEval, Bosonize.A08.oscPairing]
+  | add x y hx hy =>
+      simp only [dadd, eadd, map_add, LinearMap.add_apply, padd, paddleft]
+      rw [hx, hy]
+  | single w z =>
+      rw [dsingle, esingle, esingle]
+      simp only [map_smul, LinearMap.smul_apply, psmul, psmulleft, star_star]
+      congr 1
+      simpa only [hword] using
+        Bosonize.A08.bogoliubovMap_word_adjoint M hp.c (-hp.s)
+          (Bosonize.A08.wordDagger w) p q
 
 theorem vertexSeriesAdjoint_reverses_product_contract {M : ℕ}
     (f g : VertexSeries M) :
     vertexSeriesAdjoint (vertexSeriesMul f g) =
-      vertexSeriesMul (vertexSeriesAdjoint g) (vertexSeriesAdjoint f) := by sorry
+      vertexSeriesMul (vertexSeriesAdjoint g) (vertexSeriesAdjoint f) := by
+  classical
+  have hcharge (a b : ChargeWord) :
+      ChargeWord.adjoint (ChargeWord.comp a b) =
+        ChargeWord.comp (ChargeWord.adjoint b) (ChargeWord.adjoint a) := by
+    cases a with
+    | mk aTarget aa =>
+      cases b with
+      | mk bt ba =>
+        simp [ChargeWord.comp, ChargeWord.adjoint, Equiv.trans_apply, star_mul, mul_comm]
+  have hcoeff (a b : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffMul a b) =
+        vertexCoeffMul (vertexCoeffAdjoint b) (vertexCoeffAdjoint a) := by
+    rcases a with ⟨a, x⟩
+    rcases b with ⟨b, y⟩
+    change (ChargeWord.adjoint (ChargeWord.comp a b), oscSyntaxDagger (x * y)) = _
+    rw [hcharge, oscSyntaxDagger_mul_contract]
+    rfl
+  have hmap (s : Finset ℕ) (v : ℕ → Multiset (vertexCoeff M)) :
+      (∑ i ∈ s, v i).map vertexCoeffAdjoint = ∑ i ∈ s, (v i).map vertexCoeffAdjoint := by
+    induction s using Finset.induction_on with
+    | empty => simp
+    | @insert i s hi ih => simp [Finset.sum_insert hi, ih]
+  funext n
+  simp only [vertexSeriesAdjoint, vertexSeriesMul, hmap,
+    Multiset.map_bind, Multiset.map_map, Multiset.bind_map, Function.comp_def, hcoeff]
+  rw [← Finset.sum_range_reflect (fun k =>
+    (g k).bind fun b => (f (n - k)).map fun a =>
+      vertexCoeffMul (vertexCoeffAdjoint b) (vertexCoeffAdjoint a)) (n + 1)]
+  apply Finset.sum_congr rfl
+  intro k hk
+  have hk' : k ≤ n := by simpa using Finset.mem_range.mp hk
+  simp only [Nat.add_sub_cancel, Nat.sub_sub_self hk']
+  exact Multiset.bind_map_comm _ _
 
 theorem difference_variance_contract {M h : ℕ} (_hh : 0 < h)
     (hp : Bosonize.Ch18.HyperbolicPair) (x y : Position (2 * h)) (channel : Bool) :

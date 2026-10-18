@@ -1,14 +1,14 @@
 # V1-S2 charge words and formal vertices — Phase A companion
 
-Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in progress.** The reviewed source was committed in `0610d1495ebc4e95dec323c27faf22966e55e9d2`. Six Phase B contracts are proved; 26 remain placeholders, including the main correlator, so S2 is not proof-complete. The current proof source hash is `f3056b313db9d90f10d238be1a0555460026173e979ae82a195fdc81ec8a6a07`.
+Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in progress.** The reviewed interface was committed in `0610d1495ebc4e95dec323c27faf22966e55e9d2`. The October 17 scheduled resumption completed 18 additional contracts: 31 S2 theorem declarations are now proved and eight contracts remain placeholders. S2 is not proof-complete. The current source SHA-256 is `a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03`. The exact 18-proof partial package passed independent review; the receipt and fresh validation are in [`phase-b-proof-review-2026-10-17.json`](../plans/v1-s2/phase-b-proof-review-2026-10-17.json).
 
 The detailed candidate mathematical interface, source hashes, convention
 derivations, conditional correlator proof, normal-ordering audit, and checks
-are in [`phase-a-review-packet.md`](../../plans/v1-s2/phase-a-review-packet.md).
+are in [`phase-a-review-packet.md`](../plans/v1-s2/phase-a-review-packet.md).
 The current Phase B proof inventory, dead ends, validation gates, and resume
-instructions are in [`phase-b-checkpoint.md`](../../plans/v1-s2/phase-b-checkpoint.md);
+instructions are in [`phase-b-checkpoint.md`](../plans/v1-s2/phase-b-checkpoint.md);
 a concise initialization prompt is in
-[`follow-up-agent-prompt.md`](../../plans/v1-s2/follow-up-agent-prompt.md).
+[`follow-up-agent-prompt.md`](../plans/v1-s2/follow-up-agent-prompt.md).
 The packet was independently reviewed as a mathematical specification. S1 is separately accepted by its promoted Core implementation and review receipt.
 
 ## Source reconciliation
@@ -110,3 +110,19 @@ Phase B has proved `chargeWord_comp_action_contract`,
 placeholder warnings, and strict scoped-lock verification passes. The earlier
 data-only audit covered 81 data declarations with standard axioms only; a
 fresh final theorem/dependency axiom audit remains outstanding.
+
+
+## Scheduled Phase B resumption — 2026-10-17
+
+The charge singleton/linear-induction route, explicit syntax dagger laws,
+represented oscillator and tensor adjoint bridges, all gauge/charge-selection
+contracts, coefficient-action composition and multiset series-adjoint reversal
+are now proved. All proof changes were confined to approved theorem bodies.
+The strict lock and 36-file Core guard pass; the staging build has exactly eight
+remaining placeholder warnings. Fresh axiom inspection of all 31 completed
+theorems contains only the three permitted standard axioms. The independent
+review is PASS for this partial package, not the eight outstanding contracts.
+The detailed inventory, failed search routes and next proof dependencies are
+in the current checkpoint. The commutator, field/exponential adjoints, variance,
+Weyl correlator and both normal-ordering statements remain open. No Phase C,
+S3, continuum, finite-CAR identification or publication acceptance is claimed.

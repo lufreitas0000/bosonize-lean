@@ -273,13 +273,15 @@ the minimal charge/vector, position/phase, represented oscillator-field,
 coefficientwise series, adjoint, and formal correlator interface. The
 independent mathematical/interface review passed for the exact source and
 document hashes recorded above; the scoped lock was committed in
-`0610d1495ebc4e95dec323c27faf22966e55e9d2`. Phase B has proved
-`chargeWord_comp_action_contract`, `oscSyntaxEval_one_contract`,
-`oscSyntaxEval_mul_contract`, `jointCoeffFunctional_product_contract`,
-`chargeGauge_unitary_contract`, and `source_phase_product_contract`. Twenty-six
-contracts remain placeholders, including the main correlator and its variance,
-adjoint, charge-selection, and normal-ordering dependencies. The current
-candidate is not proof-complete; the strict lock passes and the staging build
-elaborates with the expected placeholder warnings. Final theorem/dependency
-axiom audit and Phase C gates remain open.
+`0610d1495ebc4e95dec323c27faf22966e55e9d2`. Phase B's current proof inventory is recorded in
+[`phase-b-checkpoint.md`](phase-b-checkpoint.md). The October 17 resumption
+completed 18 further contracts, leaving eight unchanged placeholders; 31 S2
+theorem declarations are proved in total. The exact partial package at source
+SHA-256 `a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03` passed
+independent review. Fresh strict/Core guards pass; the staging build succeeds
+with exactly eight placeholder warnings; the 31 completed theorem closures
+use only the three permitted standard axioms. The main correlator, variance,
+remaining field identities and normal-ordering theorems are still unproved.
+The packet's mathematical interface and earlier Phase A review provenance
+are retained; the resumption is not a full Phase B or Phase C verdict.
 This packet does not start S3.
