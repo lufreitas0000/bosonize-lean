@@ -5,6 +5,10 @@ Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in prog
 The detailed candidate mathematical interface, source hashes, convention
 derivations, conditional correlator proof, normal-ordering audit, and checks
 are in [`phase-a-review-packet.md`](../../plans/v1-s2/phase-a-review-packet.md).
+The current Phase B proof inventory, dead ends, validation gates, and resume
+instructions are in [`phase-b-checkpoint.md`](../../plans/v1-s2/phase-b-checkpoint.md);
+a concise initialization prompt is in
+[`follow-up-agent-prompt.md`](../../plans/v1-s2/follow-up-agent-prompt.md).
 The packet was independently reviewed as a mathematical specification. S1 is separately accepted by its promoted Core implementation and review receipt.
 
 ## Source reconciliation
