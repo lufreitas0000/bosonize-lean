@@ -1,6 +1,6 @@
 # V1-S2 Phase A specification candidate: charge words and formal vertices
 
-Date: 2026-10-17. Status: **S1 dependency accepted; actual S2 Lean interface independently reviewed PASS; scoped lock and Phase B proofs are outstanding.** The interface review covered Lean SHA-256 `984132893e986956592cf291bba2ed4ff3ddfc8ba61b748f298814068d046bd7` with packet snapshot `57f336cb6c5ff9dd9656bf7a7e775ea0f63d4b2b7f17044557b6bfe2c31b2fbf` and companion snapshot `6122a5513a52709b246265cd75760cf7197d6233bdd1c5429d9501fa384a1dbb`.
+Date: 2026-10-17. Status: **S1 dependency accepted; actual S2 Lean interface independently reviewed PASS and scoped-locked in commit `0610d1495ebc4e95dec323c27faf22966e55e9d2`; Phase B is in progress.** The interface review covered Lean SHA-256 `984132893e986956592cf291bba2ed4ff3ddfc8ba61b748f298814068d046bd7` with packet snapshot `57f336cb6c5ff9dd9656bf7a7e775ea0f63d4b2b7f17044557b6bfe2c31b2fbf` and companion snapshot `6122a5513a52709b246265cd75760cf7197d6233bdd1c5429d9501fa384a1dbb`.
 
 This packet records the independently checkable S2 mathematical interface and
 convention derivations. The accepted S1 homogeneous-linear-form, ordered-Wick,
@@ -270,10 +270,16 @@ particle-hole map, analytic limit, continuum result, or S3 duality is included.
 
 S1 is integrated and its general-moment declaration is available. Phase A adds
 the minimal charge/vector, position/phase, represented oscillator-field,
-coefficientwise series, adjoint, and formal correlator interface. Elaborate
-definitions and examples; do not claim theorems proved by a build with
-placeholders. The independent mathematical/interface review has passed for
-the exact source and document hashes recorded above. Freeze only the scoped
-declarations, then discharge the Phase B contracts. The candidate is not
-proof-complete until those contracts are proved.
+coefficientwise series, adjoint, and formal correlator interface. The
+independent mathematical/interface review passed for the exact source and
+document hashes recorded above; the scoped lock was committed in
+`0610d1495ebc4e95dec323c27faf22966e55e9d2`. Phase B has proved
+`chargeWord_comp_action_contract`, `oscSyntaxEval_one_contract`,
+`oscSyntaxEval_mul_contract`, `jointCoeffFunctional_product_contract`,
+`chargeGauge_unitary_contract`, and `source_phase_product_contract`. Twenty-six
+contracts remain placeholders, including the main correlator and its variance,
+adjoint, charge-selection, and normal-ordering dependencies. The current
+candidate is not proof-complete; the strict lock passes and the staging build
+elaborates with the expected placeholder warnings. Final theorem/dependency
+axiom audit and Phase C gates remain open.
 This packet does not start S3.

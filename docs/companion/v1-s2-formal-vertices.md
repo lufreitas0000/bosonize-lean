@@ -1,6 +1,6 @@
 # V1-S2 charge words and formal vertices — Phase A companion
 
-Status: **S1 accepted; S2 Phase A interface independently reviewed.** The exact Lean interface below passed review and is ready for scoped locking; theorem contracts still contain Phase A placeholders, so S2 is not proof-complete.
+Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in progress.** The reviewed source was committed in `0610d1495ebc4e95dec323c27faf22966e55e9d2`. Six Phase B contracts are proved; 26 remain placeholders, including the main correlator, so S2 is not proof-complete. The current proof source hash is `f3056b313db9d90f10d238be1a0555460026173e979ae82a195fdc81ec8a6a07`.
 
 The detailed candidate mathematical interface, source hashes, convention
 derivations, conditional correlator proof, normal-ordering audit, and checks
@@ -34,9 +34,9 @@ S1 is accepted and promoted in `Bosonize/Core/V1S1OrderedWick.lean` and
 `Bosonize/Core/V1S1PairingCombinatorics.lean`; its companion records the
 independent review, hashes, audits, and Phase C promotion. S2 imports the
 accepted ordered-Wick and moment interface directly and does not copy its
-proofs. The S2 candidate remains Phase A until its exact Lean declarations pass
-independent review and scoped locking; theorem contracts remain placeholders.
-No S3 work is part of this sprint.
+proofs. The exact S2 Phase A interface passed review and was scoped-locked.
+Phase B is incomplete; theorem contracts remain placeholders. No S3 work is
+part of this sprint.
 
 ## Independent specification review
 
@@ -65,7 +65,7 @@ coefficients, a tensor-carrier matrix functional, canonical charge-selection
 contracts, and finite-word syntax documentation. A second review found the
 bare L-shift gauge ratio was conflated with the Klein sign and requested
 charge-adjoint/composition and syntax-evaluator/dagger laws. Those corrections
-are in progress; no S2 interface lock has been established.
+are reflected in the final reviewed interface below.
 
 The second actual-source review returned **REVISE** on Lean SHA-256
 `dd9e2327d8c36c732ff88438061bcf88f328ce635f4399272e287327b15a33e1`, packet
@@ -97,7 +97,12 @@ The fourth actual-source review by `/root/v1_s2_spec_review` returned
 The reviewer confirmed that the pairing is basis-defined on the tensor
 carrier, factors to A08's monomial-norm pairing on simple tensors, and makes
 the represented coefficient dagger a proof-relevant adjoint contract. This
-PASS reviews the interface only; it does not certify placeholder proofs or
-validation. The candidate build succeeds with expected Phase A `sorry`
-warnings; the data-only audit passes 81 data declarations with standard
-axioms only. The scoped lock has not yet been written.
+PASS reviews the interface only; it does not certify subsequent proof bodies.
+The scoped lock was committed in `0610d1495ebc4e95dec323c27faf22966e55e9d2`.
+Phase B has proved `chargeWord_comp_action_contract`,
+`oscSyntaxEval_one_contract`, `oscSyntaxEval_mul_contract`,
+`jointCoeffFunctional_product_contract`, `chargeGauge_unitary_contract`, and
+`source_phase_product_contract`. The current staging build succeeds with 26
+placeholder warnings, and strict scoped-lock verification passes. The earlier
+data-only audit covered 81 data declarations with standard axioms only; a
+fresh final theorem/dependency axiom audit remains outstanding.

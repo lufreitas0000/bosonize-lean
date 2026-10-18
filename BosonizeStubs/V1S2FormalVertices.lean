@@ -178,7 +178,15 @@ def ChargeWord.adjoint (f : ChargeWord) : ChargeWord where
 
 theorem chargeWord_comp_action_contract (f g : ChargeWord) (v : ChargeVec) :
     chargeWordAction (ChargeWord.comp f g) v =
-      chargeWordAction f (chargeWordAction g v) := by sorry
+      chargeWordAction f (chargeWordAction g v) := by
+  classical
+  induction v using Finsupp.induction_linear with
+  | zero => simp [chargeWordAction]
+  | add v u hv hu =>
+      rw [chargeWordAction_add_contract (ChargeWord.comp f g) v u, hv, hu,
+        chargeWordAction_add_contract g v u,
+        chargeWordAction_add_contract f (chargeWordAction g v) (chargeWordAction g u)]
+  | single a z => simp [chargeWordAction, ChargeWord.comp, mul_assoc]
 
 theorem chargeWord_adjoint_pairing_contract (f : ChargeWord) (v u : ChargeVec) :
     chargePairing (chargeWordAction f v) u =
@@ -261,10 +269,30 @@ theorem oscSyntax_roundtrip_freeAlgebra_contract {M : ℕ}
     oscSyntaxEval (oscFreeToSyntax M a) = a := by sorry
 
 theorem oscSyntaxEval_one_contract {M : ℕ} :
-    oscSyntaxEval (1 : OscSyntax M) = 1 := by sorry
+    oscSyntaxEval (1 : OscSyntax M) = 1 := by
+  classical
+  change oscSyntaxEval (MonoidAlgebra.single ([] : List (Bosonize.A08.OscGen M)) 1) = 1
+  simp [oscSyntaxEval, Bosonize.A08.wordElement]
 
 theorem oscSyntaxEval_mul_contract {M : ℕ} (a b : OscSyntax M) :
-    oscSyntaxEval (a * b) = oscSyntaxEval a * oscSyntaxEval b := by sorry
+    oscSyntaxEval (a * b) = oscSyntaxEval a * oscSyntaxEval b := by
+  let wordMap : List (Bosonize.A08.OscGen M) →* Bosonize.A08.OscAlgebra M :=
+    { toFun := Bosonize.A08.wordElement M
+      map_one' := by
+        change Bosonize.A08.wordElement M ([] : List (Bosonize.A08.OscGen M)) = 1
+        simp [Bosonize.A08.wordElement]
+      map_mul' := by
+        intro x y
+        change Bosonize.A08.wordElement M (x ++ y) =
+          Bosonize.A08.wordElement M x * Bosonize.A08.wordElement M y
+        simp [Bosonize.A08.wordElement, List.map_append, List.prod_append] }
+  have heval (x : OscSyntax M) :
+      oscSyntaxEval x = (MonoidAlgebra.lift ℂ (Bosonize.A08.OscAlgebra M)
+        (List (Bosonize.A08.OscGen M)) wordMap) x := by
+    simp [oscSyntaxEval, MonoidAlgebra.lift_apply, wordMap]
+  rw [heval (a * b), heval a, heval b]
+  exact (MonoidAlgebra.lift ℂ (Bosonize.A08.OscAlgebra M)
+    (List (Bosonize.A08.OscGen M)) wordMap).map_mul a b
 
 theorem oscSyntaxDagger_involutive_contract {M : ℕ} (a : OscSyntax M) :
     oscSyntaxDagger (oscSyntaxDagger a) = a := by sorry
@@ -402,7 +430,16 @@ theorem jointCoeffFunctional_is_matrix_coefficient_contract {M : ℕ}
 theorem jointCoeffFunctional_product_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) :
     jointCoeffFunctional hp N a =
-      chargeBasisExpectation N a.1 * Bosonize.A08.omegaP M hp (oscSyntaxEval a.2) := by sorry
+      chargeBasisExpectation N a.1 * Bosonize.A08.omegaP M hp (oscSyntaxEval a.2) := by
+  simp only [jointCoeffFunctional, jointCoeffAction, jointBasis,
+    TensorProduct.map_tmul, jointTensorFunctional_tmul]
+  change chargeWordAction a.1 (Finsupp.single N 1) N *
+      MvPolynomial.lcoeff ℂ 0
+        (Bosonize.A08.oscRep M
+          (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval a.2)) 1) = _
+  rw [chargeWordAction_basis_contract]
+  simp [chargeBasisExpectation, Bosonize.A08.omegaP, Bosonize.A08.omega0,
+    Finsupp.single_apply]
 
 theorem jointCoeffFunctional_adjoint_contract {M : ℕ}
     (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) :
@@ -507,7 +544,8 @@ theorem bare_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
 /-! The following contracts are intentionally Phase A placeholders. -/
 
 theorem chargeGauge_unitary_contract (h : ℕ) (N : Charge) :
-    ‖chargeGauge h N‖ = 1 := by sorry
+    ‖chargeGauge h N‖ = 1 := by
+  simp [chargeGauge]
 
 theorem gauge_adapter_right_contract (h : ℕ) (N : Charge) :
     chargeGauge h (chargeShiftR N) / chargeGauge h N =
@@ -526,7 +564,17 @@ theorem source_phase_product_contract (L : ℕ) (_hL : 0 < L) (a : ℤ)
     (x y : Position L) :
     chargePhase L a x * star (chargePhase L a y) =
       Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) a
-        ((x.val : ℤ) - (y.val : ℤ)) := by sorry
+        ((x.val : ℤ) - (y.val : ℤ)) := by
+  have hprim : IsPrimitiveRoot (Bosonize.A01.canonicalRoot L) L :=
+    @Bosonize.A01.canonical_root_primitive L ⟨Nat.ne_of_gt _hL⟩
+  unfold chargePhase
+  rw [@Bosonize.A01.complex_character_conj L ⟨Nat.ne_of_gt _hL⟩
+    (Bosonize.A01.canonicalRoot L) hprim a (y.val : ℤ)]
+  simp only [Bosonize.A01.integerCharacter]
+  rw [← zpow_add₀ (hprim.ne_zero (Nat.ne_of_gt _hL))
+    (a * (x.val : ℤ)) (-a * (y.val : ℤ))]
+  congr 1
+  ring
 
 theorem charge_selection_D_contract (L : ℕ) (_hL : 0 < L) (x y : Position L) (N : Charge) :
     chargeBasisExpectation N
