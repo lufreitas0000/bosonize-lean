@@ -13655,6 +13655,756 @@
           "text": "omit [LinearOrder α] in lemma symm {P : Finset (α×α)} {i j : α} (h : R P i j) : R P j i"
         }
       }
+    },
+    "BosonizeStubs/V1S2FormalVertices.lean": {
+      "commands": [
+        {
+          "hash": "8ba3dc9b1f39cd65a312f9374067cf5ca4d62178b37ee26a667c9d42f020fc3f",
+          "kind": "import",
+          "label": "import Bosonize.Core.V1S1OrderedWick",
+          "text": "import Bosonize.Core.V1S1OrderedWick"
+        },
+        {
+          "hash": "93d89b07bcbe6908207e79e6f02e5f5e3d4c50121ac283466d1b1749249886d7",
+          "kind": "namespace",
+          "label": "namespace Bosonize.V1S2",
+          "text": "namespace Bosonize.V1S2"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "6c3a18f45966bb02caa08233c2759f0e8f88fb37296b8a5343c609da30deaaac",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S2.Charge",
+          "text": "abbrev Charge := \u2124 \u00d7 \u2124"
+        },
+        {
+          "hash": "e975abb75176e66393052b4ec6865b47eb5e85ce7b2760546aab36390aa361b7",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S2.ChargeVec",
+          "text": "abbrev ChargeVec := Charge \u2192\u2080 \u2102"
+        },
+        {
+          "hash": "18d4dcefe6fad0470be372be75cfb856f9b57e8c5b0be5cfbd2fb69a74821549",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S2.Position",
+          "text": "abbrev Position (L : \u2115) := ZMod L"
+        },
+        {
+          "hash": "b4d7e4e95067528cffcc1e9662ffc7ed424cf7cab991b283245e4121fe418db0",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.FormalSeries",
+          "text": "def FormalSeries (A : Type*) := \u2115 \u2192 A"
+        },
+        {
+          "hash": "ddf1d2c52bcda7c7cc99d402a4e798a399fe59926cfb9c752e641999e898bd43",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S2.JointCarrier",
+          "text": "abbrev JointCarrier (M : \u2115) :=\n  TensorProduct \u2102 ChargeVec (Bosonize.A08.OscPoly M)"
+        },
+        {
+          "hash": "daa3d8cfefda74a747d5bc169da8732e077673e74bc79f81df09757be87d3d5f",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S2.JointBasisIndex",
+          "text": "abbrev JointBasisIndex (M : \u2115) := Charge \u00d7 (Bosonize.A08.OscMode M \u2192\u2080 \u2115)"
+        },
+        {
+          "hash": "55dc2ff9131cc1ab48eaa064c30192d50be6d8b072978f1ab152eaaad27e71d3",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointBasisOf",
+          "text": "noncomputable def jointBasisOf (M : \u2115) :\n    Module.Basis (JointBasisIndex M) \u2102 (JointCarrier M) :=\n  Module.Basis.tensorProduct Finsupp.basisSingleOne\n    (MvPolynomial.basisMonomials (Bosonize.A08.OscMode M) \u2102)"
+        },
+        {
+          "hash": "af661c4fc8bb75ff6755bfbb0fd50c17fe92fb4b7174acbdacc01ab5d1198a29",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointBasisWeight",
+          "text": "def jointBasisWeight {M : \u2115} (i : JointBasisIndex M) : \u2102 :=\n  (Bosonize.A08.oscMonomialNorm i.2 : \u2102)"
+        },
+        {
+          "hash": "fb471bd212c028c80d39b57fca43db528f975bbd15c713d0a0a51412f835fc94",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointPairing",
+          "text": "noncomputable def jointPairing {M : \u2115} (v u : JointCarrier M) : \u2102 := by\n  classical\n  let b := jointBasisOf M\n  exact \u2211 i \u2208 (b.repr v).support \u222a (b.repr u).support,\n    star ((b.repr v) i) * jointBasisWeight i * (b.repr u) i"
+        },
+        {
+          "hash": "ccb8dd8eb9981c60c688d16645aee817d4f6503a55ee78d934b3b355347c7c4c",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointBasis",
+          "text": "noncomputable def jointBasis (M : \u2115) (N : Charge) : JointCarrier M :=\n  TensorProduct.tmul \u2102 (Finsupp.single N 1) (1 : Bosonize.A08.OscPoly M)"
+        },
+        {
+          "hash": "b3c66b0b96f39e140cb7e54b2984ba6f73723490a054d7ebfb3928e5af923459",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeCoordinate",
+          "text": "def chargeCoordinate (N : Charge) : ChargeVec \u2192\u2097[\u2102] \u2102 where\n  toFun := fun v => v N\n  map_add' := by intro v w; rfl\n  map_smul' := by intro z v; rfl"
+        },
+        {
+          "hash": "7f4700cdcd1515039f6f9455be4b61412ba02784862d639bd248d9e2f1a6b83a",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointTensorFunctional",
+          "text": "noncomputable def jointTensorFunctional {M : \u2115}\n    (_hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) : JointCarrier M \u2192\u2097[\u2102] \u2102 :=\n  TensorProduct.lift\n    { toFun := fun v =>\n        { toFun := fun p => v N * MvPolynomial.lcoeff \u2102 0 p\n          map_add' := by intro p q; simp [mul_add]\n          map_smul' := by intro z p; simp only [map_smul, RingHom.id_apply, smul_eq_mul]; ring }\n      map_add' := by intro v w; ext p; simp [add_mul]\n      map_smul' := by intro z v; ext p; simp [mul_assoc] }"
+        },
+        {
+          "hash": "1412ba9b036613e8b3b9d6878f761204a4739ccecdd2de0b026374c0f36cea83",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeGaugeExponent",
+          "text": "def chargeGaugeExponent (h : \u2115) (N : Charge) : \u2124 :=\n  (h : \u2124) * N.1 + N.1 * (N.1 - 1) / 2 + N.2 * (N.2 - 1) / 2"
+        },
+        {
+          "hash": "e5b1986cd2f93dcc97829269696cdbf6b13f71882d45f957ec52849b4018f749",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeGauge",
+          "text": "noncomputable def chargeGauge (h : \u2115) (N : Charge) : \u2102 :=\n  (-1 : \u2102) ^ chargeGaugeExponent h N"
+        },
+        {
+          "hash": "467e7690a8a8715814c7ab3a6ba7505af3ff1da31e44d9f540157faab0c28f84",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeShiftR",
+          "text": "def chargeShiftR (N : Charge) : Charge := (N.1 - 1, N.2)"
+        },
+        {
+          "hash": "5df418426c64734d0f02495f257a746657c9d50ecca9ef52e634ae98f38618bb",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeShiftL",
+          "text": "def chargeShiftL (N : Charge) : Charge := (N.1, N.2 - 1)"
+        },
+        {
+          "hash": "bfc462e2d7ec54fc33f83627a0b7d6e935a088d0723ec71c145ff9c4d9e38e97",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeShiftD",
+          "text": "def chargeShiftD (N : Charge) : Charge := (N.1 + 1, N.2 - 1)"
+        },
+        {
+          "hash": "a2fae0c9f20649226c04ffb21a48a2f570613d3cb4b63dea5bc46c812827330f",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeShiftS",
+          "text": "def chargeShiftS (N : Charge) : Charge := (N.1 - 1, N.2 - 1)"
+        },
+        {
+          "hash": "69d0fdb37b38f302a74a5b2d1308bf7f2ca49c0c359c6d0470dd0c12572cd007",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.inverseShiftD",
+          "text": "def inverseShiftD (N : Charge) : Charge := (N.1 - 1, N.2 + 1)"
+        },
+        {
+          "hash": "c458a16799b0507f67c9f1d35f44de8c580f6b6f27d5d1f49260c17008db93fc",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.inverseShiftS",
+          "text": "def inverseShiftS (N : Charge) : Charge := (N.1 + 1, N.2 + 1)"
+        },
+        {
+          "hash": "0756fe0bf3441323ef4d1ac12598ff6c1d3f895e7ba3f172bd679c6bf8f78783",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeShiftDEquiv",
+          "text": "def chargeShiftDEquiv : Charge \u2243 Charge where\n  toFun := chargeShiftD\n  invFun := inverseShiftD\n  left_inv := by intro N; rcases N with \u27e8r,l\u27e9; simp [chargeShiftD, inverseShiftD]\n  right_inv := by intro N; rcases N with \u27e8r,l\u27e9; simp [chargeShiftD, inverseShiftD]"
+        },
+        {
+          "hash": "316469c6cfb1d458480df0eb9666f7ae26bc00ecdec185c5c6450f1476727d3a",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeShiftSEquiv",
+          "text": "def chargeShiftSEquiv : Charge \u2243 Charge where\n  toFun := chargeShiftS\n  invFun := inverseShiftS\n  left_inv := by intro N; rcases N with \u27e8r,l\u27e9; simp [chargeShiftS, inverseShiftS]\n  right_inv := by intro N; rcases N with \u27e8r,l\u27e9; simp [chargeShiftS, inverseShiftS]"
+        },
+        {
+          "hash": "c98a7bb2c00fb1a5aa9bf6254bf91b0c942cbd04ca5e800cc74a414ab6b27771",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.aD",
+          "text": "def aD (N : Charge) : \u2124 := N.2 - N.1 - 1"
+        },
+        {
+          "hash": "cf4fda494fdcface6e27f0487c2e0b20c4b72daa7a0868032617f5fd71d282ba",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.aS",
+          "text": "def aS (N : Charge) : \u2124 := N.1 + N.2"
+        },
+        {
+          "hash": "b34601cf8c6034fa86c7282e637c5e14d9622e4251aee3e49094421296c3c5d7",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargePhase",
+          "text": "noncomputable def chargePhase (L : \u2115) (a : \u2124) (x : Position L) : \u2102 :=\n  Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) a (x.val : \u2124)"
+        },
+        {
+          "hash": "0aa57684cd5baabc36d7f60f2ef75054c4e4be94ca2ba92a88f908f7c998a6d6",
+          "kind": "structure",
+          "label": "structure Bosonize.V1S2.ChargeWord",
+          "text": "structure ChargeWord where\n  target : Charge \u2243 Charge\n  amplitude : Charge \u2192 \u2102"
+        },
+        {
+          "hash": "f12308b326da263e1637d345e60b9939439ed355612cde8dcfe6092d041b9a51",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeWordAction",
+          "text": "noncomputable def chargeWordAction (w : ChargeWord) (v : ChargeVec) : ChargeVec := by\n  classical\n  exact v.sum fun N z => z \u2022 (w.amplitude N \u2022 Finsupp.single (w.target N) 1)"
+        },
+        {
+          "hash": "ba849383a98a125130949aee0b50ce9df112f2eee1b119dfbc22924118c3219a",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeWordActionLinear",
+          "text": "noncomputable def chargeWordActionLinear (w : ChargeWord) : ChargeVec \u2192\u2097[\u2102] ChargeVec where\n  toFun := chargeWordAction w\n  map_add' := chargeWordAction_add_contract w\n  map_smul' := chargeWordAction_smul_contract w"
+        },
+        {
+          "hash": "3eb080fdb9218db4d5e62378c1384aaf62c468ef8107d3f4e1b88d51f65ebe6c",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargePairing",
+          "text": "noncomputable def chargePairing (v u : ChargeVec) : \u2102 :=\n  \u2211 N \u2208 v.support \u222a u.support, star (v N) * u N"
+        },
+        {
+          "hash": "913508afa2867828447d607bd49d2bfc8077ae909deeb8e832dbd0b0fa690979",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.ChargeWord.comp",
+          "text": "def ChargeWord.comp (f g : ChargeWord) : ChargeWord where\n  target := g.target.trans f.target\n  amplitude := fun N => g.amplitude N * f.amplitude (g.target N)"
+        },
+        {
+          "hash": "e207454727168a700b3b9807e361487351f5fb10a707424e9d443a5dfee158f2",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.ChargeWord.adjoint",
+          "text": "def ChargeWord.adjoint (f : ChargeWord) : ChargeWord where\n  target := f.target.symm\n  amplitude := fun N => star (f.amplitude (f.target.symm N))"
+        },
+        {
+          "hash": "b91fa453295a2610752a167d1803bbd883972670fb5e3e96b3b7244e39d0f774",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.kleinD",
+          "text": "noncomputable def kleinD (L : \u2115) (x : Position L) : ChargeWord where\n  target := chargeShiftDEquiv\n  amplitude := fun N => (-1 : \u2102) ^ N.1 * chargePhase L (aD N) x"
+        },
+        {
+          "hash": "943c55dd3a24a0eeaa1cf51f480075dfc44f83bcc947c5c72b601ec5adae2748",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.kleinS",
+          "text": "noncomputable def kleinS (L : \u2115) (x : Position L) : ChargeWord where\n  target := chargeShiftSEquiv\n  amplitude := fun N => (-1 : \u2102) ^ N.1 * chargePhase L (aS N) x"
+        },
+        {
+          "hash": "5d8851138b697e3abdd20441e1ef03cb66e86fe907f01fd4511ff75517eda663",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.ChargeWord.scale",
+          "text": "def ChargeWord.scale (z : \u2102) (w : ChargeWord) : ChargeWord where\n  target := w.target\n  amplitude := fun N => z * w.amplitude N"
+        },
+        {
+          "hash": "568c2f2a6b394ed110c674949e3f03933524f6463fb16e74bfcb5ec24acab7d9",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.canonicalKleinD",
+          "text": "noncomputable def canonicalKleinD (h : \u2115) (L : \u2115) (x : Position L) : ChargeWord where\n  target := chargeShiftDEquiv\n  amplitude := fun N => chargeGauge h (chargeShiftD N) *\n    (kleinD L x).amplitude N * star (chargeGauge h N)"
+        },
+        {
+          "hash": "c3024b930e9bed8322a6ff3d5cff967c189b59f4da9d36379ab68a5327fcd36f",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.canonicalKleinS",
+          "text": "noncomputable def canonicalKleinS (h : \u2115) (L : \u2115) (x : Position L) : ChargeWord where\n  target := chargeShiftSEquiv\n  amplitude := fun N => chargeGauge h (chargeShiftS N) *\n    (kleinS L x).amplitude N * star (chargeGauge h N)"
+        },
+        {
+          "hash": "bffca14235fa8d35043f88a4e00d2f9b35ac5924019c822d4cc3680c18bfb3ee",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.kleinDAdj",
+          "text": "noncomputable def kleinDAdj (L : \u2115) (x : Position L) : ChargeWord where\n  target := chargeShiftDEquiv.symm\n  amplitude := fun N => star ((kleinD L x).amplitude (inverseShiftD N))"
+        },
+        {
+          "hash": "696629e1ad1183730b859360691909fef58c1dc82a41d6f043c417fa6fd71a6c",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.kleinSAdj",
+          "text": "noncomputable def kleinSAdj (L : \u2115) (x : Position L) : ChargeWord where\n  target := chargeShiftSEquiv.symm\n  amplitude := fun N => star ((kleinS L x).amplitude (inverseShiftS N))"
+        },
+        {
+          "hash": "2f2a8230e81923c31d5e169d6054f9d6f7002aa12e77c37c2d20a3d7e6bbd5dc",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.canonicalKleinDAdj",
+          "text": "noncomputable def canonicalKleinDAdj (h : \u2115) (L : \u2115) (x : Position L) : ChargeWord where\n  target := chargeShiftDEquiv.symm\n  amplitude := fun N => star ((canonicalKleinD h L x).amplitude (inverseShiftD N))"
+        },
+        {
+          "hash": "03dc116b811651f3c751e157054996312745a915bc3c42601cb9de8bb91c2d5a",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.canonicalKleinSAdj",
+          "text": "noncomputable def canonicalKleinSAdj (h : \u2115) (L : \u2115) (x : Position L) : ChargeWord where\n  target := chargeShiftSEquiv.symm\n  amplitude := fun N => star ((canonicalKleinS h L x).amplitude (inverseShiftS N))"
+        },
+        {
+          "hash": "370b67132cd2a1db83a020ce0c7af825e28e24a575ad9b27efe8d707e8c855d6",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeBasisExpectation",
+          "text": "def chargeBasisExpectation (N : Charge) (w : ChargeWord) : \u2102 :=\n  if w.target N = N then w.amplitude N else 0"
+        },
+        {
+          "hash": "fffd0e9ec13edf01da6312c6d58f8051433570892edd799a1f58949b93486820",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.chargeSelection",
+          "text": "def chargeSelection (N : Charge) (w : ChargeWord) : Prop := w.target N = N"
+        },
+        {
+          "hash": "5ad0369ca2eb770a2eab30f816a1c20750e7f5521a385f72e8c57f277e6ca9c1",
+          "kind": "instance",
+          "label": "instance Bosonize.V1S2.oscillatorWordMonoid",
+          "text": "instance oscillatorWordMonoid (M : \u2115) : Monoid (List (Bosonize.A08.OscGen M)) where\n  one := []\n  mul := List.append\n  mul_assoc := List.append_assoc\n  one_mul := List.nil_append\n  mul_one := List.append_nil"
+        },
+        {
+          "hash": "46c36e313bbcdedda1034968f1361743bc00826454da5feb2f9e354c08ddcd7e",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S2.OscSyntax",
+          "text": "abbrev OscSyntax (M : \u2115) :=\n  MonoidAlgebra \u2102 (List (Bosonize.A08.OscGen M))"
+        },
+        {
+          "hash": "9582c81a04c40fbb7d9126251d255f426bf3ecc72c1150c56ab01b76df16a04a",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.oscFreeToSyntax",
+          "text": "noncomputable def oscFreeToSyntax (M : \u2115) :\n    Bosonize.A08.OscAlgebra M \u2192\u2090[\u2102] OscSyntax M :=\n  FreeAlgebra.lift \u2102 (fun g => (MonoidAlgebra.single [g] (1 : \u2102) : OscSyntax M))"
+        },
+        {
+          "hash": "744f2a1faea773d0cceec38e5ef80c671dde4357710c00a8f544dec5bed2ec04",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.oscSyntaxDagger",
+          "text": "noncomputable def oscSyntaxDagger {M : \u2115} (a : OscSyntax M) : OscSyntax M := by\n  classical\n  exact MonoidAlgebra.ofCoeff\n    (Finsupp.sum a.coeff fun w z =>\n      Finsupp.single (Bosonize.A08.wordDagger w) (star z))"
+        },
+        {
+          "hash": "824aed2b93c8185498da09f9ab4212fa7acad0ab7fad100a12cce419209d9384",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.oscSyntaxEval",
+          "text": "noncomputable def oscSyntaxEval {M : \u2115} (a : OscSyntax M) : Bosonize.A08.OscAlgebra M := by\n  classical\n  exact Finsupp.sum a.coeff fun w z => z \u2022 Bosonize.A08.wordElement M w"
+        },
+        {
+          "hash": "92d9b42c1f8ed83a7199aa1f25d0b4a28f9920e4eca4967d78108b3cd5e76ffe",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexCoeff",
+          "text": "def vertexCoeff (M : \u2115) := ChargeWord \u00d7 OscSyntax M"
+        },
+        {
+          "hash": "ca3764e2fc78d473187a30de279200ae2eac7acceb32532608ab4755f3945249",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexCoeffMul",
+          "text": "noncomputable def vertexCoeffMul {M : \u2115} (a b : vertexCoeff M) : vertexCoeff M :=\n  (ChargeWord.comp a.1 b.1, a.2 * b.2)"
+        },
+        {
+          "hash": "3bb82c2d2b7149055da8d9a05ee0e25b67664238f43da5c21e0f30d37c6a8f46",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexCoeffAdjoint",
+          "text": "noncomputable def vertexCoeffAdjoint {M : \u2115} (a : vertexCoeff M) : vertexCoeff M :=\n  (ChargeWord.adjoint a.1, oscSyntaxDagger a.2)"
+        },
+        {
+          "hash": "abedd1606dc924aef3a6ce3d4fdde90c3b88d3403b95c172cd1160590efaa851",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.FormalSeries.add",
+          "text": "def FormalSeries.add {A : Type*} [Add A] (f g : FormalSeries A) : FormalSeries A :=\n  fun n => f n + g n"
+        },
+        {
+          "hash": "6c45e5b94860d80e84d8b9bd3fb7c81e7247abd148b05240a664f4348e171dca",
+          "kind": "abbrev",
+          "label": "abbrev Bosonize.V1S2.VertexSeries",
+          "text": "abbrev VertexSeries (M : \u2115) := FormalSeries (Multiset (vertexCoeff M))"
+        },
+        {
+          "hash": "fb13ca2acdf0a34cc42d309eab7123e0286c300d52b3b2fc710637235736fb4d",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexSeriesMul",
+          "text": "noncomputable def vertexSeriesMul {M : \u2115} (f g : VertexSeries M) : VertexSeries M := fun n =>\n  \u2211 k \u2208 Finset.range (n + 1),\n    (f k).bind fun a => (g (n - k)).map fun b => vertexCoeffMul a b"
+        },
+        {
+          "hash": "25366d43b1b6fceebb50c4ab37fab3af2ad48ec679f01f91abcb8637eb51332b",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexSeriesAdjoint",
+          "text": "noncomputable def vertexSeriesAdjoint {M : \u2115} (f : VertexSeries M) : VertexSeries M :=\n  fun n => (f n).map vertexCoeffAdjoint"
+        },
+        {
+          "hash": "275b1c056fc0d4b6a9a1871f6859dac6d61e3ce1df4f9a4f81fb8f3cb051ca55",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.dressedModeForm",
+          "text": "noncomputable def dressedModeForm {M : \u2115} (c s : \u211d)\n    (creator : Bool) (\u03bd : Bosonize.A06.Orientation) (m : Fin M) :\n    Bosonize.V1S1.OscLinearForm M :=\n  Bosonize.V1S1.dressedGeneratorForm c s (creator, (\u03bd, m))"
+        },
+        {
+          "hash": "cca89871b806f55209a24b52abcfdd148677ce09530f88aa08037a236d6a9fec",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.epsilon",
+          "text": "def epsilon (\u03bd : Bosonize.A06.Orientation) : \u2124 :=\n  if \u03bd = Bosonize.A06.Orientation.right then 1 else -1"
+        },
+        {
+          "hash": "39d42f7e176ff324d57cc4d0f00ce760d94d451603c8822437bd9b805b006a0c",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.qForm",
+          "text": "noncomputable def qForm {M L : \u2115} (c s : \u211d) (\u03bd : Bosonize.A06.Orientation)\n    (x : Position L) : Bosonize.V1S1.OscLinearForm M := by\n  classical\n  exact \u2211 m : Fin M,\n    ((((Bosonize.A01.canonicalRoot L) ^ (-(epsilon \u03bd) * ((m.val : \u2124) + 1) * (x.val : \u2124))) /\n        ((m.val : \u2102) + 1)) \u2022 dressedModeForm c s true \u03bd m +\n      (((Bosonize.A01.canonicalRoot L) ^ (epsilon \u03bd * ((m.val : \u2124) + 1) * (x.val : \u2124))) /\n        ((m.val : \u2102) + 1)) \u2022 dressedModeForm c s false \u03bd m)"
+        },
+        {
+          "hash": "798df3e52ece1bbb61a52ef2dc6d92f119cbfd15f54b9de2920c9b04e3061f82",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.xDForm",
+          "text": "noncomputable def xDForm {M L : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (x : Position L) : Bosonize.V1S1.OscLinearForm M :=\n  ((hp.c - hp.s : \u211d) : \u2102) \u2022\n    (qForm hp.c hp.s Bosonize.A06.Orientation.right x +\n      qForm hp.c hp.s Bosonize.A06.Orientation.left x)"
+        },
+        {
+          "hash": "4dc34ecaab770f15d4ef224d413fcce43b44f396c30a0a7bf11438e8de5789be",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.xSForm",
+          "text": "noncomputable def xSForm {M L : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (x : Position L) : Bosonize.V1S1.OscLinearForm M :=\n  ((hp.c + hp.s : \u211d) : \u2102) \u2022\n    (qForm hp.c hp.s Bosonize.A06.Orientation.right x -\n      qForm hp.c hp.s Bosonize.A06.Orientation.left x)"
+        },
+        {
+          "hash": "0106c29ccb8728f3e8704fbea2a8aac3ffea7a13921e6594f251f93c87fa0fbd",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.gainD",
+          "text": "def gainD (hp : Bosonize.Ch18.HyperbolicPair) : \u211d := (hp.c - hp.s) ^ 2"
+        },
+        {
+          "hash": "ccd627f89ba7b0a029d414de9a28dbf13b427d5a1e0523c9e96f8e8371fefd80",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.gainS",
+          "text": "def gainS (hp : Bosonize.Ch18.HyperbolicPair) : \u211d := (hp.c + hp.s) ^ 2"
+        },
+        {
+          "hash": "de928dca6de7e9804ebd6569547dc82037fa9e13064a2ccf1c6ed9a9637ad9d1",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.scalarExp",
+          "text": "noncomputable def scalarExp (a : \u2102) : FormalSeries \u2102 := fun n => a ^ n / (n.factorial : \u2102)"
+        },
+        {
+          "hash": "fecb3befb90805ce38c3eabe411e3be4fa3543c6eb6533b1263d3b266d32fdeb",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.oscillatorExpWithScalar",
+          "text": "noncomputable def oscillatorExpWithScalar {M L : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (x : Position L) (channel : Bool) (\u03b9 : \u2102) : FormalSeries (OscSyntax M) :=\n  fun n => ((n.factorial : \u2102)\u207b\u00b9) \u2022\n    ((\u03b9 \u2022 oscFreeToSyntax M (Bosonize.V1S1.linearElement\n      (if channel then xSForm hp x else xDForm hp x))) ^ n)"
+        },
+        {
+          "hash": "5e52e8983c3d773a4be57a35d246b05b54e78e8a85ca803126fe433fb4b8b8dd",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.oscillatorExp",
+          "text": "noncomputable def oscillatorExp {M L : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (x : Position L) (channel : Bool) : FormalSeries (OscSyntax M) :=\n  oscillatorExpWithScalar hp x channel Complex.I"
+        },
+        {
+          "hash": "d941e50736260a4889f74cfc48349dc72ea16c8bc5943d6987562a60ddf709ca",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.harmonicCutoff",
+          "text": "noncomputable def harmonicCutoff (M : \u2115) : \u211d := \u2211 m \u2208 Finset.Icc 1 M, (m : \u211d)\u207b\u00b9"
+        },
+        {
+          "hash": "4563a801b1630ba6d10f5b62f2266fe633005db45db22f2b87f25986f16cffb4",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.dirichletCutoff",
+          "text": "noncomputable def dirichletCutoff (L M : \u2115) (x y : Position L) : \u211d :=\n  \u2211 m \u2208 Finset.Icc 1 M,\n    (1 - Real.cos (2 * Real.pi * (m : \u211d) * ((x.val : \u2124) - (y.val : \u2124)) / (L : \u211d))) /\n      (m : \u211d)"
+        },
+        {
+          "hash": "16cc2be0253edf965046502e4b8d9a0342ae2e71f48732abcdc7fd5c4287bcc0",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexWeyl",
+          "text": "noncomputable def vertexWeyl {M h : \u2115} (_hh : 0 < h)\n    (hp : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h))\n    (channel : Bool) : VertexSeries M := by\n  classical\n  exact fun n =>\n    { (ChargeWord.scale ((2 * h : \u2115) : \u2102)\u207b\u00b9\n      (if channel then canonicalKleinS h (2 * h) x else canonicalKleinD h (2 * h) x),\n      oscillatorExp hp x channel n) }"
+        },
+        {
+          "hash": "2ce2b2404cb4344de1c97d53a1cb0b7aed995c06acbb6f4e243ece5a6bb2bf10",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexWeylAdj",
+          "text": "noncomputable def vertexWeylAdj {M h : \u2115} (_hh : 0 < h)\n    (hp : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h))\n    (channel : Bool) : VertexSeries M :=\n  vertexSeriesAdjoint (vertexWeyl (M := M) _hh hp x channel)"
+        },
+        {
+          "hash": "aa1815efeb919887665707af60152bcbba836e5adb9d979d6fa01bd164335c2b",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointCoeffAction",
+          "text": "noncomputable def jointCoeffAction {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (a : vertexCoeff M) : JointCarrier M \u2192\u2097[\u2102] JointCarrier M :=\n  TensorProduct.map (chargeWordActionLinear a.1)\n    (Bosonize.A08.oscRep M\n      (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval a.2)))"
+        },
+        {
+          "hash": "98e58391f727281e664baee8484900b4886facd337d0e2acec227a6e02dbffc0",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointCoeffFunctional",
+          "text": "noncomputable def jointCoeffFunctional {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (N : Charge) (a : vertexCoeff M) : \u2102 :=\n  jointTensorFunctional (M := M) hp N\n    (jointCoeffAction hp a (jointBasis M N))"
+        },
+        {
+          "hash": "c690ffcee344599484c5ff690ec880f10d05aa0d95b1d6f59c9ed77ca8171031",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointSeriesCoeffFunctional",
+          "text": "noncomputable def jointSeriesCoeffFunctional {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (N : Charge) (a : vertexCoeff M) : \u2102 := jointCoeffFunctional hp N a"
+        },
+        {
+          "hash": "f6c44ef37d62e00789781121c161ec7005b09447dc1f90c04736fe8863087433",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.jointSeriesFunctional",
+          "text": "noncomputable def jointSeriesFunctional {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (N : Charge) (f : VertexSeries M) : FormalSeries \u2102 := fun n =>\n  ((f n).map (jointCoeffFunctional hp N)).sum"
+        },
+        {
+          "hash": "1bf280de101f8ba7f2f5b652987d105f38312839da3605c87335894cd3acc639",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.expectedWeylCorrelator",
+          "text": "noncomputable def expectedWeylCorrelator {M h : \u2115} (_hh : 0 < h)\n    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))\n    (channel : Bool) : FormalSeries \u2102 := fun n =>\n  let k := n / 2\n  let g : \u2102 := if channel then (gainS hp : \u2102) else (gainD hp : \u2102)\n  let d : \u2102 := dirichletCutoff (2 * h) M x y\n  let a := if channel then aS N else aD N\n  let phase := Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot (2 * h)) a\n    ((y.val : \u2124) - (x.val : \u2124))\n  if n % 2 = 0 then\n    ((2 * h : \u2115) : \u2102)\u207b\u00b9 ^ 2 * phase * ((-2 * g * (d : \u2102)) ^ k / (k.factorial : \u2102))\n  else 0"
+        },
+        {
+          "hash": "8a88ab7bb19fc4b4f0136ecc2dc6e60fcaef17085f9ef2d1214c3306f748a393",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.scalarSeriesMul",
+          "text": "def scalarSeriesMul (f g : FormalSeries \u2102) : FormalSeries \u2102 := fun n =>\n  \u2211 k \u2208 Finset.range (n + 1), f k * g (n - k)"
+        },
+        {
+          "hash": "f28bb090419a6932ef3150e27c65fd35f9eab2ba6856207390c59cf26b10fdbb",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexSeriesScalarMul",
+          "text": "def vertexSeriesScalarMul {M : \u2115} (s : FormalSeries \u2102) (v : VertexSeries M) :\n    VertexSeries M := fun n =>\n  \u2211 k \u2208 Finset.range (n + 1),\n    (v (n - k)).map fun a => (ChargeWord.scale (s k) a.1, a.2)"
+        },
+        {
+          "hash": "d11641c815f4fa4444b655363c4a79ec93f301ccc9e4c886f23033784f4cebd1",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.dressedNormalMultiplier",
+          "text": "noncomputable def dressedNormalMultiplier {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (channel : Bool) : FormalSeries \u2102 := fun n =>\n  let k := n / 2\n  if n % 2 = 0 then\n    ((if channel then gainS hp else gainD hp) * harmonicCutoff M : \u211d) ^ k /\n      (k.factorial : \u211d) |> fun r => (r : \u2102)\n  else 0"
+        },
+        {
+          "hash": "d442587ccacacead0f7d1484ec92123f9066419caaf5957c809fcf43f87a55d3",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.bareNormalMultiplier",
+          "text": "noncomputable def bareNormalMultiplier (M : \u2115) : FormalSeries \u2102 := fun n =>\n  let k := n / 2\n  if n % 2 = 0 then\n    (harmonicCutoff M ^ k / (k.factorial : \u211d) : \u211d) |> fun r => (r : \u2102)\n  else 0"
+        },
+        {
+          "hash": "ffc75d9fe7d5b7ba540072f5007112f71548152a070ef1fa445c544743d3713e",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexWeylDressedNormal",
+          "text": "noncomputable def vertexWeylDressedNormal {M h : \u2115} (hh : 0 < h)\n    (hp : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h))\n    (channel : Bool) : VertexSeries M :=\n  vertexSeriesScalarMul (dressedNormalMultiplier (M := M) hp channel)\n    (vertexWeyl (M := M) hh hp x channel)"
+        },
+        {
+          "hash": "b21c14781c36077dbb6295b7d9cdfe16fe90247818b1a74481487b0f39fbba02",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.vertexWeylBareNormal",
+          "text": "noncomputable def vertexWeylBareNormal {M h : \u2115} (hh : 0 < h)\n    (hp : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h))\n    (channel : Bool) : VertexSeries M :=\n  vertexSeriesScalarMul (bareNormalMultiplier M) (vertexWeyl (M := M) hh hp x channel)"
+        },
+        {
+          "hash": "7cabd7f3f7184928aa0df86a01b652565fe58a9dee840caae994113aa9bd7a82",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.dressedNormalCorrelator",
+          "text": "noncomputable def dressedNormalCorrelator {M h : \u2115} (hh : 0 < h)\n    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))\n    (channel : Bool) : FormalSeries \u2102 :=\n  scalarSeriesMul (expectedWeylCorrelator (M := M) hh hp N x y channel)\n    (scalarSeriesMul (dressedNormalMultiplier (M := M) hp channel)\n      (dressedNormalMultiplier (M := M) hp channel))"
+        },
+        {
+          "hash": "5d9536305c571cf8e1102038de2aefe61b510a029161c9da6bac31e105654d06",
+          "kind": "def",
+          "label": "def Bosonize.V1S2.bareNormalCorrelator",
+          "text": "noncomputable def bareNormalCorrelator {M h : \u2115} (hh : 0 < h)\n    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))\n    (channel : Bool) : FormalSeries \u2102 :=\n  scalarSeriesMul (expectedWeylCorrelator (M := M) hh hp N x y channel)\n    (scalarSeriesMul (bareNormalMultiplier M) (bareNormalMultiplier M))"
+        },
+        {
+          "hash": "a6ae65cb80ec9952a60ade395b74ec60fac2902a9fecddf33c6f34191ed3a074",
+          "kind": "end",
+          "label": "end Bosonize.V1S2",
+          "text": "end Bosonize.V1S2"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.V1S2.bare_normal_prefactor_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "f6a7627f8704ff1ab200fb828d850a4f48687ec4bafc8b2d64ff26c33bf301cc",
+          "kind": "theorem",
+          "text": "theorem bare_normal_prefactor_contract {M h : \u2115} (hh : 0 < h) (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h)) (channel : Bool) : jointSeriesFunctional (M := M) hp N (vertexSeriesMul (M := M) (vertexSeriesScalarMul (bareNormalMultiplier M) (vertexWeylAdj (M := M) hh hp x channel)) (vertexWeylBareNormal hh hp y channel)) = bareNormalCorrelator (M := M) hh hp N x y channel"
+        },
+        "Bosonize.V1S2.canonical_charge_selection_D_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "f2e8a18a305b7659a793cdd23af0ae7d83284317a421668f8684a332fd350269",
+          "kind": "theorem",
+          "text": "theorem canonical_charge_selection_D_contract (h : \u2115) (L : \u2115) (_hL : 0 < L) (x y : Position L) (N : Charge) : chargeBasisExpectation N (ChargeWord.comp (canonicalKleinDAdj h L x) (canonicalKleinD h L y)) = Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) (aD N) ((y.val : \u2124) - (x.val : \u2124))"
+        },
+        "Bosonize.V1S2.canonical_charge_selection_S_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "a4993f8ce6db0b1a12aa1193f4223b2556ddc562023204eb5770d8540f2837b8",
+          "kind": "theorem",
+          "text": "theorem canonical_charge_selection_S_contract (h : \u2115) (L : \u2115) (_hL : 0 < L) (x y : Position L) (N : Charge) : chargeBasisExpectation N (ChargeWord.comp (canonicalKleinSAdj h L x) (canonicalKleinS h L y)) = Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) (aS N) ((y.val : \u2124) - (x.val : \u2124))"
+        },
+        "Bosonize.V1S2.chargeGauge_unitary_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "b9f86feed2eac7c7c35ac7d08a7dfc7c81a316cf9a8c66b76b104b11191af7e5",
+          "kind": "theorem",
+          "text": "theorem chargeGauge_unitary_contract (h : \u2115) (N : Charge) : \u2016chargeGauge h N\u2016 = 1"
+        },
+        "Bosonize.V1S2.chargePhaseLift_independent": {
+          "ctx": "0dac73ae3d47673db3a654a20323fb179ea1eb2bb6765f44c21de1fd3838cd3c",
+          "hash": "80a83b282e8b0e971f5356e6ef6679e92517ca83ac764855a0e60747898bbdb1",
+          "kind": "theorem",
+          "text": "theorem chargePhaseLift_independent (L : \u2115) [NeZero L] (a x k : \u2124) : Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) a (x + k * (L : \u2124)) = Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) a x"
+        },
+        "Bosonize.V1S2.chargeWordAction_add_contract": {
+          "ctx": "5d9e9557bc75c343828cb33df1033d464c5de34eae71af33847fb4e8670dfca0",
+          "hash": "956791a05ece2fa16cf3f615ef4b61fec5c29ecc93ceb98bcabbea41520eed89",
+          "kind": "theorem",
+          "text": "theorem chargeWordAction_add_contract (w : ChargeWord) (v u : ChargeVec) : chargeWordAction w (v + u) = chargeWordAction w v + chargeWordAction w u"
+        },
+        "Bosonize.V1S2.chargeWordAction_basis_contract": {
+          "ctx": "713846e7f1c32cdad3f1517f1434c30dc8956e58865e64146f2d974d488b0166",
+          "hash": "4c4c2506449bf20b608141c4b38d25df9869690241a8553c23085a49773f6a25",
+          "kind": "theorem",
+          "text": "theorem chargeWordAction_basis_contract (w : ChargeWord) (N : Charge) : chargeWordAction w (Finsupp.single N 1) = w.amplitude N \u2022 Finsupp.single (w.target N) 1"
+        },
+        "Bosonize.V1S2.chargeWordAction_smul_contract": {
+          "ctx": "5d9e9557bc75c343828cb33df1033d464c5de34eae71af33847fb4e8670dfca0",
+          "hash": "efa8b57499d3eef3ff6df898c9b5cfd21f5b8eaf6002133c94835add39b0440e",
+          "kind": "theorem",
+          "text": "theorem chargeWordAction_smul_contract (w : ChargeWord) (z : \u2102) (v : ChargeVec) : chargeWordAction w (z \u2022 v) = z \u2022 chargeWordAction w v"
+        },
+        "Bosonize.V1S2.chargeWord_adjoint_pairing_contract": {
+          "ctx": "3a842116e4b0bd6e1f6787093015c181562be80a755a88970599d7d5ef0d7d2c",
+          "hash": "4e8a76d7fc1baf680e77e6ff25e41e7fb203f3f42fb2d10f6979a42071bc8a38",
+          "kind": "theorem",
+          "text": "theorem chargeWord_adjoint_pairing_contract (f : ChargeWord) (v u : ChargeVec) : chargePairing (chargeWordAction f v) u = chargePairing v (chargeWordAction (ChargeWord.adjoint f) u)"
+        },
+        "Bosonize.V1S2.chargeWord_comp_action_contract": {
+          "ctx": "3a842116e4b0bd6e1f6787093015c181562be80a755a88970599d7d5ef0d7d2c",
+          "hash": "00f5cdd86b8102016d3dd971e0471a2678dcaac8c1e60cd61fcc4363d32b3508",
+          "kind": "theorem",
+          "text": "theorem chargeWord_comp_action_contract (f g : ChargeWord) (v : ChargeVec) : chargeWordAction (ChargeWord.comp f g) v = chargeWordAction f (chargeWordAction g v)"
+        },
+        "Bosonize.V1S2.charge_selection_D_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "fd7e4fb08f456211bb725a5efa17935c8ec3a572fed11702abcd953d5600e9da",
+          "kind": "theorem",
+          "text": "theorem charge_selection_D_contract (L : \u2115) (_hL : 0 < L) (x y : Position L) (N : Charge) : chargeBasisExpectation N (ChargeWord.comp (kleinDAdj L x) (kleinD L y)) = Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) (aD N) ((y.val : \u2124) - (x.val : \u2124))"
+        },
+        "Bosonize.V1S2.charge_selection_S_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "98dfac558085cf92c86f738841e27dffa42d5a34e66aaab5af291053a9a7d9f2",
+          "kind": "theorem",
+          "text": "theorem charge_selection_S_contract (L : \u2115) (_hL : 0 < L) (x y : Position L) (N : Charge) : chargeBasisExpectation N (ChargeWord.comp (kleinSAdj L x) (kleinS L y)) = Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) (aS N) ((y.val : \u2124) - (x.val : \u2124))"
+        },
+        "Bosonize.V1S2.coefficientwise_weyl_correlator_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "87959f46cc63a3bc5a221353bd1bc7a54dc5211a0fb526c72cf6761df1210077",
+          "kind": "theorem",
+          "text": "theorem coefficientwise_weyl_correlator_contract {M h : \u2115} (hh : 0 < h) (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h)) (channel : Bool) : jointSeriesFunctional (M := M) hp N (vertexSeriesMul (M := M) (vertexWeylAdj (M := M) hh hp x channel) (vertexWeyl (M := M) hh hp y channel)) = expectedWeylCorrelator (M := M) hh hp N x y channel"
+        },
+        "Bosonize.V1S2.difference_variance_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "14c1bad1fc2c2e4808e924543e9c15f5d60d95c0c378d68d445e25cf8b5c5148",
+          "kind": "theorem",
+          "text": "theorem difference_variance_contract {M h : \u2115} (_hh : 0 < h) (hp : Bosonize.Ch18.HyperbolicPair) (x y : Position (2 * h)) (channel : Bool) : Bosonize.V1S1.contraction hp (if channel then xSForm (M := M) hp y - xSForm (M := M) hp x else xDForm (M := M) hp y - xDForm (M := M) hp x) (if channel then xSForm (M := M) hp y - xSForm (M := M) hp x else xDForm (M := M) hp y - xDForm (M := M) hp x) = (4 : \u2102) * (if channel then gainS hp else gainD hp : \u2102) * (dirichletCutoff (2 * h) M x y : \u2102)"
+        },
+        "Bosonize.V1S2.dressed_normal_prefactor_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "0874972533ec87553e8d98445bc2e049c81e726364d20db1f06d054711f74a8a",
+          "kind": "theorem",
+          "text": "theorem dressed_normal_prefactor_contract {M h : \u2115} (hh : 0 < h) (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h)) (channel : Bool) : jointSeriesFunctional (M := M) hp N (vertexSeriesMul (M := M) (vertexSeriesScalarMul (dressedNormalMultiplier (M := M) hp channel) (vertexWeylAdj (M := M) hh hp x channel)) (vertexWeylDressedNormal hh hp y channel)) = dressedNormalCorrelator (M := M) hh hp N x y channel"
+        },
+        "Bosonize.V1S2.field_adjoint_on_polynomials_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "915d5d27d4a46520e5e0befd5ed502d8162adb03f73992a8755758ae6cdc983c",
+          "kind": "theorem",
+          "text": "theorem field_adjoint_on_polynomials_contract {M L : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (x : Position L) (channel : Bool) (p q : Bosonize.A08.OscPoly M) : Bosonize.A08.oscPairing M p (Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)) q) = Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)) p) q"
+        },
+        "Bosonize.V1S2.gauge_adapter_left_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "f92ae0dc289cfe0e26fd50f45585fdd9b0fb1b8aababc8eb23cdb4892ff39a86",
+          "kind": "theorem",
+          "text": "theorem gauge_adapter_left_contract (h : \u2115) (N : Charge) : chargeGauge h (chargeShiftL N) / chargeGauge h N = (-1 : \u2102) ^ (N.2 - 1)"
+        },
+        "Bosonize.V1S2.gauge_adapter_left_klein_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "f98bccd4b9ab4bcafd1f5d3cb93e9d06505b19d9f89ed548062dd4c6148038fd",
+          "kind": "theorem",
+          "text": "theorem gauge_adapter_left_klein_contract (h : \u2115) (N : Charge) : (-1 : \u2102) ^ N.1 * (chargeGauge h (chargeShiftL N) / chargeGauge h N) = (-1 : \u2102) ^ (N.1 + N.2 - 1)"
+        },
+        "Bosonize.V1S2.gauge_adapter_right_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "2531e8a5378427a6b286ccfb0b74539f800020bdef4388cc43ffe18a76211ba5",
+          "kind": "theorem",
+          "text": "theorem gauge_adapter_right_contract (h : \u2115) (N : Charge) : chargeGauge h (chargeShiftR N) / chargeGauge h N = (-1 : \u2102) ^ (h + N.1 - 1)"
+        },
+        "Bosonize.V1S2.jointCoeffAction_adjoint_factor_contract": {
+          "ctx": "e3065b07e3996d4a6697307ab9707d973f2a4ea283a2ecdcf948c94cdc72a3f3",
+          "hash": "a13c97560157e1d7227b3e86b6129855eab17a6bb43c2a7c0bb18e7148d9460e",
+          "kind": "theorem",
+          "text": "theorem jointCoeffAction_adjoint_factor_contract {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (a : vertexCoeff M) : jointCoeffAction hp (vertexCoeffAdjoint a) = TensorProduct.map (chargeWordActionLinear (ChargeWord.adjoint a.1)) (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval (oscSyntaxDagger a.2))))"
+        },
+        "Bosonize.V1S2.jointCoeffAction_adjoint_pairing_contract": {
+          "ctx": "e3065b07e3996d4a6697307ab9707d973f2a4ea283a2ecdcf948c94cdc72a3f3",
+          "hash": "947ad26ff7a5a4c22277b15b9ea76fa170724fa1f5e6cd81ea05d72f5aee13de",
+          "kind": "theorem",
+          "text": "theorem jointCoeffAction_adjoint_pairing_contract {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (a : vertexCoeff M) (v u : JointCarrier M) : jointPairing (jointCoeffAction hp a v) u = jointPairing v (jointCoeffAction hp (vertexCoeffAdjoint a) u)"
+        },
+        "Bosonize.V1S2.jointCoeffAction_mul_contract": {
+          "ctx": "e3065b07e3996d4a6697307ab9707d973f2a4ea283a2ecdcf948c94cdc72a3f3",
+          "hash": "f557ad5915ad6627bf9c486c4d26452636da5b98adfe978ada109d121ca701f1",
+          "kind": "theorem",
+          "text": "theorem jointCoeffAction_mul_contract {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (a b : vertexCoeff M) : jointCoeffAction hp (vertexCoeffMul a b) = (jointCoeffAction hp a).comp (jointCoeffAction hp b)"
+        },
+        "Bosonize.V1S2.jointCoeffFunctional_adjoint_contract": {
+          "ctx": "e3065b07e3996d4a6697307ab9707d973f2a4ea283a2ecdcf948c94cdc72a3f3",
+          "hash": "617210b806f49e71800801533131789f5af3343ca86d86168338a4bac214fa6f",
+          "kind": "theorem",
+          "text": "theorem jointCoeffFunctional_adjoint_contract {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) : jointCoeffFunctional hp N (vertexCoeffAdjoint a) = star (jointCoeffFunctional hp N a)"
+        },
+        "Bosonize.V1S2.jointCoeffFunctional_is_matrix_coefficient_contract": {
+          "ctx": "e3065b07e3996d4a6697307ab9707d973f2a4ea283a2ecdcf948c94cdc72a3f3",
+          "hash": "353be3813231553ee4945c3e2f17039900a639faa6fc09fd43a80759a5e31f4e",
+          "kind": "theorem",
+          "text": "theorem jointCoeffFunctional_is_matrix_coefficient_contract {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) : jointCoeffFunctional hp N a = jointPairing (jointBasis M N) (jointCoeffAction hp a (jointBasis M N))"
+        },
+        "Bosonize.V1S2.jointCoeffFunctional_product_contract": {
+          "ctx": "e3065b07e3996d4a6697307ab9707d973f2a4ea283a2ecdcf948c94cdc72a3f3",
+          "hash": "6a7d3a5f54cf040e84fc68470d68013c9892c50523cfc9d897039a766e5e85c2",
+          "kind": "theorem",
+          "text": "theorem jointCoeffFunctional_product_contract {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) : jointCoeffFunctional hp N a = chargeBasisExpectation N a.1 * Bosonize.A08.omegaP M hp (oscSyntaxEval a.2)"
+        },
+        "Bosonize.V1S2.jointPairing_basis_contract": {
+          "ctx": "a6c5e52f1a43f345258b36025d91ecdef6d9c7a430d43dba812b469ec1fd32f3",
+          "hash": "7703a6d10774df15cae04325ba59b434d5610ab326bff4ac7db72164f08c5220",
+          "kind": "theorem",
+          "text": "theorem jointPairing_basis_contract {M : \u2115} (i j : JointBasisIndex M) : jointPairing (jointBasisOf M i) (jointBasisOf M j) = if i = j then jointBasisWeight i else 0"
+        },
+        "Bosonize.V1S2.jointPairing_tmul_factor_contract": {
+          "ctx": "3350b5e247c6efa744cab48e59a03972e13a670e6f1f738542320a77929e6eb7",
+          "hash": "186e627cef4ce84939f142dbae97c6f22ad764c941620316a367512b69504fad",
+          "kind": "theorem",
+          "text": "theorem jointPairing_tmul_factor_contract {M : \u2115} (v u : ChargeVec) (p q : Bosonize.A08.OscPoly M) : jointPairing (TensorProduct.tmul \u2102 v p) (TensorProduct.tmul \u2102 u q) = chargePairing v u * Bosonize.A08.oscPairing M p q"
+        },
+        "Bosonize.V1S2.jointTensorFunctional_tmul": {
+          "ctx": "7e4c1384e0d4282048854c89cd3570ce70b488ee5b45ee672f64948447dc0494",
+          "hash": "34f27907435ec35325412e0cc6a521a8981fa88d2967521ad59e2950778e68c1",
+          "kind": "theorem",
+          "text": "@[simp] theorem jointTensorFunctional_tmul {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (v : ChargeVec) (p : Bosonize.A08.OscPoly M) : jointTensorFunctional (M := M) hp N (TensorProduct.tmul \u2102 v p) = v N * MvPolynomial.lcoeff \u2102 0 p"
+        },
+        "Bosonize.V1S2.oscSyntaxDagger_involutive_contract": {
+          "ctx": "17e939d30f3b02695e711f2d00fd5086b0d1960417f2784f61fad12eff7ab247",
+          "hash": "b14d6123509995c95f09dd390d061aeb8c17254f9e7fdddc6abd8f04fc580762",
+          "kind": "theorem",
+          "text": "theorem oscSyntaxDagger_involutive_contract {M : \u2115} (a : OscSyntax M) : oscSyntaxDagger (oscSyntaxDagger a) = a"
+        },
+        "Bosonize.V1S2.oscSyntaxDagger_mul_contract": {
+          "ctx": "17e939d30f3b02695e711f2d00fd5086b0d1960417f2784f61fad12eff7ab247",
+          "hash": "3cb1ea5c26343d63a87f8ae064d4e2c3b4279dafce75e5fac78c4f30a1eb5897",
+          "kind": "theorem",
+          "text": "theorem oscSyntaxDagger_mul_contract {M : \u2115} (a b : OscSyntax M) : oscSyntaxDagger (a * b) = oscSyntaxDagger b * oscSyntaxDagger a"
+        },
+        "Bosonize.V1S2.oscSyntaxEval_mul_contract": {
+          "ctx": "17e939d30f3b02695e711f2d00fd5086b0d1960417f2784f61fad12eff7ab247",
+          "hash": "2a74f40aace03675c594f7c799aa269e3736c323fb47362aec8607cc6459e38c",
+          "kind": "theorem",
+          "text": "theorem oscSyntaxEval_mul_contract {M : \u2115} (a b : OscSyntax M) : oscSyntaxEval (a * b) = oscSyntaxEval a * oscSyntaxEval b"
+        },
+        "Bosonize.V1S2.oscSyntaxEval_one_contract": {
+          "ctx": "17e939d30f3b02695e711f2d00fd5086b0d1960417f2784f61fad12eff7ab247",
+          "hash": "8d63c495ef05721009d24e6cd0bf7feb56ea005598323e2c5b229a418aa91ff1",
+          "kind": "theorem",
+          "text": "theorem oscSyntaxEval_one_contract {M : \u2115} : oscSyntaxEval (1 : OscSyntax M) = 1"
+        },
+        "Bosonize.V1S2.oscSyntax_roundtrip_freeAlgebra_contract": {
+          "ctx": "17e939d30f3b02695e711f2d00fd5086b0d1960417f2784f61fad12eff7ab247",
+          "hash": "4202066fd42221f6eedfb57c05221ca97ac80c756162b1a08f745e82f46f96bc",
+          "kind": "theorem",
+          "text": "theorem oscSyntax_roundtrip_freeAlgebra_contract {M : \u2115} (a : Bosonize.A08.OscAlgebra M) : oscSyntaxEval (oscFreeToSyntax M a) = a"
+        },
+        "Bosonize.V1S2.oscillatorExp_adjoint_coefficient_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "3e3fbd2fdc7f84c43de67f962079c533749e65fa810f124190d49625c52677ca",
+          "kind": "theorem",
+          "text": "theorem oscillatorExp_adjoint_coefficient_contract {M h : \u2115} (_hh : 0 < h) (hp : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) (channel : Bool) (n : \u2115) (p q : Bosonize.A08.OscPoly M) : Bosonize.A08.oscPairing M p (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval (oscillatorExp hp x channel n))) q) = Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval (oscillatorExpWithScalar hp x channel (-Complex.I) n))) p) q"
+        },
+        "Bosonize.V1S2.oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "140ff5f31b159e58f71bb2d5d15e10cff1a781189cc1567b12d57dd350832774",
+          "kind": "theorem",
+          "text": "theorem oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair) (a : OscSyntax M) (p q : Bosonize.A08.OscPoly M) : Bosonize.A08.oscPairing M p (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval a)) q) = Bosonize.A08.oscPairing M (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval (oscSyntaxDagger a))) p) q"
+        },
+        "Bosonize.V1S2.represented_same_channel_commutator_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "da6914f72a527df740bd0cab0bba423ce30260b949e5c2e85054350fa8d9f334",
+          "kind": "theorem",
+          "text": "theorem represented_same_channel_commutator_contract {M h : \u2115} (_hh : 0 < h) (hp : Bosonize.Ch18.HyperbolicPair) (x y : Position (2 * h)) (channel : Bool) : Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)) * Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement (if channel then xSForm (M := M) hp y else xDForm (M := M) hp y)) = Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement (if channel then xSForm (M := M) hp y else xDForm (M := M) hp y)) * Bosonize.A08.oscRep M (Bosonize.V1S1.linearElement (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x))"
+        },
+        "Bosonize.V1S2.same_channel_commutator_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "b5af3284b2ef81ed8a6c51ba36f3fa8042df6d580c54c96a9f047603bf949eb8",
+          "kind": "theorem",
+          "text": "theorem same_channel_commutator_contract {M h : \u2115} (_hh : 0 < h) (hp : Bosonize.Ch18.HyperbolicPair) (x y : Position (2 * h)) (channel : Bool) : Bosonize.V1S1.contraction hp (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x) (if channel then xSForm (M := M) hp y else xDForm (M := M) hp y) = Bosonize.V1S1.contraction hp (if channel then xSForm (M := M) hp y else xDForm (M := M) hp y) (if channel then xSForm (M := M) hp x else xDForm (M := M) hp x)"
+        },
+        "Bosonize.V1S2.source_phase_product_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "1cef6f9931606ed4f9d13c6dab1a24bbea480f0cd559567a84e718996d7735c7",
+          "kind": "theorem",
+          "text": "theorem source_phase_product_contract (L : \u2115) (_hL : 0 < L) (a : \u2124) (x y : Position L) : chargePhase L a x * star (chargePhase L a y) = Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot L) a ((x.val : \u2124) - (y.val : \u2124))"
+        },
+        "Bosonize.V1S2.vertexSeriesAdjoint_reverses_product_contract": {
+          "ctx": "f0921bc0af8cdbaaddb305ddb8e6b2ed34fc4b6ca69a4d601e649fe81a2dddb3",
+          "hash": "e5e61dfe0068b971ede57afe7da7212f3734ec1a5c57b5602b32a17c7d65254d",
+          "kind": "theorem",
+          "text": "theorem vertexSeriesAdjoint_reverses_product_contract {M : \u2115} (f g : VertexSeries M) : vertexSeriesAdjoint (vertexSeriesMul f g) = vertexSeriesMul (vertexSeriesAdjoint g) (vertexSeriesAdjoint f)"
+        }
+      }
     }
   },
   "version": 2
