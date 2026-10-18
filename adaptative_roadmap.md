@@ -1,6 +1,6 @@
 # Adaptive roadmap and Kanban pipeline
 
-Updated: 2026-10-17. **Current goal:** the user authorized sequential completion of the canonical Lean A–B–C scope through CH19/A08, CH20, CH20b, CH21 and the closure audit. The work proceeds without paid-provider calls or Antigravity/desktop subagents, and keeps each chapter's independent review and proof gates. The remaining-work plan below supersedes older next-action prose in historical checkpoints.
+Updated: 2026-10-18. **V1-S3 Phase C complete and accepted.** All 62 contracts are proved, with zero placeholders and warnings; all 87 public declarations have clean complete axiom audits. The reviewed source is promoted to Core, with all 37 previous Core records preserved (38 total). Independent proof/pedagogy reviews and local CI passed. See [the S3 acceptance receipt](docs/plans/v1-s3/phase-c-acceptance-2026-10-18.md). Hamiltonian transport remains unproved. Stop after S3; do not begin S4. Earlier sprint stop/status snapshots below are historical and superseded by this acceptance.
 
 This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures. The requested execution policy for the next implementation is external-first (Jules and account-eligible OpenAI API), with no default Antigravity author/reviewer or desktop-subagent fallback. Skills/rules and the direct judge entrypoints now enforce that default policy within the controller; the desktop account itself remains outside its control.
 
@@ -394,3 +394,21 @@ See [accepted validation](docs/plans/v1-s2/validation.md) and
 The authorized sprint ends here: **do not begin S3**. Duality/state transport,
 finite-CAR comparisons and analytic limits remain separate obligations. No push,
 GitHub CI or publication is included in this local acceptance.
+
+
+## V1-S3 accepted — 2026-10-18
+
+S3 is promoted as `Bosonize/Core/V1S3FormalDuality.lean`, SHA-256
+`236e5ca07184e63a29ded6b028008cca7543d3ae5e5ef1bb849b72cb06f83694`.
+All 62 contracts are proved; all 87 declarations have permitted standard axioms
+or none, with zero placeholders and warnings. The authorized four-header
+coefficientwise-phase correction is recorded at `4726c62`; Phase B acceptance
+is `0e9f506`. Strict scoped locks and all previous 37 Core records are preserved.
+Independent native proof, migration and pedagogy reviews passed; local `make ci`
+passed 69 guard tests and 18 verifier tests with both aggregator builds.
+See [Phase C acceptance](docs/plans/v1-s3/phase-c-acceptance-2026-10-18.md) and
+[the companion](docs/companion/Bosonize/Core/V1S3FormalDuality.md).
+
+This acceptance concerns the formal charge/polynomial model. Hamiltonian
+transport, finite-CAR equivalence and physical interacting-state duality remain
+unproved. No push or remote CI is claimed. S4 has not been started.

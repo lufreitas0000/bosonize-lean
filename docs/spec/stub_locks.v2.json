@@ -1,6 +1,6 @@
 {
   "files": {
-    "BosonizeStubs/V1S3FormalDuality.lean": {
+    "Bosonize/Core/V1S3FormalDuality.lean": {
       "commands": [
         {
           "hash": "699a6352b15737d5c8fd95ca05d81c0c03b9528cf55aebfa2f1169c9a28f2979",

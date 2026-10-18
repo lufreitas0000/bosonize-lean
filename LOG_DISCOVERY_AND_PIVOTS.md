@@ -6,6 +6,10 @@ This journal preserves critical formalization insights for `bosonize-lean`. When
 
 ## Log Entries
 
+| Date | Module/Context | Obstruction | Pivot/Resolution | Status |
+| --- | --- | --- | --- | --- |
+| 2026-10-18 | V1-S3 / `duality_vertex_D_contract` | Literal multiset equality is compiler-refuted at coefficient 1: cardinalities 1 and 2 differ because Cauchy scalar convolution retains zero-scaled entries. | Independent diagnosis and review established the four-header coefficientwise-phase repair; user authorized it and commit `4726c62` records the amendment. Existing definitions and successful proofs were preserved. | Resolved: all 62 contracts proved, 87 declarations audited, zero placeholders/warnings; Phase C promotion and independent reviews passed. Hamiltonian limitation retained; no S4 work. |
+
 | Date | Context / Target Lemma | Obstruction / Bottleneck | Resolution / Architectural Pivot |
 | :---: | :---: | :--- | :--- |
 | 2026-10-11 | Strategy Alignment | Multi-agent orchestration failure modes | Adopted strategy v2: CI gates, locked statements, and independent Skeptic audit |

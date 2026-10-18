@@ -16,6 +16,91 @@ Define generator maps on the quotient and prove relation/star preservation and i
 
 This is an uncompressed algebraic model equivalence. A finite CAR particle-hole map, mapped budgets, or finite spectral equivalence needs its own construction. A topological T-duality interpretation additionally needs a compactification and charge-lattice form; it is physical context outside this theorem.
 
+## Constructive realization in Lean: formal duality
+
+The S3 construction realizes the formal vertex and charge-indexed functional
+transport in the preceding proposal. Its carrier is
+\[
+\mathcal Q_M=\mathbb C^{(\mathbb Z^2)}\otimes_{\mathbb C}
+  \mathbb C[X_{\nu,m}:\nu\in\{R,L\},\ m<M].
+\]
+The first factor consists of finitely supported charge vectors. The second
+consists of polynomials in finitely many oscillator variables, with no bound
+on their degrees. Thus a finite number of modes does not make this carrier
+finite dimensional. Creation multiplies by a variable; annihilation is the
+corresponding partial derivative multiplied by its positive mode weight.
+
+For a real hyperbolic pair $P=(c,s)$ with $c^2-s^2=1$, put $P^*=(c,-s)$.
+Charge reflection sends $(N_R,N_L)$ to $(N_R,-N_L)$. Polynomial parity sends
+each right variable to its negative and fixes each left variable. Their tensor
+product $J$ is an involutive complex-linear map. On a charge/monomial basis
+vector its sign is $(-1)^{d_R}$, where $d_R$ is the total right-mode degree.
+The complex scalar $i$ is fixed by this map; scalar conjugation belongs to
+the separate adjoint operation.
+
+The polynomial calculation explains transport of the represented action.
+Parity conjugates both multiplication by a right variable and differentiation
+with respect to that variable to their negatives. The derivative statement
+follows from the product rule and polynomial induction. The generator
+identities extend to finite words and finite linear combinations. Combining
+them with the Bogoliubov substitution and the charge-basis calculation gives
+\[
+\rho_{P^*}(D a)=J\rho_P(a)J.
+\]
+In particular, an observable coefficient acts as zero at $P$ exactly when its
+dual acts as zero at $P^*$. This is a statement about the actual polynomial
+representation, without imposing a new CCR quotient on the word syntax.
+
+The charge-word part retains its source amplitude and bijective charge shift.
+The canonical Klein words include the diagonal charge gauge inherited from
+Chapter 13. Their reflections give the positive factor $\zeta^x$ in the
+displayed vertex identities. The simplified ungauged words instead acquire
+an additional minus sign. These are distinct conventions with separately
+proved formulas; interchanging them would change the claimed identity.
+
+Oscillator fields transform by
+\[
+D X_D(P,x)=-X_S(P^*,x),\qquad
+D X_S(P,x)=-X_D(P^*,x).
+\]
+Their coefficients satisfy the conjugation and creator/annihilator exchange
+condition required by the explicit word adjoint. Applying these facts to
+each finite power proves the vertex identities coefficient by coefficient,
+for every $M$ and every ring length $L=2h$ with $h>0$.
+
+There is a distinction between an algebraic sum and the finite multiset that
+records its summands. The S2 coefficient presentation retains even a summand
+whose charge amplitude is zero. Consequently multiplication by the constant
+phase in the literal vertex transport theorem is defined by applying that
+phase to every summand of each coefficient. Expressing it as a Cauchy product
+with a scalar series supported at degree zero would introduce additional
+zero-scaled entries. The reviewed S3 statements use coefficientwise phase
+scaling. General scalar convolutions still define the dressed and bare normal
+vertices; their transport follows from exchange of the real gain factors and
+conjugation invariance of their real scalar multipliers.
+
+Let $\Phi_{P,N}$ denote the constructed joint functional. Its covariance is
+\[
+\Phi_{P^*,f(N)}(D A)=\Phi_{P,N}(A),\qquad f(N_R,N_L)=(N_R,-N_L),
+\]
+both on observable coefficients and coefficientwise on formal series. It
+relates different parameter and charge labels. The ordered two-point laws
+retain the factor $\zeta^x\overline{\zeta^y}$ and exchange a vertex with the
+opposite-channel adjoint; they do not assume cyclicity or exchange the order
+of a noncommutative product. The same laws hold for the dressed and bare normal
+conventions.
+
+The Hamiltonian covariance in the earlier proposal remains a separate target:
+S3 provides no algebra-valued Hamiltonian carrying all oscillator, charge,
+zero-mode and chemical-potential terms and no proof transporting that object.
+It also makes no identification with finite CAR observables or physical
+interacting ground states, no substitution $t=1$, and no analytic or continuum
+claim. The spin/charge and Umklapp proposals below are outside this S3 result.
+
+The implementation and exact declaration mappings are in the
+[formal duality source](../../Bosonize/Core/V1S3FormalDuality.lean) and its
+[companion](../../docs/companion/Bosonize/Core/V1S3FormalDuality.md).
+
 ## Spin/charge normalization and sectors
 
 Square roots can again be isolated.

@@ -1,0 +1,466 @@
+{
+  "date": "2026-10-18",
+  "status": "Phase C accepted",
+  "source": "Bosonize/Core/V1S3FormalDuality.lean",
+  "source_sha256": "236e5ca07184e63a29ded6b028008cca7543d3ae5e5ef1bb849b72cb06f83694",
+  "namespace": "Bosonize.V1S3",
+  "theorem_contracts": 62,
+  "public_declarations_audited": 87,
+  "placeholders": 0,
+  "warnings": 0,
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "axioms": {
+    "Bosonize.V1S3.oscillatorParityAlgHom": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.reflectCharge_involutive": [
+      "propext"
+    ],
+    "Bosonize.V1S3.reflectChargeEquiv": [
+      "propext"
+    ],
+    "Bosonize.V1S3.chargeReflectionLinear": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.jointReflectionLinear": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.rightOscillatorDegree": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.rightOscillatorParity": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.chargeReflectionLinear_basis": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.jointReflection_basis": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.polynomial_vacuum_parity_invariant": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.reflectHyperbolic": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.reflectHyperbolic_involutive": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.gain_exchange": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.gains_reciprocal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.reflectChargeWord": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOscSign": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.oscillatorDualityAlgHom": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOscWordSign": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOscLinearForm": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOscSyntax": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualCoeff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.vertexCoeffOne": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.vertexCoeffScale": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.D_P": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualSeries": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.vertexMultisetAction": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.representedSeries": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.representedSeriesMul": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOsc_generator_action_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOscSyntax_preserves_one_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOscSyntax_preserves_mul_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOscSyntax_preserves_dagger_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualOscSyntax_involutive_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.oscillatorParityAlgHom_one": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.oscillatorParityAlgHom_involutive": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.oscillatorParityAlgHom_creation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.oscillatorDuality_generator": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.oscillatorDuality_syntax_compatibility_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.oscillator_bogoliubov_intertwining_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dressed_right_generator_duality": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dressed_left_generator_duality": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.jointReflectionLinear_involutive": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.reflectChargeWord_preserves_comp_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.reflectChargeWord_basis_action": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.reflectChargeWord_diagonal_observable": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.reflectChargeWord_preserves_adjoint_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualCoeff_preserves_mul_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualCoeff_preserves_adjoint_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualCoeff_involutive_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.D_P_scalar_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.D_P_unit_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.D_twice_typed_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.represented_action_intertwining_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.represented_action_kernel_transport_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.representedSeries_intertwining_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.representedSeries_mul_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.joint_functional_transport_from_action": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualSeries_product_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualSeries_adjoint_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dualSeries_involutive_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.canonicalKleinD_reflection_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.canonicalKleinS_reflection_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.simplifiedKleinD_reflection_sign_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.simplifiedKleinS_reflection_sign_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.canonical_degree_zero_D_action": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.duality_charge_vector_contract": [
+      "propext"
+    ],
+    "Bosonize.V1S3.oscillator_field_D_duality": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.oscillator_field_S_duality": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.chargeWord_reflection_source_first": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.chargeBasisExpectation_reflection": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.duality_vertex_D_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.duality_vertex_S_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.duality_vertex_D_t0_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dressed_normal_multiplier_exchange": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.bare_normal_multiplier_self_adjoint": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dressed_normal_vertex_D_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.bare_normal_vertex_D_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.duality_state_family_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.duality_state_family_series_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.duality_ordered_product_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.duality_ordered_vertex_adjoint_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.dressed_normal_vertex_adjoint_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.bare_normal_vertex_adjoint_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Bosonize.V1S3.Charge": [],
+    "Bosonize.V1S3.reflectCharge": [],
+    "Bosonize.V1S3.dualOscGen": [],
+    "Bosonize.V1S3.dualOscWord": []
+  },
+  "interface_amendment_commit": "4726c62",
+  "phase_b_commit": "0e9f506",
+  "strict_interface_records": {
+    "statements": 1215,
+    "frozen_commands": 1240
+  },
+  "core_source_count": 38,
+  "previous_core_preserved": 37,
+  "ci": {
+    "command": "make ci",
+    "exit_code": 0,
+    "guard_tests": 69,
+    "verifier_tests": 18,
+    "builds": [
+      "Bosonize",
+      "BosonizeStubs"
+    ],
+    "log_sha256": "7fc59e2a4c1f799341058d39875b371a43579dcc76ccc5c6376d9bd4605eff87"
+  },
+  "proof_review": {
+    "reviewer": "/root/s3_syntax_review",
+    "verdict": "PASS",
+    "final_source_sha256": "236e5ca07184e63a29ded6b028008cca7543d3ae5e5ef1bb849b72cb06f83694"
+  },
+  "migration_pedagogy_review": {
+    "reviewer": "/root/s3_syntax_review",
+    "verdict": "PASS after appendix-index date/count correction",
+    "notes": {
+      "notes/appendices/a09_duality_spin_and_umklapp.md": "1115d0a1e0eec3a66a52d25b1af68245c4b920a663edf367bd5498506db07163",
+      "notes/md/ch20_CDW.md": "2bd6528ed7325086379e7657244ac84f835e4e3891f8c3978bc7a4a9fff22542",
+      "notes/appendices/README.md": "aaec65664c4b9df19c36241fbb612e8e314f383e8a75a22ca3c2ace71af50b7f"
+    }
+  },
+  "publication": "Local commits and local CI; no push or remote CI claim.",
+  "scope": "Formal uncompressed charge/polynomial model. Hamiltonian transport, finite-CAR/physical-state identification and S4 excluded."
+}

@@ -1,4 +1,62 @@
-# V1-S3 formal duality and state transport — Phase B checkpoint
+# V1-S3 formal duality and state transport — accepted construction
+
+
+## Promoted construction and validation — 2026-10-18
+
+The complete S3 source is promoted to `Bosonize/Core/V1S3FormalDuality.lean`
+with namespace `Bosonize.V1S3`, byte-identically to the accepted Phase B source.
+Its SHA-256 is `236e5ca07184e63a29ded6b028008cca7543d3ae5e5ef1bb849b72cb06f83694`.
+All 62 theorem contracts are proved; all 87 public declarations have only the
+permitted standard axioms or none, with zero placeholders and zero warnings.
+The four-header correction was authorized and committed at `4726c62`; complete
+proof acceptance was committed at `0e9f506`.
+
+The scoped lock entry moved by path with every declaration/context/command
+hash preserved. The new bytehash was appended to the Core manifest; all prior
+37 Core records are unchanged. `Bosonize.lean` imports the promoted module;
+`BosonizeStubs.lean` already imports the Core aggregator. The reviewed migration
+plan and final pedagogy have independent native PASS. The promoted audit
+passed for all 87 declarations; warning-as-error compilation and `make ci`
+passed, including 69 guard tests, 18 verifier tests and both aggregators.
+See [the Phase C acceptance receipt](../../../plans/v1-s3/phase-c-acceptance-2026-10-18.md)
+and [the complete audit receipt](../../../plans/v1-s3/phase-c-evidence-2026-10-18.json).
+
+| Formal result | Declaration anchors | Mathematical scope |
+| --- | --- | --- |
+| Polynomial parity and representation transport | `jointReflection_basis`, `oscillatorParityAlgHom_involutive`, `represented_action_intertwining_contract`, `represented_action_kernel_transport_contract` | Actual charge/polynomial tensor carrier, with right-degree parity and involutive conjugation. |
+| Syntax, adjoint and parameter substitution | `oscillatorDuality_syntax_compatibility_contract`, `oscillator_bogoliubov_intertwining_contract`, `dualCoeff_preserves_adjoint_contract` | Finite-word algebra, complex-linear duality and explicit conjugate/reverse/swap adjoint. |
+| Canonical charge and field laws | `canonicalKleinD_reflection_contract`, `canonicalKleinS_reflection_contract`, `oscillator_field_D_duality`, `oscillator_field_S_duality` | Source-evaluated charge amplitudes, canonical gauge phase and reflected hyperbolic pair. Simplified Klein signs have separate contracts. |
+| Weyl and normal vertices | `duality_vertex_D_contract`, `duality_vertex_S_contract`, `dressed_normal_vertex_D_contract`, `bare_normal_vertex_D_contract` | Literal multiset equality with coefficientwise phase mapping; formal coefficient identities for positive `h`, arbitrary finite mode count `M`. |
+| State-family and ordered functional transport | `duality_state_family_series_contract`, `duality_ordered_vertex_adjoint_transport`, `dressed_normal_vertex_adjoint_transport`, `bare_normal_vertex_adjoint_transport` | Parameter/charge-family covariance, preserving product order and phase(x) times conjugate phase(y). |
+
+The canonical coefficient map is independent of the parameter. The parameter
+enters the source and target representations through the Bogoliubov maps.
+No quotient descent, fixed-charge state invariance, finite-CAR equivalence,
+physical interacting-state duality or analytic evaluation follows.
+Hamiltonian transport is explicitly unproved: its complete algebra-valued
+oscillator/charge/zero-mode/chemical-potential object and covariance theorem
+remain separate obligations. S4 has not been started.
+
+Pedagogical mapping: `notes/appendices/a09_duality_spin_and_umklapp.md`,
+section “Constructive realization in Lean: formal duality”, explains the
+carrier, derivative/parity argument, coefficient presentation, phase and
+functional transport together with the reference theory. `notes/md/ch20_CDW.md`
+links this result to (20.10) and the state part of (20.11), explicitly retaining
+the unformalized Hamiltonian target. The original A09 spin/charge and Umklapp
+material is preserved and remains outside S3.
+
+Independent proof reviews by `/root/s3_syntax_review` passed the integrated
+batches; final normal/ordered proofs and lint cleanup were reviewed at the
+exact source hash above. Earlier Weyl D/S proofs were reviewed at
+`58bd588fb97e224f44f2e644735ca0626690b4c28e4136fd945b4a5ae4f68e7c` and preserved.
+Detailed Phase B and amendment receipts are in `docs/plans/v1-s3/`.
+
+## Historical development records
+
+The following snapshots retain earlier partial counts, source hashes and
+pending decisions. They are superseded by the promoted-construction status
+above and do not describe the current proof inventory.
+
 
 ## Accepted Phase B result — 2026-10-18
 
@@ -9,19 +67,19 @@ only permitted standard axioms or none. The final staging source SHA-256 is
 Independent native proof review PASS covers the integrated proof batches and
 the final normal/correlator and lint changes. The corrected interface baseline
 is `4726c62`; strict statement/context locks and all 37 prior Core source
-hashes pass. See [the Phase B acceptance receipt](../../plans/v1-s3/phase-b-acceptance-2026-10-18.md).
+hashes pass. See [the Phase B acceptance receipt](../../../plans/v1-s3/phase-b-acceptance-2026-10-18.md).
 
 Phase C promotion and pedagogical synchronization are now in progress. The
 earlier partial counts, obstruction and pending-decision text below describe
 historical snapshots; the four-header correction was authorized and proved.
 
-## Current Phase B checkpoint — 2026-10-18
+## Historical Phase B checkpoint — 2026-10-18
 
 **Subsequent authorization:** the user approved the reviewed four-header
 coefficientwise-phase correction and continued development. The exact amended
 source has SHA-256 `1574eb8b3e555cbbde324d0f68ac5f04b30cff363859bb2dfa514a3bda85e200`;
 only the four reviewed statement records were amended in the scoped lock.
-See [the amendment receipt](../../plans/v1-s3/interface-amendment-2026-10-18.md).
+See [the amendment receipt](../../../plans/v1-s3/interface-amendment-2026-10-18.md).
 The earlier obstruction and pending-decision checkpoint below is historical;
 the remaining seven proofs now proceed against the corrected interface.
 
@@ -44,7 +102,7 @@ mapping; it has not changed the canonical statements or locks. A specific user
 decision is pending under the sprint's interface/lock preservation instruction.
 
 Exact source hashes, evidence, remaining contracts and the next decomposition
-are in [the Phase B checkpoint](../../plans/v1-s3/phase-b-checkpoint-2026-10-18.md).
+are in [the Phase B checkpoint](../../../plans/v1-s3/phase-b-checkpoint-2026-10-18.md).
 The earlier quota pause ended after recovery; the consumed wakeup is paused.
 The Hamiltonian limitation below remains in force. S4 has not been started.
 

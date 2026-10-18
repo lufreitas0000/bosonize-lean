@@ -114,8 +114,9 @@ Together they realize the CAR products and their projection residuals in §20.1,
 plus the charge/polynomial carrier, basis pairing, coefficientwise formal vertices
 and correlators, and the duality coefficients used in §§20.2–20.3. The earlier
 proof strategies remain reference proposals; the realization here explains the
-completed constructive arguments, while the full duality and charge-transport
-statements are still tracked separately at S3.
+completed constructive arguments. The S3 realization of the formal duality and
+charge-indexed functional transport is explained below and in Appendix A09;
+Hamiltonian covariance remains a separate obligation.
 
 **Occupation configurations and fields.** Fix a finite ordered species set,
 distinct species R and L, and the momentum band $\{-h+1,\ldots,h\}$ of length
@@ -224,7 +225,7 @@ potential. The theorem does not extend to arbitrary chemical potentials: the
 chapter proves a concrete inequality between the unadjusted energies at charges
 $(0,1)$ and $(0,-1)$.
 
-**Finite kernel and remaining formal theory.** The finite cosine sum (20.5) is proved symmetric, nonnegative and zero at equal arguments. Its elementary proof uses evenness of cosine and $\cos t\le1$ term by term; for $h=2$, $M=1$, $x=1$, $y=0$ its value is one. In the promoted S2 realization, this same cutoff kernel is the scalar Dirichlet factor that enters the exact coefficientwise correlator theorem and the Gaussian variance calculation. The formal vertices and correlators are now constructed in the uncompressed polynomial model; the full duality and charge-indexed state transport remain S3 obligations. Comparisons with finite interacting states, analytic evaluation of the formal parameter and continuum interpretations also require separate results. The reference formulas in §20.3 remain targets for the duality construction.
+**Finite kernel and remaining formal theory.** The finite cosine sum (20.5) is proved symmetric, nonnegative and zero at equal arguments. Its elementary proof uses evenness of cosine and $\cos t\le1$ term by term; for $h=2$, $M=1$, $x=1$, $y=0$ its value is one. In the promoted S2 realization, this same cutoff kernel is the scalar Dirichlet factor that enters the exact coefficientwise correlator theorem and the Gaussian variance calculation. The formal vertices and correlators are now constructed in the uncompressed polynomial model; the formal duality and charge-indexed functional transport are now proved in S3, as explained below. Comparisons with finite interacting states, analytic evaluation of the formal parameter and continuum interpretations also require separate results. The Hamiltonian part of §20.3 still requires a separate construction.
 
 
 ### S1 input for the coefficientwise formal correlator theorem
@@ -239,7 +240,7 @@ unique partner of the first position. This is the moment input used in the
 coefficientwise formal-vertex construction and its normal-prefactor contracts.
 The charge carrier, the formal vertices, and the correlator formulas are already
 realized in the promoted S2 source; the remaining chapter obligations are the
-full duality and charge-transport statements of S3, not the correlator algebra
+Hamiltonian and physical-state comparisons beyond the formal S3 transport, not the correlator algebra
 itself.
 
 #### S2 verified realization: coefficientwise formal vertices and correlators
@@ -290,4 +291,31 @@ with $H_M$ the harmonic cutoff. Each vertex receives one multiplier; its two-poi
 
 The S1 moments supply the Gaussian coefficient calculation: the ordered Wick theorem gives the polynomial moments needed for the Gaussian coefficient extraction, and the odd moments vanish. The exact two-point formula is therefore the promoted S2 correlator theorem, while the earlier exponential language in the chapter should be read as reference formulas that need additional BCH-style interpretation if one wants to compare them with other presentations.
 
-The construction is coefficientwise. Evaluation at $t=1$, analytic convergence and identification with finite CAR observables each require separate results. Full formal duality and charge-indexed state transport remain S3 obligations.
+The construction is coefficientwise. Evaluation at $t=1$, analytic convergence and identification with finite CAR observables each require separate results. S3 now proves formal duality and charge-indexed functional transport; its Hamiltonian and physical-state limitations remain explicit below.
+
+
+#### S3 verified realization: formal duality and charge-family transport
+
+The [S3 formal duality module](../../Bosonize/Core/V1S3FormalDuality.lean)
+constructs the involution on the same charge/polynomial carrier used in S2.
+It reflects the left charge and applies parity to the right oscillator
+variables. On represented coefficients it intertwines the actions at
+$P=(c,s)$ and $P^*=(c,-s)$, so the two representation kernels correspond.
+
+The canonical Klein phases and oscillator-field transformation prove (20.10)
+coefficient by coefficient. Constant phase multiplication here scales each
+summand of the finite multiset presentation; a scalar Cauchy product would
+retain extra zero-scaled summands. The ordered Weyl, dressed-normal and
+bare-normal functional identities retain the phase
+$\zeta^x\overline{\zeta^y}$ and their written product order. Functional
+covariance relates $(P,N)$ to $(P^*,(N_R,-N_L))$; it asserts no invariance of
+an arbitrary fixed-charge functional.
+
+[Appendix A09's constructive realization](../appendices/a09_duality_spin_and_umklapp.md#constructive-realization-in-lean-formal-duality)
+explains the basis, polynomial-derivative and formal-power arguments. Exact
+declaration mappings and validation evidence belong to the
+[S3 companion](../../docs/companion/Bosonize/Core/V1S3FormalDuality.md).
+The Hamiltonian assertion in (20.11) remains an unformalized reference target:
+S3 contains neither the complete algebra-valued Hamiltonian nor its covariance
+proof. Finite-CAR identification, physical interacting-state comparison,
+analytic evaluation and continuum interpretation remain separate obligations.
