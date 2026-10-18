@@ -1,6 +1,6 @@
 # V1-S2 charge words and formal vertices — Phase A companion
 
-Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in progress.** The interface baseline is `0610d1495ebc4e95dec323c27faf22966e55e9d2`. This resumption proved 23 additional contracts: 36 S2 theorem declarations are now complete, with three placeholders remaining (the Weyl correlator and two normal-ordering results). Current source SHA-256: `0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233`. Independent review covers all 23 changed proofs through the two exact partial-package receipts linked in the current checkpoint. S2 is not proof-complete; no Phase C or S3 work has started.
+Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in progress.** The interface baseline is `0610d1495ebc4e95dec323c27faf22966e55e9d2`. This resumption proved 23 additional contracts: 36 S2 theorem declarations are now complete, with three placeholders remaining (the Weyl correlator and two normal-ordering results). Current source SHA-256: `37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9`. Independent review covers all 23 changed proofs through the two exact partial-package receipts linked in the current checkpoint. S2 is not proof-complete; no Phase C or S3 work has started.
 
 The detailed candidate mathematical interface, source hashes, convention
 derivations, conditional correlator proof, normal-ordering audit, and checks

@@ -784,32 +784,8 @@ noncomputable def bareNormalCorrelator {M h : ℕ} (hh : 0 < h)
   scalarSeriesMul (expectedWeylCorrelator (M := M) hh hp N x y channel)
     (scalarSeriesMul (bareNormalMultiplier M) (bareNormalMultiplier M))
 
-theorem coefficientwise_weyl_correlator_contract {M h : ℕ} (hh : 0 < h)
-    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))
-    (channel : Bool) :
-    jointSeriesFunctional (M := M) hp N
-      (vertexSeriesMul (M := M) (vertexWeylAdj (M := M) hh hp x channel)
-        (vertexWeyl (M := M) hh hp y channel)) =
-        expectedWeylCorrelator (M := M) hh hp N x y channel := by sorry
 
-theorem dressed_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
-    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))
-    (channel : Bool) :
-    jointSeriesFunctional (M := M) hp N
-      (vertexSeriesMul (M := M)
-        (vertexSeriesScalarMul (dressedNormalMultiplier (M := M) hp channel)
-          (vertexWeylAdj (M := M) hh hp x channel))
-        (vertexWeylDressedNormal hh hp y channel)) =
-      dressedNormalCorrelator (M := M) hh hp N x y channel := by sorry
 
-theorem bare_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
-    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))
-    (channel : Bool) :
-    jointSeriesFunctional (M := M) hp N
-      (vertexSeriesMul (M := M)
-        (vertexSeriesScalarMul (bareNormalMultiplier M) (vertexWeylAdj (M := M) hh hp x channel))
-        (vertexWeylBareNormal hh hp y channel)) =
-      bareNormalCorrelator (M := M) hh hp N x y channel := by sorry
 
 /-! The following contracts are intentionally Phase A placeholders. -/
 
@@ -1690,5 +1666,32 @@ theorem difference_variance_contract {M h : ℕ} (_hh : 0 < h)
     ring
   rw [hsumvar]
   ring
+
+theorem coefficientwise_weyl_correlator_contract {M h : ℕ} (hh : 0 < h)
+    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))
+    (channel : Bool) :
+    jointSeriesFunctional (M := M) hp N
+      (vertexSeriesMul (M := M) (vertexWeylAdj (M := M) hh hp x channel)
+        (vertexWeyl (M := M) hh hp y channel)) =
+        expectedWeylCorrelator (M := M) hh hp N x y channel := by sorry
+
+theorem dressed_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
+    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))
+    (channel : Bool) :
+    jointSeriesFunctional (M := M) hp N
+      (vertexSeriesMul (M := M)
+        (vertexSeriesScalarMul (dressedNormalMultiplier (M := M) hp channel)
+          (vertexWeylAdj (M := M) hh hp x channel))
+        (vertexWeylDressedNormal hh hp y channel)) =
+      dressedNormalCorrelator (M := M) hh hp N x y channel := by sorry
+
+theorem bare_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
+    (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))
+    (channel : Bool) :
+    jointSeriesFunctional (M := M) hp N
+      (vertexSeriesMul (M := M)
+        (vertexSeriesScalarMul (bareNormalMultiplier M) (vertexWeylAdj (M := M) hh hp x channel))
+        (vertexWeylBareNormal hh hp y channel)) =
+      bareNormalCorrelator (M := M) hh hp N x y channel := by sorry
 
 end Bosonize.V1S2

@@ -8,7 +8,7 @@ unchanged reviewed interface lock from
 has started. This resumption began at `083df9dbd7148a5c71ef09cce5a46558825a3907`.
 
 - Source: `BosonizeStubs/V1S2FormalVertices.lean`
-- SHA-256: `0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233`
+- SHA-256: `37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9`
 - Previous checkpoint source: `f3056b313db9d90f10d238be1a0555460026173e979ae82a195fdc81ec8a6a07`
 - **23 newly proved contracts, 36 completed S2 theorem declarations total,
   and three unchanged placeholder contracts remain.**
@@ -153,3 +153,25 @@ review of actual new proofs and fresh strict lock/build/axiom/warning/placeholde
 and nonvacuity evidence before entering the authorized Phase C gates. No S3.
 
 Scratch Gaussian-coefficient source SHA-256: `56c535cdac18e7a94527c8a827c658044b33e3e1b562f1acbb0ad18d8936f9d6`.
+
+## Independently reviewed dependency-order repair — 2026-10-18
+
+The three remaining correlator/prefactor contracts originally preceded the
+charge, field, commutator and variance results needed in their proofs. Lean
+cannot use forward references. The three unchanged open declarations were
+moved after those prerequisites, inside the same namespace and without
+crossing a non-theorem command. The existing authoritative guard verified
+identical statements and non-theorem context hashes; no lock amendment or
+regeneration was needed. An independent PASS covers the exact reordered
+source. The receipt is
+[`phase-b-dependency-order-review-2026-10-18.json`](phase-b-dependency-order-review-2026-10-18.json).
+The source chain is: proof-reviewed `b54f7fd...5fcd2ce9`, blank-line cleanup
+`0d684a41...fe0c233`, and reviewed declaration reorder
+`37e52dd7...109afc9`. Recompute the full hashes from the receipts.
+
+The separate scratch `ContextualBinomial.lean` now compiles a generic additive
+functional binomial theorem under explicit two-sided contextual commutation,
+using a local `RingCon` quotient and `Commute.add_pow`. Its axiom closure is
+standard only. It is not imported into staging; inline the checked proof as a
+local helper if using that route. This does not yet supply the actual field
+contextual-CCR or coefficientwise syntax/charge/Cauchy bridges.

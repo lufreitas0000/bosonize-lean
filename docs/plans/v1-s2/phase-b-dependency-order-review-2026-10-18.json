@@ -1,0 +1,30 @@
+{
+  "scope": "Theorem-declaration dependency order only; no new proof or statement change",
+  "before_sha256": "0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233",
+  "source_sha256": "37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9",
+  "moved_contracts": [
+    "bare_normal_prefactor_contract",
+    "coefficientwise_weyl_correlator_contract",
+    "dressed_normal_prefactor_contract"
+  ],
+  "review": {
+    "verdict": "PASS",
+    "candidate_sha256": "37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9",
+    "findings": [
+      "Preserves the locked interface: only declaration order changed; no statement, proof, import, definition, instance, option, or attribute changed.",
+      "The three moved theorems remain open (`:= by sorry`); this is a dependency-order repair only, not proof completion.",
+      "No theorem was moved outside the same namespace; the committed manifest check reportedly had zero errors and zero warnings."
+    ],
+    "scope": "Bosonize.V1S2 namespace; reordered only `coefficientwise_weyl_correlator_contract`, `dressed_normal_prefactor_contract`, and `bare_normal_prefactor_contract` to after their supporting theorems."
+  },
+  "review_provenance": {
+    "provider": "openai",
+    "requested_alias": "api-fast",
+    "returned_model": "gpt-5.4-mini-2026-03-17",
+    "reasoning": "medium",
+    "charged_tokens": 1922
+  },
+  "guards": "Existing unchanged v2 manifest: 1153 headers/1211 non-theorem commands pass; all 36 Core sources pass",
+  "lock_manifest_changed": false,
+  "proof_complete": false
+}

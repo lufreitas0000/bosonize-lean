@@ -279,7 +279,7 @@ proved 23 further contracts, leaving the Weyl correlator and two normal-ordering
 contracts as three unchanged placeholders; 36 S2 theorem declarations are
 proved in total. Independent review covers all 23 changed proofs in two
 partial packages; the current source SHA-256 is
-`0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233`. The five-proof receipt records the independently reviewed hash and the
+`37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9`. The five-proof receipt records the independently reviewed hash and the
 subsequent four-blank-line whitespace cleanup. Strict/Core guards
 pass; the staging build has exactly three placeholder warnings; all 36
 completed theorem closures use only the permitted standard axioms. The
