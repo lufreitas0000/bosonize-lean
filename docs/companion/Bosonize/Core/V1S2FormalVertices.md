@@ -1,14 +1,14 @@
-# V1-S2 charge words and formal vertices — Phase A companion
+# V1-S2 charge words and formal vertices — accepted companion
 
-Status: **Phase B complete; Phase C next.** All 39 theorem contracts are proved. Source SHA-256: `17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`. Fresh audit of 119 declarations, zero-warning build, strict/Core locks, nonvacuity checks and independent final proof/package review PASS. Historical progress counts below describe their saved snapshots. No S3 work.
+Status: **Phase C complete; source promoted and frozen.** All 39 theorem contracts are proved. Source SHA-256: `17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`. Fresh audit of 119 declarations, zero-warning build, strict/Core locks, nonvacuity checks and independent final proof/package review PASS. Historical progress counts below describe their saved snapshots. No S3 work.
 
 The detailed candidate mathematical interface, source hashes, convention
 derivations, conditional correlator proof, normal-ordering audit, and checks
-are in [`phase-a-review-packet.md`](../plans/v1-s2/phase-a-review-packet.md).
+are in [`phase-a-review-packet.md`](../../../plans/v1-s2/phase-a-review-packet.md).
 The current Phase B proof inventory, dead ends, validation gates, and resume
-instructions are in [`phase-b-checkpoint.md`](../plans/v1-s2/phase-b-checkpoint.md);
+instructions are in [`phase-b-checkpoint.md`](../../../plans/v1-s2/phase-b-checkpoint.md);
 a concise initialization prompt is in
-[`follow-up-agent-prompt.md`](../plans/v1-s2/follow-up-agent-prompt.md).
+[`follow-up-agent-prompt.md`](../../../plans/v1-s2/follow-up-agent-prompt.md).
 The packet was independently reviewed as a mathematical specification. S1 is separately accepted by its promoted Core implementation and review receipt.
 
 ## Source reconciliation
@@ -39,8 +39,8 @@ S1 is accepted and promoted in `Bosonize/Core/V1S1OrderedWick.lean` and
 independent review, hashes, audits, and Phase C promotion. S2 imports the
 accepted ordered-Wick and moment interface directly and does not copy its
 proofs. The exact S2 Phase A interface passed review and was scoped-locked.
-Phase B is incomplete; theorem contracts remain placeholders. No S3 work is
-part of this sprint.
+All 39 theorem contracts are proved and independently reviewed. Phase C moved the source byte-identically to Core; independent migration and
+pedagogical reviews and all local validation gates pass. No S3 work is part of this sprint.
 
 ## Independent specification review
 
@@ -134,7 +134,7 @@ The same-channel contraction symmetry, represented polynomial commutator,
 field Hermiticity, inverse-pullback exponential-coefficient adjoint and exact
 difference variance have now passed sandboxed compilation/axiom/target-warning
 gates and independent review. The exact five-proof receipt is
-[`phase-b-field-review-2026-10-17.json`](../plans/v1-s2/phase-b-field-review-2026-10-17.json).
+[`phase-b-field-review-2026-10-17.json`](../../../plans/v1-s2/phase-b-field-review-2026-10-17.json).
 A fresh staging build has three placeholder warnings; all 36 completed theorem
 closures have standard axioms only. The main correlator and both prefactor
 contracts remain open. Historical partial-package counts above describe their
@@ -148,7 +148,7 @@ including canonical source-charge selection, represented coefficient adjoints,
 contextual finite Cauchy/binomial algebra, the S1 even/odd moment calculation,
 variance `4*g_J*D1`, and both `L^-1` factors. Its current source passed the
 sandboxed statement/compiler/target-warning/axiom gate and independent review.
-Receipt: [`phase-b-weyl-review-2026-10-18.json`](../plans/v1-s2/phase-b-weyl-review-2026-10-18.json).
+Receipt: [`phase-b-weyl-review-2026-10-18.json`](../../../plans/v1-s2/phase-b-weyl-review-2026-10-18.json).
 All 37 completed theorem closures use only standard axioms. The staging build
 still has two normal-prefactor placeholder warnings; neither Phase B nor
 Phase C is complete. The theorem remains a formal coefficient identity, with
@@ -159,4 +159,63 @@ no finite-CAR, analytic or continuum identification.
 
 The dressed and bare contracts extract their defined scalar Cauchy multipliers. Local coefficient bilinearity is extended by multiset induction, a curried additive functional and an explicit finite reindexing bijection. This argument preserves oscillator word order and never assumes multiplicativity of the state. Both complete bodies passed the sandboxed statement/compiler/warning/axiom gate and independent review. The final source retains every locked definition, header, import and option.
 
-[Final Phase B evidence](../plans/v1-s2/phase-b-validation.md); [independent review](../plans/v1-s2/phase-b-normal-review-2026-10-18.json). All 39 theorem closures and 80 data/type declarations have only standard axioms. The proof does not separately establish a creator/annihilator factorization or BCH identity; those remain reference interpretation beyond the locked normal-multiplier contracts.
+[Final Phase B evidence](../../../plans/v1-s2/phase-b-validation.md); [independent review](../../../plans/v1-s2/phase-b-normal-review-2026-10-18.json). All 39 theorem closures and 80 data/type declarations have only standard axioms. The proof does not separately establish a creator/annihilator factorization or BCH identity; those remain reference interpretation beyond the locked normal-multiplier contracts.
+
+
+## Promoted declaration and pedagogy mapping
+
+The [promoted module](../../../../Bosonize/Core/V1S2FormalVertices.lean) keeps
+namespace `Bosonize.V1S2` and imports only accepted S1. It contains 39 theorem
+contracts and 80 data/type declarations, all covered by the fresh aggregator
+axiom audit. The source SHA-256 is
+`17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`.
+
+| Mathematical content | Declaration anchors | Pedagogical location |
+| --- | --- | --- |
+| Tensor basis pairing and factorization | `jointPairing_basis_contract`, `jointPairing_tmul_factor_contract` | Chapter 20 S2 carrier and weighted pairing |
+| Charge action, composition and adjoint | `chargeWordAction_basis_contract`, `chargeWord_comp_action_contract`, `chargeWord_adjoint_pairing_contract` | S2 charge bijections/source amplitudes |
+| Syntax evaluator and dagger | `oscSyntax_roundtrip_freeAlgebra_contract`, `oscSyntaxEval_mul_contract`, `oscSyntaxDagger_involutive_contract`, `oscSyntaxDagger_mul_contract` | S2 finite-word syntax |
+| Represented adjoint and matrix functional | `jointCoeffAction_adjoint_pairing_contract`, `jointCoeffFunctional_is_matrix_coefficient_contract`, `jointCoeffFunctional_product_contract`, `jointCoeffFunctional_adjoint_contract` | S2 inverse pullback and pairing |
+| Gauge and source phase | `chargeGauge_unitary_contract`, both `gauge_adapter_*_contract`, both `canonical_charge_selection_*_contract` | S2 CH13 gauge and restored-source phase |
+| Same-channel field algebra and variance | `same_channel_commutator_contract`, `represented_same_channel_commutator_contract`, `field_adjoint_on_polynomials_contract`, `difference_variance_contract` | S2 cancellation and variance |
+| Series/exponential adjoints | `oscillatorExp_adjoint_coefficient_contract`, `oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract`, `vertexSeriesAdjoint_reverses_product_contract` | S2 coefficientwise construction |
+| Gaussian Weyl correlator | `coefficientwise_weyl_correlator_contract` | Chapter 20 (20.8)–(20.9), S2 even/odd coefficients |
+| Defined normal multipliers | `dressed_normal_prefactor_contract`, `bare_normal_prefactor_contract` | S2 twofold scalar Cauchy factors |
+
+The corresponding note is [Chapter 20](../../../../notes/md/ch20_CDW.md).
+All 17 pre-existing display equations and original reference targets were
+preserved; only three stale status passages were revised, with an added S2
+realization section. The external author supplied the draft; supervisor
+corrections fixed links, inverse pullback, source-charge ordering, the two
+vertex normalizations, and S3 boundaries before independent review.
+
+## Phase C migration evidence
+
+The source was moved from `BosonizeStubs/` to `Bosonize/Core/` without changing
+any byte. Its import, namespace, definitions, statements and proof bodies are
+identical to the final reviewed Phase B source. The strict manifest changes
+only the S2 path key, retaining all 39 theorem and 85 command records exactly.
+The Core manifest adds only the S2 source hash; all 36 earlier hashes remain
+unchanged. Core and staging aggregators route downstream imports through
+`Bosonize`. Historical manifests and review receipts remain intact.
+
+Local `make ci` passes 69 guard tests, both library builds and 18 verifier
+tests. The promoted aggregator audit covers all 119 S2 declarations with only
+`propext`, `Classical.choice`, `Quot.sound`. No source placeholders or compiler
+warnings remain. The deliberate `Fixture.value` sorryAx in CI is a verifier
+rejection test, not an accepted dependency. Nonvacuity checks establish the
+squeezed gains 1/9 and 9 and a nonzero degree-zero coefficient 1/4 for every
+mode cutoff at circumference two. No GitHub CI, push, publication, finite-CAR
+identification, analytic evaluation, or S3 completion is claimed.
+
+
+## Final acceptance — October 18, 2026
+
+Independent actual migration, pedagogical and reference-preservation reviews
+all returned PASS, with no actionable findings. Exact reviewed source/note
+hashes and provider provenance are in the [Phase C receipt](../../../plans/v1-s2/phase-c-review-2026-10-18.json).
+The complete [validation record](../../../plans/v1-s2/validation.md),
+[aggregator axiom audit](../../../plans/v1-s2/axiom-audit.txt) and
+[local CI output](../../../plans/v1-s2/ci-output.txt) establish S2 acceptance.
+S3 remains outside this sprint. The corresponding pedagogical note retains
+all reference formulas and makes the normal-multiplier/BCH boundary explicit.

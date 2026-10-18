@@ -1,0 +1,72 @@
+{
+  "scope": "V1-S2 actual byte-preserving Core migration and Chapter20 pedagogical synchronization",
+  "source_sha256": "17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020",
+  "note_sha256": "cb9e86c9bcae4e60e5e2f86c172f147d80e283970789a9e7ba41d3bbbd1f77ba",
+  "phase_b_commit": "fcd5b45181cd86f141516b79fcfa200272ec5cf3",
+  "review": {
+    "verdict": "PASS",
+    "reviewed_source_sha256": "17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020",
+    "reviewed_note_sha256": "cb9e86c9bcae4e60e5e2f86c172f147d80e283970789a9e7ba41d3bbbd1f77ba",
+    "migration_verdict": "PASS",
+    "pedagogy_verdict": "PASS",
+    "reference_preservation_verdict": "PASS",
+    "actionable_findings": [],
+    "remaining_gates": [
+      "S3 duality/state transport remains pending",
+      "No finite-CAR identification, t=1 evaluation, or analytic/continuum theorem should be claimed from S2 alone"
+    ]
+  },
+  "review_provenance": {
+    "provider": "openai",
+    "requested_alias": "api-fast",
+    "returned_model": "gpt-5.4-mini-2026-03-17",
+    "reasoning": "medium",
+    "charged_tokens": 25473,
+    "usage": {
+      "input_tokens": 23067,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 2406,
+      "output_tokens_details": {
+        "reasoning_tokens": 2231
+      },
+      "total_tokens": 25473
+    }
+  },
+  "review_prompt_sha256": "1c0c9bd45169ff9e7dfd4093b3fa01a07d1f152d118a361b98e1f36df4957896",
+  "review_response_sha256": "01f0dbbeb3e9fe20b9bf9d88a312baba59266c819a612bf3ded1b564e75c6213",
+  "migration": {
+    "source_bytes_identical": true,
+    "strict_manifest_only_path_key_changed": true,
+    "unchanged_theorem_records": 39,
+    "unchanged_command_records": 85,
+    "existing_core_sources_preserved": 36,
+    "core_sources_after": 37
+  },
+  "pedagogy": {
+    "external_author": "agentctl api-fast",
+    "draft_rounds": 2,
+    "supervisor_corrections": [
+      "proper source links and CH20 finite attribution",
+      "inverse vacuum pullback vs forward dressed fields",
+      "source-charge phase before shift",
+      "one normalization per vertex",
+      "two identical multiplier series per two-point normal correlator",
+      "charge bijection vs special constant shifts",
+      "S3 and analytic/finite-comparison boundaries"
+    ],
+    "original_display_formulas_preserved": 17,
+    "original_links_preserved": true,
+    "local_links_resolve": true,
+    "independent_review": "PASS"
+  },
+  "validation": "S2 source moved byte-identically; SHA256 17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020.\nStrict manifest: only S2 key moved; all 39 theorem and85 command records unchanged.\nCore manifest: only S2 SHA added;36 prior hashes unchanged.\nCore/staging aggregators updated; namespace/imports/source bodies preserved.\nmake ci PASS:69 guard tests, both library builds,18 verifier tests, CI OK. Zero compiler warnings/errors. Deliberate Fixture.value sorryAx is only in rejection-test evidence.\nPromoted Bosonize aggregator audit119 declarations:standard axioms only.\nPromoted nonvacuity scratch:PASS (gains1/9,9; coefficient1/4 nonzero for every cutoff).\nPedagogical/migration review PASS; final commit/ref guards run after promotion commit. No GitHub CI or publication claimed.\n",
+  "strict_manifest_sha256": "f47a305be49eea48684363b8655babe9c8caea1895019f609f62235476da186d",
+  "core_manifest_sha256": "97abfe83045a0ee401229336aa51a372737612ce97cfda625c25621ad0da80ab",
+  "phase_c_complete": true,
+  "s3_started": false,
+  "github_ci_run": null,
+  "pushed": false
+}

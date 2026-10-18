@@ -1,8 +1,17 @@
-# V1-S2 current checkpoint — Phase B complete, Phase C next
+# V1-S2 current checkpoint — Phase C complete
 
-All 39 theorem contracts are proved; 119 declarations freshly audited with standard axioms only. Build, zero-warning/placeholder, strict/Core locks, nonvacuity checks and independent final package review PASS. Source SHA-256: `17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`. See [final Phase B validation](phase-b-validation.md) and [review](phase-b-normal-review-2026-10-18.json). No S3 work.
+All 39 contracts are proved, independently reviewed, promoted and frozen.
+All 119 declarations audit with standard axioms only; zero warnings/placeholders.
+Strict/Core guards, both builds, local CI, nonvacuity, actual migration and
+pedagogical reviews PASS. Source SHA-256:
+`17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`. See [final validation](validation.md),
+[Core companion](../../companion/Bosonize/Core/V1S2FormalVertices.md),
+[final B review](phase-b-normal-review-2026-10-18.json) and
+[C review](phase-c-review-2026-10-18.json). No S2 gate remains open; S3 has not
+started. No push/publication/GitHub CI is claimed. The one-time continuation
+automation was consumed and deleted.
 
-The following saved checkpoint is historical; its two remaining contracts and quota stop have now been resolved. It preserves the proof inventory, dead ends and prior evidence.
+The following saved checkpoint is historical; its two remaining contracts, quota stop and Phase C gates have now been resolved. It preserves the proof inventory, dead ends and prior evidence.
 
 # V1-S2 Phase B checkpoint — scheduled resumption, October 17–18, 2026
 

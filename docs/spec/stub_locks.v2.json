@@ -13656,7 +13656,7 @@
         }
       }
     },
-    "BosonizeStubs/V1S2FormalVertices.lean": {
+    "Bosonize/Core/V1S2FormalVertices.lean": {
       "commands": [
         {
           "hash": "8ba3dc9b1f39cd65a312f9374067cf5ca4d62178b37ee26a667c9d42f020fc3f",

@@ -1,5 +1,4 @@
 import Bosonize
-import BosonizeStubs.V1S2FormalVertices
 
 /-!
 # Bosonize Staging Library

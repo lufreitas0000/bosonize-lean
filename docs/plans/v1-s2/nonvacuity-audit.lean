@@ -1,4 +1,4 @@
-import BosonizeStubs.V1S2FormalVertices
+import Bosonize
 open Bosonize.V1S2
 private def hp0 : Bosonize.Ch18.HyperbolicPair := ⟨1, 0, by norm_num⟩
 private noncomputable def hpSqueezed : Bosonize.Ch18.HyperbolicPair := ⟨5/3, 4/3, by norm_num⟩

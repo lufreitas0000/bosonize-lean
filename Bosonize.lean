@@ -36,6 +36,7 @@ import Bosonize.Core.A08OscillatorStates
 import Bosonize.Core.Ch19Correlations
 import Bosonize.Core.V1S1PairingCombinatorics
 import Bosonize.Core.V1S1OrderedWick
+import Bosonize.Core.V1S2FormalVertices
 import Bosonize.Core.Ch20CDW
 
 /-!

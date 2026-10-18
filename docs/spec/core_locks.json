@@ -34,5 +34,6 @@
   "Bosonize/Core/Ch19Correlations.lean": "845e95b619fca515b25c2a103071ba1fa0fdfa46ddd12081440ddfbdae902339",
   "Bosonize/Core/Ch20CDW.lean": "00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f",
   "Bosonize/Core/V1S1PairingCombinatorics.lean": "33fefe1fafbdde6c544925a641ac8cdec496ce571f3036558500a53ddb0ddeff",
-  "Bosonize/Core/V1S1OrderedWick.lean": "f26d52cb29008f7d39030157368b7b9131bf14a4db173e97ef404062220852a9"
+  "Bosonize/Core/V1S1OrderedWick.lean": "f26d52cb29008f7d39030157368b7b9131bf14a4db173e97ef404062220852a9",
+  "Bosonize/Core/V1S2FormalVertices.lean": "17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020"
 }

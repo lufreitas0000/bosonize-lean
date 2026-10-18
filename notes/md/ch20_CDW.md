@@ -106,11 +106,16 @@ Prove relation and star preservation, inverse, charge conjugation on kets, exact
 The verified finite part of this chapter is developed in the
 [CH20 Core module](../../Bosonize/Core/Ch20CDW.lean), with exact theorem mappings
 and validation evidence in its [companion](../../docs/companion/Bosonize/Core/Ch20CDW.md).
-It realizes the CAR products and their projection residuals in §20.1, together
-with charge-coefficient, parameter and mode-family identities underlying §20.3.
-The formal vertices and state transport in §§20.2–20.3 retain the separate
-construction obligations described below. The earlier proof strategies remain
-reference proposals; the realization here explains the completed finite arguments.
+The verified S2 realization is developed in the
+[V1S2 Formal Vertices module](../../Bosonize/Core/V1S2FormalVertices.lean), with
+exact theorem mappings and validation evidence in its
+[companion](../../docs/companion/Bosonize/Core/V1S2FormalVertices.md).
+Together they realize the CAR products and their projection residuals in §20.1,
+plus the charge/polynomial carrier, basis pairing, coefficientwise formal vertices
+and correlators, and the duality coefficients used in §§20.2–20.3. The earlier
+proof strategies remain reference proposals; the realization here explains the
+completed constructive arguments, while the full duality and charge-transport
+statements are still tracked separately at S3.
 
 **Occupation configurations and fields.** Fix a finite ordered species set,
 distinct species R and L, and the momentum band $\{-h+1,\ldots,h\}$ of length
@@ -219,19 +224,10 @@ potential. The theorem does not extend to arbitrary chemical potentials: the
 chapter proves a concrete inequality between the unadjusted energies at charges
 $(0,1)$ and $(0,-1)$.
 
-**Finite kernel and remaining formal theory.** The finite cosine sum (20.5)
-is proved symmetric, nonnegative and zero at equal arguments. Its elementary
-proof uses evenness of cosine and $\cos t\le1$ term by term; for $h=2$, $M=1$,
-$x=1$, $y=0$ its value is one. This finite kernel is available for a subsequent
-correlator construction. Constructing formal vertices, proving their Hermitian
-properties and formal correlations, the full tensor-algebra duality and vertex law,
-and state transport remain CH20b obligations. The finite results do not yet
-supply the formal correlations (20.8)–(20.9), evaluation of a formal parameter
-at one, or a continuum power law. The reference formulas above remain the
-stated targets for those further constructions.
+**Finite kernel and remaining formal theory.** The finite cosine sum (20.5) is proved symmetric, nonnegative and zero at equal arguments. Its elementary proof uses evenness of cosine and $\cos t\le1$ term by term; for $h=2$, $M=1$, $x=1$, $y=0$ its value is one. In the promoted S2 realization, this same cutoff kernel is the scalar Dirichlet factor that enters the exact coefficientwise correlator theorem and the Gaussian variance calculation. The formal vertices and correlators are now constructed in the uncompressed polynomial model; the full duality and charge-indexed state transport remain S3 obligations. Comparisons with finite interacting states, analytic evaluation of the formal parameter and continuum interpretations also require separate results. The reference formulas in §20.3 remain targets for the duality construction.
 
 
-### S1 input for the remaining formal correlator construction
+### S1 input for the coefficientwise formal correlator theorem
 
 The [A08 S1 extension](../appendices/a08_states_and_correlations.md#ordered-wick-theorem-and-moments-s1-oscillator-extension)
 now supplies the ordered Wick theorem and all polynomial moments for arbitrary
@@ -239,7 +235,59 @@ homogeneous oscillator linear forms in the existing uncompressed state.
 Contractions retain their order, $Q(Y,Z)=\omega_P(YZ)$, and are complex bilinear.
 For $q=\omega_P(Y^2)$, the even moments are $(2k)!q^k/(2^k k!)$ and odd moments
 vanish. The explicit perfect-pairing sum is connected to pull-through by the
-unique partner of the first position. This provides the oscillator moment
-input for a later coefficientwise construction. The charge carrier, formal
-vertices, full formal correlations, and comparisons with finite interacting
-states remain separate Chapter 20 obligations.
+unique partner of the first position. This is the moment input used in the
+coefficientwise formal-vertex construction and its normal-prefactor contracts.
+The charge carrier, the formal vertices, and the correlator formulas are already
+realized in the promoted S2 source; the remaining chapter obligations are the
+full duality and charge-transport statements of S3, not the correlator algebra
+itself.
+
+#### S2 verified realization: coefficientwise formal vertices and correlators
+
+See the promoted source [V1S2 Formal Vertices](../../Bosonize/Core/V1S2FormalVertices.lean) and the matching [companion](../../docs/companion/Bosonize/Core/V1S2FormalVertices.md) for the exact declarations.
+
+For every mode cutoff $M\in\mathbb N$, including $M=0$, and every $h>0$ with $L=2h$, with real parameters $c,s$ satisfying $c^2-s^2=1$, the verified construction works with all integer charges $N=(N_R,N_L)\in\mathbb Z^2$. The carrier is the actual tensor product
+$$
+\mathrm{JointCarrier}(M)=\mathrm{ChargeVec}\otimes \mathrm{OscPoly}(M),
+$$
+where $\mathrm{ChargeVec}=\mathrm{Finsupp}(\mathbb Z^2,\mathbb C)$ is the space of finitely supported complex charge vectors and $\mathrm{OscPoly}(M)$ is the polynomial algebra in finitely many mode variables. The mode set is finite, but polynomial degree is unbounded: there is no truncation of degree, only a finite list of generators.
+
+The pairing is defined from the tensor-product basis. On basis vectors it is a weighted sesquilinear form: if $e_i$ and $e_j$ are basis vectors, then
+$$
+\langle e_i,e_j\rangle = \delta_{ij}\,w_i,
+$$
+where $w_i$ is the oscillator monomial weight attached to the basis index. Equivalently, for general vectors $v$ and $u$,
+$$
+\langle v,u\rangle = \sum_{i\in\mathrm{supp}(v)\cup\mathrm{supp}(u)} \overline{v_i}\,w_i\,u_i.
+$$
+This is a pairing on the carrier itself; it is not a star operation on arbitrary endomorphisms.
+
+The oscillator syntax is also kept free at the word level. Finite words in the oscillator generators form a monoid algebra, and the dagger there is explicit: conjugate the coefficient, reverse the word, and swap creator with annihilator. Evaluation then sends that finite-word syntax into the A08 oscillator representation. So the proof does not assume a star on all endomorphisms; it proves the represented adjoint relation on the concrete basis pairing.
+
+The charge words are likewise concrete. A charge word records a bijection of the charge lattice and a source-dependent scalar amplitude, acting on a charge vector by a finite sum over the support of the vector. The canonical CH13 Klein coefficients are obtained from the simplified charge shifts by the diagonal gauge factor $\mathrm{chargeGauge}_h$; the oscillator tensor factor is unchanged. Thus the simplified shifts are the raw combinatorics, while the canonical versions are the gauge-corrected ones actually used in the promoted theorem.
+
+The source-first phase convention is built into the coefficient theorem. In the two-point coefficient, the rightmost factor acts first, the source charge label is restored by the adjoint relation, and only then is the conjugate phase read off. This is why the scalar phase factor appears as a character of $y-x$: the source charge is transported through the represented adjoint, not through a blanket star on an unrelated operator algebra.
+
+The fields use the forward Bogoliubov substitution with parameters $(c,s)$. The oscillator state uses its inverse, with parameters $(c,-s)$. Accordingly, the represented coefficient action first evaluates its syntax, applies that inverse substitution and then acts on polynomials. Together with the charge action, this gives an action on the tensor carrier. Pairing its value on $|N\rangle\otimes1$ against the same vector yields the joint functional. The adjoint-pairing theorem separately proves that the explicit coefficient dagger gives the represented adjoint for this pairing.
+
+The same-channel commutator cancellation is proved at the linear-form level and then at the represented-operator level. For each fixed channel $J$, the field at $x$ commutes with the field at $y$ in the required reversed sense, so the commutator contribution cancels exactly where the Gaussian proof needs it. From there the difference-variance theorem gives
+$$
+4\,g_J\,D_1(x,y),
+$$
+with $g_D=(c-s)^2$ and $g_S=(c+s)^2$. Here the two gains are actual squares; since $c^2-s^2=1$, they are reciprocal in the chapter’s abstract notation.
+
+Each series coefficient is a finite multiset of charge/oscillator monomials, with multiplicity recording addition. The coefficient computation uses finite Cauchy sums and a binomial identity justified by the represented relations. This does not assert commutation in the free syntax algebra or multiplicativity of the vacuum functional. The product of two vertex series is the Cauchy product of coefficients, and the Gaussian/Wick theorem says that only even degrees survive. The exact degree-$2k$ coefficient in the main correlator is
+$$
+L^{-2}\,\text{phase}\,\frac{(-2\,g_J\,D_1(x,y))^k}{k!},
+$$
+and the odd coefficients are $0$. The two $L^{-1}$ factors are both genuine normalizations, one from each of the two vertices, so the total prefactor is $L^{-1}L^{-1}=L^{-2}$.
+
+The normal conventions are the actual scalar-formal-series multipliers
+$$
+\exp_f(g_J\,H_M\,t^2)\qquad\text{and}\qquad \exp_f(H_M\,t^2),
+$$
+with $H_M$ the harmonic cutoff. Each vertex receives one multiplier; its two-point contract multiplies the Weyl correlator by the Cauchy product of two copies of that multiplier. In the customary scalar exponential notation these products are written as the factors $\exp_f(2\,g_J\,H_M\,t^2)$ and $\exp_f(2\,H_M\,t^2)$. The proved contracts retain these twofold scalar Cauchy products explicitly. They are not a separate creation/annihilation factorization and not a standalone BCH identity: the normal vertices are defined by these scalar convolutions, and the locked theorems extract those factors from the coefficientwise product.
+
+The S1 moments supply the Gaussian coefficient calculation: the ordered Wick theorem gives the polynomial moments needed for the Gaussian coefficient extraction, and the odd moments vanish. The exact two-point formula is therefore the promoted S2 correlator theorem, while the earlier exponential language in the chapter should be read as reference formulas that need additional BCH-style interpretation if one wants to compare them with other presentations.
+
+The construction is coefficientwise. Evaluation at $t=1$, analytic convergence and identification with finite CAR observables each require separate results. Full formal duality and charge-indexed state transport remain S3 obligations.

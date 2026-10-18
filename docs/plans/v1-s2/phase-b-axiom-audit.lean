@@ -1,4 +1,5 @@
-import BosonizeStubs.V1S2FormalVertices
+import Bosonize
+-- Original Phase B import is preserved in commit fcd5b45181cd86f141516b79fcfa200272ec5cf3.
 #print axioms Bosonize.V1S2.Charge
 #print axioms Bosonize.V1S2.ChargeVec
 #print axioms Bosonize.V1S2.Position

@@ -1,3 +1,8 @@
+# Historical continuation prompt — consumed
+
+V1-S2 is now Phase C complete. Do not rerun this historical prompt or begin S3.
+See [accepted validation](validation.md) and [checkpoint](phase-b-checkpoint.md).
+
 # Prompt for the V1-S2 follow-up agent
 
 Continue Sprint V1-S2 Phase B from the current repository checkout. Read

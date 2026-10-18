@@ -375,3 +375,22 @@ audit with permitted standard axioms only. Local CI passes, strict locks verify
 within the 36-source freeze. The independent pedagogical review passes.
 See [the accepted companion](docs/companion/Bosonize/Core/V1S1OrderedWick.md).
 This completes S1 only; S2 and the broader Chapter 20 bridge remain separate.
+
+
+## V1-S2 accepted checkpoint — 2026-10-18
+
+**Done — Phase C complete.** This acceptance supersedes earlier S2 progress
+counts in the working sprint queue. All 39 locked theorem contracts are proved:
+charge/gauge/adjoint laws, same-channel commutation and variance, the exact
+coefficientwise Weyl correlator, and both defined normal-prefactor contracts.
+The source is promoted and frozen at SHA-256
+`17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`.
+All 119 declarations have standard axioms only; no placeholders or compiler
+warnings. Independent proof, migration and pedagogical reviews PASS; local CI
+passes 69 guard tests, both builds and 18 verifier tests. Strict locks verify
+1153 statements/1211 commands and 37 Core sources, preserving all prior36 hashes.
+See [accepted validation](docs/plans/v1-s2/validation.md) and
+[Core companion](docs/companion/Bosonize/Core/V1S2FormalVertices.md).
+The authorized sprint ends here: **do not begin S3**. Duality/state transport,
+finite-CAR comparisons and analytic limits remain separate obligations. No push,
+GitHub CI or publication is included in this local acceptance.

@@ -1,6 +1,6 @@
 # V1-S2 Phase A specification candidate: charge words and formal vertices
 
-Date: 2026-10-17. Status: **S1 dependency accepted; actual S2 Lean interface independently reviewed PASS and scoped-locked in commit `0610d1495ebc4e95dec323c27faf22966e55e9d2`; Phase B is in progress.** The interface review covered Lean SHA-256 `984132893e986956592cf291bba2ed4ff3ddfc8ba61b748f298814068d046bd7` with packet snapshot `57f336cb6c5ff9dd9656bf7a7e775ea0f63d4b2b7f17044557b6bfe2c31b2fbf` and companion snapshot `6122a5513a52709b246265cd75760cf7197d6233bdd1c5429d9501fa384a1dbb`.
+Date: 2026-10-17. Status: **S1 dependency accepted; actual S2 Lean interface independently reviewed PASS and scoped-locked in commit `0610d1495ebc4e95dec323c27faf22966e55e9d2`; Phase C is complete.** The interface review covered Lean SHA-256 `984132893e986956592cf291bba2ed4ff3ddfc8ba61b748f298814068d046bd7` with packet snapshot `57f336cb6c5ff9dd9656bf7a7e775ea0f63d4b2b7f17044557b6bfe2c31b2fbf` and companion snapshot `6122a5513a52709b246265cd75760cf7197d6233bdd1c5429d9501fa384a1dbb`.
 
 This packet records the independently checkable S2 mathematical interface and
 convention derivations. The accepted S1 homogeneous-linear-form, ordered-Wick,
@@ -273,16 +273,13 @@ the minimal charge/vector, position/phase, represented oscillator-field,
 coefficientwise series, adjoint, and formal correlator interface. The
 independent mathematical/interface review passed for the exact source and
 document hashes recorded above; the scoped lock was committed in
-`0610d1495ebc4e95dec323c27faf22966e55e9d2`. Phase B's current inventory is in
-[`phase-b-checkpoint.md`](phase-b-checkpoint.md). The scheduled resumption
-proved 24 further contracts, including the main coefficientwise Weyl
-correlator, with 37 completed S2 theorem declarations and two unchanged
-normal-prefactor placeholders. Independent review covers every proof batch;
-the exact Weyl proof receipt is
-[`phase-b-weyl-review-2026-10-18.json`](phase-b-weyl-review-2026-10-18.json).
-Current source SHA-256: `3e0b72ac30fb213d36ac91e54ffee297dee39910dfe5734f54aa52bd2d472a02`.
-The strict/Core guards pass, the staging build has exactly two placeholder
-warnings, and all 37 completed theorem closures use only standard axioms.
-The reviewed mathematical interface and Phase A provenance above remain
-intact. Both normal-ordering contracts and the final Phase B/C gates are
-open. This packet does not start S3.
+`0610d1495ebc4e95dec323c27faf22966e55e9d2`. The complete accepted inventory and exact validation are in
+[`validation.md`](validation.md). All 39 theorem contracts are proved and
+reviewed; 119 declarations have only standard axioms in their fresh aggregator
+closures. Source SHA-256:
+`17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`. The source is promoted byte-identically to
+`Bosonize/Core/V1S2FormalVertices.lean`; all prior Core hashes are preserved.
+Strict locks, zero-warning builds, local CI, nonvacuity checks and independent
+migration/pedagogy reviews pass. The reviewed Phase A provenance above remains
+intact. S3 has not started, and no analytic or finite-CAR identification is
+inferred. See the [Core companion](../../companion/Bosonize/Core/V1S2FormalVertices.md).
