@@ -1,12 +1,12 @@
 import Bosonize.Core.V1S1OrderedWick
 
 /-!
-# V1-S2 Phase A: charge words and coefficientwise formal vertices
+# V1-S2: charge words and coefficientwise formal vertices
 
 All oscillator products in this module are interpreted through A08's
 polynomial representation.  The free algebra remains the syntax carrier;
-the Phase A theorem contracts below record the representation and moment
-obligations rather than asserting CCR equalities in that free algebra.
+the theorem contracts below establish the representation and moment
+identities without asserting CCR equalities in that free algebra.
 -/
 
 namespace Bosonize.V1S2
@@ -787,7 +787,7 @@ noncomputable def bareNormalCorrelator {M h : ℕ} (hh : 0 < h)
 
 
 
-/-! The following contracts are intentionally Phase A placeholders. -/
+/-! Gauge, phase, field and formal-correlator contracts. -/
 
 theorem chargeGauge_unitary_contract (h : ℕ) (N : Charge) :
     ‖chargeGauge h N‖ = 1 := by
@@ -2141,7 +2141,189 @@ theorem dressed_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
         (vertexSeriesScalarMul (dressedNormalMultiplier (M := M) hp channel)
           (vertexWeylAdj (M := M) hh hp x channel))
         (vertexWeylDressedNormal hh hp y channel)) =
-      dressedNormalCorrelator (M := M) hh hp N x y channel := by sorry
+      dressedNormalCorrelator (M := M) hh hp N x y channel := by
+  classical
+  have coefficient_scale {M : ℕ} (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) :
+      ∀ (z w : ℂ) (a b : vertexCoeff M),
+        jointCoeffFunctional hp N (vertexCoeffMul
+          ((ChargeWord.scale z a.1, a.2) : vertexCoeff M)
+          ((ChargeWord.scale w b.1, b.2) : vertexCoeff M)) =
+        z*w*jointCoeffFunctional hp N (vertexCoeffMul a b) := by
+    intro z w a b
+    let S (r : ℂ) (c : vertexCoeff M) : vertexCoeff M := (ChargeWord.scale r c.1, c.2)
+    change jointCoeffFunctional hp N (vertexCoeffMul (S z a) (S w b)) = _
+    calc
+      _ = chargeBasisExpectation N (vertexCoeffMul (S z a) (S w b)).1 *
+        Bosonize.A08.omegaP M hp (oscSyntaxEval (vertexCoeffMul (S z a) (S w b)).2) :=
+        jointCoeffFunctional_product_contract hp N _
+      _ = z*w*(chargeBasisExpectation N (vertexCoeffMul a b).1 *
+        Bosonize.A08.omegaP M hp (oscSyntaxEval (vertexCoeffMul a b).2)) := by
+        dsimp [S, vertexCoeffMul, chargeBasisExpectation, ChargeWord.scale, ChargeWord.comp]
+        split_ifs <;> simp_all
+        ring
+      _ = _ := congrArg (fun q : ℂ => z*w*q) (jointCoeffFunctional_product_contract hp N _).symm
+
+  have multiset_scale_generic {A : Type} (F : A → ℂ) (P : A → A → A)
+      (S : ℂ → A → A)
+      (hc : ∀ z w a b, F (P (S z a) (S w b)) = z*w*F (P a b))
+      (z w : ℂ) (u v : Multiset A) :
+      (((u.map (S z)).bind fun a => (v.map (S w)).map fun b => P a b).map F).sum =
+        z*w*(((u.bind fun a => v.map fun b => P a b).map F).sum) := by
+    induction u using Multiset.induction with
+    | empty => simp
+    | cons a u ihu =>
+      simp only [Multiset.map_cons, Multiset.cons_bind, Multiset.map_add, Multiset.sum_add, ihu]
+      have hv : (((v.map (S w)).map (fun b => P (S z a) b)).map F).sum =
+          z*w*((v.map (fun b => P a b)).map F).sum := by
+        clear ihu
+        induction v using Multiset.induction with
+        | empty => simp
+        | cons b v ihv =>
+          simp only [Multiset.map_cons, Multiset.sum_cons, hc, ihv]
+          ring
+      rw [hv]
+      ring
+  have scalar_cauchy_shuffle (n : ℕ) (s t : ℕ → ℂ) (B : ℕ → ℕ → ℂ) :
+      (∑ k ∈ Finset.range (n+1), ∑ i ∈ Finset.range (k+1), ∑ j ∈ Finset.range (n-k+1),
+        s i * t j * B (k-i) (n-k-j)) =
+      ∑ a ∈ Finset.range (n+1), ∑ b ∈ Finset.range (a+1), ∑ i ∈ Finset.range (n-a+1),
+        B b (a-b) * s i * t (n-a-i) := by
+    classical
+    let T : Finset (Σ _ : ℕ, ℕ × ℕ) := (Finset.range (n+1)).sigma
+      (fun k => (Finset.range (k+1)).product (Finset.range (n-k+1)))
+    calc
+      _ = ∑ x ∈ T, s x.2.1 * t x.2.2 * B (x.1-x.2.1) (n-x.1-x.2.2) := by
+        simp only [T, Finset.sum_sigma]
+        apply Finset.sum_congr rfl
+        intro k _
+        exact (Finset.sum_product (Finset.range (k+1)) (Finset.range (n-k+1))
+          (fun p : ℕ × ℕ => s p.1 * t p.2 * B (k-p.1) (n-k-p.2))).symm
+      _ = ∑ x ∈ T, B x.2.1 (x.1-x.2.1) * s x.2.2 * t (n-x.1-x.2.2) := by
+        apply Finset.sum_bij (fun x _ =>
+          (⟨n - (x.2.1 + x.2.2), (x.1-x.2.1, x.2.1)⟩ : Σ _ : ℕ, ℕ × ℕ))
+        · intro x hx
+          rcases x with ⟨k, i, j⟩
+          simp [T] at hx ⊢
+          omega
+        · intro x hx y hy heq
+          rcases x with ⟨k, i, j⟩
+          rcases y with ⟨l, p, q⟩
+          simp [T] at hx hy
+          have ha := congrArg (fun z : Σ _ : ℕ, ℕ × ℕ => z.1) heq
+          have hb := congrArg (fun z : Σ _ : ℕ, ℕ × ℕ => z.2.1) heq
+          have hc := congrArg (fun z : Σ _ : ℕ, ℕ × ℕ => z.2.2) heq
+          have hkl : k = l := by dsimp at ha hb hc; omega
+          have hip : i = p := by dsimp at hc; omega
+          have hjq : j = q := by dsimp at ha; omega
+          subst l
+          subst p
+          subst q
+          rfl
+        · intro y hy
+          rcases y with ⟨a, b, i⟩
+          simp [T] at hy
+          let x : Σ _ : ℕ, ℕ × ℕ := ⟨b+i, (i,n-a-i)⟩
+          refine ⟨x, ?_, ?_⟩
+          · simp [x, T]
+            omega
+          · apply Sigma.ext
+            · change n - (i + (n-a-i)) = a
+              omega
+            · apply heq_of_eq
+              apply Prod.ext
+              · change b+i-i = b
+                omega
+              · rfl
+        · intro x hx
+          rcases x with ⟨k, i, j⟩
+          simp [T] at hx
+          change s i * t j * B (k-i) (n-k-j) =
+            B (k-i) (n-(i+j)-(k-i)) * s i * t (n-(n-(i+j))-i)
+          rw [show n-(i+j)-(k-i) = n-k-j by omega,
+            show n-(n-(i+j))-i = j by omega]
+          ring
+      _ = _ := by
+        simp only [T, Finset.sum_sigma]
+        apply Finset.sum_congr rfl
+        intro a _
+        exact Finset.sum_product (Finset.range (a+1)) (Finset.range (n-a+1))
+          (fun p : ℕ × ℕ => B p.1 (a-p.1) * s p.2 * t (n-a-p.2))
+  have bilinear_hom {A : Type} (F : A → ℂ) (P : A → A → A) :
+      ∃ B : Multiset A →+ Multiset A →+ ℂ,
+        ∀ u v, B u v = ((u.bind fun a => v.map fun b => P a b).map F).sum := by
+    let E : Multiset A →+ ℂ :=
+      { toFun := fun u => (u.map F).sum
+        map_zero' := by simp
+        map_add' := by intro u v; simp }
+    let B : Multiset A →+ Multiset A →+ ℂ :=
+      { toFun := fun u =>
+          { toFun := fun v => E (u.bind fun a => v.map fun b => P a b)
+            map_zero' := by simp
+            map_add' := by intro v w; simp [Multiset.bind_add] }
+        map_zero' := by ext v; simp
+        map_add' := by intro u v; ext w; simp }
+    exact ⟨B, fun _ _ => rfl⟩
+
+  have generic_extract {A : Type} (F : A → ℂ) (P : A → A → A)
+      (S : ℂ → A → A)
+      (hc : ∀ z w a b, F (P (S z a) (S w b)) = z*w*F (P a b))
+      (f g : ℕ → Multiset A) (s t : ℕ → ℂ) (n : ℕ) :
+      (∑ k ∈ Finset.range (n+1),
+        (((∑ i ∈ Finset.range (k+1), (f (k-i)).map (S (s i))).bind fun a =>
+          (∑ j ∈ Finset.range (n-k+1), (g (n-k-j)).map (S (t j))).map
+            (fun b => P a b)).map F).sum) =
+      ∑ a ∈ Finset.range (n+1),
+        (∑ b ∈ Finset.range (a+1), (((f b).bind fun x =>
+          (g (a-b)).map (fun y => P x y)).map F).sum) *
+        (∑ i ∈ Finset.range (n-a+1), s i*t (n-a-i)) := by
+    classical
+    obtain ⟨B, hB⟩ := bilinear_hom F P
+    have hs (z w : ℂ) (u v : Multiset A) :
+        B (u.map (S z)) (v.map (S w)) = z*w*B u v := by
+      simpa only [hB] using multiset_scale_generic F P S hc z w u v
+    calc
+      _ = ∑ k ∈ Finset.range (n+1), ∑ i ∈ Finset.range (k+1),
+          ∑ j ∈ Finset.range (n-k+1), s i*t j*B (f (k-i)) (g (n-k-j)) := by
+        simp only [← hB, map_sum, AddMonoidHom.finsetSum_apply, hs]
+        apply Finset.sum_congr rfl
+        intro k _
+        rw [Finset.sum_comm]
+      _ = ∑ a ∈ Finset.range (n+1), ∑ b ∈ Finset.range (a+1),
+          ∑ i ∈ Finset.range (n-a+1), B (f b) (g (a-b))*s i*t (n-a-i) :=
+        scalar_cauchy_shuffle n s t (fun i j => B (f i) (g j))
+      _ = _ := by
+        simp only [Finset.sum_mul, Finset.mul_sum, mul_assoc, hB]
+        apply Finset.sum_congr rfl
+        intro a _
+        rw [Finset.sum_comm]
+
+  have scalar_extract (f g : VertexSeries M) (s t : FormalSeries ℂ) :
+      jointSeriesFunctional (M := M) hp N
+        (vertexSeriesMul (vertexSeriesScalarMul s f) (vertexSeriesScalarMul t g)) =
+      scalarSeriesMul (jointSeriesFunctional hp N (vertexSeriesMul f g))
+        (scalarSeriesMul s t) := by
+    apply funext
+    intro n
+    let E : Multiset (vertexCoeff M) →+ ℂ :=
+      { toFun := fun u => (u.map (jointCoeffFunctional hp N)).sum
+        map_zero' := by simp
+        map_add' := by intro u v; simp }
+    change E (∑ k ∈ Finset.range (n+1),
+        ((∑ i ∈ Finset.range (k+1), (f (k-i)).map
+          (fun a => ((ChargeWord.scale (s i) a.1,a.2) : vertexCoeff M))).bind fun a =>
+          (∑ j ∈ Finset.range (n-k+1), (g (n-k-j)).map
+            (fun b => ((ChargeWord.scale (t j) b.1,b.2) : vertexCoeff M))).map
+              (fun b => vertexCoeffMul a b))) =
+      ∑ a ∈ Finset.range (n+1),
+        E (∑ b ∈ Finset.range (a+1), (f b).bind fun x =>
+          (g (a-b)).map (fun y => vertexCoeffMul x y)) *
+        (∑ i ∈ Finset.range (n-a+1), s i*t (n-a-i))
+    simp only [map_sum]
+    exact generic_extract (jointCoeffFunctional hp N) vertexCoeffMul
+      (fun z a => ((ChargeWord.scale z a.1,a.2) : vertexCoeff M))
+      (coefficient_scale hp N) f g s t n
+  unfold vertexWeylDressedNormal dressedNormalCorrelator
+  rw [scalar_extract, coefficientwise_weyl_correlator_contract]
 
 theorem bare_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
     (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))
@@ -2150,6 +2332,188 @@ theorem bare_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
       (vertexSeriesMul (M := M)
         (vertexSeriesScalarMul (bareNormalMultiplier M) (vertexWeylAdj (M := M) hh hp x channel))
         (vertexWeylBareNormal hh hp y channel)) =
-      bareNormalCorrelator (M := M) hh hp N x y channel := by sorry
+      bareNormalCorrelator (M := M) hh hp N x y channel := by
+  classical
+  have coefficient_scale {M : ℕ} (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) :
+      ∀ (z w : ℂ) (a b : vertexCoeff M),
+        jointCoeffFunctional hp N (vertexCoeffMul
+          ((ChargeWord.scale z a.1, a.2) : vertexCoeff M)
+          ((ChargeWord.scale w b.1, b.2) : vertexCoeff M)) =
+        z*w*jointCoeffFunctional hp N (vertexCoeffMul a b) := by
+    intro z w a b
+    let S (r : ℂ) (c : vertexCoeff M) : vertexCoeff M := (ChargeWord.scale r c.1, c.2)
+    change jointCoeffFunctional hp N (vertexCoeffMul (S z a) (S w b)) = _
+    calc
+      _ = chargeBasisExpectation N (vertexCoeffMul (S z a) (S w b)).1 *
+        Bosonize.A08.omegaP M hp (oscSyntaxEval (vertexCoeffMul (S z a) (S w b)).2) :=
+        jointCoeffFunctional_product_contract hp N _
+      _ = z*w*(chargeBasisExpectation N (vertexCoeffMul a b).1 *
+        Bosonize.A08.omegaP M hp (oscSyntaxEval (vertexCoeffMul a b).2)) := by
+        dsimp [S, vertexCoeffMul, chargeBasisExpectation, ChargeWord.scale, ChargeWord.comp]
+        split_ifs <;> simp_all
+        ring
+      _ = _ := congrArg (fun q : ℂ => z*w*q) (jointCoeffFunctional_product_contract hp N _).symm
+
+  have multiset_scale_generic {A : Type} (F : A → ℂ) (P : A → A → A)
+      (S : ℂ → A → A)
+      (hc : ∀ z w a b, F (P (S z a) (S w b)) = z*w*F (P a b))
+      (z w : ℂ) (u v : Multiset A) :
+      (((u.map (S z)).bind fun a => (v.map (S w)).map fun b => P a b).map F).sum =
+        z*w*(((u.bind fun a => v.map fun b => P a b).map F).sum) := by
+    induction u using Multiset.induction with
+    | empty => simp
+    | cons a u ihu =>
+      simp only [Multiset.map_cons, Multiset.cons_bind, Multiset.map_add, Multiset.sum_add, ihu]
+      have hv : (((v.map (S w)).map (fun b => P (S z a) b)).map F).sum =
+          z*w*((v.map (fun b => P a b)).map F).sum := by
+        clear ihu
+        induction v using Multiset.induction with
+        | empty => simp
+        | cons b v ihv =>
+          simp only [Multiset.map_cons, Multiset.sum_cons, hc, ihv]
+          ring
+      rw [hv]
+      ring
+  have scalar_cauchy_shuffle (n : ℕ) (s t : ℕ → ℂ) (B : ℕ → ℕ → ℂ) :
+      (∑ k ∈ Finset.range (n+1), ∑ i ∈ Finset.range (k+1), ∑ j ∈ Finset.range (n-k+1),
+        s i * t j * B (k-i) (n-k-j)) =
+      ∑ a ∈ Finset.range (n+1), ∑ b ∈ Finset.range (a+1), ∑ i ∈ Finset.range (n-a+1),
+        B b (a-b) * s i * t (n-a-i) := by
+    classical
+    let T : Finset (Σ _ : ℕ, ℕ × ℕ) := (Finset.range (n+1)).sigma
+      (fun k => (Finset.range (k+1)).product (Finset.range (n-k+1)))
+    calc
+      _ = ∑ x ∈ T, s x.2.1 * t x.2.2 * B (x.1-x.2.1) (n-x.1-x.2.2) := by
+        simp only [T, Finset.sum_sigma]
+        apply Finset.sum_congr rfl
+        intro k _
+        exact (Finset.sum_product (Finset.range (k+1)) (Finset.range (n-k+1))
+          (fun p : ℕ × ℕ => s p.1 * t p.2 * B (k-p.1) (n-k-p.2))).symm
+      _ = ∑ x ∈ T, B x.2.1 (x.1-x.2.1) * s x.2.2 * t (n-x.1-x.2.2) := by
+        apply Finset.sum_bij (fun x _ =>
+          (⟨n - (x.2.1 + x.2.2), (x.1-x.2.1, x.2.1)⟩ : Σ _ : ℕ, ℕ × ℕ))
+        · intro x hx
+          rcases x with ⟨k, i, j⟩
+          simp [T] at hx ⊢
+          omega
+        · intro x hx y hy heq
+          rcases x with ⟨k, i, j⟩
+          rcases y with ⟨l, p, q⟩
+          simp [T] at hx hy
+          have ha := congrArg (fun z : Σ _ : ℕ, ℕ × ℕ => z.1) heq
+          have hb := congrArg (fun z : Σ _ : ℕ, ℕ × ℕ => z.2.1) heq
+          have hc := congrArg (fun z : Σ _ : ℕ, ℕ × ℕ => z.2.2) heq
+          have hkl : k = l := by dsimp at ha hb hc; omega
+          have hip : i = p := by dsimp at hc; omega
+          have hjq : j = q := by dsimp at ha; omega
+          subst l
+          subst p
+          subst q
+          rfl
+        · intro y hy
+          rcases y with ⟨a, b, i⟩
+          simp [T] at hy
+          let x : Σ _ : ℕ, ℕ × ℕ := ⟨b+i, (i,n-a-i)⟩
+          refine ⟨x, ?_, ?_⟩
+          · simp [x, T]
+            omega
+          · apply Sigma.ext
+            · change n - (i + (n-a-i)) = a
+              omega
+            · apply heq_of_eq
+              apply Prod.ext
+              · change b+i-i = b
+                omega
+              · rfl
+        · intro x hx
+          rcases x with ⟨k, i, j⟩
+          simp [T] at hx
+          change s i * t j * B (k-i) (n-k-j) =
+            B (k-i) (n-(i+j)-(k-i)) * s i * t (n-(n-(i+j))-i)
+          rw [show n-(i+j)-(k-i) = n-k-j by omega,
+            show n-(n-(i+j))-i = j by omega]
+          ring
+      _ = _ := by
+        simp only [T, Finset.sum_sigma]
+        apply Finset.sum_congr rfl
+        intro a _
+        exact Finset.sum_product (Finset.range (a+1)) (Finset.range (n-a+1))
+          (fun p : ℕ × ℕ => B p.1 (a-p.1) * s p.2 * t (n-a-p.2))
+  have bilinear_hom {A : Type} (F : A → ℂ) (P : A → A → A) :
+      ∃ B : Multiset A →+ Multiset A →+ ℂ,
+        ∀ u v, B u v = ((u.bind fun a => v.map fun b => P a b).map F).sum := by
+    let E : Multiset A →+ ℂ :=
+      { toFun := fun u => (u.map F).sum
+        map_zero' := by simp
+        map_add' := by intro u v; simp }
+    let B : Multiset A →+ Multiset A →+ ℂ :=
+      { toFun := fun u =>
+          { toFun := fun v => E (u.bind fun a => v.map fun b => P a b)
+            map_zero' := by simp
+            map_add' := by intro v w; simp [Multiset.bind_add] }
+        map_zero' := by ext v; simp
+        map_add' := by intro u v; ext w; simp }
+    exact ⟨B, fun _ _ => rfl⟩
+
+  have generic_extract {A : Type} (F : A → ℂ) (P : A → A → A)
+      (S : ℂ → A → A)
+      (hc : ∀ z w a b, F (P (S z a) (S w b)) = z*w*F (P a b))
+      (f g : ℕ → Multiset A) (s t : ℕ → ℂ) (n : ℕ) :
+      (∑ k ∈ Finset.range (n+1),
+        (((∑ i ∈ Finset.range (k+1), (f (k-i)).map (S (s i))).bind fun a =>
+          (∑ j ∈ Finset.range (n-k+1), (g (n-k-j)).map (S (t j))).map
+            (fun b => P a b)).map F).sum) =
+      ∑ a ∈ Finset.range (n+1),
+        (∑ b ∈ Finset.range (a+1), (((f b).bind fun x =>
+          (g (a-b)).map (fun y => P x y)).map F).sum) *
+        (∑ i ∈ Finset.range (n-a+1), s i*t (n-a-i)) := by
+    classical
+    obtain ⟨B, hB⟩ := bilinear_hom F P
+    have hs (z w : ℂ) (u v : Multiset A) :
+        B (u.map (S z)) (v.map (S w)) = z*w*B u v := by
+      simpa only [hB] using multiset_scale_generic F P S hc z w u v
+    calc
+      _ = ∑ k ∈ Finset.range (n+1), ∑ i ∈ Finset.range (k+1),
+          ∑ j ∈ Finset.range (n-k+1), s i*t j*B (f (k-i)) (g (n-k-j)) := by
+        simp only [← hB, map_sum, AddMonoidHom.finsetSum_apply, hs]
+        apply Finset.sum_congr rfl
+        intro k _
+        rw [Finset.sum_comm]
+      _ = ∑ a ∈ Finset.range (n+1), ∑ b ∈ Finset.range (a+1),
+          ∑ i ∈ Finset.range (n-a+1), B (f b) (g (a-b))*s i*t (n-a-i) :=
+        scalar_cauchy_shuffle n s t (fun i j => B (f i) (g j))
+      _ = _ := by
+        simp only [Finset.sum_mul, Finset.mul_sum, mul_assoc, hB]
+        apply Finset.sum_congr rfl
+        intro a _
+        rw [Finset.sum_comm]
+
+  have scalar_extract (f g : VertexSeries M) (s t : FormalSeries ℂ) :
+      jointSeriesFunctional (M := M) hp N
+        (vertexSeriesMul (vertexSeriesScalarMul s f) (vertexSeriesScalarMul t g)) =
+      scalarSeriesMul (jointSeriesFunctional hp N (vertexSeriesMul f g))
+        (scalarSeriesMul s t) := by
+    apply funext
+    intro n
+    let E : Multiset (vertexCoeff M) →+ ℂ :=
+      { toFun := fun u => (u.map (jointCoeffFunctional hp N)).sum
+        map_zero' := by simp
+        map_add' := by intro u v; simp }
+    change E (∑ k ∈ Finset.range (n+1),
+        ((∑ i ∈ Finset.range (k+1), (f (k-i)).map
+          (fun a => ((ChargeWord.scale (s i) a.1,a.2) : vertexCoeff M))).bind fun a =>
+          (∑ j ∈ Finset.range (n-k+1), (g (n-k-j)).map
+            (fun b => ((ChargeWord.scale (t j) b.1,b.2) : vertexCoeff M))).map
+              (fun b => vertexCoeffMul a b))) =
+      ∑ a ∈ Finset.range (n+1),
+        E (∑ b ∈ Finset.range (a+1), (f b).bind fun x =>
+          (g (a-b)).map (fun y => vertexCoeffMul x y)) *
+        (∑ i ∈ Finset.range (n-a+1), s i*t (n-a-i))
+    simp only [map_sum]
+    exact generic_extract (jointCoeffFunctional hp N) vertexCoeffMul
+      (fun z a => ((ChargeWord.scale z a.1,a.2) : vertexCoeff M))
+      (coefficient_scale hp N) f g s t n
+  unfold vertexWeylBareNormal bareNormalCorrelator
+  rw [scalar_extract, coefficientwise_weyl_correlator_contract]
 
 end Bosonize.V1S2

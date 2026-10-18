@@ -1,3 +1,9 @@
+# V1-S2 current checkpoint — Phase B complete, Phase C next
+
+All 39 theorem contracts are proved; 119 declarations freshly audited with standard axioms only. Build, zero-warning/placeholder, strict/Core locks, nonvacuity checks and independent final package review PASS. Source SHA-256: `17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`. See [final Phase B validation](phase-b-validation.md) and [review](phase-b-normal-review-2026-10-18.json). No S3 work.
+
+The following saved checkpoint is historical; its two remaining contracts and quota stop have now been resolved. It preserves the proof inventory, dead ends and prior evidence.
+
 # V1-S2 Phase B checkpoint — scheduled resumption, October 17–18, 2026
 
 ## Current status and source identity

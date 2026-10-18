@@ -1,6 +1,6 @@
 # V1-S2 charge words and formal vertices — Phase A companion
 
-Status: **S1 accepted; S2 reviewed/locked Phase A; Phase B in progress.** The resumption proved 24 additional contracts, including the coefficientwise Weyl correlator: 37 S2 theorem declarations are complete and only the two dressed/bare normal-prefactor contracts remain placeholders. Current source SHA-256: `3e0b72ac30fb213d36ac91e54ffee297dee39910dfe5734f54aa52bd2d472a02`. Every integrated proof batch has independent PASS review; exact receipts and full live inventory are in the checkpoint. No Phase C or S3 work has started.
+Status: **Phase B complete; Phase C next.** All 39 theorem contracts are proved. Source SHA-256: `17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020`. Fresh audit of 119 declarations, zero-warning build, strict/Core locks, nonvacuity checks and independent final proof/package review PASS. Historical progress counts below describe their saved snapshots. No S3 work.
 
 The detailed candidate mathematical interface, source hashes, convention
 derivations, conditional correlator proof, normal-ordering audit, and checks
@@ -153,3 +153,10 @@ All 37 completed theorem closures use only standard axioms. The staging build
 still has two normal-prefactor placeholder warnings; neither Phase B nor
 Phase C is complete. The theorem remains a formal coefficient identity, with
 no finite-CAR, analytic or continuum identification.
+
+
+## Final normal-prefactor proofs and Phase B acceptance — October 18, 2026
+
+The dressed and bare contracts extract their defined scalar Cauchy multipliers. Local coefficient bilinearity is extended by multiset induction, a curried additive functional and an explicit finite reindexing bijection. This argument preserves oscillator word order and never assumes multiplicativity of the state. Both complete bodies passed the sandboxed statement/compiler/warning/axiom gate and independent review. The final source retains every locked definition, header, import and option.
+
+[Final Phase B evidence](../plans/v1-s2/phase-b-validation.md); [independent review](../plans/v1-s2/phase-b-normal-review-2026-10-18.json). All 39 theorem closures and 80 data/type declarations have only standard axioms. The proof does not separately establish a creator/annihilator factorization or BCH identity; those remain reference interpretation beyond the locked normal-multiplier contracts.
