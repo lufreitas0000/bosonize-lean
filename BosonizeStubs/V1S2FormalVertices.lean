@@ -1673,7 +1673,465 @@ theorem coefficientwise_weyl_correlator_contract {M h : ℕ} (hh : 0 < h)
     jointSeriesFunctional (M := M) hp N
       (vertexSeriesMul (M := M) (vertexWeylAdj (M := M) hh hp x channel)
         (vertexWeyl (M := M) hh hp y channel)) =
-        expectedWeylCorrelator (M := M) hh hp N x y channel := by sorry
+        expectedWeylCorrelator (M := M) hh hp N x y channel := by
+  classical
+  have contextual_binomial_coefficient {A : Type} [Ring A] (ω : A →+ ℂ) (X Y : A)
+      (hctx : ∀ u v, ω (u * (X * Y) * v) = ω (u * (Y * X) * v)) (n : ℕ) :
+      ω ((Y - X) ^ n) = ∑ k ∈ Finset.range (n + 1),
+        (n.choose k : ℂ) * (-1 : ℂ) ^ k * ω (X ^ k * Y ^ (n - k)) := by
+    classical
+    let c : RingCon A :=
+      { r := fun a b => ∀ u v, ω (u * a * v) = ω (u * b * v)
+        iseqv :=
+          ⟨(by intro a u v; rfl),
+            (by intro a b hab u v; exact (hab u v).symm),
+            (by intro a b d hab hbd u v; exact (hab u v).trans (hbd u v))⟩
+        add' := by
+          intro a b d e hab hde u v
+          simp only [mul_add, add_mul, map_add]
+          rw [hab, hde]
+        mul' := by
+          intro a b d e hab hde u v
+          simpa only [mul_assoc] using
+            (hab u (d * v)).trans (by simpa only [mul_assoc] using hde (u * b) v) }
+    let ωq : c.Quotient →+ ℂ :=
+      { toFun := Quotient.lift (fun a => ω a) (by
+          intro a b hab
+          simpa using hab 1 1)
+        map_zero' := ω.map_zero
+        map_add' := by
+          intro a b
+          refine Quotient.inductionOn₂ a b ?_
+          intro a b
+          exact ω.map_add a b }
+    let q := c.mk'
+    have hcomm : Commute (q X) (q Y) := by
+      change q X * q Y = q Y * q X
+      rw [← map_mul, ← map_mul]
+      exact (RingCon.eq c).mpr hctx
+    have hterm (k : ℕ) :
+        ωq ((-q X) ^ k * (q Y) ^ (n - k) * (n.choose k : c.Quotient)) =
+          (n.choose k : ℂ) * (-1 : ℂ) ^ k * ω (X ^ k * Y ^ (n - k)) := by
+      rw [← nsmul_eq_mul', map_nsmul]
+      have he : (-q X) ^ k * (q Y) ^ (n - k) =
+          ((-1 : ℤ) ^ k) • q (X ^ k * Y ^ (n - k)) := by
+        rw [neg_pow]
+        simp [zsmul_eq_mul, map_mul, map_pow, mul_assoc]
+      rw [he, map_zsmul]
+      change (n.choose k) • (((-1 : ℤ) ^ k) • ω (X ^ k * Y ^ (n - k))) = _
+      simp [nsmul_eq_mul, zsmul_eq_mul, mul_assoc]
+    have hbin := congrArg ωq (hcomm.neg_left.add_pow n)
+    have hl : (-q X + q Y) ^ n = q ((Y - X) ^ n) := by
+      rw [map_pow, map_sub]
+      congr 1
+      abel
+    rw [hl, map_sum] at hbin
+    simp_rw [hterm] at hbin
+    exact hbin
+  have contextual_linear_commute {M : ℕ} (hp : Bosonize.Ch18.HyperbolicPair)
+      (f g : Bosonize.V1S1.OscLinearForm M)
+      (hfg : Bosonize.V1S1.contraction hp f g = Bosonize.V1S1.contraction hp g f)
+      (a b : Bosonize.A08.OscAlgebra M) :
+      Bosonize.A08.omegaP M hp (a * (Bosonize.V1S1.linearElement f * Bosonize.V1S1.linearElement g) * b) =
+      Bosonize.A08.omegaP M hp (a * (Bosonize.V1S1.linearElement g * Bosonize.V1S1.linearElement f) * b) := by
+    classical
+    let : Fintype Bosonize.A06.Orientation :=
+      ⟨{Bosonize.A06.Orientation.right, Bosonize.A06.Orientation.left}, by
+        intro ν; cases ν <;> simp⟩
+    let G (i : Bosonize.A08.OscGen M) := FreeAlgebra.ι ℂ i
+    let E := Bosonize.V1S1.generatorContractionExpected (M := M) hp
+    let ω := Bosonize.A08.omegaP M hp
+    have hc : (hp.c : ℂ) ^ 2 = 1 + (hp.s : ℂ) ^ 2 := by
+      have H : (hp.c : ℂ) ^ 2 - (hp.s : ℂ) ^ 2 = 1 := by exact_mod_cast hp.hyperbolic_id
+      linear_combination H
+    have haa (p q : Bosonize.A08.OscMode M) :
+        ω (a * (G (false,p) * G (false,q) - G (false,q) * G (false,p)) * b) = 0 :=
+      Bosonize.A08.omegaP_ccr_descends_aa M hp a b p q
+    have hcc (p q : Bosonize.A08.OscMode M) :
+        ω (a * (G (true,p) * G (true,q) - G (true,q) * G (true,p)) * b) = 0 :=
+      Bosonize.A08.omegaP_ccr_descends_cc M hp a b p q
+    have hac (p q : Bosonize.A08.OscMode M) :
+        ω (a * (G (false,p) * G (true,q) - G (true,q) * G (false,p)) * b) =
+        (if p = q then (Bosonize.A08.oscWeight p : ℂ) else 0) * ω (a * b) := by
+      have H := Bosonize.A08.omegaP_ccr_descends M hp a b p q
+      simp only [mul_sub, sub_mul, mul_smul_comm, smul_mul_assoc, mul_one,
+        map_sub, map_smul, smul_eq_mul] at H
+      simpa only [G, ω, mul_sub, sub_mul, map_sub] using (sub_eq_zero.mp H)
+    have hca (p q : Bosonize.A08.OscMode M) :
+        ω (a * (G (true,p) * G (false,q) - G (false,q) * G (true,p)) * b) =
+        -((if q = p then (Bosonize.A08.oscWeight q : ℂ) else 0) * ω (a * b)) := by
+      have H : G (true,p) * G (false,q) - G (false,q) * G (true,p) =
+          -(G (false,q) * G (true,p) - G (true,p) * G (false,q)) := by abel
+      rw [H, mul_neg, neg_mul, map_neg, hac]
+    have hkernel (i j : Bosonize.A08.OscGen M) :
+        ω (a * (G i * G j - G j * G i) * b) = (E i j - E j i) * ω (a * b) := by
+      rcases i with ⟨bi, ν, i⟩
+      rcases j with ⟨bj, μ, j⟩
+      cases bi <;> cases bj <;>
+        first | rw [haa] | rw [hac] | rw [hca] | rw [hcc]
+      all_goals
+        cases ν <;> cases μ
+        all_goals
+          by_cases hij : i = j
+          · subst j
+            simp [E, Bosonize.V1S1.generatorContractionExpected,
+              Bosonize.A07Interactions.oppositeOrientation, Bosonize.A08.oscWeight, hc] <;> ring <;> simp
+          · simp [E, Bosonize.V1S1.generatorContractionExpected,
+              Bosonize.A07Interactions.oppositeOrientation, hij, Ne.symm hij]
+    have hlinear (u : Bosonize.V1S1.OscLinearForm M) :
+        Bosonize.V1S1.linearElement u = ∑ i : Bosonize.A08.OscGen M, u i • G i := by
+      unfold Bosonize.V1S1.linearElement
+      apply Finset.sum_subset (Finset.subset_univ _)
+      intro i _ hi
+      simp [Finsupp.notMem_support_iff.mp hi]
+    have hfull (f g : Bosonize.V1S1.OscLinearForm M) :
+        Bosonize.V1S1.contraction hp f g =
+          ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+            f i * g j * E i j := by
+      rw [Bosonize.V1S1.contraction_coeff_formula]
+      change (∑ i ∈ f.support, ∑ j ∈ g.support, f i * g j * E i j) = _
+      have hg (i : Bosonize.A08.OscGen M) :
+          (∑ j ∈ g.support, f i * g j * E i j) =
+          ∑ j : Bosonize.A08.OscGen M, f i * g j * E i j := by
+        apply Finset.sum_subset (Finset.subset_univ _)
+        intro j _ hj
+        simp [Finsupp.notMem_support_iff.mp hj]
+      simp_rw [hg]
+      apply Finset.sum_subset (Finset.subset_univ _)
+      intro i _ hi
+      simp [Finsupp.notMem_support_iff.mp hi]
+    have hprod (a b : Bosonize.V1S1.OscLinearForm M) :
+        Bosonize.V1S1.linearElement a *
+        Bosonize.V1S1.linearElement b =
+          ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+            (a i * b j) • (G i * G j) := by
+      simp only [hlinear, Finset.sum_mul_sum, smul_mul_smul_comm]
+    have hrev : Bosonize.V1S1.linearElement g *
+        Bosonize.V1S1.linearElement f =
+        ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+          (f i * g j) • (G j * G i) := by
+      rw [hprod, Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      rw [mul_comm]
+    have hreverse : (∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+        f i * g j * E j i) = Bosonize.V1S1.contraction hp g f := by
+      rw [hfull, Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      ring
+    have hscalar : (∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+        (f i * g j) * (E i j - E j i)) = 0 := by
+      simp_rw [mul_sub, Finset.sum_sub_distrib]
+      rw [← hfull, hreverse, hfg, sub_self]
+    have hexpand : Bosonize.V1S1.linearElement f * Bosonize.V1S1.linearElement g -
+        Bosonize.V1S1.linearElement g * Bosonize.V1S1.linearElement f =
+        ∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+          (f i * g j) • (G i * G j - G j * G i) := by
+      rw [hprod, hrev]
+      simp only [← Finset.sum_sub_distrib]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      exact (smul_sub _ _ _).symm
+    have H : ω (a * (Bosonize.V1S1.linearElement f * Bosonize.V1S1.linearElement g -
+        Bosonize.V1S1.linearElement g * Bosonize.V1S1.linearElement f) * b) = 0 := by
+      rw [hexpand]
+      simp only [Finset.mul_sum, Finset.sum_mul, map_sum, mul_smul_comm,
+        smul_mul_assoc, map_smul, smul_eq_mul, hkernel]
+      calc
+        _ = (∑ i : Bosonize.A08.OscGen M, ∑ j : Bosonize.A08.OscGen M,
+            f i * g j * (E i j - E j i)) * ω (a * b) := by
+          simp only [Finset.sum_mul]
+          apply Finset.sum_congr rfl
+          intro i _
+          apply Finset.sum_congr rfl
+          intro j _
+          ring
+        _ = 0 := by rw [hscalar, zero_mul]
+    rw [mul_sub, sub_mul, map_sub] at H
+    exact sub_eq_zero.mp H
+  have oscillator_coefficient_product {M h : ℕ} (hh : 0 < h)
+      (hp : Bosonize.Ch18.HyperbolicPair) (x y : Position (2 * h))
+      (channel : Bool) (k l : ℕ) :
+      Bosonize.A08.omegaP M hp (oscSyntaxEval
+        (oscSyntaxDagger (oscillatorExp hp x channel k) * oscillatorExp hp y channel l)) =
+      (((k.factorial : ℂ)⁻¹) * ((l.factorial : ℂ)⁻¹) * (-Complex.I) ^ k * Complex.I ^ l) *
+        Bosonize.A08.omegaP M hp
+          ((Bosonize.V1S1.linearElement (if channel then xSForm hp x else xDForm hp x)) ^ k *
+            (Bosonize.V1S1.linearElement (if channel then xSForm hp y else xDForm hp y)) ^ l) := by
+    classical
+    let wordMap : List (Bosonize.A08.OscGen M) →* Bosonize.A08.OscAlgebra M :=
+      { toFun := Bosonize.A08.wordElement M
+        map_one' := by
+          change Bosonize.A08.wordElement M ([] : List (Bosonize.A08.OscGen M)) = 1
+          simp [Bosonize.A08.wordElement]
+        map_mul' := by
+          intro x y
+          change Bosonize.A08.wordElement M (x ++ y) =
+            Bosonize.A08.wordElement M x * Bosonize.A08.wordElement M y
+          simp [Bosonize.A08.wordElement, List.map_append, List.prod_append] }
+    let evalHom := MonoidAlgebra.lift ℂ (Bosonize.A08.OscAlgebra M)
+      (List (Bosonize.A08.OscGen M)) wordMap
+    have heval (x : OscSyntax M) : oscSyntaxEval x = evalHom x := by
+      simp [oscSyntaxEval, evalHom, MonoidAlgebra.lift_apply, wordMap]
+    let R (a : OscSyntax M) := Bosonize.A08.oscRep M
+      (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (oscSyntaxEval a))
+    have hExpEval (z : Position (2 * h)) (ι : ℂ) (n : ℕ) :
+        oscSyntaxEval (oscillatorExpWithScalar hp z channel ι n) =
+        ((n.factorial : ℂ)⁻¹) • (ι • Bosonize.V1S1.linearElement
+          (if channel then xSForm (M := M) hp z else xDForm (M := M) hp z)) ^ n := by
+      simp only [oscillatorExpWithScalar, heval, map_smul, map_pow]
+      rw [← heval, oscSyntax_roundtrip_freeAlgebra_contract]
+    have hm (a : Bosonize.A08.OscAlgebra M) :
+        Bosonize.A08.omegaP M hp a = Bosonize.A08.oscPairing M 1
+          (Bosonize.A08.oscRep M (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) a) 1) := by
+      simp [Bosonize.A08.omegaP, Bosonize.A08.omega0, Bosonize.A08.oscPairing,
+        Bosonize.A08.oscMonomialNorm]
+    have hmp (a b : OscSyntax M) : Bosonize.A08.omegaP M hp (oscSyntaxEval (a * b)) =
+        Bosonize.A08.oscPairing M 1 (R a (R b 1)) := by
+      rw [hm]
+      simp only [R, oscSyntaxEval_mul_contract, map_mul, Module.End.mul_apply]
+    calc
+      _ = Bosonize.A08.oscPairing M 1
+          (R (oscSyntaxDagger (oscillatorExp hp x channel k)) (R (oscillatorExp hp y channel l) 1)) := hmp _ _
+      _ = Bosonize.A08.oscPairing M (R (oscillatorExp hp x channel k) 1)
+          (R (oscillatorExp hp y channel l) 1) := by
+        simpa only [R, oscSyntaxDagger_involutive_contract] using
+          oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract hp
+            (oscSyntaxDagger (oscillatorExp hp x channel k)) 1 (R (oscillatorExp hp y channel l) 1)
+      _ = Bosonize.A08.oscPairing M 1
+          (R (oscillatorExpWithScalar hp x channel (-Complex.I) k) (R (oscillatorExp hp y channel l) 1)) := by
+        simpa only [Bosonize.A08.oscPairing_conj] using
+          congrArg star (oscillatorExp_adjoint_coefficient_contract hh hp x channel k
+            (R (oscillatorExp hp y channel l) 1) 1)
+      _ = Bosonize.A08.omegaP M hp (oscSyntaxEval
+          (oscillatorExpWithScalar hp x channel (-Complex.I) k * oscillatorExp hp y channel l)) :=
+        (hmp _ _).symm
+      _ = _ := by
+        simp only [oscSyntaxEval_mul_contract, oscillatorExp, hExpEval, smul_pow,
+          smul_mul_smul_comm, map_smul, smul_smul, smul_eq_mul]
+        ring
+  have gaussian_coefficient {M h : ℕ} (hh : 0 < h) (hp : Bosonize.Ch18.HyperbolicPair)
+      (x y : Position (2 * h)) (channel : Bool) (n : ℕ) :
+      let f := if channel then xSForm (M := M) hp y - xSForm (M := M) hp x
+        else xDForm (M := M) hp y - xDForm (M := M) hp x
+      let g : ℂ := if channel then gainS hp else gainD hp
+      let d : ℂ := dirichletCutoff (2 * h) M x y
+      (Complex.I ^ n / (n.factorial : ℂ)) *
+          Bosonize.A08.omegaP M hp (Bosonize.V1S1.linearElement f ^ n) =
+        if n % 2 = 0 then (-2 * g * d) ^ (n / 2) / ((n / 2).factorial : ℂ) else 0 := by
+    dsimp only
+    let f := if channel then xSForm (M := M) hp y - xSForm (M := M) hp x
+      else xDForm (M := M) hp y - xDForm (M := M) hp x
+    let g : ℂ := if channel then gainS hp else gainD hp
+    let d : ℂ := dirichletCutoff (2 * h) M x y
+    change (Complex.I ^ n / (n.factorial : ℂ)) *
+      Bosonize.A08.omegaP M hp (Bosonize.V1S1.linearElement f ^ n) =
+      if n % 2 = 0 then (-2 * g * d) ^ (n / 2) / ((n / 2).factorial : ℂ) else 0
+    have hv : Bosonize.V1S1.contraction hp f f = 4 * g * d := difference_variance_contract hh hp x y channel
+    rcases Nat.even_or_odd n with he | ho
+    · obtain ⟨k, hk⟩ := he
+      have hn : n = 2 * k := by omega
+      clear hk
+      subst n
+      have hm : (2 * k) % 2 = 0 := by omega
+      have hd : (2 * k) / 2 = k := by omega
+      rw [hm, hd]
+      simp only [ite_true]
+      rw [Bosonize.V1S1.omegaP_single_even_moment, hv, pow_mul, Complex.I_sq]
+      have hpowers : (-1 : ℂ) ^ k * (4 * g * d) ^ k =
+          (2 : ℂ) ^ k * (-2 * g * d) ^ k := by
+        rw [← mul_pow, ← mul_pow]
+        congr 1
+        ring
+      have hk0 : (k.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
+      have h2k0 : ((2 * k).factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (2 * k)
+      have ht : (2 : ℂ) ^ k ≠ 0 := pow_ne_zero k (by norm_num)
+      push_cast
+      field_simp [hk0, h2k0, ht]
+      linear_combination hpowers
+    · obtain ⟨k, hk⟩ := ho
+      have hn : n = 2 * k + 1 := by omega
+      clear hk
+      subst n
+      have hm : (2 * k + 1) % 2 = 1 := by omega
+      rw [hm, Bosonize.V1S1.omegaP_single_odd_moment]
+      simp
+  have oscillator_cauchy_moment {M h : ℕ} (hh : 0 < h)
+      (hp : Bosonize.Ch18.HyperbolicPair) (x y : Position (2 * h))
+      (channel : Bool) (n : ℕ) :
+      (∑ k ∈ Finset.range (n + 1), Bosonize.A08.omegaP M hp (oscSyntaxEval
+        (oscSyntaxDagger (oscillatorExp hp x channel k) * oscillatorExp hp y channel (n - k)))) =
+      (Complex.I ^ n / (n.factorial : ℂ)) *
+        Bosonize.A08.omegaP M hp
+          ((Bosonize.V1S1.linearElement (if channel then xSForm hp y - xSForm hp x
+            else xDForm hp y - xDForm hp x)) ^ n) := by
+    classical
+    let fx := if channel then xSForm (M := M) hp x else xDForm (M := M) hp x
+    let fy := if channel then xSForm (M := M) hp y else xDForm (M := M) hp y
+    let X := Bosonize.V1S1.linearElement fx
+    let Y := Bosonize.V1S1.linearElement fy
+    let ω := Bosonize.A08.omegaP M hp
+    have hctx (a b : Bosonize.A08.OscAlgebra M) :
+        ω (a * (X * Y) * b) = ω (a * (Y * X) * b) :=
+      contextual_linear_commute hp fx fy (same_channel_commutator_contract hh hp x y channel) a b
+    have hbin := contextual_binomial_coefficient (A := Bosonize.A08.OscAlgebra M) ω.toAddMonoidHom X Y hctx n
+    have hlin : Bosonize.V1S1.linearElement (if channel then xSForm (M := M) hp y - xSForm (M := M) hp x
+        else xDForm (M := M) hp y - xDForm (M := M) hp x) = Y - X := by
+      have hdiff : (if channel then xSForm (M := M) hp y - xSForm (M := M) hp x
+          else xDForm (M := M) hp y - xDForm (M := M) hp x) = fy - fx := by
+        cases channel <;> rfl
+      rw [hdiff]
+      let L := Finsupp.linearCombination ℂ (fun i : Bosonize.A08.OscGen M => FreeAlgebra.ι ℂ i)
+      change L (fy - fx) = L fy - L fx
+      exact L.map_sub fy fx
+    have hbin' : Bosonize.A08.omegaP M hp ((Y - X) ^ n) =
+        ∑ k ∈ Finset.range (n + 1), (n.choose k : ℂ) * (-1 : ℂ)^k *
+          Bosonize.A08.omegaP M hp (X^k * Y^(n-k)) := hbin
+    with_unfolding_all rw [hlin, hbin', Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro k hk
+    have hk' : k ≤ n := by have := Finset.mem_range.mp hk; omega
+    rw [oscillator_coefficient_product hh]
+    have hden : ((k.factorial : ℂ)⁻¹) * (((n - k).factorial : ℂ)⁻¹) =
+        (n.choose k : ℂ) / (n.factorial : ℂ) := by
+      rw [Nat.cast_choose ℂ hk']
+      have hf (m : ℕ) : (m.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero m
+      field_simp [hf]
+    have hphase : (-Complex.I) ^ k * Complex.I ^ (n - k) =
+        (-1 : ℂ) ^ k * Complex.I ^ n := by
+      rw [neg_pow, mul_assoc, ← pow_add, show k + (n - k) = n by omega]
+    change (((k.factorial : ℂ)⁻¹) * (((n-k).factorial : ℂ)⁻¹) * (-Complex.I)^k * Complex.I^(n-k)) *
+      ω (X^k * Y^(n-k)) = _
+    calc
+      _ = ((((k.factorial : ℂ)⁻¹) * (((n-k).factorial : ℂ)⁻¹)) *
+          ((-Complex.I)^k * Complex.I^(n-k))) * ω (X^k * Y^(n-k)) := by ring
+      _ = ((n.choose k : ℂ) / (n.factorial : ℂ)) *
+          ((-1 : ℂ)^k * Complex.I^n) * ω (X^k * Y^(n-k)) := by rw [hden, hphase]
+      _ = _ := by ring
+  have vertex_charge_coefficient {h : ℕ} (hh : 0 < h) (N : Charge)
+      (x y : Position (2 * h)) (channel : Bool) :
+      let c : ℂ := (((2 * h : ℕ) : ℂ))⁻¹
+      let K := fun z => if channel then canonicalKleinS h (2 * h) z else canonicalKleinD h (2 * h) z
+      chargeBasisExpectation N (ChargeWord.comp (ChargeWord.adjoint (ChargeWord.scale c (K x)))
+        (ChargeWord.scale c (K y))) =
+      c ^ 2 * Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot (2 * h))
+        (if channel then aS N else aD N) ((y.val : ℤ) - (x.val : ℤ)) := by
+    dsimp only
+    let c : ℂ := (((2 * h : ℕ) : ℂ))⁻¹
+    let K := fun z => if channel then canonicalKleinS h (2 * h) z else canonicalKleinD h (2 * h) z
+    have hs : star c = c := by simp [c]
+    have hscale (a b : ChargeWord) :
+        chargeBasisExpectation N (ChargeWord.comp (ChargeWord.adjoint (ChargeWord.scale c a))
+          (ChargeWord.scale c b)) =
+        c ^ 2 * chargeBasisExpectation N (ChargeWord.comp (ChargeWord.adjoint a) b) := by
+      change (if a.target.symm (b.target N) = N then
+        (c * b.amplitude N) * star (c * a.amplitude (a.target.symm (b.target N))) else 0) =
+        c ^ 2 * (if a.target.symm (b.target N) = N then
+          b.amplitude N * star (a.amplitude (a.target.symm (b.target N))) else 0)
+      split_ifs
+      · rw [star_mul, hs]; ring
+      · ring
+    change chargeBasisExpectation N (ChargeWord.comp (ChargeWord.adjoint (ChargeWord.scale c (K x)))
+      (ChargeWord.scale c (K y))) = _
+    rw [hscale]
+    cases channel
+    · change c^2 * chargeBasisExpectation N
+        (ChargeWord.comp (canonicalKleinDAdj h (2*h) x) (canonicalKleinD h (2*h) y)) = _
+      rw [canonical_charge_selection_D_contract h (2*h) (by omega)]
+      rfl
+    · change c^2 * chargeBasisExpectation N
+        (ChargeWord.comp (canonicalKleinSAdj h (2*h) x) (canonicalKleinS h (2*h) y)) = _
+      rw [canonical_charge_selection_S_contract h (2*h) (by omega)]
+      rfl
+  have vertex_cauchy_coefficient {M h : ℕ} (hh : 0 < h)
+      (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge)
+      (x y : Position (2 * h)) (channel : Bool) (n : ℕ) :
+      let c : ℂ := (((2 * h : ℕ) : ℂ))⁻¹
+      let K := fun z => if channel then canonicalKleinS h (2 * h) z else canonicalKleinD h (2 * h) z
+      jointSeriesFunctional hp N
+        (vertexSeriesMul (vertexWeylAdj (M := M) hh hp x channel)
+          (vertexWeyl (M := M) hh hp y channel)) n =
+        ∑ k ∈ Finset.range (n + 1), jointCoeffFunctional (M := M) hp N
+          (vertexCoeffMul (vertexCoeffAdjoint (ChargeWord.scale c (K x), oscillatorExp (M := M) hp x channel k))
+            (ChargeWord.scale c (K y), oscillatorExp (M := M) hp y channel (n-k))) := by
+    classical
+    let c : ℂ := (((2 * h : ℕ) : ℂ))⁻¹
+    let K := fun z => if channel then canonicalKleinS h (2 * h) z else canonicalKleinD h (2 * h) z
+    let ev : Multiset (vertexCoeff M) →+ ℂ :=
+      { toFun := fun s => (s.map (jointCoeffFunctional (M := M) hp N)).sum
+        map_zero' := by simp
+        map_add' := by intro a b; simp }
+    have hv (z : Position (2*h)) (k : ℕ) : vertexWeyl (M := M) hh hp z channel k =
+        {((ChargeWord.scale c (K z), oscillatorExp (M := M) hp z channel k) : vertexCoeff M)} := by rfl
+    have ha (k : ℕ) : vertexWeylAdj (M := M) hh hp x channel k =
+        {vertexCoeffAdjoint ((ChargeWord.scale c (K x), oscillatorExp (M := M) hp x channel k) : vertexCoeff M)} := by
+      change Multiset.map vertexCoeffAdjoint (vertexWeyl (M := M) hh hp x channel k) = _
+      exact (congrArg (fun s : Multiset (vertexCoeff M) => s.map vertexCoeffAdjoint) (hv x k)).trans
+        (Multiset.map_singleton vertexCoeffAdjoint _)
+    change ev (∑ k ∈ Finset.range (n+1),
+      ((vertexWeylAdj (M := M) hh hp x channel) k).bind fun a =>
+        ((vertexWeyl (M := M) hh hp y channel) (n-k)).map fun b => vertexCoeffMul a b) = _
+    rw [map_sum]
+    apply Finset.sum_congr rfl
+    intro k _
+    have hb (a b : vertexCoeff M) :
+        ev (({a} : Multiset (vertexCoeff M)).bind fun v => ({b} : Multiset (vertexCoeff M)).map fun u => vertexCoeffMul v u) =
+        jointCoeffFunctional hp N (vertexCoeffMul a b) := by
+      rw [Multiset.singleton_bind, Multiset.map_singleton]
+      change (({vertexCoeffMul a b} : Multiset (vertexCoeff M)).map (jointCoeffFunctional hp N)).sum = _
+      rw [Multiset.map_singleton, Multiset.sum_singleton]
+    let a : vertexCoeff M := (ChargeWord.scale c (K x), oscillatorExp (M := M) hp x channel k)
+    let b : vertexCoeff M := (ChargeWord.scale c (K y), oscillatorExp (M := M) hp y channel (n-k))
+    exact (congrArg (fun s : Multiset (vertexCoeff M) => ev (s.bind fun v =>
+        (vertexWeyl (M := M) hh hp y channel (n-k)).map fun u => vertexCoeffMul v u)) (ha k)).trans
+      ((congrArg (fun s : Multiset (vertexCoeff M) => ev (({vertexCoeffAdjoint a} : Multiset (vertexCoeff M)).bind
+        fun v => s.map fun u => vertexCoeffMul v u)) (hv y (n-k))).trans (hb (vertexCoeffAdjoint a) b))
+  funext n
+  let c : ℂ := (((2*h : ℕ) : ℂ))⁻¹
+  let K := fun z => if channel then canonicalKleinS h (2*h) z else canonicalKleinD h (2*h) z
+  let phase := Bosonize.A01.integerCharacter (Bosonize.A01.canonicalRoot (2*h))
+    (if channel then aS N else aD N) ((y.val : ℤ) - (x.val : ℤ))
+  have hterm (k : ℕ) : jointCoeffFunctional (M := M) hp N
+      (vertexCoeffMul (vertexCoeffAdjoint (ChargeWord.scale c (K x), oscillatorExp (M := M) hp x channel k))
+        (ChargeWord.scale c (K y), oscillatorExp (M := M) hp y channel (n-k))) =
+      (c^2 * phase) * Bosonize.A08.omegaP M hp (oscSyntaxEval
+        (oscSyntaxDagger (oscillatorExp (M := M) hp x channel k) * oscillatorExp (M := M) hp y channel (n-k))) := by
+    rw [jointCoeffFunctional_product_contract]
+    change chargeBasisExpectation N (ChargeWord.comp (ChargeWord.adjoint (ChargeWord.scale c (K x)))
+      (ChargeWord.scale c (K y))) * _ = _
+    exact congrArg (fun z : ℂ => z * Bosonize.A08.omegaP M hp (oscSyntaxEval
+      (oscSyntaxDagger (oscillatorExp (M := M) hp x channel k) * oscillatorExp (M := M) hp y channel (n-k))))
+      (vertex_charge_coefficient hh N x y channel)
+  calc
+    _ = ∑ k ∈ Finset.range (n+1), jointCoeffFunctional (M := M) hp N
+        (vertexCoeffMul (vertexCoeffAdjoint (ChargeWord.scale c (K x), oscillatorExp (M := M) hp x channel k))
+          (ChargeWord.scale c (K y), oscillatorExp (M := M) hp y channel (n-k))) :=
+      vertex_cauchy_coefficient hh hp N x y channel n
+    _ = ∑ k ∈ Finset.range (n+1), (c^2 * phase) * Bosonize.A08.omegaP M hp (oscSyntaxEval
+        (oscSyntaxDagger (oscillatorExp (M := M) hp x channel k) * oscillatorExp (M := M) hp y channel (n-k))) := by
+      apply Finset.sum_congr rfl
+      intro k _
+      exact hterm k
+    _ = (c^2 * phase) * (∑ k ∈ Finset.range (n+1), Bosonize.A08.omegaP M hp (oscSyntaxEval
+        (oscSyntaxDagger (oscillatorExp (M := M) hp x channel k) * oscillatorExp (M := M) hp y channel (n-k)))) := by
+      rw [Finset.mul_sum]
+    _ = (c^2 * phase) * ((Complex.I^n / (n.factorial : ℂ)) * Bosonize.A08.omegaP M hp
+        ((Bosonize.V1S1.linearElement (if channel then xSForm hp y - xSForm hp x
+          else xDForm hp y - xDForm hp x))^n)) :=
+      congrArg (fun z : ℂ => (c^2 * phase) * z) (oscillator_cauchy_moment (M := M) hh hp x y channel n)
+    _ = (c^2 * phase) * (if n % 2 = 0 then
+        (-2 * (if channel then (gainS hp : ℂ) else (gainD hp : ℂ)) *
+          (dirichletCutoff (2*h) M x y : ℂ))^(n/2) / ((n/2).factorial : ℂ) else 0) :=
+      congrArg (fun z : ℂ => (c^2 * phase) * z) (gaussian_coefficient (M := M) hh hp x y channel n)
+    _ = _ := by
+      by_cases hn : n % 2 = 0 <;> simp [expectedWeylCorrelator, c, phase, hn]
 
 theorem dressed_normal_prefactor_contract {M h : ℕ} (hh : 0 < h)
     (hp : Bosonize.Ch18.HyperbolicPair) (N : Charge) (x y : Position (2 * h))

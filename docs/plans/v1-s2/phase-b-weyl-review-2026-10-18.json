@@ -1,0 +1,57 @@
+{
+  "scope": "Exact coefficientwise Weyl-correlator proof, not whole Sprint completion",
+  "source_sha256": "3e0b72ac30fb213d36ac91e54ffee297dee39910dfe5734f54aa52bd2d472a02",
+  "previous_source_sha256": "37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9",
+  "previous_commit": "80393ee",
+  "proved_contract": "coefficientwise_weyl_correlator_contract",
+  "proof_lines": 459,
+  "review": {
+    "verdict": "PASS",
+    "reviewed_sha256": "3e0b72ac30fb213d36ac91e54ffee297dee39910dfe5734f54aa52bd2d472a02",
+    "reviewed_contracts": [
+      "coefficientwise_weyl_correlator_contract",
+      "contextual_binomial_coefficient / quotient additive-functional binomial expansion",
+      "contextual_linear_commute / operator-order and CCR transport",
+      "oscillator_coefficient_product, gaussian_coefficient, vertex_charge_coefficient, vertex_cauchy_coefficient"
+    ],
+    "actionable_findings": [],
+    "remaining_gates": [
+      "Both normal-ordering contracts remain open.",
+      "Phase B/C final gates remain open."
+    ]
+  },
+  "review_provenance": {
+    "provider": "openai",
+    "requested_alias": "api-fast",
+    "returned_model": "gpt-5.4-mini-2026-03-17",
+    "reasoning": "medium",
+    "charged_tokens": 26887,
+    "usage": {
+      "input_tokens": 18946,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 7941,
+      "output_tokens_details": {
+        "reasoning_tokens": 7768
+      },
+      "total_tokens": 26887
+    }
+  },
+  "review_prompt_sha256": "cc823df0f01f91dc1c30df48747ff42b41eb2fb39c373947a4cba5d7b0eec4d1",
+  "review_response_sha256": "876fc8681c286b923bf8de243056d60c894f20b71fb8679d3132d211516d85ad",
+  "validation": {
+    "strict_lock": "PASS: 1153 statements / 1211 frozen commands",
+    "core_lock": "PASS: all 36 existing Core sources",
+    "build": "lake build BosonizeStubs PASS: 2 remaining placeholder warnings, no other warnings",
+    "axioms": "Fresh audit of all 37 completed theorems: only propext, Classical.choice, Quot.sound",
+    "remaining_contracts": [
+      "dressed_normal_prefactor_contract",
+      "bare_normal_prefactor_contract"
+    ],
+    "phase_b_complete": false,
+    "phase_c_started": false,
+    "s3_started": false
+  }
+}
