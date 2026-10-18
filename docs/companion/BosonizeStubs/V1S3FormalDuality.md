@@ -1,5 +1,20 @@
 # V1-S3 formal duality and state transport — Phase B checkpoint
 
+## Accepted Phase B result — 2026-10-18
+
+All 62 theorem contracts are proved, with zero placeholders and zero warnings.
+Fresh complete axiom/dependency closure audit of 87 public declarations reports
+only permitted standard axioms or none. The final staging source SHA-256 is
+`236e5ca07184e63a29ded6b028008cca7543d3ae5e5ef1bb849b72cb06f83694`.
+Independent native proof review PASS covers the integrated proof batches and
+the final normal/correlator and lint changes. The corrected interface baseline
+is `4726c62`; strict statement/context locks and all 37 prior Core source
+hashes pass. See [the Phase B acceptance receipt](../../plans/v1-s3/phase-b-acceptance-2026-10-18.md).
+
+Phase C promotion and pedagogical synchronization are now in progress. The
+earlier partial counts, obstruction and pending-decision text below describe
+historical snapshots; the four-header correction was authorized and proved.
+
 ## Current Phase B checkpoint — 2026-10-18
 
 **Subsequent authorization:** the user approved the reviewed four-header

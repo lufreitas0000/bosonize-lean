@@ -87,10 +87,10 @@ theorem jointReflection_basis {M : ℕ} (N : Charge)
         MvPolynomial.C ((-1 : ℂ) ^ (if i.1 = Bosonize.A06.Orientation.right then e else 0)) *
           MvPolynomial.X i ^ e := by
       by_cases hir : i.1 = Bosonize.A06.Orientation.right
-      · simp only [if_pos hir]
+      · simp only [ite_eq_left hir]
         rw [show -MvPolynomial.X i = MvPolynomial.C (-1 : ℂ) * MvPolynomial.X i by simp,
           mul_pow, ← map_pow (MvPolynomial.C : ℂ →+* MvPolynomial (Bosonize.A08.OscMode M) ℂ)]
-      · rw [if_neg hir]
+      · rw [ite_eq_right hir]
         simp [hir]
     calc
       (∏ i ∈ k.support,
@@ -118,7 +118,7 @@ theorem jointReflection_basis {M : ℕ} (N : Charge)
   rw [← TensorProduct.tmul_smul]
   simp only [map_one, one_mul, beq_iff_eq]
   rw [hprod, MvPolynomial.monomial_eq]
-  simpa [rightOscillatorParity, Finsupp.prod, MvPolynomial.smul_eq_C_mul]
+  simp [rightOscillatorParity, Finsupp.prod, MvPolynomial.smul_eq_C_mul]
 
 theorem polynomial_vacuum_parity_invariant {M : ℕ} :
     oscillatorParityAlgHom (1 : Bosonize.A08.OscPoly M) = 1 :=
@@ -341,8 +341,6 @@ theorem dualOscSyntax_preserves_dagger_contract {M : ℕ} (a : OscSyntax M) :
           star (dualOscSign g * dualOscWordSign gs)
         rw [hsignAppend, ih]
         simp only [dualOscWordSign, mul_one]
-        change star (dualOscWordSign gs) * dualOscSign (!g.1, g.2) =
-          star (dualOscSign g * dualOscWordSign gs)
         rw [hgensign, star_mul]
   have hdualzero : dualOscSyntax (0 : OscSyntax M) = 0 := by simp [dualOscSyntax]
   have hdualadd (x y : OscSyntax M) :
@@ -447,7 +445,7 @@ theorem oscillatorParityAlgHom_involutive {M : ℕ}
       oscillatorParityAlgHom (MvPolynomial.X i) =
         (if i.1 = Bosonize.A06.Orientation.right then (-1 : ℂ) else 1) •
           MvPolynomial.X i := by
-    simp [oscillatorParityAlgHom, MvPolynomial.aeval_X, MvPolynomial.smul_eq_C_mul]
+    simp [oscillatorParityAlgHom]
   induction p using MvPolynomial.induction_on with
   | add p q hp hq => simp [map_add, hp, hq]
   | mul_X p i hp =>
@@ -472,7 +470,7 @@ theorem oscillatorParityAlgHom_creation {M : ℕ} (ν : Bosonize.A06.Orientation
     oscillatorParityAlgHom (MvPolynomial.X (ν, m)) =
       (if ν = Bosonize.A06.Orientation.right then -1 else 1) •
         MvPolynomial.X (ν, m) := by
-  simp [oscillatorParityAlgHom, MvPolynomial.smul_eq_C_mul]
+  simp [oscillatorParityAlgHom]
 
 theorem oscillatorDuality_generator {M : ℕ} (g : Bosonize.A08.OscGen M) :
     oscillatorDualityAlgHom (FreeAlgebra.ι ℂ g) =
@@ -540,7 +538,8 @@ theorem oscillator_bogoliubov_intertwining_contract {M : ℕ}
           map_add, AlgHom.map_smul_of_tower]
         rw [oscillatorDuality_generator, oscillatorDuality_generator]
         cases ν <;> simp [dualOscSign, dualOscGen,
-          Bosonize.A07Interactions.oppositeOrientation] <;> module
+          Bosonize.A07Interactions.oppositeOrientation]
+        module
     | mul x y hx hy => simp [map_mul, hx, hy]
     | add x y hx hy => simp [map_add, hx, hy]
   simpa [D, B, Bstar, reflectHyperbolic] using
@@ -628,8 +627,7 @@ theorem reflectChargeWord_preserves_comp_contract (a b : ChargeWord) :
       reflectCharge (a.target (reflectCharge (reflectCharge (b.target (reflectCharge N)))))
     rw [reflectCharge_involutive]
   · funext N
-    simp [reflectChargeWord, ChargeWord.comp, reflectCharge_involutive,
-      Equiv.trans_apply]
+    simp [reflectChargeWord, ChargeWord.comp, reflectCharge_involutive]
 
 theorem reflectChargeWord_basis_action (w : ChargeWord) (N : Charge) :
     chargeWordAction (reflectChargeWord w)
@@ -646,7 +644,7 @@ theorem reflectChargeWord_diagonal_observable (f : Charge → ℂ) :
   apply congrArg₂ (fun t amp => ({ target := t, amplitude := amp } : ChargeWord))
   · apply Equiv.ext
     intro N
-    simp [reflectChargeWord, reflectCharge_involutive]
+    simp [reflectCharge_involutive]
   · rfl
 
 theorem reflectChargeWord_preserves_adjoint_contract (a : ChargeWord) :
@@ -655,7 +653,7 @@ theorem reflectChargeWord_preserves_adjoint_contract (a : ChargeWord) :
   apply congrArg₂ (fun t f => ({ target := t, amplitude := f } : ChargeWord))
   · apply Equiv.ext
     intro N
-    simp [reflectChargeWord, ChargeWord.adjoint, reflectCharge_involutive]
+    simp [reflectChargeWord, ChargeWord.adjoint]
   · funext N
     simp [reflectChargeWord, ChargeWord.adjoint, reflectCharge_involutive]
 
@@ -939,7 +937,7 @@ theorem dualSeries_adjoint_contract {M : ℕ} (A : VertexSeries M) :
 theorem dualSeries_involutive_contract {M : ℕ} (A : VertexSeries M) :
     dualSeries (dualSeries A) = A := by
   funext n
-  simp [dualSeries, Multiset.map_map, Function.comp_def,
+  simp [dualSeries, Multiset.map_map,
     dualCoeff_involutive_contract]
 
 theorem canonicalKleinD_reflection_contract {L h : ℕ} (x : Position L) :
@@ -1236,14 +1234,218 @@ theorem duality_vertex_D_contract {M h : ℕ} (hh : 0 < h)
     dualSeries (vertexWeyl (M := M) hh P x false) =
       (fun n => ((vertexWeylAdj (M := M) hh (reflectHyperbolic P) x true) n).map
         (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : ℤ)))) := by
-  sorry
+  have hDualSmul (z : ℂ) (a : OscSyntax M) :
+      dualOscSyntax (z • a) = z • dualOscSyntax a := by
+    classical
+    simp only [dualOscSyntax, MonoidAlgebra.coeff_smul]
+    rw [Finsupp.sum_smul_index (by intro w; simp)]
+    rw [← MonoidAlgebra.ofCoeff_smul, Finsupp.smul_sum]
+    congr 1
+    apply Finsupp.sum_congr
+    intro w hw
+    simp [Finsupp.smul_single, smul_eq_mul, mul_left_comm]
+  have hDagSmul (z : ℂ) (a : OscSyntax M) :
+      oscSyntaxDagger (z • a) = star z • oscSyntaxDagger a := by
+    classical
+    simp only [oscSyntaxDagger, MonoidAlgebra.coeff_smul]
+    rw [Finsupp.sum_smul_index (by intro w; simp)]
+    rw [← MonoidAlgebra.ofCoeff_smul, Finsupp.smul_sum]
+    congr 1
+    apply Finsupp.sum_congr
+    intro w hw
+    simp [Finsupp.smul_single, smul_eq_mul, star_mul, mul_comm]
+  have hDagAdd (x y : OscSyntax M) :
+      oscSyntaxDagger (x+y) = oscSyntaxDagger x + oscSyntaxDagger y := by
+    simp only [oscSyntaxDagger, MonoidAlgebra.coeff_add]
+    rw [Finsupp.sum_add_index' (by intro w; simp)
+      (by intro w z t; simp [star_add, Finsupp.single_add])]
+    exact MonoidAlgebra.ofCoeff_add _ _
+  have hLinearSyntax [Fintype Bosonize.A06.Orientation]
+      (f : Bosonize.V1S1.OscLinearForm M) :
+      oscFreeToSyntax M (Bosonize.V1S1.linearElement f) =
+        ∑ g : Bosonize.A08.OscGen M, f g • MonoidAlgebra.single [g] (1 : ℂ) := by
+    classical
+    simp only [Bosonize.V1S1.linearElement, map_sum, map_smul,
+      oscFreeToSyntax, FreeAlgebra.lift_ι_apply]
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro g hg hnot
+    simp [Finsupp.notMem_support_iff.mp hnot]
+  have hDualLinear [Fintype Bosonize.A06.Orientation]
+      (f : Bosonize.V1S1.OscLinearForm M) :
+      dualOscSyntax (oscFreeToSyntax M (Bosonize.V1S1.linearElement f)) =
+        oscFreeToSyntax M (Bosonize.V1S1.linearElement (dualOscLinearForm f)) := by
+    classical
+    let D : OscSyntax M →+ OscSyntax M :=
+      { toFun := dualOscSyntax
+        map_zero' := by simp [dualOscSyntax]
+        map_add' := by
+          intro x y
+          simp only [dualOscSyntax, MonoidAlgebra.coeff_add]
+          rw [Finsupp.sum_add_index' (by intro w; simp)
+            (by intro w z t; simp [mul_add, Finsupp.single_add])]
+          exact MonoidAlgebra.ofCoeff_add _ _ }
+    have hg (g : Bosonize.A08.OscGen M) : dualOscGen g = g := by
+      rcases g with ⟨b, ν, m⟩
+      cases ν <;> rfl
+    have hdiag (g : Bosonize.A08.OscGen M) : dualOscLinearForm f g = dualOscSign g * f g := by
+      simp [dualOscLinearForm, hg, Finsupp.sum_apply, Finsupp.single_apply]
+      intro h; exact Or.inr h
+    rw [hLinearSyntax, hLinearSyntax]
+    change D _ = _
+    rw [map_sum]
+    apply Finset.sum_congr rfl
+    intro g hmem
+    change dualOscSyntax (f g • MonoidAlgebra.single [g] 1) = _
+    rw [hDualSmul, hdiag]
+    simp [dualOscSyntax, dualOscWord, dualOscWordSign, hg,
+      MonoidAlgebra.smul_single, smul_eq_mul, mul_comm]
+  have hHermitian [Fintype Bosonize.A06.Orientation]
+      (f : Bosonize.V1S1.OscLinearForm M)
+      (hf : ∀ g, star (f g) = f (!g.1, g.2)) :
+      oscSyntaxDagger (oscFreeToSyntax M (Bosonize.V1S1.linearElement f)) =
+        oscFreeToSyntax M (Bosonize.V1S1.linearElement f) := by
+    classical
+    let T : OscSyntax M →+ OscSyntax M :=
+      { toFun := oscSyntaxDagger
+        map_zero' := by simp [oscSyntaxDagger]
+        map_add' := hDagAdd }
+    let e : Bosonize.A08.OscGen M ≃ Bosonize.A08.OscGen M :=
+      { toFun := fun g => (!g.1, g.2)
+        invFun := fun g => (!g.1, g.2)
+        left_inv := by intro g; simp
+        right_inv := by intro g; simp }
+    rw [hLinearSyntax]
+    change T _ = _
+    rw [map_sum]
+    calc
+      _ = ∑ g : Bosonize.A08.OscGen M, star (f g) • MonoidAlgebra.single [e g] (1 : ℂ) := by
+        apply Finset.sum_congr rfl
+        intro g hg
+        change oscSyntaxDagger (f g • MonoidAlgebra.single [g] 1) = _
+        rw [hDagSmul]
+        simp [oscSyntaxDagger, Bosonize.A08.wordDagger, e]
+      _ = ∑ g : Bosonize.A08.OscGen M, f (e g) • MonoidAlgebra.single [e g] (1 : ℂ) := by
+        simp only [hf]
+        rfl
+      _ = _ := Equiv.sum_comp e (fun g => f g • (MonoidAlgebra.single [g] (1 : ℂ) : OscSyntax M))
+  have hFieldHerm {L : ℕ} (Q : Bosonize.Ch18.HyperbolicPair)
+      (x : Position L) (ch : Bool) (g : Bosonize.A08.OscGen M) :
+      star ((if ch then xSForm Q x else xDForm Q x) g) =
+        (if ch then xSForm Q x else xDForm Q x) (!g.1, g.2) := by
+    classical
+    have hq (c s : ℝ) (x : Position L) (b : Bool)
+      (ν μ : Bosonize.A06.Orientation) (i : Fin M) :
+      qForm c s ν x (b, (μ, i)) =
+        (if μ = ν then (c : ℂ) *
+          (Bosonize.A01.canonicalRoot L) ^
+            ((if b then -(epsilon ν) else epsilon ν) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+            ((i.val : ℂ) + 1) else 0) +
+        (if μ = Bosonize.A07Interactions.oppositeOrientation ν then (s : ℂ) *
+          (Bosonize.A01.canonicalRoot L) ^
+            ((if b then epsilon ν else -(epsilon ν)) * ((i.val : ℤ) + 1) * (x.val : ℤ)) /
+            ((i.val : ℂ) + 1) else 0) :=   by
+      classical
+      cases b <;> cases ν <;> cases μ <;>
+        simp [qForm, dressedModeForm, Bosonize.V1S1.dressedGeneratorForm,
+          epsilon, Bosonize.A07Interactions.oppositeOrientation, Finsupp.single_apply] <;> ring
+    have hroot : (starRingEnd ℂ) (Bosonize.A01.canonicalRoot L) = (Bosonize.A01.canonicalRoot L)⁻¹ := by
+      unfold Bosonize.A01.canonicalRoot
+      rw [← Complex.exp_neg, ← Complex.exp_conj]
+      congr 1
+      have htwo : (starRingEnd ℂ) (2 : ℂ) = 2 := Complex.conj_ofReal 2
+      simp [htwo]
+      ring
+    rcases g with ⟨b, ν, i⟩
+    cases ch <;> cases b <;> cases ν <;>
+      simp [xDForm, xSForm, hq, epsilon, Bosonize.A07Interactions.oppositeOrientation,
+        star_div₀, star_zpow₀, hroot, -zpow_neg, neg_mul] <;> ring <;> simp
+  have hOscillator {L : ℕ} (P : Bosonize.Ch18.HyperbolicPair)
+      (x : Position L) (ch : Bool) (n : ℕ) :
+      dualOscSyntax (oscillatorExp (M := M) P x ch n) =
+        oscSyntaxDagger (oscillatorExp (reflectHyperbolic P) x (!ch) n) := by
+    classical
+    let : Fintype Bosonize.A06.Orientation :=
+      ⟨{Bosonize.A06.Orientation.right, Bosonize.A06.Orientation.left}, by intro ν; cases ν <;> simp⟩
+    have hneg (f : Bosonize.V1S1.OscLinearForm M) :
+        oscFreeToSyntax M (Bosonize.V1S1.linearElement (-f)) =
+          -oscFreeToSyntax M (Bosonize.V1S1.linearElement f) := by
+      rw [hLinearSyntax, hLinearSyntax]
+      simp
+    have hlin : dualOscSyntax (oscFreeToSyntax M (Bosonize.V1S1.linearElement
+        (if ch then xSForm P x else xDForm P x))) =
+        -oscFreeToSyntax M (Bosonize.V1S1.linearElement
+          (if !ch then xSForm (reflectHyperbolic P) x else xDForm (reflectHyperbolic P) x)) := by
+      rw [hDualLinear]
+      cases ch
+      · simp only [Bool.false_eq_true, ite_false, Bool.not_false, ite_true]
+        rw [oscillator_field_D_duality, hneg]
+      · simp only [ite_true, Bool.not_true, Bool.false_eq_true, ite_false]
+        rw [oscillator_field_S_duality, hneg]
+    have hdpow (a : OscSyntax M) (k : ℕ) : dualOscSyntax (a^k) = dualOscSyntax a ^ k := by
+      induction k with
+      | zero => simp [dualOscSyntax_preserves_one_contract]
+      | succ k ih => rw [pow_succ, dualOscSyntax_preserves_mul_contract, ih, pow_succ]
+    have hdagone : oscSyntaxDagger (1 : OscSyntax M) = 1 := by
+      rw [MonoidAlgebra.one_def]
+      simp [oscSyntaxDagger, Bosonize.A08.wordDagger]
+      rfl
+    have hdagpow (a : OscSyntax M) (k : ℕ) : oscSyntaxDagger (a^k) = oscSyntaxDagger a ^ k := by
+      induction k with
+      | zero => simp [hdagone]
+      | succ k ih => rw [pow_succ, oscSyntaxDagger_mul_contract, ih, ← pow_succ']
+    have hdaglin := hHermitian
+      (if !ch then xSForm (M := M) (reflectHyperbolic P) x else xDForm (reflectHyperbolic P) x)
+      (hFieldHerm (reflectHyperbolic P) x (!ch))
+    simp only [oscillatorExp, oscillatorExpWithScalar, hDualSmul, hdpow,
+      hlin, hDagSmul, hdagpow, hdaglin, star_inv₀, star_natCast]
+    simp
+  set_option backward.isDefEq.respectTransparency false in
+    funext n
+    simp only [dualSeries, vertexWeyl, vertexWeylAdj, vertexSeriesAdjoint,
+        Multiset.map_singleton, dualCoeff, vertexCoeffAdjoint, vertexCoeffScale, Bool.false_eq_true, ite_false, ite_true]
+    rw [hOscillator]
+    have hr (z : ℂ) (w : ChargeWord) :
+        reflectChargeWord (ChargeWord.scale z w) = ChargeWord.scale z (reflectChargeWord w) := rfl
+    rw [hr, canonicalKleinD_reflection_contract]
+    congr 2
+    apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+    · rfl
+    · funext N
+      simp [ChargeWord.scale, ChargeWord.adjoint, canonicalKleinSAdj,
+        star_mul, mul_comm, mul_left_comm, canonicalKleinS, chargeShiftSEquiv]
 
 theorem duality_vertex_S_contract {M h : ℕ} (hh : 0 < h)
     (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) :
     dualSeries (vertexWeyl (M := M) hh P x true) =
       (fun n => ((vertexWeylAdj (M := M) hh (reflectHyperbolic P) x false) n).map
         (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : ℤ)))) := by
-  sorry
+  set_option backward.isDefEq.respectTransparency false in
+    have hOscillator (n : ℕ) : dualOscSyntax (oscillatorExp (M := M) P x true n) =
+        oscSyntaxDagger (oscillatorExp (reflectHyperbolic P) x false n) := by
+      have h := congrFun (duality_vertex_D_contract (M := M) hh (reflectHyperbolic P) x) n
+      simp only [dualSeries, vertexWeyl, vertexWeylAdj, vertexSeriesAdjoint,
+        Multiset.map_singleton, dualCoeff, vertexCoeffAdjoint, vertexCoeffScale,
+        Bool.false_eq_true, ite_false, ite_true, reflectHyperbolic_involutive] at h
+      have ho := congrArg Prod.snd (Multiset.singleton_inj.mp h)
+      have hd := congrArg dualOscSyntax ho
+      rw [dualOscSyntax_involutive_contract, dualOscSyntax_preserves_dagger_contract] at hd
+      have ht := congrArg oscSyntaxDagger hd
+      rw [oscSyntaxDagger_involutive_contract] at ht
+      exact ht.symm
+    funext n
+    simp only [dualSeries, vertexWeyl, vertexWeylAdj, vertexSeriesAdjoint,
+      Multiset.map_singleton, dualCoeff, vertexCoeffAdjoint, vertexCoeffScale,
+      Bool.false_eq_true, ite_false, ite_true]
+    rw [hOscillator]
+    have hr (z : ℂ) (w : ChargeWord) :
+        reflectChargeWord (ChargeWord.scale z w) = ChargeWord.scale z (reflectChargeWord w) := rfl
+    rw [hr, canonicalKleinS_reflection_contract]
+    congr 2
+    apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+    · rfl
+    · funext N
+      simp [ChargeWord.scale, ChargeWord.adjoint, canonicalKleinDAdj,
+        star_mul, mul_comm, mul_left_comm, canonicalKleinD, chargeShiftDEquiv]
 
 theorem duality_vertex_D_t0_contract {M h : ℕ} (hh : 0 < h)
     (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) :
@@ -1299,14 +1501,128 @@ theorem dressed_normal_vertex_D_contract {M h : ℕ} (hh : 0 < h)
     dualSeries (vertexWeylDressedNormal (M := M) hh P x false) =
       (fun n => ((vertexSeriesAdjoint (vertexWeylDressedNormal (M := M) hh (reflectHyperbolic P) x true)) n).map
         (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : ℤ)))) := by
-  sorry
+  have hAdjScale (z : ℂ) (a : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffScale z a) =
+        vertexCoeffScale (star z) (vertexCoeffAdjoint a) := by
+    rcases a with ⟨w, x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffAdjoint, vertexCoeffScale, ChargeWord.adjoint,
+          ChargeWord.scale, star_mul, mul_comm]
+    · rfl
+  have hScaleComm (z y : ℂ) (a : vertexCoeff M) :
+      vertexCoeffScale z (vertexCoeffScale y a) = vertexCoeffScale y (vertexCoeffScale z a) := by
+    rcases a with ⟨w,x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffScale, ChargeWord.scale, mul_left_comm]
+    · rfl
+  have hNormalTransport (s t : FormalSeries ℂ) (V W : VertexSeries M) (z : ℂ)
+      (hs : ∀ k, s k = star (t k))
+      (hv : dualSeries V = fun n => (vertexSeriesAdjoint W n).map (vertexCoeffScale z)) :
+      dualSeries (vertexSeriesScalarMul s V) =
+        fun n => (vertexSeriesAdjoint (vertexSeriesScalarMul t W) n).map (vertexCoeffScale z) := by
+    classical
+    set_option backward.isDefEq.respectTransparency false in
+      let F : Multiset (vertexCoeff M) →+ Multiset (vertexCoeff M) :=
+        Multiset.mapAddMonoidHom dualCoeff
+      let G : Multiset (vertexCoeff M) →+ Multiset (vertexCoeff M) :=
+        Multiset.mapAddMonoidHom (fun a => vertexCoeffScale z (vertexCoeffAdjoint a))
+      have hb (n : ℕ) : F (V n) = G (W n) := by
+        simpa only [F, G, Multiset.mapAddMonoidHom_apply, dualSeries,
+          vertexSeriesAdjoint, Multiset.map_map, Function.comp_def] using congrFun hv n
+      funext n
+      simp only [dualSeries, vertexSeriesScalarMul, vertexSeriesAdjoint, Multiset.map_map]
+      change F (∑ k ∈ Finset.range (n+1), (V (n-k)).map (vertexCoeffScale (s k))) =
+        G (∑ k ∈ Finset.range (n+1), (W (n-k)).map (vertexCoeffScale (t k)))
+      rw [map_sum, map_sum]
+      apply Finset.sum_congr rfl
+      intro k hk
+      calc
+        _ = (F (V (n-k))).map (vertexCoeffScale (s k)) := by
+          simp only [F, Multiset.mapAddMonoidHom_apply, Multiset.map_map]
+          rfl
+        _ = (G (W (n-k))).map (vertexCoeffScale (s k)) := by rw [hb]
+        _ = _ := by
+          simp only [G, Multiset.mapAddMonoidHom_apply, Multiset.map_map]
+          apply Multiset.map_congr rfl
+          intro a ha
+          simp only [Function.comp_apply, hAdjScale, ← hs, hScaleComm]
+  apply hNormalTransport
+    (dressedNormalMultiplier (M := M) P false)
+    (dressedNormalMultiplier (M := M) (reflectHyperbolic P) true)
+    (vertexWeyl hh P x false) (vertexWeyl hh (reflectHyperbolic P) x true)
+  · intro k
+    rw [(dressed_normal_multiplier_exchange P).2]
+    unfold dressedNormalMultiplier
+    split_ifs <;> simp [Complex.conj_ofReal]
+  · exact duality_vertex_D_contract hh P x
 
 theorem bare_normal_vertex_D_contract {M h : ℕ} (hh : 0 < h)
     (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) :
     dualSeries (vertexWeylBareNormal (M := M) hh P x false) =
       (fun n => ((vertexSeriesAdjoint (vertexWeylBareNormal (M := M) hh (reflectHyperbolic P) x true)) n).map
         (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : ℤ)))) := by
-  sorry
+  have hAdjScale (z : ℂ) (a : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffScale z a) =
+        vertexCoeffScale (star z) (vertexCoeffAdjoint a) := by
+    rcases a with ⟨w, x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffAdjoint, vertexCoeffScale, ChargeWord.adjoint,
+          ChargeWord.scale, star_mul, mul_comm]
+    · rfl
+  have hScaleComm (z y : ℂ) (a : vertexCoeff M) :
+      vertexCoeffScale z (vertexCoeffScale y a) = vertexCoeffScale y (vertexCoeffScale z a) := by
+    rcases a with ⟨w,x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffScale, ChargeWord.scale, mul_left_comm]
+    · rfl
+  have hNormalTransport (s t : FormalSeries ℂ) (V W : VertexSeries M) (z : ℂ)
+      (hs : ∀ k, s k = star (t k))
+      (hv : dualSeries V = fun n => (vertexSeriesAdjoint W n).map (vertexCoeffScale z)) :
+      dualSeries (vertexSeriesScalarMul s V) =
+        fun n => (vertexSeriesAdjoint (vertexSeriesScalarMul t W) n).map (vertexCoeffScale z) := by
+    classical
+    set_option backward.isDefEq.respectTransparency false in
+      let F : Multiset (vertexCoeff M) →+ Multiset (vertexCoeff M) :=
+        Multiset.mapAddMonoidHom dualCoeff
+      let G : Multiset (vertexCoeff M) →+ Multiset (vertexCoeff M) :=
+        Multiset.mapAddMonoidHom (fun a => vertexCoeffScale z (vertexCoeffAdjoint a))
+      have hb (n : ℕ) : F (V n) = G (W n) := by
+        simpa only [F, G, Multiset.mapAddMonoidHom_apply, dualSeries,
+          vertexSeriesAdjoint, Multiset.map_map, Function.comp_def] using congrFun hv n
+      funext n
+      simp only [dualSeries, vertexSeriesScalarMul, vertexSeriesAdjoint, Multiset.map_map]
+      change F (∑ k ∈ Finset.range (n+1), (V (n-k)).map (vertexCoeffScale (s k))) =
+        G (∑ k ∈ Finset.range (n+1), (W (n-k)).map (vertexCoeffScale (t k)))
+      rw [map_sum, map_sum]
+      apply Finset.sum_congr rfl
+      intro k hk
+      calc
+        _ = (F (V (n-k))).map (vertexCoeffScale (s k)) := by
+          simp only [F, Multiset.mapAddMonoidHom_apply, Multiset.map_map]
+          rfl
+        _ = (G (W (n-k))).map (vertexCoeffScale (s k)) := by rw [hb]
+        _ = _ := by
+          simp only [G, Multiset.mapAddMonoidHom_apply, Multiset.map_map]
+          apply Multiset.map_congr rfl
+          intro a ha
+          simp only [Function.comp_apply, hAdjScale, ← hs, hScaleComm]
+  apply hNormalTransport (bareNormalMultiplier M) (bareNormalMultiplier M)
+    (vertexWeyl hh P x false) (vertexWeyl hh (reflectHyperbolic P) x true)
+  · intro k
+    exact (bare_normal_multiplier_self_adjoint k).symm
+  · exact duality_vertex_D_contract hh P x
 
 theorem duality_state_family_contract {M : ℕ}
     (P : Bosonize.Ch18.HyperbolicPair) (N : Charge) (a : vertexCoeff M) :
@@ -1349,7 +1665,147 @@ theorem duality_ordered_vertex_adjoint_transport {M h : ℕ}
           (vertexSeriesMul
             (vertexWeylAdj (M := M) hh P x channel)
             (vertexWeyl (M := M) hh P y channel))) := by
-  sorry
+  have h_c_adjscale (z : ℂ) (a : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffScale z a) =
+        vertexCoeffScale (star z) (vertexCoeffAdjoint a) := by
+    rcases a with ⟨w, x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffAdjoint, vertexCoeffScale, ChargeWord.adjoint,
+          ChargeWord.scale, star_mul, mul_comm]
+    · rfl
+  have h_c_adj_inv (a : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffAdjoint a) = a := by
+    rcases a with ⟨w, x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffAdjoint, ChargeWord.adjoint]
+    · exact oscSyntaxDagger_involutive_contract x
+  have h_c_series_adj_inv (V : VertexSeries M) :
+      vertexSeriesAdjoint (vertexSeriesAdjoint V) = V := by
+    funext n
+    simp [vertexSeriesAdjoint, Multiset.map_map, h_c_adj_inv]
+  have h_c_adj_scale (z : ℂ) (V : VertexSeries M) :
+      vertexSeriesAdjoint (fun n => (V n).map (vertexCoeffScale z)) =
+        fun n => (vertexSeriesAdjoint V n).map (vertexCoeffScale (star z)) := by
+    funext n
+    simp only [vertexSeriesAdjoint, Multiset.map_map]
+    apply Multiset.map_congr rfl
+    intro a ha
+    exact h_c_adjscale z a
+  have h_c_coeff_mul (z y : ℂ) (a b : vertexCoeff M) :
+      vertexCoeffMul (vertexCoeffScale z a) (vertexCoeffScale y b) =
+        vertexCoeffScale (z*y) (vertexCoeffMul a b) := by
+    rcases a with ⟨a, x⟩; rcases b with ⟨b,y'⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp only [vertexCoeffMul, vertexCoeffScale, ChargeWord.comp, ChargeWord.scale]
+        ring
+    · rfl
+  have h_c_scaled_mul (z y : ℂ) (V W : VertexSeries M) :
+      vertexSeriesMul (fun n => (V n).map (vertexCoeffScale z))
+        (fun n => (W n).map (vertexCoeffScale y)) =
+          fun n => (vertexSeriesMul V W n).map (vertexCoeffScale (z*y)) := by
+    let G := Multiset.mapAddMonoidHom (vertexCoeffScale (M := M) (z*y))
+    funext n
+    change (∑ k ∈ Finset.range (n+1),
+      ((V k).map (vertexCoeffScale z)).bind fun a =>
+        ((W (n-k)).map (vertexCoeffScale y)).map (vertexCoeffMul a)) =
+          G (∑ k ∈ Finset.range (n+1), (V k).bind fun a => (W (n-k)).map (vertexCoeffMul a))
+    rw [map_sum]
+    apply Finset.sum_congr rfl
+    intro k hk
+    simp only [G, Multiset.mapAddMonoidHom_apply, Multiset.bind_map,
+      Multiset.map_bind, Multiset.map_map]
+    apply Multiset.bind_congr
+    intro a ha
+    apply Multiset.map_congr rfl
+    intro b hb
+    exact h_c_coeff_mul z y a b
+  have h_c_functional_scale (Q : Bosonize.Ch18.HyperbolicPair) (N : Charge)
+      (z : ℂ) (a : vertexCoeff M) :
+      jointCoeffFunctional Q N (vertexCoeffScale z a) = z * jointCoeffFunctional Q N a := by
+    set_option backward.isDefEq.respectTransparency false in
+      rcases a with ⟨w, x⟩
+      rw [jointCoeffFunctional_product_contract, jointCoeffFunctional_product_contract]
+      simp only [vertexCoeffScale, chargeBasisExpectation, ChargeWord.scale]
+      split_ifs <;> ring
+  have h_c_series_functional_scale (Q : Bosonize.Ch18.HyperbolicPair)
+      (N : Charge) (z : ℂ) (V : VertexSeries M) :
+      jointSeriesFunctional Q N (fun n => (V n).map (vertexCoeffScale z)) =
+        fun n => z * jointSeriesFunctional Q N V n := by
+    funext n
+    have h (m : Multiset (vertexCoeff M)) :
+        ((m.map (vertexCoeffScale z)).map (jointCoeffFunctional Q N)).sum =
+          z * (m.map (jointCoeffFunctional Q N)).sum := by
+      induction m using Multiset.induction_on with
+      | empty => simp
+      | cons a m ih =>
+        simp only [Multiset.map_cons, Multiset.sum_cons]
+        rw [h_c_functional_scale, ih, mul_add]
+    exact h (V n)
+  have h_c_constant_mul (z : ℂ) (f : FormalSeries ℂ) (n : ℕ) :
+      scalarSeriesMul (fun k => if k=0 then z else 0) f n = z * f n := by
+    simp [scalarSeriesMul, ite_mul]
+  have h_c_transport (P : Bosonize.Ch18.HyperbolicPair) (N : Charge)
+      (Vx Vy Wx Wy : VertexSeries M) (zx zy : ℂ)
+      (hx : zx * star zx = 1) (hy : zy * star zy = 1)
+      (hvx : dualSeries Vx = fun n => (vertexSeriesAdjoint Wx n).map (vertexCoeffScale zx))
+      (hvy : dualSeries Vy = fun n => (vertexSeriesAdjoint Wy n).map (vertexCoeffScale zy)) :
+      jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+          (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) =
+        scalarSeriesMul (fun n => if n=0 then zx * star zy else 0)
+          (jointSeriesFunctional P N (vertexSeriesMul (vertexSeriesAdjoint Vx) Vy)) := by
+    have ht := duality_state_family_series_contract P N
+      (vertexSeriesMul (vertexSeriesAdjoint Vx) Vy)
+    rw [dualSeries_product_contract, dualSeries_adjoint_contract, hvx, hvy,
+      h_c_adj_scale, h_c_series_adj_inv, h_c_scaled_mul, h_c_series_functional_scale] at ht
+    have hu : (zx * star zy) * (star zx * zy) = 1 := by
+      calc
+        _ = (zx * star zx) * (zy * star zy) := by ring
+        _ = 1 := by rw [hx, hy]; simp
+    funext n
+    rw [h_c_constant_mul]
+    have hn := congrFun ht n
+    calc
+      _ = 1 * jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+        (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) n := by simp
+      _ = (zx * star zy) * ((star zx * zy) *
+        jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+          (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) n) := by rw [← mul_assoc, hu]
+      _ = _ := by rw [hn]
+  have h_c_phase_unit {L : ℕ} (x : Position L) :
+      (Bosonize.A01.canonicalRoot L) ^ (x.val : ℤ) *
+        star ((Bosonize.A01.canonicalRoot L) ^ (x.val : ℤ)) = 1 := by
+    have hroot : star (Bosonize.A01.canonicalRoot L) = (Bosonize.A01.canonicalRoot L)⁻¹ := by
+      unfold Bosonize.A01.canonicalRoot
+      change (starRingEnd ℂ) (Complex.exp (2 * ↑Real.pi * Complex.I / (L : ℂ))) = _
+      rw [← Complex.exp_neg, ← Complex.exp_conj]
+      congr 1
+      have htwo : (starRingEnd ℂ) (2 : ℂ) = 2 := Complex.conj_ofReal 2
+      simp [htwo]
+      ring
+    have hn : Bosonize.A01.canonicalRoot L ≠ 0 := Complex.exp_ne_zero _
+    rw [star_zpow₀, hroot, inv_zpow]
+    exact mul_inv_cancel₀ (zpow_ne_zero _ hn)
+  apply h_c_transport P N
+    (vertexWeyl (M := M) hh P x channel) (vertexWeyl (M := M) hh P y channel)
+    (vertexWeyl (M := M) hh (reflectHyperbolic P) x (!channel))
+    (vertexWeyl (M := M) hh (reflectHyperbolic P) y (!channel))
+  · exact h_c_phase_unit x
+  · exact h_c_phase_unit y
+  · cases channel
+    · exact duality_vertex_D_contract hh P x
+    · exact duality_vertex_S_contract hh P x
+  · cases channel
+    · exact duality_vertex_D_contract hh P y
+    · exact duality_vertex_S_contract hh P y
 
 theorem dressed_normal_vertex_adjoint_transport {M h : ℕ}
     (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (N : Charge)
@@ -1367,7 +1823,198 @@ theorem dressed_normal_vertex_adjoint_transport {M h : ℕ}
           (vertexSeriesMul
             (vertexSeriesAdjoint (vertexWeylDressedNormal (M := M) hh P x channel))
             (vertexWeylDressedNormal (M := M) hh P y channel))) := by
-  sorry
+  have h_c_adjscale (z : ℂ) (a : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffScale z a) =
+        vertexCoeffScale (star z) (vertexCoeffAdjoint a) := by
+    rcases a with ⟨w, x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffAdjoint, vertexCoeffScale, ChargeWord.adjoint,
+          ChargeWord.scale, star_mul, mul_comm]
+    · rfl
+  have h_c_adj_inv (a : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffAdjoint a) = a := by
+    rcases a with ⟨w, x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffAdjoint, ChargeWord.adjoint]
+    · exact oscSyntaxDagger_involutive_contract x
+  have h_c_series_adj_inv (V : VertexSeries M) :
+      vertexSeriesAdjoint (vertexSeriesAdjoint V) = V := by
+    funext n
+    simp [vertexSeriesAdjoint, Multiset.map_map, h_c_adj_inv]
+  have h_c_adj_scale (z : ℂ) (V : VertexSeries M) :
+      vertexSeriesAdjoint (fun n => (V n).map (vertexCoeffScale z)) =
+        fun n => (vertexSeriesAdjoint V n).map (vertexCoeffScale (star z)) := by
+    funext n
+    simp only [vertexSeriesAdjoint, Multiset.map_map]
+    apply Multiset.map_congr rfl
+    intro a ha
+    exact h_c_adjscale z a
+  have h_c_coeff_mul (z y : ℂ) (a b : vertexCoeff M) :
+      vertexCoeffMul (vertexCoeffScale z a) (vertexCoeffScale y b) =
+        vertexCoeffScale (z*y) (vertexCoeffMul a b) := by
+    rcases a with ⟨a, x⟩; rcases b with ⟨b,y'⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp only [vertexCoeffMul, vertexCoeffScale, ChargeWord.comp, ChargeWord.scale]
+        ring
+    · rfl
+  have h_c_scaled_mul (z y : ℂ) (V W : VertexSeries M) :
+      vertexSeriesMul (fun n => (V n).map (vertexCoeffScale z))
+        (fun n => (W n).map (vertexCoeffScale y)) =
+          fun n => (vertexSeriesMul V W n).map (vertexCoeffScale (z*y)) := by
+    let G := Multiset.mapAddMonoidHom (vertexCoeffScale (M := M) (z*y))
+    funext n
+    change (∑ k ∈ Finset.range (n+1),
+      ((V k).map (vertexCoeffScale z)).bind fun a =>
+        ((W (n-k)).map (vertexCoeffScale y)).map (vertexCoeffMul a)) =
+          G (∑ k ∈ Finset.range (n+1), (V k).bind fun a => (W (n-k)).map (vertexCoeffMul a))
+    rw [map_sum]
+    apply Finset.sum_congr rfl
+    intro k hk
+    simp only [G, Multiset.mapAddMonoidHom_apply, Multiset.bind_map,
+      Multiset.map_bind, Multiset.map_map]
+    apply Multiset.bind_congr
+    intro a ha
+    apply Multiset.map_congr rfl
+    intro b hb
+    exact h_c_coeff_mul z y a b
+  have h_c_functional_scale (Q : Bosonize.Ch18.HyperbolicPair) (N : Charge)
+      (z : ℂ) (a : vertexCoeff M) :
+      jointCoeffFunctional Q N (vertexCoeffScale z a) = z * jointCoeffFunctional Q N a := by
+    set_option backward.isDefEq.respectTransparency false in
+      rcases a with ⟨w, x⟩
+      rw [jointCoeffFunctional_product_contract, jointCoeffFunctional_product_contract]
+      simp only [vertexCoeffScale, chargeBasisExpectation, ChargeWord.scale]
+      split_ifs <;> ring
+  have h_c_series_functional_scale (Q : Bosonize.Ch18.HyperbolicPair)
+      (N : Charge) (z : ℂ) (V : VertexSeries M) :
+      jointSeriesFunctional Q N (fun n => (V n).map (vertexCoeffScale z)) =
+        fun n => z * jointSeriesFunctional Q N V n := by
+    funext n
+    have h (m : Multiset (vertexCoeff M)) :
+        ((m.map (vertexCoeffScale z)).map (jointCoeffFunctional Q N)).sum =
+          z * (m.map (jointCoeffFunctional Q N)).sum := by
+      induction m using Multiset.induction_on with
+      | empty => simp
+      | cons a m ih =>
+        simp only [Multiset.map_cons, Multiset.sum_cons]
+        rw [h_c_functional_scale, ih, mul_add]
+    exact h (V n)
+  have h_c_constant_mul (z : ℂ) (f : FormalSeries ℂ) (n : ℕ) :
+      scalarSeriesMul (fun k => if k=0 then z else 0) f n = z * f n := by
+    simp [scalarSeriesMul, ite_mul]
+  have h_c_transport (P : Bosonize.Ch18.HyperbolicPair) (N : Charge)
+      (Vx Vy Wx Wy : VertexSeries M) (zx zy : ℂ)
+      (hx : zx * star zx = 1) (hy : zy * star zy = 1)
+      (hvx : dualSeries Vx = fun n => (vertexSeriesAdjoint Wx n).map (vertexCoeffScale zx))
+      (hvy : dualSeries Vy = fun n => (vertexSeriesAdjoint Wy n).map (vertexCoeffScale zy)) :
+      jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+          (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) =
+        scalarSeriesMul (fun n => if n=0 then zx * star zy else 0)
+          (jointSeriesFunctional P N (vertexSeriesMul (vertexSeriesAdjoint Vx) Vy)) := by
+    have ht := duality_state_family_series_contract P N
+      (vertexSeriesMul (vertexSeriesAdjoint Vx) Vy)
+    rw [dualSeries_product_contract, dualSeries_adjoint_contract, hvx, hvy,
+      h_c_adj_scale, h_c_series_adj_inv, h_c_scaled_mul, h_c_series_functional_scale] at ht
+    have hu : (zx * star zy) * (star zx * zy) = 1 := by
+      calc
+        _ = (zx * star zx) * (zy * star zy) := by ring
+        _ = 1 := by rw [hx, hy]; simp
+    funext n
+    rw [h_c_constant_mul]
+    have hn := congrFun ht n
+    calc
+      _ = 1 * jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+        (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) n := by simp
+      _ = (zx * star zy) * ((star zx * zy) *
+        jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+          (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) n) := by rw [← mul_assoc, hu]
+      _ = _ := by rw [hn]
+  have h_c_phase_unit {L : ℕ} (x : Position L) :
+      (Bosonize.A01.canonicalRoot L) ^ (x.val : ℤ) *
+        star ((Bosonize.A01.canonicalRoot L) ^ (x.val : ℤ)) = 1 := by
+    have hroot : star (Bosonize.A01.canonicalRoot L) = (Bosonize.A01.canonicalRoot L)⁻¹ := by
+      unfold Bosonize.A01.canonicalRoot
+      change (starRingEnd ℂ) (Complex.exp (2 * ↑Real.pi * Complex.I / (L : ℂ))) = _
+      rw [← Complex.exp_neg, ← Complex.exp_conj]
+      congr 1
+      have htwo : (starRingEnd ℂ) (2 : ℂ) = 2 := Complex.conj_ofReal 2
+      simp [htwo]
+      ring
+    have hn : Bosonize.A01.canonicalRoot L ≠ 0 := Complex.exp_ne_zero _
+    rw [star_zpow₀, hroot, inv_zpow]
+    exact mul_inv_cancel₀ (zpow_ne_zero _ hn)
+  have h_n_scalecomm (z y : ℂ) (a : vertexCoeff M) :
+      vertexCoeffScale z (vertexCoeffScale y a) = vertexCoeffScale y (vertexCoeffScale z a) := by
+    rcases a with ⟨w,x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffScale, ChargeWord.scale, mul_left_comm]
+    · rfl
+  have h_n_transport (s t : FormalSeries ℂ) (V W : VertexSeries M) (z : ℂ)
+      (hs : ∀ k, s k = star (t k))
+      (hv : dualSeries V = fun n => (vertexSeriesAdjoint W n).map (vertexCoeffScale z)) :
+      dualSeries (vertexSeriesScalarMul s V) =
+        fun n => (vertexSeriesAdjoint (vertexSeriesScalarMul t W) n).map (vertexCoeffScale z) := by
+    classical
+    set_option backward.isDefEq.respectTransparency false in
+      let F : Multiset (vertexCoeff M) →+ Multiset (vertexCoeff M) :=
+        Multiset.mapAddMonoidHom dualCoeff
+      let G : Multiset (vertexCoeff M) →+ Multiset (vertexCoeff M) :=
+        Multiset.mapAddMonoidHom (fun a => vertexCoeffScale z (vertexCoeffAdjoint a))
+      have hb (n : ℕ) : F (V n) = G (W n) := by
+        simpa only [F, G, Multiset.mapAddMonoidHom_apply, dualSeries,
+          vertexSeriesAdjoint, Multiset.map_map, Function.comp_def] using congrFun hv n
+      funext n
+      simp only [dualSeries, vertexSeriesScalarMul, vertexSeriesAdjoint, Multiset.map_map]
+      change F (∑ k ∈ Finset.range (n+1), (V (n-k)).map (vertexCoeffScale (s k))) =
+        G (∑ k ∈ Finset.range (n+1), (W (n-k)).map (vertexCoeffScale (t k)))
+      rw [map_sum, map_sum]
+      apply Finset.sum_congr rfl
+      intro k hk
+      calc
+        _ = (F (V (n-k))).map (vertexCoeffScale (s k)) := by
+          simp only [F, Multiset.mapAddMonoidHom_apply, Multiset.map_map]
+          rfl
+        _ = (G (W (n-k))).map (vertexCoeffScale (s k)) := by rw [hb]
+        _ = _ := by
+          simp only [G, Multiset.mapAddMonoidHom_apply, Multiset.map_map]
+          apply Multiset.map_congr rfl
+          intro a ha
+          simp only [Function.comp_apply, h_c_adjscale, ← hs, h_n_scalecomm]
+  have hv (u : Position (2*h)) (b : Bool) :
+      dualSeries (vertexWeylDressedNormal (M := M) hh P u b) =
+        fun n => (vertexSeriesAdjoint (vertexWeylDressedNormal (M := M) hh
+          (reflectHyperbolic P) u (!b)) n).map
+            (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (u.val : ℤ))) := by
+    cases b
+    · exact dressed_normal_vertex_D_contract hh P u
+    · apply h_n_transport (dressedNormalMultiplier (M := M) P true)
+        (dressedNormalMultiplier (M := M) (reflectHyperbolic P) false)
+        (vertexWeyl hh P u true) (vertexWeyl hh (reflectHyperbolic P) u false)
+      · intro k
+        rw [(dressed_normal_multiplier_exchange P).1]
+        unfold dressedNormalMultiplier
+        split_ifs <;> simp [Complex.conj_ofReal]
+      · exact duality_vertex_S_contract hh P u
+  apply h_c_transport P N
+    (vertexWeylDressedNormal (M := M) hh P x channel) (vertexWeylDressedNormal (M := M) hh P y channel)
+    (vertexWeylDressedNormal (M := M) hh (reflectHyperbolic P) x (!channel))
+    (vertexWeylDressedNormal (M := M) hh (reflectHyperbolic P) y (!channel))
+  · exact h_c_phase_unit x
+  · exact h_c_phase_unit y
+  · exact hv x channel
+  · exact hv y channel
 
 theorem bare_normal_vertex_adjoint_transport {M h : ℕ}
     (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (N : Charge)
@@ -1385,6 +2032,194 @@ theorem bare_normal_vertex_adjoint_transport {M h : ℕ}
           (vertexSeriesMul
             (vertexSeriesAdjoint (vertexWeylBareNormal (M := M) hh P x channel))
             (vertexWeylBareNormal (M := M) hh P y channel))) := by
-  sorry
+  have h_c_adjscale (z : ℂ) (a : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffScale z a) =
+        vertexCoeffScale (star z) (vertexCoeffAdjoint a) := by
+    rcases a with ⟨w, x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffAdjoint, vertexCoeffScale, ChargeWord.adjoint,
+          ChargeWord.scale, star_mul, mul_comm]
+    · rfl
+  have h_c_adj_inv (a : vertexCoeff M) :
+      vertexCoeffAdjoint (vertexCoeffAdjoint a) = a := by
+    rcases a with ⟨w, x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffAdjoint, ChargeWord.adjoint]
+    · exact oscSyntaxDagger_involutive_contract x
+  have h_c_series_adj_inv (V : VertexSeries M) :
+      vertexSeriesAdjoint (vertexSeriesAdjoint V) = V := by
+    funext n
+    simp [vertexSeriesAdjoint, Multiset.map_map, h_c_adj_inv]
+  have h_c_adj_scale (z : ℂ) (V : VertexSeries M) :
+      vertexSeriesAdjoint (fun n => (V n).map (vertexCoeffScale z)) =
+        fun n => (vertexSeriesAdjoint V n).map (vertexCoeffScale (star z)) := by
+    funext n
+    simp only [vertexSeriesAdjoint, Multiset.map_map]
+    apply Multiset.map_congr rfl
+    intro a ha
+    exact h_c_adjscale z a
+  have h_c_coeff_mul (z y : ℂ) (a b : vertexCoeff M) :
+      vertexCoeffMul (vertexCoeffScale z a) (vertexCoeffScale y b) =
+        vertexCoeffScale (z*y) (vertexCoeffMul a b) := by
+    rcases a with ⟨a, x⟩; rcases b with ⟨b,y'⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp only [vertexCoeffMul, vertexCoeffScale, ChargeWord.comp, ChargeWord.scale]
+        ring
+    · rfl
+  have h_c_scaled_mul (z y : ℂ) (V W : VertexSeries M) :
+      vertexSeriesMul (fun n => (V n).map (vertexCoeffScale z))
+        (fun n => (W n).map (vertexCoeffScale y)) =
+          fun n => (vertexSeriesMul V W n).map (vertexCoeffScale (z*y)) := by
+    let G := Multiset.mapAddMonoidHom (vertexCoeffScale (M := M) (z*y))
+    funext n
+    change (∑ k ∈ Finset.range (n+1),
+      ((V k).map (vertexCoeffScale z)).bind fun a =>
+        ((W (n-k)).map (vertexCoeffScale y)).map (vertexCoeffMul a)) =
+          G (∑ k ∈ Finset.range (n+1), (V k).bind fun a => (W (n-k)).map (vertexCoeffMul a))
+    rw [map_sum]
+    apply Finset.sum_congr rfl
+    intro k hk
+    simp only [G, Multiset.mapAddMonoidHom_apply, Multiset.bind_map,
+      Multiset.map_bind, Multiset.map_map]
+    apply Multiset.bind_congr
+    intro a ha
+    apply Multiset.map_congr rfl
+    intro b hb
+    exact h_c_coeff_mul z y a b
+  have h_c_functional_scale (Q : Bosonize.Ch18.HyperbolicPair) (N : Charge)
+      (z : ℂ) (a : vertexCoeff M) :
+      jointCoeffFunctional Q N (vertexCoeffScale z a) = z * jointCoeffFunctional Q N a := by
+    set_option backward.isDefEq.respectTransparency false in
+      rcases a with ⟨w, x⟩
+      rw [jointCoeffFunctional_product_contract, jointCoeffFunctional_product_contract]
+      simp only [vertexCoeffScale, chargeBasisExpectation, ChargeWord.scale]
+      split_ifs <;> ring
+  have h_c_series_functional_scale (Q : Bosonize.Ch18.HyperbolicPair)
+      (N : Charge) (z : ℂ) (V : VertexSeries M) :
+      jointSeriesFunctional Q N (fun n => (V n).map (vertexCoeffScale z)) =
+        fun n => z * jointSeriesFunctional Q N V n := by
+    funext n
+    have h (m : Multiset (vertexCoeff M)) :
+        ((m.map (vertexCoeffScale z)).map (jointCoeffFunctional Q N)).sum =
+          z * (m.map (jointCoeffFunctional Q N)).sum := by
+      induction m using Multiset.induction_on with
+      | empty => simp
+      | cons a m ih =>
+        simp only [Multiset.map_cons, Multiset.sum_cons]
+        rw [h_c_functional_scale, ih, mul_add]
+    exact h (V n)
+  have h_c_constant_mul (z : ℂ) (f : FormalSeries ℂ) (n : ℕ) :
+      scalarSeriesMul (fun k => if k=0 then z else 0) f n = z * f n := by
+    simp [scalarSeriesMul, ite_mul]
+  have h_c_transport (P : Bosonize.Ch18.HyperbolicPair) (N : Charge)
+      (Vx Vy Wx Wy : VertexSeries M) (zx zy : ℂ)
+      (hx : zx * star zx = 1) (hy : zy * star zy = 1)
+      (hvx : dualSeries Vx = fun n => (vertexSeriesAdjoint Wx n).map (vertexCoeffScale zx))
+      (hvy : dualSeries Vy = fun n => (vertexSeriesAdjoint Wy n).map (vertexCoeffScale zy)) :
+      jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+          (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) =
+        scalarSeriesMul (fun n => if n=0 then zx * star zy else 0)
+          (jointSeriesFunctional P N (vertexSeriesMul (vertexSeriesAdjoint Vx) Vy)) := by
+    have ht := duality_state_family_series_contract P N
+      (vertexSeriesMul (vertexSeriesAdjoint Vx) Vy)
+    rw [dualSeries_product_contract, dualSeries_adjoint_contract, hvx, hvy,
+      h_c_adj_scale, h_c_series_adj_inv, h_c_scaled_mul, h_c_series_functional_scale] at ht
+    have hu : (zx * star zy) * (star zx * zy) = 1 := by
+      calc
+        _ = (zx * star zx) * (zy * star zy) := by ring
+        _ = 1 := by rw [hx, hy]; simp
+    funext n
+    rw [h_c_constant_mul]
+    have hn := congrFun ht n
+    calc
+      _ = 1 * jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+        (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) n := by simp
+      _ = (zx * star zy) * ((star zx * zy) *
+        jointSeriesFunctional (reflectHyperbolic P) (reflectCharge N)
+          (vertexSeriesMul Wx (vertexSeriesAdjoint Wy)) n) := by rw [← mul_assoc, hu]
+      _ = _ := by rw [hn]
+  have h_c_phase_unit {L : ℕ} (x : Position L) :
+      (Bosonize.A01.canonicalRoot L) ^ (x.val : ℤ) *
+        star ((Bosonize.A01.canonicalRoot L) ^ (x.val : ℤ)) = 1 := by
+    have hroot : star (Bosonize.A01.canonicalRoot L) = (Bosonize.A01.canonicalRoot L)⁻¹ := by
+      unfold Bosonize.A01.canonicalRoot
+      change (starRingEnd ℂ) (Complex.exp (2 * ↑Real.pi * Complex.I / (L : ℂ))) = _
+      rw [← Complex.exp_neg, ← Complex.exp_conj]
+      congr 1
+      have htwo : (starRingEnd ℂ) (2 : ℂ) = 2 := Complex.conj_ofReal 2
+      simp [htwo]
+      ring
+    have hn : Bosonize.A01.canonicalRoot L ≠ 0 := Complex.exp_ne_zero _
+    rw [star_zpow₀, hroot, inv_zpow]
+    exact mul_inv_cancel₀ (zpow_ne_zero _ hn)
+  have h_n_scalecomm (z y : ℂ) (a : vertexCoeff M) :
+      vertexCoeffScale z (vertexCoeffScale y a) = vertexCoeffScale y (vertexCoeffScale z a) := by
+    rcases a with ⟨w,x⟩
+    apply Prod.ext
+    · apply congrArg₂ (fun t f => ({target := t, amplitude := f} : ChargeWord))
+      · rfl
+      · funext N
+        simp [vertexCoeffScale, ChargeWord.scale, mul_left_comm]
+    · rfl
+  have h_n_transport (s t : FormalSeries ℂ) (V W : VertexSeries M) (z : ℂ)
+      (hs : ∀ k, s k = star (t k))
+      (hv : dualSeries V = fun n => (vertexSeriesAdjoint W n).map (vertexCoeffScale z)) :
+      dualSeries (vertexSeriesScalarMul s V) =
+        fun n => (vertexSeriesAdjoint (vertexSeriesScalarMul t W) n).map (vertexCoeffScale z) := by
+    classical
+    set_option backward.isDefEq.respectTransparency false in
+      let F : Multiset (vertexCoeff M) →+ Multiset (vertexCoeff M) :=
+        Multiset.mapAddMonoidHom dualCoeff
+      let G : Multiset (vertexCoeff M) →+ Multiset (vertexCoeff M) :=
+        Multiset.mapAddMonoidHom (fun a => vertexCoeffScale z (vertexCoeffAdjoint a))
+      have hb (n : ℕ) : F (V n) = G (W n) := by
+        simpa only [F, G, Multiset.mapAddMonoidHom_apply, dualSeries,
+          vertexSeriesAdjoint, Multiset.map_map, Function.comp_def] using congrFun hv n
+      funext n
+      simp only [dualSeries, vertexSeriesScalarMul, vertexSeriesAdjoint, Multiset.map_map]
+      change F (∑ k ∈ Finset.range (n+1), (V (n-k)).map (vertexCoeffScale (s k))) =
+        G (∑ k ∈ Finset.range (n+1), (W (n-k)).map (vertexCoeffScale (t k)))
+      rw [map_sum, map_sum]
+      apply Finset.sum_congr rfl
+      intro k hk
+      calc
+        _ = (F (V (n-k))).map (vertexCoeffScale (s k)) := by
+          simp only [F, Multiset.mapAddMonoidHom_apply, Multiset.map_map]
+          rfl
+        _ = (G (W (n-k))).map (vertexCoeffScale (s k)) := by rw [hb]
+        _ = _ := by
+          simp only [G, Multiset.mapAddMonoidHom_apply, Multiset.map_map]
+          apply Multiset.map_congr rfl
+          intro a ha
+          simp only [Function.comp_apply, h_c_adjscale, ← hs, h_n_scalecomm]
+  have hv (u : Position (2*h)) (b : Bool) :
+      dualSeries (vertexWeylBareNormal (M := M) hh P u b) =
+        fun n => (vertexSeriesAdjoint (vertexWeylBareNormal (M := M) hh
+          (reflectHyperbolic P) u (!b)) n).map
+            (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (u.val : ℤ))) := by
+    cases b
+    · exact bare_normal_vertex_D_contract hh P u
+    · apply h_n_transport (bareNormalMultiplier M) (bareNormalMultiplier M)
+        (vertexWeyl hh P u true) (vertexWeyl hh (reflectHyperbolic P) u false)
+      · intro k
+        exact (bare_normal_multiplier_self_adjoint k).symm
+      · exact duality_vertex_S_contract hh P u
+  apply h_c_transport P N
+    (vertexWeylBareNormal (M := M) hh P x channel) (vertexWeylBareNormal (M := M) hh P y channel)
+    (vertexWeylBareNormal (M := M) hh (reflectHyperbolic P) x (!channel))
+    (vertexWeylBareNormal (M := M) hh (reflectHyperbolic P) y (!channel))
+  · exact h_c_phase_unit x
+  · exact h_c_phase_unit y
+  · exact hv x channel
+  · exact hv y channel
 
 end Bosonize.V1S3
