@@ -275,13 +275,14 @@ independent mathematical/interface review passed for the exact source and
 document hashes recorded above; the scoped lock was committed in
 `0610d1495ebc4e95dec323c27faf22966e55e9d2`. Phase B's current inventory is in
 [`phase-b-checkpoint.md`](phase-b-checkpoint.md). The scheduled resumption
-proved 23 further contracts, leaving the Weyl correlator and two normal-ordering
-contracts as three unchanged placeholders; 36 S2 theorem declarations are
-proved in total. Independent review covers all 23 changed proofs in two
-partial packages; the current source SHA-256 is
-`37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9`. The five-proof receipt records the independently reviewed hash and the
-subsequent four-blank-line whitespace cleanup. Strict/Core guards
-pass; the staging build has exactly three placeholder warnings; all 36
-completed theorem closures use only the permitted standard axioms. The
-reviewed mathematical interface and Phase A provenance above remain intact.
-This is not full Phase B or Phase C acceptance and does not start S3.
+proved 24 further contracts, including the main coefficientwise Weyl
+correlator, with 37 completed S2 theorem declarations and two unchanged
+normal-prefactor placeholders. Independent review covers every proof batch;
+the exact Weyl proof receipt is
+[`phase-b-weyl-review-2026-10-18.json`](phase-b-weyl-review-2026-10-18.json).
+Current source SHA-256: `3e0b72ac30fb213d36ac91e54ffee297dee39910dfe5734f54aa52bd2d472a02`.
+The strict/Core guards pass, the staging build has exactly two placeholder
+warnings, and all 37 completed theorem closures use only standard axioms.
+The reviewed mathematical interface and Phase A provenance above remain
+intact. Both normal-ordering contracts and the final Phase B/C gates are
+open. This packet does not start S3.

@@ -1,6 +1,6 @@
 # V1-S2 charge words and formal vertices — Phase A companion
 
-Status: **S1 accepted; S2 Phase A interface reviewed and locked; Phase B in progress.** The interface baseline is `0610d1495ebc4e95dec323c27faf22966e55e9d2`. This resumption proved 23 additional contracts: 36 S2 theorem declarations are now complete, with three placeholders remaining (the Weyl correlator and two normal-ordering results). Current source SHA-256: `37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9`. Independent review covers all 23 changed proofs through the two exact partial-package receipts linked in the current checkpoint. S2 is not proof-complete; no Phase C or S3 work has started.
+Status: **S1 accepted; S2 reviewed/locked Phase A; Phase B in progress.** The resumption proved 24 additional contracts, including the coefficientwise Weyl correlator: 37 S2 theorem declarations are complete and only the two dressed/bare normal-prefactor contracts remain placeholders. Current source SHA-256: `3e0b72ac30fb213d36ac91e54ffee297dee39910dfe5734f54aa52bd2d472a02`. Every integrated proof batch has independent PASS review; exact receipts and full live inventory are in the checkpoint. No Phase C or S3 work has started.
 
 The detailed candidate mathematical interface, source hashes, convention
 derivations, conditional correlator proof, normal-ordering audit, and checks
@@ -139,3 +139,17 @@ A fresh staging build has three placeholder warnings; all 36 completed theorem
 closures have standard axioms only. The main correlator and both prefactor
 contracts remain open. Historical partial-package counts above describe their
 recorded snapshots; the current checkpoint contains the complete live inventory.
+
+
+## Weyl-correlator proof — October 18, 2026
+
+The exact coefficientwise formal Weyl correlator now has a complete proof,
+including canonical source-charge selection, represented coefficient adjoints,
+contextual finite Cauchy/binomial algebra, the S1 even/odd moment calculation,
+variance `4*g_J*D1`, and both `L^-1` factors. Its current source passed the
+sandboxed statement/compiler/target-warning/axiom gate and independent review.
+Receipt: [`phase-b-weyl-review-2026-10-18.json`](../plans/v1-s2/phase-b-weyl-review-2026-10-18.json).
+All 37 completed theorem closures use only standard axioms. The staging build
+still has two normal-prefactor placeholder warnings; neither Phase B nor
+Phase C is complete. The theorem remains a formal coefficient identity, with
+no finite-CAR, analytic or continuum identification.

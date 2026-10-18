@@ -53,5 +53,13 @@
     "phase_b_complete": false,
     "phase_c_started": false,
     "s3_started": false
+  },
+  "proof_commit": "3a1448d1f2695f078b88ee758b3ac3de2f8f3090",
+  "allowance_checkpoint": {
+    "five_hour_remaining_percent": 8,
+    "weekly_remaining_percent": 70,
+    "limiting_reset_local": "2026-10-18T04:18:13-03:00",
+    "new_proof_work_stopped": true,
+    "reset_credit_spent": false
   }
 }

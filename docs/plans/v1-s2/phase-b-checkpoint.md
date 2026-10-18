@@ -1,23 +1,25 @@
-# V1-S2 Phase B checkpoint — scheduled resumption of 2026-10-17
+# V1-S2 Phase B checkpoint — scheduled resumption, October 17–18, 2026
 
-## Current status
+## Current status and source identity
 
-S1 is accepted and promoted. S2 remains **Phase B in progress** under the
-unchanged reviewed interface lock from
-`0610d1495ebc4e95dec323c27faf22966e55e9d2`. No Phase C promotion or S3 work
-has started. This resumption began at `083df9dbd7148a5c71ef09cce5a46558825a3907`.
+**Phase B remains in progress.** This resumption proved **24 additional
+contracts**, including the coefficientwise Weyl correlator. S2 now has
+**37 completed theorem declarations and two unchanged placeholder contracts**.
+S1 remains promoted; no Phase C promotion or S3 work has started.
 
-- Source: `BosonizeStubs/V1S2FormalVertices.lean`
-- SHA-256: `37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9`
-- Previous checkpoint source: `f3056b313db9d90f10d238be1a0555460026173e979ae82a195fdc81ec8a6a07`
-- **23 newly proved contracts, 36 completed S2 theorem declarations total,
-  and three unchanged placeholder contracts remain.**
-- First 18-proof checkpoint commit: `c2da192b29e068f9ac40e0958c77d2d81e604adb`.
-- Exact independent review receipts:
-  [`phase-b-proof-review-2026-10-17.json`](phase-b-proof-review-2026-10-17.json)
-  and [`phase-b-field-review-2026-10-17.json`](phase-b-field-review-2026-10-17.json).
+- Current source: `BosonizeStubs/V1S2FormalVertices.lean`
+- Current SHA-256: `3e0b72ac30fb213d36ac91e54ffee297dee39910dfe5734f54aa52bd2d472a02`
+- Starting HEAD: `083df9dbd7148a5c71ef09cce5a46558825a3907`
+- Starting source SHA-256: `f3056b313db9d90f10d238be1a0555460026173e979ae82a195fdc81ec8a6a07`
+- Reviewed interface-lock baseline: `0610d1495ebc4e95dec323c27faf22966e55e9d2`
+- Recorded commits before the final Weyl checkpoint:
+  `c2da192b29e068f9ac40e0958c77d2d81e604adb` (18 proofs),
+  `65f6b989f69e5bddaf40f583fb2ee6fe602ca06a` (five field/variance proofs),
+  `80393ee` (reviewed theorem-order repair), and
+  `3a1448d1f2695f078b88ee758b3ac3de2f8f3090` (Weyl proof and exact independent review).
+  A following documentation-only commit records this final checkpoint.
 
-## Proofs completed during this resumption
+## Completed during this resumption
 
 - `jointPairing_tmul_factor_contract`
 - `chargeWord_adjoint_pairing_contract`
@@ -42,136 +44,154 @@ has started. This resumption began at `083df9dbd7148a5c71ef09cce5a46558825a3907`
 - `oscillator_syntax_dagger_inverse_pullback_represents_adjoint_contract`
 - `vertexSeriesAdjoint_reverses_product_contract`
 - `difference_variance_contract`
+- `coefficientwise_weyl_correlator_contract`
 
-Each proof passed the sandboxed `agentctl.theorem.submit_proof` gate,
-statement/context and forbidden-token scans, target warning checks and
-transitive axiom inspection. Independent review passed the first 18 proofs
-at source `a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03`
-and the following five-proof delta at source
-`b54f7fdbe407d44455cf22eed03b9a85f6cc02d1bdd3ccacd85a67a15fcd2ce9`.
-The current hash differs only by removal of spaces from four blank lines;
-all nonblank source lines remain byte-identical. The exact cleanup hash chain
-is recorded in the five-proof receipt. Review coverage
-includes every changed body. These are partial-package verdicts; they do not
-accept the remaining three stubs.
+The six principal contracts and seven auxiliary declarations from the earlier
+checkpoint remain proved, accounting for the total of 37. Each new proof
+passed `agentctl.theorem.submit_proof`: statement/context preservation,
+forbidden-token scanning, sandboxed compilation, target warning checks and
+transitive standard-axiom inspection. Accepted S1 declarations are reused
+through the existing Core import, without edits to S1/Core.
 
-The six principal contracts from the earlier checkpoint and its seven proved
-auxiliary declarations are retained, accounting for 36 completed declarations.
-Accepted S1 declarations are imported and reused; no S1/Core source was edited.
+## Exact independent review chain
+
+- First 18-proof partial package: **PASS**, source
+  `a639ded883ef762f34063a0a1425dc2cbdab4059d7be4026ce4d6e2c83e5dc03`.
+  Receipt: [`phase-b-proof-review-2026-10-17.json`](phase-b-proof-review-2026-10-17.json).
+- Next five field/variance proofs: **PASS**, reviewed source
+  `b54f7fdbe407d44455cf22eed03b9a85f6cc02d1bdd3ccacd85a67a15fcd2ce9`.
+  Four otherwise blank lines were then trimmed, producing source
+  `0d684a41e006bec922df38e0245a998d2d206ddfcdeacc44eb1f759e9fe0c233`;
+  all nonblank lines stayed byte-identical. Receipt and cleanup chain:
+  [`phase-b-field-review-2026-10-17.json`](phase-b-field-review-2026-10-17.json).
+- Dependency-order repair: **PASS**, exact source
+  `37e52dd7486b0cb0d6a74e53f386f7d03941f1b7043cd24b9af63f45c109afc9`.
+  The three correlator/prefactor declarations originally preceded their
+  required charge/field/variance theorems; Lean cannot use forward references.
+  Only these three unchanged open declarations moved after their prerequisites,
+  within the same namespace and across no non-theorem command. The existing
+  strict lock passed unchanged: no manifest regeneration/amendment occurred.
+  Receipt: [`phase-b-dependency-order-review-2026-10-18.json`](phase-b-dependency-order-review-2026-10-18.json).
+- Weyl-correlator proof: **PASS** on the current exact source hash above.
+  Receipt: [`phase-b-weyl-review-2026-10-18.json`](phase-b-weyl-review-2026-10-18.json).
+  This covers its local contextual-CCR, quotient-binomial, exponential-adjoint,
+  Gaussian-moment, charge and multiset Cauchy helpers. It is not a verdict on
+  the two remaining normal-ordering stubs or whole Phase B/C completion.
 
 ## Remaining contracts
 
-- `coefficientwise_weyl_correlator_contract`
 - `dressed_normal_prefactor_contract`
 - `bare_normal_prefactor_contract`
 
-The main Weyl correlator and both normal-ordering results remain unproved.
-Formal vertices have not been identified with finite CAR fields.
+The Weyl formal-series theorem is now proved. Both dressed/bare prefactor
+contracts remain unproved. No formal vertex is identified with a finite CAR
+field; no analytic convergence, `t = 1` substitution or continuum claim is made.
 
-## Proof routes and dead ends
+## Proof design, failures and resolutions
 
-1. **Charge adjoint — resolved:** reduce the union-support pairing to a sum
-   over either operand, prove singleton pairing, induct linearly and use the
-   explicit source coefficient at `w.target.symm N`. This replaces the failed
-   direct union-support reindexing attempt.
-2. **Dagger and evaluator — resolved:** explicit word-dagger involution,
-   `Finsupp.sum_sum_index`, `MonoidAlgebra.induction_linear`, and the universal
-   evaluator homomorphism. Wrong induction alternatives and blind `ext`/`simp`
-   attempts were discarded.
-3. **Gauge and charge selection — resolved:** normalize quadratic integer
-   finite differences before `omega`. Use complex group-with-zero zpower laws.
-   Inverse shifts restore the source before the adjoint phase is evaluated;
-   canonical gauge factors cancel by unit modulus.
-4. **Tensor pairing and adjoint — resolved:** enlarge only to the product
-   of the charge/monomial supports, factor the resulting finite sum and use
-   the current `TensorProduct.inductionOn`. The later syntax-adjoint contract
-   is derived locally where a forward reference would otherwise be required.
-5. **Series adjoint — resolved:** `Multiset.bind_map_comm` and reflection of
-   the finite Cauchy index preserve multiplicities while reversing products.
-6. **Fields and commutators — resolved:** supply a local finite instance for
-   the two orientations, prove explicit `qForm` and bare field coefficients,
-   extend coefficient sums to the finite generator universe, and evaluate
-   the existing S1 contraction kernel. Three external commutator attempts
-   failed (output exhaustion or nonexistent helper names); an independent
-   diagnosis led to this explicit route. Receipts `55929dc16b`, `a3eb3c8b99`.
-   For represented commutation, reduce each generator commutator to the
-   antisymmetric contraction scalar using A08 CCR, then collect scalar
-   multiples with `congrArg` and finite sums. Rewriting `smul_sub` directly
-   at the final goal failed; the diagnosed congruence route compiled.
-7. **Field/exponential adjoints — resolved:** conjugate field coefficients,
-   reindex the creator/annihilator swap and use A08's accepted word-adjoint
-   theorem. Root conjugation is proved for every `L`, including `L = 0`,
-   as required by the field contract. Preserve the inverse Bogoliubov
-   pullback. Extend Hermiticity through powers and the real factorial scalar;
-   do not apply the forward substitution twice. Remove actual linter causes
-   instead of suppressing warnings.
-8. **Variance — resolved:** compute the finite symbolic variance, establish
-   the exact exponential/root cosine identity, and reindex `Fin M` to
-   `Finset.Icc 1 M`. The resulting coefficient is exactly `4*g_J*D1`.
-   Explicitly reduce the constructed `Fin.val` before `omega` in the
-   surjectivity proof and push the real-sum cast before distributing scalars.
-   This proof includes the `M = 0` case through empty sums.
-9. **Weyl correlator — open:** external attempt `69d4c6ba99` failed at the
-   expanded coefficientwise Cauchy sum. Blind unfolding of the vertices
-   does not supply the binomial/moment argument and is not proof evidence.
-   An auxiliary Gaussian-coefficient lemma has compiled in scratch with
-   standard axioms only, using accepted S1 even/odd moments and the proved
-   variance. It is not an imported staging declaration; reuse its body as
-   a local helper, not as a nonexistent library name. The main missing bridge must respect
-   represented/contextual same-channel commutation and operator order.
+1. **Charge adjoint:** the direct union-support/reindexing route failed.
+   Restrict the pairing sum to either support, prove singleton evaluation,
+   induct linearly and use the coefficient at the inverse target.
+2. **Syntax/evaluator:** replace blind `ext`/`simp` and the wrong induction
+   alternatives with explicit word-dagger involution, nested `Finsupp.sum`
+   flattening, `MonoidAlgebra.induction_linear` and the evaluator homomorphism.
+3. **Gauge/charge phases:** normalize integer quadratic finite differences
+   before `omega`; use complex group-with-zero zpower laws. Inverse shifts
+   restore the source before the adjoint phase. Canonical gauges cancel by
+   unit modulus, without multiplicativity of the oscillator functional.
+4. **Tensor bridge:** enlarge only to the charge/monomial support product,
+   factor the finite sum, and extend adjoints using the current
+   `TensorProduct.inductionOn`. Forward-reference problems in an earlier
+   joint-adjoint body were handled by a local A08 derivation.
+5. **Field algebra:** three external commutator attempts failed (output
+   exhaustion or nonexistent helper names); independent diagnosis led to
+   an explicit local finite orientation instance, `qForm`/bare field
+   coefficients, finite-generator kernel sums and A08 CCR. Represented
+   commutators collect antisymmetric contraction scalars through `congrArg`;
+   direct `smul_sub` matching failed at the final collection step.
+6. **Adjoints/variance:** root conjugation also covers `L = 0`, as required
+   by the field contract. Preserve the inverse Bogoliubov pullback.
+   Extend Hermiticity through powers and real factorial scalars. The variance
+   uses the exact root/exponential cosine identity and a `Fin M` to `Icc 1 M`
+   bijection, including empty sums at `M = 0`, and yields exactly `4*g_J*D1`.
+7. **Weyl proof:** three external attempts at whole-expression unfolding
+   failed; a targeted independent diagnosis identified the missing actual
+   Cauchy/binomial bridge. The successful local proof uses contextual CCR
+   inside arbitrary left/right contexts, a local `RingCon` quotient and an
+   **additive** descended functional to justify a binomial identity, without
+   asserting literal free-algebra CCR or multiplicativity of `omegaP`.
+   Represented adjoint contracts evaluate dagger-exponential coefficients;
+   S1 even/odd moments plus variance give the Gaussian coefficient; canonical
+   charge restoration and finite multiset Cauchy evaluation supply the phase
+   and both normalization factors. Local generic quotient helpers must use
+   `A : Type`, not an unbound `Type*` universe in this non-polymorphic theorem.
+8. **Lean transparency:** aggressive unfolding of `vertexCoeff` and
+   `FormalSeries` inside rewriting produced cached-instance/type mismatches.
+   Typed singleton facts, `congrArg`/`calc` equalities and local explicit
+   carriers resolved these without changing data, imports or global options.
+9. **Normal prefactors:** the pure scalar finite Cauchy-shuffle identity
+   has now compiled in scratch with standard axioms only. The remaining
+   bridge is the joint functional's scalar bilinearity and multiset expansion,
+   then instantiation with the two multiplier series. No partial normal proof
+   was integrated into the staging stubs.
 
-## Fresh validation and remaining gates
+## Fresh validation
 
-- Strict statement/context lock: **PASS**, 1,153 statements and 1,211 frozen
-  commands. No lock baseline was regenerated.
-- Complete-source Core guard: **PASS**, all 36 existing Core files.
-- `lake build BosonizeStubs`: **PASS**, exactly three S2 placeholder warnings
-  and no other warnings. Existing Core tactic suggestions are informational.
-- Fresh `#print axioms` for **all 36 completed S2 theorem declarations**:
-  only `propext`, `Classical.choice`, and `Quot.sound`; no `sorryAx` in their
-  transitive closures. The three remaining stubs are not included as proofs.
+- `python3 scripts/guards/stub_lock.py --check --strict`: **PASS**, 1,153
+  theorem statements and 1,211 frozen non-theorem commands.
+- `python3 scripts/guards/core_lock.py`: **PASS**, all 36 frozen Core sources.
+- `lake build BosonizeStubs`: **PASS**, exactly two placeholder warnings
+  (the normal prefactors), no other warnings. Existing tactic suggestions
+  in Core/staging are informational and are not linter suppression.
+- Fresh `#print axioms` for **all 37 completed S2 theorem declarations**:
+  only `propext`, `Classical.choice`, `Quot.sound`; no `sorryAx` in these closures.
 - Strict/Core manifest SHA-256 respectively:
   `7ab7800ef7fa313ed34b7aac48a08c3c5a7a1e2bda29783edeaf3a85a9539cd1`,
   `cbe522f531b1bb0b0ac6950527b01ca2bfff32976a833c4898b68584f7c280af`.
-- S1 ordered-Wick and pairing-combinatorics source SHA-256 respectively:
+- S1 ordered-Wick/pairing-combinatorics source SHA-256 respectively:
   `f26d52cb29008f7d39030157368b7b9131bf14a4db173e97ef404062220852a9`,
   `33fefe1fafbdde6c544925a641ac8cdec496ce571f3036558500a53ddb0ddeff`.
-- Full Phase B acceptance (zero placeholders/warnings, full closure and
-  nonvacuity audits, final review), CI/integration, Phase C promotion and
-  pedagogical review remain open. No push/publication has occurred.
-- Pre-existing unrelated tracked/untracked changes were not edited or staged.
+- Independent review covers every integrated proof change. Full Phase B still
+  requires both prefactors, zero placeholders/warnings, final theorem/closure
+  and nonvacuity audits, and final package review. CI/integration, Phase C
+  promotion and pedagogical review remain open. No push/publication occurred.
+- Unrelated pre-existing tracked/untracked changes were not edited or staged.
 
-## Exact next action
+## Evidence archive and exact next action
 
-Prove the formal Cauchy/binomial reduction of the ordered exponential product
-using the accepted adjoint, commutator, charge-selection and variance results.
-Apply accepted S1 single-form moments coefficientwise, including odd vanishing,
-even factorial cancellation and the two normalization factors. Then prove
-both scalar-convolution normal-ordering prefactors. Preserve the locked
-interface, S1/Core sources and finite/formal boundaries. Obtain independent
-review of actual new proofs and fresh strict lock/build/axiom/warning/placeholder
-and nonvacuity evidence before entering the authorized Phase C gates. No S3.
+The private, resumable evidence directory is:
+`/home/lucas/Projects/.agentctl/sprints/v1-s2-resume-20261017-2318/`.
+Its `INDEX.md` distinguishes proved scratch helpers from failed drafts, and
+preserves exact API receipts, prompts/replies, compiler diagnostics, complete
+source candidates, independent reviews and validation logs. Useful standalone
+checked helpers include `Gaussian.lean`, `ContextualBinomial.lean`,
+`ContextualCCR.lean`, `OscillatorCoefficient.lean`, `OscillatorCauchy.lean`,
+`ChargeCoefficient.lean`, `SeriesCoefficient.lean` and **`ScalarShuffle.lean`**.
+These are not additional imported staging declarations.
 
-Scratch Gaussian-coefficient source SHA-256: `56c535cdac18e7a94527c8a827c658044b33e3e1b562f1acbb0ad18d8936f9d6`.
+Before new proof work, verify checkout/HEAD/hash, strict/Core locks, unrelated
+changes and live allowance. For the two normal prefactors:
 
-## Independently reviewed dependency-order repair — 2026-10-18
+1. Let `S z a = (ChargeWord.scale z a.1, a.2)` and prove locally that
+   `jointCoeffFunctional hp N (vertexCoeffMul (S z a) (S w b))`
+   equals `z*w` times the unscaled product functional. Use its existing
+   charge-expectation/oscillator-product law; do not assume multiplicativity.
+2. Extend to multiset coefficients by additivity and finite bind/map sums.
+3. Expand the two scalar-scaled series into a triple finite sum. Apply the
+   checked `scalar_cauchy_shuffle` to reindex it into the scalar convolution
+   of the original correlator with the product of the two multiplier series.
+4. Instantiate with `dressedNormalMultiplier`, then `bareNormalMultiplier`,
+   and substitute the now-proved `coefficientwise_weyl_correlator_contract`.
+   Keep statements/data/imports/headers and all S1/Core sources frozen.
+5. Independently review actual new bodies; run the complete Phase B audits.
+   Only then enter authorized Phase C promotion and pedagogical review. No S3.
 
-The three remaining correlator/prefactor contracts originally preceded the
-charge, field, commutator and variance results needed in their proofs. Lean
-cannot use forward references. The three unchanged open declarations were
-moved after those prerequisites, inside the same namespace and without
-crossing a non-theorem command. The existing authoritative guard verified
-identical statements and non-theorem context hashes; no lock amendment or
-regeneration was needed. An independent PASS covers the exact reordered
-source. The receipt is
-[`phase-b-dependency-order-review-2026-10-18.json`](phase-b-dependency-order-review-2026-10-18.json).
-The source chain is: proof-reviewed `b54f7fd...5fcd2ce9`, blank-line cleanup
-`0d684a41...fe0c233`, and reviewed declaration reorder
-`37e52dd7...109afc9`. Recompute the full hashes from the receipts.
+## Allowance checkpoint
 
-The separate scratch `ContextualBinomial.lean` now compiles a generic additive
-functional binomial theorem under explicit two-sided contextual commutation,
-using a local `RingCon` quotient and `Commute.add_pow`. Its axiom closure is
-standard only. It is not imported into staging; inline the checked proof as a
-local helper if using that route. This does not yet supply the actual field
-contextual-CCR or coefficientwise syntax/charge/Cauchy bridges.
+At the final reading, the shared five-hour allowance had **8%** remaining
+and weekly allowance **70%** remaining. New proof work stopped below the
+formalizer guard of 10%/5%, respectively. Recheck live before resuming.
+The limiting reset is **2026-10-18 04:18:13 America/Fortaleza**. No reset credit
+was spent and no new automatic quota-resumption schedule was created.
+
+Checked scratch scalar-shuffle source SHA-256: `3ce69cd99bfc33cff9d613443f6d133a96b0a194b116377dda3c179e0a01fa16`.
