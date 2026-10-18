@@ -1,6 +1,41 @@
-# V1-S3 formal duality and state transport — Phase A candidate
+# V1-S3 formal duality and state transport — Phase B checkpoint
 
-**Status: independently reviewed PASS; not yet locked or proved.** This is
+## Current Phase B checkpoint — 2026-10-18
+
+**Subsequent authorization:** the user approved the reviewed four-header
+coefficientwise-phase correction and continued development. The exact amended
+source has SHA-256 `1574eb8b3e555cbbde324d0f68ac5f04b30cff363859bb2dfa514a3bda85e200`;
+only the four reviewed statement records were amended in the scoped lock.
+See [the amendment receipt](../../plans/v1-s3/interface-amendment-2026-10-18.md).
+The earlier obstruction and pending-decision checkpoint below is historical;
+the remaining seven proofs now proceed against the corrected interface.
+
+**Phase B remains incomplete: 7 placeholders, with a confirmed false vertex
+contract blocking acceptance.** The resumed batch completed 16 contracts:
+representation/kernel/series transport, joint functionals and state-family
+corollaries, Klein reflections, both field transformations and degree-zero
+vertex transport. The canonical module compiles, and strict locks against
+HEAD preserve 1215 statements, 1240 frozen commands and 37 Core sources.
+All 87 declarations received a fresh axiom/dependency closure audit: 80 have
+only standard axioms or none; seven contain `sorryAx`, matching the remaining
+placeholders. Independent native proof review passed the new proof batches.
+Existing lint/deprecation warnings remain; no Phase B/C acceptance is claimed.
+
+At coefficient 1, the accepted Weyl D equality compares multiset cardinalities
+1 and 2 because scalar Cauchy convolution retains zero-scaled entries.
+An independent compiler-checked negation has only standard axioms. A concrete,
+independently reviewed four-header correction uses coefficientwise phase
+mapping; it has not changed the canonical statements or locks. A specific user
+decision is pending under the sprint's interface/lock preservation instruction.
+
+Exact source hashes, evidence, remaining contracts and the next decomposition
+are in [the Phase B checkpoint](../../plans/v1-s3/phase-b-checkpoint-2026-10-18.md).
+The earlier quota pause ended after recovery; the consumed wakeup is paused.
+The Hamiltonian limitation below remains in force. S4 has not been started.
+
+## Historical Phase A record
+
+**Status at the historical Phase A snapshot: independently reviewed PASS; not yet locked or proved.** This is
 the actual additive Lean interface drafted against promoted S2. It is not a
 finite-CAR construction and does not establish physical interacting-state
 duality. Do not promote or describe this sprint as complete from this file.

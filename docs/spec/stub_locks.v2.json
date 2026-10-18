@@ -204,9 +204,9 @@
         },
         "Bosonize.V1S3.bare_normal_vertex_D_contract": {
           "ctx": "b5c5129fea4255c7b0b661acae33bfb12820e45146197df63bf12e2fa4b7a35b",
-          "hash": "bb6c58cabf70844f072777422d245f4c99e0f3c0ad31d708bb9bedfafd41e459",
+          "hash": "35af5083d2056c630c17498032e7acae7aeda410e448d01d6a06a3fc851cd4a2",
           "kind": "theorem",
-          "text": "theorem bare_normal_vertex_D_contract {M h : \u2115} (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) : dualSeries (vertexWeylBareNormal (M := M) hh P x false) = vertexSeriesScalarMul (fun n => if n = 0 then ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : \u2124)) else 0) (vertexSeriesAdjoint (vertexWeylBareNormal (M := M) hh (reflectHyperbolic P) x true))"
+          "text": "theorem bare_normal_vertex_D_contract {M h : \u2115} (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) : dualSeries (vertexWeylBareNormal (M := M) hh P x false) = (fun n => ((vertexSeriesAdjoint (vertexWeylBareNormal (M := M) hh (reflectHyperbolic P) x true)) n).map (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : \u2124))))"
         },
         "Bosonize.V1S3.bare_normal_vertex_adjoint_transport": {
           "ctx": "b5c5129fea4255c7b0b661acae33bfb12820e45146197df63bf12e2fa4b7a35b",
@@ -264,9 +264,9 @@
         },
         "Bosonize.V1S3.dressed_normal_vertex_D_contract": {
           "ctx": "b5c5129fea4255c7b0b661acae33bfb12820e45146197df63bf12e2fa4b7a35b",
-          "hash": "0ab9762a1780618cd197ae5c0dfdd60112110669f8c557f087a3046374192234",
+          "hash": "e345a009a9c0ef343f9b5428f1999532255380484aa0f58452ac0eecab1a4e46",
           "kind": "theorem",
-          "text": "theorem dressed_normal_vertex_D_contract {M h : \u2115} (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) : dualSeries (vertexWeylDressedNormal (M := M) hh P x false) = vertexSeriesScalarMul (fun n => if n = 0 then ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : \u2124)) else 0) (vertexSeriesAdjoint (vertexWeylDressedNormal (M := M) hh (reflectHyperbolic P) x true))"
+          "text": "theorem dressed_normal_vertex_D_contract {M h : \u2115} (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) : dualSeries (vertexWeylDressedNormal (M := M) hh P x false) = (fun n => ((vertexSeriesAdjoint (vertexWeylDressedNormal (M := M) hh (reflectHyperbolic P) x true)) n).map (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : \u2124))))"
         },
         "Bosonize.V1S3.dressed_normal_vertex_adjoint_transport": {
           "ctx": "b5c5129fea4255c7b0b661acae33bfb12820e45146197df63bf12e2fa4b7a35b",
@@ -378,9 +378,9 @@
         },
         "Bosonize.V1S3.duality_vertex_D_contract": {
           "ctx": "b5c5129fea4255c7b0b661acae33bfb12820e45146197df63bf12e2fa4b7a35b",
-          "hash": "dbad6961c831ac93a9036251cc66668e517ad470448610c38b90d9717fd56f6b",
+          "hash": "ef923e55c409d7039b74a67233ddc44638fa3025cbf422341cdc9b222bfcc14a",
           "kind": "theorem",
-          "text": "theorem duality_vertex_D_contract {M h : \u2115} (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) : dualSeries (vertexWeyl (M := M) hh P x false) = vertexSeriesScalarMul (fun n => if n = 0 then ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : \u2124)) else 0) (vertexWeylAdj (M := M) hh (reflectHyperbolic P) x true)"
+          "text": "theorem duality_vertex_D_contract {M h : \u2115} (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) : dualSeries (vertexWeyl (M := M) hh P x false) = (fun n => ((vertexWeylAdj (M := M) hh (reflectHyperbolic P) x true) n).map (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : \u2124))))"
         },
         "Bosonize.V1S3.duality_vertex_D_t0_contract": {
           "ctx": "b5c5129fea4255c7b0b661acae33bfb12820e45146197df63bf12e2fa4b7a35b",
@@ -390,9 +390,9 @@
         },
         "Bosonize.V1S3.duality_vertex_S_contract": {
           "ctx": "b5c5129fea4255c7b0b661acae33bfb12820e45146197df63bf12e2fa4b7a35b",
-          "hash": "c84774e5da42a5f45c6f5abaddf50cdf3d2cde1b5ef394b0582540351ce15755",
+          "hash": "88c1a2543654149e393a3f602c4a1da1fcde8ca101b880dd9ed769cb242a844c",
           "kind": "theorem",
-          "text": "theorem duality_vertex_S_contract {M h : \u2115} (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) : dualSeries (vertexWeyl (M := M) hh P x true) = vertexSeriesScalarMul (fun n => if n = 0 then ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : \u2124)) else 0) (vertexWeylAdj (M := M) hh (reflectHyperbolic P) x false)"
+          "text": "theorem duality_vertex_S_contract {M h : \u2115} (hh : 0 < h) (P : Bosonize.Ch18.HyperbolicPair) (x : Position (2 * h)) : dualSeries (vertexWeyl (M := M) hh P x true) = (fun n => ((vertexWeylAdj (M := M) hh (reflectHyperbolic P) x false) n).map (vertexCoeffScale ((Bosonize.A01.canonicalRoot (2*h)) ^ (x.val : \u2124))))"
         },
         "Bosonize.V1S3.gain_exchange": {
           "ctx": "2486155f7926312e6ec9f3c0e3e10b362ccd96cb89c666b11d65fbbac2c62731",
