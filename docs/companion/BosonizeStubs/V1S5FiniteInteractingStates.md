@@ -1,8 +1,8 @@
 # V1-S5 finite interacting states — staging companion
 
-Status: Phase A draft; not independently approved, locked, proved or promoted.
+Status: reviewed and locked Phase A; Phase B in progress; no promotion or Phase C acceptance.
 Baseline: `5865ca33d6c1c8731bf7b8bb743e632b650240fa` (accepted S4).
-Sources: `V1S5FiniteGroundState.lean`, `V1S5MomentObstruction.lean`, and
+Sources: `V1S5FiniteVectorStates.lean`, `V1S5FiniteGroundState.lean`, `V1S5MomentObstruction.lean`, and
 `V1S5SmallInteractingModel.lean` in `BosonizeStubs/`.
 
 ## Carrier and physical conventions
@@ -116,3 +116,33 @@ receipts must be added before acceptance. Existing Core remains immutable.
 No S6, physical-field equality, finite particle-hole symmetry, A10, finiteQMB,
 analytic limit, global finite CCR, ambient ground minimum or release is part
 of these contracts.
+
+## Phase B checkpoint — 2026-10-19
+
+The original Phase A interface was independently accepted and committed at
+`803bdf9`; `c3acc51` restores original manifest serialization without changing
+records. Subsequent scoped amendments were independently approved by
+`/root/s5_review`: two redundant finite-dimensional binders omitted, two local
+compiler resource settings, the generic/physical source split required by the
+module system, and the generic inclusion and three small-label helpers.
+All prior data definitions and theorem conclusions are preserved.
+
+The two finite-state modules compile without placeholders or warnings, as does
+the general oscillator normal-moment proof in isolation. Repeated ambient
+lowering, ambient moment vanishing, compressed lowering and compressed normal
+moment proofs have compiler evidence in the scratch receipts. The concrete
+obstruction witness encountered a conversion/heartbeat obstruction; its failed
+candidate is preserved in `.scratch/v1-s5/raw-witness-failed-candidate.txt` and
+its original staging placeholder remains. It is not claimed proved.
+
+The small-label bijection and actual partition-state bridge compile, using only
+partitions of energies zero, one and two. The nine main small-model contracts
+remain unproved. Its orthonormality proof experiment is not accepted evidence.
+Full matrix action, complete spectrum, global small ground minimum, selected
+moments/discrepancies, final proof review, promotion, pedagogical synchronization
+and integrated CI all remain required. No S6 work has started.
+
+Next: finish the concrete witness conversion, then complete the nine small-model
+contracts using the reviewed label bijection and the actual current-action and
+partition Gram APIs. Preserve all successful proofs and prior Core bytes. Read
+`docs/plans/v1-s5/checkpoint-2026-10-19.md` for exact current validation.

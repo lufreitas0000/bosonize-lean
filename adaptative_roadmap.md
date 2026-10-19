@@ -440,3 +440,26 @@ The scope is transformed-observable comparison in a free sea; interacting
 finite states and physical-field/norm comparisons remain separate.
 **Stop after S4. S5 has not started.** No push or release is authorized here.
 Earlier sprint stop/status statements in this document are historical.
+
+
+## V1-S5 implementation checkpoint — 2026-10-19
+
+**Current authorized sprint: S5; Phase A reviewed/locked, Phase B partial.**
+The finite-state construction, actual compressed Chapter 17 Hamiltonian and
+parameterized raw moment obstruction are implemented in staging. The four-module
+build passes with **10 remaining staging placeholders**: the concrete obstruction
+witness and nine full small-model contracts. S5 is not accepted or promoted.
+See [the resumable checkpoint](docs/plans/v1-s5/checkpoint-2026-10-19.md) and
+[independent review record](docs/plans/v1-s5/independent-review-2026-10-19.md).
+
+The next action is to finish those proofs, complete fresh dependency/axiom and
+integration audits, obtain independent final proof/pedagogical reviews, and
+promote through Phase C. The source split preserves all earlier definitions and
+conclusions; all 39 frozen Core files remain unchanged. Development stopped at
+the required usage guard (9% five-hour allowance remaining); no automatic restart
+or reset credit was used.
+
+After S5 acceptance, S6 remains the next planned physical-field/residual sprint;
+S0 scope decisions, conditional S7/S8, finite CH21 and book/coverage/release gates
+remain as listed above. **Do not begin S6 in this authorization.** This checkpoint
+supersedes earlier statements that S5 has not started, without marking it done.

@@ -15723,10 +15723,10 @@
           "text": "import Bosonize.Core.Ch17LuttingerModels"
         },
         {
-          "hash": "7b429552cba1ffd87e4c913cc4ce9db184b7251a9166a0cad548e70a14e30cc3",
+          "hash": "db6ae7a2f757c31c8ec320102d0e9e2b5d0bac0bc04f930e2307aafa407b4711",
           "kind": "import",
-          "label": "import Mathlib.Analysis.InnerProductSpace.Rayleigh",
-          "text": "import Mathlib.Analysis.InnerProductSpace.Rayleigh"
+          "label": "import BosonizeStubs.V1S5FiniteVectorStates",
+          "text": "import BosonizeStubs.V1S5FiniteVectorStates"
         },
         {
           "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
@@ -15751,54 +15751,6 @@
           "kind": "open",
           "label": "open scoped BigOperators",
           "text": "open scoped BigOperators"
-        },
-        {
-          "hash": "7119aed37df33232afe49fe6d7783534cb528007e75fcf86ebdbc9771faf97f3",
-          "kind": "section",
-          "label": "section FiniteState",
-          "text": "section FiniteState"
-        },
-        {
-          "hash": "7484bd6ecea2028108ea00fad0664756ba24ee6b87869691b910b09b1c421348",
-          "kind": "variable",
-          "label": "variable {E : Type*} [NormedAddCommGroup E] [Inne",
-          "text": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace \u2102 E]\n  [FiniteDimensional \u2102 E]"
-        },
-        {
-          "hash": "27f2315ee80bc5c9b724a956b804c11b1d75ff03e0cd183a38a806755fedd0fb",
-          "kind": "structure",
-          "label": "structure Bosonize.V1S5.GroundVector",
-          "text": "structure GroundVector (H : Module.End \u2102 E) where\n  energy : \u211d\n  ket : E\n  unit : \u2016ket\u2016 = 1\n  eigen : H ket = (energy : \u2102) \u2022 ket\n  minimal : \u2200 v : E, energy * \u2016v\u2016 ^ 2 \u2264 (inner \u2102 v (H v)).re"
-        },
-        {
-          "hash": "fe6eb1f43ce025ef55c6be048bb846464e004c4e26772f16080ae93dde49f2d9",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.vectorState",
-          "text": "noncomputable def vectorState (v : E) : Module.End \u2102 E \u2192\u2097[\u2102] \u2102 where\n  toFun X := inner \u2102 v (X v)\n  map_add' X Y := by simp [inner_add_right]\n  map_smul' a X := by simp [inner_smul_right]"
-        },
-        {
-          "hash": "6871d8c34ff7140c99c7273996ff895c7450b48d96f30987a0b079c327ea3e3a",
-          "kind": "variable",
-          "label": "variable {F : Type*} [NormedAddCommGroup F] [Inne",
-          "text": "variable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace \u2102 F]\n  [FiniteDimensional \u2102 F]"
-        },
-        {
-          "hash": "0138fe3ce043bf3ffc3224a290f2bc617d7d6495785135232475f9572a57a64a",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.compression",
-          "text": "noncomputable def compression (i : E \u2192\u2097[\u2102] F) (X : Module.End \u2102 F) :\n    Module.End \u2102 E := (LinearMap.adjoint i).comp (X.comp i)"
-        },
-        {
-          "hash": "4839edbd8d7dc93f1d2c740067001ad81511a811da0f54f0e414ad973837ecbb",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.extendedState",
-          "text": "noncomputable def extendedState (i : E \u2192\u2097[\u2102] F) (v : E) :\n    Module.End \u2102 F \u2192\u2097[\u2102] \u2102 where\n  toFun X := vectorState v (compression i X)\n  map_add' X Y := by simp [vectorState, compression, inner_add_right]\n  map_smul' a X := by simp [vectorState, compression, inner_smul_right]"
-        },
-        {
-          "hash": "a0579cbf0e19b4df1de746a4ab8b7ab4c473d5faa6a912f59497f772a6d6eee2",
-          "kind": "end",
-          "label": "end FiniteState",
-          "text": "end FiniteState"
         },
         {
           "hash": "4f9013c1ec27b614544c2e2d566fbb25eba936f389f23b80a13b6b043925beaf",
@@ -15851,94 +15803,46 @@
       ],
       "lemmas": {
         "Bosonize.V1S5.ambient_hamiltonian_self_adjoint": {
-          "ctx": "b89a23c5306b23811d3c85ff27817ad038b8a0891684a3f92ebc6d5de7cbbd3c",
+          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
           "hash": "f6357856d2c7b3e90e97c9c72cee155ca1720f0fefe73a8332b1cb94139cf93f",
           "kind": "theorem",
           "text": "theorem ambient_hamiltonian_self_adjoint (h M : \u2115) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) : LinearMap.adjoint (ambientHamiltonian h M vF g4 g2 mu branches) = ambientHamiltonian h M vF g4 g2 mu branches"
         },
         "Bosonize.V1S5.budget_hamiltonian_symmetric": {
-          "ctx": "b89a23c5306b23811d3c85ff27817ad038b8a0891684a3f92ebc6d5de7cbbd3c",
+          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
           "hash": "b0835de4f0c716bb27222f7753116a2e99518f0ae6b7dc94fea1e489c5bbd1c8",
           "kind": "theorem",
           "text": "theorem budget_hamiltonian_symmetric (h M K : \u2115) (Ns : \u03c3 \u2192 \u2124) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) : LinearMap.IsSymmetric (\ud835\udd5c := \u2102) (E := Budget h Ns K) (budgetHamiltonian h M K Ns vF g4 g2 mu branches)"
         },
         "Bosonize.V1S5.budget_nontrivial": {
-          "ctx": "b89a23c5306b23811d3c85ff27817ad038b8a0891684a3f92ebc6d5de7cbbd3c",
+          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
           "hash": "b30c5cf577c7d84ef8eb49ada7a2f4822c29d997212e7b2150b9682b4ebf90bd",
           "kind": "theorem",
           "text": "theorem budget_nontrivial (h K : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) : Nontrivial (Budget h Ns K)"
         },
-        "Bosonize.V1S5.compression_symmetric": {
-          "ctx": "2618d4f2fc90e154d37f394046fd8b1d7043701803b44aab590e14063ea9a277",
-          "hash": "8a0513c22471576fad4ae3e949451a3899f5908ab92c19b4bcb5b73db3beb933",
-          "kind": "theorem",
-          "text": "theorem compression_symmetric (i : E \u2192\u2097[\u2102] F) (X : Module.End \u2102 F) (hX : X.IsSymmetric) : (compression i X).IsSymmetric"
-        },
-        "Bosonize.V1S5.extended_state_one": {
-          "ctx": "2618d4f2fc90e154d37f394046fd8b1d7043701803b44aab590e14063ea9a277",
-          "hash": "27f0a5ae72caaf55acef038135a1a22d5e279b836362b88491160a42a18d3977",
-          "kind": "theorem",
-          "text": "theorem extended_state_one (i : E \u2192\u2097[\u2102] F) (hi : \u2200 v, \u2016i v\u2016 = \u2016v\u2016) (v : E) (hv : \u2016v\u2016 = 1) : extendedState i v 1 = 1"
-        },
-        "Bosonize.V1S5.extended_state_positive": {
-          "ctx": "2618d4f2fc90e154d37f394046fd8b1d7043701803b44aab590e14063ea9a277",
-          "hash": "964f8a4c58d7b87ab84f6faa52932bbdce3ed3ba78f435029aa677f5bffd0001",
-          "kind": "theorem",
-          "text": "theorem extended_state_positive (i : E \u2192\u2097[\u2102] F) (v : E) (X : Module.End \u2102 F) : extendedState i v (LinearMap.adjoint X * X) = (\u2016X (i v)\u2016 ^ 2 : \u211d)"
-        },
-        "Bosonize.V1S5.extended_state_vector": {
-          "ctx": "2618d4f2fc90e154d37f394046fd8b1d7043701803b44aab590e14063ea9a277",
-          "hash": "8e6124ca2a0ce89bb9c13fd4d13e15863c38eb24a216475e2976cc9660d632ca",
-          "kind": "theorem",
-          "text": "theorem extended_state_vector (i : E \u2192\u2097[\u2102] F) (v : E) (X : Module.End \u2102 F) : extendedState i v X = vectorState (i v) X"
-        },
-        "Bosonize.V1S5.ground_energy_evaluation": {
-          "ctx": "6abcf24c2ff8e691379dfa0df273ae4d40f0d5ba92eee241cc64fb0c416d95c8",
-          "hash": "98aa91f467b27d9e34d6dcf67b810cbde7b4543c045255ccae76636a099bea96",
-          "kind": "theorem",
-          "text": "theorem ground_energy_evaluation (H : Module.End \u2102 E) (g : GroundVector H) : vectorState g.ket H = (g.energy : \u2102)"
-        },
-        "Bosonize.V1S5.ground_vector_exists": {
-          "ctx": "6abcf24c2ff8e691379dfa0df273ae4d40f0d5ba92eee241cc64fb0c416d95c8",
-          "hash": "9bc5444e23c2a4aeb552cc63b2d08485ec072faf0adfd2f3c9f814a47428c4b6",
-          "kind": "theorem",
-          "text": "theorem ground_vector_exists [Nontrivial E] (H : Module.End \u2102 E) (hH : H.IsSymmetric) : Nonempty (GroundVector H)"
-        },
         "Bosonize.V1S5.inclusion_adjoint_inclusion": {
-          "ctx": "b89a23c5306b23811d3c85ff27817ad038b8a0891684a3f92ebc6d5de7cbbd3c",
-          "hash": "0dc7a3d7b69c76a13d0dc6ad17ca5fdf27b42ee3a08611f2d8d38e03f07fc886",
+          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
+          "hash": "6948b5eae7959f960086a4ef6b25e480c7ef4ae2087353e500f379fe2c20264d",
           "kind": "theorem",
-          "text": "theorem inclusion_adjoint_inclusion (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : (LinearMap.adjoint (\ud835\udd5c := \u2102) (E := Budget h Ns K) (F := A05.FockSpace \u03c3 h) (inclusion h Ns K)).comp (inclusion h Ns K) = LinearMap.id"
+          "text": "set_option maxHeartbeats 2000000 in theorem inclusion_adjoint_inclusion (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : (LinearMap.adjoint (\ud835\udd5c := \u2102) (E := Budget h Ns K) (F := A05.FockSpace \u03c3 h) (inclusion h Ns K)).comp (inclusion h Ns K) = LinearMap.id"
         },
         "Bosonize.V1S5.inclusion_isometric": {
-          "ctx": "b89a23c5306b23811d3c85ff27817ad038b8a0891684a3f92ebc6d5de7cbbd3c",
+          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
           "hash": "4b8146f39132e887085e35ef9bb662dfc60300d0f26cf5cdb9a236841a50cc9c",
           "kind": "theorem",
           "text": "theorem inclusion_isometric (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : \u2200 v : Budget h Ns K, \u2016inclusion h Ns K v\u2016 = \u2016v\u2016"
         },
         "Bosonize.V1S5.inclusion_projection": {
-          "ctx": "b89a23c5306b23811d3c85ff27817ad038b8a0891684a3f92ebc6d5de7cbbd3c",
+          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
           "hash": "d5168044051528c874032a008f2dba290989227c22dcad54bc775d0d2dd1d205",
           "kind": "theorem",
           "text": "theorem inclusion_projection (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : (inclusion h Ns K).comp (LinearMap.adjoint (\ud835\udd5c := \u2102) (E := Budget h Ns K) (F := A05.FockSpace \u03c3 h) (inclusion h Ns K)) = A03.coordinateProjection {S | (\u2200 \u03bd, Ch07.relativeCharge h (Ch07.speciesConfiguration h S \u03bd) = Ns \u03bd) \u2227 Ch07.totalExcitation h S \u2264 (K : \u2124)}"
         },
         "Bosonize.V1S5.physical_ground_exists": {
-          "ctx": "b89a23c5306b23811d3c85ff27817ad038b8a0891684a3f92ebc6d5de7cbbd3c",
+          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
           "hash": "846d4c11f8152e2497dd900f3c39a8aea38c5373d30059fd7a2f2d7ed86fe76c",
           "kind": "theorem",
           "text": "theorem physical_ground_exists (h M K : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) : Nonempty (GroundVector (E := Budget h Ns K) (budgetHamiltonian h M K Ns vF g4 g2 mu branches))"
-        },
-        "Bosonize.V1S5.vector_state_one": {
-          "ctx": "6abcf24c2ff8e691379dfa0df273ae4d40f0d5ba92eee241cc64fb0c416d95c8",
-          "hash": "b1c239ff387c66a9982fb6db4c1260f3d464f08cc276e472727c81eefc0e1cf8",
-          "kind": "theorem",
-          "text": "theorem vector_state_one (v : E) (hv : \u2016v\u2016 = 1) : vectorState v 1 = 1"
-        },
-        "Bosonize.V1S5.vector_state_positive": {
-          "ctx": "6abcf24c2ff8e691379dfa0df273ae4d40f0d5ba92eee241cc64fb0c416d95c8",
-          "hash": "44d47ac8d98ac9679a146d1e77a0fa5dda7d8f0e72ab5aff4a9dff7b89ab1e74",
-          "kind": "theorem",
-          "text": "theorem vector_state_positive (v : E) (X : Module.End \u2102 E) : vectorState v (LinearMap.adjoint X * X) = (\u2016X v\u2016 ^ 2 : \u211d)"
         }
       }
     },
@@ -16032,9 +15936,9 @@
         },
         "Bosonize.V1S5.raw_obstruction_witness": {
           "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "b520955c7928067b03f6166db1a26731098c60ba1bc3c6a93b45dbf3521aff51",
+          "hash": "066480c51589e50ca702aff7887954e7894005377ad27bee7c28d4c8e32a2add",
           "kind": "theorem",
-          "text": "theorem raw_obstruction_witness : A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)) \u2208 A05.jointBudget 8 (fun _ : Fin 2 => (0 : \u2124)) 2 \u2227 A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)) \u2260 0 \u2227 inner \u2102 (A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124))) ((A05.rho 8 (0 : Fin 2) 1 ^ 3 * A05.rho 8 (0 : Fin 2) (-1) ^ 3) (A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)))) \u2260 A08.omegaP 1 Ch18.concretePair (A08.creatorGen 1 .right 0 ^ 3 * A08.annihilatorGen 1 .right 0 ^ 3)"
+          "text": "set_option maxRecDepth 2000 in theorem raw_obstruction_witness : A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)) \u2208 A05.jointBudget 8 (fun _ : Fin 2 => (0 : \u2124)) 2 \u2227 A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)) \u2260 0 \u2227 inner \u2102 (A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124))) ((A05.rho 8 (0 : Fin 2) 1 ^ 3 * A05.rho 8 (0 : Fin 2) (-1) ^ 3) (A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)))) \u2260 A08.omegaP 1 Ch18.concretePair (A08.creatorGen 1 .right 0 ^ 3 * A08.annihilatorGen 1 .right 0 ^ 3)"
         },
         "Bosonize.V1S5.repeated_lowering_zero": {
           "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
@@ -16119,6 +16023,12 @@
           "text": "noncomputable def smallVector (j : Fin 8) : Budget 8 smallCharges 2 :=\n  \u27e8smallCoefficient j \u2022 A05.wordState 8 smallCharges (smallParts j), by\n    apply Submodule.smul_mem\n    apply A05.word_mem_budget 8 (by norm_num) smallCharges small_admissible\n    fin_cases j <;> norm_num [smallParts, Fin.sum_univ_two]\u27e9"
         },
         {
+          "hash": "c0de9d60722444ee7ae1a7f851d62bd6ffead5e23a54d0ed4a4d8b0214cae226",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallLabel",
+          "text": "def smallLabel (j : Fin 8) : A05.JointPartitions (Fin 2) 2 :=\n  \u27e8fun \u03bd => \u27e8\u27e8(smallParts j \u03bd).sum, by fin_cases j <;> fin_cases \u03bd <;> decide\u27e9,\n    \u27e8((smallParts j \u03bd) : Multiset \u2115), by fin_cases j <;> fin_cases \u03bd <;> decide, rfl\u27e9\u27e9,\n      by fin_cases j <;> decide\u27e9"
+        },
+        {
           "hash": "7070bde96264b36bcdf2d5ed5b1a613dc5df75aafb4dd6298d2bcd9aef02bb17",
           "kind": "def",
           "label": "def Bosonize.V1S5.smallHamiltonian",
@@ -16169,58 +16079,226 @@
           "text": "theorem small_admissible : A05.admissible 8 smallCharges"
         },
         "Bosonize.V1S5.small_complete": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "89f6723daa7f4969389e903ee260e01ff581f1cef35607b11bec216f11f29f5e",
           "kind": "theorem",
           "text": "theorem small_complete : Submodule.span \u2102 (Set.range smallVector) = \u22a4"
         },
         "Bosonize.V1S5.small_ground": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "bed8cda507add50d2adc2a072e1cb2eebfdd85b097b91a2aa2aebfc949077ab1",
           "kind": "theorem",
           "text": "theorem small_ground : \u2016smallPsi\u2016 = 1 \u2227 smallHamiltonian smallPsi = (smallEnergy : \u2102) \u2022 smallPsi \u2227 (\u2200 v : Budget 8 smallCharges 2, smallEnergy * \u2016v\u2016 ^ 2 \u2264 (inner \u2102 v (smallHamiltonian v)).re) \u2227 smallEnergy < 0"
         },
+        "Bosonize.V1S5.small_label_bijective": {
+          "ctx": "81c41de667d98d3a2cf75534c25d10a38b567e75d00bf4cf2b324efeadaca2f8",
+          "hash": "208599c8446f04b639bd42cdef2784ebf9a2d04fad4c88ba5a2f156a0dc494df",
+          "kind": "theorem",
+          "text": "theorem small_label_bijective : Function.Bijective smallLabel"
+        },
         "Bosonize.V1S5.small_matrix_action": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "0d6a331b54dd100e44c5b087d75ce3177a394aada5f7ba2cf25c16dc39be2225",
           "kind": "theorem",
           "text": "theorem small_matrix_action (j : Fin 8) : smallHamiltonian (smallVector j) = \u2211 i : Fin 8, smallMatrix i j \u2022 smallVector i"
         },
         "Bosonize.V1S5.small_number_discrepancy": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "80441553b94c71a479adb5e1c886e822ebf62509d4544316a283c37ab0eece34",
           "kind": "theorem",
           "text": "theorem small_number_discrepancy : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.rightSpecies (-1)) \u2260 A08.omegaP 2 Ch18.concretePair (A08.creatorGen 2 .right 0 * A08.annihilatorGen 2 .right 0)"
         },
         "Bosonize.V1S5.small_number_moment": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "1373721885346433d1789c5d11cf964d29680d35da23e4a67b263d6b8d64cc0d",
           "kind": "theorem",
           "text": "theorem small_number_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.rightSpecies) (-1)) = (((1 - 17 / Real.sqrt 514) / 2 : \u211d) : \u2102)"
         },
         "Bosonize.V1S5.small_orthonormal": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "160b093fe8ede3392890b5ccd475f652abca5f05764a7d699dabc1db91659d46",
           "kind": "theorem",
           "text": "theorem small_orthonormal : Orthonormal \u2102 smallVector"
         },
         "Bosonize.V1S5.small_pair_discrepancy": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "18ff3be51f3fc72ecd962a110e506572883460493f58e5e50d272ba7b59bb99b",
           "kind": "theorem",
           "text": "theorem small_pair_discrepancy : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.leftSpecies 1) \u2260 A08.omegaP 2 Ch18.concretePair (A08.creatorGen 2 .right 0 * A08.creatorGen 2 .left 0)"
         },
         "Bosonize.V1S5.small_pair_moment": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "e02a11a1a0192614731e946efd261a7e1b56fec29ebd5e701a5a4d7ac0f3cbca",
           "kind": "theorem",
           "text": "theorem small_pair_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.leftSpecies) 1) = ((-15 / (2 * Real.sqrt 514) : \u211d) : \u2102)"
         },
+        "Bosonize.V1S5.small_partition_state": {
+          "ctx": "81c41de667d98d3a2cf75534c25d10a38b567e75d00bf4cf2b324efeadaca2f8",
+          "hash": "8936efb7a1413781c1469844f9724590464be9140b2ae73d5ba393646fa102bc",
+          "kind": "theorem",
+          "text": "theorem small_partition_state (j : Fin 8) : A05.partitionState 8 smallCharges (smallLabel j) = A05.wordState 8 smallCharges (smallParts j)"
+        },
         "Bosonize.V1S5.small_spectral_basis": {
-          "ctx": "aa8fc1264e3e724506f065c25256acc8b7637f0e5e23b2d2eacc29ac24e0ad05",
+          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
           "hash": "77fba20145da350fcd7cc19d4f5cb47683be053bcb681dcf744aae234e588ce7",
           "kind": "theorem",
           "text": "theorem small_spectral_basis : \u2203 b : OrthonormalBasis (Fin 8) \u2102 (Budget 8 smallCharges 2), \u2200 j, smallHamiltonian (b j) = (smallEigenvalue j : \u2102) \u2022 b j"
+        }
+      }
+    },
+    "BosonizeStubs/V1S5FiniteVectorStates.lean": {
+      "commands": [
+        {
+          "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
+          "kind": "module",
+          "label": "module",
+          "text": "module"
+        },
+        {
+          "hash": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7",
+          "kind": "public",
+          "label": "public",
+          "text": "public"
+        },
+        {
+          "hash": "7b429552cba1ffd87e4c913cc4ce9db184b7251a9166a0cad548e70a14e30cc3",
+          "kind": "import",
+          "label": "import Mathlib.Analysis.InnerProductSpace.Rayleigh",
+          "text": "import Mathlib.Analysis.InnerProductSpace.Rayleigh"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "90a558972f1f5a96bdb44282de86a0adf0fcd4e05ace5bbff5275d52e8d3de61",
+          "kind": "namespace",
+          "label": "namespace Bosonize.V1S5",
+          "text": "namespace Bosonize.V1S5"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "7119aed37df33232afe49fe6d7783534cb528007e75fcf86ebdbc9771faf97f3",
+          "kind": "section",
+          "label": "section FiniteState",
+          "text": "section FiniteState"
+        },
+        {
+          "hash": "7484bd6ecea2028108ea00fad0664756ba24ee6b87869691b910b09b1c421348",
+          "kind": "variable",
+          "label": "variable {E : Type*} [NormedAddCommGroup E] [Inne",
+          "text": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace \u2102 E]\n  [FiniteDimensional \u2102 E]"
+        },
+        {
+          "hash": "27f2315ee80bc5c9b724a956b804c11b1d75ff03e0cd183a38a806755fedd0fb",
+          "kind": "structure",
+          "label": "structure Bosonize.V1S5.GroundVector",
+          "text": "structure GroundVector (H : Module.End \u2102 E) where\n  energy : \u211d\n  ket : E\n  unit : \u2016ket\u2016 = 1\n  eigen : H ket = (energy : \u2102) \u2022 ket\n  minimal : \u2200 v : E, energy * \u2016v\u2016 ^ 2 \u2264 (inner \u2102 v (H v)).re"
+        },
+        {
+          "hash": "fe6eb1f43ce025ef55c6be048bb846464e004c4e26772f16080ae93dde49f2d9",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.vectorState",
+          "text": "noncomputable def vectorState (v : E) : Module.End \u2102 E \u2192\u2097[\u2102] \u2102 where\n  toFun X := inner \u2102 v (X v)\n  map_add' X Y := by simp [inner_add_right]\n  map_smul' a X := by simp [inner_smul_right]"
+        },
+        {
+          "hash": "6871d8c34ff7140c99c7273996ff895c7450b48d96f30987a0b079c327ea3e3a",
+          "kind": "variable",
+          "label": "variable {F : Type*} [NormedAddCommGroup F] [Inne",
+          "text": "variable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace \u2102 F]\n  [FiniteDimensional \u2102 F]"
+        },
+        {
+          "hash": "0138fe3ce043bf3ffc3224a290f2bc617d7d6495785135232475f9572a57a64a",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.compression",
+          "text": "noncomputable def compression (i : E \u2192\u2097[\u2102] F) (X : Module.End \u2102 F) :\n    Module.End \u2102 E := (LinearMap.adjoint i).comp (X.comp i)"
+        },
+        {
+          "hash": "4839edbd8d7dc93f1d2c740067001ad81511a811da0f54f0e414ad973837ecbb",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.extendedState",
+          "text": "noncomputable def extendedState (i : E \u2192\u2097[\u2102] F) (v : E) :\n    Module.End \u2102 F \u2192\u2097[\u2102] \u2102 where\n  toFun X := vectorState v (compression i X)\n  map_add' X Y := by simp [vectorState, compression, inner_add_right]\n  map_smul' a X := by simp [vectorState, compression, inner_smul_right]"
+        },
+        {
+          "hash": "a0579cbf0e19b4df1de746a4ab8b7ab4c473d5faa6a912f59497f772a6d6eee2",
+          "kind": "end",
+          "label": "end FiniteState",
+          "text": "end FiniteState"
+        },
+        {
+          "hash": "e188ef922852dd77ff87422bc4fc8586b9bca0b337be8fc111968a484f590459",
+          "kind": "end",
+          "label": "end Bosonize.V1S5",
+          "text": "end Bosonize.V1S5"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.V1S5.compression_symmetric": {
+          "ctx": "afd5f5973cc0aa5a1378c52831d3bf3abad55e0ecee6fe2ca9a9746bdcdf8c4f",
+          "hash": "8a0513c22471576fad4ae3e949451a3899f5908ab92c19b4bcb5b73db3beb933",
+          "kind": "theorem",
+          "text": "theorem compression_symmetric (i : E \u2192\u2097[\u2102] F) (X : Module.End \u2102 F) (hX : X.IsSymmetric) : (compression i X).IsSymmetric"
+        },
+        "Bosonize.V1S5.extended_state_one": {
+          "ctx": "afd5f5973cc0aa5a1378c52831d3bf3abad55e0ecee6fe2ca9a9746bdcdf8c4f",
+          "hash": "27f0a5ae72caaf55acef038135a1a22d5e279b836362b88491160a42a18d3977",
+          "kind": "theorem",
+          "text": "theorem extended_state_one (i : E \u2192\u2097[\u2102] F) (hi : \u2200 v, \u2016i v\u2016 = \u2016v\u2016) (v : E) (hv : \u2016v\u2016 = 1) : extendedState i v 1 = 1"
+        },
+        "Bosonize.V1S5.extended_state_positive": {
+          "ctx": "afd5f5973cc0aa5a1378c52831d3bf3abad55e0ecee6fe2ca9a9746bdcdf8c4f",
+          "hash": "964f8a4c58d7b87ab84f6faa52932bbdce3ed3ba78f435029aa677f5bffd0001",
+          "kind": "theorem",
+          "text": "theorem extended_state_positive (i : E \u2192\u2097[\u2102] F) (v : E) (X : Module.End \u2102 F) : extendedState i v (LinearMap.adjoint X * X) = (\u2016X (i v)\u2016 ^ 2 : \u211d)"
+        },
+        "Bosonize.V1S5.extended_state_vector": {
+          "ctx": "afd5f5973cc0aa5a1378c52831d3bf3abad55e0ecee6fe2ca9a9746bdcdf8c4f",
+          "hash": "8e6124ca2a0ce89bb9c13fd4d13e15863c38eb24a216475e2976cc9660d632ca",
+          "kind": "theorem",
+          "text": "theorem extended_state_vector (i : E \u2192\u2097[\u2102] F) (v : E) (X : Module.End \u2102 F) : extendedState i v X = vectorState (i v) X"
+        },
+        "Bosonize.V1S5.ground_energy_evaluation": {
+          "ctx": "3f1b40dfe202ada3846ca3ee464d7475787144e65f38d8c46c3f84a7463481ae",
+          "hash": "cdb3f5ce860be83af61642d0d23e2c8c2be7ad9e48ad6b11f7f133f72d4f0d77",
+          "kind": "theorem",
+          "text": "omit [FiniteDimensional \u2102 E] in theorem ground_energy_evaluation (H : Module.End \u2102 E) (g : GroundVector H) : vectorState g.ket H = (g.energy : \u2102)"
+        },
+        "Bosonize.V1S5.ground_vector_exists": {
+          "ctx": "3f1b40dfe202ada3846ca3ee464d7475787144e65f38d8c46c3f84a7463481ae",
+          "hash": "9bc5444e23c2a4aeb552cc63b2d08485ec072faf0adfd2f3c9f814a47428c4b6",
+          "kind": "theorem",
+          "text": "theorem ground_vector_exists [Nontrivial E] (H : Module.End \u2102 E) (hH : H.IsSymmetric) : Nonempty (GroundVector H)"
+        },
+        "Bosonize.V1S5.submodule_inclusion_adjoint": {
+          "ctx": "3f1b40dfe202ada3846ca3ee464d7475787144e65f38d8c46c3f84a7463481ae",
+          "hash": "54d095887e3f2380ab9cc3ec7717bc2ab896b49f580aec4a980b3d68c95dcb80",
+          "kind": "theorem",
+          "text": "theorem submodule_inclusion_adjoint (W : Submodule \u2102 E) : (LinearMap.adjoint (\ud835\udd5c := \u2102) W.subtype).comp W.subtype = (LinearMap.id : Module.End \u2102 W)"
+        },
+        "Bosonize.V1S5.vector_state_one": {
+          "ctx": "3f1b40dfe202ada3846ca3ee464d7475787144e65f38d8c46c3f84a7463481ae",
+          "hash": "159a5768cf203f25ebcf22516579aad331165942420485d89d30c622689a8a8e",
+          "kind": "theorem",
+          "text": "omit [FiniteDimensional \u2102 E] in theorem vector_state_one (v : E) (hv : \u2016v\u2016 = 1) : vectorState v 1 = 1"
+        },
+        "Bosonize.V1S5.vector_state_positive": {
+          "ctx": "3f1b40dfe202ada3846ca3ee464d7475787144e65f38d8c46c3f84a7463481ae",
+          "hash": "44d47ac8d98ac9679a146d1e77a0fa5dda7d8f0e72ab5aff4a9dff7b89ab1e74",
+          "kind": "theorem",
+          "text": "theorem vector_state_positive (v : E) (X : Module.End \u2102 E) : vectorState v (LinearMap.adjoint X * X) = (\u2016X v\u2016 ^ 2 : \u211d)"
         }
       }
     }

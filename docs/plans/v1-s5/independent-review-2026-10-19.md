@@ -38,3 +38,24 @@ promotion or pedagogical acceptance.
 ## Later gates
 
 Phase B final proof review: pending. Phase C migration and pedagogy: pending.
+
+## Scoped Phase B interface amendments — PASS
+
+The same independent reviewer approved the two redundant finite-dimensional
+binder omissions, local inclusion/witness elaboration resource settings, and
+module-system source split. Exact-source review compared parsed declarations
+against `803bdf9`: all 19 original data definitions remained unchanged, and all
+33 prior theorem conclusions/headers remained except the four approved local
+prefixes. Additions are exactly `submodule_inclusion_adjoint`, `smallLabel`,
+`small_label_bijective`, and `small_partition_state`. Only the four S5 records
+were migrated/amended; unrelated records and Core bytes remain unchanged.
+
+Exact-source review hashes (before subsequent proof-body integration): Ground
+`f199317a26ccb54d4fcd881279fe84c59916980bce5307f95373f332f8850d8b`;
+Vector `1e534841bcfa89f905b3bde1dd2ed353455963fe66377256c7db5db55e079db4`;
+Moment `e837637121941a680d3dbbe86f54d929f213364104f2bba25e0a457b6fd1d003`;
+Small `bf64ae5b919892a08f89e6103e9cfc021c7cf359c06335ecf0ee00f133a6d4db`.
+Current checkpoint hashes are recorded separately in `checkpoint-hashes.json`.
+The fresh four-target build passes with 10 explicitly unproved contracts.
+Full post-amendment axiom audit and independent final proof/pedagogical reviews
+remain pending. This approval is not Phase B or Phase C completion.
