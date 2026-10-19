@@ -15129,6 +15129,30 @@
           "text": "noncomputable def polynomialState {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]\n    (h M : \u2115) (Ns : \u03c3 \u2192 \u2124)\n    (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    (p : Bosonize.A08.OscPoly M) : Bosonize.A05.FockSpace \u03c3 h := by\n  classical\n  exact \u2211 r \u2208 p.support,\n    (MvPolynomial.lcoeff \u2102 r p) \u2022 monomialState h M Ns species r"
         },
         {
+          "hash": "78e84ca14540aaa1b72b4a2ee137acba34e2ca73cf70c6b9b0d6caa8a5f8be34",
+          "kind": "namespace",
+          "label": "namespace Support",
+          "text": "namespace Support"
+        },
+        {
+          "hash": "056152f259e1430f8271a411d3aad8fdf5ab59c35fd151a6822e6bf7ef7db76c",
+          "kind": "def",
+          "label": "def Bosonize.V1S4.Support.parts",
+          "text": "def parts {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115)\n    (o : Bosonize.A06.Orientation) : List \u2115 :=\n  (List.finRange M).flatMap fun i => List.replicate (r (o,i)) (i.val+1)"
+        },
+        {
+          "hash": "13b434ca8bcee90924b01cd4c7f57ddb7b9240895e8ca21abc04d717c573162e",
+          "kind": "end",
+          "label": "end Support",
+          "text": "end Support"
+        },
+        {
+          "hash": "02234c8c813f4b931009b373fe70bfa4b9f265f4d3b370169c1cc067ca9ec088",
+          "kind": "open",
+          "label": "open Support",
+          "text": "open Support"
+        },
+        {
           "hash": "97453a1abcda37f60196c62422f0d6690a1f1cc1fd6e4b7aa540463bd760905a",
           "kind": "def",
           "label": "def Bosonize.V1S4.cutoffRange",
@@ -15311,25 +15335,121 @@
       ],
       "lemmas": {
         "Bosonize.V1S4.Examples.orientationCode_injective": {
-          "ctx": "b8b5eeff1b63b26c459ab205cb8505a0da77111b7aa6781e6f9362187233c20e",
+          "ctx": "21197907d7ae766fefea91a4918cdf3dbeb7e8b5d71e96c033b49e38ae6b246b",
           "hash": "8913ad938ebc5f8156abcf7a55bfe142f9784499873941ead2fbfa53b1e27937",
           "kind": "theorem",
           "text": "theorem orientationCode_injective : Function.Injective orientationCode"
         },
+        "Bosonize.V1S4.Support.count_parts": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "df6dcaa06bd1ffe7f60caf9562abe4e3e488115efe199bcc210ccaabcb552f43",
+          "kind": "lemma",
+          "text": "lemma count_parts {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (o : Bosonize.A06.Orientation) (m : \u2115) : (parts r o).count m = \u2211 i : Fin M, if m=i.val+1 then r (o,i) else 0"
+        },
+        "Bosonize.V1S4.Support.count_parts_mode": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "a2496c58965c1adaa19b900d94c93272c7d309c2e49904756851f11d2cebcc96",
+          "kind": "lemma",
+          "text": "lemma count_parts_mode {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (o : Bosonize.A06.Orientation) (i : Fin M) : (parts r o).count (i.val+1) = r (o,i)"
+        },
+        "Bosonize.V1S4.Support.multi_active": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "7f3bd84a3194d3f5221379acc0fc8530c51676e697d2164774f83fccfcbe8286",
+          "kind": "lemma",
+          "text": "lemma multi_active {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M : \u2115} (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (o : Bosonize.A06.Orientation) : multiIndexParts M species r (species o) = parts r o"
+        },
+        "Bosonize.V1S4.Support.multi_bound": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "19d86acc1acfcebab60c85f73efddcf5b75796702deed3f0426e96b650dfd8fc",
+          "kind": "lemma",
+          "text": "lemma multi_bound {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M : \u2115} (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (\u03bd : \u03c3) : (multiIndexParts M species r \u03bd).sum \u2264 weightedEnergy r"
+        },
+        "Bosonize.V1S4.Support.multi_equal_iff": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "1adec237c5d2a5ebe34b981f92f31179e3e8c0db17c812bbd6cf3e30e9c3899c",
+          "kind": "lemma",
+          "text": "lemma multi_equal_iff {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M : \u2115} (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (r t : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : (\u2200 \u03bd, (multiIndexParts M species r \u03bd : Multiset \u2115) = (multiIndexParts M species t \u03bd : Multiset \u2115)) \u2194 r=t"
+        },
+        "Bosonize.V1S4.Support.multi_hall_prod": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "bff6cd09548608f1deb2ff22d23765d1cb18130a610bf7bbfa6dfdc3da43f228",
+          "kind": "lemma",
+          "text": "lemma multi_hall_prod {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M : \u2115} (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : (\u220f \u03bd : \u03c3, Bosonize.Ch11.hallFactor (multiIndexParts M species r \u03bd : Multiset \u2115)) = \u220f o : Bosonize.A06.Orientation, Bosonize.Ch11.hallFactor (parts r o : Multiset \u2115)"
+        },
+        "Bosonize.V1S4.Support.multi_other": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "ad270bc3d1b2c88a251ac04eda48c3838714474c610544e13a62b4729ac195f5",
+          "kind": "lemma",
+          "text": "lemma multi_other {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M : \u2115} (species : Bosonize.A06.Orientation \u2192 \u03c3) (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (\u03bd : \u03c3) (hr : species .right \u2260 \u03bd) (hl : species .left \u2260 \u03bd) : multiIndexParts M species r \u03bd = []"
+        },
+        "Bosonize.V1S4.Support.multi_pos": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "8b856c83e28120a53afb8505042c16bae3702b8f9771a6d4eae817a38bfad432",
+          "kind": "lemma",
+          "text": "lemma multi_pos {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M : \u2115} (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (\u03bd : \u03c3) : \u2200 m \u2208 multiIndexParts M species r \u03bd, 0<m"
+        },
+        "Bosonize.V1S4.Support.orientation_univ": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "7fefc71017ddeceb83f67317b077d1ebd9040d8862ef4e02b28ce347da7df1dd",
+          "kind": "lemma",
+          "text": "lemma orientation_univ : (Finset.univ : Finset Bosonize.A06.Orientation) = {.right, .left}"
+        },
+        "Bosonize.V1S4.Support.parts_equal_iff": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "89e7c3aceda054bb7ea1e7a2e151d7673c171ea649bac9c848e646276faaeab8",
+          "kind": "lemma",
+          "text": "lemma parts_equal_iff {M : \u2115} (r t : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : (\u2200 o, (parts r o : Multiset \u2115) = (parts t o : Multiset \u2115)) \u2194 r=t"
+        },
+        "Bosonize.V1S4.Support.parts_pos": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "8aad62572a5419a60ee7178444b3fbc6f6ad0b17dbadc6eec11532f058a9451f",
+          "kind": "lemma",
+          "text": "lemma parts_pos {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (o : Bosonize.A06.Orientation) : \u2200 n \u2208 parts r o, 0<n"
+        },
+        "Bosonize.V1S4.Support.parts_single_add": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "eda32872aadcf45290c3aec692dfd95a6697c97e1158ad2c63e3c40d64b024ae",
+          "kind": "lemma",
+          "text": "lemma parts_single_add {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (a : Bosonize.A08.OscMode M) (o : Bosonize.A06.Orientation) : (parts (r+Finsupp.single a 1) o : Multiset \u2115) = (parts r o : Multiset \u2115) + if o=a.1 then {a.2.val+1} else 0"
+        },
+        "Bosonize.V1S4.Support.parts_single_sub": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "aca73c24844a4a8e765a14091ef7536930bcee6c30893a571cd9c046c31d16fc",
+          "kind": "lemma",
+          "text": "lemma parts_single_sub {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (a : Bosonize.A08.OscMode M) (hr : 0 < r a) (o : Bosonize.A06.Orientation) : (parts (r-Finsupp.single a 1) o : Multiset \u2115) = if o=a.1 then (parts r o : Multiset \u2115).erase (a.2.val+1) else (parts r o : Multiset \u2115)"
+        },
+        "Bosonize.V1S4.Support.parts_sum": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "d4462d9c02b3430af874271ad9419fe22c71760f50b9f93dcab1ba15f7847ae4",
+          "kind": "lemma",
+          "text": "lemma parts_sum {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) (o : Bosonize.A06.Orientation) : (parts r o).sum = \u2211 i : Fin M, r (o,i) * (i.val+1)"
+        },
+        "Bosonize.V1S4.Support.parts_total": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "e7d68b2ab56ee2b187532274d6a5f8e12c3dc99ceb202b3b2271a9ac4563dfe7",
+          "kind": "lemma",
+          "text": "lemma parts_total {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : (\u2211 o : Bosonize.A06.Orientation, (parts r o).sum) = weightedEnergy r"
+        },
+        "Bosonize.V1S4.Support.parts_zero": {
+          "ctx": "be1af4df6e0f7758864f6f6531bf839bd16046bafb4a766ffb2b698a640ff6b1",
+          "hash": "f316553edf24dc21aa9fa38fe09fbd7b0c7a6c0ea0f5e041050a864e682a34c1",
+          "kind": "lemma",
+          "text": "lemma parts_zero {M : \u2115} (o : Bosonize.A06.Orientation) : parts (0 : Bosonize.A08.OscMode M \u2192\u2080 \u2115) o = []"
+        },
         "Bosonize.V1S4.covered_dressed_moment_contract": {
-          "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "ctx": "28e7c2ab31066945368d4bbb24864db8fda3242629fd5fc2a01457561e39b520",
           "hash": "4de05814670423585d2f20c8de7aed0fdf7ef8575f2060df54b5f3a340a320f3",
           "kind": "theorem",
           "text": "theorem covered_dressed_moment_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (hp : Bosonize.Ch18.HyperbolicPair) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : \u2200 v \u2208 survivingBranches hp.c (-hp.s) w, PathCovered h Ns species K v) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta (\u03c3 := \u03c3) h M species ((Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (Bosonize.A08.wordElement M w))) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omegaP M hp (Bosonize.A08.wordElement M w)"
         },
         "Bosonize.V1S4.covered_word_action_contract": {
-          "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "ctx": "28e7c2ab31066945368d4bbb24864db8fda3242629fd5fc2a01457561e39b520",
           "hash": "775b14dd1bcf14e7d82a47e439ac0619e6dee7401faa86a2efccbb92e6a11b3d",
           "kind": "theorem",
           "text": "theorem covered_word_action_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : PathCovered h Ns species K w) : theta (\u03c3 := \u03c3) h M species (Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns) = polynomialState h M Ns species (Bosonize.A08.oscRep M (Bosonize.A08.wordElement M w) 1)"
         },
         "Bosonize.V1S4.covered_word_moment_contract": {
-          "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "ctx": "28e7c2ab31066945368d4bbb24864db8fda3242629fd5fc2a01457561e39b520",
           "hash": "456fe199938655e4d49e088fbf1fa456bd3547d1059ff2eed711aaae8118e6fd",
           "kind": "theorem",
           "text": "theorem covered_word_moment_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : PathCovered h Ns species K w) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta (\u03c3 := \u03c3) h M species (Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omega0 M (Bosonize.A08.wordElement M w)"
@@ -15341,25 +15461,25 @@
           "text": "theorem inverse_expansion_contract {M : \u2115} (c s : \u211d) (w : Word M) : \u2211 v \u2208 inverseBranches w, branchCoefficient c s w v \u2022 Bosonize.A08.wordElement M v = Bosonize.A08.bogoliubovMap M c s (Bosonize.A08.wordElement M w)"
         },
         "Bosonize.V1S4.oscillator_monomial_norm_eq_haldane_contract": {
-          "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "ctx": "28e7c2ab31066945368d4bbb24864db8fda3242629fd5fc2a01457561e39b520",
           "hash": "f71ac2182033f54d6b7074c7c220093f9afa1402fe280025a82a0ee325446fce",
           "kind": "theorem",
           "text": "theorem oscillator_monomial_norm_eq_haldane_contract {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : Bosonize.A08.oscMonomialNorm r = \u220f \u03bd : Bosonize.A06.Orientation, Bosonize.Ch11.hallFactor (((List.finRange M).flatMap fun i => List.replicate (r (\u03bd, i)) (i.val + 1) : List \u2115) : Multiset \u2115)"
         },
         "Bosonize.V1S4.polynomial_state_budget_contract": {
-          "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "ctx": "28e7c2ab31066945368d4bbb24864db8fda3242629fd5fc2a01457561e39b520",
           "hash": "881972ed3ccacaf706b9596186a4af1725cad8989d7c1813d62c344742eadb2c",
           "kind": "theorem",
           "text": "theorem polynomial_state_budget_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) : polynomialState h M Ns species p \u2208 Bosonize.A05.jointBudget h Ns K"
         },
         "Bosonize.V1S4.polynomial_state_gram_contract": {
-          "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "ctx": "28e7c2ab31066945368d4bbb24864db8fda3242629fd5fc2a01457561e39b520",
           "hash": "0204829f2aa06bad2ebd74c67af2b2367579fb2da6909ee93a79e836f1d081a1",
           "kind": "theorem",
           "text": "theorem polynomial_state_gram_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0 < h) (hinj : Function.Injective species) (hN : Bosonize.A05.admissible h Ns) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (p q : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) (hq : PolynomialDomain K q) : inner \u2102 (polynomialState h M Ns species p) (polynomialState h M Ns species q) = Bosonize.A08.oscPairing M p q"
         },
         "Bosonize.V1S4.polynomial_state_range_contract": {
-          "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "ctx": "28e7c2ab31066945368d4bbb24864db8fda3242629fd5fc2a01457561e39b520",
           "hash": "6ceb5038706fc432696343b1e1003ef902d63e63bbe67c7122dc12669fbc189e",
           "kind": "theorem",
           "text": "theorem polynomial_state_range_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) : polynomialState h M Ns species p \u2208 cutoffRange h M K Ns species"

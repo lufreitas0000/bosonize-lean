@@ -4,8 +4,8 @@
 
 **Phase B in progress, resumed 2026-10-19.** The reviewed Phase A interface
 was locked in `7f623b1`, with the positive-regulator amendment in `2e2be41`.
-Four contracts remain unproved: polynomial Gram, covered word action,
-covered word moment, and dressed moment. No S4 promotion or Phase C claim.
+Three contracts remain unproved: covered word action, covered word moment,
+and dressed moment. No S4 promotion or Phase C claim.
 Historical review snapshots below describe their recorded dates, not current
 placeholder counts.
 
@@ -164,3 +164,25 @@ creation/erasure lemmas, and `A05.word_tensor`/`rho_tensor`. Live lowering uses
 `Ch11.lowering_through_word_erase`; a killed species branch uses the
 one-species `Ch09.rho_lowering_budget_zero`, since another species can carry
 energy. This diagnosis is not a proof or acceptance verdict.
+
+## Phase B — polynomial Gram batch
+
+Reviewer `/root/s4_diagnosis` approved the additive `Support` bookkeeping
+helpers and the Gram proof, preserving all existing data and theorem headers.
+Reviewed helper artifact SHA-256:
+`0dd894faa7b6b62338c3109dccf629c6a2c1cdeda214382ee4a86274299972fc`.
+The review covers positive mode counts, energies, insertion/erasure of one
+part, exponent recovery, species separation and product normalization. The
+reviewed source before integration was
+`2a677303f9a61f68e1befc4eebc8c2648f032fa4072a703fbedc8b9567579f7e`.
+Verdict: approve the specified helper amendment and Gram proof integration;
+not final acceptance.
+
+The canonical module now proves `polynomial_state_gram_contract` by tensor
+factorization, the actual one-species `word_gram` theorem and finite support
+sums. The sandboxed module build passes with only three remaining `sorry`
+warnings. A fresh axiom audit of this contract contains only the permitted
+standard axioms. Strict locks pass after adding only the reviewed S4 helper
+records (1242 theorem headers / 1302 commands globally). No existing Core or
+other staging records changed. The scoped manifest diff against the initial
+baseline is kept free of unrelated ordering/serialization changes.

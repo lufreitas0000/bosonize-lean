@@ -212,6 +212,178 @@ noncomputable def polynomialState {σ : Type*} [Fintype σ] [LinearOrder σ]
   exact ∑ r ∈ p.support,
     (MvPolynomial.lcoeff ℂ r p) • monomialState h M Ns species r
 
+namespace Support
+def parts {M : ℕ} (r : Bosonize.A08.OscMode M →₀ ℕ)
+    (o : Bosonize.A06.Orientation) : List ℕ :=
+  (List.finRange M).flatMap fun i => List.replicate (r (o,i)) (i.val+1)
+lemma count_parts {M : ℕ} (r : Bosonize.A08.OscMode M →₀ ℕ)
+    (o : Bosonize.A06.Orientation) (m : ℕ) :
+    (parts r o).count m = ∑ i : Fin M, if m=i.val+1 then r (o,i) else 0 := by
+  unfold parts
+  rw [List.count_flatMap]
+  simp only [List.finRange, List.map_ofFn, Function.comp_apply, List.sum_ofFn]
+  apply Finset.sum_congr rfl
+  intro i hi
+  by_cases he : m = i.val+1
+  · simp [← he]
+  · have hne : i.val+1 ≠ m := Ne.symm he
+    simp [List.count_replicate, he, hne]
+lemma count_parts_mode {M : ℕ} (r : Bosonize.A08.OscMode M →₀ ℕ)
+    (o : Bosonize.A06.Orientation) (i : Fin M) :
+    (parts r o).count (i.val+1) = r (o,i) := by
+  rw [count_parts]
+  have he (j : Fin M) : (i.val+1=j.val+1) ↔ i=j := by omega
+  simp_rw [he]
+  simp
+lemma parts_pos {M : ℕ} (r : Bosonize.A08.OscMode M →₀ ℕ)
+    (o : Bosonize.A06.Orientation) : ∀ n ∈ parts r o, 0<n := by
+  intro n hn
+  obtain ⟨i, hi, hn⟩ := List.mem_flatMap.mp hn
+  obtain ⟨_, rfl⟩ := List.mem_replicate.mp hn
+  omega
+lemma parts_sum {M : ℕ} (r : Bosonize.A08.OscMode M →₀ ℕ)
+    (o : Bosonize.A06.Orientation) :
+    (parts r o).sum = ∑ i : Fin M, r (o,i) * (i.val+1) := by
+  have hf : ∀ is : List (Fin M),
+      (is.flatMap fun i => List.replicate (r (o,i)) (i.val+1)).sum =
+      (is.map fun i => r (o,i) * (i.val+1)).sum := by
+    intro is
+    induction is with
+    | nil => simp
+    | cons i is ih => simp [ih, Nat.mul_comm]
+  unfold parts
+  rw [hf]
+  simp only [List.finRange, List.map_ofFn, Function.comp_apply, List.sum_ofFn]
+lemma parts_zero {M : ℕ} (o : Bosonize.A06.Orientation) :
+    parts (0 : Bosonize.A08.OscMode M →₀ ℕ) o = [] := by
+  simp [parts]
+lemma parts_single_add {M : ℕ} (r : Bosonize.A08.OscMode M →₀ ℕ)
+    (a : Bosonize.A08.OscMode M) (o : Bosonize.A06.Orientation) :
+    (parts (r+Finsupp.single a 1) o : Multiset ℕ) =
+      (parts r o : Multiset ℕ) + if o=a.1 then {a.2.val+1} else 0 := by
+  apply Multiset.ext.mpr
+  intro m
+  simp only [Multiset.count_add, Multiset.coe_count]
+  rw [count_parts, count_parts]
+  simp only [Finsupp.add_apply]
+  have ht (i : Fin M) :
+      (if m=i.val+1 then (r (o,i) + Finsupp.single a 1 (o,i)) else 0) =
+        (if m=i.val+1 then r (o,i) else 0) +
+        (if m=i.val+1 then Finsupp.single a 1 (o,i) else 0) := by
+    split_ifs <;> simp
+  simp_rw [ht]
+  rw [Finset.sum_add_distrib]
+  congr 1
+  have hs (i : Fin M) :
+      (if m=i.val+1 then Finsupp.single a 1 (o,i) else 0) =
+        if i=a.2 then (if o=a.1 ∧ m=a.2.val+1 then 1 else 0) else 0 := by
+    rcases a with ⟨v,j⟩
+    by_cases ho : o=v <;> by_cases hi : i=j <;>
+      simp [ho, hi, Prod.mk.injEq]
+  simp_rw [hs]
+  simp
+  split_ifs <;> simp_all
+lemma parts_single_sub {M : ℕ} (r : Bosonize.A08.OscMode M →₀ ℕ)
+    (a : Bosonize.A08.OscMode M) (hr : 0 < r a)
+    (o : Bosonize.A06.Orientation) :
+    (parts (r-Finsupp.single a 1) o : Multiset ℕ) =
+      if o=a.1 then (parts r o : Multiset ℕ).erase (a.2.val+1)
+      else (parts r o : Multiset ℕ) := by
+  have hle : Finsupp.single a 1 ≤ r := by
+    intro b
+    by_cases hb : b=a
+    · subst b; simpa using (Nat.succ_le_of_lt hr)
+    · simp [hb]
+  have hadd := parts_single_add (r-Finsupp.single a 1) a o
+  rw [tsub_add_cancel_of_le hle] at hadd
+  by_cases ho : o=a.1
+  · rw [ite_eq_left ho] at hadd ⊢
+    exact (Multiset.add_singleton_eq_iff.mp hadd.symm).2
+  · rw [ite_eq_right ho] at hadd ⊢
+    simpa using hadd.symm
+lemma parts_equal_iff {M : ℕ} (r t : Bosonize.A08.OscMode M →₀ ℕ) :
+    (∀ o, (parts r o : Multiset ℕ) = (parts t o : Multiset ℕ)) ↔ r=t := by
+  constructor
+  · intro h
+    ext ⟨o,i⟩
+    have hc := congrArg (Multiset.count (i.val+1)) (h o)
+    simpa only [Multiset.coe_count, count_parts_mode] using hc
+  · rintro rfl; simp
+lemma parts_total {M : ℕ} (r : Bosonize.A08.OscMode M →₀ ℕ) :
+    (∑ o : Bosonize.A06.Orientation, (parts r o).sum) = weightedEnergy r := by
+  simp_rw [parts_sum]
+  rw [weightedEnergy, Finsupp.sum_fintype _ _ (by intro mode; simp),
+    Fintype.sum_prod_type]
+lemma orientation_univ : (Finset.univ : Finset Bosonize.A06.Orientation) =
+    {.right, .left} := by ext o; cases o <;> simp
+lemma multi_active {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (o : Bosonize.A06.Orientation) :
+    multiIndexParts M species r (species o) = parts r o := by
+  cases o <;> simp [multiIndexParts, parts, hinj.eq_iff]
+lemma multi_other {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (ν : σ)
+    (hr : species .right ≠ ν) (hl : species .left ≠ ν) :
+    multiIndexParts M species r ν = [] := by
+  simp [multiIndexParts, hr, hl]
+lemma multi_pos {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (ν : σ) :
+    ∀ m ∈ multiIndexParts M species r ν, 0<m := by
+  by_cases hr : species .right = ν
+  · subst ν; rw [multi_active species hinj]; exact parts_pos r _
+  by_cases hl : species .left = ν
+  · subst ν; rw [multi_active species hinj]; exact parts_pos r _
+  rw [multi_other species r ν hr hl]; simp
+lemma multi_bound {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (ν : σ) :
+    (multiIndexParts M species r ν).sum ≤ weightedEnergy r := by
+  have hb (o : Bosonize.A06.Orientation) : (parts r o).sum ≤ weightedEnergy r := by
+    rw [← parts_total]
+    exact Finset.single_le_sum (f := fun o => (parts r o).sum) (fun _ _ => Nat.zero_le _) (Finset.mem_univ o)
+  by_cases hr : species .right = ν
+  · subst ν; rw [multi_active species hinj]; exact hb _
+  by_cases hl : species .left = ν
+  · subst ν; rw [multi_active species hinj]; exact hb _
+  rw [multi_other species r ν hr hl]; exact Nat.zero_le _
+lemma multi_equal_iff {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r t : Bosonize.A08.OscMode M →₀ ℕ) :
+    (∀ ν, (multiIndexParts M species r ν : Multiset ℕ) =
+      (multiIndexParts M species t ν : Multiset ℕ)) ↔ r=t := by
+  constructor
+  · intro he
+    apply (parts_equal_iff r t).mp
+    intro o
+    simpa only [multi_active species hinj] using he (species o)
+  · rintro rfl; simp
+lemma multi_hall_prod {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) :
+    (∏ ν : σ, Bosonize.Ch11.hallFactor
+      (multiIndexParts M species r ν : Multiset ℕ)) =
+      ∏ o : Bosonize.A06.Orientation, Bosonize.Ch11.hallFactor (parts r o : Multiset ℕ) := by
+  have ht (ν : σ) : Bosonize.Ch11.hallFactor
+      (multiIndexParts M species r ν : Multiset ℕ) =
+      (if species .right=ν then Bosonize.Ch11.hallFactor (parts r .right : Multiset ℕ) else 1) *
+      (if species .left=ν then Bosonize.Ch11.hallFactor (parts r .left : Multiset ℕ) else 1) := by
+    by_cases hr : species .right=ν
+    · subst ν
+      simp [multi_active species hinj, hinj.eq_iff]
+    by_cases hl : species .left=ν
+    · subst ν
+      simp [multi_active species hinj, hinj.eq_iff]
+    rw [multi_other species r ν hr hl]
+    simp [hr, hl, Bosonize.Ch11.hallFactor]
+  simp_rw [ht]
+  rw [Finset.prod_mul_distrib]
+  simp [orientation_univ]
+end Support
+
+open Support
+
 /-- The polynomial map's explicit truncated range: the span of current
 partition states whose oscillator modes lie below the cutoff. -/
 noncomputable def cutoffRange {σ : Type*} [Fintype σ] [LinearOrder σ]
@@ -300,7 +472,58 @@ theorem polynomial_state_gram_contract {σ : Type*} [Fintype σ] [LinearOrder σ
     inner ℂ (polynomialState h M Ns species p)
       (polynomialState h M Ns species q) =
       Bosonize.A08.oscPairing M p q := by
-  sorry
+  classical
+  have hm (r t : Bosonize.A08.OscMode M →₀ ℕ)
+      (hr : weightedEnergy r ≤ K) (ht : weightedEnergy t ≤ K) :
+      inner ℂ (monomialState h M Ns species r) (monomialState h M Ns species t) =
+        if r=t then (Bosonize.A08.oscMonomialNorm r : ℂ) else 0 := by
+    rw [monomialState, monomialState, Bosonize.A05.word_tensor h Ns hN,
+      Bosonize.A05.word_tensor h Ns hN, Bosonize.A05.tensor_inner]
+    have hg (ν : σ) := Bosonize.Ch11.word_gram h hh (Ns ν) (hN ν) K
+      (multiIndexParts M species r ν) (multiIndexParts M species t ν)
+      (multi_pos species hinj r ν) (multi_pos species hinj t ν)
+      ((multi_bound species hinj r ν).trans hr)
+      ((multi_bound species hinj t ν).trans ht) (hR2 ν)
+    simp_rw [hg]
+    by_cases he : r=t
+    · subst t
+      simp only [ite_true]
+      rw [← Nat.cast_prod, multi_hall_prod species hinj]
+      exact congrArg (fun n : ℕ => (n : ℂ))
+        (oscillator_monomial_norm_eq_haldane_contract r).symm
+    · rw [ite_eq_right he]
+      have hn : ¬ ∀ ν, (multiIndexParts M species r ν : Multiset ℕ) =
+          (multiIndexParts M species t ν : Multiset ℕ) := by
+        simpa only [multi_equal_iff species hinj] using he
+      push Not at hn
+      obtain ⟨ν,hν⟩ := hn
+      exact Finset.prod_eq_zero (Finset.mem_univ ν) (ite_eq_right hν)
+  unfold polynomialState Bosonize.A08.oscPairing
+  rw [sum_inner]
+  simp only [inner_smul_left, inner_sum, inner_smul_right]
+  apply Finset.sum_congr rfl
+  intro r hr
+  have hs : (∑ t ∈ q.support, MvPolynomial.lcoeff ℂ t q *
+      inner ℂ (monomialState h M Ns species r) (monomialState h M Ns species t)) =
+      (Bosonize.A08.oscMonomialNorm r : ℂ) * MvPolynomial.lcoeff ℂ r q := by
+    have hterm (t) (ht : t ∈ q.support) := hm r t (hp r hr) (hq t ht)
+    trans ∑ t ∈ q.support, MvPolynomial.lcoeff ℂ t q *
+      (if r=t then (Bosonize.A08.oscMonomialNorm r : ℂ) else 0)
+    · exact Finset.sum_congr rfl (fun t ht => by rw [hterm t ht])
+    · by_cases hmem : r ∈ q.support
+      · simp [hmem, mul_comm]
+      · have hz : MvPolynomial.lcoeff ℂ r q = 0 := MvPolynomial.notMem_support_iff.mp hmem
+        simp [hmem, hz]
+  calc
+    _ = star (MvPolynomial.lcoeff ℂ r p) *
+        (∑ t ∈ q.support, MvPolynomial.lcoeff ℂ t q *
+          inner ℂ (monomialState h M Ns species r) (monomialState h M Ns species t)) := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro t ht
+      change _ * (star _ * _) = star _ * (_ * _)
+      ring
+    _ = _ := by rw [hs]; ring
 
 /-- The map lands in the actual fixed-charge total-energy budget. -/
 theorem polynomial_state_budget_contract {σ : Type*} [Fintype σ] [LinearOrder σ]
