@@ -1,0 +1,13 @@
+{
+  "source_sha256": "3f436b970c78bb5126a18ab0ffc4a523bea61dd855f60b491baf410f96770b3e",
+  "named_declarations_audited": 92,
+  "named_theorems_and_lemmas": 53,
+  "old_core_files_preserved": 38,
+  "new_core_count": 39,
+  "stub_record_migration": "byte-identical path-only",
+  "source_migration": "byte-identical",
+  "phase_b_and_c_axiom_outputs": "identical",
+  "pedagogical_preservation": "baseline bytes plus exactly one reviewed addition",
+  "introduced_note_links": "resolved",
+  "source_placeholder_tokens": 0
+}

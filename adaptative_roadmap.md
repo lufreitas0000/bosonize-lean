@@ -1,6 +1,6 @@
 # Adaptive roadmap and Kanban pipeline
 
-Updated: 2026-10-18. **V1-S3 Phase C complete and accepted.** All 62 contracts are proved, with zero placeholders and warnings; all 87 public declarations have clean complete axiom audits. The reviewed source is promoted to Core, with all 37 previous Core records preserved (38 total). Independent proof/pedagogy reviews and local CI passed. See [the S3 acceptance receipt](docs/plans/v1-s3/phase-c-acceptance-2026-10-18.md). Hamiltonian transport remains unproved. Stop after S3; do not begin S4. Earlier sprint stop/status snapshots below are historical and superseded by this acceptance.
+Updated: 2026-10-19. **V1-S4 Phase C complete and accepted.** Exact finite current-word and inverse-Bogoliubov moment comparisons are promoted with derived path/length margins, 53 proved named lemmas/theorems, complete 92-declaration clean axiom audits, independent proof/pedagogy reviews, strict locks and local CI. All 38 prior Core sources are preserved (39 total). See [the S4 acceptance receipt](docs/plans/v1-s4/phase-c-acceptance-2026-10-19.md). Stop after S4; do not begin S5. Earlier status and stop snapshots below are historical.
 
 This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures. The requested execution policy for the next implementation is external-first (Jules and account-eligible OpenAI API), with no default Antigravity author/reviewer or desktop-subagent fallback. Skills/rules and the direct judge entrypoints now enforce that default policy within the controller; the desktop account itself remains outside its control.
 
@@ -412,3 +412,31 @@ See [Phase C acceptance](docs/plans/v1-s3/phase-c-acceptance-2026-10-18.md) and
 This acceptance concerns the formal charge/polynomial model. Hamiltonian
 transport, finite-CAR equivalence and physical interacting-state duality remain
 unproved. No push or remote CI is claimed. S4 has not been started.
+
+## V1-S4 accepted — 2026-10-19
+
+S4 is Phase C complete: the exact finite current-word comparison is promoted
+as `Bosonize/Core/V1S4FiniteCurrentComparison.lean`, SHA-256
+`3f436b970c78bb5126a18ab0ffc4a523bea61dd855f60b491baf410f96770b3e`.
+All eight original contracts and the added helper/corollary proofs are complete;
+all 53 named proof declarations and all 92 named declarations have fresh clean
+axiom audits. The module has zero placeholders and warnings. The prior 38 Core
+sources and their freeze records are unchanged; 39 Core sources are now frozen.
+
+The current dictionary sends creation to positive transfer and weighted
+annihilation to negative transfer. Explicit rightmost-first species-energy
+paths give exact ordinary and inverse-Bogoliubov-dressed moments in the actual
+free finite sea. The derived numerical wrapper is `2*d*M + |Nν| ≤ h` for all
+species and words of length at most `d`; every expanded branch is covered.
+The polynomial map has its weighted Gram identity, restricted zero kernel,
+fixed-charge budget inclusion and cutoff-current range inclusion. No whole
+budget surjectivity is asserted when required partition parts exceed M.
+
+Independent mathematical/proof and additive pedagogical reviews PASS.
+Sandboxed local CI, complete aggregator axiom audits and strict statement/Core
+locks pass. See [acceptance evidence](docs/plans/v1-s4/phase-c-acceptance-2026-10-19.md)
+and [the companion](docs/companion/Bosonize/Core/V1S4FiniteCurrentComparison.md).
+The scope is transformed-observable comparison in a free sea; interacting
+finite states and physical-field/norm comparisons remain separate.
+**Stop after S4. S5 has not started.** No push or release is authorized here.
+Earlier sprint stop/status statements in this document are historical.

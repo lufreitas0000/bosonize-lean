@@ -319,3 +319,98 @@ The Hamiltonian assertion in (20.11) remains an unformalized reference target:
 S3 contains neither the complete algebra-valued Hamiltonian nor its covariance
 proof. Finite-CAR identification, physical interacting-state comparison,
 analytic evaluation and continuum interpretation remain separate obligations.
+
+#### S4 verified realization: exact finite current-word moments
+
+The [S4 current-word module](../../Bosonize/Core/V1S4FiniteCurrentComparison.lean)
+connects the algebraic oscillator polynomials to actual finite CAR current
+states. Fix a positive regulator $h$, the band of size $L=2h$, admissible
+integer charges $N_\nu$, and two distinct species assigned to the oscillator
+orientations. A mode indexed by $i\in\{0,\ldots,M-1\}$ has the positive weight
+$m=i+1$. The free-word substitution is
+$$
+\Theta(C_{\nu m})=\rho_\nu(+m),\qquad
+\Theta(A_{\nu m})=\rho_\nu(-m).
+$$
+The positive density transfer raises excitation energy; the negative transfer
+lowers it. Creation is multiplication by the corresponding polynomial variable,
+and annihilation is $m$ times its derivative. There is no square-root
+normalization. The substitution preserves the displayed order of free words;
+it does not assert oscillator commutation relations on the entire finite
+Fock space.
+
+For an exponent array $r=(r_{\nu m})$, the polynomial-to-current map sends
+$X^r$ to the ordered product of $r_{\nu m}$ copies of each positive current,
+applied to the finite free sea $\Omega_N$. It extends by finite coefficient
+sums. The polynomial energy is
+$$
+\mathcal E(r)=\sum_{\nu,m} m\,r_{\nu m},
+$$
+which differs from the number of polynomial factors. On polynomials whose
+monomials satisfy $\mathcal E(r)\le K$, the image lies in the actual fixed-charge
+total-energy budget. Under $2K+|N_\nu|\le h$ for every species, the map has the
+exact weighted Gram form
+$$
+\langle J_N X^r,J_N X^t\rangle
+ =\delta_{rt}\prod_{\nu,m}m^{r_{\nu m}}r_{\nu m}!,
+$$
+with the corresponding sesquilinear identity for arbitrary polynomials in
+that domain. Its restricted kernel is zero. The normalization is the Hall
+partition factor of the actual current states. The image is contained in the
+span of partitions using parts at most $M$; no surjectivity onto the whole
+energy budget is asserted when $M<K$.
+
+A displayed word acts from its right edge. The path certificate records the
+excitation energy of each active species after every such step. A creation
+adds $m$ in its species. An annihilation requires the source margin
+$m+E_\nu+|N_\nu|\le h$; if $E_\nu<m$, it kills that branch. Otherwise the
+certificate continues with that species energy reduced by $m$. Every live
+intermediate total energy must stay within $K$. These are numerical checks
+on suffixes, rather than an assumed equality of the two actions. The selected
+word theorems also retain the global Gram margin $2K+|N_\nu|\le h$.
+
+The proof tracks a scalar monomial through this execution. Positive-current
+commutativity handles insertion of a part. The finite Haldane lowering theorem
+removes a matching part with coefficient $m r_{\nu m}$; the species tensor
+realization transfers that identity to the multispecies carrier. A lowering
+mode above the relevant energy annihilates the actual vector by the
+one-species negative-budget theorem. Pairing with the sea extracts the
+polynomial constant coefficient, giving
+$$
+\langle\Omega_N,\Theta(w)\Omega_N\rangle=\omega_0(w)
+$$
+for every covered word. This method uses a sufficient certified domain; it
+does not claim that its combined margins are optimal.
+
+For the squeezed functional, expand the actual inverse Bogoliubov
+substitution before checking the paths. Each generator independently keeps
+its label with coefficient $c$, or flips creation/annihilation and orientation
+with coefficient $-s$. Every branch with nonzero total coefficient must be
+covered. Linearity then proves
+$$
+\langle\Omega_N,\Theta(\beta_P^{-1}(w))\Omega_N\rangle=\omega_P(w).
+$$
+The same comparisons hold for finite linear combinations with the stated
+word-by-word branch coverage. A convenient fully proved numerical criterion is
+$$
+|w|\le d,\qquad 2dM+|N_\nu|\le h\quad\text{for every species}.
+$$
+It derives the certificates with $K=dM$, including every inverse-substitution
+branch because substitution preserves word length. The regulator therefore
+depends explicitly on the maximum word length.
+
+The checked examples include the empty-mode constant case, unsqueezed
+contractions and mixed species at $h=4,M=1$, and an order-sensitive fourth-order
+word at $h=8,M=1$. For $c=5/4,s=3/4$, both the quadratic and fourth-order
+dressed comparisons have explicit finite regulators. Raw free-sea currents
+still give the unsqueezed functional: for instance the mixed annihilator pair
+has zero $\omega_0$ expectation and nonzero $\omega_P$ expectation at these
+nonzero squeeze parameters. The inverse substitution is essential.
+
+This establishes selected transformed-observable moments in a free finite
+sea. It constructs no interacting ground state and identifies no finite
+interacting density matrix with $\omega_P$. Physical field/vertex equality,
+intermediate-projection residuals, full-budget surjectivity, finite particle-hole
+symmetry and analytic or thermodynamic limits remain separate obligations.
+Exact declarations, reviewed hashes and validation receipts are in the
+[S4 companion](../../docs/companion/Bosonize/Core/V1S4FiniteCurrentComparison.md).

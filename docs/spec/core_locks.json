@@ -36,5 +36,6 @@
   "Bosonize/Core/V1S1PairingCombinatorics.lean": "33fefe1fafbdde6c544925a641ac8cdec496ce571f3036558500a53ddb0ddeff",
   "Bosonize/Core/V1S1OrderedWick.lean": "f26d52cb29008f7d39030157368b7b9131bf14a4db173e97ef404062220852a9",
   "Bosonize/Core/V1S2FormalVertices.lean": "17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020",
-  "Bosonize/Core/V1S3FormalDuality.lean": "236e5ca07184e63a29ded6b028008cca7543d3ae5e5ef1bb849b72cb06f83694"
+  "Bosonize/Core/V1S3FormalDuality.lean": "236e5ca07184e63a29ded6b028008cca7543d3ae5e5ef1bb849b72cb06f83694",
+  "Bosonize/Core/V1S4FiniteCurrentComparison.lean": "3f436b970c78bb5126a18ab0ffc4a523bea61dd855f60b491baf410f96770b3e"
 }

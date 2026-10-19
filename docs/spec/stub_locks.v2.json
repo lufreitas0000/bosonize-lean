@@ -14958,7 +14958,7 @@
         }
       }
     },
-    "BosonizeStubs/V1S4FiniteCurrentComparison.lean": {
+    "Bosonize/Core/V1S4FiniteCurrentComparison.lean": {
       "commands": [
         {
           "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",

@@ -1,15 +1,52 @@
 # V1-S4 exact finite current-word comparison
 
-## Current phase
+## Current phase — Phase C complete, 2026-10-19
 
-**Phase B in progress, resumed 2026-10-19.** The reviewed Phase A interface
-was locked in `7f623b1`, with the positive-regulator amendment in `2e2be41`.
-All eight original contracts are now proved. Complete declaration audits,
-corollary integration, final independent review and Phase C remain pending. No S4 promotion or Phase C claim.
-Historical review snapshots below describe their recorded dates, not current
-placeholder counts.
+Accepted source: `Bosonize/Core/V1S4FiniteCurrentComparison.lean`, SHA-256
+`3f436b970c78bb5126a18ab0ffc4a523bea61dd855f60b491baf410f96770b3e`.
+All eight original contracts and all added support/corollary proofs are complete.
+The module contains 53 named lemmas/theorems and 92 named declarations in total.
+Fresh complete audits through `import Bosonize` use only permitted standard
+axioms; there are zero source placeholders and zero compiler warnings.
 
-## Candidate interface
+The independent mathematical/proof review and pedagogical review are PASS.
+The promotion is byte-identical, preserves all 38 earlier Core sources and
+records (39 now frozen), and migrates only the S4 statement-lock path. Both
+strict guards and sandboxed local CI pass after promotion. S5 is untouched.
+See `docs/plans/v1-s4/phase-c-acceptance-2026-10-19.md`, the complete review
+record `docs/plans/v1-s4/independent-review-2026-10-19.md`, and the Phase C
+build/axiom/CI/preservation receipts in that directory.
+
+## Accepted declaration map
+
+| Mathematical content | Declaration anchors |
+| --- | --- |
+| Actual finite-current free-word substitution | `theta`, `weight` |
+| Numerical suffix certificate and full substitution branches | `BranchPath`, `PathCovered`, `inverseBranches`, `survivingBranches` |
+| Exact inverse-Bogoliubov expansion | `inverse_expansion_contract`, `inverse_branches_length` |
+| Unnormalized polynomial/partition map and weighted domain | `polynomialState`, `monomialState`, `weightedEnergy`, `PolynomialDomain` |
+| Gram normalization and restricted zero kernel | `oscillator_monomial_norm_eq_haldane_contract`, `polynomial_state_gram_contract`, `polynomial_state_kernel` |
+| Exact physical budget and cutoff-span inclusions | `polynomial_state_budget_contract`, `polynomial_state_range_contract` |
+| Current insertion/lowering and rightmost-first induction | `Support.mono_creation`, `Support.mono_lowering`, `Support.execution_action` |
+| Vacuum compatibility | `Support.vacuum_polynomial`, `constant_expectation` |
+| Selected ordinary/dressed moments | `covered_word_action_contract`, `covered_word_moment_contract`, `covered_dressed_moment_contract` |
+| Derived word-length wrapper and finite combinations | `uniform_margin_path`, `uniform_word_moment`, `uniform_dressed_moment`, `covered_word_sum_moment`, `covered_dressed_sum_moment` |
+
+Pedagogical mapping: the new S4 section of `notes/md/ch20_CDW.md` explains
+these constructions after its existing S2/S3 realizations. Its prior 321 lines
+are preserved byte-for-byte; the independently reviewed 5,094-byte addition
+covers dictionary, carriers, normalization, path/R2 hypotheses, proof argument,
+expansion, examples and scope. The note links to this companion and Core source.
+The code realizes selected free-sea observables, not an interacting finite
+state or a physical field/vertex identity; cutoff range inclusion is not full
+budget surjectivity. Combined path/R2 hypotheses are sufficient, not asserted
+optimal. No push or release was performed.
+
+The remaining sections retain historical Phase A/B provenance. Their candidate,
+placeholder and pending-review statements describe those earlier snapshots;
+they are superseded by this accepted status and the final receipts.
+
+## Historical Phase A candidate interface
 
 Source: `BosonizeStubs/V1S4FiniteCurrentComparison.lean`.
 
@@ -26,7 +63,7 @@ contracts only and establish no S4 result. The example declarations instantiate
 the moment contracts with explicit path hypotheses; their conclusions still
 depend on those placeholders.
 
-## Exact current review snapshot
+## Historical pre-lock review snapshot
 
 * Lean source: `804f72a4ce81b0173675357376a57c86bbb06a5d0496de3968fc2f5d55e4baf0`
 * Derivation: `493d13ef9dd6ae06c5e568bde37e3571396f3a06ae8a36927c78eebce208cf17`
