@@ -2,9 +2,12 @@
 
 ## Current phase
 
-Phase A candidate after two independent review rounds. The latest verdict is
-REVISE; no scoped lock exists, no Phase B proof work has begun, and no Phase C
-pedagogy has been changed. The accepted outcome remains pending.
+**Phase B in progress, resumed 2026-10-19.** The reviewed Phase A interface
+was locked in `7f623b1`, with the positive-regulator amendment in `2e2be41`.
+Four contracts remain unproved: polynomial Gram, covered word action,
+covered word moment, and dressed moment. No S4 promotion or Phase C claim.
+Historical review snapshots below describe their recorded dates, not current
+placeholder counts.
 
 ## Candidate interface
 
@@ -129,3 +132,35 @@ match to the selected proof route. No other contract changes are authorized.
 The derivation now records this boundary. The amended source and lock manifest
 are awaiting exact-hash Phase A re-review; the earlier PASS does not cover the
 amended signatures.
+
+## Phase B resume — 2026-10-19, first proof batch
+
+The inverse-Bogoliubov expansion is now proved by word induction. Its two
+head images are disjoint because the creation bit flips, so the finite-set
+sum splits without lost multiplicities; coefficients multiply in displayed
+order. The monomial norm equality is proved by counting repeated positive
+mode labels and extending the Hall product over all cutoff modes.
+
+Independent reviewer `/root/s4_diagnosis` approved removing the unused
+`σ`, instance, species-map and injectivity binders **only** from
+`oscillator_monomial_norm_eq_haldane_contract`: neither side depends on them.
+The equality itself is unchanged. The Gram/action hypotheses retain species
+injectivity. Reviewed pre-amendment source hash:
+`af1976a648af9b4f4c5388aa2fc2ede99ada3fbccb052d9ae83aca1e0583c4d7`;
+reviewed scratch norm proof hash:
+`0da7b86f02f227b1c2c0125a2ca3be9fd73c36ddc4cc146facbed3298f8c7189`.
+Verdict: approve this exact binder removal; not sprint/proof acceptance.
+
+Fresh sandboxed module build passes with exactly four remaining `sorry`
+warnings and no other S4 warnings. The audit in
+`docs/plans/v1-s4/phase-a-audit.lean` confirms standard axioms only for the two
+new proofs and existing range/budget proofs. The four unfinished contracts
+still depend on `sorryAx`. Strict lock verification passes; manifest records
+outside this S4 staging file are unchanged.
+
+The independent read-only action diagnosis found the path condition adequate.
+Use a scalar-monomial invariant along `w.reverse`, canonical-list count,
+creation/erasure lemmas, and `A05.word_tensor`/`rho_tensor`. Live lowering uses
+`Ch11.lowering_through_word_erase`; a killed species branch uses the
+one-species `Ch09.rho_lowering_budget_zero`, since another species can carry
+energy. This diagnosis is not a proof or acceptance verdict.

@@ -124,7 +124,50 @@ theorem inverse_expansion_contract {M : ℕ} (c s : ℝ) (w : Word M) :
       branchCoefficient c s w v • Bosonize.A08.wordElement M v =
         Bosonize.A08.bogoliubovMap M c s
           (Bosonize.A08.wordElement M w) := by
-  sorry
+  classical
+  have hne (g : Generator M) : g ≠ flipGenerator g := by
+    intro he
+    have hb := congrArg Prod.fst he
+    cases g.1 <;> simp [flipGenerator] at hb
+  have hbranches (g : Generator M) (t : Word M) :
+      inverseBranches (g :: t) =
+        (inverseBranches t).image (List.cons g) ∪
+          (inverseBranches t).image (List.cons (flipGenerator g)) := by
+    ext v
+    simp only [inverseBranches, Finset.mem_biUnion, Finset.mem_insert,
+      Finset.mem_singleton, Finset.mem_union, Finset.mem_image]
+    aesop
+  induction w with
+  | nil => simp [inverseBranches, branchCoefficient, Bosonize.A08.wordElement]
+  | cons g t ih =>
+    rw [hbranches, Finset.sum_union]
+    · rw [Finset.sum_image (by intro a ha b hb he; exact List.cons.inj he |>.2),
+        Finset.sum_image (by intro a ha b hb he; exact List.cons.inj he |>.2)]
+      have hkeep (v : Word M) :
+          branchCoefficient c s (g::t) (g::v) = (c : ℂ) * branchCoefficient c s t v := by
+        simp [branchCoefficient]
+      have hflip (v : Word M) :
+          branchCoefficient c s (g::t) (flipGenerator g::v) =
+            (s : ℂ) * branchCoefficient c s t v := by
+        simp [branchCoefficient, hne g]
+      simp_rw [hkeep, hflip, Bosonize.A08.wordElement, List.map_cons, List.prod_cons]
+      have hterm (a : ℂ) (x y : Algebra M) (b : ℂ) :
+          (a * b) • (x * y) = (a • x) * (b • y) := by
+        simp [Algebra.smul_mul_assoc, Algebra.mul_smul_comm, smul_smul, mul_comm]
+      simp_rw [hterm]
+      rw [← Finset.mul_sum, ← Finset.mul_sum]
+      change ((c : ℂ) • FreeAlgebra.ι ℂ g) *
+          (∑ v ∈ inverseBranches t, branchCoefficient c s t v • Bosonize.A08.wordElement M v) +
+        ((s : ℂ) • FreeAlgebra.ι ℂ (flipGenerator g)) *
+          (∑ v ∈ inverseBranches t, branchCoefficient c s t v • Bosonize.A08.wordElement M v) = _
+      rw [ih]
+      simp [Bosonize.A08.wordElement, Bosonize.A08.bogoliubovMap,
+        flipGenerator, add_mul]
+    · apply Finset.disjoint_left.mpr
+      intro v hv hw
+      obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp hv
+      obtain ⟨b, hb, he⟩ := Finset.mem_image.mp hw
+      exact hne g (List.cons.inj he).1.symm
 
 /-- Actual finite-current substitution on A05's ordinary multispecies Fock
 carrier. `true` maps to positive transfer and `false` to negative transfer. -/
@@ -192,16 +235,56 @@ theorem polynomial_state_range_contract {σ : Type*} [Fintype σ] [LinearOrder �
 
 /-- Weighted monomial Gram factor agrees with the partition/Haldane norm. -/
 theorem oscillator_monomial_norm_eq_haldane_contract {M : ℕ}
-    {σ : Type*} [Fintype σ] [LinearOrder σ]
-    (species : Bosonize.A06.Orientation → σ)
-    (hinj : Function.Injective species)
     (r : Bosonize.A08.OscMode M →₀ ℕ) :
     Bosonize.A08.oscMonomialNorm r =
       ∏ ν : Bosonize.A06.Orientation,
         Bosonize.Ch11.hallFactor
           (((List.finRange M).flatMap fun i =>
             List.replicate (r (ν, i)) (i.val + 1) : List ℕ) : Multiset ℕ) := by
-  sorry
+  classical
+  have hall (ν : Bosonize.A06.Orientation) :
+      Bosonize.Ch11.hallFactor
+          (((List.finRange M).flatMap fun i =>
+            List.replicate (r (ν, i)) (i.val + 1) : List ℕ) : Multiset ℕ) =
+        ∏ i : Fin M, (i.val+1) ^ r (ν,i) * (r (ν,i)).factorial := by
+    let parts := (List.finRange M).flatMap fun i =>
+      List.replicate (r (ν,i)) (i.val+1)
+    have hc (m : ℕ) : parts.count m =
+        ∑ i : Fin M, if m=i.val+1 then r (ν,i) else 0 := by
+      dsimp [parts]
+      rw [List.count_flatMap]
+      simp only [List.finRange, List.map_ofFn, Function.comp_apply, List.sum_ofFn]
+      apply Finset.sum_congr rfl
+      intro i hi
+      by_cases he : m = i.val+1
+      · simp [← he]
+      · have hne : i.val+1 ≠ m := Ne.symm he
+        simp [List.count_replicate, he, hne]
+    have hci (i : Fin M) : parts.count (i.val+1) = r (ν,i) := by
+      rw [hc]
+      have he (j : Fin M) : (i.val+1=j.val+1) ↔ i=j := by omega
+      simp_rw [he]
+      simp
+    have hs : parts.toFinset ⊆ (Finset.univ.image fun i : Fin M => i.val+1) := by
+      intro m hm
+      have hm' : m ∈ parts := by simpa using hm
+      obtain ⟨i, hi, hm⟩ := List.mem_flatMap.mp hm'
+      have hm'' : m=i.val+1 := (List.mem_replicate.mp hm).2
+      exact Finset.mem_image.mpr ⟨i, Finset.mem_univ _, hm''.symm⟩
+    change Bosonize.Ch11.hallFactor (parts : Multiset ℕ) = _
+    simp only [Bosonize.Ch11.hallFactor, Multiset.coe_count]
+    change (∏ m ∈ parts.toFinset, m ^ parts.count m * (parts.count m).factorial) = _
+    rw [Finset.prod_subset hs]
+    · rw [Finset.prod_image (by intro a ha b hb he; apply Fin.ext; change a.val+1=b.val+1 at he; omega)]
+      simp_rw [hci]
+    · intro m hm hn
+      have hzero : parts.count m = 0 := by
+        exact List.count_eq_zero.mpr (by simpa using hn)
+      simp [hzero]
+  simp_rw [hall]
+  rw [Bosonize.A08.oscMonomialNorm,
+    Finsupp.prod_fintype _ _ (by intro mode; simp), Fintype.prod_prod_type]
+  rfl
 
 /-- On the explicit weighted-energy-`K` polynomial domain, the unnormalized state map
 has the exact weighted oscillator Gram form. -/
