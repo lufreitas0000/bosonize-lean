@@ -295,42 +295,288 @@ theorem small_complete : Submodule.span ℂ (Set.range smallVector) = ⊤ := by
   rw [← b.sum_repr v]
   exact Submodule.sum_mem W (fun p _ => W.smul_mem _ (hm p))
 
+set_option maxRecDepth 2000 in
+set_option maxHeartbeats 2000000 in
 /-- Complete operator action, including all six complementary eigenvectors. -/
 theorem small_matrix_action (j : Fin 8) :
-    smallHamiltonian (smallVector j) = ∑ i : Fin 8, smallMatrix i j • smallVector i := by sorry
+    smallHamiltonian (smallVector j) = ∑ i : Fin 8, smallMatrix i j • smallVector i := by
+  set_option maxRecDepth 2000 in
+  set_option maxHeartbeats 2000000 in
+  have hentries (i j : Fin 8) :
+      inner ℂ (smallVector i) (smallHamiltonian (smallVector j)) = smallMatrix i j := by
+    let v (k : Fin 8) := inclusion 8 smallCharges 2 (smallVector k)
+    have hv (k : Fin 8) : v k ∈ A05.jointBudget 8 smallCharges 2 := (smallVector k).property
+    have hg (k l : Fin 8) : inner ℂ (v k) (v l) = if k = l then 1 else 0 :=
+      orthonormal_iff_ite.mp small_orthonormal k l
+    rw [smallHamiltonian, budgetHamiltonian, compression_inner]
+    change inner ℂ (v i) (ambientHamiltonian 8 2 1 (32*Real.pi) (30*Real.pi)
+      (Ch17.canonicalMu 8 1) smallBranches (v j)) = _
+    rw [ambientHamiltonian, Ch17.luttingerBosonizedHamiltonian, LinearMap.add_apply,
+      inner_add_right, Ch17.zero_mode_op_on_budget 8 2 1 (32*Real.pi) (30*Real.pi)
+        (Ch17.canonicalMu 8 1) smallBranches smallCharges (v j) (hv j)]
+    simp only [Ch17.zeroModeEnergyScalar, smallCharges, Int.cast_zero, mul_zero, zero_mul,
+      add_zero, zero_add, zero_div, sub_zero, zero_pow (by norm_num : (2 : ℕ) ≠ 0), Complex.ofReal_zero, mul_zero]
+    have hv1 : Ch17.v1Velocity 1 (32*Real.pi) = 17 := Ch18.concrete_velocity_match.1.symm
+    have hv2 : Ch17.v2Velocity (30*Real.pi) = 15 := Ch18.concrete_velocity_match.2.symm
+    have hcre (ν : Fin 2) (m : ℕ) : A05.rho 8 ν (m : ℤ) =
+        LinearMap.adjoint (A05.rho 8 ν (-(m : ℤ))) := by rw [A05.rho_adjoint, neg_neg]
+    have hnum (ν : Fin 2) (m : ℕ) :
+        inner ℂ (v i) ((A05.rho 8 ν (m : ℤ) * A05.rho 8 ν (-(m : ℤ))) (v j)) =
+          inner ℂ (A05.rho 8 ν (-(m : ℤ)) (v i)) (A05.rho 8 ν (-(m : ℤ)) (v j)) := by
+      rw [hcre, Module.End.mul_apply, LinearMap.adjoint_inner_right]
+    have hpair (m : ℕ) :
+        inner ℂ (v i) ((A05.rho 8 (0 : Fin 2) (m : ℤ) * A05.rho 8 (1 : Fin 2) (m : ℤ)) (v j)) =
+          inner ℂ (A05.rho 8 (1 : Fin 2) (-(m : ℤ)) (A05.rho 8 (0 : Fin 2) (-(m : ℤ)) (v i))) (v j) := by
+      rw [hcre, Module.End.mul_apply, LinearMap.adjoint_inner_right, hcre,
+        LinearMap.adjoint_inner_right]
+    unfold Ch17.luttingerOscillatorOp
+    rw [hv1, hv2]
+    norm_num only [show Finset.Icc 1 2 = {1,2} by decide, Finset.sum_insert,
+      Finset.mem_singleton, Nat.reduceEqDiff, not_false_eq_true, Finset.sum_singleton]
+    simp only [A07Interactions.pairingMode, smallBranches, Ch18.concreteBranches, Ch16.standardBranches,
+      LinearMap.smul_apply, LinearMap.add_apply, inner_add_right, inner_smul_right]
+    rw [hnum, hnum, hpair, hnum, hnum, hpair]
+    simp only [Module.End.mul_apply]
+    simp only [v, small_current_lowering _ 1 (Or.inl rfl), small_current_lowering _ 2 (Or.inr rfl),
+      map_smul, inner_smul_left, inner_smul_right]
+    simp only [v] at hg
+    simp only [hg]
+    have hs : ((Real.sqrt 2 : ℝ) : ℂ) ^ 2 = 2 := by norm_cast; norm_num
+    fin_cases i <;> fin_cases j <;>
+      norm_num [smallLowerTarget, smallLowerCoefficient, smallMatrix, Complex.star_def]
+    all_goals ring_nf
+    all_goals simp only [hs]
+    all_goals ring
+  let b := OrthonormalBasis.mk small_orthonormal small_complete.ge
+  have ht := b.sum_repr' (smallHamiltonian (smallVector j))
+  simpa only [b, OrthonormalBasis.coe_mk, hentries] using ht.symm
+
 
 /-- All eight eigenvalues with multiplicity, on a complete orthonormal basis. -/
 theorem small_spectral_basis :
     ∃ b : OrthonormalBasis (Fin 8) ℂ (Budget 8 smallCharges 2),
-      ∀ j, smallHamiltonian (b j) = (smallEigenvalue j : ℂ) • b j := by sorry
+      ∀ j, smallHamiltonian (b j) = (smallEigenvalue j : ℂ) • b j := by
+  let v := OrthonormalBasis.mk small_orthonormal small_complete.ge
+  let a : ℝ := (Real.sqrt (1 + smallEta ^ 2))⁻¹
+  have ha : a ^ 2 * (1 + smallEta ^ 2) = 1 := by
+    dsimp [a]
+    have hp : (0 : ℝ) < 1 + smallEta ^ 2 := by positivity
+    field_simp
+    rw [Real.sq_sqrt hp.le]
+  have hA (j : Fin 8) : smallHamiltonian (v j) = ∑ i : Fin 8,
+      (((Real.pi / 8 : ℝ) : ℂ) * (if (i=0 ∧ j=5) ∨ (i=5 ∧ j=0) then 15 else
+        if i=j then if i=0 then 0 else if i=1 ∨ i=2 then 17 else 34 else 0)) • v i := by
+    simpa only [v, OrthonormalBasis.coe_mk, smallMatrix] using small_matrix_action j
+  obtain ⟨b, hz, hb⟩ := finite_plane_diagonalization v smallHamiltonian (Real.pi / 8)
+    smallEta (Real.sqrt 514) a ha small_eta_algebra.1 small_eta_algebra.2.1 hA
+  have hzero : b 0 = smallPsi := by
+    simpa only [v, OrthonormalBasis.coe_mk, a, smallPsi] using hz
+  have heval (j : Fin 8) : Real.pi / 8 * (if j=0 then 17-Real.sqrt 514 else
+      if j=5 then 17+Real.sqrt 514 else if j=1 ∨ j=2 then 17 else 34) = smallEigenvalue j := by
+    unfold smallEigenvalue smallEnergy
+    split_ifs <;> ring
+  have heig (j : Fin 8) : smallHamiltonian (b j) = (smallEigenvalue j : ℂ) • b j := by
+    simpa only [heval] using hb j
+  exact ⟨b, heig⟩
+
 
 theorem small_ground : ‖smallPsi‖ = 1 ∧
     smallHamiltonian smallPsi = (smallEnergy : ℂ) • smallPsi ∧
     (∀ v : Budget 8 smallCharges 2,
-      smallEnergy * ‖v‖ ^ 2 ≤ (inner ℂ v (smallHamiltonian v)).re) ∧ smallEnergy < 0 := by sorry
+      smallEnergy * ‖v‖ ^ 2 ≤ (inner ℂ v (smallHamiltonian v)).re) ∧ smallEnergy < 0 := by
+  have hbound {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] (b : OrthonormalBasis (Fin 8) ℂ E) (A : Module.End ℂ E)
+      (e : Fin 8 → ℝ) (e0 : ℝ) (he : ∀ j, e0 ≤ e j)
+      (hA : ∀ j, A (b j) = (e j : ℂ) • b j) (x : E) :
+      e0 * ‖x‖^2 ≤ (inner ℂ x (A x)).re := by
+    have hg := orthonormal_iff_ite.mp b.orthonormal
+    have hcoord (i : Fin 8) : inner ℂ (b i) (A x) = (e i : ℂ) * inner ℂ (b i) x := by
+      conv_lhs => rw [← b.sum_repr' x]
+      simp only [map_sum, map_smul, hA, inner_sum, inner_smul_right, hg]
+      simp [mul_comm]
+    have hterm (j : Fin 8) :
+        (inner ℂ x (b j) * inner ℂ (b j) (A x)).re = e j * ‖inner ℂ x (b j)‖^2 := by
+      rw [hcoord]
+      calc
+        _ = ((e j : ℂ) * (inner ℂ x (b j) * inner ℂ (b j) x)).re := by congr 1; ring
+        _ = _ := by
+          rw [Complex.mul_re]
+          simp only [Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+          have hn := inner_mul_symm_re_eq_norm (𝕜 := ℂ) x (b j)
+          have hn' : (inner ℂ x (b j) * inner ℂ (b j) x).re = ‖inner ℂ x (b j) * inner ℂ (b j) x‖ := hn
+          rw [hn', norm_mul, norm_inner_symm (b j) x, pow_two]
+    calc
+      _ = ∑ j, e0 * ‖inner ℂ x (b j)‖^2 := by rw [← Finset.mul_sum, b.sum_sq_norm_inner_left]
+      _ ≤ ∑ j, e j * ‖inner ℂ x (b j)‖^2 := Finset.sum_le_sum fun j _ => mul_le_mul_of_nonneg_right (he j) (sq_nonneg _)
+      _ = _ := by rw [← b.sum_inner_mul_inner x (A x), Complex.re_sum]; simp only [hterm]
+  let v := OrthonormalBasis.mk small_orthonormal small_complete.ge
+  let a : ℝ := (Real.sqrt (1 + smallEta ^ 2))⁻¹
+  have ha : a ^ 2 * (1 + smallEta ^ 2) = 1 := by
+    dsimp [a]
+    have hp : (0 : ℝ) < 1 + smallEta ^ 2 := by positivity
+    field_simp
+    rw [Real.sq_sqrt hp.le]
+  have hA (j : Fin 8) : smallHamiltonian (v j) = ∑ i : Fin 8,
+      (((Real.pi / 8 : ℝ) : ℂ) * (if (i=0 ∧ j=5) ∨ (i=5 ∧ j=0) then 15 else
+        if i=j then if i=0 then 0 else if i=1 ∨ i=2 then 17 else 34 else 0)) • v i := by
+    simpa only [v, OrthonormalBasis.coe_mk, smallMatrix] using small_matrix_action j
+  obtain ⟨b, hz, hb⟩ := finite_plane_diagonalization v smallHamiltonian (Real.pi / 8)
+    smallEta (Real.sqrt 514) a ha small_eta_algebra.1 small_eta_algebra.2.1 hA
+  have hzero : b 0 = smallPsi := by
+    simpa only [v, OrthonormalBasis.coe_mk, a, smallPsi] using hz
+  have heval (j : Fin 8) : Real.pi / 8 * (if j=0 then 17-Real.sqrt 514 else
+      if j=5 then 17+Real.sqrt 514 else if j=1 ∨ j=2 then 17 else 34) = smallEigenvalue j := by
+    unfold smallEigenvalue smallEnergy
+    split_ifs <;> ring
+  have heig (j : Fin 8) : smallHamiltonian (b j) = (smallEigenvalue j : ℂ) • b j := by
+    simpa only [heval] using hb j
+  have hDpos : 0 < Real.sqrt 514 := Real.sqrt_pos.mpr (by norm_num)
+  have hDsq : (Real.sqrt 514)^2 = 514 := Real.sq_sqrt (by norm_num)
+  have hD : 17 < Real.sqrt 514 := by nlinarith
+  have hneg : smallEnergy < 0 := mul_neg_of_pos_of_neg
+    (div_pos Real.pi_pos (by norm_num)) (sub_neg.mpr hD)
+  have hmin (j : Fin 8) : smallEnergy ≤ smallEigenvalue j := by
+    unfold smallEigenvalue
+    split_ifs
+    · exact le_rfl
+    all_goals exact le_trans hneg.le (by positivity)
+  refine ⟨?_, ?_, ?_, hneg⟩
+  · simpa only [hzero] using b.orthonormal.norm_eq_one 0
+  · simpa only [hzero, smallEigenvalue, ite_true] using heig 0
+  · exact hbound b smallHamiltonian smallEigenvalue smallEnergy hmin heig
 
+
+set_option maxHeartbeats 2000000 in
 theorem small_number_moment :
     extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi
       (A05.rho 8 (smallBranches.rightSpecies) 1 *
         A05.rho 8 (smallBranches.rightSpecies) (-1)) =
-      (((1 - 17 / Real.sqrt 514) / 2 : ℝ) : ℂ) := by sorry
+      (((1 - 17 / Real.sqrt 514) / 2 : ℝ) : ℂ) := by
+  set_option maxHeartbeats 2000000 in
+    let z (j : Fin 8) := inclusion 8 smallCharges 2 (smallVector j)
+    let a : ℝ := (Real.sqrt (1 + smallEta ^ 2))⁻¹
+    have hpsi : inclusion 8 smallCharges 2 smallPsi =
+        (a : ℂ) • (z 0 - (smallEta : ℂ) • z 5) := by
+      simp only [smallPsi, map_smul, map_sub]
+      rfl
+    have hg (j k : Fin 8) : inner ℂ (z j) (z k) = if j = k then 1 else 0 :=
+      orthonormal_iff_ite.mp small_orthonormal j k
+    have hr0 : A05.rho 8 (0 : Fin 2) (-1) (z 0) = 0 := by
+      simpa [z, smallLowerCoefficient] using small_current_lowering 0 1 (Or.inl rfl) 0
+    have hr5 : A05.rho 8 (0 : Fin 2) (-1) (z 5) = z 2 := by
+      simpa [z, smallLowerCoefficient, smallLowerTarget] using small_current_lowering 0 1 (Or.inl rfl) 5
+    have hcre : A05.rho 8 (0 : Fin 2) 1 = LinearMap.adjoint (A05.rho 8 (0 : Fin 2) (-1)) := by
+      rw [A05.rho_adjoint]; rfl
+    rw [extended_state_vector (inclusion 8 smallCharges 2) smallPsi]
+    change inner ℂ (inclusion 8 smallCharges 2 smallPsi)
+      ((A05.rho 8 (0 : Fin 2) 1 * A05.rho 8 (0 : Fin 2) (-1))
+        (inclusion 8 smallCharges 2 smallPsi)) = _
+    rw [hcre, Module.End.mul_apply, LinearMap.adjoint_inner_right, hpsi]
+    simp only [map_smul, map_sub, hr0, hr5, zero_sub, inner_smul_left, inner_smul_right,
+      inner_neg_left, inner_neg_right, hg, ite_true, mul_one, Complex.conj_ofReal]
+    have ha : a ^ 2 * (1 + smallEta ^ 2) = 1 := by
+      dsimp [a]
+      have hp : (0 : ℝ) < 1 + smallEta ^ 2 := by positivity
+      field_simp
+      rw [Real.sq_sqrt hp.le]
+    have he := small_eta_algebra.2.2.2.1
+    have ha' : a ^ 2 = 1 / (1 + smallEta ^ 2) := (eq_div_iff (by positivity)).mpr ha
+    have hres : a * (smallEta * (a * smallEta)) = (1 - 17 / Real.sqrt 514) / 2 := by
+      calc
+        _ = a ^ 2 * smallEta ^ 2 := by ring
+        _ = smallEta ^ 2 / (1 + smallEta ^ 2) := by rw [ha']; ring
+        _ = _ := he
+    norm_cast
+    convert hres using 1
+    ring
 
+set_option maxHeartbeats 2000000 in
 theorem small_pair_moment :
     extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi
       (A05.rho 8 (smallBranches.rightSpecies) 1 *
         A05.rho 8 (smallBranches.leftSpecies) 1) =
-      ((-15 / (2 * Real.sqrt 514) : ℝ) : ℂ) := by sorry
+      ((-15 / (2 * Real.sqrt 514) : ℝ) : ℂ) := by
+  let z (j : Fin 8) := inclusion 8 smallCharges 2 (smallVector j)
+  let a : ℝ := (Real.sqrt (1 + smallEta ^ 2))⁻¹
+  have hpsi : inclusion 8 smallCharges 2 smallPsi =
+      (a : ℂ) • (z 0 - (smallEta : ℂ) • z 5) := by
+    simp only [smallPsi, map_smul, map_sub]
+    rfl
+  have hg (j k : Fin 8) : inner ℂ (z j) (z k) = if j = k then 1 else 0 :=
+    orthonormal_iff_ite.mp small_orthonormal j k
+  have hr0 : A05.rho 8 (0 : Fin 2) (-1) (z 0) = 0 := by
+    simpa [z, smallLowerCoefficient] using small_current_lowering 0 1 (Or.inl rfl) 0
+  have hr5 : A05.rho 8 (0 : Fin 2) (-1) (z 5) = z 2 := by
+    simpa [z, smallLowerCoefficient, smallLowerTarget] using small_current_lowering 0 1 (Or.inl rfl) 5
+  have hl2 : A05.rho 8 (1 : Fin 2) (-1) (z 2) = z 0 := by
+    simpa [z, smallLowerCoefficient, smallLowerTarget] using small_current_lowering 1 1 (Or.inl rfl) 2
+  have hcre (ν : Fin 2) : A05.rho 8 ν 1 = LinearMap.adjoint (A05.rho 8 ν (-1)) := by
+    rw [A05.rho_adjoint]; rfl
+  rw [extended_state_vector (inclusion 8 smallCharges 2) smallPsi]
+  change inner ℂ (inclusion 8 smallCharges 2 smallPsi)
+    ((A05.rho 8 (0 : Fin 2) 1 * A05.rho 8 (1 : Fin 2) 1)
+      (inclusion 8 smallCharges 2 smallPsi)) = _
+  rw [hcre 0, Module.End.mul_apply, LinearMap.adjoint_inner_right, hcre 1,
+    LinearMap.adjoint_inner_right, hpsi]
+  simp only [map_smul, map_sub, map_neg, hr0, hr5, hl2, zero_sub,
+    inner_sub_right, inner_smul_left, inner_smul_right, inner_neg_left,
+    hg, show (0 : Fin 8) ≠ 5 by decide, ite_true, ite_false, mul_zero, sub_zero, mul_one, Complex.conj_ofReal]
+  have ha : a ^ 2 * (1 + smallEta ^ 2) = 1 := by
+    dsimp [a]
+    have hp : (0 : ℝ) < 1 + smallEta ^ 2 := by positivity
+    field_simp
+    rw [Real.sq_sqrt hp.le]
+  have he := small_eta_algebra.2.2.2.2
+  have ha' : a ^ 2 = 1 / (1 + smallEta ^ 2) := (eq_div_iff (by positivity)).mpr ha
+  have hres : -(a * smallEta * a) = -15 / (2 * Real.sqrt 514) := by
+    calc
+      _ = -(a ^ 2 * smallEta) := by ring
+      _ = -(smallEta / (1 + smallEta ^ 2)) := by rw [ha']; ring
+      _ = _ := by rw [he]; ring
+  norm_cast
+  convert hres using 1 <;> norm_num <;> ring
+
 
 theorem small_number_discrepancy :
     extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi
       (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.rightSpecies (-1)) ≠
       A08.omegaP 2 Ch18.concretePair
-        (A08.creatorGen 2 .right 0 * A08.annihilatorGen 2 .right 0) := by sorry
+        (A08.creatorGen 2 .right 0 * A08.annihilatorGen 2 .right 0) := by
+  have ho : A08.omegaP 2 Ch18.concretePair
+      (A08.creatorGen 2 .right 0 * A08.annihilatorGen 2 .right 0) = (9/16 : ℂ) := by
+    have hh := V1S1.generator_contraction 2 Ch18.concretePair (true,.right,0) (false,.right,0)
+    norm_num [V1S1.contraction, V1S1.linearElement, V1S1.formOfGenerator,
+      V1S1.generatorContractionExpected, A08.creatorGen, A08.annihilatorGen,
+      Ch18.concretePair, Ch18.HyperbolicPair.ofParams, Ch18.concreteParams] at hh ⊢
+    exact hh
+  rw [small_number_moment, ho]
+  intro he
+  have hr := congrArg Complex.re he
+  norm_num at hr
+  have hDpos : 0 < Real.sqrt 514 := Real.sqrt_pos.mpr (by norm_num)
+  have hp : 0 < 17 / Real.sqrt 514 := div_pos (by norm_num) hDpos
+  linarith
 
 theorem small_pair_discrepancy :
     extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi
       (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.leftSpecies 1) ≠
       A08.omegaP 2 Ch18.concretePair
-        (A08.creatorGen 2 .right 0 * A08.creatorGen 2 .left 0) := by sorry
+        (A08.creatorGen 2 .right 0 * A08.creatorGen 2 .left 0) := by
+  have ho : A08.omegaP 2 Ch18.concretePair
+      (A08.creatorGen 2 .right 0 * A08.creatorGen 2 .left 0) = (-15/16 : ℂ) := by
+    have hh := V1S1.generator_contraction 2 Ch18.concretePair (true,.right,0) (true,.left,0)
+    norm_num [V1S1.contraction, V1S1.linearElement, V1S1.formOfGenerator,
+      V1S1.generatorContractionExpected, A08.creatorGen, A08.annihilatorGen,
+      Ch18.concretePair, Ch18.HyperbolicPair.ofParams, Ch18.concreteParams,
+      A07Interactions.oppositeOrientation] at hh ⊢
+    exact hh
+  rw [small_pair_moment, ho]
+  intro he
+  have hr : (-15 / (2 * Real.sqrt 514) : ℝ) = -15/16 := by exact_mod_cast he
+  have hDpos : 0 < Real.sqrt 514 := Real.sqrt_pos.mpr (by norm_num)
+  have hD : (Real.sqrt 514)^2 = 514 := Real.sq_sqrt (by norm_num)
+  have hbig : 15 < Real.sqrt 514 := by nlinarith
+  have hp : 15 / (2 * Real.sqrt 514) < (1/2 : ℝ) := (div_lt_iff₀ (by positivity)).mpr (by linarith)
+  rw [neg_div] at hr
+  linarith
 
 end Bosonize.V1S5

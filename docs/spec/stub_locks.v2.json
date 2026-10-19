@@ -16134,9 +16134,9 @@
         },
         "Bosonize.V1S5.small_matrix_action": {
           "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "0d6a331b54dd100e44c5b087d75ce3177a394aada5f7ba2cf25c16dc39be2225",
+          "hash": "d85d788d48e75ac30f2e888c5aabca325b54d4a38c00bc7341d4ca35c0967998",
           "kind": "theorem",
-          "text": "theorem small_matrix_action (j : Fin 8) : smallHamiltonian (smallVector j) = \u2211 i : Fin 8, smallMatrix i j \u2022 smallVector i"
+          "text": "set_option maxRecDepth 2000 in set_option maxHeartbeats 2000000 in theorem small_matrix_action (j : Fin 8) : smallHamiltonian (smallVector j) = \u2211 i : Fin 8, smallMatrix i j \u2022 smallVector i"
         },
         "Bosonize.V1S5.small_number_discrepancy": {
           "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
@@ -16146,9 +16146,9 @@
         },
         "Bosonize.V1S5.small_number_moment": {
           "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "1373721885346433d1789c5d11cf964d29680d35da23e4a67b263d6b8d64cc0d",
+          "hash": "4739ac74cf15b9cf1679450e732dd29b7106aeb161f698fc1e68566831cea7af",
           "kind": "theorem",
-          "text": "theorem small_number_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.rightSpecies) (-1)) = (((1 - 17 / Real.sqrt 514) / 2 : \u211d) : \u2102)"
+          "text": "set_option maxHeartbeats 2000000 in theorem small_number_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.rightSpecies) (-1)) = (((1 - 17 / Real.sqrt 514) / 2 : \u211d) : \u2102)"
         },
         "Bosonize.V1S5.small_orthonormal": {
           "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
@@ -16164,9 +16164,9 @@
         },
         "Bosonize.V1S5.small_pair_moment": {
           "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "e02a11a1a0192614731e946efd261a7e1b56fec29ebd5e701a5a4d7ac0f3cbca",
+          "hash": "ba34787ccbb762a805cd81320876dd01c67a311cca6f9f6deb2812dc36175bed",
           "kind": "theorem",
-          "text": "theorem small_pair_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.leftSpecies) 1) = ((-15 / (2 * Real.sqrt 514) : \u211d) : \u2102)"
+          "text": "set_option maxHeartbeats 2000000 in theorem small_pair_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.leftSpecies) 1) = ((-15 / (2 * Real.sqrt 514) : \u211d) : \u2102)"
         },
         "Bosonize.V1S5.small_partition_state": {
           "ctx": "a2a47924217be4e4c8868d3f27c79bf3ffe74683c0e33024c46f3f1f2827449b",
@@ -16317,6 +16317,18 @@
           "hash": "8e6124ca2a0ce89bb9c13fd4d13e15863c38eb24a216475e2976cc9660d632ca",
           "kind": "theorem",
           "text": "theorem extended_state_vector (i : E \u2192\u2097[\u2102] F) (v : E) (X : Module.End \u2102 F) : extendedState i v X = vectorState (i v) X"
+        },
+        "Bosonize.V1S5.finite_plane_diagonalization": {
+          "ctx": "3fe4a1997804b5fb67f72bc0d2b33c8abec4ba82b994c858710b5f7c496fd6cb",
+          "hash": "babfaae80472b9381c33e48436f0eb59bc48e14aea51005c594505d4fb352908",
+          "kind": "theorem",
+          "text": "set_option maxHeartbeats 2000000 in omit [FiniteDimensional \u2102 E] in theorem finite_plane_diagonalization (v : OrthonormalBasis (Fin 8) \u2102 E) (A : Module.End \u2102 E) (p t D a : \u211d) (ha : a^2*(1+t^2)=1) (ht : t*(17+D)=15) (ht' : 15*t=D-17) (hA : \u2200 j, A (v j) = \u2211 i : Fin 8, ((p : \u2102) * (if (i=0 \u2227 j=5) \u2228 (i=5 \u2227 j=0) then 15 else if i=j then if i=0 then 0 else if i=1 \u2228 i=2 then 17 else 34 else 0)) \u2022 v i) : \u2203 b : OrthonormalBasis (Fin 8) \u2102 E, b 0 = (a:\u2102) \u2022 (v 0 - (t:\u2102) \u2022 v 5) \u2227 \u2200 j, A (b j) = ((p * (if j=0 then 17-D else if j=5 then 17+D else if j=1 \u2228 j=2 then 17 else 34) : \u211d) : \u2102) \u2022 b j"
+        },
+        "Bosonize.V1S5.finite_plane_rotation_orthonormal": {
+          "ctx": "3fe4a1997804b5fb67f72bc0d2b33c8abec4ba82b994c858710b5f7c496fd6cb",
+          "hash": "2ec558673a9135d1d37976f624e3a575d154248897c4dbca7ab14f8cd3a8d9da",
+          "kind": "theorem",
+          "text": "omit [FiniteDimensional \u2102 E] in theorem finite_plane_rotation_orthonormal (v : Fin 8 \u2192 E) (hv : Orthonormal \u2102 v) (t a : \u211d) (ha : a ^ 2 * (1 + t ^ 2) = 1) : Orthonormal \u2102 (fun j : Fin 8 => if j = 0 then (a : \u2102) \u2022 (v 0 - (t : \u2102) \u2022 v 5) else if j = 5 then (a : \u2102) \u2022 ((t : \u2102) \u2022 v 0 + v 5) else v j)"
         },
         "Bosonize.V1S5.ground_energy_evaluation": {
           "ctx": "3f1b40dfe202ada3846ca3ee464d7475787144e65f38d8c46c3f84a7463481ae",

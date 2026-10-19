@@ -76,3 +76,26 @@ small-model placeholders. Fresh audits of both additions and the preceding
 `current_word_lowering` / `small_current_lowering` helpers use only
 `propext`, `Classical.choice`, `Quot.sound`. Only the two affected S5 statement
 lock records are amended. This is not Phase B completion or promotion.
+
+
+## Final staging proof review — 2026-10-19
+
+Native read-only reviewer `/root/s5_review` approved the two additional generic
+rotation/diagonalization helpers, including the explicit lowest-vector identity,
+and the three scoped small-model resource prefixes. No definitions or original
+conclusions changed. Complete mathematical/proof review PASS is conditional on
+fresh full compilation, all 64 declaration axiom audits, strict locks and Core
+preservation. Source hashes at review:
+
+- Ground: `f199317a26ccb54d4fcd881279fe84c59916980bce5307f95373f332f8850d8b`.
+- Vector: `2b1b6ce7eb6694abae1094a93a40b37bfb1cfedb7b659f4a702ce3c851f07822`.
+- Moment: `66d660acf1b08fee021260b6b038f070c0f32aff887e9f9db8656bb89f85aad9`.
+- Small: `3a97db5f0ca34e061a0f2e330505da3cf889a1007a884fcd30daddcbf7467c2d`.
+
+The reviewer checked actual Chapter 17 compression, budget-wide minimality,
+positive normalized extension, separate ambient/compressed lowering powers,
+all eight matrix columns/eigenvalues, final-only compressed selected moments,
+and the fixed S1/S4 dictionary. No mathematical blockers were found. Scoped
+promotion plan approved: four moves, three staging dependency import changes,
+four aggregator imports and four new Core hashes, preserving all 39 old ones.
+These review verdicts alone establish neither Phase B nor Phase C acceptance.
