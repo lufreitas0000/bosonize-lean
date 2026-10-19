@@ -1,8 +1,9 @@
 import Bosonize.Core.A05MultiSpecies
 import Bosonize.Core.A08OscillatorStates
 
-/-! V1-S4 Phase A candidate: exact finite current-word comparison.
-The only placeholders below are theorem contracts in unaccepted staging.
+/-! V1-S4: exact finite current-word comparison on certified paths.
+The actual free finite sea realizes selected ordinary and inverse-Bogoliubov
+word moments, with explicit weighted-energy and regulator hypotheses.
 -/
 
 @[expose] public section
@@ -1031,6 +1032,166 @@ theorem covered_dressed_moment_contract {σ : Type*} [Fintype σ] [LinearOrder �
   · rw [covered_word_moment_contract h M Ns species v hh hN K hR2 hinj
       (hPath v (Finset.mem_filter.mpr ⟨hv,hc⟩))]
 
+lemma branch_bounded {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M K : ℕ) (Ns : σ → ℤ) (species : Bosonize.A06.Orientation → σ)
+    (hne : species .right ≠ species .left)
+    (hR2 : ∀ ν, 2*K+|Ns ν| ≤ h)
+    (xs : Word M) (E : σ → ℤ) (hE : nonnegativeEnergies species E)
+    (hbound : energyTotal species E + xs.length * (M : ℤ) ≤ K) :
+    BranchPath h M Ns species K xs E := by
+  induction xs generalizing E with
+  | nil => exact ⟨hE, by simpa using hbound⟩
+  | cons g xs ih =>
+    rcases g with ⟨b,o,i⟩
+    have hm : (i.val+1 : ℤ) ≤ M := by exact_mod_cast i.isLt
+    have htot : 0 ≤ energyTotal species E := add_nonneg hE.1 hE.2
+    have hν : E (species o) ≤ energyTotal species E := by
+      cases o <;> dsimp [energyTotal] <;> have hEr := hE.1 <;> have hEl := hE.2 <;> omega
+    have hM : (M : ℤ) ≤ K := by
+      simp only [List.length_cons, Nat.cast_add, Nat.cast_one, add_mul, one_mul] at hbound
+      have hp : (0 : ℤ) ≤ xs.length * (M : ℤ) := mul_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)
+      omega
+    have hb : energyTotal species E + (xs.length : ℤ) * M + M ≤ K := by
+      simpa only [List.length_cons, Nat.cast_add, Nat.cast_one, add_mul, one_mul, add_assoc] using hbound
+    have hEtot : energyTotal species E ≤ K := by
+      have hp : (0 : ℤ) ≤ xs.length * (M : ℤ) := mul_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)
+      omega
+    change nonnegativeEnergies species E ∧ _
+    refine ⟨hE, ?_⟩
+    cases b with
+    | true =>
+      change energyTotal species (energyUpdate species (true,(o,i)) E) ≤ K ∧ _
+      have he : nonnegativeEnergies species (energyUpdate species (true,(o,i)) E) ∧
+          energyTotal species (energyUpdate species (true,(o,i)) E) =
+            energyTotal species E + (i.val+1) := by
+        cases o <;> simp [energyTotal, nonnegativeEnergies, energyUpdate, weight,
+          Function.update, hne, Ne.symm hne] at * <;> omega
+      have hnew : energyTotal species (energyUpdate species (true,(o,i)) E) +
+          xs.length * (M : ℤ) ≤ K := by rw [he.2]; omega
+      exact ⟨by have hp : (0 : ℤ) ≤ xs.length * (M : ℤ) := mul_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _); omega,
+        ih _ he.1 hnew⟩
+    | false =>
+      change (i.val+1 : ℤ) + E (species o) + |Ns (species o)| ≤ h ∧ _
+      refine ⟨by have hu := hR2 (species o); omega, ?_⟩
+      change (if E (species o) < (i.val+1 : ℤ) then True else
+        energyTotal species (energyUpdate species (false,(o,i)) E) ≤ K ∧
+          BranchPath h M Ns species K xs (energyUpdate species (false,(o,i)) E))
+      by_cases hk : E (species o) < (i.val+1 : ℤ)
+      · rw [ite_eq_left hk]; trivial
+      · rw [ite_eq_right hk]
+        have he : nonnegativeEnergies species (energyUpdate species (false,(o,i)) E) ∧
+            energyTotal species (energyUpdate species (false,(o,i)) E) =
+              energyTotal species E - (i.val+1) := by
+          cases o <;> simp [energyTotal, nonnegativeEnergies, energyUpdate, weight,
+            Function.update, hne, Ne.symm hne] at * <;> omega
+        have hnew : energyTotal species (energyUpdate species (false,(o,i)) E) +
+            xs.length * (M : ℤ) ≤ K := by rw [he.2]; omega
+        exact ⟨by have hp : (0 : ℤ) ≤ xs.length * (M : ℤ) := mul_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _); omega,
+          ih _ he.1 hnew⟩
+theorem uniform_margin_path {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h d M : ℕ) (Ns : σ → ℤ) (species : Bosonize.A06.Orientation → σ)
+    (hinj : Function.Injective species) (hU : UniformMargin h d M Ns)
+    (w : Word M) (hw : w.length ≤ d) :
+    PathCovered h Ns species (d*M) w := by
+  have hne : species .right ≠ species .left := by
+    intro he; have ho := hinj he; cases ho
+  refine ⟨hne, branch_bounded h M (d*M) Ns species hne
+      (uniform_margin_implies_r2 h d M (d*M) Ns hU (le_refl _)) w.reverse (fun _ => 0)
+      (by simp [nonnegativeEnergies]) ?_⟩
+  simp only [energyTotal, zero_add, List.length_reverse]
+  exact_mod_cast Nat.mul_le_mul_right M hw
+lemma inverse_branches_length {M : ℕ} (w v : Word M) (hv : v ∈ inverseBranches w) :
+    v.length = w.length := by
+  induction w generalizing v with
+  | nil => simpa [inverseBranches] using hv
+  | cons g w ih =>
+    simp only [inverseBranches, Finset.mem_biUnion, Finset.mem_insert, Finset.mem_singleton] at hv
+    obtain ⟨t,ht,he⟩ := hv
+    rcases he with rfl | rfl <;> simpa using congrArg Nat.succ (ih _ ht)
+/-- Every word of the stated length obeys the derived finite margin. -/
+theorem uniform_word_moment {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h d M : ℕ) (Ns : σ → ℤ) (species : Bosonize.A06.Orientation → σ)
+    (hh : 0<h) (hN : Bosonize.A05.admissible h Ns)
+    (hinj : Function.Injective species) (hU : UniformMargin h d M Ns)
+    (w : Word M) (hw : w.length ≤ d) :
+    inner ℂ (Bosonize.A05.groundKet h Ns)
+      (theta h M species (Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns)) =
+      Bosonize.A08.omega0 M (Bosonize.A08.wordElement M w) := by
+  exact covered_word_moment_contract h M Ns species w hh hN (d*M)
+    (uniform_margin_implies_r2 h d M (d*M) Ns hU (le_refl _)) hinj
+    (uniform_margin_path h d M Ns species hinj hU w hw)
+/-- The same numerical bound covers every branch after inverse substitution. -/
+theorem uniform_dressed_moment {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h d M : ℕ) (Ns : σ → ℤ) (hp : Bosonize.Ch18.HyperbolicPair)
+    (species : Bosonize.A06.Orientation → σ)
+    (hh : 0<h) (hN : Bosonize.A05.admissible h Ns)
+    (hinj : Function.Injective species) (hU : UniformMargin h d M Ns)
+    (w : Word M) (hw : w.length ≤ d) :
+    inner ℂ (Bosonize.A05.groundKet h Ns)
+      (theta h M species (Bosonize.A08.bogoliubovMap M hp.c (-hp.s)
+        (Bosonize.A08.wordElement M w)) (Bosonize.A05.groundKet h Ns)) =
+      Bosonize.A08.omegaP M hp (Bosonize.A08.wordElement M w) := by
+  apply covered_dressed_moment_contract h M Ns hp species w hh hN (d*M)
+    (uniform_margin_implies_r2 h d M (d*M) Ns hU (le_refl _)) hinj
+  intro v hv
+  apply uniform_margin_path h d M Ns species hinj hU v
+  rw [inverse_branches_length w v (Finset.mem_filter.mp hv).1]
+  exact hw
+/-- Finite linear combinations require coverage word by word. -/
+theorem covered_word_sum_moment {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M : ℕ) (Ns : σ → ℤ) (species : Bosonize.A06.Orientation → σ)
+    (hh : 0<h) (hN : Bosonize.A05.admissible h Ns)
+    (K : ℕ) (hR2 : ∀ ν, 2*K+|Ns ν| ≤ h) (hinj : Function.Injective species)
+    (ws : Finset (Word M)) (z : Word M → ℂ)
+    (hpath : ∀ w ∈ ws, PathCovered h Ns species K w) :
+    inner ℂ (Bosonize.A05.groundKet h Ns)
+      (theta h M species (∑ w ∈ ws, z w • Bosonize.A08.wordElement M w)
+        (Bosonize.A05.groundKet h Ns)) =
+      Bosonize.A08.omega0 M (∑ w ∈ ws, z w • Bosonize.A08.wordElement M w) := by
+  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    inner_sum, inner_smul_right, smul_eq_mul]
+  exact Finset.sum_congr rfl (fun w hw => by
+    rw [covered_word_moment_contract h M Ns species w hh hN K hR2 hinj (hpath w hw)])
+theorem covered_dressed_sum_moment {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M : ℕ) (Ns : σ → ℤ) (hp : Bosonize.Ch18.HyperbolicPair)
+    (species : Bosonize.A06.Orientation → σ)
+    (hh : 0<h) (hN : Bosonize.A05.admissible h Ns)
+    (K : ℕ) (hR2 : ∀ ν, 2*K+|Ns ν| ≤ h) (hinj : Function.Injective species)
+    (ws : Finset (Word M)) (z : Word M → ℂ)
+    (hpath : ∀ w ∈ ws, ∀ v ∈ survivingBranches hp.c (-hp.s) w,
+      PathCovered h Ns species K v) :
+    inner ℂ (Bosonize.A05.groundKet h Ns)
+      (theta h M species (Bosonize.A08.bogoliubovMap M hp.c (-hp.s)
+        (∑ w ∈ ws, z w • Bosonize.A08.wordElement M w))
+        (Bosonize.A05.groundKet h Ns)) =
+      Bosonize.A08.omegaP M hp (∑ w ∈ ws, z w • Bosonize.A08.wordElement M w) := by
+  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    inner_sum, inner_smul_right, smul_eq_mul]
+  exact Finset.sum_congr rfl (fun w hw => by
+    rw [covered_dressed_moment_contract h M Ns hp species w hh hN K hR2 hinj (hpath w hw)])
+theorem polynomial_state_kernel {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M K : ℕ) (Ns : σ → ℤ) (species : Bosonize.A06.Orientation → σ)
+    (hh : 0<h) (hN : Bosonize.A05.admissible h Ns)
+    (hR2 : ∀ ν, 2*K+|Ns ν| ≤ h) (hinj : Function.Injective species)
+    (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p)
+    (hz : polynomialState h M Ns species p=0) : p=0 := by
+  apply (Bosonize.A08.oscPairing_self_eq_zero M p).mp
+  rw [← polynomial_state_gram_contract Ns species hh hinj hN hR2 p p hp hp, hz]
+  exact inner_zero_left _
+/-- Constants have their normalized finite sea expectation, also at M=0. -/
+theorem constant_expectation {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M : ℕ) (Ns : σ → ℤ) (species : Bosonize.A06.Orientation → σ) (c : ℂ) :
+    inner ℂ (Bosonize.A05.groundKet h Ns)
+      (theta h M species (c • (1 : Algebra M)) (Bosonize.A05.groundKet h Ns)) = c := by
+  classical
+  have hn : inner ℂ (Bosonize.A05.groundKet h Ns) (Bosonize.A05.groundKet h Ns) = 1 := by
+    change inner ℂ (Bosonize.A02.ket (Bosonize.A05.groundConfiguration h Ns))
+      (Bosonize.A02.ket (Bosonize.A05.groundConfiguration h Ns)) = 1
+    simpa only [ite_true] using Bosonize.A02.ket_inner
+      (Bosonize.A05.groundConfiguration h Ns) (Bosonize.A05.groundConfiguration h Ns)
+  simp only [map_smul, map_one, LinearMap.smul_apply, Module.End.one_apply, inner_smul_right, hn, mul_one]
+
+
 namespace Examples
 
 noncomputable local instance orientationFintype : Fintype Bosonize.A06.Orientation :=
@@ -1244,6 +1405,38 @@ example :
     Bosonize.A07Interactions.oppositeOrientation]
   simp [MvPolynomial.coeff_mul]
   norm_num [Bosonize.A08.oscWeight]
+
+/-- The empty mode set still has every scalar expectation. -/
+example (c : ℂ) :
+    inner ℂ (Bosonize.A05.groundKet 2 (fun _ : Bosonize.A06.Orientation => (0 : ℤ)))
+      (theta 2 0 id (c • (1 : Algebra 0))
+        (Bosonize.A05.groundKet 2 (fun _ : Bosonize.A06.Orientation => (0 : ℤ)))) = c :=
+  constant_expectation 2 0 _ id c
+
+/-- All branches of a genuinely fourth-order squeezed comparison satisfy the
+proved length wrapper at h=8, M=1, d=4. -/
+example :
+    inner ℂ (Bosonize.A05.groundKet 8 (fun _ : Bosonize.A06.Orientation => (0 : ℤ)))
+      (theta 8 1 id (Bosonize.A08.bogoliubovMap 1 nonzeroSqueeze.c (-nonzeroSqueeze.s)
+        (Bosonize.A08.wordElement 1 fourthOrderWord))
+        (Bosonize.A05.groundKet 8 (fun _ : Bosonize.A06.Orientation => (0 : ℤ)))) =
+      Bosonize.A08.omegaP 1 nonzeroSqueeze (Bosonize.A08.wordElement 1 fourthOrderWord) := by
+  apply uniform_dressed_moment 8 4 1 _ nonzeroSqueeze id (by norm_num)
+    (by intro ν; constructor <;> norm_num [Bosonize.Ch07.admissible]) Function.injective_id
+    (by intro ν; norm_num) fourthOrderWord
+  simp [fourthOrderWord]
+
+/-- Mixed species have an actual current moment comparison at the same
+quadratic regulator, in addition to their explicit path certificate above. -/
+example :
+    inner ℂ (Bosonize.A05.groundKet 4 (fun _ : Bosonize.A06.Orientation => (0 : ℤ)))
+      (theta 4 1 id (Bosonize.A08.wordElement 1 mixedCreationWord)
+        (Bosonize.A05.groundKet 4 (fun _ : Bosonize.A06.Orientation => (0 : ℤ)))) =
+      Bosonize.A08.omega0 1 (Bosonize.A08.wordElement 1 mixedCreationWord) := by
+  apply uniform_word_moment 4 2 1 _ id (by norm_num)
+    (by intro ν; constructor <;> norm_num [Bosonize.Ch07.admissible]) Function.injective_id
+    (by intro ν; norm_num) mixedCreationWord
+  simp [mixedCreationWord]
 
 end Examples
 

@@ -58,8 +58,10 @@ condition is numerical and independent of the target intertwining or moment.
 The convenient uniform wrapper for word length `d`, maximum mode weight `M`, and charges
 `Nν` is `2*d*M+|Nν| ≤ h`: given a live path, each prefix energy is at most
 `d*M`, each mode weight at most `M`, and the Haldane/Gram domain needs
-`2*d*M+|Nν|≤h`. It is sufficient but not sharp, and does not replace the
-separate path condition. Empty words and `M=0` have no generator branches.
+`2*d*M+|Nν|≤h`. The proved `uniform_margin_path` theorem derives the complete path condition
+with `K=d*M` for every word of length at most `d`; `inverse_branches_length`
+then supplies every inverse-substitution branch. This is sufficient, with no
+claim of optimality. Empty words and `M=0` have no generator branches.
 
 ## Polynomial/partition carrier
 
@@ -118,3 +120,21 @@ These are audited source facts and a derivation, not evidence that the new S4
 contracts have been proved. Any candidate Lean interface must encode the
 branch coverage explicitly and may not assume intertwining or moment equality
 as an admissibility field.
+
+## Verified proof route (Phase B, 2026-10-19)
+
+The source now proves all original contracts and the numerical wrapper. The
+actual action proof uses a scalar-monomial invariant through the reversed
+execution list. Its global R2 hypothesis controls live Haldane lowering.
+When a lowering mode exceeds K, the selected species has energy below that
+mode and the one-species negative-budget theorem applies. The explicit local
+annihilation margin remains part of the reviewed certificate, although this
+R2-based proof does not need to consume it separately. Neither that redundancy
+nor the Gram cutoff is hidden as an optimal domain claim.
+
+Vacuum-polynomial compatibility needs no upper energy bound: every nonconstant
+monomial has positive energy in at least one active species and is orthogonal
+to that species sea. The Gram theorem itself remains restricted to the
+weighted-energy domain with R2. Its formal consequences include the restricted
+zero-kernel theorem and cutoff-range/budget inclusions; no whole-budget
+surjectivity or global finite CCR is claimed.

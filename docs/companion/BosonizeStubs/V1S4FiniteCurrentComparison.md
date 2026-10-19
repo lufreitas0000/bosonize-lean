@@ -210,3 +210,37 @@ zero warnings and zero placeholders. The existing audit source reports only
 standard axioms for all original contracts. Strict locks pass with 1259
 headers and 1309 commands. Full helper/data axiom auditing and final review
 are still required before promotion; these scoped reviews are not acceptance.
+
+## Phase B complete — final independent review
+
+Reviewer `/root/s4_diagnosis` issued PASS for the integrated mathematics and
+proofs at source SHA-256
+`3f436b970c78bb5126a18ab0ffc4a523bea61dd855f60b491baf410f96770b3e`.
+The reviewed statement lock is
+`bbca6e8c87a8afb69640485e1e408b4156bfa38dc5da7967fa221e9757c8c6e1`;
+the full audit source is
+`70d5ee20831851587694f971dbe8fb5ec715f07eeeba76abd899d6127d9e0a0b`
+and its output is
+`b5617c59ed2267a35286a63da0953c7a4ff27acc9183376d86e99fab005f376f`.
+The reviewer independently ran strict locks, checked all 92 audit entries
+against commands and permitted axioms, and inspected the absence of source
+placeholders and prior-Core diffs. Compiler/axiom generation was executed by
+the supervising agent in the required sandbox, not independently repeated by
+the reviewer. There were no blocking findings.
+
+The final additive numerical/linear/constant corollaries were separately
+approved at scratch hash
+`c0aabdaf41fe27fa34d2f48075b74caa77d41008f59e2a45603256659281d662`.
+The numerical path proof uses remaining-length energy allowance; all inverse
+branches preserve length. Kernel, constant/M=0, mixed-species and squeezed
+fourth-order examples are included in the integrated final review.
+
+All 53 named theorem/lemma declarations and all 92 named declarations in
+total have complete permitted-standard-axiom audits. Zero source placeholders
+and zero target compiler warnings. Full sandboxed `make ci` passes, including
+both libraries and guard/verifier tests. The only `sorryAx` displayed in the
+CI log belongs to the intentional negative test `Fixture.value`; it is absent
+from the S4 axiom output. Strict locks pass (1268 headers / 1312 commands).
+The reviewer approves byte-identical Core promotion, sole S4 path migration,
+Core aggregator addition and complete-source freeze. Pedagogical review and
+fresh post-promotion integration remain the Phase C gates.

@@ -15363,6 +15363,24 @@
           "text": "example :\n    Bosonize.A08.omegaP 1 nonzeroSqueeze\n      (Bosonize.A08.wordElement 1 [rightAnnihilator, leftAnnihilator]) \u2260\n    Bosonize.A08.omega0 1\n      (Bosonize.A08.wordElement 1 [rightAnnihilator, leftAnnihilator]) := by\n  norm_num [Bosonize.A08.omegaP, Bosonize.A08.omega0,\n    Bosonize.A08.bogoliubovMap, Bosonize.A08.wordElement,\n    Bosonize.A08.oscRep, Bosonize.A08.oscAnnihilation,\n    Bosonize.A08.oscCreation, nonzeroSqueeze,\n    rightAnnihilator, leftAnnihilator, rightCreator,\n    Bosonize.A07Interactions.oppositeOrientation]\n  simp [MvPolynomial.coeff_mul]\n  norm_num [Bosonize.A08.oscWeight]"
         },
         {
+          "hash": "e8e3f27317d0fed5b27511f1ecea68e4b150cce94156cc9d115880d8a87e717a",
+          "kind": "example",
+          "label": "example (c : \u2102) :",
+          "text": "example (c : \u2102) :\n    inner \u2102 (Bosonize.A05.groundKet 2 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))\n      (theta 2 0 id (c \u2022 (1 : Algebra 0))\n        (Bosonize.A05.groundKet 2 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))) = c :=\n  constant_expectation 2 0 _ id c"
+        },
+        {
+          "hash": "efa1a1207c40dcb236f9ec5db2066acc35948f6efb658a752cc98eec53120e3a",
+          "kind": "example",
+          "label": "example :",
+          "text": "example :\n    inner \u2102 (Bosonize.A05.groundKet 8 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))\n      (theta 8 1 id (Bosonize.A08.bogoliubovMap 1 nonzeroSqueeze.c (-nonzeroSqueeze.s)\n        (Bosonize.A08.wordElement 1 fourthOrderWord))\n        (Bosonize.A05.groundKet 8 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))) =\n      Bosonize.A08.omegaP 1 nonzeroSqueeze (Bosonize.A08.wordElement 1 fourthOrderWord) := by\n  apply uniform_dressed_moment 8 4 1 _ nonzeroSqueeze id (by norm_num)\n    (by intro \u03bd; constructor <;> norm_num [Bosonize.Ch07.admissible]) Function.injective_id\n    (by intro \u03bd; norm_num) fourthOrderWord\n  simp [fourthOrderWord]"
+        },
+        {
+          "hash": "3c31be922878ef57d2fb715e992de325cf4ec01f64c66acce1caf06a4436b3c4",
+          "kind": "example",
+          "label": "example :",
+          "text": "example :\n    inner \u2102 (Bosonize.A05.groundKet 4 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))\n      (theta 4 1 id (Bosonize.A08.wordElement 1 mixedCreationWord)\n        (Bosonize.A05.groundKet 4 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))) =\n      Bosonize.A08.omega0 1 (Bosonize.A08.wordElement 1 mixedCreationWord) := by\n  apply uniform_word_moment 4 2 1 _ id (by norm_num)\n    (by intro \u03bd; constructor <;> norm_num [Bosonize.Ch07.admissible]) Function.injective_id\n    (by intro \u03bd; norm_num) mixedCreationWord\n  simp [mixedCreationWord]"
+        },
+        {
           "hash": "55ccd37adb6544c85880b36ff94079e0d324d937e72bf26cfc7c20f85e303820",
           "kind": "end",
           "label": "end Examples",
@@ -15580,11 +15598,29 @@
           "kind": "lemma",
           "text": "lemma vacuum_polynomial {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (hh : 0<h) (hN : Bosonize.A05.admissible h Ns) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (p : Bosonize.A08.OscPoly M) : inner \u2102 (Bosonize.A05.groundKet h Ns) (polynomialState h M Ns species p) = MvPolynomial.lcoeff \u2102 0 p"
         },
+        "Bosonize.V1S4.branch_bounded": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "63ce9fca0a201160459cc0ad480c87a195006c62776bd9b82ddb27af87c4bd88",
+          "kind": "lemma",
+          "text": "lemma branch_bounded {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M K : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hne : species .right \u2260 species .left) (hR2 : \u2200 \u03bd, 2*K+|Ns \u03bd| \u2264 h) (xs : Word M) (E : \u03c3 \u2192 \u2124) (hE : nonnegativeEnergies species E) (hbound : energyTotal species E + xs.length * (M : \u2124) \u2264 K) : BranchPath h M Ns species K xs E"
+        },
+        "Bosonize.V1S4.constant_expectation": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "fae179a36bc02cd4b8ba6f1bab2e9603a16641a1e5114010ca3efefc084a7e33",
+          "kind": "theorem",
+          "text": "theorem constant_expectation {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (c : \u2102) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta h M species (c \u2022 (1 : Algebra M)) (Bosonize.A05.groundKet h Ns)) = c"
+        },
         "Bosonize.V1S4.covered_dressed_moment_contract": {
           "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
           "hash": "4de05814670423585d2f20c8de7aed0fdf7ef8575f2060df54b5f3a340a320f3",
           "kind": "theorem",
           "text": "theorem covered_dressed_moment_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (hp : Bosonize.Ch18.HyperbolicPair) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : \u2200 v \u2208 survivingBranches hp.c (-hp.s) w, PathCovered h Ns species K v) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta (\u03c3 := \u03c3) h M species ((Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (Bosonize.A08.wordElement M w))) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omegaP M hp (Bosonize.A08.wordElement M w)"
+        },
+        "Bosonize.V1S4.covered_dressed_sum_moment": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "a4d6e280818e4b13f45cc3e71455e7decf46ac77eedf7357481d0860992d5028",
+          "kind": "theorem",
+          "text": "theorem covered_dressed_sum_moment {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (hp : Bosonize.Ch18.HyperbolicPair) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0<h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2*K+|Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (ws : Finset (Word M)) (z : Word M \u2192 \u2102) (hpath : \u2200 w \u2208 ws, \u2200 v \u2208 survivingBranches hp.c (-hp.s) w, PathCovered h Ns species K v) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta h M species (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (\u2211 w \u2208 ws, z w \u2022 Bosonize.A08.wordElement M w)) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omegaP M hp (\u2211 w \u2208 ws, z w \u2022 Bosonize.A08.wordElement M w)"
         },
         "Bosonize.V1S4.covered_word_action_contract": {
           "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
@@ -15597,6 +15633,18 @@
           "hash": "456fe199938655e4d49e088fbf1fa456bd3547d1059ff2eed711aaae8118e6fd",
           "kind": "theorem",
           "text": "theorem covered_word_moment_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : PathCovered h Ns species K w) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta (\u03c3 := \u03c3) h M species (Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omega0 M (Bosonize.A08.wordElement M w)"
+        },
+        "Bosonize.V1S4.covered_word_sum_moment": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "ffba62ef22f0da56bfb45e13d7e65a3458b0412da7996d0bdac67e2561e1abbe",
+          "kind": "theorem",
+          "text": "theorem covered_word_sum_moment {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0<h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2*K+|Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (ws : Finset (Word M)) (z : Word M \u2192 \u2102) (hpath : \u2200 w \u2208 ws, PathCovered h Ns species K w) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta h M species (\u2211 w \u2208 ws, z w \u2022 Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omega0 M (\u2211 w \u2208 ws, z w \u2022 Bosonize.A08.wordElement M w)"
+        },
+        "Bosonize.V1S4.inverse_branches_length": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "2b29fda8f4ba8f1d865c8462a4fa5ba51dc522e0290334135e508371f8161866",
+          "kind": "lemma",
+          "text": "lemma inverse_branches_length {M : \u2115} (w v : Word M) (hv : v \u2208 inverseBranches w) : v.length = w.length"
         },
         "Bosonize.V1S4.inverse_expansion_contract": {
           "ctx": "de1fc4fdf4fc53ab00ba3a89e6f1379de9b35b434ef6fe645244ec60aeaa5a62",
@@ -15622,11 +15670,23 @@
           "kind": "theorem",
           "text": "theorem polynomial_state_gram_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0 < h) (hinj : Function.Injective species) (hN : Bosonize.A05.admissible h Ns) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (p q : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) (hq : PolynomialDomain K q) : inner \u2102 (polynomialState h M Ns species p) (polynomialState h M Ns species q) = Bosonize.A08.oscPairing M p q"
         },
+        "Bosonize.V1S4.polynomial_state_kernel": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "cbbc94e2e12e68c042685a71aeb036871c33cca9ee97e5c6db00868c8a8135b5",
+          "kind": "theorem",
+          "text": "theorem polynomial_state_kernel {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M K : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0<h) (hN : Bosonize.A05.admissible h Ns) (hR2 : \u2200 \u03bd, 2*K+|Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) (hz : polynomialState h M Ns species p=0) : p=0"
+        },
         "Bosonize.V1S4.polynomial_state_range_contract": {
           "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
           "hash": "6ceb5038706fc432696343b1e1003ef902d63e63bbe67c7122dc12669fbc189e",
           "kind": "theorem",
           "text": "theorem polynomial_state_range_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) : polynomialState h M Ns species p \u2208 cutoffRange h M K Ns species"
+        },
+        "Bosonize.V1S4.uniform_dressed_moment": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "5c88b1b0f3bc860239bad766a8f6b2cf88c7db290d1b4ef5c069c8ade584a165",
+          "kind": "theorem",
+          "text": "theorem uniform_dressed_moment {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h d M : \u2115) (Ns : \u03c3 \u2192 \u2124) (hp : Bosonize.Ch18.HyperbolicPair) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0<h) (hN : Bosonize.A05.admissible h Ns) (hinj : Function.Injective species) (hU : UniformMargin h d M Ns) (w : Word M) (hw : w.length \u2264 d) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta h M species (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (Bosonize.A08.wordElement M w)) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omegaP M hp (Bosonize.A08.wordElement M w)"
         },
         "Bosonize.V1S4.uniform_margin_implies_r2": {
           "ctx": "d0ff31438d797c1ccb160e53a6aa4d3aabb887d8ba46bb6adcc9363276a509e1",
@@ -15639,6 +15699,18 @@
           "hash": "d635960e62d010345fb565d13dc276823d53b66006948e113e7eb4f9b4a80cd0",
           "kind": "theorem",
           "text": "theorem uniform_margin_local_annihilation {\u03c3 : Type*} (h d M m E : \u2115) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hd : 0 < d) (hm : m \u2264 M) (hE : E \u2264 d * M) (hU : UniformMargin h d M Ns) : (m : \u2124) + E + |Ns \u03bd| \u2264 h"
+        },
+        "Bosonize.V1S4.uniform_margin_path": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "5e6b149aa2b1964ee6ab2d0a0f4f3f33467ca97193e39f3a234ac00925dbb46f",
+          "kind": "theorem",
+          "text": "theorem uniform_margin_path {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h d M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (hU : UniformMargin h d M Ns) (w : Word M) (hw : w.length \u2264 d) : PathCovered h Ns species (d*M) w"
+        },
+        "Bosonize.V1S4.uniform_word_moment": {
+          "ctx": "587e94edc71f0fbd008a7c25b91925908ebf285d63fd31fa3d35cd72ebdbdf52",
+          "hash": "a79fcf50326b467ce576199c774cea7a47628468036ae775e0499160d1010cb2",
+          "kind": "theorem",
+          "text": "theorem uniform_word_moment {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h d M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0<h) (hN : Bosonize.A05.admissible h Ns) (hinj : Function.Injective species) (hU : UniformMargin h d M Ns) (w : Word M) (hw : w.length \u2264 d) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta h M species (Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omega0 M (Bosonize.A08.wordElement M w)"
         }
       }
     }
