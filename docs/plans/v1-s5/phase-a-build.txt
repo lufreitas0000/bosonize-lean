@@ -1,0 +1,96 @@
+ℹ [3403/3440] Replayed Bosonize.Core.Ch13KleinFactors
+info: Bosonize/Core/Ch13KleinFactors.lean:228:4: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+ℹ [3411/3440] Replayed Bosonize.Core.A07InteractionsAndBogoliubov
+info: Bosonize/Core/A07InteractionsAndBogoliubov.lean:375:2: Try this:
+  [apply] abel_nf
+ℹ [3417/3440] Replayed Bosonize.Core.V1S1OrderedWick
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+⚠ [3438/3440] Replayed BosonizeStubs.V1S5FiniteGroundState
+warning: BosonizeStubs/V1S5FiniteGroundState.lean: imports `Mathlib.Analysis.InnerProductSpace.Rayleigh` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:27:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:30:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:33:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:36:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:51:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:54:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:57:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:60:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:83:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:86:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:89:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:93:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:98:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:103:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5FiniteGroundState.lean:107:8: declaration uses `sorry`
+⚠ [3439/3440] Built BosonizeStubs.V1S5SmallInteractingModel (5.2s)
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:51:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:53:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:56:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:60:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:64:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:69:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:75:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:81:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:87:8: declaration uses `sorry`
+⚠ [3440/3440] Built BosonizeStubs.V1S5MomentObstruction (5.9s)
+warning: BosonizeStubs/V1S5MomentObstruction.lean:11:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5MomentObstruction.lean:17:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5MomentObstruction.lean:24:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5MomentObstruction.lean:30:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5MomentObstruction.lean:39:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5MomentObstruction.lean:44:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5MomentObstruction.lean:53:8: declaration uses `sorry`
+warning: BosonizeStubs/V1S5MomentObstruction.lean:63:8: declaration uses `sorry`
+Build completed successfully (3440 jobs).
