@@ -217,6 +217,31 @@ noncomputable def smallPsi : Budget 8 smallCharges 2 :=
   (((Real.sqrt (1 + smallEta ^ 2))⁻¹ : ℝ) : ℂ) •
     (smallVector 0 - (smallEta : ℂ) • smallVector 5)
 
+theorem small_eta_algebra :
+    smallEta * (17 + Real.sqrt 514) = 15 ∧
+    15 * smallEta = Real.sqrt 514 - 17 ∧
+    15 * smallEta ^ 2 + 34 * smallEta = 15 ∧
+    smallEta ^ 2 / (1 + smallEta ^ 2) = (1 - 17 / Real.sqrt 514) / 2 ∧
+    smallEta / (1 + smallEta ^ 2) = 15 / (2 * Real.sqrt 514) := by
+  have hD : (Real.sqrt 514) ^ 2 = 514 := Real.sq_sqrt (by norm_num)
+  have hDpos : 0 < Real.sqrt 514 := Real.sqrt_pos.mpr (by norm_num)
+  have hden : 17 + Real.sqrt 514 ≠ 0 := by positivity
+  have h1 : smallEta * (17 + Real.sqrt 514) = 15 := by
+    unfold smallEta
+    field_simp
+  have h2 : 15 * smallEta = Real.sqrt 514 - 17 := by
+    unfold smallEta
+    field_simp
+    nlinarith
+  have h3 : 15 * smallEta ^ 2 + 34 * smallEta = 15 := by nlinarith [h1]
+  refine ⟨h1,h2,h3,?_,?_⟩
+  · have he : 1 + smallEta ^ 2 ≠ 0 := by positivity
+    field_simp
+    nlinarith [h1,h2,h3]
+  · have he : 1 + smallEta ^ 2 ≠ 0 := by positivity
+    field_simp
+    nlinarith [h1,h2,h3]
+
 theorem small_orthonormal : Orthonormal ℂ smallVector := by
   have hR2 : A05.r2 8 2 smallCharges := by intro ν; norm_num [smallCharges]
   have hN (j : Fin 8) : (A05.jointNormalization (smallLabel j) : ℂ) *

@@ -85,6 +85,10 @@ variable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℂ F]
 noncomputable def compression (i : E →ₗ[ℂ] F) (X : Module.End ℂ F) :
     Module.End ℂ E := (LinearMap.adjoint i).comp (X.comp i)
 
+theorem compression_inner (i : E →ₗ[ℂ] F) (X : Module.End ℂ F) (v w : E) :
+    inner ℂ v (compression i X w) = inner ℂ (i v) (X (i w)) := by
+  exact LinearMap.adjoint_inner_right i v (X (i w))
+
 noncomputable def extendedState (i : E →ₗ[ℂ] F) (v : E) :
     Module.End ℂ F →ₗ[ℂ] ℂ where
   toFun X := vectorState v (compression i X)

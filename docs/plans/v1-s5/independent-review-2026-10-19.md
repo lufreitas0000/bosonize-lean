@@ -59,3 +59,20 @@ Current checkpoint hashes are recorded separately in `checkpoint-hashes.json`.
 The fresh four-target build passes with 10 explicitly unproved contracts.
 Full post-amendment axiom audit and independent final proof/pedagogical reviews
 remain pending. This approval is not Phase B or Phase C completion.
+
+
+## Resumed helper amendment — 2026-10-19
+
+Independent reviewer `/root/s5_review` approved exactly two proved additions:
+`compression_inner` (arbitrary finite Hilbert carriers, actual adjoint pairing)
+and `small_eta_algebra` (five scalar identities, including both moment ratios).
+Exact assembled SHA256: VectorStates
+`6f6196400fc88f2aef76be649f27fbc36e4f99ac9063ed42bd8966791288a635`;
+SmallInteractingModel
+`44d0e5475be66b56b0e4536ade0a5286cc8b219ddbe97edcddec6983a9c222de`.
+Git diff checked: exactly two additions, 29 lines; old declarations unchanged.
+Sandboxed target build completed (3441 jobs), with only seven preexisting
+small-model placeholders. Fresh audits of both additions and the preceding
+`current_word_lowering` / `small_current_lowering` helpers use only
+`propext`, `Classical.choice`, `Quot.sound`. Only the two affected S5 statement
+lock records are amended. This is not Phase B completion or promotion.

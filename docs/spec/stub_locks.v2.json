@@ -16114,6 +16114,12 @@
           "kind": "theorem",
           "text": "theorem small_current_lowering (\u03bd : Fin 2) (m : \u2115) (hm : m = 1 \u2228 m = 2) (j : Fin 8) : A05.rho 8 \u03bd (-(m : \u2124)) (inclusion 8 smallCharges 2 (smallVector j)) = smallLowerCoefficient \u03bd m j \u2022 inclusion 8 smallCharges 2 (smallVector (smallLowerTarget \u03bd m j))"
         },
+        "Bosonize.V1S5.small_eta_algebra": {
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
+          "hash": "e832b8d630abd116db3e75af3dba970a8abfba621e983ccff2da1655a83175e6",
+          "kind": "theorem",
+          "text": "theorem small_eta_algebra : smallEta * (17 + Real.sqrt 514) = 15 \u2227 15 * smallEta = Real.sqrt 514 - 17 \u2227 15 * smallEta ^ 2 + 34 * smallEta = 15 \u2227 smallEta ^ 2 / (1 + smallEta ^ 2) = (1 - 17 / Real.sqrt 514) / 2 \u2227 smallEta / (1 + smallEta ^ 2) = 15 / (2 * Real.sqrt 514)"
+        },
         "Bosonize.V1S5.small_ground": {
           "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "bed8cda507add50d2adc2a072e1cb2eebfdd85b097b91a2aa2aebfc949077ab1",
@@ -16282,6 +16288,12 @@
         }
       ],
       "lemmas": {
+        "Bosonize.V1S5.compression_inner": {
+          "ctx": "3fe4a1997804b5fb67f72bc0d2b33c8abec4ba82b994c858710b5f7c496fd6cb",
+          "hash": "278c994582b73fcbe0e4e80e0d72c7c2f7179d978f83674b220226f96aaf20d5",
+          "kind": "theorem",
+          "text": "theorem compression_inner (i : E \u2192\u2097[\u2102] F) (X : Module.End \u2102 F) (v w : E) : inner \u2102 v (compression i X w) = inner \u2102 (i v) (X (i w))"
+        },
         "Bosonize.V1S5.compression_symmetric": {
           "ctx": "afd5f5973cc0aa5a1378c52831d3bf3abad55e0ecee6fe2ca9a9746bdcdf8c4f",
           "hash": "8a0513c22471576fad4ae3e949451a3899f5908ab92c19b4bcb5b73db3beb933",
