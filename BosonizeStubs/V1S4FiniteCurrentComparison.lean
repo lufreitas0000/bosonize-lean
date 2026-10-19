@@ -382,6 +382,378 @@ lemma multi_hall_prod {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
   simp [orientation_univ]
 end Support
 
+namespace Support
+lemma polynomial_monomial {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M : ℕ) (Ns : σ → ℤ) (species : Bosonize.A06.Orientation → σ)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (c : ℂ) :
+    polynomialState h M Ns species (MvPolynomial.monomial r c) =
+      c • monomialState h M Ns species r := by
+  classical
+  by_cases hc : c=0
+  · simp [hc, polynomialState]
+  · simp [polynomialState, MvPolynomial.support_monomial, hc,
+      MvPolynomial.lcoeff_apply, MvPolynomial.coeff_monomial]
+lemma monomial_zero {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M : ℕ) (Ns : σ → ℤ) (species : Bosonize.A06.Orientation → σ) :
+    monomialState h M Ns species 0 = Bosonize.A05.groundKet h Ns := by
+  classical
+  have hz : multiIndexParts M species (0 : Bosonize.A08.OscMode M →₀ ℕ) = fun _ => [] := by
+    funext ν
+    simp only [multiIndexParts, Finsupp.zero_apply, List.replicate_zero]
+    simp [List.flatMap_eq_nil_iff]
+  rw [monomialState, hz]
+  simp [Bosonize.A05.wordState, Bosonize.A05.creatorWord]
+lemma multi_add {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (a : Bosonize.A08.OscMode M) (ν : σ) :
+    (multiIndexParts M species (r+Finsupp.single a 1) ν : Multiset ℕ) =
+      (multiIndexParts M species r ν : Multiset ℕ) +
+        if ν=species a.1 then {a.2.val+1} else 0 := by
+  classical
+  by_cases hr : species .right=ν
+  · subst ν
+    rw [multi_active species hinj, multi_active species hinj, parts_single_add]
+    simp only [hinj.eq_iff]
+  by_cases hl : species .left=ν
+  · subst ν
+    rw [multi_active species hinj, multi_active species hinj, parts_single_add]
+    simp only [hinj.eq_iff]
+  rw [multi_other species _ ν hr hl, multi_other species _ ν hr hl]
+  have he : ν ≠ species a.1 := by cases a.1 <;> exact Ne.symm (by assumption)
+  simp [he]
+lemma multi_sub {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (a : Bosonize.A08.OscMode M)
+    (hr : 0<r a) (ν : σ) :
+    (multiIndexParts M species (r-Finsupp.single a 1) ν : Multiset ℕ) =
+        if ν=species a.1 then (multiIndexParts M species r ν : Multiset ℕ).erase (a.2.val+1)
+        else (multiIndexParts M species r ν : Multiset ℕ) := by
+  classical
+  by_cases hR : species .right=ν
+  · subst ν
+    rw [multi_active species hinj, multi_active species hinj, parts_single_sub r a hr]
+    simp only [hinj.eq_iff]
+  by_cases hL : species .left=ν
+  · subst ν
+    rw [multi_active species hinj, multi_active species hinj, parts_single_sub r a hr]
+    simp only [hinj.eq_iff]
+  rw [multi_other species _ ν hR hL, multi_other species _ ν hR hL]
+  simp
+lemma tensor_update_smul {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h : ℕ) (vs : σ → Bosonize.Ch07.FockSpace h) (ν : σ)
+    (x : Bosonize.Ch07.FockSpace h) (c : ℂ) :
+    Bosonize.A05.tensorVector h (Function.update vs ν (c • x)) =
+      c • Bosonize.A05.tensorVector h (Function.update vs ν x) := by
+  classical
+  let : DecidableEq (Bosonize.A05.Mode σ h) := (Bosonize.A05.speciesOrder h).toDecidableEq
+  apply (Bosonize.A02.coordinates (Bosonize.A05.Mode σ h)).injective
+  funext S
+  simp only [Bosonize.A05.tensorVector, map_smul, LinearEquiv.apply_symm_apply,
+    Pi.smul_apply]
+  have hf (y : Bosonize.Ch07.FockSpace h) :
+      (∏ η, Function.update vs ν y η (Bosonize.Ch07.speciesConfiguration h S η)) =
+        y (Bosonize.Ch07.speciesConfiguration h S ν) *
+          ∏ η ∈ (Finset.univ : Finset σ).erase ν, vs η (Bosonize.Ch07.speciesConfiguration h S η) := by
+    rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ ν)]
+    simp only [Function.update_self]
+    congr 1
+    apply Finset.prod_congr rfl
+    intro η hη
+    rw [Function.update_of_ne (Finset.mem_erase.mp hη).1]
+  rw [hf, hf]
+  simp [PiLp.smul_apply, smul_eq_mul, mul_assoc]
+lemma mono_creation {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M : ℕ) (Ns : σ → ℤ) (hN : Bosonize.A05.admissible h Ns)
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (a : Bosonize.A08.OscMode M) :
+    Bosonize.A05.rho h (species a.1) (a.2.val+1 : ℕ)
+      (monomialState h M Ns species r) =
+      monomialState h M Ns species (r+Finsupp.single a 1) := by
+  classical
+  rw [monomialState, monomialState, Bosonize.A05.word_tensor h Ns hN,
+    Bosonize.A05.word_tensor h Ns hN, Bosonize.A05.rho_tensor]
+  congr 1
+  funext ν
+  by_cases he : ν=species a.1
+  · subst ν
+    simp only [Function.update_self]
+    rw [← Bosonize.Ch11.word_state_cons]
+    have hp : ((a.2.val+1) :: multiIndexParts M species r (species a.1)).Perm
+        (multiIndexParts M species (r+Finsupp.single a 1) (species a.1)) := by
+      apply Multiset.coe_eq_coe.mp
+      rw [multi_add species hinj]
+      simp [add_comm]
+    exact congrArg (fun op => op (Bosonize.Ch07.groundKet h (Ns (species a.1)) (hN _)))
+      (Bosonize.Ch11.creator_word_perm h _ _ hp)
+  · rw [Function.update_of_ne he]
+    have hp : (multiIndexParts M species r ν).Perm
+        (multiIndexParts M species (r+Finsupp.single a 1) ν) := by
+      apply Multiset.coe_eq_coe.mp
+      rw [multi_add species hinj]
+      simp [he]
+    exact congrArg (fun op => op (Bosonize.Ch07.groundKet h (Ns ν) (hN _)))
+      (Bosonize.Ch11.creator_word_perm h _ _ hp)
+lemma mono_lowering {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M K : ℕ) (Ns : σ → ℤ) (hh : 0<h)
+    (hN : Bosonize.A05.admissible h Ns)
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (hR2 : ∀ ν, 2*K+|Ns ν| ≤ h)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (hr : weightedEnergy r ≤ K)
+    (a : Bosonize.A08.OscMode M) :
+    Bosonize.A05.rho h (species a.1) (-(a.2.val+1 : ℕ) : ℤ)
+      (monomialState h M Ns species r) =
+      ((a.2.val+1 : ℕ) * r a : ℂ) •
+        monomialState h M Ns species (r-Finsupp.single a 1) := by
+  classical
+  let ν := species a.1
+  let m := a.2.val+1
+  let ps := multiIndexParts M species r
+  have hc : (ps ν).count m = r a := by
+    dsimp [ps, ν, m]
+    rw [multi_active species hinj]
+    exact count_parts_mode r a.1 a.2
+  have hE : (ps ν).sum ≤ K := (multi_bound species hinj r ν).trans hr
+  have hlower : Bosonize.Ch09.rho h (-(m : ℤ))
+      (Bosonize.Ch11.wordState h (Ns ν) (hN ν) (ps ν)) =
+      ((m * r a : ℕ) : ℂ) •
+        Bosonize.Ch11.wordState h (Ns ν) (hN ν) ((ps ν).erase m) := by
+    by_cases hm : m ≤ K
+    · have ht := Bosonize.Ch11.lowering_through_word_erase h hh (Ns ν) (hN ν)
+        K m (by dsimp [m]; omega) hm (ps ν)
+        (multi_pos species hinj r ν) hE (hR2 ν)
+      rw [hc] at ht
+      simpa only [← Nat.cast_smul_eq_nsmul ℂ] using ht
+    · have hzero := Bosonize.Ch09.rho_lowering_budget_zero h hh (m : ℤ) (Ns ν)
+        ((ps ν).sum : ℤ) (by omega)
+        _ (Bosonize.Ch11.word_state_mem_budget h hh (Ns ν) (hN ν) (ps ν)
+          (ps ν).sum (le_refl _))
+      have hcount : r a = 0 := by
+        by_contra hn
+        have hmem : m ∈ ps ν := List.count_pos_iff.mp (by rw [hc]; omega)
+        have hle : m ≤ (ps ν).sum := List.single_le_sum (fun _ _ => Nat.zero_le _) m hmem
+        omega
+      simp [hzero, hcount]
+  rw [monomialState, Bosonize.A05.word_tensor h Ns hN, Bosonize.A05.rho_tensor]
+  change Bosonize.A05.tensorVector h
+    (Function.update (fun η => Bosonize.Ch11.wordState h (Ns η) (hN η) (ps η)) ν
+      (Bosonize.Ch09.rho h (-(m : ℤ))
+        (Bosonize.Ch11.wordState h (Ns ν) (hN ν) (ps ν)))) = _
+  rw [hlower, tensor_update_smul]
+  by_cases hra : r a=0
+  · simp [hra]
+  · simp only [Nat.cast_mul]
+    apply congrArg (fun v => ((m:ℂ) * (r a:ℂ)) • v)
+    rw [monomialState, Bosonize.A05.word_tensor h Ns hN]
+    congr 1
+    funext η
+    by_cases he : η=ν
+    · subst η
+      simp only [Function.update_self]
+      have hp : ((ps ν).erase m).Perm
+          (multiIndexParts M species (r-Finsupp.single a 1) ν) := by
+        apply Multiset.coe_eq_coe.mp
+        rw [multi_sub species hinj r a (by omega)]
+        simp [ν, m, ps, Multiset.coe_erase]
+      exact congrArg (fun op => op (Bosonize.Ch07.groundKet h (Ns ν) (hN ν)))
+        (Bosonize.Ch11.creator_word_perm h _ _ hp)
+    · rw [Function.update_of_ne he]
+      have hp : (ps η).Perm (multiIndexParts M species (r-Finsupp.single a 1) η) := by
+        apply Multiset.coe_eq_coe.mp
+        rw [multi_sub species hinj r a (by omega)]
+        simp [show η ≠ species a.1 from he, ps]
+      exact congrArg (fun op => op (Bosonize.Ch07.groundKet h (Ns η) (hN η)))
+        (Bosonize.Ch11.creator_word_perm h _ _ hp)
+noncomputable def monoE {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (r : Bosonize.A08.OscMode M →₀ ℕ) : σ → ℤ :=
+  fun ν => (multiIndexParts M species r ν).sum
+lemma monoE_total {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) :
+    energyTotal species (monoE species r) = weightedEnergy r := by
+  have h : (parts r .right).sum + (parts r .left).sum = weightedEnergy r := by
+    have ht := parts_total r
+    simpa [orientation_univ] using ht
+  simp only [energyTotal, monoE, multi_active species hinj]
+  exact_mod_cast h
+lemma monoE_zero {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) :
+    monoE species (0 : Bosonize.A08.OscMode M →₀ ℕ) = fun _ => 0 := by
+  have hz : multiIndexParts M species (0 : Bosonize.A08.OscMode M →₀ ℕ) = fun _ => [] := by
+    funext ν
+    simp only [multiIndexParts, Finsupp.zero_apply, List.replicate_zero]
+    simp [List.flatMap_eq_nil_iff]
+  funext ν
+  simp only [monoE, hz, List.sum_nil, Nat.cast_zero]
+lemma monoE_add {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (a : Bosonize.A08.OscMode M) :
+    monoE species (r+Finsupp.single a 1) =
+      energyUpdate species (true,a) (monoE species r) := by
+  classical
+  funext ν
+  have he := congrArg Multiset.sum (multi_add species hinj r a ν)
+  simp only [Multiset.sum_add, Multiset.sum_coe] at he
+  by_cases hν : ν=species a.1
+  · subst ν
+    simp only [ite_true, Multiset.sum_singleton] at he
+    simp only [energyUpdate, Function.update_self, ↓reduceIte, weight, monoE]
+    exact_mod_cast he
+  · simp only [ite_eq_right hν, Multiset.sum_zero, add_zero] at he
+    simp only [energyUpdate, Function.update_of_ne hν, monoE]
+    exact_mod_cast he
+lemma monoE_sub {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (a : Bosonize.A08.OscMode M)
+    (hr : 0<r a) :
+    monoE species (r-Finsupp.single a 1) =
+      energyUpdate species (false,a) (monoE species r) := by
+  classical
+  have hle : Finsupp.single a 1 ≤ r := by
+    intro b
+    by_cases hb : b=a
+    · subst b; simpa using Nat.succ_le_of_lt hr
+    · simp [hb]
+  have he := monoE_add species hinj (r-Finsupp.single a 1) a
+  rw [tsub_add_cancel_of_le hle] at he
+  funext ν
+  have hv := congrArg (fun E => E ν) he
+  by_cases hν : ν=species a.1
+  · subst ν
+    simp [energyUpdate, weight] at hv ⊢
+    omega
+  · simpa only [energyUpdate, Function.update_of_ne hν] using hv.symm
+lemma monoE_mode_le {σ : Type*} [Fintype σ] [LinearOrder σ] {M : ℕ}
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (a : Bosonize.A08.OscMode M)
+    (hr : 0<r a) : (a.2.val+1 : ℕ) ≤ monoE species r (species a.1) := by
+  have hc : (parts r a.1).count (a.2.val+1) > 0 := by rw [count_parts_mode]; exact hr
+  have hm := List.count_pos_iff.mp hc
+  have he := List.single_le_sum (fun _ _ => Nat.zero_le _) (a.2.val+1) hm
+  simp only [monoE, multi_active species hinj]
+  exact_mod_cast he
+end Support
+namespace Support
+lemma osc_create_monomial (M : ℕ) (a : Bosonize.A08.OscMode M)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (c : ℂ) :
+    Bosonize.A08.oscRep M (FreeAlgebra.ι ℂ (true,a)) (MvPolynomial.monomial r c) =
+      MvPolynomial.monomial (r+Finsupp.single a 1) c := by
+  classical
+  simp only [Bosonize.A08.oscRep, FreeAlgebra.lift_ι_apply, ↓reduceIte,
+    Bosonize.A08.oscCreation, LinearMap.mulLeft_apply]
+  rw [add_comm r, MvPolynomial.monomial_single_add, pow_one]
+lemma osc_lower_monomial (M : ℕ) (a : Bosonize.A08.OscMode M)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) (c : ℂ) :
+    Bosonize.A08.oscRep M (FreeAlgebra.ι ℂ (false,a)) (MvPolynomial.monomial r c) =
+      MvPolynomial.monomial (r-Finsupp.single a 1) ((a.2.val+1 : ℕ) * (c * r a)) := by
+  classical
+  simp [Bosonize.A08.oscRep, Bosonize.A08.oscAnnihilation,
+    Bosonize.A08.oscWeight, MvPolynomial.smul_monomial]
+lemma execution_action {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M K : ℕ) (Ns : σ → ℤ) (hh : 0<h)
+    (hN : Bosonize.A05.admissible h Ns)
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (hR2 : ∀ ν, 2*K+|Ns ν| ≤ h)
+    (xs : Word M) (r : Bosonize.A08.OscMode M →₀ ℕ) (c : ℂ)
+    (hr : weightedEnergy r ≤ K)
+    (hpath : BranchPath h M Ns species K xs (monoE species r)) :
+    theta h M species (Bosonize.A08.wordElement M xs.reverse)
+      (c • monomialState h M Ns species r) =
+      polynomialState h M Ns species
+        (Bosonize.A08.oscRep M (Bosonize.A08.wordElement M xs.reverse)
+          (MvPolynomial.monomial r c)) := by
+  classical
+  have hw (g : Generator M) (t : Word M) :
+      Bosonize.A08.wordElement M (g::t).reverse =
+        Bosonize.A08.wordElement M t.reverse * FreeAlgebra.ι ℂ g := by
+    simp [Bosonize.A08.wordElement]
+  induction xs generalizing r c with
+  | nil => simp [Bosonize.A08.wordElement, polynomial_monomial]
+  | cons g xs ih =>
+    rw [hw, map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply]
+    rcases g with ⟨b,a⟩
+    cases b with
+    | false =>
+      rw [osc_lower_monomial]
+      have hc : theta h M species (FreeAlgebra.ι ℂ (false,a))
+          (c • monomialState h M Ns species r) =
+          ((a.2.val+1 : ℕ) * (c * r a) : ℂ) •
+            monomialState h M Ns species (r-Finsupp.single a 1) := by
+        simp only [theta, FreeAlgebra.lift_ι_apply, Bool.false_eq_true, ↓reduceIte, weight]
+        rw [map_smul, mono_lowering h M K Ns hh hN species hinj hR2 r hr a, smul_smul]
+        congr 1
+        ring
+      rw [hc]
+      by_cases hra : r a=0
+      · simp [hra, polynomialState]
+      · have hmode := monoE_mode_le species hinj r a (by omega)
+        have ht : BranchPath h M Ns species K xs
+            (monoE species (r-Finsupp.single a 1)) ∧
+            weightedEnergy (r-Finsupp.single a 1) ≤ K := by
+          simp only [BranchPath, Bool.false_eq_true, ↓reduceIte] at hpath
+          have hn : ¬ monoE species r (species a.1) < (weight (false,a) : ℤ) := by
+            simpa only [weight] using not_lt_of_ge hmode
+          have hs := (ite_eq_right hn ▸ hpath.2.2)
+          rw [← monoE_sub species hinj r a (by omega)] at hs
+          exact ⟨hs.2, by rw [monoE_total species hinj] at hs; exact_mod_cast hs.1⟩
+        exact ih _ _ ht.2 ht.1
+    | true =>
+      rw [osc_create_monomial]
+      have hc : theta h M species (FreeAlgebra.ι ℂ (true,a))
+          (c • monomialState h M Ns species r) =
+          c • monomialState h M Ns species (r+Finsupp.single a 1) := by
+        simp only [theta, FreeAlgebra.lift_ι_apply, ↓reduceIte, weight]
+        rw [map_smul, mono_creation h M Ns hN species hinj]
+      rw [hc]
+      simp only [BranchPath, ↓reduceIte] at hpath
+      have hs := hpath.2
+      rw [← monoE_add species hinj r a] at hs
+      exact ih _ _ (by rw [monoE_total species hinj] at hs; exact_mod_cast hs.1) hs.2
+end Support
+
+namespace Support
+lemma vacuum_monomial {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M : ℕ) (Ns : σ → ℤ) (hh : 0<h)
+    (hN : Bosonize.A05.admissible h Ns)
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (r : Bosonize.A08.OscMode M →₀ ℕ) :
+    inner ℂ (Bosonize.A05.groundKet h Ns) (monomialState h M Ns species r) =
+      if r=0 then 1 else 0 := by
+  classical
+  by_cases he : r=0
+  · subst r
+    rw [monomial_zero]
+    change inner ℂ (Bosonize.A02.ket (Bosonize.A05.groundConfiguration h Ns))
+      (Bosonize.A02.ket (Bosonize.A05.groundConfiguration h Ns)) = 1
+    simpa only [ite_true] using Bosonize.A02.ket_inner
+      (Bosonize.A05.groundConfiguration h Ns) (Bosonize.A05.groundConfiguration h Ns)
+  · rw [ite_eq_right he, ← monomial_zero h M Ns species,
+      monomialState, monomialState, Bosonize.A05.word_tensor h Ns hN,
+      Bosonize.A05.word_tensor h Ns hN, Bosonize.A05.tensor_inner]
+    obtain ⟨a,ha⟩ := Finsupp.ne_iff.mp he
+    apply Finset.prod_eq_zero (Finset.mem_univ (species a.1))
+    rw [multi_active species hinj, parts_zero, Bosonize.Ch11.word_state_nil,
+      multi_active species hinj]
+    apply Bosonize.Ch11.ground_inner_word_zero h hh (Ns (species a.1)) (hN _)
+    have hc : 0 < (parts r a.1).count (a.2.val+1) := by rw [count_parts_mode]; simpa using Nat.pos_of_ne_zero ha
+    have hm := List.count_pos_iff.mp hc
+    have he := List.single_le_sum (fun _ _ => Nat.zero_le _) (a.2.val+1) hm
+    omega
+lemma vacuum_polynomial {σ : Type*} [Fintype σ] [LinearOrder σ]
+    (h M : ℕ) (Ns : σ → ℤ) (hh : 0<h)
+    (hN : Bosonize.A05.admissible h Ns)
+    (species : Bosonize.A06.Orientation → σ) (hinj : Function.Injective species)
+    (p : Bosonize.A08.OscPoly M) :
+    inner ℂ (Bosonize.A05.groundKet h Ns) (polynomialState h M Ns species p) =
+      MvPolynomial.lcoeff ℂ 0 p := by
+  classical
+  unfold polynomialState
+  simp only [inner_sum, inner_smul_right, vacuum_monomial h M Ns hh hN species hinj]
+  by_cases hz : 0 ∈ p.support
+  · simp [hz]
+  · have hc := MvPolynomial.notMem_support_iff.mp hz
+    simp [hz, hc]
+end Support
+
 open Support
 
 /-- The polynomial map's explicit truncated range: the span of current
@@ -607,7 +979,10 @@ theorem covered_word_action_contract {σ : Type*} [Fintype σ] [LinearOrder σ]
       (Bosonize.A05.groundKet h Ns) =
       polynomialState h M Ns species
         (Bosonize.A08.oscRep M (Bosonize.A08.wordElement M w) 1) := by
-  sorry
+  have he := execution_action h M K Ns hh hN species hinj hR2 w.reverse 0 1
+    (by simp [weightedEnergy]) (by simpa only [monoE_zero] using hPath.2)
+  simpa only [List.reverse_reverse, monomial_zero, one_smul,
+    MvPolynomial.monomial_zero', map_one] using he
 
 /-- Selected finite sea matrix element equals A08's unsqueezed vacuum
 functional on every covered word. -/
@@ -621,7 +996,9 @@ theorem covered_word_moment_contract {σ : Type*} [Fintype σ] [LinearOrder σ]
       (theta (σ := σ) h M species (Bosonize.A08.wordElement M w)
         (Bosonize.A05.groundKet h Ns)) =
       Bosonize.A08.omega0 M (Bosonize.A08.wordElement M w) := by
-  sorry
+  rw [covered_word_action_contract h M Ns species w hh hN K hR2 hinj hPath,
+    vacuum_polynomial h M Ns hh hN species hinj]
+  rfl
 
 /-- Bogoliubov-dressed comparison: branch hypotheses cover the complete
 inverse expansion, so the result is omegaP on the original displayed word. -/
@@ -639,7 +1016,20 @@ theorem covered_dressed_moment_contract {σ : Type*} [Fintype σ] [LinearOrder �
           (Bosonize.A08.wordElement M w)))
         (Bosonize.A05.groundKet h Ns)) =
       Bosonize.A08.omegaP M hp (Bosonize.A08.wordElement M w) := by
-  sorry
+  classical
+  rw [← inverse_expansion_contract]
+  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    inner_sum, inner_smul_right]
+  change _ = Bosonize.A08.omega0 M
+    (Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (Bosonize.A08.wordElement M w))
+  rw [← inverse_expansion_contract, map_sum]
+  simp only [map_smul, smul_eq_mul]
+  apply Finset.sum_congr rfl
+  intro v hv
+  by_cases hc : branchCoefficient hp.c (-hp.s) w v=0
+  · simp [hc]
+  · rw [covered_word_moment_contract h M Ns species v hh hN K hR2 hinj
+      (hPath v (Finset.mem_filter.mpr ⟨hv,hc⟩))]
 
 namespace Examples
 

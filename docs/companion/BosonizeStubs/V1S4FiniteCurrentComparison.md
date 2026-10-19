@@ -4,8 +4,8 @@
 
 **Phase B in progress, resumed 2026-10-19.** The reviewed Phase A interface
 was locked in `7f623b1`, with the positive-regulator amendment in `2e2be41`.
-Three contracts remain unproved: covered word action, covered word moment,
-and dressed moment. No S4 promotion or Phase C claim.
+All eight original contracts are now proved. Complete declaration audits,
+corollary integration, final independent review and Phase C remain pending. No S4 promotion or Phase C claim.
 Historical review snapshots below describe their recorded dates, not current
 placeholder counts.
 
@@ -186,3 +186,27 @@ standard axioms. Strict locks pass after adding only the reviewed S4 helper
 records (1242 theorem headers / 1302 commands globally). No existing Core or
 other staging records changed. The scoped manifest diff against the initial
 baseline is kept free of unrelated ordering/serialization changes.
+
+## Phase B — action and moment proofs
+
+All original S4 theorem placeholders have been replaced. The reviewed action
+helper artifact is `.scratch/v1-s4-resume/Action.lean`, SHA-256
+`766c977207fa0b754958a05874f87d811e072be6e2bcb6243bd4c38a871279ae`.
+Reviewer `/root/s4_diagnosis` approved every helper and its action theorem
+specialization. The execution induction tracks a scalar monomial and its
+species energies, preserving the displayed product order through reversal.
+Live lowering uses the R2-controlled partition action; out-of-budget modes
+use a one-species negative-energy argument. No path premise assumes transport.
+
+The reviewed vacuum/moment artifact is `.scratch/v1-s4-resume/Moment.lean`,
+SHA-256 `f62713f89a2bb790190c9586835a8126e9ecd6d9cb42f1b458946501b3badcf4`.
+The same reviewer approved both vacuum helpers and the two moment proofs.
+Vacuum compatibility holds for all polynomials by positive-energy
+orthogonality and finite linearity. In the dressed proof, every nonzero
+inverse-expansion coefficient uses its own branch path hypothesis.
+
+The integrated canonical module builds in the required namespace sandbox with
+zero warnings and zero placeholders. The existing audit source reports only
+standard axioms for all original contracts. Strict locks pass with 1259
+headers and 1309 commands. Full helper/data axiom auditing and final review
+are still required before promotion; these scoped reviews are not acceptance.
