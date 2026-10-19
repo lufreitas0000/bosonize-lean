@@ -13818,103 +13818,103 @@
           "kind": "abbrev",
           "label": "abbrev Bosonize.V1S1.OscLinearForm",
           "hash": "86f76224f461058f3c7a64b8ecb73dd2c43d4c8524bdc289f72669283039e402",
-          "text": "abbrev OscLinearForm (M : ℕ) := Bosonize.A08.OscGen M →₀ ℂ"
+          "text": "abbrev OscLinearForm (M : \u2115) := Bosonize.A08.OscGen M \u2192\u2080 \u2102"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.linearElement",
           "hash": "4363caa83010c64c15457b6a520f2a4aa2d081d21520a739ad6ef0d0933dc120",
-          "text": "def linearElement {M : ℕ} (f : OscLinearForm M) : Bosonize.A08.OscAlgebra M :=\n  ∑ g ∈ f.support, (f g) • FreeAlgebra.ι ℂ g"
+          "text": "def linearElement {M : \u2115} (f : OscLinearForm M) : Bosonize.A08.OscAlgebra M :=\n  \u2211 g \u2208 f.support, (f g) \u2022 FreeAlgebra.\u03b9 \u2102 g"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.formOfGenerator",
           "hash": "ade129ff008010aa5a29379bce3b150fdc52bbe4e02aba8fa90540b6075947e5",
-          "text": "noncomputable def formOfGenerator {M : ℕ} (g : Bosonize.A08.OscGen M) : OscLinearForm M :=\n  Finsupp.single g 1"
+          "text": "noncomputable def formOfGenerator {M : \u2115} (g : Bosonize.A08.OscGen M) : OscLinearForm M :=\n  Finsupp.single g 1"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.wordElement",
           "hash": "7a3a74d85fcff81fd3a8291502ad5347437cc9cb0daaa71a868efa9808f3335e",
-          "text": "def wordElement {M : ℕ} (w : List (OscLinearForm M)) : Bosonize.A08.OscAlgebra M :=\n  (w.map linearElement).prod"
+          "text": "def wordElement {M : \u2115} (w : List (OscLinearForm M)) : Bosonize.A08.OscAlgebra M :=\n  (w.map linearElement).prod"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.contraction",
           "hash": "776925518401afa5213c0628a7231ae2e622bc42b5f9be307a2fb64b7cd7488d",
-          "text": "noncomputable def contraction {M : ℕ} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f g : OscLinearForm M) : ℂ :=\n  Bosonize.A08.omegaP M hp (linearElement f * linearElement g)"
+          "text": "noncomputable def contraction {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f g : OscLinearForm M) : \u2102 :=\n  Bosonize.A08.omegaP M hp (linearElement f * linearElement g)"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.wordForms",
           "hash": "6be5e9ce451623f97be31da64709a6aaf643041c32c8532a920defe8dee31c9b",
-          "text": "def wordForms {M : ℕ} {n : ℕ} (f : Fin n → OscLinearForm M) :\n    List (OscLinearForm M) := List.ofFn f"
+          "text": "def wordForms {M : \u2115} {n : \u2115} (f : Fin n \u2192 OscLinearForm M) :\n    List (OscLinearForm M) := List.ofFn f"
         },
         {
           "kind": "abbrev",
           "label": "abbrev Bosonize.V1S1.Pairing",
           "hash": "a3c24e71eca23effc573175386e27dc2348edc1b63939b5c5ea25b464217eb04",
-          "text": "abbrev Pairing (n : ℕ) := Finset (Fin n × Fin n)"
+          "text": "abbrev Pairing (n : \u2115) := Finset (Fin n \u00d7 Fin n)"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.IsPairing",
           "hash": "337abcb8782f0f32325707921813bf1842ce03f79e9a874086195df3d9198911",
-          "text": "def IsPairing {n : ℕ} (P : Pairing n) : Prop :=\n  (∀ e ∈ P, e.1 < e.2) ∧\n  (∀ i : Fin n, ∃! j : Fin n, (i, j) ∈ P ∨ (j, i) ∈ P)"
+          "text": "def IsPairing {n : \u2115} (P : Pairing n) : Prop :=\n  (\u2200 e \u2208 P, e.1 < e.2) \u2227\n  (\u2200 i : Fin n, \u2203! j : Fin n, (i, j) \u2208 P \u2228 (j, i) \u2208 P)"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.pairingWeight",
           "hash": "b09bcf8ca0da369bfd01519cbcbeb296eb941110276376e1bf90b98fdccce42c",
-          "text": "noncomputable def pairingWeight {M n : ℕ} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f : Fin n → OscLinearForm M) (P : Pairing n) : ℂ :=\n  ∏ e ∈ P, contraction hp (f e.1) (f e.2)"
+          "text": "noncomputable def pairingWeight {M n : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f : Fin n \u2192 OscLinearForm M) (P : Pairing n) : \u2102 :=\n  \u220f e \u2208 P, contraction hp (f e.1) (f e.2)"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.orderedPairingSum",
           "hash": "e6cf142c7e61845a89bb86b6a8a12d2d20ab1ccca83e50c30cf27f774ecc5ca5",
-          "text": "noncomputable def orderedPairingSum {M n : ℕ} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f : Fin n → OscLinearForm M) : ℂ := by\n  classical\n  exact ∑ P : Pairing n, if IsPairing P then pairingWeight hp f P else 0"
+          "text": "noncomputable def orderedPairingSum {M n : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (f : Fin n \u2192 OscLinearForm M) : \u2102 := by\n  classical\n  exact \u2211 P : Pairing n, if IsPairing P then pairingWeight hp f P else 0"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.dressedLinearElement",
           "hash": "7410ca92e9f5a12cd1fa164735a93073dc4a18f02e8c8875109c7391c507874e",
-          "text": "noncomputable def dressedLinearElement {M : ℕ} (c s : ℝ)\n    (f : OscLinearForm M) : Bosonize.A08.OscAlgebra M :=\n  ∑ g ∈ f.support, (f g) •\n    Bosonize.A08.bogoliubovMap M c s (FreeAlgebra.ι ℂ g)"
+          "text": "noncomputable def dressedLinearElement {M : \u2115} (c s : \u211d)\n    (f : OscLinearForm M) : Bosonize.A08.OscAlgebra M :=\n  \u2211 g \u2208 f.support, (f g) \u2022\n    Bosonize.A08.bogoliubovMap M c s (FreeAlgebra.\u03b9 \u2102 g)"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.dressedGeneratorForm",
           "hash": "b34f277461b7c0ede85e9c72fe6c07489c4dcda58fadcf0855deba9d7e17f7cc",
-          "text": "noncomputable def dressedGeneratorForm {M : ℕ} (c s : ℝ)\n    (g : Bosonize.A08.OscGen M) : OscLinearForm M :=\n  (c : ℂ) • Finsupp.single g 1 + (s : ℂ) •\n    Finsupp.single (!g.1, (Bosonize.A07Interactions.oppositeOrientation g.2.1, g.2.2)) 1"
+          "text": "noncomputable def dressedGeneratorForm {M : \u2115} (c s : \u211d)\n    (g : Bosonize.A08.OscGen M) : OscLinearForm M :=\n  (c : \u2102) \u2022 Finsupp.single g 1 + (s : \u2102) \u2022\n    Finsupp.single (!g.1, (Bosonize.A07Interactions.oppositeOrientation g.2.1, g.2.2)) 1"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.dressedForm",
           "hash": "32acb370b4b4823959f8d438faf2baeaa3292b1b97ac60c0d3fca4e22b45e99c",
-          "text": "noncomputable def dressedForm {M : ℕ} (c s : ℝ) (f : OscLinearForm M) : OscLinearForm M :=\n  ∑ g ∈ f.support, (f g) • dressedGeneratorForm c s g"
+          "text": "noncomputable def dressedForm {M : \u2115} (c s : \u211d) (f : OscLinearForm M) : OscLinearForm M :=\n  \u2211 g \u2208 f.support, (f g) \u2022 dressedGeneratorForm c s g"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.deleteFin",
           "hash": "1b55b6f606c99cf910f54e24db3c75a97bf8013b917dafe3962e969d1ad16e0b",
-          "text": "def deleteFin {M : ℕ} (xs : List (OscLinearForm M)) (i : Fin xs.length) :=\n  xs.take i.val ++ xs.drop (i.val + 1)"
+          "text": "def deleteFin {M : \u2115} (xs : List (OscLinearForm M)) (i : Fin xs.length) :=\n  xs.take i.val ++ xs.drop (i.val + 1)"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.generatorContractionExpected",
           "hash": "3af802b6ca5e771144ead1be25b41febb962056ff502a9cde92a54843ce639a9",
-          "text": "noncomputable def generatorContractionExpected {M : ℕ} (hp : Bosonize.Ch18.HyperbolicPair)\n    (g h : Bosonize.A08.OscGen M) : ℂ := by\n  classical\n  by_cases hg : g.1 = false\n  · by_cases hh : h.1 = false\n    · exact if g.2.2 = h.2.2 ∧ h.2.1 = Bosonize.A07Interactions.oppositeOrientation g.2.1\n        then -(↑(g.2.2.val + 1) * (hp.c : ℂ) * (hp.s : ℂ)) else 0\n    · exact if g.2.2 = h.2.2 ∧ g.2.1 = h.2.1\n        then ↑(g.2.2.val + 1) * (hp.c : ℂ) ^ 2 else 0\n  · by_cases hh : h.1 = false\n    · exact if g.2.2 = h.2.2 ∧ g.2.1 = h.2.1\n        then ↑(g.2.2.val + 1) * (hp.s : ℂ) ^ 2 else 0\n    · exact if g.2.2 = h.2.2 ∧ h.2.1 = Bosonize.A07Interactions.oppositeOrientation g.2.1\n        then -(↑(g.2.2.val + 1) * (hp.c : ℂ) * (hp.s : ℂ)) else 0"
+          "text": "noncomputable def generatorContractionExpected {M : \u2115} (hp : Bosonize.Ch18.HyperbolicPair)\n    (g h : Bosonize.A08.OscGen M) : \u2102 := by\n  classical\n  by_cases hg : g.1 = false\n  \u00b7 by_cases hh : h.1 = false\n    \u00b7 exact if g.2.2 = h.2.2 \u2227 h.2.1 = Bosonize.A07Interactions.oppositeOrientation g.2.1\n        then -(\u2191(g.2.2.val + 1) * (hp.c : \u2102) * (hp.s : \u2102)) else 0\n    \u00b7 exact if g.2.2 = h.2.2 \u2227 g.2.1 = h.2.1\n        then \u2191(g.2.2.val + 1) * (hp.c : \u2102) ^ 2 else 0\n  \u00b7 by_cases hh : h.1 = false\n    \u00b7 exact if g.2.2 = h.2.2 \u2227 g.2.1 = h.2.1\n        then \u2191(g.2.2.val + 1) * (hp.s : \u2102) ^ 2 else 0\n    \u00b7 exact if g.2.2 = h.2.2 \u2227 h.2.1 = Bosonize.A07Interactions.oppositeOrientation g.2.1\n        then -(\u2191(g.2.2.val + 1) * (hp.c : \u2102) * (hp.s : \u2102)) else 0"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.freePair",
           "hash": "7242c3afe9454662f4044a4915770b4772f3fdf5fdc60963729af00a6d8bf9ba",
-          "text": "def freePair : Bosonize.Ch18.HyperbolicPair := ⟨1, 0, by norm_num⟩"
+          "text": "def freePair : Bosonize.Ch18.HyperbolicPair := \u27e81, 0, by norm_num\u27e9"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.squeezedPair",
           "hash": "08df8317da6a2cfc6e2ea6bc43e618e05d6fd0d6cc1da1ea4c10a703d2706f83",
-          "text": "noncomputable def squeezedPair : Bosonize.Ch18.HyperbolicPair :=\n  ⟨(5 / 3 : ℝ), (4 / 3 : ℝ), by norm_num⟩"
+          "text": "noncomputable def squeezedPair : Bosonize.Ch18.HyperbolicPair :=\n  \u27e8(5 / 3 : \u211d), (4 / 3 : \u211d), by norm_num\u27e9"
         },
         {
           "kind": "def",
@@ -13934,55 +13934,55 @@
           "kind": "theorem",
           "hash": "210961dd83c4a5e5c206b1aa8a018bed0a7acde264bf97c12074a745afc7a550",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem bare_in_dressed_coordinates (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : Bosonize.A08.bogoliubovMap M hp.c hp.s (dressedLinearElement hp.c (-hp.s) f) = linearElement f"
+          "text": "theorem bare_in_dressed_coordinates (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : Bosonize.A08.bogoliubovMap M hp.c hp.s (dressedLinearElement hp.c (-hp.s) f) = linearElement f"
         },
         "Bosonize.V1S1.bare_to_dressed_conversion": {
           "kind": "theorem",
           "hash": "6674dd0f0d5b96e8ec65a31482da07b9fae301c589ec78701dc9fe2d89853927",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem bare_to_dressed_conversion (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : Bosonize.A08.bogoliubovMap M hp.c hp.s (linearElement f) = dressedLinearElement hp.c hp.s f"
+          "text": "theorem bare_to_dressed_conversion (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : Bosonize.A08.bogoliubovMap M hp.c hp.s (linearElement f) = dressedLinearElement hp.c hp.s f"
         },
         "Bosonize.V1S1.contraction_bilinear_left": {
           "kind": "theorem",
           "hash": "0cdb9e38553a9d4cd3a788919c0474e15eed737897304b338625299f04d9f29b",
           "ctx": "83f2d7e70a050284ca8badd62466fb946eb8028a0de51d9aecc37f3549bb0bee",
-          "text": "theorem contraction_bilinear_left (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (a b c : OscLinearForm M) : contraction hp (a + b) c = contraction hp a c + contraction hp b c"
+          "text": "theorem contraction_bilinear_left (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (a b c : OscLinearForm M) : contraction hp (a + b) c = contraction hp a c + contraction hp b c"
         },
         "Bosonize.V1S1.contraction_bilinear_right": {
           "kind": "theorem",
           "hash": "015f1d27a3894430f7ffa6c18754adf01e369c214b0ede896157f28aa11c1b36",
           "ctx": "83f2d7e70a050284ca8badd62466fb946eb8028a0de51d9aecc37f3549bb0bee",
-          "text": "theorem contraction_bilinear_right (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (a b c : OscLinearForm M) : contraction hp a (b + c) = contraction hp a b + contraction hp a c"
+          "text": "theorem contraction_bilinear_right (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (a b c : OscLinearForm M) : contraction hp a (b + c) = contraction hp a b + contraction hp a c"
         },
         "Bosonize.V1S1.contraction_coeff_formula": {
           "kind": "theorem",
           "hash": "c79da76f79d164ff8c1e83747cd0f6c3dcc348fc5ac9907504258bb5b3e0af9a",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem contraction_coeff_formula (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f g : OscLinearForm M) : contraction hp f g = ∑ i ∈ f.support, ∑ j ∈ g.support, f i * g j * generatorContractionExpected hp i j"
+          "text": "theorem contraction_coeff_formula (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f g : OscLinearForm M) : contraction hp f g = \u2211 i \u2208 f.support, \u2211 j \u2208 g.support, f i * g j * generatorContractionExpected hp i j"
         },
         "Bosonize.V1S1.contraction_zero_left": {
           "kind": "theorem",
           "hash": "4d337619d72814c7c7940d2c47d7719717440b04532007f39b78a96b29eb6e01",
           "ctx": "83f2d7e70a050284ca8badd62466fb946eb8028a0de51d9aecc37f3549bb0bee",
-          "text": "theorem contraction_zero_left (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : contraction hp 0 f = 0"
+          "text": "theorem contraction_zero_left (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : contraction hp 0 f = 0"
         },
         "Bosonize.V1S1.contraction_zero_right": {
           "kind": "theorem",
           "hash": "35516836eb12e95a84575c1893b12b2be85104cf1ee1cb1bf2d7854282d9ca0f",
           "ctx": "83f2d7e70a050284ca8badd62466fb946eb8028a0de51d9aecc37f3549bb0bee",
-          "text": "theorem contraction_zero_right (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : contraction hp f 0 = 0"
+          "text": "theorem contraction_zero_right (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) : contraction hp f 0 = 0"
         },
         "Bosonize.V1S1.dressed_conversion_preserves_free_expectation": {
           "kind": "theorem",
           "hash": "7dad4160c6babebfbee8c6c0ccb5d3901f43ddb6a63a05c395f3687c9b86dc5e",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem dressed_conversion_preserves_free_expectation (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f g : OscLinearForm M) : Bosonize.A08.omegaP M hp (dressedLinearElement hp.c hp.s f * dressedLinearElement hp.c hp.s g) = Bosonize.A08.omega0 M (linearElement f * linearElement g)"
+          "text": "theorem dressed_conversion_preserves_free_expectation (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f g : OscLinearForm M) : Bosonize.A08.omegaP M hp (dressedLinearElement hp.c hp.s f * dressedLinearElement hp.c hp.s g) = Bosonize.A08.omega0 M (linearElement f * linearElement g)"
         },
         "Bosonize.V1S1.dressed_form_evaluation": {
           "kind": "theorem",
           "hash": "88592938fbde695e3d51e33a7559d6a8ba78433075a451dc78d0d66a6d483bb2",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem dressed_form_evaluation (M : ℕ) (c s : ℝ) (f : OscLinearForm M) : linearElement (dressedForm c s f) = dressedLinearElement c s f"
+          "text": "theorem dressed_form_evaluation (M : \u2115) (c s : \u211d) (f : OscLinearForm M) : linearElement (dressedForm c s f) = dressedLinearElement c s f"
         },
         "Bosonize.V1S1.free_vacuum_order_sensitive": {
           "kind": "theorem",
@@ -13994,19 +13994,19 @@
           "kind": "theorem",
           "hash": "a0a177e7aa932bae702657b2676db4b4aaa43e4bfebd0e180415d0519bdfdde4",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem generator_contraction (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (g h : Bosonize.A08.OscGen M) : contraction hp (formOfGenerator g) (formOfGenerator h) = generatorContractionExpected hp g h"
+          "text": "theorem generator_contraction (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (g h : Bosonize.A08.OscGen M) : contraction hp (formOfGenerator g) (formOfGenerator h) = generatorContractionExpected hp g h"
         },
         "Bosonize.V1S1.linearElement_add": {
           "kind": "theorem",
           "hash": "172c0f2b1a44997e4908cef4cd1ad6baf6b1e51ef8c860f9afae493ab23dd0fb",
           "ctx": "83f2d7e70a050284ca8badd62466fb946eb8028a0de51d9aecc37f3549bb0bee",
-          "text": "theorem linearElement_add (M : ℕ) (f g : OscLinearForm M) : linearElement (f + g) = linearElement f + linearElement g"
+          "text": "theorem linearElement_add (M : \u2115) (f g : OscLinearForm M) : linearElement (f + g) = linearElement f + linearElement g"
         },
         "Bosonize.V1S1.linearElement_zero": {
           "kind": "theorem",
           "hash": "f47ee4e9bb1fa762f3d379b9fb55a1cc28105460075767e395c04f0d53b77009",
           "ctx": "83f2d7e70a050284ca8badd62466fb946eb8028a0de51d9aecc37f3549bb0bee",
-          "text": "theorem linearElement_zero (M : ℕ) : linearElement (0 : OscLinearForm M) = 0"
+          "text": "theorem linearElement_zero (M : \u2115) : linearElement (0 : OscLinearForm M) = 0"
         },
         "Bosonize.V1S1.linearElement_zero_mode": {
           "kind": "theorem",
@@ -14018,61 +14018,61 @@
           "kind": "theorem",
           "hash": "22bc977b597bc81504c76afab8966ab6ea5e21219e9b5c595087de119673c7a9",
           "ctx": "c7e52f6857b642fcb035f53a7e8df15ffdd90c539cd30afc292dce917f5117af",
-          "text": "theorem mixed_bare_dressed_word (i : Fin 1) : Bosonize.A08.omegaP 1 squeezedPair (wordElement [formOfGenerator (false, (.right, i)), dressedForm squeezedPair.c squeezedPair.s (formOfGenerator (true, (.right, i)))]) = (((i.val + 1 : ℕ) : ℂ) * (squeezedPair.c : ℂ))"
+          "text": "theorem mixed_bare_dressed_word (i : Fin 1) : Bosonize.A08.omegaP 1 squeezedPair (wordElement [formOfGenerator (false, (.right, i)), dressedForm squeezedPair.c squeezedPair.s (formOfGenerator (true, (.right, i)))]) = (((i.val + 1 : \u2115) : \u2102) * (squeezedPair.c : \u2102))"
         },
         "Bosonize.V1S1.omegaP_empty_word": {
           "kind": "theorem",
           "hash": "0b1a3e31a39857630a499a7d4e9393b3345b876cf6a35c151864b7e0e08ce29f",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem omegaP_empty_word (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) : Bosonize.A08.omegaP M hp (wordElement ([] : List (OscLinearForm M))) = 1"
+          "text": "theorem omegaP_empty_word (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) : Bosonize.A08.omegaP M hp (wordElement ([] : List (OscLinearForm M))) = 1"
         },
         "Bosonize.V1S1.omegaP_odd_word_zero": {
           "kind": "theorem",
           "hash": "7a0e89474e89792c01377296fdbc34f76ccda13e1e764bd8bfa9cc748d396288",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem omegaP_odd_word_zero (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (w : List (OscLinearForm M)) (hodd : Odd w.length) : Bosonize.A08.omegaP M hp (wordElement w) = 0"
+          "text": "theorem omegaP_odd_word_zero (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (w : List (OscLinearForm M)) (hodd : Odd w.length) : Bosonize.A08.omegaP M hp (wordElement w) = 0"
         },
         "Bosonize.V1S1.omegaP_ordered_wick": {
           "kind": "theorem",
           "hash": "c43ca3f50deaff38c6fcd1e9788a405795daaae6e4c70d60e3a7524bfb8672b5",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem omegaP_ordered_wick (M n : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f : Fin n → OscLinearForm M) : Bosonize.A08.omegaP M hp (wordElement (wordForms f)) = orderedPairingSum hp f"
+          "text": "theorem omegaP_ordered_wick (M n : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : Fin n \u2192 OscLinearForm M) : Bosonize.A08.omegaP M hp (wordElement (wordForms f)) = orderedPairingSum hp f"
         },
         "Bosonize.V1S1.omegaP_pull_through": {
           "kind": "theorem",
           "hash": "e1d34587fbcc5c3d50a916c4041b47a849e442c0a16689a36302090c9aafb35f",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem omegaP_pull_through (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (tail : List (OscLinearForm M)) : Bosonize.A08.omegaP M hp (wordElement (f :: tail)) = ∑ i : Fin tail.length, contraction hp f (tail.get i) * Bosonize.A08.omegaP M hp (wordElement (deleteFin tail i))"
+          "text": "theorem omegaP_pull_through (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (tail : List (OscLinearForm M)) : Bosonize.A08.omegaP M hp (wordElement (f :: tail)) = \u2211 i : Fin tail.length, contraction hp f (tail.get i) * Bosonize.A08.omegaP M hp (wordElement (deleteFin tail i))"
         },
         "Bosonize.V1S1.omegaP_single_even_moment": {
           "kind": "theorem",
           "hash": "467ff77b81a27fd11e12cd287bd539facfb4692bd1cf714ddff4645e4afc1eda",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem omegaP_single_even_moment (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (k : ℕ) : Bosonize.A08.omegaP M hp ((linearElement f) ^ (2 * k)) = ((((2 * k).factorial : ℕ) : ℂ) / (((2 ^ k) * k.factorial : ℕ) : ℂ)) * (contraction hp f f) ^ k"
+          "text": "theorem omegaP_single_even_moment (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (k : \u2115) : Bosonize.A08.omegaP M hp ((linearElement f) ^ (2 * k)) = ((((2 * k).factorial : \u2115) : \u2102) / (((2 ^ k) * k.factorial : \u2115) : \u2102)) * (contraction hp f f) ^ k"
         },
         "Bosonize.V1S1.omegaP_single_odd_moment": {
           "kind": "theorem",
           "hash": "a7e4a98aaca9d15d5490e87c1d6fd22f0a17e06a39e2133b88c27d3e6db574c6",
           "ctx": "8715d27673e5b5ab6ff78d0931b2c8d4c201b72a09760479c698fc9ce029106d",
-          "text": "theorem omegaP_single_odd_moment (M : ℕ) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (k : ℕ) : Bosonize.A08.omegaP M hp ((linearElement f) ^ (2 * k + 1)) = 0"
+          "text": "theorem omegaP_single_odd_moment (M : \u2115) (hp : Bosonize.Ch18.HyperbolicPair) (f : OscLinearForm M) (k : \u2115) : Bosonize.A08.omegaP M hp ((linearElement f) ^ (2 * k + 1)) = 0"
         },
         "Bosonize.V1S1.pairing_representation_ext": {
           "kind": "theorem",
           "hash": "1bd642412ae346a5298e3b37c6ad5ea8b3f7fd317c9853e253ba22e9c90e077a",
           "ctx": "d20025bfa61c56a0219740c21afce67979e40a2cb538ae9176af35af523de351",
-          "text": "theorem pairing_representation_ext {n : ℕ} (P Q : Pairing n) (h : ∀ e, e ∈ P ↔ e ∈ Q) : P = Q"
+          "text": "theorem pairing_representation_ext {n : \u2115} (P Q : Pairing n) (h : \u2200 e, e \u2208 P \u2194 e \u2208 Q) : P = Q"
         },
         "Bosonize.V1S1.squeezed_test_fourth_moment": {
           "kind": "theorem",
           "hash": "f95d3d50121d12f10068b376ed772a75a71d5a9b51a86b808b544ee51d2dcb67",
           "ctx": "c7e52f6857b642fcb035f53a7e8df15ffdd90c539cd30afc292dce917f5117af",
-          "text": "theorem squeezed_test_fourth_moment : Bosonize.A08.omegaP 1 squeezedPair ((linearElement squeezedTestForm) ^ 4) = (4 / 27 : ℂ)"
+          "text": "theorem squeezed_test_fourth_moment : Bosonize.A08.omegaP 1 squeezedPair ((linearElement squeezedTestForm) ^ 4) = (4 / 27 : \u2102)"
         },
         "Bosonize.V1S1.squeezed_test_variance": {
           "kind": "theorem",
           "hash": "bc2da91e92ae1129b69d818c398fbd5cc27c14a103c8e84fa7fc2ab374084545",
           "ctx": "c7e52f6857b642fcb035f53a7e8df15ffdd90c539cd30afc292dce917f5117af",
-          "text": "theorem squeezed_test_variance : contraction squeezedPair squeezedTestForm squeezedTestForm = (2 / 9 : ℂ)"
+          "text": "theorem squeezed_test_variance : contraction squeezedPair squeezedTestForm squeezedTestForm = (2 / 9 : \u2102)"
         },
         "Bosonize.V1S1.zero_mode_form_eq_zero": {
           "kind": "theorem",
@@ -14098,27 +14098,27 @@
         },
         {
           "kind": "variable",
-          "label": "variable {α : Type*} [LinearOrder α]",
+          "label": "variable {\u03b1 : Type*} [LinearOrder \u03b1]",
           "hash": "a62fe17aa762f3727d3c7f59401c5d8bd82bf590f4ff3bb88ebbe5446afe337e",
-          "text": "variable {α : Type*} [LinearOrder α]"
+          "text": "variable {\u03b1 : Type*} [LinearOrder \u03b1]"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.Pairings.R",
           "hash": "19645b4e9ad7397749476b8d299d9855561717a3749916c9a732e4043cf07fcd",
-          "text": "def R (P : Finset (α×α)) (i j : α) : Prop := (i,j)∈P ∨ (j,i)∈P"
+          "text": "def R (P : Finset (\u03b1\u00d7\u03b1)) (i j : \u03b1) : Prop := (i,j)\u2208P \u2228 (j,i)\u2208P"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.Pairings.Good",
           "hash": "342ed6130a3b091d38664761c9146e3ef5450776dddccdc0adcc0c27fd51cdc6",
-          "text": "def Good (V : Finset α) (P : Finset (α×α)) : Prop :=\n  (∀ e∈P, e.1 < e.2) ∧\n  ∀ i, (i∈V ↔ ∃j, R P i j) ∧ (∀ j k, R P i j → R P i k → j=k)"
+          "text": "def Good (V : Finset \u03b1) (P : Finset (\u03b1\u00d7\u03b1)) : Prop :=\n  (\u2200 e\u2208P, e.1 < e.2) \u2227\n  \u2200 i, (i\u2208V \u2194 \u2203j, R P i j) \u2227 (\u2200 j k, R P i j \u2192 R P i k \u2192 j=k)"
         },
         {
           "kind": "def",
           "label": "def Bosonize.V1S1.Pairings.extendPair",
           "hash": "ff5f38f7ea6a65d089d7a7f4aa60b31fd28756861e4de66221a591687e6d6183",
-          "text": "noncomputable def extendPair {S : Finset α} {x : α} (hx : x∉S)\n    (hmin : ∀y∈S, x<y)\n    (u : Σ y : {y // y∈S}, {P : Finset (α×α) // Good (S.erase y.val) P}) :\n    {P : Finset (α×α) // Good (insert x S) P} := by\n  classical\n  refine ⟨insert (x,u.1.val) u.2.val, ?_⟩\n  have h := insert_good u.2.property (hmin _ u.1.property)\n    (show x∉S.erase u.1.val from fun hh => hx (Finset.mem_of_mem_erase hh))\n    (Finset.notMem_erase _ _)\n  simpa [Finset.insert_erase u.1.property] using h"
+          "text": "noncomputable def extendPair {S : Finset \u03b1} {x : \u03b1} (hx : x\u2209S)\n    (hmin : \u2200y\u2208S, x<y)\n    (u : \u03a3 y : {y // y\u2208S}, {P : Finset (\u03b1\u00d7\u03b1) // Good (S.erase y.val) P}) :\n    {P : Finset (\u03b1\u00d7\u03b1) // Good (insert x S) P} := by\n  classical\n  refine \u27e8insert (x,u.1.val) u.2.val, ?_\u27e9\n  have h := insert_good u.2.property (hmin _ u.1.property)\n    (show x\u2209S.erase u.1.val from fun hh => hx (Finset.mem_of_mem_erase hh))\n    (Finset.notMem_erase _ _)\n  simpa [Finset.insert_erase u.1.property] using h"
         },
         {
           "kind": "open",
@@ -14136,7 +14136,7 @@
           "kind": "def",
           "label": "def Bosonize.V1S1.Pairings.sumOn",
           "hash": "e616f0a436388b1b76fc6befda5304ee40ca60a6ddaec827fe16f6ffcfe6ec79",
-          "text": "noncomputable def sumOn [Fintype α] (C : α→α→ℂ) (V : Finset α) : ℂ := by\n  classical\n  exact ∑ P : {P : Finset (α×α) // Good V P}, ∏ e∈P.val, C e.1 e.2"
+          "text": "noncomputable def sumOn [Fintype \u03b1] (C : \u03b1\u2192\u03b1\u2192\u2102) (V : Finset \u03b1) : \u2102 := by\n  classical\n  exact \u2211 P : {P : Finset (\u03b1\u00d7\u03b1) // Good V P}, \u220f e\u2208P.val, C e.1 e.2"
         },
         {
           "kind": "end",
@@ -14150,61 +14150,61 @@
           "kind": "lemma",
           "hash": "483447b8e1dc276835bcc897fb6fd5b1be88d245d0322172fa3894572cddaca0",
           "ctx": "cd8e6f5ceb399337601aac82746c0ce6b528f032a980de7376848c4d6dae40d6",
-          "text": "lemma erase_good {V : Finset α} {P : Finset (α×α)} (h : Good V P) {x y : α} (hxy : (x,y)∈P) : Good ((V.erase x).erase y) (P.erase (x,y))"
+          "text": "lemma erase_good {V : Finset \u03b1} {P : Finset (\u03b1\u00d7\u03b1)} (h : Good V P) {x y : \u03b1} (hxy : (x,y)\u2208P) : Good ((V.erase x).erase y) (P.erase (x,y))"
         },
         "Bosonize.V1S1.Pairings.erase_inc": {
           "kind": "lemma",
           "hash": "f9840fce571bb513440f0bc93f6a07cf065e7d2486316eb882b8a4e34f5d0793",
           "ctx": "cd8e6f5ceb399337601aac82746c0ce6b528f032a980de7376848c4d6dae40d6",
-          "text": "lemma erase_inc {V : Finset α} {P : Finset (α×α)} (h : Good V P) {x y : α} (hxy : (x,y)∈P) (i j : α) : R (P.erase (x,y)) i j ↔ R P i j ∧ i≠x ∧ i≠y ∧ j≠x ∧ j≠y"
+          "text": "lemma erase_inc {V : Finset \u03b1} {P : Finset (\u03b1\u00d7\u03b1)} (h : Good V P) {x y : \u03b1} (hxy : (x,y)\u2208P) (i j : \u03b1) : R (P.erase (x,y)) i j \u2194 R P i j \u2227 i\u2260x \u2227 i\u2260y \u2227 j\u2260x \u2227 j\u2260y"
         },
         "Bosonize.V1S1.Pairings.extendPair_bijective": {
           "kind": "lemma",
           "hash": "ae22dab6269f6e5b311e2f8da3644b04375a0f30e02ef43a60f7c6c208faf2a7",
           "ctx": "1057d408d74739b7389b79cee5efa37cf2f408ed4c4624ff43c2c1168c42ae1d",
-          "text": "lemma extendPair_bijective {S : Finset α} {x : α} (hx : x∉S) (hmin : ∀y∈S, x<y) : Function.Bijective (extendPair hx hmin)"
+          "text": "lemma extendPair_bijective {S : Finset \u03b1} {x : \u03b1} (hx : x\u2209S) (hmin : \u2200y\u2208S, x<y) : Function.Bijective (extendPair hx hmin)"
         },
         "Bosonize.V1S1.Pairings.insert_R": {
           "kind": "lemma",
           "hash": "e6792de2b3d1c07110dd53c85c642b64b7483551c5f8864e1ff4c1191674eeeb",
           "ctx": "cd8e6f5ceb399337601aac82746c0ce6b528f032a980de7376848c4d6dae40d6",
-          "text": "lemma insert_R (P : Finset (α×α)) (x y i j : α) : R (insert (x,y) P) i j ↔ (i=x ∧ j=y) ∨ (i=y ∧ j=x) ∨ R P i j"
+          "text": "lemma insert_R (P : Finset (\u03b1\u00d7\u03b1)) (x y i j : \u03b1) : R (insert (x,y) P) i j \u2194 (i=x \u2227 j=y) \u2228 (i=y \u2227 j=x) \u2228 R P i j"
         },
         "Bosonize.V1S1.Pairings.insert_good": {
           "kind": "lemma",
           "hash": "63f00a5248c043ee06342c8ce2122ec14ec4967d63da832c0a7b55e54ab65bc6",
           "ctx": "cd8e6f5ceb399337601aac82746c0ce6b528f032a980de7376848c4d6dae40d6",
-          "text": "lemma insert_good {V : Finset α} {P : Finset (α×α)} (h : Good V P) {x y : α} (hxy : x<y) (hx : x∉V) (hy : y∉V) : Good (insert x (insert y V)) (insert (x,y) P)"
+          "text": "lemma insert_good {V : Finset \u03b1} {P : Finset (\u03b1\u00d7\u03b1)} (h : Good V P) {x y : \u03b1} (hxy : x<y) (hx : x\u2209V) (hy : y\u2209V) : Good (insert x (insert y V)) (insert (x,y) P)"
         },
         "Bosonize.V1S1.Pairings.no_self": {
           "kind": "lemma",
           "hash": "63910a39c60f660ba7f017450d9614402ad2f16071511e5576985bb1fb5dd6da",
           "ctx": "cd8e6f5ceb399337601aac82746c0ce6b528f032a980de7376848c4d6dae40d6",
-          "text": "lemma no_self {V : Finset α} {P : Finset (α×α)} (h : Good V P) (i : α) : ¬ R P i i"
+          "text": "lemma no_self {V : Finset \u03b1} {P : Finset (\u03b1\u00d7\u03b1)} (h : Good V P) (i : \u03b1) : \u00ac R P i i"
         },
         "Bosonize.V1S1.Pairings.sumOn_as_sum": {
           "kind": "lemma",
           "hash": "9ec86b9ba35bde67357266d45b73e4493434af0531c7a677154ab66f0fdc69c4",
           "ctx": "2f994b67ac859e7f3366ac9382d3dffb046f6831a816d67cff76fc42ec982c0e",
-          "text": "lemma sumOn_as_sum [Fintype α] (C : α→α→ℂ) (V : Finset α) : sumOn C V = ∑ P : Finset (α×α), if Good V P then ∏e∈P, C e.1 e.2 else 0"
+          "text": "lemma sumOn_as_sum [Fintype \u03b1] (C : \u03b1\u2192\u03b1\u2192\u2102) (V : Finset \u03b1) : sumOn C V = \u2211 P : Finset (\u03b1\u00d7\u03b1), if Good V P then \u220fe\u2208P, C e.1 e.2 else 0"
         },
         "Bosonize.V1S1.Pairings.sumOn_empty": {
           "kind": "lemma",
           "hash": "7b0653f2f9178b5450ea7e041aeb822f00006d4f868c505ab7d59e03fbff8e2e",
           "ctx": "2f994b67ac859e7f3366ac9382d3dffb046f6831a816d67cff76fc42ec982c0e",
-          "text": "lemma sumOn_empty [Fintype α] (C : α→α→ℂ) : sumOn C ∅ = 1"
+          "text": "lemma sumOn_empty [Fintype \u03b1] (C : \u03b1\u2192\u03b1\u2192\u2102) : sumOn C \u2205 = 1"
         },
         "Bosonize.V1S1.Pairings.sumOn_first": {
           "kind": "lemma",
           "hash": "474ea282cd2a6e8786615089829234d7eb5a20b292937ee6e8525cd4537a7e9b",
           "ctx": "2f994b67ac859e7f3366ac9382d3dffb046f6831a816d67cff76fc42ec982c0e",
-          "text": "lemma sumOn_first [Fintype α] (C : α→α→ℂ) (S : Finset α) (x : α) (hx : x∉S) (hmin : ∀y∈S,x<y) : sumOn C (insert x S) = ∑ y : {y // y∈S}, C x y.val * sumOn C (S.erase y.val)"
+          "text": "lemma sumOn_first [Fintype \u03b1] (C : \u03b1\u2192\u03b1\u2192\u2102) (S : Finset \u03b1) (x : \u03b1) (hx : x\u2209S) (hmin : \u2200y\u2208S,x<y) : sumOn C (insert x S) = \u2211 y : {y // y\u2208S}, C x y.val * sumOn C (S.erase y.val)"
         },
         "Bosonize.V1S1.Pairings.symm": {
           "kind": "lemma",
           "hash": "7bcfd4ef4d2a67d68f8e5e11712e0e40ec3b006d16261c41173646abe6ff69c7",
           "ctx": "cd8e6f5ceb399337601aac82746c0ce6b528f032a980de7376848c4d6dae40d6",
-          "text": "omit [LinearOrder α] in lemma symm {P : Finset (α×α)} {i j : α} (h : R P i j) : R P j i"
+          "text": "omit [LinearOrder \u03b1] in lemma symm {P : Finset (\u03b1\u00d7\u03b1)} {i j : \u03b1} (h : R P i j) : R P j i"
         }
       }
     },
@@ -14961,419 +14961,419 @@
     "BosonizeStubs/V1S4FiniteCurrentComparison.lean": {
       "commands": [
         {
+          "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",
           "kind": "import",
           "label": "import Bosonize.Core.A05MultiSpecies",
-          "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",
           "text": "import Bosonize.Core.A05MultiSpecies"
         },
         {
+          "hash": "5177d3ad02b6233cd18b2e3198348979a77671b9599974dc5a27836a19928643",
           "kind": "import",
           "label": "import Bosonize.Core.A08OscillatorStates",
-          "hash": "5177d3ad02b6233cd18b2e3198348979a77671b9599974dc5a27836a19928643",
           "text": "import Bosonize.Core.A08OscillatorStates"
         },
         {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
           "kind": "@",
           "label": "@ [expose] public",
-          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
           "text": "@[expose] public"
         },
         {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
           "kind": "section",
           "label": "section",
-          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
           "text": "section"
         },
         {
+          "hash": "6cbcb4ce54c0f3062ea1ca2334e5f42ea76a8a9e2ebff518241910bab9ee505b",
           "kind": "namespace",
           "label": "namespace Bosonize.V1S4",
-          "hash": "6cbcb4ce54c0f3062ea1ca2334e5f42ea76a8a9e2ebff518241910bab9ee505b",
           "text": "namespace Bosonize.V1S4"
         },
         {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
           "kind": "open",
           "label": "open scoped BigOperators",
-          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
           "text": "open scoped BigOperators"
         },
         {
+          "hash": "2d9d0fb75362a34062832b2b20bcee29f1a66317a55cc55285dac8f49fa218ea",
           "kind": "instance",
           "label": "instance Bosonize.V1S4.orientationFintype",
-          "hash": "2d9d0fb75362a34062832b2b20bcee29f1a66317a55cc55285dac8f49fa218ea",
           "text": "noncomputable local instance orientationFintype : Fintype Bosonize.A06.Orientation :=\n  \u27e8\u27e8{.right, .left}, by decide\u27e9, fun o => by cases o <;> simp\u27e9"
         },
         {
+          "hash": "18bf2d7f0414882b424da604b0587ddea16fd50654517810d1d7ba17d8a6a363",
           "kind": "abbrev",
           "label": "abbrev Bosonize.V1S4.Generator",
-          "hash": "18bf2d7f0414882b424da604b0587ddea16fd50654517810d1d7ba17d8a6a363",
           "text": "abbrev Generator (M : \u2115) := Bosonize.A08.OscGen M"
         },
         {
+          "hash": "6978619783d704582db0b0486433f26c8eeb372c8c63481c0f74cd7276d0c6da",
           "kind": "abbrev",
           "label": "abbrev Bosonize.V1S4.Word",
-          "hash": "6978619783d704582db0b0486433f26c8eeb372c8c63481c0f74cd7276d0c6da",
           "text": "abbrev Word (M : \u2115) := List (Generator M)"
         },
         {
+          "hash": "a5eb34a4f71ed8ad160c03d539474b125925338ec621665dd5b47ff5df739ab6",
           "kind": "abbrev",
           "label": "abbrev Bosonize.V1S4.Algebra",
-          "hash": "a5eb34a4f71ed8ad160c03d539474b125925338ec621665dd5b47ff5df739ab6",
           "text": "abbrev Algebra (M : \u2115) := Bosonize.A08.OscAlgebra M"
         },
         {
+          "hash": "b67e32970e434824083fb0914890c679a636a29dfec373a08e11c1db8d1ee88c",
           "kind": "def",
           "label": "def Bosonize.V1S4.weight",
-          "hash": "b67e32970e434824083fb0914890c679a636a29dfec373a08e11c1db8d1ee88c",
           "text": "def weight {M : \u2115} (g : Generator M) : \u2115 := g.2.2.val + 1"
         },
         {
+          "hash": "584f226fae01abc620cbbf5d88b67d2c405af5e4d5ffd6ce8f0413b935bfd116",
           "kind": "def",
           "label": "def Bosonize.V1S4.energyUpdate",
-          "hash": "584f226fae01abc620cbbf5d88b67d2c405af5e4d5ffd6ce8f0413b935bfd116",
           "text": "def energyUpdate {\u03c3 : Type*} [DecidableEq \u03c3]\n    (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    {M : \u2115} (g : Generator M) (E : \u03c3 \u2192 \u2124) : \u03c3 \u2192 \u2124 :=\n  Function.update E (species g.2.1)\n    (E (species g.2.1) + if g.1 then (weight g : \u2124) else -(weight g : \u2124))"
         },
         {
+          "hash": "b2afbcc567f181951689a25e10a4bb9346bb00bbe496f0cbca58a0b337f5e490",
           "kind": "def",
           "label": "def Bosonize.V1S4.energyTotal",
-          "hash": "b2afbcc567f181951689a25e10a4bb9346bb00bbe496f0cbca58a0b337f5e490",
           "text": "def energyTotal {\u03c3 : Type*} (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    (E : \u03c3 \u2192 \u2124) : \u2124 := E (species .right) + E (species .left)"
         },
         {
+          "hash": "07bcd29dd9635d625419efbabeac8bbdeaa88feb7c0846b2d022a4aca6a25ad2",
           "kind": "def",
           "label": "def Bosonize.V1S4.nonnegativeEnergies",
-          "hash": "07bcd29dd9635d625419efbabeac8bbdeaa88feb7c0846b2d022a4aca6a25ad2",
           "text": "def nonnegativeEnergies {\u03c3 : Type*} (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    (E : \u03c3 \u2192 \u2124) : Prop := 0 \u2264 E (species .right) \u2227 0 \u2264 E (species .left)"
         },
         {
+          "hash": "9097860bd59e9e2b1419c865e4c24b7e5533b0a43386b9ba8f6e87dd1a56ca19",
           "kind": "def",
           "label": "def Bosonize.V1S4.BranchPath",
-          "hash": "9097860bd59e9e2b1419c865e4c24b7e5533b0a43386b9ba8f6e87dd1a56ca19",
           "text": "def BranchPath {\u03c3 : Type*} [DecidableEq \u03c3]\n    (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    (K : \u2115) : List (Generator M) \u2192 (\u03c3 \u2192 \u2124) \u2192 Prop\n  | [], E => nonnegativeEnergies species E \u2227 energyTotal species E \u2264 K\n  | g :: tail, E =>\n      nonnegativeEnergies species E \u2227\n        if g.1 then\n          energyTotal species (energyUpdate species g E) \u2264 K \u2227\n            BranchPath h M Ns species K tail (energyUpdate species g E)\n        else\n          (weight g : \u2124) + E (species g.2.1) +\n              |Ns (species g.2.1)| \u2264 h \u2227\n            if E (species g.2.1) < (weight g : \u2124) then\n              True\n            else\n              energyTotal species (energyUpdate species g E) \u2264 K \u2227\n                BranchPath h M Ns species K tail (energyUpdate species g E)"
         },
         {
+          "hash": "3569fd7cf25b1b54a6de857d30df327d515d40e8a78e6e5395519dbc0d278dd3",
           "kind": "def",
           "label": "def Bosonize.V1S4.flipGenerator",
-          "hash": "3569fd7cf25b1b54a6de857d30df327d515d40e8a78e6e5395519dbc0d278dd3",
           "text": "def flipGenerator {M : \u2115} (g : Generator M) : Generator M :=\n  (!g.1, (Bosonize.A07Interactions.oppositeOrientation g.2.1, g.2.2))"
         },
         {
+          "hash": "44b937ae902849c0aae543eb7c47acee316e10b469476c1766eaa611d0bdeeb6",
           "kind": "def",
           "label": "def Bosonize.V1S4.inverseBranches",
-          "hash": "44b937ae902849c0aae543eb7c47acee316e10b469476c1766eaa611d0bdeeb6",
           "text": "def inverseBranches {M : \u2115} : Word M \u2192 Finset (Word M)\n  | [] => {[]}\n  | g :: tail => (inverseBranches tail).biUnion fun branch =>\n      {g :: branch, flipGenerator g :: branch}"
         },
         {
+          "hash": "b0bcf4f4c455f3485f839307498070c87ec5c8dff00182e1c8be16df1cd8d900",
           "kind": "def",
           "label": "def Bosonize.V1S4.PathCovered",
-          "hash": "b0bcf4f4c455f3485f839307498070c87ec5c8dff00182e1c8be16df1cd8d900",
           "text": "def PathCovered {\u03c3 : Type*} [Fintype \u03c3] [DecidableEq \u03c3] {M : \u2115}\n    (h : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    (K : \u2115) (w : Word M) : Prop :=\n  species .right \u2260 species .left \u2227\n    BranchPath h M Ns species K w.reverse (fun _ => 0)"
         },
         {
+          "hash": "490a490d29efc3510928ca41a217608a001a9dad365669b61120f137aa1da207",
           "kind": "def",
           "label": "def Bosonize.V1S4.UniformMargin",
-          "hash": "490a490d29efc3510928ca41a217608a001a9dad365669b61120f137aa1da207",
           "text": "def UniformMargin {\u03c3 : Type*} (h d M : \u2115) (Ns : \u03c3 \u2192 \u2124) : Prop :=\n  \u2200 \u03bd, 2 * d * M + |Ns \u03bd| \u2264 h"
         },
         {
+          "hash": "d13d4422e0e9b647e85943a633951342aa7c66d1f277afb380e62673959d711b",
           "kind": "def",
           "label": "def Bosonize.V1S4.monomialDegree",
-          "hash": "d13d4422e0e9b647e85943a633951342aa7c66d1f277afb380e62673959d711b",
           "text": "def monomialDegree {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : \u2115 :=\n  r.sum fun _ n => n"
         },
         {
+          "hash": "6001b0d7795cea86cb181ab3a8fd7c462cda63c7e75b4449bb75ceddc151a150",
           "kind": "def",
           "label": "def Bosonize.V1S4.weightedEnergy",
-          "hash": "6001b0d7795cea86cb181ab3a8fd7c462cda63c7e75b4449bb75ceddc151a150",
           "text": "def weightedEnergy {M : \u2115} (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : \u2115 :=\n  r.sum fun mode n => n * (mode.2.val + 1)"
         },
         {
+          "hash": "43051b56d90b6edd420f598dee4de7e72be9deed89b8c32244f0c6a35bff187a",
           "kind": "def",
           "label": "def Bosonize.V1S4.PolynomialDomain",
-          "hash": "43051b56d90b6edd420f598dee4de7e72be9deed89b8c32244f0c6a35bff187a",
           "text": "def PolynomialDomain {M : \u2115} (K : \u2115) (p : Bosonize.A08.OscPoly M) : Prop :=\n  \u2200 r \u2208 p.support, weightedEnergy r \u2264 K"
         },
         {
+          "hash": "424d60f378d1c16c97751bec8394249dad80a0355f336881f8b099975430caa6",
           "kind": "def",
           "label": "def Bosonize.V1S4.branchCoefficient",
-          "hash": "424d60f378d1c16c97751bec8394249dad80a0355f336881f8b099975430caa6",
           "text": "def branchCoefficient {M : \u2115} (c s : \u211d) (w v : Word M) : \u2102 :=\n  ((List.zip w v).map fun p =>\n    if p.1 = p.2 then (c : \u2102)\n    else if flipGenerator p.1 = p.2 then (s : \u2102) else 0).prod"
         },
         {
+          "hash": "bd30bd5ca5da60c98487c197ed8041fd2c0e1d74c4c1342bdbdeab693739d4b2",
           "kind": "def",
           "label": "def Bosonize.V1S4.survivingBranches",
-          "hash": "bd30bd5ca5da60c98487c197ed8041fd2c0e1d74c4c1342bdbdeab693739d4b2",
           "text": "noncomputable def survivingBranches {M : \u2115} (c s : \u211d) (w : Word M) : Finset (Word M) := by\n  classical\n  exact (inverseBranches w).filter (fun v => branchCoefficient c s w v \u2260 0)"
         },
         {
+          "hash": "26abca5dddedddb05d68c3e81148727cb336e57350f3b646cce64836bc0bbc98",
           "kind": "def",
           "label": "def Bosonize.V1S4.theta",
-          "hash": "26abca5dddedddb05d68c3e81148727cb336e57350f3b646cce64836bc0bbc98",
           "text": "noncomputable def theta {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]\n    (h M : \u2115) (species : Bosonize.A06.Orientation \u2192 \u03c3) :\n    Algebra M \u2192\u2090[\u2102] Module.End \u2102 (Bosonize.A05.FockSpace \u03c3 h) := by\n  classical\n  exact FreeAlgebra.lift \u2102 (fun g =>\n    Bosonize.A05.rho h (species g.2.1)\n      (if g.1 then (weight g : \u2124) else -(weight g : \u2124)))"
         },
         {
+          "hash": "7d7388770a9d9e0aec853e5a958825a4ee2899aac32b6c27a0ff3b963e998c06",
           "kind": "def",
           "label": "def Bosonize.V1S4.multiIndexParts",
-          "hash": "7d7388770a9d9e0aec853e5a958825a4ee2899aac32b6c27a0ff3b963e998c06",
           "text": "noncomputable def multiIndexParts {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]\n    (M : \u2115) (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : \u03c3 \u2192 List \u2115 := by\n  classical\n  exact fun \u03bd =>\n    (if species .right = \u03bd then\n      (List.finRange M).flatMap fun i =>\n        List.replicate (r (Bosonize.A06.Orientation.right, i)) (i.val + 1)\n     else []) ++\n    (if species .left = \u03bd then\n      (List.finRange M).flatMap fun i =>\n        List.replicate (r (Bosonize.A06.Orientation.left, i)) (i.val + 1)\n     else [])"
         },
         {
+          "hash": "705d0d5dff85d40186372d31a881ff848e889dc83bda857ea67c314c660dd4e0",
           "kind": "def",
           "label": "def Bosonize.V1S4.monomialState",
-          "hash": "705d0d5dff85d40186372d31a881ff848e889dc83bda857ea67c314c660dd4e0",
           "text": "noncomputable def monomialState {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]\n    (h M : \u2115) (Ns : \u03c3 \u2192 \u2124)\n    (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : Bosonize.A05.FockSpace \u03c3 h :=\n  Bosonize.A05.wordState h Ns (multiIndexParts M species r)"
         },
         {
+          "hash": "54db911dd040bed24fd588966d0c0b1243cfc63eb30680d2e73652f355371518",
           "kind": "def",
           "label": "def Bosonize.V1S4.polynomialState",
-          "hash": "54db911dd040bed24fd588966d0c0b1243cfc63eb30680d2e73652f355371518",
           "text": "noncomputable def polynomialState {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]\n    (h M : \u2115) (Ns : \u03c3 \u2192 \u2124)\n    (species : Bosonize.A06.Orientation \u2192 \u03c3)\n    (p : Bosonize.A08.OscPoly M) : Bosonize.A05.FockSpace \u03c3 h := by\n  classical\n  exact \u2211 r \u2208 p.support,\n    (MvPolynomial.lcoeff \u2102 r p) \u2022 monomialState h M Ns species r"
         },
         {
+          "hash": "97453a1abcda37f60196c62422f0d6690a1f1cc1fd6e4b7aa540463bd760905a",
           "kind": "def",
           "label": "def Bosonize.V1S4.cutoffRange",
-          "hash": "97453a1abcda37f60196c62422f0d6690a1f1cc1fd6e4b7aa540463bd760905a",
           "text": "noncomputable def cutoffRange {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3]\n    (h M K : \u2115) (Ns : \u03c3 \u2192 \u2124)\n    (species : Bosonize.A06.Orientation \u2192 \u03c3) :\n    Submodule \u2102 (Bosonize.A05.FockSpace \u03c3 h) :=\n  Submodule.span \u2102 (Set.range fun r : {r : Bosonize.A08.OscMode M \u2192\u2080 \u2115 // weightedEnergy r \u2264 K} =>\n    monomialState h M Ns species r.1)"
         },
         {
+          "hash": "8732027b4e0273967c96b659cfd9828fb8f96a0b971cdb83e9e2579480f2bb72",
           "kind": "namespace",
           "label": "namespace Examples",
-          "hash": "8732027b4e0273967c96b659cfd9828fb8f96a0b971cdb83e9e2579480f2bb72",
           "text": "namespace Examples"
         },
         {
+          "hash": "2d9d0fb75362a34062832b2b20bcee29f1a66317a55cc55285dac8f49fa218ea",
           "kind": "instance",
           "label": "instance Bosonize.V1S4.Examples.orientationFintype",
-          "hash": "2d9d0fb75362a34062832b2b20bcee29f1a66317a55cc55285dac8f49fa218ea",
           "text": "noncomputable local instance orientationFintype : Fintype Bosonize.A06.Orientation :=\n  \u27e8\u27e8{.right, .left}, by decide\u27e9, fun o => by cases o <;> simp\u27e9"
         },
         {
+          "hash": "f0dd336b617da2fb4269b5d4671e4579387e0b65180455a3bdb980a28d3ad228",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.orientationCode",
-          "hash": "f0dd336b617da2fb4269b5d4671e4579387e0b65180455a3bdb980a28d3ad228",
           "text": "def orientationCode : Bosonize.A06.Orientation \u2192 Bool\n  | .right => false\n  | .left => true"
         },
         {
+          "hash": "6423261b1f99d2219cf19832ebb07625817c9d10b2336f862115f689ba0634cf",
           "kind": "instance",
           "label": "instance Bosonize.V1S4.Examples.orientationMax",
-          "hash": "6423261b1f99d2219cf19832ebb07625817c9d10b2336f862115f689ba0634cf",
           "text": "noncomputable local instance orientationMax : Max Bosonize.A06.Orientation :=\n  \u27e8fun a b => match a, b with\n    | .right, x => x\n    | .left, _ => .left\u27e9"
         },
         {
+          "hash": "3179d86002b73dd0b04c3a952650c9014bdb5e6ce50c5fda9f9e3e27bb5ce2be",
           "kind": "instance",
           "label": "instance Bosonize.V1S4.Examples.orientationMin",
-          "hash": "3179d86002b73dd0b04c3a952650c9014bdb5e6ce50c5fda9f9e3e27bb5ce2be",
           "text": "noncomputable local instance orientationMin : Min Bosonize.A06.Orientation :=\n  \u27e8fun a b => match a, b with\n    | .right, _ => .right\n    | .left, x => x\u27e9"
         },
         {
+          "hash": "be17bdf2d9c9fe9034500306033c41be0c0023fc44f5fcac3e246b2228cf0ea3",
           "kind": "instance",
           "label": "instance Bosonize.V1S4.Examples.orientationLinearOrder",
-          "hash": "be17bdf2d9c9fe9034500306033c41be0c0023fc44f5fcac3e246b2228cf0ea3",
           "text": "noncomputable local instance orientationLinearOrder : LinearOrder Bosonize.A06.Orientation :=\n  LinearOrder.lift orientationCode orientationCode_injective\n    (by intro a b; cases a <;> cases b <;> rfl)\n    (by intro a b; cases a <;> cases b <;> rfl)"
         },
         {
+          "hash": "9d2d56c37e72b7893a7cdcae5b9080eb13982da84738e8b8cc84db1556b60f44",
           "kind": "instance",
           "label": "instance Bosonize.V1S4.Examples.orientationDecidableEq",
-          "hash": "9d2d56c37e72b7893a7cdcae5b9080eb13982da84738e8b8cc84db1556b60f44",
           "text": "noncomputable local instance orientationDecidableEq : DecidableEq Bosonize.A06.Orientation :=\n  LinearOrder.toDecidableEq"
         },
         {
+          "hash": "11827c6847ef70545d781f8f8c57bae3b1942f40d0628985496dbcbbf5c82cf0",
           "kind": "set_option",
           "label": "set_option maxHeartbeats 1000000",
-          "hash": "11827c6847ef70545d781f8f8c57bae3b1942f40d0628985496dbcbbf5c82cf0",
           "text": "set_option maxHeartbeats 1000000"
         },
         {
+          "hash": "cfed85592dae585a4665c6c52ab3ea0e8825c1682c82bbbc25fed3247de03b5f",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.rightAnnihilator",
-          "hash": "cfed85592dae585a4665c6c52ab3ea0e8825c1682c82bbbc25fed3247de03b5f",
           "text": "def rightAnnihilator : Generator 1 := (false, (.right, 0))"
         },
         {
+          "hash": "84e49f64435e176d3f66e07480270d0e7908344d5cee0791f76110a526c8e46f",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.rightCreator",
-          "hash": "84e49f64435e176d3f66e07480270d0e7908344d5cee0791f76110a526c8e46f",
           "text": "def rightCreator : Generator 1 := (true, (.right, 0))"
         },
         {
+          "hash": "835a44de2413f50cd58113d9f68607cfc388bced2b75286f259cca8b9d0e0297",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.leftAnnihilator",
-          "hash": "835a44de2413f50cd58113d9f68607cfc388bced2b75286f259cca8b9d0e0297",
           "text": "def leftAnnihilator : Generator 1 := (false, (.left, 0))"
         },
         {
+          "hash": "c7c876ea34ebc182a5c0bc237d6e299c34c596fa38fb42511ca148c46e9c4151",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.leftCreator",
-          "hash": "c7c876ea34ebc182a5c0bc237d6e299c34c596fa38fb42511ca148c46e9c4151",
           "text": "def leftCreator : Generator 1 := (true, (.left, 0))"
         },
         {
+          "hash": "0f855f2a6f02811594727850f72516b28e99d0b7364b7099e4512e13b92f2e27",
           "kind": "example",
           "label": "example : PathCovered 2 (fun _ : Bosonize.A06.Or",
-          "hash": "0f855f2a6f02811594727850f72516b28e99d0b7364b7099e4512e13b92f2e27",
           "text": "example : PathCovered 2 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id\n    0 ([] : Word 0) := by\n  simp [PathCovered, BranchPath, energyTotal, nonnegativeEnergies]"
         },
         {
+          "hash": "2c0d91d741957d9ae619047c93f34c9dab765f9c4dacff255e1e90c11547a118",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.contractionWord",
-          "hash": "2c0d91d741957d9ae619047c93f34c9dab765f9c4dacff255e1e90c11547a118",
           "text": "def contractionWord : Word 1 := [rightAnnihilator, rightCreator]"
         },
         {
+          "hash": "4cca382b41907b363365cb97cb20ad70e836e378ea996126ccea0bfb03d06182",
           "kind": "example",
           "label": "example : PathCovered 4 (fun _ : Bosonize.A06.Or",
-          "hash": "4cca382b41907b363365cb97cb20ad70e836e378ea996126ccea0bfb03d06182",
           "text": "example : PathCovered 4 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id\n    2\n    contractionWord := by\n  simp [PathCovered, BranchPath, energyUpdate, energyTotal,\n    nonnegativeEnergies, weight, contractionWord, rightCreator,\n    rightAnnihilator, Function.update]"
         },
         {
+          "hash": "913119616167dacf5ba86a720bf33a55b48cca757dfd59c5e5a79583a23e94e9",
           "kind": "example",
           "label": "example : \u2200 v \u2208 inverseBranches contractionWord,",
-          "hash": "913119616167dacf5ba86a720bf33a55b48cca757dfd59c5e5a79583a23e94e9",
           "text": "example : \u2200 v \u2208 inverseBranches contractionWord,\n    PathCovered 4 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id 2 v := by\n  intro v hv\n  simp [inverseBranches, contractionWord, rightCreator, rightAnnihilator,\n    flipGenerator] at hv\n  rcases hv with rfl | rfl | rfl | rfl\n  all_goals simp [PathCovered, BranchPath, energyUpdate, energyTotal,\n    nonnegativeEnergies, weight, Function.update,\n    Bosonize.A07Interactions.oppositeOrientation]"
         },
         {
+          "hash": "13c7dc825b9fed4663f3dbc36680fb60486db734961a1c548b4b2800721befbb",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.mixedCreationWord",
-          "hash": "13c7dc825b9fed4663f3dbc36680fb60486db734961a1c548b4b2800721befbb",
           "text": "def mixedCreationWord : Word 1 := [rightCreator, leftCreator]"
         },
         {
+          "hash": "3f5dab070e51eced460ff93456f79bbf6210f2adc0f5c47f4bd38943fe648a68",
           "kind": "example",
           "label": "example : PathCovered 4 (fun _ : Bosonize.A06.Or",
-          "hash": "3f5dab070e51eced460ff93456f79bbf6210f2adc0f5c47f4bd38943fe648a68",
           "text": "example : PathCovered 4 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id\n    2\n    mixedCreationWord := by\n  simp [PathCovered, BranchPath, energyUpdate,\n    energyTotal, nonnegativeEnergies, weight, mixedCreationWord,\n    rightCreator, leftCreator, Function.update]"
         },
         {
+          "hash": "046ad679960fc9083f42573e160fef93d909c2155691815f1c31df878fc7fffd",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.fourthOrderWord",
-          "hash": "046ad679960fc9083f42573e160fef93d909c2155691815f1c31df878fc7fffd",
           "text": "def fourthOrderWord : Word 1 :=\n  [rightAnnihilator, rightCreator, rightAnnihilator, rightCreator]"
         },
         {
+          "hash": "f82526be088d1fdfa94900a809f8e2a72d94e074eb1cab709c65d8052b64d079",
           "kind": "example",
           "label": "example : PathCovered 8 (fun _ : Bosonize.A06.Or",
-          "hash": "f82526be088d1fdfa94900a809f8e2a72d94e074eb1cab709c65d8052b64d079",
           "text": "example : PathCovered 8 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id\n    4 fourthOrderWord := by\n  simp [PathCovered, BranchPath, energyUpdate, energyTotal,\n    nonnegativeEnergies, weight, rightCreator,\n    rightAnnihilator, fourthOrderWord, Function.update]"
         },
         {
+          "hash": "2ff523078ffc2615dc41731398c0860833485b2ee92b6b5b0f91593d4fd36c07",
           "kind": "example",
           "label": "example : \u2200 v \u2208 inverseBranches fourthOrderWord,",
-          "hash": "2ff523078ffc2615dc41731398c0860833485b2ee92b6b5b0f91593d4fd36c07",
           "text": "example : \u2200 v \u2208 inverseBranches fourthOrderWord,\n    PathCovered 8 (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id 4 v := by\n  intro v hv\n  simp [inverseBranches, fourthOrderWord, rightCreator, rightAnnihilator,\n    flipGenerator] at hv\n  rcases hv with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl |\n    rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl\n  all_goals simp [PathCovered, BranchPath, energyUpdate, energyTotal,\n    nonnegativeEnergies, weight, Function.update,\n    Bosonize.A07Interactions.oppositeOrientation]"
         },
         {
+          "hash": "92948de0c69b172d37b91b145b05984e19d7c470332e8847af5d879317819c82",
           "kind": "def",
           "label": "def Bosonize.V1S4.Examples.nonzeroSqueeze",
-          "hash": "92948de0c69b172d37b91b145b05984e19d7c470332e8847af5d879317819c82",
           "text": "noncomputable def nonzeroSqueeze : Bosonize.Ch18.HyperbolicPair where\n  c := 5/4\n  s := 3/4\n  hyperbolic_id := by norm_num"
         },
         {
+          "hash": "809e738944042ee50779ab2e8b3883c5caa95fcededa964ed276fbdeaa0b2215",
           "kind": "example",
           "label": "example : nonzeroSqueeze.s \u2260 0 := by norm_num [n",
-          "hash": "809e738944042ee50779ab2e8b3883c5caa95fcededa964ed276fbdeaa0b2215",
           "text": "example : nonzeroSqueeze.s \u2260 0 := by norm_num [nonzeroSqueeze]"
         },
         {
+          "hash": "f437850cbbcef9004f4bd4e306b9a5182793532efe3fc5094568c1c92bac5fc5",
           "kind": "example",
           "label": "example :",
-          "hash": "f437850cbbcef9004f4bd4e306b9a5182793532efe3fc5094568c1c92bac5fc5",
           "text": "example :\n    inner \u2102 (Bosonize.A05.groundKet 4\n      (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))\n      (theta (\u03c3 := Bosonize.A06.Orientation) 4 1 id\n        (Bosonize.A08.wordElement 1 contractionWord)\n        (Bosonize.A05.groundKet 4\n          (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))) =\n      Bosonize.A08.omega0 1 (Bosonize.A08.wordElement 1 contractionWord) := by\n  have hN : Bosonize.A05.admissible 4\n      (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) := by\n    intro \u03bd\n    exact \u27e8by norm_num [Bosonize.Ch07.admissible], by norm_num [Bosonize.Ch07.admissible]\u27e9\n  have hR2 : \u2200 \u03bd : Bosonize.A06.Orientation, 2 * 2 + |(0 : \u2124)| \u2264 4 := by\n    intro \u03bd\n    norm_num\n  have hPath : PathCovered 4\n      (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id 2 contractionWord := by\n    simp [PathCovered, contractionWord, rightCreator, rightAnnihilator,\n      BranchPath, energyUpdate, energyTotal, nonnegativeEnergies, weight,\n      Function.update]\n  exact covered_word_moment_contract 4 1 _ id contractionWord (by norm_num)\n    hN 2 hR2 Function.injective_id hPath"
         },
         {
+          "hash": "f7bbf7526eeb24570470ee770e725a42230f73f495e8f674dd3ed83dba0bf351",
           "kind": "example",
           "label": "example :",
-          "hash": "f7bbf7526eeb24570470ee770e725a42230f73f495e8f674dd3ed83dba0bf351",
           "text": "example :\n    inner \u2102 (Bosonize.A05.groundKet 4\n      (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))\n      (theta (\u03c3 := Bosonize.A06.Orientation) 4 1 id\n        (Bosonize.A08.bogoliubovMap 1 nonzeroSqueeze.c (-nonzeroSqueeze.s)\n          (Bosonize.A08.wordElement 1 contractionWord))\n        (Bosonize.A05.groundKet 4\n          (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))) =\n      Bosonize.A08.omegaP 1 nonzeroSqueeze\n        (Bosonize.A08.wordElement 1 contractionWord) := by\n  have hN : Bosonize.A05.admissible 4\n      (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) := by\n    intro \u03bd\n    exact \u27e8by norm_num [Bosonize.Ch07.admissible], by norm_num [Bosonize.Ch07.admissible]\u27e9\n  have hR2 : \u2200 \u03bd : Bosonize.A06.Orientation, 2 * 2 + |(0 : \u2124)| \u2264 4 := by\n    intro \u03bd\n    norm_num\n  have hPath : \u2200 v \u2208 survivingBranches nonzeroSqueeze.c (-nonzeroSqueeze.s)\n      contractionWord, PathCovered 4\n        (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id 2 v := by\n    intro v hv\n    have hv' : v \u2208 inverseBranches contractionWord :=\n      (Finset.mem_filter.mp hv).1\n    have hall : \u2200 v \u2208 inverseBranches contractionWord, PathCovered 4\n        (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id 2 v := by\n      intro v hv\n      simp [inverseBranches, contractionWord, rightCreator, rightAnnihilator,\n        flipGenerator] at hv\n      rcases hv with rfl | rfl | rfl | rfl\n      all_goals simp [PathCovered, BranchPath, energyUpdate, energyTotal,\n        nonnegativeEnergies, weight, Function.update,\n        Bosonize.A07Interactions.oppositeOrientation]\n    exact hall v hv'\n  exact covered_dressed_moment_contract 4 1 _ nonzeroSqueeze id contractionWord\n    (by norm_num) hN 2 hR2 Function.injective_id hPath"
         },
         {
+          "hash": "7c7335a8a2c935e23405a4481b2a7c8f41c97b4200999f4cb442bd91f437a26a",
           "kind": "example",
           "label": "example :",
-          "hash": "7c7335a8a2c935e23405a4481b2a7c8f41c97b4200999f4cb442bd91f437a26a",
           "text": "example :\n    inner \u2102 (Bosonize.A05.groundKet 8\n      (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))\n      (theta (\u03c3 := Bosonize.A06.Orientation) 8 1 id\n        (Bosonize.A08.wordElement 1 fourthOrderWord)\n        (Bosonize.A05.groundKet 8\n          (fun _ : Bosonize.A06.Orientation => (0 : \u2124)))) =\n      Bosonize.A08.omega0 1 (Bosonize.A08.wordElement 1 fourthOrderWord) := by\n  have hN : Bosonize.A05.admissible 8\n      (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) := by\n    intro \u03bd\n    exact \u27e8by norm_num [Bosonize.Ch07.admissible], by norm_num [Bosonize.Ch07.admissible]\u27e9\n  have hR2 : \u2200 \u03bd : Bosonize.A06.Orientation, 2 * 4 + |(0 : \u2124)| \u2264 8 := by\n    intro \u03bd\n    norm_num\n  have hPath : PathCovered 8\n      (fun _ : Bosonize.A06.Orientation => (0 : \u2124)) id 4 fourthOrderWord := by\n    simp [PathCovered, fourthOrderWord, rightCreator, rightAnnihilator,\n      BranchPath, energyUpdate, energyTotal, nonnegativeEnergies, weight,\n      Function.update]\n  exact covered_word_moment_contract 8 1 _ id fourthOrderWord (by norm_num)\n    hN 4 hR2 Function.injective_id hPath"
         },
         {
+          "hash": "6f4e2d121da1bba957b24ca5df6225f83f5f95090613af0be63048ff74680fc5",
           "kind": "example",
           "label": "example :",
-          "hash": "6f4e2d121da1bba957b24ca5df6225f83f5f95090613af0be63048ff74680fc5",
           "text": "example :\n    Bosonize.A08.omegaP 1 nonzeroSqueeze\n      (Bosonize.A08.wordElement 1 [rightAnnihilator, leftAnnihilator]) \u2260\n    Bosonize.A08.omega0 1\n      (Bosonize.A08.wordElement 1 [rightAnnihilator, leftAnnihilator]) := by\n  norm_num [Bosonize.A08.omegaP, Bosonize.A08.omega0,\n    Bosonize.A08.bogoliubovMap, Bosonize.A08.wordElement,\n    Bosonize.A08.oscRep, Bosonize.A08.oscAnnihilation,\n    Bosonize.A08.oscCreation, nonzeroSqueeze,\n    rightAnnihilator, leftAnnihilator, rightCreator,\n    Bosonize.A07Interactions.oppositeOrientation]\n  simp [MvPolynomial.coeff_mul]\n  norm_num [Bosonize.A08.oscWeight]"
         },
         {
+          "hash": "55ccd37adb6544c85880b36ff94079e0d324d937e72bf26cfc7c20f85e303820",
           "kind": "end",
           "label": "end Examples",
-          "hash": "55ccd37adb6544c85880b36ff94079e0d324d937e72bf26cfc7c20f85e303820",
           "text": "end Examples"
         },
         {
+          "hash": "8bb0db2771249381204697196699d8b07ba21ae0aabacae220e469d2b4673aec",
           "kind": "end",
           "label": "end Bosonize.V1S4",
-          "hash": "8bb0db2771249381204697196699d8b07ba21ae0aabacae220e469d2b4673aec",
           "text": "end Bosonize.V1S4"
         }
       ],
       "lemmas": {
         "Bosonize.V1S4.Examples.orientationCode_injective": {
-          "kind": "theorem",
-          "hash": "8913ad938ebc5f8156abcf7a55bfe142f9784499873941ead2fbfa53b1e27937",
           "ctx": "b8b5eeff1b63b26c459ab205cb8505a0da77111b7aa6781e6f9362187233c20e",
+          "hash": "8913ad938ebc5f8156abcf7a55bfe142f9784499873941ead2fbfa53b1e27937",
+          "kind": "theorem",
           "text": "theorem orientationCode_injective : Function.Injective orientationCode"
         },
         "Bosonize.V1S4.covered_dressed_moment_contract": {
-          "kind": "theorem",
-          "hash": "4de05814670423585d2f20c8de7aed0fdf7ef8575f2060df54b5f3a340a320f3",
           "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "hash": "4de05814670423585d2f20c8de7aed0fdf7ef8575f2060df54b5f3a340a320f3",
+          "kind": "theorem",
           "text": "theorem covered_dressed_moment_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (hp : Bosonize.Ch18.HyperbolicPair) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : \u2200 v \u2208 survivingBranches hp.c (-hp.s) w, PathCovered h Ns species K v) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta (\u03c3 := \u03c3) h M species ((Bosonize.A08.bogoliubovMap M hp.c (-hp.s) (Bosonize.A08.wordElement M w))) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omegaP M hp (Bosonize.A08.wordElement M w)"
         },
         "Bosonize.V1S4.covered_word_action_contract": {
-          "kind": "theorem",
-          "hash": "871de72bf4c937cd1858ef0f1ed584188220c8ccc1bcd39ba516512bc0d404a4",
           "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
-          "text": "theorem covered_word_action_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : PathCovered h Ns species K w) : theta (\u03c3 := \u03c3) h M species (Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns) = polynomialState h M Ns species (Bosonize.A08.oscRep M (Bosonize.A08.wordElement M w) 1)"
+          "hash": "775b14dd1bcf14e7d82a47e439ac0619e6dee7401faa86a2efccbb92e6a11b3d",
+          "kind": "theorem",
+          "text": "theorem covered_word_action_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : PathCovered h Ns species K w) : theta (\u03c3 := \u03c3) h M species (Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns) = polynomialState h M Ns species (Bosonize.A08.oscRep M (Bosonize.A08.wordElement M w) 1)"
         },
         "Bosonize.V1S4.covered_word_moment_contract": {
-          "kind": "theorem",
-          "hash": "456fe199938655e4d49e088fbf1fa456bd3547d1059ff2eed711aaae8118e6fd",
           "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "hash": "456fe199938655e4d49e088fbf1fa456bd3547d1059ff2eed711aaae8118e6fd",
+          "kind": "theorem",
           "text": "theorem covered_word_moment_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h M : \u2115) (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (w : Word M) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (K : \u2115) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (hinj : Function.Injective species) (hPath : PathCovered h Ns species K w) : inner \u2102 (Bosonize.A05.groundKet h Ns) (theta (\u03c3 := \u03c3) h M species (Bosonize.A08.wordElement M w) (Bosonize.A05.groundKet h Ns)) = Bosonize.A08.omega0 M (Bosonize.A08.wordElement M w)"
         },
         "Bosonize.V1S4.inverse_expansion_contract": {
-          "kind": "theorem",
-          "hash": "e357673f92f45ce5cd1bbc994ec7660985bb0500c1658ab139dccf4937315c90",
           "ctx": "de1fc4fdf4fc53ab00ba3a89e6f1379de9b35b434ef6fe645244ec60aeaa5a62",
+          "hash": "e357673f92f45ce5cd1bbc994ec7660985bb0500c1658ab139dccf4937315c90",
+          "kind": "theorem",
           "text": "theorem inverse_expansion_contract {M : \u2115} (c s : \u211d) (w : Word M) : \u2211 v \u2208 inverseBranches w, branchCoefficient c s w v \u2022 Bosonize.A08.wordElement M v = Bosonize.A08.bogoliubovMap M c s (Bosonize.A08.wordElement M w)"
         },
         "Bosonize.V1S4.oscillator_monomial_norm_eq_haldane_contract": {
-          "kind": "theorem",
-          "hash": "76139fce05d6b398d6a68a76adc674210b66a8366117e2533f12fb23c5f0cce3",
           "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "hash": "76139fce05d6b398d6a68a76adc674210b66a8366117e2533f12fb23c5f0cce3",
+          "kind": "theorem",
           "text": "theorem oscillator_monomial_norm_eq_haldane_contract {M : \u2115} {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (r : Bosonize.A08.OscMode M \u2192\u2080 \u2115) : Bosonize.A08.oscMonomialNorm r = \u220f \u03bd : Bosonize.A06.Orientation, Bosonize.Ch11.hallFactor (((List.finRange M).flatMap fun i => List.replicate (r (\u03bd, i)) (i.val + 1) : List \u2115) : Multiset \u2115)"
         },
         "Bosonize.V1S4.polynomial_state_budget_contract": {
-          "kind": "theorem",
-          "hash": "881972ed3ccacaf706b9596186a4af1725cad8989d7c1813d62c344742eadb2c",
           "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "hash": "881972ed3ccacaf706b9596186a4af1725cad8989d7c1813d62c344742eadb2c",
+          "kind": "theorem",
           "text": "theorem polynomial_state_budget_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns) (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) : polynomialState h M Ns species p \u2208 Bosonize.A05.jointBudget h Ns K"
         },
         "Bosonize.V1S4.polynomial_state_gram_contract": {
-          "kind": "theorem",
-          "hash": "41e1a6151c6f3350437ebaabc8ec55406d121fe8ba312fff1cfaedfdc33960f1",
           "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
-          "text": "theorem polynomial_state_gram_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hinj : Function.Injective species) (hN : Bosonize.A05.admissible h Ns) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (p q : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) (hq : PolynomialDomain K q) : inner \u2102 (polynomialState h M Ns species p) (polynomialState h M Ns species q) = Bosonize.A08.oscPairing M p q"
+          "hash": "0204829f2aa06bad2ebd74c67af2b2367579fb2da6909ee93a79e836f1d081a1",
+          "kind": "theorem",
+          "text": "theorem polynomial_state_gram_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (hh : 0 < h) (hinj : Function.Injective species) (hN : Bosonize.A05.admissible h Ns) (hR2 : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h) (p q : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) (hq : PolynomialDomain K q) : inner \u2102 (polynomialState h M Ns species p) (polynomialState h M Ns species q) = Bosonize.A08.oscPairing M p q"
         },
         "Bosonize.V1S4.polynomial_state_range_contract": {
-          "kind": "theorem",
-          "hash": "6ceb5038706fc432696343b1e1003ef902d63e63bbe67c7122dc12669fbc189e",
           "ctx": "14488637440dcf067b0ecff7c07aa1ee252623c321e4fbb74b3090ba0faefad7",
+          "hash": "6ceb5038706fc432696343b1e1003ef902d63e63bbe67c7122dc12669fbc189e",
+          "kind": "theorem",
           "text": "theorem polynomial_state_range_contract {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] {M h K : \u2115} (Ns : \u03c3 \u2192 \u2124) (species : Bosonize.A06.Orientation \u2192 \u03c3) (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) : polynomialState h M Ns species p \u2208 cutoffRange h M K Ns species"
         },
         "Bosonize.V1S4.uniform_margin_implies_r2": {
-          "kind": "theorem",
-          "hash": "b37903dfc8798517ed24b34c123887e146c3b0c51da8c8c3f5fbb60e8c14701f",
           "ctx": "d0ff31438d797c1ccb160e53a6aa4d3aabb887d8ba46bb6adcc9363276a509e1",
+          "hash": "b37903dfc8798517ed24b34c123887e146c3b0c51da8c8c3f5fbb60e8c14701f",
+          "kind": "theorem",
           "text": "theorem uniform_margin_implies_r2 {\u03c3 : Type*} (h d M K : \u2115) (Ns : \u03c3 \u2192 \u2124) (hU : UniformMargin h d M Ns) (hK : K \u2264 d * M) : \u2200 \u03bd, 2 * K + |Ns \u03bd| \u2264 h"
         },
         "Bosonize.V1S4.uniform_margin_local_annihilation": {
-          "kind": "theorem",
-          "hash": "d635960e62d010345fb565d13dc276823d53b66006948e113e7eb4f9b4a80cd0",
           "ctx": "d0ff31438d797c1ccb160e53a6aa4d3aabb887d8ba46bb6adcc9363276a509e1",
+          "hash": "d635960e62d010345fb565d13dc276823d53b66006948e113e7eb4f9b4a80cd0",
+          "kind": "theorem",
           "text": "theorem uniform_margin_local_annihilation {\u03c3 : Type*} (h d M m E : \u2115) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hd : 0 < d) (hm : m \u2264 M) (hE : E \u2264 d * M) (hU : UniformMargin h d M Ns) : (m : \u2124) + E + |Ns \u03bd| \u2264 h"
         }
       }

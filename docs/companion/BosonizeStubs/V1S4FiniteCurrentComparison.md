@@ -117,3 +117,15 @@ Reviewer `/root/v1s4_review` confirmed these exact final pre-lock hashes:
 Verdict: PASS. The reviewer explicitly limits this verdict to Phase A interface
 review; the eight theorem placeholders still require Phase B proofs. The
 post-review wording-only edits were hash-confirmed by the same reviewer.
+
+### Scoped amendment — positive-regulator proof premises
+
+After Phase B API diagnosis, reviewer `/root/v1s4_review` approved the narrow
+proposal to add `0 < h` to `polynomial_state_gram_contract` and
+`covered_word_action_contract`. The available Core Gram and current-margin APIs
+require this premise. The alternative would retain `h=0` by splitting the
+constant/empty-word cases; the positive-regulator premise is the minimal direct
+match to the selected proof route. No other contract changes are authorized.
+The derivation now records this boundary. The amended source and lock manifest
+are awaiting exact-hash Phase A re-review; the earlier PASS does not cover the
+amended signatures.

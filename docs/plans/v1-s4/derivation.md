@@ -80,6 +80,10 @@ partition states with parts at most `M`; it is not the whole budget if `M<K`,
 because required parts above the cutoff are absent. Selected word moments need
 only the embedding and vacuum compatibility, not surjectivity. For `M=0`, the
 oscillator carrier has only constants and the map has range the sea line.
+The Gram and path-action contracts also require `0<h`, matching the positive
+regulator premises of the Core Haldane Gram and current-margin APIs. The
+degenerate `h=0` constants/empty-word cases are intentionally outside these
+contracts rather than being silently folded into the same proof route.
 
 ## Word and moment theorem dependency
 

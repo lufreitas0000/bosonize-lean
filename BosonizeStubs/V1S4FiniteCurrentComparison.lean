@@ -183,7 +183,12 @@ theorem polynomial_state_range_contract {σ : Type*} [Fintype σ] [LinearOrder �
     (species : Bosonize.A06.Orientation → σ)
     (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) :
     polynomialState h M Ns species p ∈ cutoffRange h M K Ns species := by
-  sorry
+  classical
+  unfold polynomialState cutoffRange
+  apply Submodule.sum_mem
+  intro r hr
+  apply Submodule.smul_mem
+  exact Submodule.subset_span (Set.mem_range.mpr ⟨⟨r, hp r hr⟩, rfl⟩)
 
 /-- Weighted monomial Gram factor agrees with the partition/Haldane norm. -/
 theorem oscillator_monomial_norm_eq_haldane_contract {M : ℕ}
@@ -203,6 +208,7 @@ has the exact weighted oscillator Gram form. -/
 theorem polynomial_state_gram_contract {σ : Type*} [Fintype σ] [LinearOrder σ]
     {M h K : ℕ} (Ns : σ → ℤ)
     (species : Bosonize.A06.Orientation → σ)
+    (hh : 0 < h)
     (hinj : Function.Injective species)
     (hN : Bosonize.A05.admissible h Ns)
     (hR2 : ∀ ν, 2 * K + |Ns ν| ≤ h)
@@ -220,13 +226,74 @@ theorem polynomial_state_budget_contract {σ : Type*} [Fintype σ] [LinearOrder 
     (hh : 0 < h) (hN : Bosonize.A05.admissible h Ns)
     (p : Bosonize.A08.OscPoly M) (hp : PolynomialDomain K p) :
     polynomialState h M Ns species p ∈ Bosonize.A05.jointBudget h Ns K := by
-  sorry
+  classical
+  have list_rep_energy (r : Bosonize.A08.OscMode M →₀ ℕ)
+      (o : Bosonize.A06.Orientation) :
+      (List.flatMap (fun i : Fin M =>
+        List.replicate (r (o,i)) (i.val+1)) (List.finRange M)).sum =
+      ((List.finRange M).map (fun i => r (o,i) * (i.val+1))).sum := by
+    have hf : ∀ is : List (Fin M),
+        (List.flatMap (fun i => List.replicate (r (o,i)) (i.val+1)) is).sum =
+          (is.map (fun i => r (o,i) * (i.val+1))).sum := by
+      intro is
+      induction is with
+      | nil => simp
+      | cons i is ih =>
+        simp only [List.flatMap_cons, List.sum_append, List.sum_replicate,
+          List.map_cons, List.sum_cons]
+        rw [ih]
+        simp [Nat.mul_comm]
+    exact hf _
+  have parts_energy (r : Bosonize.A08.OscMode M →₀ ℕ) :
+      (∑ ν : σ, (multiIndexParts M species r ν).sum) = weightedEnergy r := by
+    have hterm (a : σ) (l : List ℕ) :
+        (∑ ν : σ, (if a = ν then l else []).sum) = l.sum := by
+      have ht (ν : σ) : (if a = ν then l else []).sum = if a = ν then l.sum else 0 := by
+        by_cases h : a = ν <;> simp [h]
+      simp_rw [ht]
+      simp
+    rw [weightedEnergy, Finsupp.sum_fintype r
+      (fun mode n => n * (mode.2.val+1)) (by simp)]
+    simp only [multiIndexParts, List.sum_append, Finset.sum_add_distrib]
+    rw [hterm (species .right) (List.flatMap _ (List.finRange M))]
+    rw [hterm (species .left) (List.flatMap _ (List.finRange M))]
+    rw [list_rep_energy, list_rep_energy]
+    simp only [List.finRange, List.map_ofFn, Function.comp_apply, List.sum_ofFn]
+    rw [Fintype.sum_prod_type]
+    let e : Bosonize.A06.Orientation ≃ Bool := {
+      toFun := fun o => match o with | .right => false | .left => true
+      invFun := fun b => match b with | false => .right | true => .left
+      left_inv := by intro o; cases o <;> rfl
+      right_inv := by intro b; cases b <;> rfl }
+    have hequiv :
+        (∑ o : Bosonize.A06.Orientation, ∑ i : Fin M, r (o,i) * (i.val+1)) =
+          (∑ i : Fin M, r (.right,i) * (i.val+1)) +
+            (∑ i : Fin M, r (.left,i) * (i.val+1)) := by
+      rw [Fintype.sum_equiv e
+        (fun o => ∑ i : Fin M, r (o,i) * (i.val+1))
+        (fun b => ∑ i : Fin M, r (e.symm b,i) * (i.val+1))
+        (by intro o; cases o <;> rfl)]
+      simp [e]
+      ac_rfl
+    rw [← hequiv]
+  have hmono (r : Bosonize.A08.OscMode M →₀ ℕ) (hr : weightedEnergy r ≤ K) :
+      monomialState h M Ns species r ∈ Bosonize.A05.jointBudget h Ns K := by
+    unfold monomialState
+    apply Bosonize.A05.word_mem_budget h hh Ns hN (multiIndexParts M species r) K
+    rw [parts_energy r]
+    exact hr
+  unfold polynomialState
+  apply Submodule.sum_mem
+  intro r hr
+  apply Submodule.smul_mem
+  exact hmono r (hp r hr)
 
 /-- Finite path intertwining under explicit branch coverage and the actual
 sector/budget margin. -/
 theorem covered_word_action_contract {σ : Type*} [Fintype σ] [LinearOrder σ]
     (h M : ℕ) (Ns : σ → ℤ)
     (species : Bosonize.A06.Orientation → σ) (w : Word M)
+    (hh : 0 < h)
     (hN : Bosonize.A05.admissible h Ns)
     (K : ℕ) (hR2 : ∀ ν, 2 * K + |Ns ν| ≤ h)
     (hinj : Function.Injective species) (hPath : PathCovered h Ns species K w) :
