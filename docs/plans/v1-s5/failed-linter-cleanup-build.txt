@@ -1,0 +1,65 @@
+ℹ [3403/3441] Replayed Bosonize.Core.Ch13KleinFactors
+info: Bosonize/Core/Ch13KleinFactors.lean:228:4: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+ℹ [3411/3441] Replayed Bosonize.Core.A07InteractionsAndBogoliubov
+info: Bosonize/Core/A07InteractionsAndBogoliubov.lean:375:2: Try this:
+  [apply] abel_nf
+ℹ [3439/3441] Replayed Bosonize.Core.V1S1OrderedWick
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+✖ [3441/3441] Building BosonizeStubs.V1S5SmallInteractingModel (178s)
+trace: .> LEAN_PATH=/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/lucas/Projects/Lean/bosonize-lean/.lake/build/lib/lean /home/lucas/.elan/toolchains/leanprover--lean4---v4.35.0-rc4/bin/lean /home/lucas/Projects/Lean/bosonize-lean/BosonizeStubs/V1S5SmallInteractingModel.lean -o /home/lucas/Projects/Lean/bosonize-lean/.lake/build/lib/lean/BosonizeStubs/V1S5SmallInteractingModel.olean -i /home/lucas/Projects/Lean/bosonize-lean/.lake/build/lib/lean/BosonizeStubs/V1S5SmallInteractingModel.ilean -c /home/lucas/Projects/Lean/bosonize-lean/.lake/build/ir/BosonizeStubs/V1S5SmallInteractingModel.c --setup /home/lucas/Projects/Lean/bosonize-lean/.lake/build/ir/BosonizeStubs/V1S5SmallInteractingModel.setup.json --json
+error: BosonizeStubs/V1S5SmallInteractingModel.lean:536:38: No goals to be solved
+Some required targets logged failures:
+- BosonizeStubs.V1S5SmallInteractingModel
+error: build failed

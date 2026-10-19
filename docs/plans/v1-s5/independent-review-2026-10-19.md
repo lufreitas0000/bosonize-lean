@@ -99,3 +99,31 @@ and the fixed S1/S4 dictionary. No mathematical blockers were found. Scoped
 promotion plan approved: four moves, three staging dependency import changes,
 four aggregator imports and four new Core hashes, preserving all 39 old ones.
 These review verdicts alone establish neither Phase B nor Phase C acceptance.
+
+
+### Final linter cleanup and pedagogy draft
+
+The reviewer rechecked Small SHA256
+`a2a43e40d1bb6b4147fe4b5cc036d2f5b1eddd84afad1d8c8f6955621c3d4755`:
+exactly one unused simp argument removed and the final tactic sequence
+parenthesized. The earlier full proof verdict applies to this surgical cleanup.
+All 64 declaration audits report only standard axioms. Final clean-source build
+is recorded in the Phase B receipt when complete.
+
+The corrected additive pedagogical draft is saved as
+`pedagogical-addition-reviewed.md`, SHA256
+`02ec94473e4b0ee3f1e2c8376c419370816af3f11e19cc742f7bb4d06e4986e4`.
+Reviewer PASS after correcting the complete-basis sentence and spelling out the
+four square-root normalizations. It has not been appended to the chapter;
+actual append preservation and promoted links remain Phase C gates.
+
+
+### Checkpoint rollback clarification
+
+The proposed linter cleanup failed compilation (`No goals to be solved`).
+It was not accepted. Small was restored exactly to reviewed SHA256
+`3a97db5f0ca34e061a0f2e330505da3cf889a1007a884fcd30daddcbf7467c2d`
+from `52e49d4`. Its full build passes with two linter warnings, and all 64
+compiled declaration audits pass. Thus the original conditional mathematical
+PASS remains applicable, while zero-warning Phase B acceptance and Phase C
+remain pending. No final clean-build PASS is claimed for the cleanup hash.

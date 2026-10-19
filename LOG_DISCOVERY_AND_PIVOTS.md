@@ -153,3 +153,5 @@ The explicit finite-pairing bijection and Wick proof compile in `/tmp/S1Pair.lea
 
 | 2026-10-19 | V1-S5 / finite spectral state and proof infrastructure | Concrete subtype adjoint conversion exhausted 2m heartbeats; a module importing frozen non-module Ch17 is forbidden. | Independent diagnoses/review approved an abstract generic inclusion helper and vector-state/physical source split; both modules compile. No Core or model change. | Resolved locally; full S5 acceptance pending. |
 | 2026-10-19 | V1-S5 / concrete obstruction and small model | Concrete witness conversion times out; nine small-model contracts remain unproved. Usage reached 9% five-hour remaining. | Preserve completed parameterized proofs, reviewed locks, failed diagnostics and resumable checkpoint; stop new proof work under usage policy. | Phase B partial; no promotion or S6. |
+
+| 2026-10-19 | V1-S5 full small model | All 43 theorem bodies implemented; pair-moment linter cleanup produced No goals after norm_num | Restored exact reviewed successful-build snapshot; 64 standard-only axiom audits retained; two linter warnings and Phase C remain | Checkpoint at 9% five-hour allowance; no S6 |

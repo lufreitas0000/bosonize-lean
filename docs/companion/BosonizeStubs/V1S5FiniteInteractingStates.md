@@ -1,5 +1,12 @@
 # V1-S5 finite interacting states — staging companion
 
+**Current checkpoint:** all 43 mathematical theorems implemented, 64 total
+standard-only audited declarations, zero placeholders. Phase B awaits two
+pair-moment linter cleanups and fresh zero-warning verification; Phase C is
+pending. Earlier draft/checkpoint descriptions below are historical. See
+[the exact resume receipt](../../plans/v1-s5/checkpoint-2026-10-19.md).
+
+
 Status: reviewed and locked Phase A; Phase B in progress; no promotion or Phase C acceptance.
 Baseline: `5865ca33d6c1c8731bf7b8bb743e632b650240fa` (accepted S4).
 Sources: `V1S5FiniteVectorStates.lean`, `V1S5FiniteGroundState.lean`, `V1S5MomentObstruction.lean`, and
@@ -146,3 +153,22 @@ Next: finish the concrete witness conversion, then complete the nine small-model
 contracts using the reviewed label bijection and the actual current-action and
 partition Gram APIs. Preserve all successful proofs and prior Core bytes. Read
 `docs/plans/v1-s5/checkpoint-2026-10-19.md` for exact current validation.
+
+
+## Resumed proof evidence — 2026-10-19
+
+The concrete obstruction witness, eight-vector orthonormality/completeness,
+actual full Hamiltonian matrix action, complete eigenbasis, selected ground
+normalization/equation/global minimum, both ambient-product moments and both
+oscillator discrepancies now have complete proofs. The generic diagonalization
+helper requires the actual Hamiltonian action and identifies its first basis
+vector with the specified normalized vacuum/pair ket. The whole-budget lower
+bound is obtained by summing over all eight orthonormal eigenvectors.
+
+Independent reviewer `/root/s5_review` passed the current exact-source
+mathematics. The full four-target build succeeds with two linter warnings;
+64/64 declaration axiom outputs use only the standard axioms. An attempted
+warning cleanup failed and was rolled back, preserving the exact successful
+source hash. This is not a zero-warning Phase B acceptance or promotion.
+The reviewed Phase C import/path plan and corrected pedagogical draft are
+saved in `docs/plans/v1-s5/`. The draft has not been appended to the chapter.

@@ -1,0 +1,75 @@
+ℹ [3424/3442] Replayed Bosonize.Core.Ch13KleinFactors
+info: Bosonize/Core/Ch13KleinFactors.lean:228:4: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+ℹ [3432/3442] Replayed Bosonize.Core.A07InteractionsAndBogoliubov
+info: Bosonize/Core/A07InteractionsAndBogoliubov.lean:375:2: Try this:
+  [apply] abel_nf
+ℹ [3438/3442] Replayed Bosonize.Core.V1S1OrderedWick
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: Bosonize/Core/V1S1OrderedWick.lean:209:80: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+✔ [3440/3442] Built BosonizeStubs.V1S5FiniteGroundState (7.0s)
+✔ [3441/3442] Built BosonizeStubs.V1S5MomentObstruction (7.3s)
+⚠ [3442/3442] Built BosonizeStubs.V1S5SmallInteractingModel (183s)
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:522:71: This simp argument is unused:
+  sub_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_smul, map_sub, map_neg, hr0, hr5, hl2, zero_sub, inner_sub_right, inner_smul_left,
+    inner_smul_right, inner_neg_left, hg, show (0 : Fin 8) ≠ 5 by decide, ite_true, ite_false, mul_zero, mul_one,
+    Complex.conj_ofReal]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BosonizeStubs/V1S5SmallInteractingModel.lean:536:36: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+Build completed successfully (3442 jobs).

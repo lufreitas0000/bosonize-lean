@@ -1,6 +1,6 @@
 # Adaptive roadmap and Kanban pipeline
 
-Updated: 2026-10-19. **V1-S4 Phase C complete and accepted.** Exact finite current-word and inverse-Bogoliubov moment comparisons are promoted with derived path/length margins, 53 proved named lemmas/theorems, complete 92-declaration clean axiom audits, independent proof/pedagogy reviews, strict locks and local CI. All 38 prior Core sources are preserved (39 total). See [the S4 acceptance receipt](docs/plans/v1-s4/phase-c-acceptance-2026-10-19.md). Stop after S4; do not begin S5. Earlier status and stop snapshots below are historical.
+Updated: 2026-10-19. **V1-S5 mathematical proofs implemented; Phase B validation and Phase C remain pending.** Four staging modules contain 43 proved named theorems and 64 declarations, with zero placeholders and a standard-only complete axiom audit. The full build passes with two pair-moment linter warnings; a failed cleanup was rolled back to the exact successful source. See [the current S5 checkpoint](docs/plans/v1-s5/checkpoint-2026-10-19.md). V1-S4 remains the last accepted sprint. Stop after S5; do not begin S6. Earlier snapshots below are historical.
 
 This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures. The requested execution policy for the next implementation is external-first (Jules and account-eligible OpenAI API), with no default Antigravity author/reviewer or desktop-subagent fallback. Skills/rules and the direct judge entrypoints now enforce that default policy within the controller; the desktop account itself remains outside its control.
 
@@ -463,3 +463,32 @@ After S5 acceptance, S6 remains the next planned physical-field/residual sprint;
 S0 scope decisions, conditional S7/S8, finite CH21 and book/coverage/release gates
 remain as listed above. **Do not begin S6 in this authorization.** This checkpoint
 supersedes earlier statements that S5 has not started, without marking it done.
+
+
+## V1-S5 proof-complete checkpoint and remaining queue — 2026-10-19
+
+This supersedes the earlier S5 counts of 10 or seven placeholders. All 43
+mathematical theorem bodies are now proved in staging, including the complete
+8-dimensional matrix/spectrum, whole-budget ground minimum and both selected
+moment discrepancies. All 64 declarations have fresh standard-only axiom
+outputs; the current four-source hashes and complete-build receipt are saved
+in [the checkpoint](docs/plans/v1-s5/checkpoint-2026-10-19.md).
+
+S5 is **not accepted or promoted**. Immediate remaining work is narrowly scoped:
+resolve two pair-moment linter warnings and rerun the clean build/audit gate;
+then complete reviewed Core promotion, companion migration, actual additive
+pedagogical integration/preservation review, committed strict locks and local
+CI. The final linter cleanup failed and was rolled back to the exact successful
+build snapshot. The independently approved pedagogical draft is saved for the
+next run. All 39 prior Core sources remain unchanged.
+
+After S5 acceptance, the remaining queue is S6 physical-field/residual norm
+comparisons, unresolved S0 scope decisions, conditional S7/S8, finite CH21,
+and whole-book/coverage/closure/release gates. S5's raw-current obstruction
+must constrain subsequent claims: S4 transformed-observable moments do not
+identify a finite interacting state with the squeezed oscillator functional.
+No S6, particle-hole, A10, finiteQMB, push or release work is authorized here.
+
+Execution stopped at the repository usage guard with 9% of the five-hour
+allowance remaining. Resume from the exact saved proof snapshot after checking
+allowance; do not redo completed proofs or dispatch another reviewer in parallel.
