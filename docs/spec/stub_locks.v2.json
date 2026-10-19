@@ -15963,6 +15963,12 @@
           "text": "import Bosonize.Core.V1S1OrderedWick"
         },
         {
+          "hash": "f5e4edcaff93c00ce1f4ffe8ead19b6c64df08005bfc460ae120a1d1b58070eb",
+          "kind": "import",
+          "label": "import Bosonize.Core.V1S4FiniteCurrentComparison",
+          "text": "import Bosonize.Core.V1S4FiniteCurrentComparison"
+        },
+        {
           "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
           "kind": "@",
           "label": "@ [expose] public",
@@ -16029,6 +16035,18 @@
           "text": "def smallLabel (j : Fin 8) : A05.JointPartitions (Fin 2) 2 :=\n  \u27e8fun \u03bd => \u27e8\u27e8(smallParts j \u03bd).sum, by fin_cases j <;> fin_cases \u03bd <;> decide\u27e9,\n    \u27e8((smallParts j \u03bd) : Multiset \u2115), by fin_cases j <;> fin_cases \u03bd <;> decide, rfl\u27e9\u27e9,\n      by fin_cases j <;> decide\u27e9"
         },
         {
+          "hash": "8340cc14a1f792ee501766ec71e17641b562d76ccfc79eafecfed8d3ea786d97",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallLowerTarget",
+          "text": "def smallLowerTarget (\u03bd : Fin 2) (m : \u2115) (j : Fin 8) : Fin 8 :=\n  if m = 1 then\n    if \u03bd = 0 then if j = 3 then 1 else if j = 5 then 2 else 0\n    else if j = 4 then 2 else if j = 5 then 1 else 0\n  else 0"
+        },
+        {
+          "hash": "121e79c243f8c20ef187c9cefccfbf45953d83b12c446b611e09aa9587510aae",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallLowerCoefficient",
+          "text": "noncomputable def smallLowerCoefficient (\u03bd : Fin 2) (m : \u2115) (j : Fin 8) : \u2102 :=\n  if m = 1 then\n    if \u03bd = 0 then if j = 1 \u2228 j = 5 then 1 else if j = 3 then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n    else if j = 2 \u2228 j = 5 then 1 else if j = 4 then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n  else if m = 2 then\n    if (\u03bd = 0 \u2227 j = 6) \u2228 (\u03bd = 1 \u2227 j = 7) then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n  else 0"
+        },
+        {
           "hash": "7070bde96264b36bcdf2d5ed5b1a613dc5df75aafb4dd6298d2bcd9aef02bb17",
           "kind": "def",
           "label": "def Bosonize.V1S5.smallHamiltonian",
@@ -16072,74 +16090,92 @@
         }
       ],
       "lemmas": {
+        "Bosonize.V1S5.current_word_lowering": {
+          "ctx": "a2a47924217be4e4c8868d3f27c79bf3ffe74683c0e33024c46f3f1f2827449b",
+          "hash": "015623d3d6aecc812989ae7a6f8a6a7f7eef39f4539ffa4cd1221c4131e615bd",
+          "kind": "theorem",
+          "text": "theorem current_word_lowering {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (\u03bd : \u03c3) (hm : 0 < m) (hmK : m \u2264 K) (hR : A05.r2 h K Ns) (parts : \u03c3 \u2192 List \u2115) (hpos : \u2200 \u03b7 n, n \u2208 parts \u03b7 \u2192 0 < n) (hE : \u2200 \u03b7, (parts \u03b7).sum \u2264 K) : A05.rho h \u03bd (-(m : \u2124)) (A05.wordState h Ns parts) = ((m * (parts \u03bd).count m : \u2115) : \u2102) \u2022 A05.wordState h Ns (Function.update parts \u03bd ((parts \u03bd).erase m))"
+        },
         "Bosonize.V1S5.small_admissible": {
-          "ctx": "5d834756c7528150a4ed4e15d992af90a6f32ebcc92b19f824c579a946d4ddbc",
+          "ctx": "b982e71cc7fc12c39f541c95ca973525a634c96d05f1ec2967ea824a2776690c",
           "hash": "2da0a4841552095c3570c9b3d5954aa142183af5f3b8fcecb755761976ac0675",
           "kind": "theorem",
           "text": "theorem small_admissible : A05.admissible 8 smallCharges"
         },
         "Bosonize.V1S5.small_complete": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "89f6723daa7f4969389e903ee260e01ff581f1cef35607b11bec216f11f29f5e",
           "kind": "theorem",
           "text": "theorem small_complete : Submodule.span \u2102 (Set.range smallVector) = \u22a4"
         },
+        "Bosonize.V1S5.small_current_lowering": {
+          "ctx": "72f78b3038ef27625488a6ee6bff99b65a9b1b7227e2771f0832a5c90e199f61",
+          "hash": "ff4939821e119625f80564273ae69b5b3a330bdcb84441c939e8696c3b3a566b",
+          "kind": "theorem",
+          "text": "theorem small_current_lowering (\u03bd : Fin 2) (m : \u2115) (hm : m = 1 \u2228 m = 2) (j : Fin 8) : A05.rho 8 \u03bd (-(m : \u2124)) (inclusion 8 smallCharges 2 (smallVector j)) = smallLowerCoefficient \u03bd m j \u2022 inclusion 8 smallCharges 2 (smallVector (smallLowerTarget \u03bd m j))"
+        },
         "Bosonize.V1S5.small_ground": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "bed8cda507add50d2adc2a072e1cb2eebfdd85b097b91a2aa2aebfc949077ab1",
           "kind": "theorem",
           "text": "theorem small_ground : \u2016smallPsi\u2016 = 1 \u2227 smallHamiltonian smallPsi = (smallEnergy : \u2102) \u2022 smallPsi \u2227 (\u2200 v : Budget 8 smallCharges 2, smallEnergy * \u2016v\u2016 ^ 2 \u2264 (inner \u2102 v (smallHamiltonian v)).re) \u2227 smallEnergy < 0"
         },
         "Bosonize.V1S5.small_label_bijective": {
-          "ctx": "81c41de667d98d3a2cf75534c25d10a38b567e75d00bf4cf2b324efeadaca2f8",
+          "ctx": "a2a47924217be4e4c8868d3f27c79bf3ffe74683c0e33024c46f3f1f2827449b",
           "hash": "208599c8446f04b639bd42cdef2784ebf9a2d04fad4c88ba5a2f156a0dc494df",
           "kind": "theorem",
           "text": "theorem small_label_bijective : Function.Bijective smallLabel"
         },
         "Bosonize.V1S5.small_matrix_action": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "0d6a331b54dd100e44c5b087d75ce3177a394aada5f7ba2cf25c16dc39be2225",
           "kind": "theorem",
           "text": "theorem small_matrix_action (j : Fin 8) : smallHamiltonian (smallVector j) = \u2211 i : Fin 8, smallMatrix i j \u2022 smallVector i"
         },
         "Bosonize.V1S5.small_number_discrepancy": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "80441553b94c71a479adb5e1c886e822ebf62509d4544316a283c37ab0eece34",
           "kind": "theorem",
           "text": "theorem small_number_discrepancy : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.rightSpecies (-1)) \u2260 A08.omegaP 2 Ch18.concretePair (A08.creatorGen 2 .right 0 * A08.annihilatorGen 2 .right 0)"
         },
         "Bosonize.V1S5.small_number_moment": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "1373721885346433d1789c5d11cf964d29680d35da23e4a67b263d6b8d64cc0d",
           "kind": "theorem",
           "text": "theorem small_number_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.rightSpecies) (-1)) = (((1 - 17 / Real.sqrt 514) / 2 : \u211d) : \u2102)"
         },
         "Bosonize.V1S5.small_orthonormal": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "160b093fe8ede3392890b5ccd475f652abca5f05764a7d699dabc1db91659d46",
           "kind": "theorem",
           "text": "theorem small_orthonormal : Orthonormal \u2102 smallVector"
         },
         "Bosonize.V1S5.small_pair_discrepancy": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "18ff3be51f3fc72ecd962a110e506572883460493f58e5e50d272ba7b59bb99b",
           "kind": "theorem",
           "text": "theorem small_pair_discrepancy : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.leftSpecies 1) \u2260 A08.omegaP 2 Ch18.concretePair (A08.creatorGen 2 .right 0 * A08.creatorGen 2 .left 0)"
         },
         "Bosonize.V1S5.small_pair_moment": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "e02a11a1a0192614731e946efd261a7e1b56fec29ebd5e701a5a4d7ac0f3cbca",
           "kind": "theorem",
           "text": "theorem small_pair_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.leftSpecies) 1) = ((-15 / (2 * Real.sqrt 514) : \u211d) : \u2102)"
         },
         "Bosonize.V1S5.small_partition_state": {
-          "ctx": "81c41de667d98d3a2cf75534c25d10a38b567e75d00bf4cf2b324efeadaca2f8",
+          "ctx": "a2a47924217be4e4c8868d3f27c79bf3ffe74683c0e33024c46f3f1f2827449b",
           "hash": "8936efb7a1413781c1469844f9724590464be9140b2ae73d5ba393646fa102bc",
           "kind": "theorem",
           "text": "theorem small_partition_state (j : Fin 8) : A05.partitionState 8 smallCharges (smallLabel j) = A05.wordState 8 smallCharges (smallParts j)"
         },
+        "Bosonize.V1S5.small_parts_lower": {
+          "ctx": "72f78b3038ef27625488a6ee6bff99b65a9b1b7227e2771f0832a5c90e199f61",
+          "hash": "7a8c3e98301f4414c1cd50f9002743e47336ca5f481d92b8b08dbd60b67eb173",
+          "kind": "theorem",
+          "text": "theorem small_parts_lower (\u03bd : Fin 2) (m : \u2115) (hm : m = 1 \u2228 m = 2) (j : Fin 8) (hc : (smallParts j \u03bd).count m \u2260 0) : Function.update (smallParts j) \u03bd ((smallParts j \u03bd).erase m) = smallParts (smallLowerTarget \u03bd m j)"
+        },
         "Bosonize.V1S5.small_spectral_basis": {
-          "ctx": "e39a962d46b8ed0d75037a42bb568b327476b06601e1edd79f1960729251d29f",
+          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
           "hash": "77fba20145da350fcd7cc19d4f5cb47683be053bcb681dcf744aae234e588ce7",
           "kind": "theorem",
           "text": "theorem small_spectral_basis : \u2203 b : OrthonormalBasis (Fin 8) \u2102 (Budget 8 smallCharges 2), \u2200 j, smallHamiltonian (b j) = (smallEigenvalue j : \u2102) \u2022 b j"
