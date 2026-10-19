@@ -140,9 +140,58 @@ noncomputable def smallPsi : Budget 8 smallCharges 2 :=
   (((Real.sqrt (1 + smallEta ^ 2))⁻¹ : ℝ) : ℂ) •
     (smallVector 0 - (smallEta : ℂ) • smallVector 5)
 
-theorem small_orthonormal : Orthonormal ℂ smallVector := by sorry
+theorem small_orthonormal : Orthonormal ℂ smallVector := by
+  have hR2 : A05.r2 8 2 smallCharges := by intro ν; norm_num [smallCharges]
+  have hN (j : Fin 8) : (A05.jointNormalization (smallLabel j) : ℂ) *
+      star (smallCoefficient j) * smallCoefficient j = 1 := by
+    have hnz : ((Real.sqrt 2 : ℝ) : ℂ) ≠ 0 := by exact_mod_cast Real.sqrt_ne_zero'.mpr (by norm_num : (0 : ℝ) < 2)
+    have hsq : ((Real.sqrt 2 : ℝ) : ℂ) ^ 2 = 2 := by norm_cast; norm_num
+    unfold A05.jointNormalization smallLabel
+    fin_cases j <;>
+      norm_num [smallParts, Fin.prod_univ_two, Ch11.partitionNormalization,
+        Ch11.hallFactor, smallCoefficient, Complex.star_def]
+    all_goals field_simp
+    all_goals linear_combination -hsq
+  rw [orthonormal_iff_ite]
+  intro i j
+  change inner ℂ (smallCoefficient i • A05.wordState 8 smallCharges (smallParts i))
+    (smallCoefficient j • A05.wordState 8 smallCharges (smallParts j)) = _
+  rw [← small_partition_state i, ← small_partition_state j,
+    inner_smul_left, inner_smul_right, A05.partition_gram 8 (by norm_num) smallCharges
+      small_admissible 2 hR2]
+  by_cases he : i = j
+  · subst j
+    simp only [ite_true]
+    simpa only [Complex.star_def, mul_comm, mul_left_comm, mul_assoc] using hN i
+  · have hne : smallLabel i ≠ smallLabel j := by
+      intro h
+      exact he (small_label_bijective.1 h)
+    simp [hne, he]
 
-theorem small_complete : Submodule.span ℂ (Set.range smallVector) = ⊤ := by sorry
+theorem small_complete : Submodule.span ℂ (Set.range smallVector) = ⊤ := by
+  let W := Submodule.span ℂ (Set.range smallVector)
+  have hR2 : A05.r2 8 2 smallCharges := by intro ν; norm_num [smallCharges]
+  obtain ⟨b,hb⟩ := A05.partition_basis 8 (by norm_num) smallCharges small_admissible 2 hR2
+  have hvec (j : Fin 8) : smallVector j = smallCoefficient j • b (smallLabel j) := by
+    apply Subtype.ext
+    change smallCoefficient j • A05.wordState 8 smallCharges (smallParts j) = _
+    rw [Submodule.coe_smul, hb, small_partition_state]
+  have hc (j : Fin 8) : smallCoefficient j ≠ 0 := by
+    unfold smallCoefficient
+    split_ifs
+    · exact inv_ne_zero (Complex.ofReal_ne_zero.mpr (Real.sqrt_ne_zero'.mpr (by norm_num)))
+    · exact one_ne_zero
+  have hm (p : A05.JointPartitions (Fin 2) 2) : b p ∈ W := by
+    obtain ⟨j,rfl⟩ := small_label_bijective.2 p
+    have hmem : smallCoefficient j • b (smallLabel j) ∈ W := by
+      rw [← hvec]
+      exact Submodule.subset_span (Set.mem_range_self j)
+    have hh := W.smul_mem (smallCoefficient j)⁻¹ hmem
+    simpa only [smul_smul, inv_mul_cancel₀ (hc j), one_smul] using hh
+  apply top_unique
+  intro v _
+  rw [← b.sum_repr v]
+  exact Submodule.sum_mem W (fun p _ => W.smul_mem _ (hm p))
 
 /-- Complete operator action, including all six complementary eigenvectors. -/
 theorem small_matrix_action (j : Fin 8) :

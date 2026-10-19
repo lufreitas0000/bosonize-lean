@@ -165,7 +165,21 @@ theorem raw_obstruction_witness :
       ((A05.rho 8 (0 : Fin 2) 1 ^ 3 * A05.rho 8 (0 : Fin 2) (-1) ^ 3)
         (A05.groundKet 8 (fun _ : Fin 2 => (0 : ℤ)))) ≠
       A08.omegaP 1 Ch18.concretePair
-        (A08.creatorGen 1 .right 0 ^ 3 * A08.annihilatorGen 1 .right 0 ^ 3) := by sorry
+        (A08.creatorGen 1 .right 0 ^ 3 * A08.annihilatorGen 1 .right 0 ^ 3) := by
+  have hN : A05.admissible 8 (fun _ : Fin 2 => (0 : ℤ)) := by
+    intro ν
+    norm_num [Ch07.admissible]
+  have hv := A05.ground_mem_budget 8 (by norm_num) _ hN 2
+  refine ⟨hv, A05.ground_ne_zero _ _, ?_⟩
+  have hz := finite_normal_moment_zero (σ := Fin 2) 8 2 1 3 (by norm_num)
+    (fun _ : Fin 2 => (0 : ℤ)) (0 : Fin 2) (by norm_num)
+    (A05.groundKet 8 (fun _ : Fin 2 => (0 : ℤ))) hv
+  simp only [Nat.cast_one] at hz
+  rw [hz]
+  rw [oscillator_normal_moment]
+  norm_num [Ch18.concretePair, Ch18.HyperbolicPair.ofParams,
+    Ch18.concreteParams]
+
 
 theorem ground_state_raw_obstruction {σ : Type*} [Fintype σ] [LinearOrder σ]
     (h K M q : ℕ) (hh : 0 < h) (Ns : σ → ℤ)
