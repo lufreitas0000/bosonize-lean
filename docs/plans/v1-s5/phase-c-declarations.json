@@ -1,0 +1,327 @@
+[
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "abbrev",
+    "name": "Bosonize.V1S5.Budget"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.inclusion"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.ambientHamiltonian"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.budgetHamiltonian"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.budget_nontrivial"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.inclusion_isometric"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.inclusion_adjoint_inclusion"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.inclusion_projection"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.ambient_hamiltonian_self_adjoint"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.budget_hamiltonian_symmetric"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteGroundState.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.physical_ground_exists"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "structure",
+    "name": "Bosonize.V1S5.GroundVector"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.vectorState"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.vector_state_one"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.vector_state_positive"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.ground_vector_exists"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.ground_energy_evaluation"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.submodule_inclusion_adjoint"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.compression"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.finite_plane_rotation_orthonormal"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.finite_plane_diagonalization"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.compression_inner"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.extendedState"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.extended_state_vector"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.extended_state_one"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.extended_state_positive"
+  },
+  {
+    "source": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.compression_symmetric"
+  },
+  {
+    "source": "Bosonize/Core/V1S5MomentObstruction.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.repeated_lowering_zero"
+  },
+  {
+    "source": "Bosonize/Core/V1S5MomentObstruction.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.finite_normal_moment_zero"
+  },
+  {
+    "source": "Bosonize/Core/V1S5MomentObstruction.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.compressed_lowering_zero"
+  },
+  {
+    "source": "Bosonize/Core/V1S5MomentObstruction.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.compressed_normal_moment_zero"
+  },
+  {
+    "source": "Bosonize/Core/V1S5MomentObstruction.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.oscillator_normal_moment"
+  },
+  {
+    "source": "Bosonize/Core/V1S5MomentObstruction.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.raw_dictionary_obstruction"
+  },
+  {
+    "source": "Bosonize/Core/V1S5MomentObstruction.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.raw_obstruction_witness"
+  },
+  {
+    "source": "Bosonize/Core/V1S5MomentObstruction.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.ground_state_raw_obstruction"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallCharges"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallBranches"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_admissible"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallParts"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallCoefficient"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallVector"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallLabel"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_label_bijective"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_partition_state"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.current_word_lowering"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallLowerTarget"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallLowerCoefficient"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_parts_lower"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_current_lowering"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallHamiltonian"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallMatrix"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallEta"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallEnergy"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallEigenvalue"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "def",
+    "name": "Bosonize.V1S5.smallPsi"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_eta_algebra"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_orthonormal"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_complete"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_matrix_action"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_spectral_basis"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_ground"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_number_moment"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_pair_moment"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_number_discrepancy"
+  },
+  {
+    "source": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+    "kind": "theorem",
+    "name": "Bosonize.V1S5.small_pair_discrepancy"
+  }
+]

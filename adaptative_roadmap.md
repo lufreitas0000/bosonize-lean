@@ -1,6 +1,6 @@
 # Adaptive roadmap and Kanban pipeline
 
-Updated: 2026-10-19. **V1-S5 mathematical proofs implemented; Phase B validation and Phase C remain pending.** Four staging modules contain 43 proved named theorems and 64 declarations, with zero placeholders and a standard-only complete axiom audit. The full build passes with two pair-moment linter warnings; a failed cleanup was rolled back to the exact successful source. See [the current S5 checkpoint](docs/plans/v1-s5/checkpoint-2026-10-19.md). V1-S4 remains the last accepted sprint. Stop after S5; do not begin S6. Earlier snapshots below are historical.
+Updated: 2026-10-19. **V1-S5 Phase C complete and accepted.** Four modules are promoted and frozen: 43 proved theorems, 65 directly audited declarations (including the Budget abbreviation), zero placeholders and warnings. Independent proof/migration/pedagogical reviews, strict locks and full local CI pass. All 39 prior Core sources are preserved (43 total). See [the S5 acceptance receipt](docs/plans/v1-s5/phase-c-acceptance-2026-10-19.md). S6 is the next planned sprint; stop after S5 and do not begin S6 under this authorization. Earlier status and stop snapshots below are historical.
 
 This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures. The requested execution policy for the next implementation is external-first (Jules and account-eligible OpenAI API), with no default Antigravity author/reviewer or desktop-subagent fallback. Skills/rules and the direct judge entrypoints now enforce that default policy within the controller; the desktop account itself remains outside its control.
 
@@ -442,7 +442,7 @@ finite states and physical-field/norm comparisons remain separate.
 Earlier sprint stop/status statements in this document are historical.
 
 
-## V1-S5 implementation checkpoint — 2026-10-19
+## Historical V1-S5 implementation checkpoint — 2026-10-19
 
 **Current authorized sprint: S5; Phase A reviewed/locked, Phase B partial.**
 The finite-state construction, actual compressed Chapter 17 Hamiltonian and
@@ -465,7 +465,7 @@ remain as listed above. **Do not begin S6 in this authorization.** This checkpoi
 supersedes earlier statements that S5 has not started, without marking it done.
 
 
-## V1-S5 proof-complete checkpoint and remaining queue — 2026-10-19
+## Historical V1-S5 proof-complete checkpoint and remaining queue — 2026-10-19
 
 This supersedes the earlier S5 counts of 10 or seven placeholders. All 43
 mathematical theorem bodies are now proved in staging, including the complete
@@ -492,3 +492,45 @@ No S6, particle-hole, A10, finiteQMB, push or release work is authorized here.
 Execution stopped at the repository usage guard with 9% of the five-hour
 allowance remaining. Resume from the exact saved proof snapshot after checking
 allowance; do not redo completed proofs or dispatch another reviewer in parallel.
+
+
+## V1-S5 accepted; adaptive remaining queue — 2026-10-19
+
+**S5 is Phase C complete.** This supersedes all earlier S5 placeholder,
+warning-cleanup and quota checkpoints. The actual fixed-charge total-budget
+Hamiltonian/state construction, general raw-moment obstruction, full
+8-dimensional small-model matrix/spectrum/minimum, selected moments and both
+oscillator discrepancies are proved and promoted. The 65-name final audit adds
+an explicit check of the Budget type abbreviation to the earlier 64-name
+inventory. Complete proof, migration, chapter-preservation, review and CI
+receipts are in [the acceptance record](docs/plans/v1-s5/phase-c-acceptance-2026-10-19.md).
+
+What remains, with dependencies and acceptance boundaries:
+
+1. **S0 scope closure:** independently review the exact reconciliation artifacts
+   and resolve which remaining theory/application targets are required for V1.
+   S1–S5 acceptance does not silently resolve those choices.
+2. **S6 physical fields and residuals — next planned implementation:** settle the
+   field dictionary, then separate intermediate projection, mode truncation,
+   normal-ordering normalization, state comparison and dispersion. Give each
+   term an explicit zero, quantitative bound or reviewed obstruction. S5 rules
+   out unrestricted all-moment matching under the raw dictionary at a fixed
+   budget; S4 supplies selected transformed-observable moments in a free sea.
+   Neither result proves physical-field equality or an interacting-state limit.
+3. **Conditional S7:** finite particle-hole signs, twists, charge/budget transport,
+   Hamiltonian corrections and finite-state covariance, if S0 includes it.
+   Keep this map separate from the accepted formal S3 duality.
+4. **Conditional S8:** the actual A10/CH21 restricted-carrier application,
+   projector/buffer/nonresonance hypotheses and exterior residuals, if selected.
+   This is not authorization for a general RG framework or finiteQMB migration.
+5. **S9 finite CH21 A–B–C:** independently review the four-species carrier and
+   current/parity/Cooper/Umklapp interface; derive the nonzero outward leakage
+   coefficient and witnesses. Resolve scope deferrals explicitly. A finite
+   charge shift is not a thermodynamic Mott-gap or KT theorem.
+6. **S10 closure, book, coverage and release:** whole-project proof/axiom/lock
+   audit, literature-to-result coverage, reviewed book and reproducible build,
+   then separately authorized GitHub/release checks. CH21 completion alone is
+   not release acceptance.
+
+S6 has not started. No push or release was performed. The user's S5
+implementation authorization ends at this accepted sprint.

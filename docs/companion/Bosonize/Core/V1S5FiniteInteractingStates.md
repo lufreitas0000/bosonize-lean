@@ -1,10 +1,10 @@
 # V1-S5 finite interacting states — verified construction
 
-Status: Phase B complete; reviewed Phase C migration and integration in progress.
+Status: Phase C complete and accepted after independent review and local CI.
 This companion supersedes the historical staging checkpoints. Exact acceptance
 status and reproducibility receipts are in the [S5 validation record](../../../plans/v1-s5/phase-c-acceptance-2026-10-19.md).
 The four modules share namespace `Bosonize.V1S5`; 43 named theorems and
-64 declarations are audited. The accepted S4 baseline is `5865ca33`.
+65 explicit declarations are audited, including the `Budget` abbreviation. The accepted S4 baseline is `5865ca33`.
 
 ## Carrier and physical conventions
 
@@ -144,8 +144,9 @@ pedagogy are independently reviewed. Early unsuccessful candidates, resource
 obstructions and quota checkpoints remain historical evidence under
 `docs/plans/v1-s5/`; they are not the status of these final proofs.
 
-The exact 64-declaration axiom script and output are recorded separately for
-Phase B and through the Core aggregator after promotion. Only `propext`,
+The historical Phase B script audits 64 non-abbreviation declarations. The
+final Core-aggregator script additionally audits `Budget`, covering all 65
+explicit declarations in the source inventory. Only `propext`,
 `Classical.choice`, `Quot.sound` are permitted. Fresh zero-warning builds and
 zero placeholders are required. The v2 lock migration changes precisely four
 paths, three import-command records and their induced context hashes; all
@@ -163,3 +164,14 @@ source/companion/chapter hashes, review verdicts, guard results and local CI.
 No S6, physical-field equality, finite particle-hole symmetry, A10 application,
 finiteQMB migration, global finite CCR, ambient ground minimum, analytic limit,
 continuum exponent, thermodynamic gap, push or release is claimed by S5.
+
+## Final acceptance evidence
+
+Phase B accepted at `4e79e55`; the reviewed four-source path/import migration
+is committed at `7f90a30`. Local `make ci` passes: 69 guard tests, 18 artifact/
+proof-verifier tests, both strict guards and both library builds (Core with
+warnings treated as errors). All 65 direct Core-aggregator axiom audits pass;
+all 43 named theorems have zero placeholders and warnings. Exact current
+hashes, declaration inventory, CI/audit output and independent final verdict
+are saved in the linked acceptance receipt. The complete Chapter 20 prefix
+and its approved additive suffix are checked byte-for-byte. No S6 work began.

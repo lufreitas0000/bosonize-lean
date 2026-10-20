@@ -1,0 +1,10 @@
+{
+  "Bosonize/Core/V1S5FiniteGroundState.lean": "5ca1795a6f42d27b4995d51c066adc11e570fb8dfe246fa1f5d24b63752934b3",
+  "Bosonize/Core/V1S5FiniteVectorStates.lean": "2b1b6ce7eb6694abae1094a93a40b37bfb1cfedb7b659f4a702ce3c851f07822",
+  "Bosonize/Core/V1S5MomentObstruction.lean": "5084ca9963ef0344f3ef9046a86f7faeb86387dc590d3b07de0f623dfeeea82c",
+  "Bosonize/Core/V1S5SmallInteractingModel.lean": "b5a60d0c6f62544d1a825cda6e1cc4dd4980d28591fb87fb2c7b0a9019784a79",
+  "docs/companion/Bosonize/Core/V1S5FiniteInteractingStates.md": "abc85479ab31284490aee289608ff0e688313db53b3c263f39232c3372ff4c5b",
+  "notes/md/ch20_CDW.md": "58948daf32f4a96745b69be8c96b2dcdcaceb1ffc1d8041f61b43eb84783bba6",
+  "docs/plans/v1-s5/phase-c-ci.txt": "09a98d4ddef4a2072bf5c3217d8295f16056231a58eac279e5955cda54fe950c",
+  "docs/plans/v1-s5/phase-c-axioms.txt": "7593290025b45c8beb4b4b7447674c5ee99abff61d53df930800af591ebec43d"
+}

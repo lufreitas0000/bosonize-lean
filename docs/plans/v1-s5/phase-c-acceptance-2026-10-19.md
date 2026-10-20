@@ -1,9 +1,12 @@
-# V1-S5 Phase C validation record — 2026-10-19
+# V1-S5 Phase C acceptance — 2026-10-19
 
-**Status: migration applied; final review and integration validation in progress.**
-Phase B is accepted at `4e79e55`: 43 proved named theorems, 64 freshly audited
-declarations, zero placeholders and warnings. This record does not yet assert
-Phase C completion.
+**Status: S5 Phase C complete and accepted.** Phase B is accepted at
+`4e79e55`; source promotion is committed at `7f90a30`. All 43 named theorems
+are proved. All 65 explicit source declarations are directly audited through
+the Core aggregator, with zero placeholders/warnings and standard axioms only.
+The historical Phase B direct audit counted 64 non-abbreviation declarations;
+the final inventory explicitly adds the `Budget` abbreviation. No source or
+mathematical statement changed in making that audit coverage explicit.
 
 ## Exact implementation and scope
 
@@ -40,12 +43,25 @@ Core files/hashes and unrelated v2 records remain unchanged. Four lock records
 move, three import-command hashes and 31 induced context hashes change; no
 theorem-header hashes change. The Core manifest now has 43 files.
 
-## Outstanding final gates
+## Completed validation and independent review
 
-- Independent actual-migration, companion and additive-pedagogy review.
-- `make ci` including both guards, their tests and both library builds.
-- Fresh 64-declaration axiom audit imported through the Core aggregator.
-- Final committed-reference guards, source hashes and preservation receipt.
+- Independent reviewer `/root/s5_review`: Phase A, scoped amendments, complete
+  proof/mathematical review and final Phase B acceptance PASS; actual Phase C
+  source/import/lock migration and additive chapter/companion review PASS.
+- `make ci` PASS at the committed promotion reference: 69 guard tests and
+  18 artifact/proof-verifier tests; strict v2 and Core guards; Core build
+  (3448 jobs, warnings treated as errors) and staging build (3449 jobs).
+- `phase-c-axioms.lean` / `phase-c-axioms.txt`: exact 65/65 explicit declaration
+  inventory (`phase-c-declarations.json`); only `propext`, `Classical.choice`,
+  `Quot.sound` or no axioms. No `sorryAx` in the S5 audit.
+- Strict v2 lock: 1311 headers and 1373 frozen commands. Core guard: 43 complete
+  sources. Final committed-reference verification is saved with the receipt.
+- `phase-c-ci.txt`, `phase-c-migration.json`, `phase-c-preservation.json` and
+  `phase-c-artifact-hashes.json` retain reproducibility and exact byte evidence.
+
+The CI verifier tests intentionally exercise a synthetic `Fixture.value`
+containing `sorryAx`; that fixture is not a project declaration. The separate
+65-declaration S5 audit contains only permitted standard axioms.
 
 The Chapter 20 addition is exactly the independently approved draft SHA256
 `02ec94473e4b0ee3f1e2c8376c419370816af3f11e19cc742f7bb4d06e4986e4`;
@@ -57,3 +73,10 @@ mapping are in the promoted companion.
 Stop after S5. No S6, particle-hole, A10 application, finiteQMB integration,
 physical-field equality, analytic limits, thermodynamic conclusions, push or
 release is included in this acceptance process.
+
+
+The [promoted companion](../../companion/Bosonize/Core/V1S5FiniteInteractingStates.md)
+explains the carrier, conventions, actual proofs and source mapping. The
+[adaptive roadmap](../../../adaptative_roadmap.md) lists S6 and the remaining
+conditional/closure work. Earlier S5 quota and failed-cleanup checkpoints are
+historical; they are superseded by this acceptance record.

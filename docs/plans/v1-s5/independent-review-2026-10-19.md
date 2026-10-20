@@ -139,3 +139,23 @@ the other three hashes are unchanged. The surgical cleanup now uses closing
 alternatives and compiles with zero warnings. Strict v2 locks and preservation
 of all 39 preexisting Core sources pass. See the Phase B acceptance receipt.
 This closes the earlier conditional review, not the subsequent Phase C gates.
+
+## Final Phase C independent acceptance
+
+`/root/s5_review` independently verified the actual four-source migration,
+exactly three import substitutions, unchanged headers/proofs and all 39 prior
+Core files. The actual chapter prefix and approved suffix match byte-for-byte;
+chapter SHA256 is
+`58948daf32f4a96745b69be8c96b2dcdcaceb1ffc1d8041f61b43eb84783bba6`.
+The final companion SHA256 is
+`abc85479ab31284490aee289608ff0e688313db53b3c263f39232c3372ff4c5b`.
+The initially missing acceptance-record link was created and all links resolve.
+
+Closing independent Phase C review PASS: persisted CI has 69 guard tests,
+18 verifier tests, successful Core/staging builds and both strict guards.
+All 65 fresh Core-aggregator audit names match the explicit inventory exactly,
+including Budget (the historical 64-name inventory did not list that type
+abbreviation directly). All 43 theorem proofs are included; only standard
+axioms or none. No mathematical or pedagogical findings remain. Final status,
+receipt and companion approved; final committed-reference guards are the
+supervisor's remaining mechanical closing check. No S6/push/release implied.

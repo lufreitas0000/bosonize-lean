@@ -1,4 +1,10 @@
-# V1-S5 resumable checkpoint — 2026-10-19
+# Historical V1-S5 checkpoint — 2026-10-19
+
+**Superseded:** S5 is now Phase C complete. Use the
+[acceptance receipt](phase-c-acceptance-2026-10-19.md) and current
+`phase-c-axioms.lean` / `phase-c-declarations.json`. The staging paths and
+64-entry audit below describe the historical checkpoint, not current status.
+
 
 All mathematical proof bodies are implemented: 43 named theorems across four
 staging modules, 64 total declarations, zero placeholders. **Phase B is not yet
