@@ -127,3 +127,15 @@ from `52e49d4`. Its full build passes with two linter warnings, and all 64
 compiled declaration audits pass. Thus the original conditional mathematical
 PASS remains applicable, while zero-warning Phase B acceptance and Phase C
 remain pending. No final clean-build PASS is claimed for the cleanup hash.
+
+## Phase B final acceptance after resumed validation
+
+`/root/s5_review` recomputed all four exact source hashes, inspected the
+successful 3442-job clean build, and independently parsed all 64 fresh axiom
+audit entries. Final Phase B review PASS: all original contracts proved, no
+mathematical findings outstanding. Small SHA256 is
+`0cb8ddf52321d9141728fbbea05bfd9152500de702280baa95395865952dfba4`;
+the other three hashes are unchanged. The surgical cleanup now uses closing
+alternatives and compiles with zero warnings. Strict v2 locks and preservation
+of all 39 preexisting Core sources pass. See the Phase B acceptance receipt.
+This closes the earlier conditional review, not the subsequent Phase C gates.

@@ -519,7 +519,7 @@ theorem small_pair_moment :
     LinearMap.adjoint_inner_right, hpsi]
   simp only [map_smul, map_sub, map_neg, hr0, hr5, hl2, zero_sub,
     inner_sub_right, inner_smul_left, inner_smul_right, inner_neg_left,
-    hg, show (0 : Fin 8) ≠ 5 by decide, ite_true, ite_false, mul_zero, sub_zero, mul_one, Complex.conj_ofReal]
+    hg, show (0 : Fin 8) ≠ 5 by decide, ite_true, ite_false, mul_zero, mul_one, Complex.conj_ofReal]
   have ha : a ^ 2 * (1 + smallEta ^ 2) = 1 := by
     dsimp [a]
     have hp : (0 : ℝ) < 1 + smallEta ^ 2 := by positivity
@@ -533,7 +533,7 @@ theorem small_pair_moment :
       _ = -(smallEta / (1 + smallEta ^ 2)) := by rw [ha']; ring
       _ = _ := by rw [he]; ring
   norm_cast
-  convert hres using 1 <;> norm_num <;> ring
+  convert hres using 1 <;> (solve | norm_num | (norm_num; ring))
 
 
 theorem small_number_discrepancy :
