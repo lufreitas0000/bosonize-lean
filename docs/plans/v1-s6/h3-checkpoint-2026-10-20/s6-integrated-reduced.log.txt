@@ -1,0 +1,19 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+BosonizeStubs/V1S6PhysicalFields.lean:350:6: error: Type mismatch: After simplification, term
+  hb
+ has type
+  1 / (2 * √6) ≤
+    ‖↑(finiteDictionaryErrorOnVector (Ch14.physicalMap 3 (fun x => Ch06Ext.periodicTwist 6) Ns PUnit.unit 0 0 2)
+          (Ch14.vertexCandidate 3 1 (fun x => Ch06Ext.periodicTwist 6) Ns PUnit.unit 0 0 2)
+          (Ch14.groundVector 3 ⋯ Ns singleSpeciesZero_admissible 0))‖
+but is expected to have type
+  ‖finiteDictionaryErrorOnVector
+        (Ch14.physicalMap 3 (fun x => Ch06Ext.periodicTwist 6) singleSpeciesZeroCharge PUnit.unit 0 0 2)
+        (Ch14.vertexCandidate 3 1 (fun x => Ch06Ext.periodicTwist 6) singleSpeciesZeroCharge PUnit.unit 0 0 2)
+        (Ch14.groundVector 3 ⋯ singleSpeciesZeroCharge singleSpeciesZero_admissible 0)‖ ≥
+    1 / (2 * √6)

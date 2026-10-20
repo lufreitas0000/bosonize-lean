@@ -1,0 +1,18 @@
+BosonizeStubs/V1S6PhysicalFields.lean:173:77: error: unexpected token 'set_option'; expected 'lemma'
+BosonizeStubs/V1S6PhysicalFields.lean:314:8: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (1600000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+BosonizeStubs/V1S6PhysicalFields.lean:175:0: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (1600000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+BosonizeStubs/V1S6PhysicalFields.lean:308:37: warning: This simp argument is unused:
+  inner_sum
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [inner_smul_right]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
