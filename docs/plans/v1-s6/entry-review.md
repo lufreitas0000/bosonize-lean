@@ -186,3 +186,27 @@ entry evidence is superseded by the Phase B receipt below.
   staging build completed 3443 jobs with only the two declared concrete
   `sorry` placeholders and no S6 linter warning. These facts establish a
   reviewed interface and proof batch, not Phase B completion.
+
+## CDW bound completed — 2026-10-20
+
+- Independently reviewed source SHA-256:
+  `0f67cda15a756f77a82b2d19caff9b6d4557eee75a7c235c13091547cd809644`.
+- Reviewer `/root/s6_cdw_review`: **PASS**. No source edits by reviewer.
+  The review checked unique pair `(-1,+1)`, intermediate rejection, target
+  retention, exact coefficient product, modulus `1/4`, normalized-ket norm
+  estimate and inherited target subtype norm. It also independently audited
+  the completed declaration's axioms.
+- All additions are inside `cdw_discarded_channel_norm_lower_bound`'s existing
+  proof body. No interface amendment or Core change was needed. The proof
+  locally reproduces the accepted CH20 nonzero-witness argument and strengthens
+  the coefficient conclusion to its exact norm. It does not infer a numerical
+  bound merely from nonzero.
+- Fresh `lake build BosonizeStubs.V1S6PhysicalFields`: success, 3443 jobs.
+  Source diagnostics have only the h3 `sorry` warning; the CDW declaration has
+  no warnings or placeholders.
+- Fresh CDW axiom audit: `[propext, Classical.choice, Quot.sound]`; no
+  `sorryAx`, including dependencies. This theorem is independent of h3.
+- Strict interface guard: 1317 statements and 1394 frozen commands. Core
+  preservation: 43 files. Validation logs: [cdw-validation](cdw-validation/).
+- Phase B remains incomplete with exactly one remaining placeholder, in
+  `h3_m1_ground_image_mismatch`. Phase C has not started.
