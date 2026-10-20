@@ -1,4 +1,4 @@
-import BosonizeStubs.V1S5FiniteGroundState
+import Bosonize.Core.V1S5FiniteGroundState
 import Bosonize.Core.V1S1OrderedWick
 import Bosonize.Core.V1S4FiniteCurrentComparison
 

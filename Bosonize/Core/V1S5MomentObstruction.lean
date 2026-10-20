@@ -1,6 +1,6 @@
 import Bosonize.Core.V1S1OrderedWick
 import Bosonize.Core.A05MultiSpecies
-import BosonizeStubs.V1S5FiniteGroundState
+import Bosonize.Core.V1S5FiniteGroundState
 
 /-! S5 staging: raw-current dictionary, ambient powers and final compression.
 The rightmost lowering acts first. No reverse-order vanishing is asserted. -/

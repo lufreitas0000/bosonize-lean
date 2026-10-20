@@ -1,0 +1,34 @@
+{
+  "source_moves": {
+    "BosonizeStubs/V1S5FiniteGroundState.lean": {
+      "target": "Bosonize/Core/V1S5FiniteGroundState.lean",
+      "before": "f199317a26ccb54d4fcd881279fe84c59916980bce5307f95373f332f8850d8b",
+      "after": "5ca1795a6f42d27b4995d51c066adc11e570fb8dfe246fa1f5d24b63752934b3",
+      "import_substitutions": 1
+    },
+    "BosonizeStubs/V1S5FiniteVectorStates.lean": {
+      "target": "Bosonize/Core/V1S5FiniteVectorStates.lean",
+      "before": "2b1b6ce7eb6694abae1094a93a40b37bfb1cfedb7b659f4a702ce3c851f07822",
+      "after": "2b1b6ce7eb6694abae1094a93a40b37bfb1cfedb7b659f4a702ce3c851f07822",
+      "import_substitutions": 0
+    },
+    "BosonizeStubs/V1S5MomentObstruction.lean": {
+      "target": "Bosonize/Core/V1S5MomentObstruction.lean",
+      "before": "66d660acf1b08fee021260b6b038f070c0f32aff887e9f9db8656bb89f85aad9",
+      "after": "5084ca9963ef0344f3ef9046a86f7faeb86387dc590d3b07de0f623dfeeea82c",
+      "import_substitutions": 1
+    },
+    "BosonizeStubs/V1S5SmallInteractingModel.lean": {
+      "target": "Bosonize/Core/V1S5SmallInteractingModel.lean",
+      "before": "0cb8ddf52321d9141728fbbea05bfd9152500de702280baa95395865952dfba4",
+      "after": "b5a60d0c6f62544d1a825cda6e1cc4dd4980d28591fb87fb2c7b0a9019784a79",
+      "import_substitutions": 1
+    }
+  },
+  "import_commands_changed": 3,
+  "theorem_headers_changed": 0,
+  "induced_context_hashes_changed": 31,
+  "prior_core_files_preserved": 39,
+  "core_files_after_promotion": 43,
+  "all_unrelated_v2_records_preserved": true
+}

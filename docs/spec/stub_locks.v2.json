@@ -15714,7 +15714,7 @@
         }
       }
     },
-    "BosonizeStubs/V1S5FiniteGroundState.lean": {
+    "Bosonize/Core/V1S5FiniteGroundState.lean": {
       "commands": [
         {
           "hash": "8d50a8080a7fb9df29e69a9200c7a70bb844143ce88777d2b210691c2743836d",
@@ -15723,10 +15723,10 @@
           "text": "import Bosonize.Core.Ch17LuttingerModels"
         },
         {
-          "hash": "db6ae7a2f757c31c8ec320102d0e9e2b5d0bac0bc04f930e2307aafa407b4711",
+          "hash": "4e37d4dcba316368a722dddfd459057280dc38ff5614b00cb88ffa387e3e4005",
           "kind": "import",
-          "label": "import BosonizeStubs.V1S5FiniteVectorStates",
-          "text": "import BosonizeStubs.V1S5FiniteVectorStates"
+          "label": "import Bosonize.Core.V1S5FiniteVectorStates",
+          "text": "import Bosonize.Core.V1S5FiniteVectorStates"
         },
         {
           "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
@@ -15803,392 +15803,50 @@
       ],
       "lemmas": {
         "Bosonize.V1S5.ambient_hamiltonian_self_adjoint": {
-          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
+          "ctx": "89dc161dd6320cfda5e01d75482badbdff0cf71deca05d4c3e22485bf06df1a4",
           "hash": "f6357856d2c7b3e90e97c9c72cee155ca1720f0fefe73a8332b1cb94139cf93f",
           "kind": "theorem",
           "text": "theorem ambient_hamiltonian_self_adjoint (h M : \u2115) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) : LinearMap.adjoint (ambientHamiltonian h M vF g4 g2 mu branches) = ambientHamiltonian h M vF g4 g2 mu branches"
         },
         "Bosonize.V1S5.budget_hamiltonian_symmetric": {
-          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
+          "ctx": "89dc161dd6320cfda5e01d75482badbdff0cf71deca05d4c3e22485bf06df1a4",
           "hash": "b0835de4f0c716bb27222f7753116a2e99518f0ae6b7dc94fea1e489c5bbd1c8",
           "kind": "theorem",
           "text": "theorem budget_hamiltonian_symmetric (h M K : \u2115) (Ns : \u03c3 \u2192 \u2124) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) : LinearMap.IsSymmetric (\ud835\udd5c := \u2102) (E := Budget h Ns K) (budgetHamiltonian h M K Ns vF g4 g2 mu branches)"
         },
         "Bosonize.V1S5.budget_nontrivial": {
-          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
+          "ctx": "89dc161dd6320cfda5e01d75482badbdff0cf71deca05d4c3e22485bf06df1a4",
           "hash": "b30c5cf577c7d84ef8eb49ada7a2f4822c29d997212e7b2150b9682b4ebf90bd",
           "kind": "theorem",
           "text": "theorem budget_nontrivial (h K : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) : Nontrivial (Budget h Ns K)"
         },
         "Bosonize.V1S5.inclusion_adjoint_inclusion": {
-          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
+          "ctx": "89dc161dd6320cfda5e01d75482badbdff0cf71deca05d4c3e22485bf06df1a4",
           "hash": "6948b5eae7959f960086a4ef6b25e480c7ef4ae2087353e500f379fe2c20264d",
           "kind": "theorem",
           "text": "set_option maxHeartbeats 2000000 in theorem inclusion_adjoint_inclusion (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : (LinearMap.adjoint (\ud835\udd5c := \u2102) (E := Budget h Ns K) (F := A05.FockSpace \u03c3 h) (inclusion h Ns K)).comp (inclusion h Ns K) = LinearMap.id"
         },
         "Bosonize.V1S5.inclusion_isometric": {
-          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
+          "ctx": "89dc161dd6320cfda5e01d75482badbdff0cf71deca05d4c3e22485bf06df1a4",
           "hash": "4b8146f39132e887085e35ef9bb662dfc60300d0f26cf5cdb9a236841a50cc9c",
           "kind": "theorem",
           "text": "theorem inclusion_isometric (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : \u2200 v : Budget h Ns K, \u2016inclusion h Ns K v\u2016 = \u2016v\u2016"
         },
         "Bosonize.V1S5.inclusion_projection": {
-          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
+          "ctx": "89dc161dd6320cfda5e01d75482badbdff0cf71deca05d4c3e22485bf06df1a4",
           "hash": "d5168044051528c874032a008f2dba290989227c22dcad54bc775d0d2dd1d205",
           "kind": "theorem",
           "text": "theorem inclusion_projection (h K : \u2115) (Ns : \u03c3 \u2192 \u2124) : (inclusion h Ns K).comp (LinearMap.adjoint (\ud835\udd5c := \u2102) (E := Budget h Ns K) (F := A05.FockSpace \u03c3 h) (inclusion h Ns K)) = A03.coordinateProjection {S | (\u2200 \u03bd, Ch07.relativeCharge h (Ch07.speciesConfiguration h S \u03bd) = Ns \u03bd) \u2227 Ch07.totalExcitation h S \u2264 (K : \u2124)}"
         },
         "Bosonize.V1S5.physical_ground_exists": {
-          "ctx": "cf1fdcd277817233bd6c0f3641506097fa20feb07b4d3edf46f7bdf7209e640e",
+          "ctx": "89dc161dd6320cfda5e01d75482badbdff0cf71deca05d4c3e22485bf06df1a4",
           "hash": "846d4c11f8152e2497dd900f3c39a8aea38c5373d30059fd7a2f2d7ed86fe76c",
           "kind": "theorem",
           "text": "theorem physical_ground_exists (h M K : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (vF g4 g2 mu : \u211d) (branches : A06.Branches \u03c3) : Nonempty (GroundVector (E := Budget h Ns K) (budgetHamiltonian h M K Ns vF g4 g2 mu branches))"
         }
       }
     },
-    "BosonizeStubs/V1S5MomentObstruction.lean": {
-      "commands": [
-        {
-          "hash": "8ba3dc9b1f39cd65a312f9374067cf5ca4d62178b37ee26a667c9d42f020fc3f",
-          "kind": "import",
-          "label": "import Bosonize.Core.V1S1OrderedWick",
-          "text": "import Bosonize.Core.V1S1OrderedWick"
-        },
-        {
-          "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",
-          "kind": "import",
-          "label": "import Bosonize.Core.A05MultiSpecies",
-          "text": "import Bosonize.Core.A05MultiSpecies"
-        },
-        {
-          "hash": "8045346ee122cec0a78791453fdd29501f5acea97e2eb9449fcf7c6f9c0f9691",
-          "kind": "import",
-          "label": "import BosonizeStubs.V1S5FiniteGroundState",
-          "text": "import BosonizeStubs.V1S5FiniteGroundState"
-        },
-        {
-          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
-          "kind": "@",
-          "label": "@ [expose] public",
-          "text": "@[expose] public"
-        },
-        {
-          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
-          "kind": "section",
-          "label": "section",
-          "text": "section"
-        },
-        {
-          "hash": "90a558972f1f5a96bdb44282de86a0adf0fcd4e05ace5bbff5275d52e8d3de61",
-          "kind": "namespace",
-          "label": "namespace Bosonize.V1S5",
-          "text": "namespace Bosonize.V1S5"
-        },
-        {
-          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
-          "kind": "open",
-          "label": "open scoped BigOperators",
-          "text": "open scoped BigOperators"
-        },
-        {
-          "hash": "e188ef922852dd77ff87422bc4fc8586b9bca0b337be8fc111968a484f590459",
-          "kind": "end",
-          "label": "end Bosonize.V1S5",
-          "text": "end Bosonize.V1S5"
-        }
-      ],
-      "lemmas": {
-        "Bosonize.V1S5.compressed_lowering_zero": {
-          "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "ccab4493c9b8658bd57eedac4f7d80169494e05bd338d7cc2f276a7fec782fab",
-          "kind": "theorem",
-          "text": "theorem compressed_lowering_zero {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hbound : K < q * m) : compression (E := Budget h Ns K) (inclusion h Ns K) (A05.rho h \u03bd (-(m : \u2124))) ^ q = 0"
-        },
-        "Bosonize.V1S5.compressed_normal_moment_zero": {
-          "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "f3f97b95a931f63932f928bda9222cc4f482a4d4b220f12cd4dbc703f2967302",
-          "kind": "theorem",
-          "text": "theorem compressed_normal_moment_zero {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hbound : K < q * m) (v : Budget h Ns K) : vectorState (E := Budget h Ns K) v ((compression (E := Budget h Ns K) (inclusion h Ns K) (A05.rho h \u03bd (m : \u2124))) ^ q * (compression (E := Budget h Ns K) (inclusion h Ns K) (A05.rho h \u03bd (-(m : \u2124)))) ^ q) = 0"
-        },
-        "Bosonize.V1S5.finite_normal_moment_zero": {
-          "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "8c3a0a002aef9fab27c833353c4e8cf61d6be8c6b34ee1a492845275537fe55d",
-          "kind": "theorem",
-          "text": "theorem finite_normal_moment_zero {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hbound : K < q * m) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : inner \u2102 v ((A05.rho h \u03bd (m : \u2124) ^ q * A05.rho h \u03bd (-(m : \u2124)) ^ q) v) = 0"
-        },
-        "Bosonize.V1S5.ground_state_raw_obstruction": {
-          "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "656ff729c0d5a27d73b0e96ab7ab37d048b28bd98e105ada83bf0ee1038bdd15",
-          "kind": "theorem",
-          "text": "theorem ground_state_raw_obstruction {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K M q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (branches : A06.Branches \u03c3) (vF g4 g2 mu : \u211d) (g : GroundVector (E := Budget h Ns K) (budgetHamiltonian h M K Ns vF g4 g2 mu branches)) (\u03bd : A06.Orientation) (i : Fin M) (hp : Ch18.HyperbolicPair) (hs : hp.s \u2260 0) (hbound : K < q * (i.val + 1)) : extendedState (E := Budget h Ns K) (inclusion h Ns K) g.ket (A05.rho h (A06.speciesOf branches \u03bd) ((i.val + 1 : \u2115) : \u2124) ^ q * A05.rho h (A06.speciesOf branches \u03bd) (-((i.val + 1 : \u2115) : \u2124)) ^ q) \u2260 A08.omegaP M hp (A08.creatorGen M \u03bd i ^ q * A08.annihilatorGen M \u03bd i ^ q)"
-        },
-        "Bosonize.V1S5.oscillator_normal_moment": {
-          "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "3b428a5d9dc0c30951d1a411c478ebd11b0ca8f5c334b2209aa8b1800ce58e8d",
-          "kind": "theorem",
-          "text": "theorem oscillator_normal_moment (M : \u2115) (hp : Ch18.HyperbolicPair) (\u03bd : A06.Orientation) (i : Fin M) (q : \u2115) : A08.omegaP M hp (A08.creatorGen M \u03bd i ^ q * A08.annihilatorGen M \u03bd i ^ q) = (q.factorial : \u2102) * (((i.val + 1 : \u2115) : \u2102) * (hp.s : \u2102) ^ 2) ^ q"
-        },
-        "Bosonize.V1S5.raw_dictionary_obstruction": {
-          "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "92d796de5e6d472f02aab835d59bdf79d5722ac0ff4c163ce41cec6b2a41bb27",
-          "kind": "theorem",
-          "text": "theorem raw_dictionary_obstruction {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K M q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (species : A06.Orientation \u2192 \u03c3) (\u03bd : A06.Orientation) (i : Fin M) (hp : Ch18.HyperbolicPair) (hs : hp.s \u2260 0) (hbound : K < q * (i.val + 1)) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : inner \u2102 v ((A05.rho h (species \u03bd) ((i.val + 1 : \u2115) : \u2124) ^ q * A05.rho h (species \u03bd) (-((i.val + 1 : \u2115) : \u2124)) ^ q) v) \u2260 A08.omegaP M hp (A08.creatorGen M \u03bd i ^ q * A08.annihilatorGen M \u03bd i ^ q)"
-        },
-        "Bosonize.V1S5.raw_obstruction_witness": {
-          "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "066480c51589e50ca702aff7887954e7894005377ad27bee7c28d4c8e32a2add",
-          "kind": "theorem",
-          "text": "set_option maxRecDepth 2000 in theorem raw_obstruction_witness : A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)) \u2208 A05.jointBudget 8 (fun _ : Fin 2 => (0 : \u2124)) 2 \u2227 A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)) \u2260 0 \u2227 inner \u2102 (A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124))) ((A05.rho 8 (0 : Fin 2) 1 ^ 3 * A05.rho 8 (0 : Fin 2) (-1) ^ 3) (A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)))) \u2260 A08.omegaP 1 Ch18.concretePair (A08.creatorGen 1 .right 0 ^ 3 * A08.annihilatorGen 1 .right 0 ^ 3)"
-        },
-        "Bosonize.V1S5.repeated_lowering_zero": {
-          "ctx": "9381b0c77cbb2db4962a0f16435d8c6f62c59f380d2d088b8bbad3fa7b34d870",
-          "hash": "23ef4f1643d41f12d26c9876ed64314938f6b6547ea97b8cf2aae5d533341c72",
-          "kind": "theorem",
-          "text": "theorem repeated_lowering_zero {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hbound : K < q * m) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : (A05.rho h \u03bd (-(m : \u2124)) ^ q) v = 0"
-        }
-      }
-    },
-    "BosonizeStubs/V1S5SmallInteractingModel.lean": {
-      "commands": [
-        {
-          "hash": "8045346ee122cec0a78791453fdd29501f5acea97e2eb9449fcf7c6f9c0f9691",
-          "kind": "import",
-          "label": "import BosonizeStubs.V1S5FiniteGroundState",
-          "text": "import BosonizeStubs.V1S5FiniteGroundState"
-        },
-        {
-          "hash": "8ba3dc9b1f39cd65a312f9374067cf5ca4d62178b37ee26a667c9d42f020fc3f",
-          "kind": "import",
-          "label": "import Bosonize.Core.V1S1OrderedWick",
-          "text": "import Bosonize.Core.V1S1OrderedWick"
-        },
-        {
-          "hash": "f5e4edcaff93c00ce1f4ffe8ead19b6c64df08005bfc460ae120a1d1b58070eb",
-          "kind": "import",
-          "label": "import Bosonize.Core.V1S4FiniteCurrentComparison",
-          "text": "import Bosonize.Core.V1S4FiniteCurrentComparison"
-        },
-        {
-          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
-          "kind": "@",
-          "label": "@ [expose] public",
-          "text": "@[expose] public"
-        },
-        {
-          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
-          "kind": "section",
-          "label": "section",
-          "text": "section"
-        },
-        {
-          "hash": "90a558972f1f5a96bdb44282de86a0adf0fcd4e05ace5bbff5275d52e8d3de61",
-          "kind": "namespace",
-          "label": "namespace Bosonize.V1S5",
-          "text": "namespace Bosonize.V1S5"
-        },
-        {
-          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
-          "kind": "open",
-          "label": "open scoped BigOperators",
-          "text": "open scoped BigOperators"
-        },
-        {
-          "hash": "93bc7db58d9a1dfb196a4459407efc1b940542025acdbc4021091b57d6a41671",
-          "kind": "open",
-          "label": "open Matrix",
-          "text": "open Matrix"
-        },
-        {
-          "hash": "20fd44fc920f564cd269fd32298762f06f321d8728c0c63cb73c1910fd6f19a6",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallCharges",
-          "text": "def smallCharges : Fin 2 \u2192 \u2124 := fun _ => 0"
-        },
-        {
-          "hash": "392b6eb28f696f6e320a0323707393f5b9cf20032f537dda7b8b935810249677",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallBranches",
-          "text": "def smallBranches : A06.Branches (Fin 2) := Ch18.concreteBranches"
-        },
-        {
-          "hash": "58f7b6c68513e8ba639146e6eb8887f6bf73c8d896853b6055e7f9f62b872d7e",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallParts",
-          "text": "def smallParts (j : Fin 8) : Fin 2 \u2192 List \u2115 :=\n  ![![[], []], ![[1], []], ![[], [1]], ![[1, 1], []],\n    ![[], [1, 1]], ![[1], [1]], ![[2], []], ![[], [2]]] j"
-        },
-        {
-          "hash": "960934fe42df2781686646f6905eb99e07affa60cd00e28c4e34856d33fc9849",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallCoefficient",
-          "text": "noncomputable def smallCoefficient (j : Fin 8) : \u2102 :=\n  if j = 3 \u2228 j = 4 \u2228 j = 6 \u2228 j = 7 then ((Real.sqrt 2 : \u211d) : \u2102)\u207b\u00b9 else 1"
-        },
-        {
-          "hash": "0901cecd1185659fb43a204a00bb10b4476fb6fd04b5b9d14acccee21dfcc8ff",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallVector",
-          "text": "noncomputable def smallVector (j : Fin 8) : Budget 8 smallCharges 2 :=\n  \u27e8smallCoefficient j \u2022 A05.wordState 8 smallCharges (smallParts j), by\n    apply Submodule.smul_mem\n    apply A05.word_mem_budget 8 (by norm_num) smallCharges small_admissible\n    fin_cases j <;> norm_num [smallParts, Fin.sum_univ_two]\u27e9"
-        },
-        {
-          "hash": "c0de9d60722444ee7ae1a7f851d62bd6ffead5e23a54d0ed4a4d8b0214cae226",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallLabel",
-          "text": "def smallLabel (j : Fin 8) : A05.JointPartitions (Fin 2) 2 :=\n  \u27e8fun \u03bd => \u27e8\u27e8(smallParts j \u03bd).sum, by fin_cases j <;> fin_cases \u03bd <;> decide\u27e9,\n    \u27e8((smallParts j \u03bd) : Multiset \u2115), by fin_cases j <;> fin_cases \u03bd <;> decide, rfl\u27e9\u27e9,\n      by fin_cases j <;> decide\u27e9"
-        },
-        {
-          "hash": "8340cc14a1f792ee501766ec71e17641b562d76ccfc79eafecfed8d3ea786d97",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallLowerTarget",
-          "text": "def smallLowerTarget (\u03bd : Fin 2) (m : \u2115) (j : Fin 8) : Fin 8 :=\n  if m = 1 then\n    if \u03bd = 0 then if j = 3 then 1 else if j = 5 then 2 else 0\n    else if j = 4 then 2 else if j = 5 then 1 else 0\n  else 0"
-        },
-        {
-          "hash": "121e79c243f8c20ef187c9cefccfbf45953d83b12c446b611e09aa9587510aae",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallLowerCoefficient",
-          "text": "noncomputable def smallLowerCoefficient (\u03bd : Fin 2) (m : \u2115) (j : Fin 8) : \u2102 :=\n  if m = 1 then\n    if \u03bd = 0 then if j = 1 \u2228 j = 5 then 1 else if j = 3 then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n    else if j = 2 \u2228 j = 5 then 1 else if j = 4 then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n  else if m = 2 then\n    if (\u03bd = 0 \u2227 j = 6) \u2228 (\u03bd = 1 \u2227 j = 7) then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n  else 0"
-        },
-        {
-          "hash": "7070bde96264b36bcdf2d5ed5b1a613dc5df75aafb4dd6298d2bcd9aef02bb17",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallHamiltonian",
-          "text": "noncomputable def smallHamiltonian : Module.End \u2102 (Budget 8 smallCharges 2) :=\n  budgetHamiltonian 8 2 2 smallCharges 1 (32 * Real.pi) (30 * Real.pi)\n    (Ch17.canonicalMu 8 1) smallBranches"
-        },
-        {
-          "hash": "6a2b4b2a9460bae431ec80b449bf03d2fffe05941e04c443399249a42429f137",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallMatrix",
-          "text": "noncomputable def smallMatrix : Matrix (Fin 8) (Fin 8) \u2102 := fun i j =>\n  ((Real.pi / 8 : \u211d) : \u2102) *\n    if (i = 0 \u2227 j = 5) \u2228 (i = 5 \u2227 j = 0) then 15\n    else if i = j then if i = 0 then 0 else if i = 1 \u2228 i = 2 then 17 else 34\n    else 0"
-        },
-        {
-          "hash": "ebdc698cb810b12c8ec4b1fdc3a5e0e31f6f5902e282eeab5da070cdff0fcfb8",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallEta",
-          "text": "noncomputable def smallEta : \u211d := 15 / (17 + Real.sqrt 514)"
-        },
-        {
-          "hash": "2bc57223a19839d53957de046362875e965a8e41700b4aecfe1af11a0f4f30e1",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallEnergy",
-          "text": "noncomputable def smallEnergy : \u211d := Real.pi / 8 * (17 - Real.sqrt 514)"
-        },
-        {
-          "hash": "4914643b6b1317da8ecdf99a017d4b3ab9aae78cde991e7e516444e2789180fb",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallEigenvalue",
-          "text": "noncomputable def smallEigenvalue (j : Fin 8) : \u211d :=\n  if j = 0 then smallEnergy\n  else if j = 5 then Real.pi / 8 * (17 + Real.sqrt 514)\n  else if j = 1 \u2228 j = 2 then 17 * (Real.pi / 8) else 34 * (Real.pi / 8)"
-        },
-        {
-          "hash": "cce131821dbc5be1c8720ea97eaf6b89849f4a12ddbfc1f81904731a396a691d",
-          "kind": "def",
-          "label": "def Bosonize.V1S5.smallPsi",
-          "text": "noncomputable def smallPsi : Budget 8 smallCharges 2 :=\n  (((Real.sqrt (1 + smallEta ^ 2))\u207b\u00b9 : \u211d) : \u2102) \u2022\n    (smallVector 0 - (smallEta : \u2102) \u2022 smallVector 5)"
-        },
-        {
-          "hash": "e188ef922852dd77ff87422bc4fc8586b9bca0b337be8fc111968a484f590459",
-          "kind": "end",
-          "label": "end Bosonize.V1S5",
-          "text": "end Bosonize.V1S5"
-        }
-      ],
-      "lemmas": {
-        "Bosonize.V1S5.current_word_lowering": {
-          "ctx": "a2a47924217be4e4c8868d3f27c79bf3ffe74683c0e33024c46f3f1f2827449b",
-          "hash": "015623d3d6aecc812989ae7a6f8a6a7f7eef39f4539ffa4cd1221c4131e615bd",
-          "kind": "theorem",
-          "text": "theorem current_word_lowering {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (\u03bd : \u03c3) (hm : 0 < m) (hmK : m \u2264 K) (hR : A05.r2 h K Ns) (parts : \u03c3 \u2192 List \u2115) (hpos : \u2200 \u03b7 n, n \u2208 parts \u03b7 \u2192 0 < n) (hE : \u2200 \u03b7, (parts \u03b7).sum \u2264 K) : A05.rho h \u03bd (-(m : \u2124)) (A05.wordState h Ns parts) = ((m * (parts \u03bd).count m : \u2115) : \u2102) \u2022 A05.wordState h Ns (Function.update parts \u03bd ((parts \u03bd).erase m))"
-        },
-        "Bosonize.V1S5.small_admissible": {
-          "ctx": "b982e71cc7fc12c39f541c95ca973525a634c96d05f1ec2967ea824a2776690c",
-          "hash": "2da0a4841552095c3570c9b3d5954aa142183af5f3b8fcecb755761976ac0675",
-          "kind": "theorem",
-          "text": "theorem small_admissible : A05.admissible 8 smallCharges"
-        },
-        "Bosonize.V1S5.small_complete": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "89f6723daa7f4969389e903ee260e01ff581f1cef35607b11bec216f11f29f5e",
-          "kind": "theorem",
-          "text": "theorem small_complete : Submodule.span \u2102 (Set.range smallVector) = \u22a4"
-        },
-        "Bosonize.V1S5.small_current_lowering": {
-          "ctx": "72f78b3038ef27625488a6ee6bff99b65a9b1b7227e2771f0832a5c90e199f61",
-          "hash": "ff4939821e119625f80564273ae69b5b3a330bdcb84441c939e8696c3b3a566b",
-          "kind": "theorem",
-          "text": "theorem small_current_lowering (\u03bd : Fin 2) (m : \u2115) (hm : m = 1 \u2228 m = 2) (j : Fin 8) : A05.rho 8 \u03bd (-(m : \u2124)) (inclusion 8 smallCharges 2 (smallVector j)) = smallLowerCoefficient \u03bd m j \u2022 inclusion 8 smallCharges 2 (smallVector (smallLowerTarget \u03bd m j))"
-        },
-        "Bosonize.V1S5.small_eta_algebra": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "e832b8d630abd116db3e75af3dba970a8abfba621e983ccff2da1655a83175e6",
-          "kind": "theorem",
-          "text": "theorem small_eta_algebra : smallEta * (17 + Real.sqrt 514) = 15 \u2227 15 * smallEta = Real.sqrt 514 - 17 \u2227 15 * smallEta ^ 2 + 34 * smallEta = 15 \u2227 smallEta ^ 2 / (1 + smallEta ^ 2) = (1 - 17 / Real.sqrt 514) / 2 \u2227 smallEta / (1 + smallEta ^ 2) = 15 / (2 * Real.sqrt 514)"
-        },
-        "Bosonize.V1S5.small_ground": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "bed8cda507add50d2adc2a072e1cb2eebfdd85b097b91a2aa2aebfc949077ab1",
-          "kind": "theorem",
-          "text": "theorem small_ground : \u2016smallPsi\u2016 = 1 \u2227 smallHamiltonian smallPsi = (smallEnergy : \u2102) \u2022 smallPsi \u2227 (\u2200 v : Budget 8 smallCharges 2, smallEnergy * \u2016v\u2016 ^ 2 \u2264 (inner \u2102 v (smallHamiltonian v)).re) \u2227 smallEnergy < 0"
-        },
-        "Bosonize.V1S5.small_label_bijective": {
-          "ctx": "a2a47924217be4e4c8868d3f27c79bf3ffe74683c0e33024c46f3f1f2827449b",
-          "hash": "208599c8446f04b639bd42cdef2784ebf9a2d04fad4c88ba5a2f156a0dc494df",
-          "kind": "theorem",
-          "text": "theorem small_label_bijective : Function.Bijective smallLabel"
-        },
-        "Bosonize.V1S5.small_matrix_action": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "d85d788d48e75ac30f2e888c5aabca325b54d4a38c00bc7341d4ca35c0967998",
-          "kind": "theorem",
-          "text": "set_option maxRecDepth 2000 in set_option maxHeartbeats 2000000 in theorem small_matrix_action (j : Fin 8) : smallHamiltonian (smallVector j) = \u2211 i : Fin 8, smallMatrix i j \u2022 smallVector i"
-        },
-        "Bosonize.V1S5.small_number_discrepancy": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "80441553b94c71a479adb5e1c886e822ebf62509d4544316a283c37ab0eece34",
-          "kind": "theorem",
-          "text": "theorem small_number_discrepancy : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.rightSpecies (-1)) \u2260 A08.omegaP 2 Ch18.concretePair (A08.creatorGen 2 .right 0 * A08.annihilatorGen 2 .right 0)"
-        },
-        "Bosonize.V1S5.small_number_moment": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "4739ac74cf15b9cf1679450e732dd29b7106aeb161f698fc1e68566831cea7af",
-          "kind": "theorem",
-          "text": "set_option maxHeartbeats 2000000 in theorem small_number_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.rightSpecies) (-1)) = (((1 - 17 / Real.sqrt 514) / 2 : \u211d) : \u2102)"
-        },
-        "Bosonize.V1S5.small_orthonormal": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "160b093fe8ede3392890b5ccd475f652abca5f05764a7d699dabc1db91659d46",
-          "kind": "theorem",
-          "text": "theorem small_orthonormal : Orthonormal \u2102 smallVector"
-        },
-        "Bosonize.V1S5.small_pair_discrepancy": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "18ff3be51f3fc72ecd962a110e506572883460493f58e5e50d272ba7b59bb99b",
-          "kind": "theorem",
-          "text": "theorem small_pair_discrepancy : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.leftSpecies 1) \u2260 A08.omegaP 2 Ch18.concretePair (A08.creatorGen 2 .right 0 * A08.creatorGen 2 .left 0)"
-        },
-        "Bosonize.V1S5.small_pair_moment": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "ba34787ccbb762a805cd81320876dd01c67a311cca6f9f6deb2812dc36175bed",
-          "kind": "theorem",
-          "text": "set_option maxHeartbeats 2000000 in theorem small_pair_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.leftSpecies) 1) = ((-15 / (2 * Real.sqrt 514) : \u211d) : \u2102)"
-        },
-        "Bosonize.V1S5.small_partition_state": {
-          "ctx": "a2a47924217be4e4c8868d3f27c79bf3ffe74683c0e33024c46f3f1f2827449b",
-          "hash": "8936efb7a1413781c1469844f9724590464be9140b2ae73d5ba393646fa102bc",
-          "kind": "theorem",
-          "text": "theorem small_partition_state (j : Fin 8) : A05.partitionState 8 smallCharges (smallLabel j) = A05.wordState 8 smallCharges (smallParts j)"
-        },
-        "Bosonize.V1S5.small_parts_lower": {
-          "ctx": "72f78b3038ef27625488a6ee6bff99b65a9b1b7227e2771f0832a5c90e199f61",
-          "hash": "7a8c3e98301f4414c1cd50f9002743e47336ca5f481d92b8b08dbd60b67eb173",
-          "kind": "theorem",
-          "text": "theorem small_parts_lower (\u03bd : Fin 2) (m : \u2115) (hm : m = 1 \u2228 m = 2) (j : Fin 8) (hc : (smallParts j \u03bd).count m \u2260 0) : Function.update (smallParts j) \u03bd ((smallParts j \u03bd).erase m) = smallParts (smallLowerTarget \u03bd m j)"
-        },
-        "Bosonize.V1S5.small_spectral_basis": {
-          "ctx": "4696e7c47babc3ac4744a60290627207aa8c7ca547dbdde12f27a507361ee20f",
-          "hash": "77fba20145da350fcd7cc19d4f5cb47683be053bcb681dcf744aae234e588ce7",
-          "kind": "theorem",
-          "text": "theorem small_spectral_basis : \u2203 b : OrthonormalBasis (Fin 8) \u2102 (Budget 8 smallCharges 2), \u2200 j, smallHamiltonian (b j) = (smallEigenvalue j : \u2102) \u2022 b j"
-        }
-      }
-    },
-    "BosonizeStubs/V1S5FiniteVectorStates.lean": {
+    "Bosonize/Core/V1S5FiniteVectorStates.lean": {
       "commands": [
         {
           "hash": "120970d812836f19888625587a4606a5ad23cef31c8684e601771552548fc6b9",
@@ -16359,6 +16017,348 @@
           "hash": "44d47ac8d98ac9679a146d1e77a0fa5dda7d8f0e72ab5aff4a9dff7b89ab1e74",
           "kind": "theorem",
           "text": "theorem vector_state_positive (v : E) (X : Module.End \u2102 E) : vectorState v (LinearMap.adjoint X * X) = (\u2016X v\u2016 ^ 2 : \u211d)"
+        }
+      }
+    },
+    "Bosonize/Core/V1S5MomentObstruction.lean": {
+      "commands": [
+        {
+          "hash": "8ba3dc9b1f39cd65a312f9374067cf5ca4d62178b37ee26a667c9d42f020fc3f",
+          "kind": "import",
+          "label": "import Bosonize.Core.V1S1OrderedWick",
+          "text": "import Bosonize.Core.V1S1OrderedWick"
+        },
+        {
+          "hash": "f8103a01f4e5231d016a66fe2c88a5c7e4a715e65efa6230d96f046e0e97cadb",
+          "kind": "import",
+          "label": "import Bosonize.Core.A05MultiSpecies",
+          "text": "import Bosonize.Core.A05MultiSpecies"
+        },
+        {
+          "hash": "68703b0b42aad63d64a83e8744e067a1d06712f12455a3be956f9385e7243e6e",
+          "kind": "import",
+          "label": "import Bosonize.Core.V1S5FiniteGroundState",
+          "text": "import Bosonize.Core.V1S5FiniteGroundState"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "90a558972f1f5a96bdb44282de86a0adf0fcd4e05ace5bbff5275d52e8d3de61",
+          "kind": "namespace",
+          "label": "namespace Bosonize.V1S5",
+          "text": "namespace Bosonize.V1S5"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "e188ef922852dd77ff87422bc4fc8586b9bca0b337be8fc111968a484f590459",
+          "kind": "end",
+          "label": "end Bosonize.V1S5",
+          "text": "end Bosonize.V1S5"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.V1S5.compressed_lowering_zero": {
+          "ctx": "4e4d6b2bb27b6cb985c6e3b52ad989804c93c8dc31ad4927444c9894786c4f8c",
+          "hash": "ccab4493c9b8658bd57eedac4f7d80169494e05bd338d7cc2f276a7fec782fab",
+          "kind": "theorem",
+          "text": "theorem compressed_lowering_zero {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hbound : K < q * m) : compression (E := Budget h Ns K) (inclusion h Ns K) (A05.rho h \u03bd (-(m : \u2124))) ^ q = 0"
+        },
+        "Bosonize.V1S5.compressed_normal_moment_zero": {
+          "ctx": "4e4d6b2bb27b6cb985c6e3b52ad989804c93c8dc31ad4927444c9894786c4f8c",
+          "hash": "f3f97b95a931f63932f928bda9222cc4f482a4d4b220f12cd4dbc703f2967302",
+          "kind": "theorem",
+          "text": "theorem compressed_normal_moment_zero {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hbound : K < q * m) (v : Budget h Ns K) : vectorState (E := Budget h Ns K) v ((compression (E := Budget h Ns K) (inclusion h Ns K) (A05.rho h \u03bd (m : \u2124))) ^ q * (compression (E := Budget h Ns K) (inclusion h Ns K) (A05.rho h \u03bd (-(m : \u2124)))) ^ q) = 0"
+        },
+        "Bosonize.V1S5.finite_normal_moment_zero": {
+          "ctx": "4e4d6b2bb27b6cb985c6e3b52ad989804c93c8dc31ad4927444c9894786c4f8c",
+          "hash": "8c3a0a002aef9fab27c833353c4e8cf61d6be8c6b34ee1a492845275537fe55d",
+          "kind": "theorem",
+          "text": "theorem finite_normal_moment_zero {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hbound : K < q * m) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : inner \u2102 v ((A05.rho h \u03bd (m : \u2124) ^ q * A05.rho h \u03bd (-(m : \u2124)) ^ q) v) = 0"
+        },
+        "Bosonize.V1S5.ground_state_raw_obstruction": {
+          "ctx": "4e4d6b2bb27b6cb985c6e3b52ad989804c93c8dc31ad4927444c9894786c4f8c",
+          "hash": "656ff729c0d5a27d73b0e96ab7ab37d048b28bd98e105ada83bf0ee1038bdd15",
+          "kind": "theorem",
+          "text": "theorem ground_state_raw_obstruction {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K M q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (branches : A06.Branches \u03c3) (vF g4 g2 mu : \u211d) (g : GroundVector (E := Budget h Ns K) (budgetHamiltonian h M K Ns vF g4 g2 mu branches)) (\u03bd : A06.Orientation) (i : Fin M) (hp : Ch18.HyperbolicPair) (hs : hp.s \u2260 0) (hbound : K < q * (i.val + 1)) : extendedState (E := Budget h Ns K) (inclusion h Ns K) g.ket (A05.rho h (A06.speciesOf branches \u03bd) ((i.val + 1 : \u2115) : \u2124) ^ q * A05.rho h (A06.speciesOf branches \u03bd) (-((i.val + 1 : \u2115) : \u2124)) ^ q) \u2260 A08.omegaP M hp (A08.creatorGen M \u03bd i ^ q * A08.annihilatorGen M \u03bd i ^ q)"
+        },
+        "Bosonize.V1S5.oscillator_normal_moment": {
+          "ctx": "4e4d6b2bb27b6cb985c6e3b52ad989804c93c8dc31ad4927444c9894786c4f8c",
+          "hash": "3b428a5d9dc0c30951d1a411c478ebd11b0ca8f5c334b2209aa8b1800ce58e8d",
+          "kind": "theorem",
+          "text": "theorem oscillator_normal_moment (M : \u2115) (hp : Ch18.HyperbolicPair) (\u03bd : A06.Orientation) (i : Fin M) (q : \u2115) : A08.omegaP M hp (A08.creatorGen M \u03bd i ^ q * A08.annihilatorGen M \u03bd i ^ q) = (q.factorial : \u2102) * (((i.val + 1 : \u2115) : \u2102) * (hp.s : \u2102) ^ 2) ^ q"
+        },
+        "Bosonize.V1S5.raw_dictionary_obstruction": {
+          "ctx": "4e4d6b2bb27b6cb985c6e3b52ad989804c93c8dc31ad4927444c9894786c4f8c",
+          "hash": "92d796de5e6d472f02aab835d59bdf79d5722ac0ff4c163ce41cec6b2a41bb27",
+          "kind": "theorem",
+          "text": "theorem raw_dictionary_obstruction {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K M q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (species : A06.Orientation \u2192 \u03c3) (\u03bd : A06.Orientation) (i : Fin M) (hp : Ch18.HyperbolicPair) (hs : hp.s \u2260 0) (hbound : K < q * (i.val + 1)) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : inner \u2102 v ((A05.rho h (species \u03bd) ((i.val + 1 : \u2115) : \u2124) ^ q * A05.rho h (species \u03bd) (-((i.val + 1 : \u2115) : \u2124)) ^ q) v) \u2260 A08.omegaP M hp (A08.creatorGen M \u03bd i ^ q * A08.annihilatorGen M \u03bd i ^ q)"
+        },
+        "Bosonize.V1S5.raw_obstruction_witness": {
+          "ctx": "4e4d6b2bb27b6cb985c6e3b52ad989804c93c8dc31ad4927444c9894786c4f8c",
+          "hash": "066480c51589e50ca702aff7887954e7894005377ad27bee7c28d4c8e32a2add",
+          "kind": "theorem",
+          "text": "set_option maxRecDepth 2000 in theorem raw_obstruction_witness : A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)) \u2208 A05.jointBudget 8 (fun _ : Fin 2 => (0 : \u2124)) 2 \u2227 A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)) \u2260 0 \u2227 inner \u2102 (A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124))) ((A05.rho 8 (0 : Fin 2) 1 ^ 3 * A05.rho 8 (0 : Fin 2) (-1) ^ 3) (A05.groundKet 8 (fun _ : Fin 2 => (0 : \u2124)))) \u2260 A08.omegaP 1 Ch18.concretePair (A08.creatorGen 1 .right 0 ^ 3 * A08.annihilatorGen 1 .right 0 ^ 3)"
+        },
+        "Bosonize.V1S5.repeated_lowering_zero": {
+          "ctx": "4e4d6b2bb27b6cb985c6e3b52ad989804c93c8dc31ad4927444c9894786c4f8c",
+          "hash": "23ef4f1643d41f12d26c9876ed64314938f6b6547ea97b8cf2aae5d533341c72",
+          "kind": "theorem",
+          "text": "theorem repeated_lowering_zero {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m q : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (\u03bd : \u03c3) (hbound : K < q * m) (v : A05.FockSpace \u03c3 h) (hv : v \u2208 A05.jointBudget h Ns K) : (A05.rho h \u03bd (-(m : \u2124)) ^ q) v = 0"
+        }
+      }
+    },
+    "Bosonize/Core/V1S5SmallInteractingModel.lean": {
+      "commands": [
+        {
+          "hash": "68703b0b42aad63d64a83e8744e067a1d06712f12455a3be956f9385e7243e6e",
+          "kind": "import",
+          "label": "import Bosonize.Core.V1S5FiniteGroundState",
+          "text": "import Bosonize.Core.V1S5FiniteGroundState"
+        },
+        {
+          "hash": "8ba3dc9b1f39cd65a312f9374067cf5ca4d62178b37ee26a667c9d42f020fc3f",
+          "kind": "import",
+          "label": "import Bosonize.Core.V1S1OrderedWick",
+          "text": "import Bosonize.Core.V1S1OrderedWick"
+        },
+        {
+          "hash": "f5e4edcaff93c00ce1f4ffe8ead19b6c64df08005bfc460ae120a1d1b58070eb",
+          "kind": "import",
+          "label": "import Bosonize.Core.V1S4FiniteCurrentComparison",
+          "text": "import Bosonize.Core.V1S4FiniteCurrentComparison"
+        },
+        {
+          "hash": "8194de15bb7142d2c57ba203c2f2286ffe6af759d241cd96ebd0c0d1374a46b4",
+          "kind": "@",
+          "label": "@ [expose] public",
+          "text": "@[expose] public"
+        },
+        {
+          "hash": "3fb45623cb3075a8af9a2f81ef3beaa4038541cd71f08e4bf6c79c088f7a4026",
+          "kind": "section",
+          "label": "section",
+          "text": "section"
+        },
+        {
+          "hash": "90a558972f1f5a96bdb44282de86a0adf0fcd4e05ace5bbff5275d52e8d3de61",
+          "kind": "namespace",
+          "label": "namespace Bosonize.V1S5",
+          "text": "namespace Bosonize.V1S5"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "93bc7db58d9a1dfb196a4459407efc1b940542025acdbc4021091b57d6a41671",
+          "kind": "open",
+          "label": "open Matrix",
+          "text": "open Matrix"
+        },
+        {
+          "hash": "20fd44fc920f564cd269fd32298762f06f321d8728c0c63cb73c1910fd6f19a6",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallCharges",
+          "text": "def smallCharges : Fin 2 \u2192 \u2124 := fun _ => 0"
+        },
+        {
+          "hash": "392b6eb28f696f6e320a0323707393f5b9cf20032f537dda7b8b935810249677",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallBranches",
+          "text": "def smallBranches : A06.Branches (Fin 2) := Ch18.concreteBranches"
+        },
+        {
+          "hash": "58f7b6c68513e8ba639146e6eb8887f6bf73c8d896853b6055e7f9f62b872d7e",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallParts",
+          "text": "def smallParts (j : Fin 8) : Fin 2 \u2192 List \u2115 :=\n  ![![[], []], ![[1], []], ![[], [1]], ![[1, 1], []],\n    ![[], [1, 1]], ![[1], [1]], ![[2], []], ![[], [2]]] j"
+        },
+        {
+          "hash": "960934fe42df2781686646f6905eb99e07affa60cd00e28c4e34856d33fc9849",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallCoefficient",
+          "text": "noncomputable def smallCoefficient (j : Fin 8) : \u2102 :=\n  if j = 3 \u2228 j = 4 \u2228 j = 6 \u2228 j = 7 then ((Real.sqrt 2 : \u211d) : \u2102)\u207b\u00b9 else 1"
+        },
+        {
+          "hash": "0901cecd1185659fb43a204a00bb10b4476fb6fd04b5b9d14acccee21dfcc8ff",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallVector",
+          "text": "noncomputable def smallVector (j : Fin 8) : Budget 8 smallCharges 2 :=\n  \u27e8smallCoefficient j \u2022 A05.wordState 8 smallCharges (smallParts j), by\n    apply Submodule.smul_mem\n    apply A05.word_mem_budget 8 (by norm_num) smallCharges small_admissible\n    fin_cases j <;> norm_num [smallParts, Fin.sum_univ_two]\u27e9"
+        },
+        {
+          "hash": "c0de9d60722444ee7ae1a7f851d62bd6ffead5e23a54d0ed4a4d8b0214cae226",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallLabel",
+          "text": "def smallLabel (j : Fin 8) : A05.JointPartitions (Fin 2) 2 :=\n  \u27e8fun \u03bd => \u27e8\u27e8(smallParts j \u03bd).sum, by fin_cases j <;> fin_cases \u03bd <;> decide\u27e9,\n    \u27e8((smallParts j \u03bd) : Multiset \u2115), by fin_cases j <;> fin_cases \u03bd <;> decide, rfl\u27e9\u27e9,\n      by fin_cases j <;> decide\u27e9"
+        },
+        {
+          "hash": "8340cc14a1f792ee501766ec71e17641b562d76ccfc79eafecfed8d3ea786d97",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallLowerTarget",
+          "text": "def smallLowerTarget (\u03bd : Fin 2) (m : \u2115) (j : Fin 8) : Fin 8 :=\n  if m = 1 then\n    if \u03bd = 0 then if j = 3 then 1 else if j = 5 then 2 else 0\n    else if j = 4 then 2 else if j = 5 then 1 else 0\n  else 0"
+        },
+        {
+          "hash": "121e79c243f8c20ef187c9cefccfbf45953d83b12c446b611e09aa9587510aae",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallLowerCoefficient",
+          "text": "noncomputable def smallLowerCoefficient (\u03bd : Fin 2) (m : \u2115) (j : Fin 8) : \u2102 :=\n  if m = 1 then\n    if \u03bd = 0 then if j = 1 \u2228 j = 5 then 1 else if j = 3 then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n    else if j = 2 \u2228 j = 5 then 1 else if j = 4 then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n  else if m = 2 then\n    if (\u03bd = 0 \u2227 j = 6) \u2228 (\u03bd = 1 \u2227 j = 7) then ((Real.sqrt 2 : \u211d) : \u2102) else 0\n  else 0"
+        },
+        {
+          "hash": "7070bde96264b36bcdf2d5ed5b1a613dc5df75aafb4dd6298d2bcd9aef02bb17",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallHamiltonian",
+          "text": "noncomputable def smallHamiltonian : Module.End \u2102 (Budget 8 smallCharges 2) :=\n  budgetHamiltonian 8 2 2 smallCharges 1 (32 * Real.pi) (30 * Real.pi)\n    (Ch17.canonicalMu 8 1) smallBranches"
+        },
+        {
+          "hash": "6a2b4b2a9460bae431ec80b449bf03d2fffe05941e04c443399249a42429f137",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallMatrix",
+          "text": "noncomputable def smallMatrix : Matrix (Fin 8) (Fin 8) \u2102 := fun i j =>\n  ((Real.pi / 8 : \u211d) : \u2102) *\n    if (i = 0 \u2227 j = 5) \u2228 (i = 5 \u2227 j = 0) then 15\n    else if i = j then if i = 0 then 0 else if i = 1 \u2228 i = 2 then 17 else 34\n    else 0"
+        },
+        {
+          "hash": "ebdc698cb810b12c8ec4b1fdc3a5e0e31f6f5902e282eeab5da070cdff0fcfb8",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallEta",
+          "text": "noncomputable def smallEta : \u211d := 15 / (17 + Real.sqrt 514)"
+        },
+        {
+          "hash": "2bc57223a19839d53957de046362875e965a8e41700b4aecfe1af11a0f4f30e1",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallEnergy",
+          "text": "noncomputable def smallEnergy : \u211d := Real.pi / 8 * (17 - Real.sqrt 514)"
+        },
+        {
+          "hash": "4914643b6b1317da8ecdf99a017d4b3ab9aae78cde991e7e516444e2789180fb",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallEigenvalue",
+          "text": "noncomputable def smallEigenvalue (j : Fin 8) : \u211d :=\n  if j = 0 then smallEnergy\n  else if j = 5 then Real.pi / 8 * (17 + Real.sqrt 514)\n  else if j = 1 \u2228 j = 2 then 17 * (Real.pi / 8) else 34 * (Real.pi / 8)"
+        },
+        {
+          "hash": "cce131821dbc5be1c8720ea97eaf6b89849f4a12ddbfc1f81904731a396a691d",
+          "kind": "def",
+          "label": "def Bosonize.V1S5.smallPsi",
+          "text": "noncomputable def smallPsi : Budget 8 smallCharges 2 :=\n  (((Real.sqrt (1 + smallEta ^ 2))\u207b\u00b9 : \u211d) : \u2102) \u2022\n    (smallVector 0 - (smallEta : \u2102) \u2022 smallVector 5)"
+        },
+        {
+          "hash": "e188ef922852dd77ff87422bc4fc8586b9bca0b337be8fc111968a484f590459",
+          "kind": "end",
+          "label": "end Bosonize.V1S5",
+          "text": "end Bosonize.V1S5"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.V1S5.current_word_lowering": {
+          "ctx": "c965072de5cbd93cd00cbb42726e15bdded5febbdc550b01900868723c10a825",
+          "hash": "015623d3d6aecc812989ae7a6f8a6a7f7eef39f4539ffa4cd1221c4131e615bd",
+          "kind": "theorem",
+          "text": "theorem current_word_lowering {\u03c3 : Type*} [Fintype \u03c3] [LinearOrder \u03c3] (h K m : \u2115) (hh : 0 < h) (Ns : \u03c3 \u2192 \u2124) (hN : A05.admissible h Ns) (\u03bd : \u03c3) (hm : 0 < m) (hmK : m \u2264 K) (hR : A05.r2 h K Ns) (parts : \u03c3 \u2192 List \u2115) (hpos : \u2200 \u03b7 n, n \u2208 parts \u03b7 \u2192 0 < n) (hE : \u2200 \u03b7, (parts \u03b7).sum \u2264 K) : A05.rho h \u03bd (-(m : \u2124)) (A05.wordState h Ns parts) = ((m * (parts \u03bd).count m : \u2115) : \u2102) \u2022 A05.wordState h Ns (Function.update parts \u03bd ((parts \u03bd).erase m))"
+        },
+        "Bosonize.V1S5.small_admissible": {
+          "ctx": "259e144dd14229b5e19d4471dcf5d0e02d8d39dcdfd31a8fb513466b8860cae0",
+          "hash": "2da0a4841552095c3570c9b3d5954aa142183af5f3b8fcecb755761976ac0675",
+          "kind": "theorem",
+          "text": "theorem small_admissible : A05.admissible 8 smallCharges"
+        },
+        "Bosonize.V1S5.small_complete": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "89f6723daa7f4969389e903ee260e01ff581f1cef35607b11bec216f11f29f5e",
+          "kind": "theorem",
+          "text": "theorem small_complete : Submodule.span \u2102 (Set.range smallVector) = \u22a4"
+        },
+        "Bosonize.V1S5.small_current_lowering": {
+          "ctx": "3f50dbfe90b2fea788a20b40fd0b689af8112231883ee25843dc2782c2064e88",
+          "hash": "ff4939821e119625f80564273ae69b5b3a330bdcb84441c939e8696c3b3a566b",
+          "kind": "theorem",
+          "text": "theorem small_current_lowering (\u03bd : Fin 2) (m : \u2115) (hm : m = 1 \u2228 m = 2) (j : Fin 8) : A05.rho 8 \u03bd (-(m : \u2124)) (inclusion 8 smallCharges 2 (smallVector j)) = smallLowerCoefficient \u03bd m j \u2022 inclusion 8 smallCharges 2 (smallVector (smallLowerTarget \u03bd m j))"
+        },
+        "Bosonize.V1S5.small_eta_algebra": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "e832b8d630abd116db3e75af3dba970a8abfba621e983ccff2da1655a83175e6",
+          "kind": "theorem",
+          "text": "theorem small_eta_algebra : smallEta * (17 + Real.sqrt 514) = 15 \u2227 15 * smallEta = Real.sqrt 514 - 17 \u2227 15 * smallEta ^ 2 + 34 * smallEta = 15 \u2227 smallEta ^ 2 / (1 + smallEta ^ 2) = (1 - 17 / Real.sqrt 514) / 2 \u2227 smallEta / (1 + smallEta ^ 2) = 15 / (2 * Real.sqrt 514)"
+        },
+        "Bosonize.V1S5.small_ground": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "bed8cda507add50d2adc2a072e1cb2eebfdd85b097b91a2aa2aebfc949077ab1",
+          "kind": "theorem",
+          "text": "theorem small_ground : \u2016smallPsi\u2016 = 1 \u2227 smallHamiltonian smallPsi = (smallEnergy : \u2102) \u2022 smallPsi \u2227 (\u2200 v : Budget 8 smallCharges 2, smallEnergy * \u2016v\u2016 ^ 2 \u2264 (inner \u2102 v (smallHamiltonian v)).re) \u2227 smallEnergy < 0"
+        },
+        "Bosonize.V1S5.small_label_bijective": {
+          "ctx": "c965072de5cbd93cd00cbb42726e15bdded5febbdc550b01900868723c10a825",
+          "hash": "208599c8446f04b639bd42cdef2784ebf9a2d04fad4c88ba5a2f156a0dc494df",
+          "kind": "theorem",
+          "text": "theorem small_label_bijective : Function.Bijective smallLabel"
+        },
+        "Bosonize.V1S5.small_matrix_action": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "d85d788d48e75ac30f2e888c5aabca325b54d4a38c00bc7341d4ca35c0967998",
+          "kind": "theorem",
+          "text": "set_option maxRecDepth 2000 in set_option maxHeartbeats 2000000 in theorem small_matrix_action (j : Fin 8) : smallHamiltonian (smallVector j) = \u2211 i : Fin 8, smallMatrix i j \u2022 smallVector i"
+        },
+        "Bosonize.V1S5.small_number_discrepancy": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "80441553b94c71a479adb5e1c886e822ebf62509d4544316a283c37ab0eece34",
+          "kind": "theorem",
+          "text": "theorem small_number_discrepancy : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.rightSpecies (-1)) \u2260 A08.omegaP 2 Ch18.concretePair (A08.creatorGen 2 .right 0 * A08.annihilatorGen 2 .right 0)"
+        },
+        "Bosonize.V1S5.small_number_moment": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "4739ac74cf15b9cf1679450e732dd29b7106aeb161f698fc1e68566831cea7af",
+          "kind": "theorem",
+          "text": "set_option maxHeartbeats 2000000 in theorem small_number_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.rightSpecies) (-1)) = (((1 - 17 / Real.sqrt 514) / 2 : \u211d) : \u2102)"
+        },
+        "Bosonize.V1S5.small_orthonormal": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "160b093fe8ede3392890b5ccd475f652abca5f05764a7d699dabc1db91659d46",
+          "kind": "theorem",
+          "text": "theorem small_orthonormal : Orthonormal \u2102 smallVector"
+        },
+        "Bosonize.V1S5.small_pair_discrepancy": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "18ff3be51f3fc72ecd962a110e506572883460493f58e5e50d272ba7b59bb99b",
+          "kind": "theorem",
+          "text": "theorem small_pair_discrepancy : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 smallBranches.rightSpecies 1 * A05.rho 8 smallBranches.leftSpecies 1) \u2260 A08.omegaP 2 Ch18.concretePair (A08.creatorGen 2 .right 0 * A08.creatorGen 2 .left 0)"
+        },
+        "Bosonize.V1S5.small_pair_moment": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "ba34787ccbb762a805cd81320876dd01c67a311cca6f9f6deb2812dc36175bed",
+          "kind": "theorem",
+          "text": "set_option maxHeartbeats 2000000 in theorem small_pair_moment : extendedState (E := Budget 8 smallCharges 2) (inclusion 8 smallCharges 2) smallPsi (A05.rho 8 (smallBranches.rightSpecies) 1 * A05.rho 8 (smallBranches.leftSpecies) 1) = ((-15 / (2 * Real.sqrt 514) : \u211d) : \u2102)"
+        },
+        "Bosonize.V1S5.small_partition_state": {
+          "ctx": "c965072de5cbd93cd00cbb42726e15bdded5febbdc550b01900868723c10a825",
+          "hash": "8936efb7a1413781c1469844f9724590464be9140b2ae73d5ba393646fa102bc",
+          "kind": "theorem",
+          "text": "theorem small_partition_state (j : Fin 8) : A05.partitionState 8 smallCharges (smallLabel j) = A05.wordState 8 smallCharges (smallParts j)"
+        },
+        "Bosonize.V1S5.small_parts_lower": {
+          "ctx": "3f50dbfe90b2fea788a20b40fd0b689af8112231883ee25843dc2782c2064e88",
+          "hash": "7a8c3e98301f4414c1cd50f9002743e47336ca5f481d92b8b08dbd60b67eb173",
+          "kind": "theorem",
+          "text": "theorem small_parts_lower (\u03bd : Fin 2) (m : \u2115) (hm : m = 1 \u2228 m = 2) (j : Fin 8) (hc : (smallParts j \u03bd).count m \u2260 0) : Function.update (smallParts j) \u03bd ((smallParts j \u03bd).erase m) = smallParts (smallLowerTarget \u03bd m j)"
+        },
+        "Bosonize.V1S5.small_spectral_basis": {
+          "ctx": "6dbc1d0bf7f87c9f7b008b4dcc4ed1e1810a3bbb72e4439d6f2382ac0f00bb88",
+          "hash": "77fba20145da350fcd7cc19d4f5cb47683be053bcb681dcf744aae234e588ce7",
+          "kind": "theorem",
+          "text": "theorem small_spectral_basis : \u2203 b : OrthonormalBasis (Fin 8) \u2102 (Budget 8 smallCharges 2), \u2200 j, smallHamiltonian (b j) = (smallEigenvalue j : \u2102) \u2022 b j"
         }
       }
     }

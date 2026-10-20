@@ -37,5 +37,9 @@
   "Bosonize/Core/V1S1OrderedWick.lean": "f26d52cb29008f7d39030157368b7b9131bf14a4db173e97ef404062220852a9",
   "Bosonize/Core/V1S2FormalVertices.lean": "17cab3f91f38bc218b18cd7a2fe9e2ec8abf13d487096c3c2fca3fdd5c107020",
   "Bosonize/Core/V1S3FormalDuality.lean": "236e5ca07184e63a29ded6b028008cca7543d3ae5e5ef1bb849b72cb06f83694",
-  "Bosonize/Core/V1S4FiniteCurrentComparison.lean": "3f436b970c78bb5126a18ab0ffc4a523bea61dd855f60b491baf410f96770b3e"
+  "Bosonize/Core/V1S4FiniteCurrentComparison.lean": "3f436b970c78bb5126a18ab0ffc4a523bea61dd855f60b491baf410f96770b3e",
+  "Bosonize/Core/V1S5FiniteGroundState.lean": "5ca1795a6f42d27b4995d51c066adc11e570fb8dfe246fa1f5d24b63752934b3",
+  "Bosonize/Core/V1S5FiniteVectorStates.lean": "2b1b6ce7eb6694abae1094a93a40b37bfb1cfedb7b659f4a702ce3c851f07822",
+  "Bosonize/Core/V1S5MomentObstruction.lean": "5084ca9963ef0344f3ef9046a86f7faeb86387dc590d3b07de0f623dfeeea82c",
+  "Bosonize/Core/V1S5SmallInteractingModel.lean": "b5a60d0c6f62544d1a825cda6e1cc4dd4980d28591fb87fb2c7b0a9019784a79"
 }

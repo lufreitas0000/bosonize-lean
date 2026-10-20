@@ -41,6 +41,11 @@ import Bosonize.Core.V1S3FormalDuality
 import Bosonize.Core.V1S4FiniteCurrentComparison
 import Bosonize.Core.Ch20CDW
 
+import Bosonize.Core.V1S5FiniteVectorStates
+import Bosonize.Core.V1S5FiniteGroundState
+import Bosonize.Core.V1S5MomentObstruction
+import Bosonize.Core.V1S5SmallInteractingModel
+
 /-!
 # Bosonize Core Library
 Aggregator for the verified Core library. Every verified module must be imported here.

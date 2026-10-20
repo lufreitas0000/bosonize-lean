@@ -1,5 +1,5 @@
 import Bosonize.Core.Ch17LuttingerModels
-import BosonizeStubs.V1S5FiniteVectorStates
+import Bosonize.Core.V1S5FiniteVectorStates
 
 /-! S5 staging: the actual finite compressed Chapter 17 pairing Hamiltonian. -/
 @[expose] public section
