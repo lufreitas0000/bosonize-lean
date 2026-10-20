@@ -6,5 +6,14 @@
   "chapter_prefix_sha256": "10534a26007235d7924783cb887bc9cd3eb8ed8ae9de5bdb23c2b51496f48717",
   "chapter_append_sha256": "02ec94473e4b0ee3f1e2c8376c419370816af3f11e19cc742f7bb4d06e4986e4",
   "chapter_final_sha256": "58948daf32f4a96745b69be8c96b2dcdcaceb1ffc1d8041f61b43eb84783bba6",
-  "chapter_exact_prefix_and_append_verified": true
+  "chapter_exact_prefix_and_append_verified": true,
+  "unrelated_preexisting_dirty_diffs_preserved": [
+    ".agents/rules/lean_conventions.md",
+    ".agents/rules/workspace_architecture.md",
+    "README.md",
+    "docs/BOOK_AND_SOURCE_COVERAGE_PLAN.md",
+    "docs/plans/ch20-theory/README.md",
+    "docs/strategy.md"
+  ],
+  "unrelated_diff_count": 6
 }

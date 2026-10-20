@@ -1,0 +1,5 @@
+Committed acceptance reference: 04af0762bea81070758b62e3bc25e8c1173505d3
+$ python3 scripts/guards/stub_lock.py --check --strict --baseline-ref HEAD
+[stub_lock] Verification PASSED: 1311 statement(s) and 1373 frozen command(s) verified.
+$ python3 scripts/guards/core_lock.py --baseline-ref HEAD
+[core_lock] Verified 43 complete Core source file(s).
