@@ -16361,6 +16361,174 @@
           "text": "theorem small_spectral_basis : \u2203 b : OrthonormalBasis (Fin 8) \u2102 (Budget 8 smallCharges 2), \u2200 j, smallHamiltonian (b j) = (smallEigenvalue j : \u2102) \u2022 b j"
         }
       }
+    },
+    "BosonizeStubs/V1S6PhysicalFields.lean": {
+      "commands": [
+        {
+          "hash": "cd154e8033ec065e76cc695def7a5df7627ce283a40b415e5f338f85ecfb3877",
+          "kind": "import",
+          "label": "import Bosonize.Core.Ch20CDW",
+          "text": "import Bosonize.Core.Ch20CDW"
+        },
+        {
+          "hash": "ea2a61e34c2339de47472a986d500c14f6b870fbc0bc392108ecd96c4b923aab",
+          "kind": "import",
+          "label": "import Bosonize.Core.V1S5SmallInteractingModel",
+          "text": "import Bosonize.Core.V1S5SmallInteractingModel"
+        },
+        {
+          "hash": "ead675de564a5cf80eae273b5cbce7af4fe54c15da8bd79de7e01c90e1b76841",
+          "kind": "section",
+          "label": "section e] section",
+          "text": "@[expose] section"
+        },
+        {
+          "hash": "8a117d4b5b765a19d9ce7b3c5aff809d4d57ef53e201be337dd13f2c34e4bfb4",
+          "kind": "namespace",
+          "label": "namespace Bosonize.V1S6",
+          "text": "namespace Bosonize.V1S6"
+        },
+        {
+          "hash": "3da4aaed9c768db0668f749056a761cfb74d3f51180dc125ccd5c3a5add1b3d6",
+          "kind": "open",
+          "label": "open scoped BigOperators",
+          "text": "open scoped BigOperators"
+        },
+        {
+          "hash": "73ab3143517c0d3065e478e3703bf82f97d5bce173350bf4baa5d69cfa439fb5",
+          "kind": "variable",
+          "label": "variable {U H : Type*}",
+          "text": "variable {U H : Type*}\n  [NormedAddCommGroup U] [InnerProductSpace \u2102 U] [FiniteDimensional \u2102 U]\n  [NormedAddCommGroup H] [InnerProductSpace \u2102 H] [FiniteDimensional \u2102 H]"
+        },
+        {
+          "hash": "da70705a6791b606648ccef2f8e39c81941244676871a2912fed5569e68067cd",
+          "kind": "structure",
+          "label": "structure Bosonize.V1S6.IsometricEmbedding",
+          "text": "structure IsometricEmbedding where\n  map : U \u2192L[\u2102] H\n  adjoint : H \u2192L[\u2102] U\n  adjoint_inner : \u2200 u h, inner \u2102 (map u) h = inner \u2102 u (adjoint h)\n  adjoint_map : adjoint.comp map = ContinuousLinearMap.id \u2102 U"
+        },
+        {
+          "hash": "6c8efeb6cbc45b60b8749ae08969f5410e16eb5f45bed456d5b4a00a7b8d8e21",
+          "kind": "structure",
+          "label": "structure Bosonize.V1S6.OrthogonalProjection",
+          "text": "structure OrthogonalProjection (H : Type*)\n    [NormedAddCommGroup H] [InnerProductSpace \u2102 H] [FiniteDimensional \u2102 H] where\n  map : H \u2192L[\u2102] H\n  idempotent : map.comp map = map\n  selfAdjoint : \u2200 x y, inner \u2102 (map x) y = inner \u2102 x (map y)"
+        },
+        {
+          "hash": "4917b13bdb6f46663ea35a6e25c8793255a91ee9644abcc77fe22142b2fb97fa",
+          "kind": "def",
+          "label": "def Bosonize.V1S6.rangeProjection",
+          "text": "def rangeProjection (E : IsometricEmbedding (U := U) (H := H)) : H \u2192L[\u2102] H :=\n  E.map.comp E.adjoint"
+        },
+        {
+          "hash": "9b1ac1677dbf470d7f04d77b30d7867ce291cda818338255828cd39613ee342b",
+          "kind": "def",
+          "label": "def Bosonize.V1S6.intermediateResidual",
+          "text": "def intermediateResidual {S T : Type*}\n    [NormedAddCommGroup S] [InnerProductSpace \u2102 S] [FiniteDimensional \u2102 S]\n    [NormedAddCommGroup T] [InnerProductSpace \u2102 T] [FiniteDimensional \u2102 T]\n    (A : H \u2192L[\u2102] T) (B : S \u2192L[\u2102] H) (P : OrthogonalProjection H) : S \u2192L[\u2102] T :=\n  A.comp ((ContinuousLinearMap.id \u2102 H - P.map).comp B)"
+        },
+        {
+          "hash": "69da3088d09a99b0c802a29c7317a9d41f55b2285c66d623b58a0396bad88e5b",
+          "kind": "def",
+          "label": "def Bosonize.V1S6.omittedRangeResidual",
+          "text": "def omittedRangeResidual (E : IsometricEmbedding (U := U) (H := H)) {S T : Type*}\n    [NormedAddCommGroup S] [InnerProductSpace \u2102 S] [FiniteDimensional \u2102 S]\n    [NormedAddCommGroup T] [InnerProductSpace \u2102 T] [FiniteDimensional \u2102 T]\n    (A : H \u2192L[\u2102] T) (B : S \u2192L[\u2102] H) (P : OrthogonalProjection H) : S \u2192L[\u2102] T :=\n  A.comp ((P.map - rangeProjection E).comp B)"
+        },
+        {
+          "hash": "c390c1fabbb7ba7d20000cbc24c193f63694446c94f6bc6c5855dbfd075d94d4",
+          "kind": "def",
+          "label": "def Bosonize.V1S6.finiteDictionaryError",
+          "text": "def finiteDictionaryError {S T : Type*}\n    [NormedAddCommGroup S] [InnerProductSpace \u2102 S] [FiniteDimensional \u2102 S]\n    [NormedAddCommGroup T] [InnerProductSpace \u2102 T] [FiniteDimensional \u2102 T]\n    (actual candidate : S \u2192L[\u2102] T) : S \u2192L[\u2102] T := actual - candidate"
+        },
+        {
+          "hash": "1685c04b7d9b6d54ebbe29da4b0883d2533ecfe254f61ca5cd53379ddf3eb847",
+          "kind": "def",
+          "label": "def Bosonize.V1S6.finiteDictionaryErrorOnVector",
+          "text": "def finiteDictionaryErrorOnVector {S T : Type*}\n    [NormedAddCommGroup S] [InnerProductSpace \u2102 S] [FiniteDimensional \u2102 S]\n    [NormedAddCommGroup T] [InnerProductSpace \u2102 T] [FiniteDimensional \u2102 T]\n    (actual candidate : S \u2192\u2097[\u2102] T) (v : S) : T := actual v - candidate v"
+        },
+        {
+          "hash": "7414d3de2be79bad8b9328328c5b7f582d5a676ef6e57400d45b9a0fc45b41e1",
+          "kind": "section",
+          "label": "section TypedProducts",
+          "text": "section TypedProducts"
+        },
+        {
+          "hash": "85b2bcf8a0bf22c6e30a67c803627de08dc2013396554df15fda72a06c2eba0b",
+          "kind": "variable",
+          "label": "variable {S T X Y Z : Type*}",
+          "text": "variable {S T X Y Z : Type*}\n  [NormedAddCommGroup S] [InnerProductSpace \u2102 S] [FiniteDimensional \u2102 S]\n  [NormedAddCommGroup T] [InnerProductSpace \u2102 T] [FiniteDimensional \u2102 T]\n  [NormedAddCommGroup X] [InnerProductSpace \u2102 X] [FiniteDimensional \u2102 X]\n  [NormedAddCommGroup Y] [InnerProductSpace \u2102 Y] [FiniteDimensional \u2102 Y]\n  [NormedAddCommGroup Z] [InnerProductSpace \u2102 Z] [FiniteDimensional \u2102 Z]"
+        },
+        {
+          "hash": "e118766b3dc0aa6d70d2c63bd85ef6d013c5fde63a9685667d39e22999c938ab",
+          "kind": "end",
+          "label": "end TypedProducts",
+          "text": "end TypedProducts"
+        },
+        {
+          "hash": "bf1d3df6534bdd7d36419c219eb2c85700930f27d7a524fb4b1c5e9b0a7a396c",
+          "kind": "section",
+          "label": "section ConcreteObstructions",
+          "text": "section ConcreteObstructions"
+        },
+        {
+          "hash": "f34fa606eb2e5d50afc18a0b91324035830e04d83384991081d4ebdae232a684",
+          "kind": "def",
+          "label": "def Bosonize.V1S6.singleSpeciesZeroCharge",
+          "text": "def singleSpeciesZeroCharge : PUnit \u2192 \u2124 := fun _ => 0"
+        },
+        {
+          "hash": "f13fe42feca364171cad15192a5d68785f966ce265f4d7502e108e21beb3d066",
+          "kind": "end",
+          "label": "end ConcreteObstructions",
+          "text": "end ConcreteObstructions"
+        },
+        {
+          "hash": "c59efcd3f8503cd4936a12c7c8daecae027eeee16d043512f76829d81d2f9a34",
+          "kind": "end",
+          "label": "end Bosonize.V1S6",
+          "text": "end Bosonize.V1S6"
+        },
+        {
+          "hash": "361e48d0308f20e32dba5fb56328baf18d72ef0ccb43b84f5c262d2a6a1fc6c8",
+          "kind": "end",
+          "label": "end",
+          "text": "end"
+        }
+      ],
+      "lemmas": {
+        "Bosonize.V1S6.cdw_discarded_channel_norm_lower_bound": {
+          "ctx": "3cd7c05554ed23e5f5c4588e0a9997d6bc0d47a2846fa9037d8052fe95402be2",
+          "hash": "5fb4cfcb8dea12ed9f955548388491de922c1d1b8c6b9c97834afd5cb6d831bb",
+          "kind": "theorem",
+          "text": "theorem cdw_discarded_channel_norm_lower_bound : \u2016Ch14.projectedMap 2 Ch20.witnessZero (Ch20.cdwTarget Ch16.standardBranches Ch20.witnessZero) 0 1 (Ch20.cdwResidualOp 2 (fun _ => Ch06Ext.periodicTwist 4) Ch16.standardBranches 1 Ch20.witnessZero 0) (Ch14.groundVector 2 (by decide) Ch20.witnessZero Ch20.witnessZero_admissible 0)\u2016 \u2265 (1 / 4 : \u211d)"
+        },
+        "Bosonize.V1S6.h3_m1_ground_image_mismatch": {
+          "ctx": "3cd7c05554ed23e5f5c4588e0a9997d6bc0d47a2846fa9037d8052fe95402be2",
+          "hash": "5bcddabdb76ca8e115a4b8aec7a036fef56bb0374f600505b8d005e058ba77bf",
+          "kind": "theorem",
+          "text": "theorem h3_m1_ground_image_mismatch : \u2016finiteDictionaryErrorOnVector (S := A05.jointBudget 3 singleSpeciesZeroCharge 0) (T := A05.jointBudget 3 (Ch13.lowerCharge singleSpeciesZeroCharge PUnit.unit) 2) (Ch14.physicalMap 3 (fun _ => Ch06Ext.periodicTwist 6) singleSpeciesZeroCharge PUnit.unit 0 0 2) (Ch14.vertexCandidate 3 1 (fun _ => Ch06Ext.periodicTwist 6) singleSpeciesZeroCharge PUnit.unit 0 0 2) (Ch14.groundVector 3 (by decide) singleSpeciesZeroCharge singleSpeciesZero_admissible 0)\u2016 \u2265 1 / (2 * Real.sqrt 6)"
+        },
+        "Bosonize.V1S6.quantitative_product_comparison": {
+          "ctx": "8966ac62ee4b89ce280d7a57bffa09cbfb81e45dc3ad373f9242cabbc72c5004",
+          "hash": "0e0ccb043523fc687ef1c97d02e09d0d84a7ac39555c904dddf3b57524fce9cf",
+          "kind": "theorem",
+          "text": "theorem quantitative_product_comparison (Us : IsometricEmbedding (U := S) (H := X)) (Um : IsometricEmbedding (U := U) (H := H)) (Ut : IsometricEmbedding (U := T) (H := Y)) (A : H \u2192L[\u2102] Y) (B : X \u2192L[\u2102] H) (Pm : OrthogonalProjection H) (hUm : Pm.map.comp Um.map = Um.map) (VA : U \u2192L[\u2102] T) (VB : S \u2192L[\u2102] U) : \u2016Ut.adjoint.comp (A.comp (B.comp Us.map)) - VA.comp VB\u2016 \u2264 \u2016Ut.adjoint.comp ((intermediateResidual A B Pm).comp Us.map)\u2016 + \u2016Ut.adjoint.comp ((omittedRangeResidual Um A B Pm).comp Us.map)\u2016 + \u2016finiteDictionaryError (Ut.adjoint.comp (A.comp Um.map)) VA\u2016 * \u2016Um.adjoint.comp (B.comp Us.map)\u2016 + \u2016VA\u2016 * \u2016finiteDictionaryError (Um.adjoint.comp (B.comp Us.map)) VB\u2016"
+        },
+        "Bosonize.V1S6.rangeProjection_subprojection": {
+          "ctx": "8618d89ab0a78bc45f034f0e7ee85750dd9f35abd93d6ebe399a143d32fae094",
+          "hash": "5c011182d559909e65ef4f1fbfeea2f7a97eb1c658b96b2e10acd4202cb33ef1",
+          "kind": "lemma",
+          "text": "omit [FiniteDimensional \u2102 U] in lemma rangeProjection_subprojection (E : IsometricEmbedding (U := U) (H := H)) (P : OrthogonalProjection H) (hE : P.map.comp E.map = E.map) : P.map.comp (rangeProjection E) = rangeProjection E"
+        },
+        "Bosonize.V1S6.singleSpeciesZero_admissible": {
+          "ctx": "3cd7c05554ed23e5f5c4588e0a9997d6bc0d47a2846fa9037d8052fe95402be2",
+          "hash": "4164883ae2c4bdf1306d5d631bb708e2d8cea6d47d899367b21ab5448a14bb25",
+          "kind": "theorem",
+          "text": "theorem singleSpeciesZero_admissible : A05.admissible 3 singleSpeciesZeroCharge"
+        },
+        "Bosonize.V1S6.typed_product_decomposition": {
+          "ctx": "8966ac62ee4b89ce280d7a57bffa09cbfb81e45dc3ad373f9242cabbc72c5004",
+          "hash": "c433f60d1986a5b6a5b097fa69996363315c63f943ed0e3c51c38be5d296f1f0",
+          "kind": "lemma",
+          "text": "omit [FiniteDimensional \u2102 U] [FiniteDimensional \u2102 S] [FiniteDimensional \u2102 T] in lemma typed_product_decomposition (Us : IsometricEmbedding (U := S) (H := X)) (Um : IsometricEmbedding (U := U) (H := H)) (Ut : IsometricEmbedding (U := T) (H := Y)) (A : H \u2192L[\u2102] Y) (B : X \u2192L[\u2102] H) (Pm : OrthogonalProjection H) (_hUm : Pm.map.comp Um.map = Um.map) : Ut.adjoint.comp (A.comp (B.comp Us.map)) = ((Ut.adjoint.comp (A.comp Um.map)).comp (Um.adjoint.comp (B.comp Us.map))) + (Ut.adjoint.comp ((intermediateResidual A B Pm).comp Us.map)) + (Ut.adjoint.comp ((omittedRangeResidual Um A B Pm).comp Us.map))"
+        }
+      }
     }
   },
   "version": 2
