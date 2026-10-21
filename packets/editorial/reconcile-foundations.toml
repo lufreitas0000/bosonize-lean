@@ -1,7 +1,7 @@
 version = 1
 id = "reconcile-foundations-20261021"
 repo = "../.."
-phase = "C"
+phase = "B"
 timeout = 600
 max_packet_bytes = 320000
 task = "Implement ONLY narrow current-source prose reconciliation for foundations, contract docs/editorial/RECONCILIATION_2026-10-21.md. Exact source53ed5d4, current prepbase from this packet. Inspect git show exactSHAs, never confuse old candidate with current. Edit ONLY listed targets. Preserve all current math inline/display/proof, labels/citations/input graph; no new theorem/notation decisions. Report actual sourceanchors, retained/rebased/rejected oldcorrections, commands, skippedchecks and unresolvedissues in docs/integration/editorial-foundations-2026-10-21.md. No extra files. Dependencies current sourcebackup accepted, existingoldreview artifacts hypotheses only. Owner Codex; no publication/merge. Budget1session+2same-session revisions; expected actual Git patch and small report, finalhash independentreview before integration."
