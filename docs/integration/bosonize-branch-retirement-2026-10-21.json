@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-21T15:39:34.156303+00:00",
+  "retired": [
+    {
+      "branch": "agent/theorem-fragments/ch18_cycle_b_0648ad0f-20261015T054228Z-af073e60-700213e3",
+      "head": "df282d091f559591d4454f9ae689f5dcd3ca82a3",
+      "disposition": "superseded-by-promoted-Core",
+      "Corepaths": [
+        "Bosonize/Core/Ch18Bogoliubov.lean"
+      ],
+      "recovery": "superseded-theorem-fragments.bundle",
+      "reason": "Accepted complete Core plus strict43file Core lock and fullsandboxCI supersede older staging-only proof candidates; no source checkout changes."
+    },
+    {
+      "branch": "agent/theorem-fragments/ch19_cycle_b_ac6d6ccf-20261015T063341Z-335fc598-44c7fc1e",
+      "head": "d0745234246b4c6cb00e5f010408c2512f0ba812",
+      "disposition": "superseded-by-promoted-Core",
+      "Corepaths": [
+        "Bosonize/Core/A08OscillatorStates.lean"
+      ],
+      "recovery": "superseded-theorem-fragments.bundle",
+      "reason": "Accepted complete Core plus strict43file Core lock and fullsandboxCI supersede older staging-only proof candidates; no source checkout changes."
+    },
+    {
+      "branch": "agent/theorem-fragments/ch19_cycle_b_b8be9c21-20261015T072535Z-8355a5de-c4fc7cf7",
+      "head": "a6d80684cb6bf87c967baecd77f9b0fee98dec76",
+      "disposition": "superseded-by-promoted-Core",
+      "Corepaths": [
+        "Bosonize/Core/Ch19Correlations.lean"
+      ],
+      "recovery": "superseded-theorem-fragments.bundle",
+      "reason": "Accepted complete Core plus strict43file Core lock and fullsandboxCI supersede older staging-only proof candidates; no source checkout changes."
+    }
+  ]
+}

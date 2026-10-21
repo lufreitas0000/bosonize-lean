@@ -1,0 +1,600 @@
+[
+  {
+    "session": "sessions/6757295423897687404",
+    "provider_state": "COMPLETED",
+    "name": "compressed_common_kernel_trivial",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 1033
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/5635151709285143205",
+    "provider_state": "COMPLETED",
+    "name": "vectorState_adjoint_mul_self",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 1005
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/8366507049471234128",
+    "provider_state": "COMPLETED",
+    "name": "vectorState_ground_one",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 1001
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/122706635266369651",
+    "provider_state": "COMPLETED",
+    "name": "omegaP_commutator",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 983
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/6072638440031085377",
+    "provider_state": "COMPLETED",
+    "name": "omegaP_dressed_creator_mul",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 962
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/5451552310362039026",
+    "provider_state": "COMPLETED",
+    "name": "omegaP_mul_dressed_annihilator",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 946
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/17979969060930309743",
+    "provider_state": "COMPLETED",
+    "name": "omegaP_comp_bogoliubovMap",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 936
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/9367290508906167194",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "omegaP_ccr_descends_aa",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 757
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/921959346795134698",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "omegaP_ccr_descends",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 645
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/17441204224639739635",
+    "provider_state": "COMPLETED",
+    "name": "omegaP_gramSum",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 584
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/5771173720543568975",
+    "provider_state": "COMPLETED",
+    "name": "omegaP_one",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 580
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/9523387138926018654",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "bogoliubovMap_word_adjoint",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 500
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/11014392912032294789",
+    "provider_state": "COMPLETED",
+    "name": "omega0_ccr_descends_cc",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 411
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/468182181250423332",
+    "provider_state": "COMPLETED",
+    "name": "omega0_ccr_descends_aa",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 391
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/5150855945077836319",
+    "provider_state": "COMPLETED",
+    "name": "omega0_ccr_descends",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 366
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/3763443981176658495",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "omega0_gramSum",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 274
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/11082429732244859582",
+    "provider_state": "COMPLETED",
+    "name": "omega0_one",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 270
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/1171688748414557765",
+    "provider_state": "COMPLETED",
+    "name": "omega0_eq_pairing",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 266
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/3527488284239561668",
+    "provider_state": "COMPLETED",
+    "name": "oscAnnihilation_one",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 262
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/10155582338928298878",
+    "provider_state": "COMPLETED",
+    "name": "osc_creators_commute",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 257
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/6789458166980033118",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "osc_annihilators_commute",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 240
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/12701744749749379099",
+    "provider_state": "COMPLETED",
+    "name": "osc_ccr",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 230
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/9603940709634473024",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "oscCreation_pairing_adjoint",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 146
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/3357909893252395649",
+    "provider_state": "COMPLETED",
+    "name": "oscPairing_self_eq_zero",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 119
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/1341273872352565226",
+    "provider_state": "COMPLETED",
+    "name": "oscPairing_self_nonneg",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 106
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/16120435784344714088",
+    "provider_state": "COMPLETED",
+    "name": "oscPairing_conj",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 66
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/7418783828749799770",
+    "provider_state": "COMPLETED",
+    "name": "oscPairing_monomial",
+    "matches": [
+      {
+        "path": "Bosonize/Core/A08OscillatorStates.lean",
+        "line": 59
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/10844132460368845821",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "concrete_bogoliubov_witness",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 792
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/15350644036381469623",
+    "provider_state": "COMPLETED",
+    "name": "no_common_bare_dressed_vacuum",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 735
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/14308299895136678457",
+    "provider_state": "COMPLETED",
+    "name": "dressed_annihilator_ground_left_ne_zero",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 712
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/6264610161756861369",
+    "provider_state": "COMPLETED",
+    "name": "dressed_annihilator_ground_left",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 678
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/16999268069150633864",
+    "provider_state": "COMPLETED",
+    "name": "luttinger_hamiltonian_dressed_on_budget",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 635
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/452445354752445414",
+    "provider_state": "COMPLETED",
+    "name": "luttinger_oscillator_dressed_on_budget",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 601
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/6761281123053145534",
+    "provider_state": "COMPLETED",
+    "name": "bogoliubov_cross_annihilator_annihilator_on_budget",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 537
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/12263715244305404302",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "bogoliubov_cross_creator_creator_on_budget",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 467
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/4840966288229757090",
+    "provider_state": "COMPLETED",
+    "name": "bogoliubov_cross_annihilator_creator",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 431
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/17365550478517632221",
+    "provider_state": "AWAITING_USER_FEEDBACK",
+    "name": "bogoliubov_annihilator_inverse_left",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 420
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/6109108290362947677",
+    "provider_state": "COMPLETED",
+    "name": "bogoliubov_annihilator_inverse_right",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 401
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/14293866162702377732",
+    "provider_state": "COMPLETED",
+    "name": "bogoliubov_creator_inverse_left",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 364
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/10952107998546067797",
+    "provider_state": "COMPLETED",
+    "name": "bogoliubov_creator_inverse_right",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 351
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/14598574467945625393",
+    "provider_state": "COMPLETED",
+    "name": "vacuum_shift_prefactor_of_params",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 307
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/4820383931951589341",
+    "provider_state": "COMPLETED",
+    "name": "hyperbolic_coeff_eq_luttinger",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 270
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/10875564376440653862",
+    "provider_state": "COMPLETED",
+    "name": "luttingerGInv_pos_of_params",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 256
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/2886507051184983245",
+    "provider_state": "COMPLETED",
+    "name": "luttingerG_eq_sqrt_of_params",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 208
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/14235470781409889874",
+    "provider_state": "COMPLETED",
+    "name": "hyperbolic_params_nonempty",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 136
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Current exact-name declaration resides in complete hash-locked Core;43complete Core sources verified and sandboxed fullCI passed. Provider state is historical, not acceptance; never replay old staging snapshot."
+  },
+  {
+    "session": "sessions/13413744445266818760",
+    "provider_state": "COMPLETED",
+    "name": "HyperbolicPair.c_add_s_ne_zero",
+    "matches": [
+      {
+        "path": "Bosonize/Core/Ch18Bogoliubov.lean",
+        "line": 100
+      }
+    ],
+    "disposition": "superseded-by-promoted-Core",
+    "reason": "Exact qualified declaration resides in complete hash-locked Core; sandboxed CI passed. Do not replay older staging patch."
+  }
+]
