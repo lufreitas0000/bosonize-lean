@@ -1,0 +1,1 @@
+[stub_lock] Verification PASSED: 1317 statement(s) and 1394 frozen command(s) verified.

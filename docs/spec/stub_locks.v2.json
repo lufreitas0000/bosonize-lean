@@ -16500,9 +16500,9 @@
         },
         "Bosonize.V1S6.h3_m1_ground_image_mismatch": {
           "ctx": "3cd7c05554ed23e5f5c4588e0a9997d6bc0d47a2846fa9037d8052fe95402be2",
-          "hash": "5bcddabdb76ca8e115a4b8aec7a036fef56bb0374f600505b8d005e058ba77bf",
+          "hash": "1331aa2fb9b3bcfad64083d2b3bfdfc3b5f92930bfd08f3a10143ecb9d930443",
           "kind": "theorem",
-          "text": "theorem h3_m1_ground_image_mismatch : \u2016finiteDictionaryErrorOnVector (S := A05.jointBudget 3 singleSpeciesZeroCharge 0) (T := A05.jointBudget 3 (Ch13.lowerCharge singleSpeciesZeroCharge PUnit.unit) 2) (Ch14.physicalMap 3 (fun _ => Ch06Ext.periodicTwist 6) singleSpeciesZeroCharge PUnit.unit 0 0 2) (Ch14.vertexCandidate 3 1 (fun _ => Ch06Ext.periodicTwist 6) singleSpeciesZeroCharge PUnit.unit 0 0 2) (Ch14.groundVector 3 (by decide) singleSpeciesZeroCharge singleSpeciesZero_admissible 0)\u2016 \u2265 1 / (2 * Real.sqrt 6)"
+          "text": "set_option maxHeartbeats 1600000 in theorem h3_m1_ground_image_mismatch : \u2016finiteDictionaryErrorOnVector (S := A05.jointBudget 3 singleSpeciesZeroCharge 0) (T := A05.jointBudget 3 (Ch13.lowerCharge singleSpeciesZeroCharge PUnit.unit) 2) (Ch14.physicalMap 3 (fun _ => Ch06Ext.periodicTwist 6) singleSpeciesZeroCharge PUnit.unit 0 0 2) (Ch14.vertexCandidate 3 1 (fun _ => Ch06Ext.periodicTwist 6) singleSpeciesZeroCharge PUnit.unit 0 0 2) (Ch14.groundVector 3 (by decide) singleSpeciesZeroCharge singleSpeciesZero_admissible 0)\u2016 \u2265 1 / (2 * Real.sqrt 6)"
         },
         "Bosonize.V1S6.quantitative_product_comparison": {
           "ctx": "8966ac62ee4b89ce280d7a57bffa09cbfb81e45dc3ad373f9242cabbc72c5004",

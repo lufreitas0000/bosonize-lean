@@ -210,3 +210,25 @@ entry evidence is superseded by the Phase B receipt below.
   preservation: 43 files. Validation logs: [cdw-validation](cdw-validation/).
 - Phase B remains incomplete with exactly one remaining placeholder, in
   `h3_m1_ground_image_mismatch`. Phase C has not started.
+
+
+## Final Phase B acceptance — 2026-10-25
+
+Both concrete bounds and all six S6 theorem contracts are proved. Exact source
+hash: `6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e`.
+Reviewer `/root/s6_h3_diagnosis`: **PASS**, independently verified guard and
+Core preservation, reviewed source and complete build/axiom receipts.
+
+The h3 coordinate at {-2,+1} is physical0, candidate1/(2 sqrt6), and
+error-1/(2 sqrt6). The inherited target subtype norm is connected by
+`Submodule.norm_coe`; local universe abbreviations are unfolded explicitly.
+The candidate's ordered factors and both rho1 actions are proved from Core.
+
+The reviewed theorem-scoped heartbeat1600000 wrapper changes only the h3
+manifest record's text/hash, preserving its exact underlying declaration and
+context. All other records and the completed CDW body remain identical.
+Fresh build success3443jobs, zero warnings/errors/placeholders. Complete audit
+of74 namespace declarations and generated helpers: only propext,
+Classical.choice, Quot.sound. Strict locks1317/1394 and43 Core files pass.
+See [fresh validation receipts](phase-b-validation-2026-10-25/).
+Phase C is authorized next; this Phase B receipt alone does not claim promotion.

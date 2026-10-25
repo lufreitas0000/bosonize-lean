@@ -1,10 +1,10 @@
-# V1-S6 Phase A companion: physical fields and controlled residuals
+# V1-S6 companion: physical fields and controlled residuals
 
-Status: **Phase B in progress**. The current typed decomposition and
-quantitative comparison have independent review. The CDW discarded-channel
-norm bound is now proved; the h3 ground-image bound remains open. The reviewed interface is now scoped-locked.
-No promotion has been created. Review receipts and exact hashes are in [the
-entry-review receipt](../../plans/v1-s6/entry-review.md).
+Status: **Phase B accepted on 2026-10-25; Phase C pending**. All six
+user-authored theorem/lemma contracts are proved, including both concrete norm
+bounds. Independent integrated review, complete dependency audit and strict
+preservation guards pass. Exact receipts follow below. No promotion is claimed
+by this staging checkpoint.
 
 ## Mathematical target and rejected stronger claims
 
@@ -72,7 +72,7 @@ decomposition, expands the difference of the two finite candidate products as
 `(Ahat - VA) Bhat + VA (Bhat - VB)`, and bounds each composition by operator
 norm submultiplicativity. Its independent review passed on the exact source
 hash in the receipt. The CDW lower bound is now proved as recorded below;
-the h3 lower-bound contract remains unproved.
+the h3 lower-bound contract is now proved as recorded below.
 
 All exact declarations are in
 [`V1S6PhysicalFields.lean`](../../../BosonizeStubs/V1S6PhysicalFields.lean).
@@ -112,7 +112,7 @@ is interface/coverage approval only, not proof approval.
 | Obligation | Exact definition/carrier | Controlling result or S6 status | Coverage limit |
 |---|---|---|---|
 | Intermediate projection | `U_t† A (1-P_m) B U_s`, plus CH20's exact finite CAR residual on the source/target budgets | `typed_product_decomposition`; proved numerical lower bound `1/4` in `cdw_discarded_channel_norm_lower_bound` | Nonzero example does not characterize all charges or cutoffs. |
-| Mode truncation and omitted range | Finite-mode dictionary errors are `Ahat-VA` and `Bhat-VB` on the selected finite carriers (`finiteDictionaryError`); the separate omitted range is `U_t† A (P_m-U_mU_m†) B U_s` | The quantitative theorem bounds the candidate errors multiplied by the companion factor norms. The pending h=3, M=1 contract states `||(Ahat-VA)ground|| ≥ 1/(2 sqrt(6))` by its extra orthogonal target component. The product decomposition retains the omitted-range map. | This lower bound is for the complete physical-to-CH14 candidate error on that vector; it does not attribute the discrepancy solely to missing modes. In the selected CH20 product witness no oscillator range is substituted, so no omitted-range approximation is made there. The general theorem has no blanket omitted-range bound. |
+| Mode truncation and omitted range | Finite-mode dictionary errors are `Ahat-VA` and `Bhat-VB` on the selected finite carriers (`finiteDictionaryError`); the separate omitted range is `U_t† A (P_m-U_mU_m†) B U_s` | The quantitative theorem bounds the candidate errors multiplied by the companion factor norms. The proved h=3, M=1 result states `||(Ahat-VA)ground|| ≥ 1/(2 sqrt(6))` by its extra orthogonal target component. The product decomposition retains the omitted-range map. | This lower bound is for the complete physical-to-CH14 candidate error on that vector; it does not attribute the discrepancy solely to missing modes. In the selected CH20 product witness no oscillator range is substituted, so no omitted-range approximation is made there. The general theorem has no blanket omitted-range bound. |
 | Normal ordering and normalization | Physical CAR field vs fixed CH14 candidate vs S2 formal Weyl/bare/dressed definitions; keep scalar prefactors in their source definitions | The S0 equal-point free-sea computation reports physical `1/4` vs formal Weyl `1/16`, discrepancy `3/16`; this is distinct from the h=3 M=1 vector obstruction and from bare/dressed scalar factors. | No field rescaling and no global normalization theorem. The equal-point calculation must be separately established in the accepted proof package before it is promoted as a Lean result. |
 | State comparison | Difference of expectations under a specified physical state and model state for a fixed observable dictionary | No state is substituted in either selected operator comparison, so this term is absent by construction; S5 state existence and S4 free-sea results are not an interacting-state estimate | This says nothing about a later physical-vs-model expectation comparison. |
 | Dispersion/Hamiltonian | Finite operator difference for any chosen change of dispersion/Hamiltonian | No Hamiltonian or dispersion is changed in either selected finite operator comparison, so this term is absent by construction | The omission gives no spectral projection or ground-state stability theorem. |
@@ -132,8 +132,8 @@ vector, charge sector, cutoff, twist, candidate, and residual are all actual
 Core declarations. The Phase A draft had four permitted placeholders. Proof work has since begun;
 the current source hash and proof status are recorded in the receipt.
 The zero-charge admissibility proof is complete. The S6 target built with
-`lake build BosonizeStubs.V1S6PhysicalFields` (3443 jobs). It now reports one
-unproved concrete norm bound (h3) and no S6 linter warnings. This is a focused
+`lake build BosonizeStubs.V1S6PhysicalFields` (3443 jobs). The latest build reports zero
+unproved contracts and zero warnings; earlier build receipts are historical. This is a focused
 build, not a full acceptance audit. The earlier Phase A data-only audit covered
 six declarations; a fresh complete declaration and axiom audit is still
 required after S6 proofs are finished.
@@ -188,3 +188,42 @@ commands and 43 prior Core files. Logs are in
 
 Phase B remains in progress solely because the h3 bound is open. Phase C has
 not started; this checkpoint makes no broader S6 acceptance claim.
+
+
+## Phase B acceptance — 2026-10-25
+
+The accepted complete staging source has SHA-256
+`6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e`.
+All 14 authored declarations (eight structures/data/functions and six
+lemmas/theorems) are complete. The fresh namespace dependency audit covers
+74 declarations including generated projections, recursors and proof helpers.
+Every axiom set is a subset of `propext`, `Classical.choice`, `Quot.sound`;
+no `sorryAx` occurs. Build: 3443 jobs, zero warnings/errors/placeholders.
+
+For h3, the target occupation is J={-2,+1}. The CAR calculation gives
+rho1 G=H and rho1 H=I+J, where G={-2,-1}, H={-2,0}, I={-1,0}.
+All target states have charge -1 and excitation at most two. The source-first
+zero mode and Klein phase are one. The lowering Taylor factor has cutoff zero;
+the output signed raising factor is the actual compressed -rho1 with Taylor
+order two. The candidate coefficient on J is normalization6/2. Every physical
+hole configuration lacks+1, so its J coefficient is zero. The actual-minus-
+candidate coordinate is -normalization6/2, of norm1/(2 sqrt6). Cauchy–Schwarz
+uses the normalized ambient ket and `Submodule.norm_coe` for the actual
+budget inclusion. `Species` and `Ns` are local definitional abbreviations
+bound at the exact universe of the locked target; no universe specialization
+or physical normalization change is made.
+
+The independently approved amendment prefixes only the h3 theorem by
+`set_option maxHeartbeats 1600000 in`. Only that record's `text` and `hash`
+change in the interface manifest; its underlying mathematical declaration,
+context hash, every other record and all prior Core sources are identical.
+This adjusts checking resources and introduces no mathematical assumption.
+
+Reviewer `/root/s6_h3_diagnosis` returned **PASS** on the exact integrated
+hash, the resource wrapper, complete audit and preservation receipts. The
+reviewer independently reran both preservation guards: 1317 statements,
+1394 commands, 43 Core files. The completed CDW proof is byte-identical to
+its earlier reviewed checkpoint. Logs and the full audit script are in
+[the Phase B validation directory](../../plans/v1-s6/phase-b-validation-2026-10-25/).
+The earlier h3 checkpoint and conditional reviews remain historical evidence;
+this complete acceptance supersedes their pending status.

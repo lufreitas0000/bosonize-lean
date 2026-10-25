@@ -1,0 +1,1 @@
+[core_lock] Verified 43 complete Core source file(s).

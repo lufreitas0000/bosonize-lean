@@ -168,6 +168,7 @@ theorem singleSpeciesZero_admissible : A05.admissible 3 singleSpeciesZeroCharge 
   intro ν
   simp [singleSpeciesZeroCharge, Ch07.admissible]
 
+set_option maxHeartbeats 1600000 in
 /-- Nonempty-cutoff (`M=1`) full-ground-image obstruction: h=3, N=0,
 Kin=0, Kout=2, trivial twist and x=0. This is the actual A-vs-B comparison;
 the theorem does not identify the separate S2 formal vertex C with either. -/
@@ -181,7 +182,172 @@ theorem h3_m1_ground_image_mismatch :
         singleSpeciesZeroCharge PUnit.unit 0 0 2)
       (Ch14.groundVector 3 (by decide) singleSpeciesZeroCharge
         singleSpeciesZero_admissible 0)‖ ≥ 1 / (2 * Real.sqrt 6) := by
-  sorry
+  set_option maxHeartbeats 1600000 in
+    set_option maxRecDepth 2048 in
+      classical
+      run_tac
+        let target ← Lean.Elab.Tactic.getMainTarget
+        let some charge := target.find? (fun e => e.isConstOf ``singleSpeciesZeroCharge)
+          | throwError "source charge missing from target"
+        let chargeType ← Lean.Meta.inferType charge
+        let .forallE _ species _ _ := chargeType
+          | throwError "source charge is not a function"
+        Lean.Elab.Tactic.liftMetaTactic1 fun goal => do
+          let goal ← goal.define `Species (← Lean.Meta.inferType species) species
+          let (_, goal) ← goal.intro1P
+          let goal ← goal.define `Ns chargeType charge
+          let (_, goal) ← goal.intro1P
+          pure goal
+      let : LinearOrder (Species × Ch01.Band 6) := A05.localModeLinearOrder 3
+      let : LT (Species × Ch01.Band 6) := A05.localModeLT 3
+      let : LE (Species × Ch01.Band 6) := A05.localModeLE 3
+      let : DecidableEq (Species × Ch01.Band 6) := A05.localModeDecidableEq 3
+      let : LinearOrder (A05.Mode Species 3) := A05.localModeLinearOrder 3
+      let : LT (A05.Mode Species 3) := A05.localModeLT 3
+      let : LE (A05.Mode Species 3) := A05.localModeLE 3
+      let : DecidableEq (A05.Mode Species 3) := A05.localModeDecidableEq 3
+      let a : Ch01.Band 6 := ⟨-2, by decide⟩
+      let b : Ch01.Band 6 := ⟨-1, by decide⟩
+      let c : Ch01.Band 6 := ⟨0, by decide⟩
+      let d : Ch01.Band 6 := ⟨1, by decide⟩
+      let e : Ch01.Band 6 := ⟨2, by decide⟩
+      let f : Ch01.Band 6 := ⟨3, by decide⟩
+      let S : A05.Occupation Species 3 := {(PUnit.unit,a),(PUnit.unit,b),(PUnit.unit,c)}
+      let G : A05.Occupation Species 3 := {(PUnit.unit,a),(PUnit.unit,b)}
+      let H : A05.Occupation Species 3 := {(PUnit.unit,a),(PUnit.unit,c)}
+      let I : A05.Occupation Species 3 := {(PUnit.unit,b),(PUnit.unit,c)}
+      let J : A05.Occupation Species 3 := {(PUnit.unit,a),(PUnit.unit,d)}
+      let N : Species → ℤ := Ch13.lowerCharge Ns PUnit.unit
+      have band : (Finset.univ : Finset (Ch01.Band 6)) = {a,b,c,d,e,f} := by decide
+      have pairs : A04.validPairs 6 1 = {(b,a),(c,b),(d,c),(e,d),(f,e)} := by decide
+      have groundS : A05.groundConfiguration 3 Ns = S := by decide
+      have groundG : A05.groundConfiguration 3 N = G := by decide
+      have rhoG : A05.rho 3 PUnit.unit 1 ((@A02.ket (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3)) G) = (@A02.ket (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3)) H := by
+        simp [A05.rho, pairs, Ch04.hopping, Module.End.mul_apply,
+          Ch04.annihilation_ket, Ch04.creation_ket, G, H,
+          Ch04.fermionSign, Ch04.precedingCount, Finset.filter_insert, Finset.filter_singleton, Finset.erase_insert_of_ne,
+          Finset.pair_comm, A05.mode_lt_iff 3, a,b,c,d,e,f]
+      have rhoH : A05.rho 3 PUnit.unit 1 ((@A02.ket (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3)) H) = (@A02.ket (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3)) I + (@A02.ket (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3)) J := by
+        simp [A05.rho, pairs, Ch04.hopping, Module.End.mul_apply,
+          Ch04.annihilation_ket, Ch04.creation_ket, H,I,J,
+          Ch04.fermionSign, Ch04.precedingCount, Finset.filter_insert, Finset.filter_singleton, Finset.erase_insert_of_ne,
+          Finset.pair_comm, A05.mode_lt_iff 3, a,b,c,d,e,f]
+      have memG0 : G ∈ Ch14.budgetSet 3 N 0 := by unfold Ch14.budgetSet; change (∀ ν, _) ∧ _; decide
+      have memG : G ∈ Ch14.budgetSet 3 N 2 := by unfold Ch14.budgetSet; change (∀ ν, _) ∧ _; decide
+      have memH : H ∈ Ch14.budgetSet 3 N 2 := by unfold Ch14.budgetSet; change (∀ ν, _) ∧ _; decide
+      have memI : I ∈ Ch14.budgetSet 3 N 2 := by unfold Ch14.budgetSet; change (∀ ν, _) ∧ _; decide
+      have memJ : J ∈ Ch14.budgetSet 3 N 2 := by unfold Ch14.budgetSet; change (∀ ν, _) ∧ _; decide
+      have projG0 : Ch14.projection 3 N 0 ((@A02.ket (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3)) G) = A02.ket G := by
+        rw [Ch14.projection, A03.projection_ket, ite_eq_left memG0]
+      have project (T : A05.Occupation Species 3) (ht : T ∈ Ch14.budgetSet 3 N 2) :
+          Ch14.projection 3 N 2 ((@A02.ket (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3)) T) = A02.ket T := by
+        rw [Ch14.projection, A03.projection_ket, ite_eq_left ht]
+      let K := @A02.ket (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3)
+      let g : A05.jointBudget 3 N 2 := ⟨K G, (@A03.ket_mem_coordinate_space (A05.Mode Species 3) inferInstance (A05.localModeDecidableEq 3) _ _).mpr memG⟩
+      let R := Ch14.projectedMap 3 N N 2 2 (Ch14.wMinus 3 1 PUnit.unit 0)
+      have r_apply (v : A05.jointBudget 3 N 2) : (R v : A05.FockSpace Species 3) =
+          -Ch14.projection 3 N 2 (A05.rho 3 PUnit.unit 1 v.val) := by
+        dsimp only [R]
+        rw [Ch14.projected_map_apply]
+        simp [Ch14.wMinus, A01.integerCharacter]
+      have rg : (R g).val = -K H := by rw [r_apply]; simp only [g, K, rhoG, project H memH]
+      have rrg : (R (R g)).val = K I + K J := by
+        rw [r_apply, rg, map_neg, rhoH, map_neg, map_add, project I memI, project J memJ, neg_neg]
+      have taylor : A05Exp.finiteTaylor 2 R = 1 + R + (2 : ℂ)⁻¹ • R^2 := by
+        norm_num [A05Exp.finiteTaylor, Finset.sum_range_succ]
+      have taylorg : (A05Exp.finiteTaylor 2 R g : A05.FockSpace Species 3) =
+          K G - K H + (2 : ℂ)⁻¹ • (K I + K J) := by
+        rw [taylor]
+        change g.val + (R g).val + (2 : ℂ)⁻¹ • ((R^2) g).val = _
+        rw [pow_two, Module.End.mul_apply, rg, rrg]
+        rfl
+      let v := Ch14.groundVector 3 (by decide) Ns V1S6.singleSpeciesZero_admissible 0
+      have kernel : Ch13.kleinKernel 3 Ns PUnit.unit 0 (A05.groundKet 3 Ns) = K G := by
+        rw [Ch13.kernel_ground 3 (by decide) _ _ _ (by
+          constructor <;> intro ν <;> cases ν <;> norm_num [A05.r2, Ch13.lowerCharge, Ns, singleSpeciesZeroCharge])]
+        have phase : Ch13.kleinPhase 3 Ns PUnit.unit = 1 := by
+          simp [Ch13.kleinPhase, Ch13.phaseExponent, Ns, singleSpeciesZeroCharge]
+        rw [phase, one_smul]
+        change K (A05.groundConfiguration 3 N) = _
+        rw [groundG]
+      set_option maxRecDepth 2048 in
+      have candidate : (Ch14.vertexCandidate 3 1 (fun _ => Ch06Ext.periodicTwist 6)
+          Ns PUnit.unit 0 0 2 v : A05.FockSpace Species 3) =
+          (A01.normalization 6 : ℂ) • (A05Exp.finiteTaylor 2 R g : A05.FockSpace Species 3) := by
+        have zero : Ch14.zeroMode 3 (fun _ => Ch06Ext.periodicTwist 6) Ns PUnit.unit 0 0 v = v := by
+          simp [Ch14.zeroMode, Ch14.zeroScalar, Ch06Ext.liftPhase, A01.integerCharacter]
+        have hin : Ch14.projectedMap 3 N N 0 2 LinearMap.id
+            (Ch14.projectedMap 3 Ns N 0 0
+              (Ch13.kleinKernel 3 Ns PUnit.unit 0) v) = g := by
+          apply Subtype.ext
+          rw [Ch14.projected_map_apply]
+          change Ch14.projection 3 N 2 (Ch14.projection 3 N 0
+            (Ch13.kleinKernel 3 Ns PUnit.unit 0
+              (A05.groundKet 3 Ns))) = K G
+          rw [kernel, projG0, project G memG]
+        simp only [Ch14.vertexCandidate, LinearMap.smul_apply, LinearMap.comp_apply,
+          A05Exp.finite_taylor_zero_cutoff, Module.End.one_apply]
+        rw [zero]
+        change (A01.normalization 6 : ℂ) • (A05Exp.finiteTaylor 2 R
+          (Ch14.projectedMap 3 N N 0 2 LinearMap.id
+            (Ch14.projectedMap 3 Ns N 0 0
+              (Ch13.kleinKernel 3 Ns PUnit.unit 0) v)) : A05.FockSpace Species 3) = _
+        rw [hin]
+      have physical_coord : inner ℂ (K J)
+          (Ch14.physicalMap 3 (fun _ => Ch06Ext.periodicTwist 6)
+            Ns PUnit.unit 0 0 2 v : A05.FockSpace Species 3) = 0 := by
+        have holes : ∀ k : Ch01.Band 6, J ≠ S.erase (PUnit.unit,k) := by decide
+        have hp (k : Ch01.Band 6) : inner ℂ (K J)
+            (Ch14.projection 3 N 2 (K (S.erase (PUnit.unit,k)))) = 0 := by
+          rw [Ch14.projection, A03.projection_ket]
+          split_ifs
+          · simp only [K, A02.ket_inner, holes k, ite_false]
+          · simp
+        dsimp only [v]
+        rw [Ch14.physical_ground_expansion, groundS]
+        have inner_sum_six (f : Ch01.Band 6 → A05.FockSpace Species 3) :
+            inner ℂ (K J) (∑ k, f k) = ∑ k, inner ℂ (K J) (f k) := by
+          rw [← innerₛₗ_apply_apply, map_sum]
+          simp only [innerₛₗ_apply_apply]
+        rw [inner_smul_right, inner_sum_six]
+        have hi (k : Ch01.Band 6) : inner ℂ (K J)
+            (if (PUnit.unit,k) ∈ S then
+              (Ch06Ext.twistedCharacter 6 (Ch06Ext.periodicTwist 6) k 0 * Ch04.fermionSign (PUnit.unit,k) S) •
+                Ch14.projection 3 N 2 (K (S.erase (PUnit.unit,k))) else 0) = 0 := by
+          split_ifs <;> simp [inner_smul_right, hp]
+        calc
+          _ = (A01.normalization 6 : ℂ) * 0 :=
+            congrArg ((A01.normalization 6 : ℂ) * ·) (Finset.sum_eq_zero (fun k _ => hi k))
+          _ = 0 := mul_zero _
+      have candidate_coord : inner ℂ (K J)
+          (Ch14.vertexCandidate 3 1 (fun _ => Ch06Ext.periodicTwist 6)
+            Ns PUnit.unit 0 0 2 v : A05.FockSpace Species 3) =
+            (A01.normalization 6 : ℂ) / 2 := by
+        rw [candidate, taylorg]
+        have jg : J ≠ G := by decide
+        have jh : J ≠ H := by decide
+        have ji : J ≠ I := by decide
+        simp only [inner_smul_right, inner_add_right, inner_sub_right, K, A02.ket_inner, jg, jh, ji, ite_false, ite_true]
+        ring
+      let err := V1S6.finiteDictionaryErrorOnVector
+        (S := A05.jointBudget 3 Ns 0)
+        (T := A05.jointBudget 3 N 2)
+        (Ch14.physicalMap 3 (fun _ => Ch06Ext.periodicTwist 6) Ns PUnit.unit 0 0 2)
+        (Ch14.vertexCandidate 3 1 (fun _ => Ch06Ext.periodicTwist 6) Ns PUnit.unit 0 0 2) v
+      have hc : inner ℂ (K J) (err : A05.FockSpace Species 3) = -(A01.normalization 6 : ℂ) / 2 := by
+        change inner ℂ (K J) ((Ch14.physicalMap 3 (fun _ => Ch06Ext.periodicTwist 6) Ns PUnit.unit 0 0 2 v : A05.FockSpace Species 3) -
+          (Ch14.vertexCandidate 3 1 (fun _ => Ch06Ext.periodicTwist 6) Ns PUnit.unit 0 0 2 v : A05.FockSpace Species 3)) = _
+        rw [inner_sub_right, physical_coord, candidate_coord]
+        ring
+      have hn : ‖inner ℂ (K J) (err : A05.FockSpace Species 3)‖ = 1 / (2 * Real.sqrt 6) := by
+        rw [hc, norm_div, norm_neg, Complex.norm_real, Real.norm_eq_abs,
+          abs_of_pos (A01.normalization_pos 6)]
+        norm_num
+        unfold A01.normalization
+        ring
+      have hb := norm_inner_le_norm (𝕜 := ℂ) (K J) (err : A05.FockSpace Species 3)
+      rw [hn, A02.ket_norm, one_mul] at hb
+      simpa only [Submodule.norm_coe, err, v, N, Ns, Species] using hb
 
 /-- The accepted CH20 discarded-channel witness strengthened to a norm lower
 bound on the actual projected finite carrier. -/
