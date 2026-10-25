@@ -1,0 +1,12 @@
+{
+  "ci.txt": {
+    "raw_sha256": "c2d51b02aa301e9471680aed1254c29094976a76391a54194deab89b6d69c7b5",
+    "saved_text_sha256": "5276912d47c7bea1db243dee79ba4a76088a0b5cd8a80ae2971940f59c49707c",
+    "normalization": "trailing whitespace only; complete original stdout in .raw.gz"
+  },
+  "warning-as-error.txt": {
+    "raw_sha256": "e345f8a3612ed06a1c3c49ade2cfb8ecbe9f17dc58767324d4c98e499bf6d164",
+    "saved_text_sha256": "183e0f94308f3d8f0b7761cd2ca84ab30f3f560c832c2d9bfe0736ec18e3fa0d",
+    "normalization": "trailing whitespace only; complete original stdout in .raw.gz"
+  }
+}

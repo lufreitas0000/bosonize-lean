@@ -16362,7 +16362,7 @@
         }
       }
     },
-    "BosonizeStubs/V1S6PhysicalFields.lean": {
+    "Bosonize/Core/V1S6PhysicalFields.lean": {
       "commands": [
         {
           "hash": "cd154e8033ec065e76cc695def7a5df7627ce283a40b415e5f338f85ecfb3877",

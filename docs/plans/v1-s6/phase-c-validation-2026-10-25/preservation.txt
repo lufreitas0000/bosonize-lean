@@ -1,0 +1,9 @@
+Source SHA256 identical staging→Core:6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e
+v2 manifest equality after exact single path substitution: PASS
+Core manifest43 prior entries preserved exactly, all43 source bytes match prior hashes: PASS
+Core manifest total44 with one new S6 source: PASS
+CH14 captured reference text exact prefix: PASS
+CH20 captured reference text exact prefix apart from reviewed pending-status sentence: PASS
+Root Core aggregator adds only one S6 import; staging aggregator unchanged: PASS
+Source placeholder scan:0; warning-as-error check:exit0
+Namespace dependency inventory identical PhaseB/Core aggregator:74

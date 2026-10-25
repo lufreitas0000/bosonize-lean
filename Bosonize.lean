@@ -45,6 +45,7 @@ import Bosonize.Core.V1S5FiniteVectorStates
 import Bosonize.Core.V1S5FiniteGroundState
 import Bosonize.Core.V1S5MomentObstruction
 import Bosonize.Core.V1S5SmallInteractingModel
+import Bosonize.Core.V1S6PhysicalFields
 
 /-!
 # Bosonize Core Library

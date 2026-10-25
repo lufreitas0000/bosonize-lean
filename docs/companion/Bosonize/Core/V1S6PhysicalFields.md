@@ -1,15 +1,15 @@
 # V1-S6 companion: physical fields and controlled residuals
 
-Status: **Phase B accepted on 2026-10-25; Phase C pending**. All six
+Status: **Phase C complete and locally accepted — 2026-10-25**. All six
 user-authored theorem/lemma contracts are proved, including both concrete norm
-bounds. Independent integrated review, complete dependency audit and strict
-preservation guards pass. Exact receipts follow below. No promotion is claimed
-by this staging checkpoint.
+bounds. The source is promoted byte-for-byte to `Bosonize/Core/V1S6PhysicalFields.lean`.
+Independent proof/migration/pedagogical reviews, complete dependency audits,
+strict preservation guards and full local CI pass. Exact receipts follow below.
 
 ## Mathematical target and rejected stronger claims
 
 The actual finite CAR field `A` and CH14's finite Taylor/Klein candidate `B`
-are not asserted equal. The S6 dictionary target is a sharp full-ground-image
+are not asserted equal. The S6 dictionary target is a quantitative full-ground-image
 obstruction at `h=3`, `M=1`, `Kin=0`, `Kout=2`, periodic twist and `x=0`.
 The corresponding exact image calculation is in the entry-review receipt.
 It keeps the physical normalization, source-first zero-mode phase, Klein
@@ -18,8 +18,8 @@ actual target projection. S2's coefficientwise Weyl-type series on its
 charge-vector tensor polynomial carrier is a third object and is not identified
 with either field.
 
-The obstruction disproves a proposed unconditional or margins-only CH14
-full-ground-image identity. It does not refute CH14's conditional theorem
+The obstruction rules out an unconditional physical-to-CH14 full-ground-image
+identity for the fixed candidate at the stated parameters. It does not refute CH14's conditional theorem
 `field_vertex_of_common_residual`, whose full-vector ground, cyclicity, and
 common residual premises remain explicit. It establishes no global field
 theorem, finite CCR, analytic evaluation, or state equivalence.
@@ -75,7 +75,7 @@ hash in the receipt. The CDW lower bound is now proved as recorded below;
 the h3 lower-bound contract is now proved as recorded below.
 
 All exact declarations are in
-[`V1S6PhysicalFields.lean`](../../../BosonizeStubs/V1S6PhysicalFields.lean).
+[`V1S6PhysicalFields.lean`](../../../../Bosonize/Core/V1S6PhysicalFields.lean).
 The first independent pre-lock review returned REVISE on an earlier source
 hash. Its projection finding was resolved by explicit
 `OrthogonalProjection` data and the `hUm` range-inclusion hypothesis. Its
@@ -129,14 +129,14 @@ from the operator product theorem.
 
 The module uses only complete structure and function definitions. The ground
 vector, charge sector, cutoff, twist, candidate, and residual are all actual
-Core declarations. The Phase A draft had four permitted placeholders. Proof work has since begun;
-the current source hash and proof status are recorded in the receipt.
+Core declarations. The Phase A draft had four permitted placeholders. Proof work is complete;
+the final source hash and acceptance status are recorded below.
 The zero-charge admissibility proof is complete. The S6 target built with
 `lake build BosonizeStubs.V1S6PhysicalFields` (3443 jobs). The latest build reports zero
 unproved contracts and zero warnings; earlier build receipts are historical. This is a focused
 build, not a full acceptance audit. The earlier Phase A data-only audit covered
-six declarations; a fresh complete declaration and axiom audit is still
-required after S6 proofs are finished.
+six declarations; the final complete namespace audit below covers
+74 declarations including generated helpers.
 
 The S6 entry is in `docs/spec/stub_locks.v2.json`; strict verification passes.
 The full lock file was updated by adding only the S6 entry, preserving all
@@ -184,10 +184,11 @@ and independently checked the axiom output. The fresh focused build completed
 warning. This theorem uses exactly `propext`, `Classical.choice`, `Quot.sound`,
 with no `sorryAx`. Strict preservation verifies 1317 statements, 1394 frozen
 commands and 43 prior Core files. Logs are in
-[`cdw-validation`](../../plans/v1-s6/cdw-validation/).
+[`cdw-validation`](../../../plans/v1-s6/cdw-validation/).
 
-Phase B remains in progress solely because the h3 bound is open. Phase C has
-not started; this checkpoint makes no broader S6 acceptance claim.
+At this historical 2026-10-20 checkpoint, Phase B remained in progress because
+h3 was open and Phase C had not started. The complete 2026-10-25 acceptance
+below supersedes that pending status.
 
 
 ## Phase B acceptance — 2026-10-25
@@ -224,6 +225,59 @@ hash, the resource wrapper, complete audit and preservation receipts. The
 reviewer independently reran both preservation guards: 1317 statements,
 1394 commands, 43 Core files. The completed CDW proof is byte-identical to
 its earlier reviewed checkpoint. Logs and the full audit script are in
-[the Phase B validation directory](../../plans/v1-s6/phase-b-validation-2026-10-25/).
+[the Phase B validation directory](../../../plans/v1-s6/phase-b-validation-2026-10-25/).
 The earlier h3 checkpoint and conditional reviews remain historical evidence;
 this complete acceptance supersedes their pending status.
+
+
+## Phase C promotion and pedagogical synchronization — 2026-10-25
+
+Phase B commit: `9a78268`. The reviewed source was moved byte-for-byte from
+staging to `Bosonize/Core/V1S6PhysicalFields.lean`; its SHA-256 remains
+`6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e`.
+No imports, definitions, proofs or mathematical statements changed during
+promotion. `Bosonize.lean` imports the new module. The staging aggregator
+already imports Core and had no direct S6 import to remove.
+
+The v2 manifest differs from the Phase B manifest by the exact S6 path move
+only; every command, theorem and context hash is preserved. The Core manifest
+adds this source and preserves all 43 earlier records and source bytes
+(44 Core files total). The historical v1 manifest is unchanged.
+
+The promoted module passes warning-as-error checking. Fresh dependency audits
+through `import Bosonize` cover the same 74 namespace declarations as Phase B,
+including both concrete bounds, with only standard axioms and no `sorryAx`.
+Full local CI passes 69 guard tests, both library builds (3449/3450 jobs),
+18 verifier tests and strict locks (1317 statements, 1394 commands). The CI
+verifier's intentional `Fixture.value`/`sorryAx` diagnostic is a test fixture,
+not a dependency of S6; the namespace audit independently rejects such axioms.
+
+Pedagogical mapping:
+
+| Formal declaration | Constructive explanation |
+|---|---|
+| `h3_m1_ground_image_mismatch` | Chapter 14, section14.5: actual occupation carrier, ordered Taylor factors, CAR actions, exact error coordinate and normalized-coordinate estimate. |
+| `cdw_discarded_channel_norm_lower_bound` | Chapter 20, S6 realization: unique rejected/retained process, both field normalizations, unit-modulus phases/signs and quantitative residual. |
+| `rangeProjection_subprojection`, `typed_product_decomposition`, `quantitative_product_comparison` | Chapter 20, S6 realization: range inclusion, both residuals, independent dictionary factors and five-error ledger. |
+
+The [Chapter14 note](../../../../notes/md/ch14_Mattis_Mandelstam_formula.md)
+and [Chapter20 note](../../../../notes/md/ch20_CDW.md) preserve their captured
+reference prose, equations and citations as prefixes; the only replacement
+inside the earlier CH20 text corrects its stale pending-S6 status sentence.
+The additions explain the actual finite construction in mathematical prose.
+No appendix rewrite or unproved formal-Weyl equal-point calculation is included
+among accepted Lean declarations.
+
+Reviewer `/root/s6_h3_diagnosis` independently checked the exact source,
+migration manifests, captured-note preservation, proof/prose mapping and
+scope limits. Reviewed CH14 hash:
+`39cd1544e75d161195f9defbebc7fd6a4a9070ad9e8964e3759101a96154cd7b`;
+CH20 hash:
+`16b8910bf71dfd5b7f81a8fdd9528cf8449f40bb6714b160359e4e8c51f7b89d`.
+The final review verdict and validation receipts are in
+[the Phase C acceptance record](../../../plans/v1-s6/phase-c-acceptance-2026-10-25.md).
+
+S6 is complete within its stated finite operator scope. S7/S8, CH21,
+finiteQMB integration, physical field equality, interacting-state equivalence,
+analytic evaluation and continuum/thermodynamic conclusions remain outside
+this sprint. No push or release was performed for this acceptance.
