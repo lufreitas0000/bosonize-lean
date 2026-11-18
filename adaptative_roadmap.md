@@ -1,5 +1,17 @@
 # Adaptive roadmap and Kanban pipeline
 
+> **Current scoped S6 status — 2026-10-25: Phase C complete and locally accepted.**
+> Both concrete lower bounds and all six S6 theorem contracts are proved. The
+> reviewed source is promoted as `Bosonize/Core/V1S6PhysicalFields.lean` with
+> zero placeholders/warnings; the complete 74-declaration dependency audit,
+> independent proof/migration/pedagogical reviews, strict locks and full local
+> CI pass. All 43 previous Core files are preserved (44 total). See the
+> [S6 acceptance receipt](docs/plans/v1-s6/phase-c-acceptance-2026-10-25.md).
+> Earlier S6-active/pending statements below are historical and superseded by
+> this scoped update. Stop after S6: S7/S8, CH21, finiteQMB integration, push
+> and release are outside this authorization.
+
+
 Updated: 2026-10-19. **V1-S5 Phase C complete and accepted.** Four modules are promoted and frozen: 43 proved theorems, 65 directly audited declarations (including the Budget abbreviation), zero placeholders and warnings. Independent proof/migration/pedagogical reviews, strict locks and full local CI pass. All 39 prior Core sources are preserved (43 total). See [the S5 acceptance receipt](docs/plans/v1-s5/phase-c-acceptance-2026-10-19.md). S6 is the next planned sprint; stop after S5 and do not begin S6 under this authorization. Earlier status and stop snapshots below are historical.
 
 This is the overall project pipeline; it does not replace the A–B–C process inside each chapter. Follow the [formalizer skill](.agents/skills/formalizer/SKILL.md), [chapter drafting](.agents/workflows/start_chapter.md), [interface lock](.agents/workflows/lock_stub.md), and [promotion](.agents/workflows/freeze_chapter.md) procedures. The requested execution policy for the next implementation is external-first (Jules and account-eligible OpenAI API), with no default Antigravity author/reviewer or desktop-subagent fallback. Skills/rules and the direct judge entrypoints now enforce that default policy within the controller; the desktop account itself remains outside its control.

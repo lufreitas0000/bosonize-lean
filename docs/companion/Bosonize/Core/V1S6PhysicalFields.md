@@ -1,15 +1,15 @@
-# V1-S6 Phase A companion: physical fields and controlled residuals
+# V1-S6 companion: physical fields and controlled residuals
 
-Status: **Phase B in progress**. The current typed decomposition and
-quantitative comparison have independent review. The CDW discarded-channel
-norm bound is now proved; the h3 ground-image bound remains open. The reviewed interface is now scoped-locked.
-No promotion has been created. Review receipts and exact hashes are in [the
-entry-review receipt](../../plans/v1-s6/entry-review.md).
+Status: **Phase C complete and locally accepted — 2026-10-25**. All six
+user-authored theorem/lemma contracts are proved, including both concrete norm
+bounds. The source is promoted byte-for-byte to `Bosonize/Core/V1S6PhysicalFields.lean`.
+Independent proof/migration/pedagogical reviews, complete dependency audits,
+strict preservation guards and full local CI pass. Exact receipts follow below.
 
 ## Mathematical target and rejected stronger claims
 
 The actual finite CAR field `A` and CH14's finite Taylor/Klein candidate `B`
-are not asserted equal. The S6 dictionary target is a sharp full-ground-image
+are not asserted equal. The S6 dictionary target is a quantitative full-ground-image
 obstruction at `h=3`, `M=1`, `Kin=0`, `Kout=2`, periodic twist and `x=0`.
 The corresponding exact image calculation is in the entry-review receipt.
 It keeps the physical normalization, source-first zero-mode phase, Klein
@@ -18,8 +18,8 @@ actual target projection. S2's coefficientwise Weyl-type series on its
 charge-vector tensor polynomial carrier is a third object and is not identified
 with either field.
 
-The obstruction disproves a proposed unconditional or margins-only CH14
-full-ground-image identity. It does not refute CH14's conditional theorem
+The obstruction rules out an unconditional physical-to-CH14 full-ground-image
+identity for the fixed candidate at the stated parameters. It does not refute CH14's conditional theorem
 `field_vertex_of_common_residual`, whose full-vector ground, cyclicity, and
 common residual premises remain explicit. It establishes no global field
 theorem, finite CCR, analytic evaluation, or state equivalence.
@@ -72,10 +72,10 @@ decomposition, expands the difference of the two finite candidate products as
 `(Ahat - VA) Bhat + VA (Bhat - VB)`, and bounds each composition by operator
 norm submultiplicativity. Its independent review passed on the exact source
 hash in the receipt. The CDW lower bound is now proved as recorded below;
-the h3 lower-bound contract remains unproved.
+the h3 lower-bound contract is now proved as recorded below.
 
 All exact declarations are in
-[`V1S6PhysicalFields.lean`](../../../BosonizeStubs/V1S6PhysicalFields.lean).
+[`V1S6PhysicalFields.lean`](../../../../Bosonize/Core/V1S6PhysicalFields.lean).
 The first independent pre-lock review returned REVISE on an earlier source
 hash. Its projection finding was resolved by explicit
 `OrthogonalProjection` data and the `hUm` range-inclusion hypothesis. Its
@@ -112,7 +112,7 @@ is interface/coverage approval only, not proof approval.
 | Obligation | Exact definition/carrier | Controlling result or S6 status | Coverage limit |
 |---|---|---|---|
 | Intermediate projection | `U_t† A (1-P_m) B U_s`, plus CH20's exact finite CAR residual on the source/target budgets | `typed_product_decomposition`; proved numerical lower bound `1/4` in `cdw_discarded_channel_norm_lower_bound` | Nonzero example does not characterize all charges or cutoffs. |
-| Mode truncation and omitted range | Finite-mode dictionary errors are `Ahat-VA` and `Bhat-VB` on the selected finite carriers (`finiteDictionaryError`); the separate omitted range is `U_t† A (P_m-U_mU_m†) B U_s` | The quantitative theorem bounds the candidate errors multiplied by the companion factor norms. The pending h=3, M=1 contract states `||(Ahat-VA)ground|| ≥ 1/(2 sqrt(6))` by its extra orthogonal target component. The product decomposition retains the omitted-range map. | This lower bound is for the complete physical-to-CH14 candidate error on that vector; it does not attribute the discrepancy solely to missing modes. In the selected CH20 product witness no oscillator range is substituted, so no omitted-range approximation is made there. The general theorem has no blanket omitted-range bound. |
+| Mode truncation and omitted range | Finite-mode dictionary errors are `Ahat-VA` and `Bhat-VB` on the selected finite carriers (`finiteDictionaryError`); the separate omitted range is `U_t† A (P_m-U_mU_m†) B U_s` | The quantitative theorem bounds the candidate errors multiplied by the companion factor norms. The proved h=3, M=1 result states `||(Ahat-VA)ground|| ≥ 1/(2 sqrt(6))` by its extra orthogonal target component. The product decomposition retains the omitted-range map. | This lower bound is for the complete physical-to-CH14 candidate error on that vector; it does not attribute the discrepancy solely to missing modes. In the selected CH20 product witness no oscillator range is substituted, so no omitted-range approximation is made there. The general theorem has no blanket omitted-range bound. |
 | Normal ordering and normalization | Physical CAR field vs fixed CH14 candidate vs S2 formal Weyl/bare/dressed definitions; keep scalar prefactors in their source definitions | The S0 equal-point free-sea computation reports physical `1/4` vs formal Weyl `1/16`, discrepancy `3/16`; this is distinct from the h=3 M=1 vector obstruction and from bare/dressed scalar factors. | No field rescaling and no global normalization theorem. The equal-point calculation must be separately established in the accepted proof package before it is promoted as a Lean result. |
 | State comparison | Difference of expectations under a specified physical state and model state for a fixed observable dictionary | No state is substituted in either selected operator comparison, so this term is absent by construction; S5 state existence and S4 free-sea results are not an interacting-state estimate | This says nothing about a later physical-vs-model expectation comparison. |
 | Dispersion/Hamiltonian | Finite operator difference for any chosen change of dispersion/Hamiltonian | No Hamiltonian or dispersion is changed in either selected finite operator comparison, so this term is absent by construction | The omission gives no spectral projection or ground-state stability theorem. |
@@ -129,14 +129,14 @@ from the operator product theorem.
 
 The module uses only complete structure and function definitions. The ground
 vector, charge sector, cutoff, twist, candidate, and residual are all actual
-Core declarations. The Phase A draft had four permitted placeholders. Proof work has since begun;
-the current source hash and proof status are recorded in the receipt.
+Core declarations. The Phase A draft had four permitted placeholders. Proof work is complete;
+the final source hash and acceptance status are recorded below.
 The zero-charge admissibility proof is complete. The S6 target built with
-`lake build BosonizeStubs.V1S6PhysicalFields` (3443 jobs). It now reports one
-unproved concrete norm bound (h3) and no S6 linter warnings. This is a focused
+`lake build BosonizeStubs.V1S6PhysicalFields` (3443 jobs). The latest build reports zero
+unproved contracts and zero warnings; earlier build receipts are historical. This is a focused
 build, not a full acceptance audit. The earlier Phase A data-only audit covered
-six declarations; a fresh complete declaration and axiom audit is still
-required after S6 proofs are finished.
+six declarations; the final complete namespace audit below covers
+74 declarations including generated helpers.
 
 The S6 entry is in `docs/spec/stub_locks.v2.json`; strict verification passes.
 The full lock file was updated by adding only the S6 entry, preserving all
@@ -184,7 +184,100 @@ and independently checked the axiom output. The fresh focused build completed
 warning. This theorem uses exactly `propext`, `Classical.choice`, `Quot.sound`,
 with no `sorryAx`. Strict preservation verifies 1317 statements, 1394 frozen
 commands and 43 prior Core files. Logs are in
-[`cdw-validation`](../../plans/v1-s6/cdw-validation/).
+[`cdw-validation`](../../../plans/v1-s6/cdw-validation/).
 
-Phase B remains in progress solely because the h3 bound is open. Phase C has
-not started; this checkpoint makes no broader S6 acceptance claim.
+At this historical 2026-10-20 checkpoint, Phase B remained in progress because
+h3 was open and Phase C had not started. The complete 2026-10-25 acceptance
+below supersedes that pending status.
+
+
+## Phase B acceptance — 2026-10-25
+
+The accepted complete staging source has SHA-256
+`6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e`.
+All 14 authored declarations (eight structures/data/functions and six
+lemmas/theorems) are complete. The fresh namespace dependency audit covers
+74 declarations including generated projections, recursors and proof helpers.
+Every axiom set is a subset of `propext`, `Classical.choice`, `Quot.sound`;
+no `sorryAx` occurs. Build: 3443 jobs, zero warnings/errors/placeholders.
+
+For h3, the target occupation is J={-2,+1}. The CAR calculation gives
+rho1 G=H and rho1 H=I+J, where G={-2,-1}, H={-2,0}, I={-1,0}.
+All target states have charge -1 and excitation at most two. The source-first
+zero mode and Klein phase are one. The lowering Taylor factor has cutoff zero;
+the output signed raising factor is the actual compressed -rho1 with Taylor
+order two. The candidate coefficient on J is normalization6/2. Every physical
+hole configuration lacks+1, so its J coefficient is zero. The actual-minus-
+candidate coordinate is -normalization6/2, of norm1/(2 sqrt6). Cauchy–Schwarz
+uses the normalized ambient ket and `Submodule.norm_coe` for the actual
+budget inclusion. `Species` and `Ns` are local definitional abbreviations
+bound at the exact universe of the locked target; no universe specialization
+or physical normalization change is made.
+
+The independently approved amendment prefixes only the h3 theorem by
+`set_option maxHeartbeats 1600000 in`. Only that record's `text` and `hash`
+change in the interface manifest; its underlying mathematical declaration,
+context hash, every other record and all prior Core sources are identical.
+This adjusts checking resources and introduces no mathematical assumption.
+
+Reviewer `/root/s6_h3_diagnosis` returned **PASS** on the exact integrated
+hash, the resource wrapper, complete audit and preservation receipts. The
+reviewer independently reran both preservation guards: 1317 statements,
+1394 commands, 43 Core files. The completed CDW proof is byte-identical to
+its earlier reviewed checkpoint. Logs and the full audit script are in
+[the Phase B validation directory](../../../plans/v1-s6/phase-b-validation-2026-10-25/).
+The earlier h3 checkpoint and conditional reviews remain historical evidence;
+this complete acceptance supersedes their pending status.
+
+
+## Phase C promotion and pedagogical synchronization — 2026-10-25
+
+Phase B commit: `9a78268`. The reviewed source was moved byte-for-byte from
+staging to `Bosonize/Core/V1S6PhysicalFields.lean`; its SHA-256 remains
+`6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e`.
+No imports, definitions, proofs or mathematical statements changed during
+promotion. `Bosonize.lean` imports the new module. The staging aggregator
+already imports Core and had no direct S6 import to remove.
+
+The v2 manifest differs from the Phase B manifest by the exact S6 path move
+only; every command, theorem and context hash is preserved. The Core manifest
+adds this source and preserves all 43 earlier records and source bytes
+(44 Core files total). The historical v1 manifest is unchanged.
+
+The promoted module passes warning-as-error checking. Fresh dependency audits
+through `import Bosonize` cover the same 74 namespace declarations as Phase B,
+including both concrete bounds, with only standard axioms and no `sorryAx`.
+Full local CI passes 69 guard tests, both library builds (3449/3450 jobs),
+18 verifier tests and strict locks (1317 statements, 1394 commands). The CI
+verifier's intentional `Fixture.value`/`sorryAx` diagnostic is a test fixture,
+not a dependency of S6; the namespace audit independently rejects such axioms.
+
+Pedagogical mapping:
+
+| Formal declaration | Constructive explanation |
+|---|---|
+| `h3_m1_ground_image_mismatch` | Chapter 14, section14.5: actual occupation carrier, ordered Taylor factors, CAR actions, exact error coordinate and normalized-coordinate estimate. |
+| `cdw_discarded_channel_norm_lower_bound` | Chapter 20, S6 realization: unique rejected/retained process, both field normalizations, unit-modulus phases/signs and quantitative residual. |
+| `rangeProjection_subprojection`, `typed_product_decomposition`, `quantitative_product_comparison` | Chapter 20, S6 realization: range inclusion, both residuals, independent dictionary factors and five-error ledger. |
+
+The [Chapter14 note](../../../../notes/md/ch14_Mattis_Mandelstam_formula.md)
+and [Chapter20 note](../../../../notes/md/ch20_CDW.md) preserve their captured
+reference prose, equations and citations as prefixes; the only replacement
+inside the earlier CH20 text corrects its stale pending-S6 status sentence.
+The additions explain the actual finite construction in mathematical prose.
+No appendix rewrite or unproved formal-Weyl equal-point calculation is included
+among accepted Lean declarations.
+
+Reviewer `/root/s6_h3_diagnosis` independently checked the exact source,
+migration manifests, captured-note preservation, proof/prose mapping and
+scope limits. Reviewed CH14 hash:
+`39cd1544e75d161195f9defbebc7fd6a4a9070ad9e8964e3759101a96154cd7b`;
+CH20 hash:
+`16b8910bf71dfd5b7f81a8fdd9528cf8449f40bb6714b160359e4e8c51f7b89d`.
+The final review verdict and validation receipts are in
+[the Phase C acceptance record](../../../plans/v1-s6/phase-c-acceptance-2026-10-25.md).
+
+S6 is complete within its stated finite operator scope. S7/S8, CH21,
+finiteQMB integration, physical field equality, interacting-state equivalence,
+analytic evaluation and continuum/thermodynamic conclusions remain outside
+this sprint. No push or release was performed for this acceptance.

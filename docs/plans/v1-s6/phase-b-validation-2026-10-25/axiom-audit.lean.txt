@@ -1,0 +1,13 @@
+import BosonizeStubs.V1S6PhysicalFields
+open Lean Elab Command in
+run_cmd do
+  let env ← getEnv
+  let names := env.constants.toList.map Prod.fst |>.filter (fun n => (`Bosonize.V1S6).isPrefixOf n)
+  let names := names.toArray.qsort Name.quickLt
+  for name in names do
+    let axs ← Lean.collectAxioms name
+    logInfo m!"{name}: {axs}"
+    for a in axs do
+      unless [``propext, ``Classical.choice, ``Quot.sound].contains a do
+        throwError "Forbidden axiom {a} in {name}"
+  logInfo m!"AUDITED {names.size} declarations"
