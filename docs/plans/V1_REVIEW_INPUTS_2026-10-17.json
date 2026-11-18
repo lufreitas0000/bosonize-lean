@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-17",
+  "repository_base": "728987b0e939fd11a0dbfd29a8ecdc6a4368ca17",
+  "status": "Research proposals only; no new Lean acceptance",
+  "inputs": [
+    {
+      "local_input": "notes/review/review: Algebraic duality versus finite-CAR symmetry.md",
+      "sha256": "9a77f3d2b46727942991d7c9db5ece4ab4606ce15f1d29d54d1519cc5b489cf4",
+      "bytes": 39044,
+      "question": "05-duality-and-state-transport.md",
+      "proposed_sprints": "V1-S3, V1-S7"
+    },
+    {
+      "local_input": "notes/review/review: Complete ordered Wick theorem for the dressed oscillator state.md",
+      "sha256": "e2e9cbbae8d5e89387cb721796911f18daf63bd4344bf686eab0f111d6c81ac5",
+      "bytes": 36269,
+      "question": "01-wick-moments.md",
+      "proposed_sprints": "V1-S1"
+    },
+    {
+      "local_input": "notes/review/review: Controlled finite comparison for Chapter 20.md",
+      "sha256": "6bd458682b1b32e138bdb8ea66b266b661b461116ceb8f88a70ad14fd84c5ef9",
+      "bytes": 42192,
+      "question": "06-comparison-and-residuals.md",
+      "proposed_sprints": "V1-S4, V1-S6"
+    },
+    {
+      "local_input": "notes/review/review: Finite Interacting States and Their Comparison with omega.md",
+      "sha256": "bd1c4ade609ce27dd9bc69d8800410f8d89b3d1a54e48f12209fb8a1175c7125",
+      "bytes": 36731,
+      "question": "04-finite-interacting-state.md",
+      "proposed_sprints": "V1-S5"
+    },
+    {
+      "local_input": "notes/review/review: Formal CDW-SC vertex correlators.md",
+      "sha256": "004747b56b82581e170472a27a80f75fb6b393458331cb2aa6026e3dd66bfd80",
+      "bytes": 32183,
+      "question": "02-formal-vertices.md",
+      "proposed_sprints": "V1-S2"
+    },
+    {
+      "local_input": "notes/review/review: Formal charge-oscillator vertex correlators.md",
+      "sha256": "f7a123ce93ee750207d633c81a47a26d5386a7f3c45838278078224a7dfc13a1",
+      "bytes": 26548,
+      "question": "02-formal-vertices.md",
+      "proposed_sprints": "V1-S2"
+    }
+  ],
+  "coverage_gap": "No dedicated reply to 03-finite-field-dictionary.md; two replies address question 02.",
+  "privacy": "Raw reviews remain local inputs; this catalog records provenance without publishing them."
+}

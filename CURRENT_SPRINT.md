@@ -1,3 +1,5 @@
+Owning milestone: V1-S9
+
 # Current sprint — proof status reconciliation / scoped handoff
 
 **No new proof implementation authorized by this document.** Existing `adaptative_roadmap.md` is the canonical **adaptive roadmap**, and its historical S1–S10 text contains dated snapshots. The workspace owner's 2026-11-14 maximalist backlog §5.1 (L456–468) is a *planning input*, not proof of an active S9 or a current head/compile receipt.
@@ -16,3 +18,6 @@ The checked default branch contains the S5 acceptance receipt in `docs/plans/v1-
 ## Gates and next action
 
 First read the actual relevant `docs/plans/` and Core interface locks for the selected CH21/CH20b task; obtain independent specification review and an exact frozen statement before code changes. A green generic build does not establish that a missing/unimported module compiled, and `sorry`/new axioms are not legitimate success substitutes. Return an evidence-backed status decision before any new proof sprint.
+
+## Exact Next Step
+- Reconcile accepted CH21 spinful models (`eba78ae`) against V1 release audits and finalize coverage/pedagogy closure before transitioning to Version 2.
