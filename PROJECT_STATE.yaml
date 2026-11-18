@@ -1,0 +1,21 @@
+schema_version: 1
+project_name: bosonize-lean
+lifecycle: active
+active_phase: Version 1
+current_milestone: V1-S9
+active_milestone:
+  id: V1-S9
+  objective: 'Standardize PG-10/UoW governance on single main, preserve audited untracked planning/review records, and align V1-S9 / CH21 closure status.'
+  status: active
+  active_tasks:
+    - id: T1
+      title: 'Reconcile V1-S9 / CH21 status, coverage audits, and Four-Record/HORIZON governance'
+      status: in_progress
+      target_files:
+        - PROJECT_STATE.yaml
+        - CURRENT_SPRINT.md
+        - HORIZON.md
+        - CHANGELOG.md
+      validation: 'python3 /home/lucas/Projects/scripts/uow.py check --repo bosonize-lean'
+milestone_history: []
+verified_invariants: []

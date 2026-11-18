@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-25",
+  "checked_head": "9fbbdce924943d6d81a6c550d1676e52c9b664d6",
+  "source": "Bosonize/Core/V1S6PhysicalFields.lean",
+  "source_sha256": "6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e",
+  "verdict": "S6 locally complete within its accepted finite-operator scope",
+  "checks": [
+    {
+      "check": "ci",
+      "command": [
+        "make",
+        "ci"
+      ],
+      "exit_code": 0
+    },
+    {
+      "check": "source",
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Bosonize/Core/V1S6PhysicalFields.lean"
+      ],
+      "exit_code": 0
+    },
+    {
+      "check": "axioms",
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        ".scratch/s6-review-2026-10-25/audit.lean"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "namespace_audited": 74,
+  "forbidden_axioms": [],
+  "source_warnings_errors": 0,
+  "strict_guard_statements": 1317,
+  "strict_guard_commands": 1394,
+  "core_sources": 44,
+  "prior_core_sources_byte_preserved": 43,
+  "v2_migration": "exact single-record staging-to-Core path substitution from 9a78268",
+  "sandbox": "required user/net/mount namespace wrapper",
+  "independent_review": "Existing final receipt checked against exact source hash; this revalidation did not introduce another reviewer or alter proofs.",
+  "publication": "Local checks only; no push or remote CI performed",
+  "log_hashes": {
+    "source.txt": "e345f8a3612ed06a1c3c49ade2cfb8ecbe9f17dc58767324d4c98e499bf6d164",
+    "axioms.txt": "80f1c7c2bf9bb68eeb607963f337af846015a9c4b7d63c0b66c9717dd127bf4c",
+    "ci.txt": "a034d1ce4fff7f2c28a93f30facefcdad3e5a2d961be4b9699b4eaf0db4091dc"
+  }
+}

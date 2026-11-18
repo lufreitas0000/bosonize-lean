@@ -1,5 +1,10 @@
 # Bosonize-Lean: Exact Lattice AQFT Bosonization in Lean 4
 
+**Goal:** Complete standalone Version 1 constructive 1+1D lattice bosonization in Lean 4 through frozen CH19/A08, CH20/CH20b, finite CH21 spinful models, and monograph release audits.
+**Scope & Non-Goals:** Owns standalone Version 1 Lean Core (`Bosonize/`), LaTeX monograph (`docs/`), and A–B–C formalization receipts; Version 2 `finite-QMB` unification is deferred cleanly in hub `HORIZON.md`.
+**Definition of Done (DoD):** All V1 Lean chapters compile with zero `sorry`/custom axioms, interface locks verify clean, coverage/pedagogy audits match frozen Core, and single `main` stays synchronized with `projects-hub`.
+**Next Steps:** Reconcile accepted CH21 spinful models (`eba78ae`) against V1 release audits and finalize coverage/pedagogy closure before transitioning to Version 2.
+
 [![Build LaTeX Monograph](https://github.com/lufreitas0000/bosonize-lean/actions/workflows/latex.yml/badge.svg)](https://github.com/lufreitas0000/bosonize-lean/actions/workflows/latex.yml)
 [![Download Monograph PDF](https://img.shields.io/badge/PDF-Download%20Monograph-blue?logo=adobe-acrobat-reader)](https://github.com/lufreitas0000/bosonize-lean/releases/download/latest/bosonize-monograph.pdf)
 

@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-25",
+  "base_sha": "9fbbdce924943d6d81a6c550d1676e52c9b664d6",
+  "authorization": "User requested starting the next sprint and continuing toward V1 completion; this supersedes earlier review-only stops.",
+  "phase": "Before CH21 Phase A implementation",
+  "implementation_started": false,
+  "independent_review": "not yet dispatched",
+  "dispatches": [],
+  "writable_paths_on_resume": [
+    "BosonizeStubs/Ch21SpinfulModels.lean",
+    "docs/companion/BosonizeStubs/Ch21SpinfulModels.md",
+    "docs/plans/v1-s9/"
+  ],
+  "preserve": [
+    "all existing Core sources and lock baselines",
+    "all unrelated dirty tracked and untracked files"
+  ],
+  "scope_decisions": "User question pending: optional S7 and inclusion of narrow S8/A10. Common CH21 foundations do not require these choices. No V1 source topic excluded.",
+  "usage_snapshot": {
+    "primary_used_percent": 96,
+    "primary_remaining_percent": 4,
+    "primary_reset_fortaleza": "2026-10-25T17:14:36-03:00",
+    "weekly_used_percent": 15,
+    "weekly_remaining_percent": 85
+  },
+  "resume": "Recheck live allowance and scope reply; below guard threshold no new proofs, agents or phase transitions without explicit user override.",
+  "sources": [
+    {
+      "path": "Bosonize/Core/A05MultiSpecies.lean",
+      "sha256": "bb9055adcf9358d5f2274666205d31dc3073716fe53e5f6bf02a983f92335bc2"
+    },
+    {
+      "path": "Bosonize/Core/Ch20CDW.lean",
+      "sha256": "00693b1dafb43d59f185143912d8a78a4303708c637afe97eed45404ad74fd7f"
+    },
+    {
+      "path": "Bosonize/Core/V1S6PhysicalFields.lean",
+      "sha256": "6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e"
+    },
+    {
+      "path": "Bosonize/Core/A10DiscreteSchriefferWolff.lean",
+      "sha256": "7ea9ac1c592eed76fc9349ff63592363c2f9efdb0876dc0c93ddf24e9f74b33f"
+    },
+    {
+      "path": "notes/md/ch21_spinful_models.md",
+      "sha256": "dabe7196d3b0d695f8277f40d84f1159bcec7846631db1e84b2ad6cc30d6f1c5"
+    },
+    {
+      "path": "notes/appendices/a09_duality_spin_and_umklapp.md",
+      "sha256": "1115d0a1e0eec3a66a52d25b1af68245c4b920a663edf367bd5498506db07163"
+    },
+    {
+      "path": "docs/plans/CH21_PARALLEL_WEB_RND.md",
+      "sha256": "f6a5e637f6ba7646b16e6d6f91325778492dda99318316d0f612ecca83fdd9e5"
+    },
+    {
+      "path": "docs/plans/V1_REMAINING_STRATEGY_2026-10-25.md",
+      "sha256": "85a738353c3a68ff582e70ec35b5fae395911b6e828bc3045ef570bc8ecda6eb"
+    }
+  ]
+}

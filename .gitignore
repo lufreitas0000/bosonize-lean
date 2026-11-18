@@ -43,3 +43,4 @@ notes/latex/*.pdf
 .book-artifacts/
 notes/latex/build-info.tex
 book-build.json
+.scratch/
