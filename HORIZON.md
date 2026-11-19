@@ -1,6 +1,6 @@
 # Project horizon — bosonize-lean
 
-**Authority:** Intra-project ordered milestone horizon (`Phase -> Milestone`). Cross-project portfolio horizons and next-project incubations live centrally in [`/home/lucas/Projects/HORIZON.md`](file:///home/lucas/Projects/HORIZON.md) and [`/home/lucas/Projects/docs/NEXT_PROJECTS_INCUBATOR.md`](file:///home/lucas/Projects/docs/NEXT_PROJECTS_INCUBATOR.md).
+**Authority:** Intra-project ordered milestone horizon (`Phase -> Milestone`). Cross-project portfolio horizons and next-project incubations live centrally in [`/home/lu/Projects/HORIZON.md`](file:///home/lu/Projects/HORIZON.md) and [`/home/lu/Projects/docs/NEXT_PROJECTS_INCUBATOR.md`](file:///home/lu/Projects/docs/NEXT_PROJECTS_INCUBATOR.md).
 
 ## Horizon 1 — Current Sprint (`V1-S9`)
 - `V1-S9`: Reconcile accepted CH21 (`eba78ae`) and S1–S6/CH20 receipts, close coverage and pedagogy audits, and lock V1 release.
@@ -9,7 +9,7 @@
 - `V1-REL`: Finalize V1 standalone monograph release and cross-reference matrix without mutating frozen Core.
 
 ## Horizon 3 — Strategic Backlog & Deferrals
-- Version 2 rebuild on reviewed `finite-QMB` interfaces and deferred research proposals (migrated to `/home/lucas/Projects/HORIZON.md`).
+- Version 2 rebuild on reviewed `finite-QMB` interfaces and deferred research proposals (migrated to `/home/lu/Projects/HORIZON.md`).
 
 ## Adaptation Ledger
 | Date | Prior expectation | New evidence / obstacle | Changed plan and authority | Evidence link |

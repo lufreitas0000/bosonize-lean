@@ -16,6 +16,6 @@ active_milestone:
         - CURRENT_SPRINT.md
         - HORIZON.md
         - CHANGELOG.md
-      validation: 'python3 /home/lucas/Projects/scripts/uow.py check --repo bosonize-lean'
+      validation: 'python3 /home/lu/Projects/scripts/uow.py check --repo bosonize-lean'
 milestone_history: []
 verified_invariants: []
