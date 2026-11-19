@@ -1,3 +1,8 @@
+---
+trigger: model_decision
+description: Bosonize-Lean scientific principles, regulator residuals, and V1 standalone scope.
+---
+<!-- @LOCAL-OVERRIDE: repo-specific customization -->
 # Bosonize-Lean scientific principles and version scope
 
 Scientific value lies in parameterized structural proofs, explicit hypotheses

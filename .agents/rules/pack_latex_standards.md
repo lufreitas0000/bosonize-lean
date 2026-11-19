@@ -1,3 +1,8 @@
+---
+trigger: glob
+globs: "**/*.tex, **/*.bib, **/*.sty, **/*.cls"
+description: LaTeX monograph/labbook macros, warm-parchment typography, and % SOURCE [STATUS] citation rules.
+---
 <!-- @CANONICAL-RULE: DO NOT EDIT DIRECTLY. MANAGED BY project-governance -->
 # Pack: LaTeX Design System, Modular Compilation & Figure Pipeline
 

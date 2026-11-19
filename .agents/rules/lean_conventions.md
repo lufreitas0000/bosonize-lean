@@ -1,3 +1,9 @@
+---
+trigger: glob
+globs: "**/*.lean, **/lakefile.lean, **/lakefile.toml, **/lean-toolchain"
+description: Lean 4 formalization conventions, F1/F2 anti-vacuity checks, and stub/Core lock discipline.
+---
+<!-- @CANONICAL-RULE: DO NOT EDIT DIRECTLY. MANAGED BY project-governance -->
 # Lean 4 Coding Conventions and Project Rules
 
 ## 1. Mathematical Strictness
