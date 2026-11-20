@@ -7,7 +7,43 @@ import tempfile
 from pathlib import Path
 
 import verify_phase_a as phase_a
-import verify_phase_b as phase_b
+
+DATA_KINDS = {'def', 'abbrev', 'instance', 'structure', 'inductive', 'class'}
+
+
+def is_private_decl(text, kind):
+    """Return True when a top-level declaration carries the `private` modifier."""
+    clean, mask = phase_a.lean.strip_lean(text)
+    depth = 0
+    for token in phase_a.lean.tokenize(clean, mask):
+        if token.kind == 'lit':
+            continue
+        if token.text in phase_a.lean.OPEN:
+            depth += 1
+        elif token.text in phase_a.lean.CLOSE:
+            depth = max(0, depth - 1)
+        elif depth == 0 and token.kind == 'id':
+            if token.text == kind:
+                return False
+            if token.text == 'private':
+                return True
+    return False
+
+
+def exported_declarations(code, data_only=False):
+    """Collect non-private declarations visible to an importing `#print axioms` file."""
+    model = phase_a.lean.parse_lean(code)
+    names = []
+    if not data_only:
+        names.extend(
+            name for name, lem in model.lemmas.items()
+            if not is_private_decl(lem.text, lem.kind)
+        )
+    names.extend(
+        c.label.split(' ', 1)[1] for c in model.commands
+        if c.kind in DATA_KINDS and not is_private_decl(c.text, c.kind)
+    )
+    return names
 
 
 def audit(repo, targets, data_only=False):
@@ -19,12 +55,7 @@ def audit(repo, targets, data_only=False):
         if source.is_symlink() or not source.is_file():
             raise ValueError(f'Missing/unsafe source: {name}')
         code = source.read_text()
-        if data_only:
-            model = phase_a.lean.parse_lean(code)
-            names.extend(c.label.split(' ', 1)[1] for c in model.commands if c.kind in
-                         {'def', 'abbrev', 'instance', 'structure', 'inductive', 'class'})
-        else:
-            names.extend(phase_b.declarations(code))
+        names.extend(exported_declarations(code, data_only=data_only))
         modules.append(name.removesuffix('.lean').replace('/', '.'))
     if not names:
         raise ValueError('No named declarations to audit')

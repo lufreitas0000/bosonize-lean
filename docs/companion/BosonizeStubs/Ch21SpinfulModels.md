@@ -3,7 +3,7 @@
 **Lean Module:** [`BosonizeStubs/Ch21SpinfulModels.lean`](../../../BosonizeStubs/Ch21SpinfulModels.lean)  
 **Reference Notes:** [`notes/md/ch21_spinful_models.md`](../../../notes/md/ch21_spinful_models.md), [`notes/appendices/a09_duality_spin_and_umklapp.md`](../../../notes/appendices/a09_duality_spin_and_umklapp.md)  
 **API & Derivation Notes:** [`ch21_api_reconciliation.md`](../../plans/v1-s9/ch21_api_reconciliation.md), [`ch21_umklapp_derivation.md`](../../plans/v1-s9/ch21_umklapp_derivation.md)  
-**Phase Status:** Phase B Complete (`lake build BosonizeStubs.Ch21SpinfulModels` succeeds with zero warnings and zero `sorry`s; all `56/56` exported declarations (`51` `lemma`s, `5` `theorem`s) are proved axiom-clean on `{propext, Classical.choice, Quot.sound}`).
+**Phase Status:** Phase B Complete — Awaiting Human Phase C Promotion (`lake build BosonizeStubs.Ch21SpinfulModels` succeeds with zero warnings and zero `sorry`s; `python3 scripts/webllm/audit_axioms.py BosonizeStubs/Ch21SpinfulModels.lean` exits `0` across all `148` exported declarations [`86` proofs: `71` `lemma`s + `15` `theorem`s; `62` data/instance commands: `56` `def` + `1` `abbrev` + `1` `structure` + `4` `local instance`s] with standard axioms only, cleanly filtering `35` `private lemma`s; `stub_lock.py --check --strict` intentionally continues to flag the file as unbaselined pending human Phase C review and `docs/spec/stub_locks.v2.json` update).
 
 ---
 
@@ -41,14 +41,15 @@
 | `mem_chargeSector_iff_eigen`, `charge_commutator_maps_sector` | `lemma` | `∀ ν, commutator (chargeObservable ν) A = (q ν) • A` | Proved (0 `sorry`) | Joint eigenspace characterization and automatic sector shift `Ns ↦ Ns + q` from charge commutators. |
 | `totalChargeObservable`, `totalSpinObservable` (+ `_self_adjoint`, `_budget`) | `def`/`lemma` | `v ∈ A05.jointBudget h Ns K` | Proved (0 `sorry`) | Self-adjoint total charge `Q_c` and total spin `Q_s` observables with eigenvalues `qc, qs` on every budget. |
 
-### Section 3: Raw Chiral Currents & `2m` Schwinger Algebra (`B1`)
+### Section 3: Raw Chiral Currents, Global Edge Identities & `2m` Schwinger Algebra (`B1`)
 
 | Symbol | Kind | Explicit Hypotheses | Status | Mathematical Content |
 | :--- | :--- | :--- | :--- | :--- |
-| `rhoChargeL/R`, `rhoSpinL/R` (+ `_adjoint`) | `def`/`lemma` | `h : ℕ, m : ℤ` | Proved (0 `sorry`) | `(ρ_{χ,c/s}(m))† = ρ_{χ,c/s}(-m)`. |
+| `rhoChargeL/R`, `rhoSpinL/R` (+ `_adjoint`), `edgeOp` | `def`/`lemma` | `h : ℕ, m n : ℤ` | Proved (0 `sorry`) | `(ρ_{χ,c/s}(m))† = ρ_{χ,c/s}(-m)` and ambient finite-band edge operator `E_ν(m, n) = [ρ_{ν,m}, ρ_{ν,n}]`. |
+| `rhoChargeL_rhoSpinL_global_edge`, `rhoChargeL_global_edge`, `rhoSpinL_global_edge`, `rhoChargeL_eq_rhoSpinL_global_edge`, `rhoChargeR_rhoSpinR_global_edge`, `rhoChargeR_global_edge`, `rhoSpinR_global_edge`, `rhoChargeR_eq_rhoSpinR_global_edge` | `lemma` | Unconditional (ambient `Module.End ℂ`) | Proved (0 `sorry`) | Exact `prop:ch21-global-edge` ambient identities `[R^c, R^s] = E_↑ - E_↓` and `[R^c, R^c] = [R^s, R^s] = E_↑ + E_↓` for both chiralities. |
 | `rhoChargeL_commutator`, `rhoSpinL_commutator`, `rhoChargeR_commutator`, `rhoSpinR_commutator` | `lemma` | `0 < h`, `v ∈ A05.jointBudget h Ns K`, **both** spin margins `\|m\| + \|n\| + K + \|Ns ν\| ≤ h` | Proved (0 `sorry`) | `[ρ_{χ,α}(m), ρ_{χ,α}(n)] v = (2 * Ch10.schwingerCoefficient m n) • v` (`-2m • v` when `m + n = 0`). |
 | `rhoChargeL_rhoSpinL_commutator`, `rhoChargeR_rhoSpinR_commutator` | `lemma` | `0 < h`, `v ∈ A05.jointBudget h Ns K`, both spin margins `≤ h` | Proved (0 `sorry`) | Same-chirality charge-spin Kac-Moody commutation `[ρ_{χ,c}(m), ρ_{χ,s}(n)] v = 0` via cross-species cancellation `schwinger - schwinger = 0`. |
-| `rhoChargeR_rhoChargeL_commute`, `rhoSpinR_rhoSpinL_commute` | `lemma` | Unconditional (ambient `Module.End ℂ`) | Proved (0 `sorry`) | Opposite chiralities commute identically on the whole Fock space via `A05.rho_cross_commute`. |
+| `rhoChargeR_rhoChargeL_commute`, `rhoSpinR_rhoSpinL_commute`, `rhoChargeR_rhoSpinL_commute`, `rhoSpinR_rhoChargeL_commute` | `lemma` | Unconditional (ambient `Module.End ℂ`) | Proved (0 `sorry`) | All four opposite-chirality commutators (`[R^a_R, R^b_L] = 0`, `a, b ∈ {c, s}`) vanish identically on the whole Fock space via `A05.rho_cross_commute`. |
 
 ### Section 4: Two-Channel Spin-Singlet Pairing (`A3`, `B3`)
 
@@ -58,6 +59,8 @@
 | `singlet_targets_distinct`, `singlet_channel_targets_orthogonal` | `lemma` | — | Proved (0 `sorry`) | Channels `A` and `B` land in orthogonal `SpinBranch → ℤ` sectors (`scTarget A ≠ scTarget B`). |
 | `singlet_preserves_spin_and_shifts_charge` | `lemma` | — | Proved (0 `sorry`) | Both channels shift `Q_c ↦ Q_c - 2` while preserving `Q_s`. |
 | `singletA_projected_residual`, `singletB_projected_residual` | `lemma` | `h Ks Km Kt : ℕ` | Proved (0 `sorry`) | Direct instantiations of `Ch20.projected_sc_residual` on both singlet channels. |
+| `singletTargetUnionSet`, `singletTargetSum`, `singletTargetSum_disjoint`, `singletTargetInclB`, `singletTargetInclA`, `singletTargetProjection` (+ `_eq_coord`, `_idempotent`, `_adjoint`, `_range`), `singletProjectedMap` | `def`/`lemma` | `h Ks KtB KtA : ℕ` | Proved (0 `sorry`) | Orthogonal direct-sum target codomain `W = V_{t,B} ⊔ V_{t,A}` (`V_{t,1} ⊕ V_{t,2}`), isometric channel inclusions `j₁, j₂`, ambient orthogonal projector `P_W = P_{t,B} + P_{t,A}`, and typed map `p_W A i_s : V_s →ₗ[ℂ] W`. |
+| `singletOrderSC_projected_sum` | `theorem` | `h Ks KmB KmA KtB KtA : ℕ` (independent cutoffs) | Proved (0 `sorry`) | Exact two-channel projected singlet identity (`thm:ch21-pair-projected`, Eq. (21.7)): `p_W O_{SSC}(x) i_s = j₁ (B_{a,1} ∘ B_{b,1} + R₁) - j₂ (B_{a,2} ∘ B_{b,2} + R₂)` on `W = V_{t,B} ⊕ V_{t,A}` with both residuals retained. |
 
 ### Section 5: Real-Space Umklapp Operator (`A2`, `B2`)
 
@@ -79,6 +82,15 @@
 | `umklapp_zero_charge_witness_coeff` | `theorem` | `0 < h, gU : ℝ` | Proved (0 `sorry`) | Exact CAR matrix element `⟨Ψ_target | H_U(g_U) | Ω₀⟩ = -g_U / (2h)²` (`DecidableEq` bridged via `Subsingleton.elim`, `umklappBackwardSite` orthogonal, `8h - 1` odd CAR swaps, zero momentum transfer `(-1 - 1 + (1-h) + (1-h)) = -2h`). |
 | `umklapp_witness_h2_coeff`, `umklapp_witness_h1_coeff` | `theorem` | `gU : ℝ` | Proved (0 `sorry`) | Specializes `umklapp_zero_charge_witness_coeff` to `-g_U / 16` (`h = 2, L = 4`) and `-g_U / 4` (`h = 1, L = 2`). |
 | `umklapp_zero_budget_not_invariant` | `theorem` | `0 < h, K : ℕ, gU : ℝ, gU ≠ 0` | Proved (0 `sorry`) | `periodicUmklappOp h gU (groundKet h 0) ∉ jointBudget h 0 K` for every `K`. |
+
+### Section 7: Concrete `h = 2` Finite-CAR Witnesses (`ex:ch21-pair-sign`, `ex:ch21-pair-residual`, `ex:ch21-u-inward-only`)
+
+| Symbol | Kind | Explicit Hypotheses | Status | Mathematical Content |
+| :--- | :--- | :--- | :--- | :--- |
+| `band4M1`, `band4Zero`, `band4One`, `band4Two`, `zeroCharge_admissible`, `canonicalRoot_four_eq_I` | `def`/`lemma` | — | Proved (0 `sorry`) | Explicit `Ch01.Band (2 * 2)` modes `{-1, 0, 1, 2}` and `A01.canonicalRoot 4 = Complex.I`. |
+| `singlet_pair_sign_channel1_h2`, `singlet_pair_sign_channel2_h2`, `singlet_pair_sign_h2` | `theorem` | `h = 2, L = 4, x = 1`, periodic twist | Proved (0 `sorry`) | Concrete `ex:ch21-pair-sign`: channel-1 (`-1/4`) and channel-2 (`-1/4`) ground-to-ground matrix elements yield opposite singlet amplitudes `⟨Ω_{T₁}, O_{SSC}(1) Ω₀⟩ = -1/4` and `⟨Ω_{T₂}, O_{SSC}(1) Ω₀⟩ = +1/4`. |
+| `singletResidualWitnessConfig`, `singletResidualWitnessKet`, `singletResidualWitnessKet_mem_target`, `singletResidualWitnessVec`, `singlet_pair_residual_comp_zero_h2`, `singlet_pair_residual_witness_h2`, `singlet_pair_residual_ne_zero_h2` | `def`/`lemma`/`theorem` | `h = 2, L = 4, x = 1, J_s = 0, J_{m,1} = 0, J_{t,1} = 1` | Proved (0 `sorry`) | Concrete `ex:ch21-pair-residual`: `|Ξ⟩ ∈ V_{T₁, 1}` gives `⟨Ξ, (B_{a,1} ∘ B_{b,1}) Ω₀⟩ = 0` and `⟨Ξ, R₁ Ω₀⟩ = -i/4 ≠ 0`. |
+| `speciesChargeBoxSet`, `speciesChargeBox`, `speciesChargeBoxProjection`, `umklappInwardBoxBounds`, `umklappInwardSourceCharge`, `umklappInwardSourceConfig`, `umklappInwardSourceKet`, `umklappInwardSourceKet_mem_box`, `umklappInwardTargetSpeciesConfig`, `umklappInwardTargetConfig`, `umklappInwardTargetKet`, `umklappInward_outward_pauli_blocked`, `umklappInward_coeff_h2`, `umklappInward_mem_box_h2`, `umklappInward_no_leakage_h2` | `def`/`lemma`/`theorem` | `h = 2, L = 4, K = 16, B = (2,2,1,1)` | Proved (0 `sorry`) | Concrete `ex:ch21-u-inward-only`: Pauli blocking `O_U(x)|S⟩ = 0` for all `b, x`, exact inward matrix element `⟨T', H_U(g_U) S⟩ = g_U / 16`, and for `g_U ≠ 0`, `H_U |S⟩ ≠ 0` with zero box leakage `(I - P_{16,B}) H_U |S⟩ = 0`. |
 
 ---
 
