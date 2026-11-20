@@ -5,7 +5,7 @@ active_phase: Version 1
 current_milestone: V1-S9
 active_milestone:
   id: V1-S9
-  objective: 'Standardize PG-10/UoW governance on single main, preserve audited untracked planning/review records, and align V1-S9 / CH21 closure status.'
+  objective: 'Standardize PG-10/UoW governance on single main, complete Ch21 Phase B formalization (Ch21SpinfulModels & Ch21CocycleAndLeakage), and align V1-S9 / CH21 closure status.'
   status: active
   active_tasks:
     - id: T1
@@ -17,5 +17,15 @@ active_milestone:
         - HORIZON.md
         - CHANGELOG.md
       validation: 'python3 /home/lu/Projects/scripts/uow.py check --repo bosonize-lean'
+    - id: T2
+      title: 'Phase B Ch21 extensions: Z4 Klein 2-cocycle, off-margin counterexample, spinful hyperbolic blocks, and general charge-box Umklapp leakage'
+      status: completed
+      target_files:
+        - BosonizeStubs/Ch21CocycleAndLeakage.lean
+        - docs/plans/v1-s9/v1_release_readiness_audit.md
+      validation: 'PATH="$HOME/.elan/bin:$PATH" python3 scripts/webllm/audit_axioms.py BosonizeStubs/Ch21CocycleAndLeakage.lean'
 milestone_history: []
-verified_invariants: []
+verified_invariants:
+  - 'core_lock.py: 44 frozen Core files intact'
+  - 'BosonizeStubs/Ch21SpinfulModels.lean: 148 exported declarations audited on standard axioms (0 sorry, 0 warnings; awaiting human Phase C)'
+  - 'BosonizeStubs/Ch21CocycleAndLeakage.lean: 114 exported declarations audited on standard axioms (0 sorry, 0 warnings; awaiting human Phase C)'
