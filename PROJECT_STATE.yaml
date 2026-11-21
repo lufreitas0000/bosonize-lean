@@ -29,3 +29,4 @@ verified_invariants:
   - 'core_lock.py: 44 frozen Core files intact'
   - 'BosonizeStubs/Ch21SpinfulModels.lean: 148 exported declarations audited on standard axioms (0 sorry, 0 warnings; awaiting human Phase C)'
   - 'BosonizeStubs/Ch21CocycleAndLeakage.lean: 114 exported declarations audited on standard axioms (0 sorry, 0 warnings; awaiting human Phase C)'
+  - 'BosonizeStubs/Ch21BudgetAndSWBridge.lean: 63 exported declarations audited on standard axioms (0 sorry, 0 warnings; W4 Carbon ACCEPT; awaiting human Phase C)'

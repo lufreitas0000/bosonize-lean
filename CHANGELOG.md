@@ -4,6 +4,17 @@ All notable changes and conceptual evolutions are recorded here per Unit of Work
 
 ## [Unreleased]
 
+### [2026-11-20] [V1-S9-U6] [Actor: Antigravity] — Formalize Ch21 Graded Budget vs. Product Cutoff, General-$h$ Singlet Klein Sign, Intermediate-State SW Formula & `Ch21 → A10` Bridge (`Ch21BudgetAndSWBridge.lean`)
+#### Ideas & Contracts Evolved
+- Added new Phase B staging module `BosonizeStubs/Ch21BudgetAndSWBridge.lean` (`import BosonizeStubs.Ch21CocycleAndLeakage`, `1,664` lines, `63` exported audited declarations [`36` proofs: `19` `theorem` + `17` `lemma`; `27` data/instance commands: `23` `def` + `4` `local instance`], `0` `sorry`, `0` warnings under `-DwarningAsError=true`, standard axioms only via `audit_axioms.py`, independent W4 `Carbon` `ACCEPT`):
+  - **Graded direct-sum decomposition vs. product cutoff (`eq:ch21-budget-energy-sum`, `eq:ch21-not-product-cutoff`):** Formalized `gradedSectorSpace` and `productCutoffSpace`, proved orthogonal internal direct-sum equivalence `jointBudget_eq_graded_sum` (`gradedSectorSpace_orthogonal`, `gradedSectorSpace_iSupIndep`) for all `0 < h`, and constructively proved `k1_product_cutoff_strict_superset` (`A05.jointBudget h 0 1 < productCutoffSpace h 0 1` via `k1DoubleExciteKet` having species cost `1` each and total cost `2`).
+  - **General-$h$ singlet Klein-product sign (`eq:ch21-pair-general-sign`):** Proved `singlet_klein_product_sign_eq` and `singlet_pair_general_sign` for ALL `0 < h` and `x : Fin (2 * h)`, establishing exact ground-to-ground amplitudes `+(-1)^{h+1}/(2h)` on $\Omega_{T_B}$ and `-(-1)^{h+1}/(2h)` on orthogonal $\Omega_{T_A}$ (specializing to `∓1/4` at `h = 2` in `singlet_pair_general_sign_h2`).
+  - **Intermediate-state SW formula & `Ch21 → A10` block bridge (`prop:ch21-sw-intermediate`):** Proved explicit `I_Q`-filtered sum-over-states formulas `sw_second_order_intermediate_sum`, `sw_second_order_diagonal_shift`, and `sw_second_order_diagonal_nonpos_of_ordered`, plus both matrix-level (`umklappBlock_sw_generator_and_shift`, `umklappBlock_sw_h2`) and operator-level (`umklappBlock_a10_bch_bridge`, `umklappBlock_a10_bch_bridge_h2`) bridges instantiating `A10.sw_compressed_bch_second_order` on `A05.Operators SpinBranch h` with `W^{(2)}_{00} = -g_U²/(32h⁵)` (`-g_U²/1024` at `h = 2`).
+- Preserved `Bosonize/Core/` (`44` Core files intact), `Ch21SpinfulModels.lean`, `Ch21CocycleAndLeakage.lean`, `BosonizeStubs.lean`, `core_locks.json`, `docs/spec/stub_locks.v2.json`, and `notes/latex/` untouched.
+
+#### Code & Artifacts Changed
+- Added `BosonizeStubs/Ch21BudgetAndSWBridge.lean` and `docs/companion/BosonizeStubs/Ch21BudgetAndSWBridge.md`; updated `LOG_DISCOVERY_AND_PIVOTS.md`, `CHANGELOG.md`, and `PROJECT_STATE.yaml`.
+
 ### [2026-11-20] [V1-S9-U5] [Actor: Antigravity] — Formalize Ch21 $\mathbb{Z}^4$ Klein 2-Cocycle, Off-Margin Counterexample, Spinful Hyperbolic Diagonalization, and General Charge-Box Leakage (`Ch21CocycleAndLeakage.lean`)
 #### Ideas & Contracts Evolved
 - Added new Phase B staging module `BosonizeStubs/Ch21CocycleAndLeakage.lean` (`import BosonizeStubs.Ch21SpinfulModels`, `1,226` lines, `77` exported proofs [`46` lemmas + `31` theorems] + `37` data/instance commands = `114` audited declarations, `0` `sorry`, `0` warnings under `-DwarningAsError=true`, standard axioms only via `audit_axioms.py`):
