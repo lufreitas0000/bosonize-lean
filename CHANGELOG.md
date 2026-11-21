@@ -4,6 +4,17 @@ All notable changes and conceptual evolutions are recorded here per Unit of Work
 
 ## [Unreleased]
 
+### [2026-11-21] [V1-S9-U7] [Actor: Antigravity] — Formalize Ch21 Finite Analytic Schrieffer–Wolff Remainder, `2×2` Witness & Umklapp Block Norm Bound (`Ch21AnalyticSWCore.lean`, `Ch21AnalyticRemainder.lean`)
+#### Ideas & Contracts Evolved
+- Added leaf `module` `BosonizeStubs/Ch21AnalyticSWCore.lean` (`558` lines, `25` exported declarations [`18` proofs + `7` data]) and non-`module` `BosonizeStubs/Ch21AnalyticRemainder.lean` (`795` lines, `33` exported declarations [`24` proofs + `9` data/instance commands]), closing `prop:ch21-sw-analytic-remainder` and `ex:ch21-sw-two-level` (`21.4.tex`) with `0` `sorry`, `0` warnings under `lake --wfail build BosonizeStubs`, standard axioms only (`58/58` exported declarations via `audit_axioms.py`), and independent W4 `Carbon` Pass-2 `ACCEPT`:
+  - **Banach / unital `CStarRing` Taylor remainder (`Ch21AnalyticSWCore.lean`):** Proved FTC integral remainder `swRemainder3_integral` (`eq:ch21-sw-integral-remainder`), unitary invariance `norm_exp_smul_skew_eq_one` / `swAdjointFlow_norm_eq` for skew-Hermitian `S₁`, orthogonal projection contraction `norm_ortho_proj_le_one`, and norm bound `‖P R₃(t) P‖ ≤ ‖R₃(t)‖ ≤ |t|³ (‖ad_{S₁}³ H₀‖/6 + ‖ad_{S₁}² V‖/2)` (`swRemainder3_norm_bound`, `swCompressed_exact_plus_remainder_and_bound`).
+  - **Explicit `2×2` witness (`ex:ch21-sw-two-level`, `Ch21AnalyticRemainder.lean`):** Proved `S₁² = -I`, closed trigonometric `exp(t S₁)`, rotated entry `sin² t - t sin(2t)` (`eq:ch21-sw-2x2-rotated`), off-diagonal `t cos(2t) - (1/2) sin(2t)`, exact eigenvalues `(1 ± √(1+4t²))/2`, finite-coupling discrepancy `-1/3 ≠ -4/9` at `t = 2/3`, and explicit `(8/3)|t|³` `L2Operator` bound.
+  - **`Ch21 → A10` Umklapp block analytic bound:** Bridged `umklappBlock_a10_bch_bridge` to `A05.FockSpace` bounded operators (`toFockCLM`), proving `‖V‖ = |g_U|/(4h²)` and `‖P R₃(t) P‖ ≤ |t|³ |g_U|³ / (96 h⁸)` (`|t|³ |g_U|³ / 24576` at `h = 2`).
+- Updated `docs/companion/BosonizeStubs/Ch21AnalyticRemainder.md` and `docs/plans/v1-s9/v1_release_readiness_audit.md` (`383` total Ch21 exported declarations across `5` Phase B files awaiting human Phase C review); preserved `Bosonize/Core/*` (`44` files), `core_locks.json`, `stub_locks.v2.json`, and `notes/latex/` untouched.
+
+#### Code & Artifacts Changed
+- Added `BosonizeStubs/Ch21AnalyticSWCore.lean`, `BosonizeStubs/Ch21AnalyticRemainder.lean`, and `docs/companion/BosonizeStubs/Ch21AnalyticRemainder.md`; updated `docs/plans/v1-s9/v1_release_readiness_audit.md`, `LOG_DISCOVERY_AND_PIVOTS.md`, `PROJECT_STATE.yaml`, and `CHANGELOG.md`.
+
 ### [2026-11-20] [V1-S9-U6] [Actor: Antigravity] — Formalize Ch21 Graded Budget vs. Product Cutoff, General-$h$ Singlet Klein Sign, Intermediate-State SW Formula & `Ch21 → A10` Bridge (`Ch21BudgetAndSWBridge.lean`)
 #### Ideas & Contracts Evolved
 - Added new Phase B staging module `BosonizeStubs/Ch21BudgetAndSWBridge.lean` (`import BosonizeStubs.Ch21CocycleAndLeakage`, `1,664` lines, `63` exported audited declarations [`36` proofs: `19` `theorem` + `17` `lemma`; `27` data/instance commands: `23` `def` + `4` `local instance`], `0` `sorry`, `0` warnings under `-DwarningAsError=true`, standard axioms only via `audit_axioms.py`, independent W4 `Carbon` `ACCEPT`):
