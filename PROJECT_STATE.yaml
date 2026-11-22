@@ -31,3 +31,4 @@ verified_invariants:
   - 'BosonizeStubs/Ch21CocycleAndLeakage.lean: 114 exported declarations audited on standard axioms (0 sorry, 0 warnings; awaiting human Phase C)'
   - 'BosonizeStubs/Ch21BudgetAndSWBridge.lean: 63 exported declarations audited on standard axioms (0 sorry, 0 warnings; W4 Carbon ACCEPT; awaiting human Phase C)'
   - 'BosonizeStubs/Ch21AnalyticSWCore.lean + BosonizeStubs/Ch21AnalyticRemainder.lean: 58 exported declarations (25 + 33) audited on standard axioms (0 sorry, 0 warnings under lake --wfail; W4 Carbon Pass-2 ACCEPT; awaiting human Phase C)'
+  - 'Wave 38 V1-S9 companion closure: 5/5 Ch21 Phase B modules have complete mirrored companions in docs/companion/BosonizeStubs/ (383/383 exported declarations documented; awaiting human Phase C)'

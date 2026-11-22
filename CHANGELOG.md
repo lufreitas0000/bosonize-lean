@@ -4,6 +4,16 @@ All notable changes and conceptual evolutions are recorded here per Unit of Work
 
 ## [Unreleased]
 
+### [2026-11-21] [V1-S9-U8] [Actor: Antigravity] — Wave 38 V1-S9 Companion Closure & Audit Reconciliation (`Ch21CocycleAndLeakage.md`, `Ch21AnalyticSWCore.md`)
+#### Ideas & Contracts Evolved
+- Completed mirrored companion documentation for the remaining two Ch21 Phase B staging modules, bringing Ch21 mirrored companion coverage to `5/5` modules (`383/383` exported declarations documented):
+  - `docs/companion/BosonizeStubs/Ch21CocycleAndLeakage.md`: documents all `114` exported declarations (`77` proofs: `31` `theorem`s + `46` `lemma`s; `37` data/instance commands: `30` `def`s + `2` `abbrev`s + `1` `structure` + `4` `local instance`s; `0` `private lemma`s) with exact signatures, explicit hypotheses, and LaTeX correspondence to `21.1.tex` and `21.3.tex`.
+  - `docs/companion/BosonizeStubs/Ch21AnalyticSWCore.md`: documents all `25` exported declarations (`18` proofs: `7` `theorem`s + `11` `lemma`s; `7` `def`s; plus `3` file-local `private lemma`s) of the pure-Mathlib leaf `module` with exact hypotheses and LaTeX correspondence to `21.4.tex`.
+- Reconciled `docs/plans/v1-s9/v1_release_readiness_audit.md` (frontmatter `depends_on`, Section 1, and Section 3), `PROJECT_STATE.yaml`, `LOG_DISCOVERY_AND_PIVOTS.md`, and `CHANGELOG.md` while keeping `.lean` files, `Bosonize/`, `BosonizeStubs/`, `core_locks.json`, `docs/spec/stub_locks.v2.json`, and `notes/latex/` untouched and Phase C promotion human-gated.
+
+#### Code & Artifacts Changed
+- Added `docs/companion/BosonizeStubs/Ch21CocycleAndLeakage.md` and `docs/companion/BosonizeStubs/Ch21AnalyticSWCore.md`; updated `docs/plans/v1-s9/v1_release_readiness_audit.md`, `PROJECT_STATE.yaml`, `LOG_DISCOVERY_AND_PIVOTS.md`, and `CHANGELOG.md`.
+
 ### [2026-11-21] [V1-S9-U7] [Actor: Antigravity] — Formalize Ch21 Finite Analytic Schrieffer–Wolff Remainder, `2×2` Witness & Umklapp Block Norm Bound (`Ch21AnalyticSWCore.lean`, `Ch21AnalyticRemainder.lean`)
 #### Ideas & Contracts Evolved
 - Added leaf `module` `BosonizeStubs/Ch21AnalyticSWCore.lean` (`558` lines, `25` exported declarations [`18` proofs + `7` data]) and non-`module` `BosonizeStubs/Ch21AnalyticRemainder.lean` (`795` lines, `33` exported declarations [`24` proofs + `9` data/instance commands]), closing `prop:ch21-sw-analytic-remainder` and `ex:ch21-sw-two-level` (`21.4.tex`) with `0` `sorry`, `0` warnings under `lake --wfail build BosonizeStubs`, standard axioms only (`58/58` exported declarations via `audit_axioms.py`), and independent W4 `Carbon` Pass-2 `ACCEPT`:
