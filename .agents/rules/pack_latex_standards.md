@@ -14,8 +14,14 @@ description: LaTeX monograph/labbook macros, warm-parchment typography, and % SO
 
 ## 2. Modular Section-Owned Sources & Build Hygiene
 - Standard compiler: `latexmk` (`-pdf -interaction=nonstopmode -halt-on-error`).
+- For standalone technical notes (`doc/notes/<note>/`), keep only `<note>.tex`, `<note>_<version>.pdf`, `figures/`, `archive_builds/`, and `aux/` at the top level, placing `Makefile`, `refs_*.bib`, and compiler temporaries inside `aux/` via:
+  ```makefile
+  BIBINPUTS=aux: latexmk -pdf -jobname=$(DOC)_$(VERSION) -auxdir=aux -emulate-aux-dir \
+    -interaction=nonstopmode -halt-on-error $(DOC).tex
+  ```
+  and archive superseded `<note>_v*.pdf` files into `archive_builds/` on rebuild or version bump.
 - Structure multi-chapter documents (`doc/labbook/` and `doc/manuscript/`) using chapter- or section-owned `.tex` files (`chapters/ch_*.tex` or `sections/sec_*.tex` via `\include`, `\input`, or `subfiles`) so individual sections can be compiled, reviewed, and passed to LLM agents without touching the entire book.
-- Keep all auxiliary files (`.aux`, `.log`, `.fls`, `.fdb_latexmk`, `.out`, `.toc`) and TikZ externalization caches (`build/figures/` or `cache_tikz/`) out of Git history. Provide a `make clean-build` target.
+- Keep all auxiliary files (`.aux`, `.log`, `.fls`, `.fdb_latexmk`, `.out`, `.toc`, `.bbl`, `.blg`) and TikZ externalization caches (`build/figures/` or `cache_tikz/`) out of Git history. Provide a `make clean-build` or `make clean` target.
 
 ## 3. Editorial & Provenance Source Comments
 - Every numbered `\section` (and independent `\subsection`) must be preceded by `% EDITORIAL QUESTION: <question>` and answer that question in its closing paragraph.

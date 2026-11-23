@@ -37,3 +37,19 @@ The following describes the current layout and intended responsibilities. A dire
 - `scripts/`: repository utilities such as snapshot generation.
 
 Do not create directories solely to make the tree conform to this description. Follow existing package and test conventions, and update this rule when the architecture materially changes.
+
+### 3.1 Standalone technical note layout and versioned PDFs
+
+Standalone technical calculation notes under `doc/notes/<note>/` keep only the canonical source, the explicitly versioned compiled PDF, figures, build archives, and the `aux/` build-scaffolding folder visible at the top level:
+
+```text
+doc/notes/<note>/
+├── <note>.tex                 # Unversioned canonical source (preserves continuous git history)
+├── <note>_<version>.pdf       # Current compiled PDF with explicit version tag (e.g. _v2.1.pdf)
+├── figures/                   # TikZ / pgfplots figure sources
+├── archive_builds/            # Timestamped prior PDFs (git-ignored)
+└── aux/                       # Compiler aux/log/bbl/blg/fls/fdb_latexmk/out/toc/.build_meta.tex
+                               # plus tracked Makefile and refs_*.bib
+```
+
+Keep compiler auxiliary outputs (`*.aux`, `*.bbl`, `*.blg`, `*.fls`, `*.fdb_latexmk`, `*.log`, `*.out`, `*.toc`, `.build_meta.tex`) and `archive_builds/` out of Git history, while keeping `<note>.tex`, `figures/`, `aux/Makefile`, and `aux/refs_*.bib` version-controlled. Version bumps move superseded `<note>_v*.pdf` builds into `archive_builds/` so only the latest versioned PDF remains at the top level.
