@@ -125,3 +125,12 @@ To reconcile the exploratory nature of mathematical physics R&D with zero-sorry,
    * **Adversarial / Falsification Agent:** Actively seeks edge-case singularities, counterexamples, and sign frustrations.
    * **Promotion Agent:** Moves verified definitions to Layer 1, contracts to Tier 2, and indexes findings in `FiniteQMBLab/Archive/INDEX.md`.
 
+---
+
+## 11. Mandatory `lean-lsp-mcp`, Mathlib4 & Scientific Compression Gates
+
+1. **Fail-Closed MCP & Search Pre-Flight:** Before authoring or proving Lean 4 declarations, verify `lean-lsp-mcp` (`lean_goal`, `lean_loogle`, `lean_leansearch`, `lean_local_search`, `lean_multi_attempt`) and `rg` via `python3 /home/lu/Projects/scripts/lean_probe.py mcp-smoke`. Never silently code Lean "blind" without LSP/Mathlib search; escalate broken tooling immediately under `Rule 09` §6 via `scripts/notify.py --type action`.
+2. **Mandatory Mathlib Requirement (No Zero-Mathlib Islands):** Every Lean package in `Project-Hub` MUST require `mathlib` unless an explicit owner-approved `doc/adr/ADR-*zero-mathlib*.md` authorizes an isolated kernel experiment. Never hand-roll finite matrix types (`Mat4`), determinants (`det4`), or `Fin n` ring sums when `Mathlib.Data.Matrix`, `LinearAlgebra.Matrix.Determinant`, `BigOperators`, or `CliffordAlgebra` exist.
+3. **Anti-DTP & File Granularity:** Standalone fixed-dimension ($N=2,3,4$ or $4\times 4$) linear-algebra proofs are forbidden in production Lean (route fixed-size checks to 15-line SymPy/Python tests or `Lab/` sandboxes). Keep production `.lean` modules modular ($200\text{--}500$ LOC target, $800$ LOC ceiling enforced by `uow.py check`) split cleanly across `Defs.lean`, `Basic.lean`, and focused theorem files.
+
+

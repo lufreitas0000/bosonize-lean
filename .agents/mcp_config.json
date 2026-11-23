@@ -1,12 +1,15 @@
 {
     "mcpServers": {
         "lean-lsp-mcp": {
-            "command": "uvx",
+            "command": "/home/lu/.local/bin/uvx",
             "args": [
+                "--offline",
                 "lean-lsp-mcp"
             ],
             "env": {
+                "PATH": "/home/lu/.elan/bin:/home/lu/.local/bin:/usr/local/bin:/usr/bin:/bin",
                 "LEAN_PROJECT_PATH": "/home/lu/Projects/research/qmb/bosonize-lean",
+                "LEAN_REPL": "1",
                 "LEAN_MCP_DISABLED_TOOLS": "lean_hammer_premise"
             }
         }
