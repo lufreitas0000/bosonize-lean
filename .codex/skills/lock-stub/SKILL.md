@@ -1,0 +1,15 @@
+---
+name: lock-stub
+description: >-
+  Establish or audit scoped cryptographic Phase A statement locks in docs/spec/stub_locks.v2.json
+  after independent mathematical review, before advancing into Phase B proofs.
+---
+
+# Lock Stub (`/lock-stub`)
+
+Establishes the independently reviewed Phase A baseline and transitions automatically to Phase B within authorized chapter scope. Follow [the pipeline policy](../formalizer/references/pipeline.md).
+
+1. **Verify review evidence:** Require a passing independent agent review of the exact current source, with reviewer identity, source SHA-256, resolved findings, and Phase A validation in the companion. Human approval may supply an explicit scope/ambiguity decision; do not claim a human mathematically validated the source unless they actually did. A compiler pass or hash match alone is not interface review.
+2. **Preserve or establish the baseline:** If the chapter is already locked, run `python3 scripts/guards/stub_lock.py --check --strict` against its committed baseline and preserve a matching record. Investigate drift; never overwrite it to obtain a pass. For initial locking or an independently reviewed unambiguous staging correction, use the guard's generation mechanism and merge only the reviewed chapter entries into `docs/spec/stub_locks.v2.json`. Inspect the entire manifest diff and verify all unrelated records unchanged. `--update` may include other staging files and refuses changed frozen content without `--accept-changes`; both require the exact scoped review authorization from the pipeline. Preserve legacy `stub_locks.json`; never use blanket acceptance. See `docs/spec/freeze_audit.md` for command/context coverage.
+3. **Commit and check:** Commit the exact reviewed source/notebook and lock records before proof edits: `git commit -m "chore(<chapter>): establish reviewed statement baseline for <chapter>"`. Verify the chapter is present and run strict verification against that commit. Unreviewed unrelated staging additions must be reported, not locked implicitly. No proof transition passes a failed required guard.
+4. **Prove:** Proceed automatically to the authorized Phase B proof scope. Reconcile source notes and proof strategies, inspect actual Mathlib contracts, and use native Lean MCP where available. Preserve data, names, and signatures while replacing proof bodies. Commit intermediate proof batches atomically: `git commit -m "feat(<chapter>): prove <declarations>"`. Run strict guards/builds around batches and update the notebook. New helpers or interface corrections follow the independent review/amendment procedure, not an unexplained baseline regeneration.
