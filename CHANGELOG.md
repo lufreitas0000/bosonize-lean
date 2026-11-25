@@ -4,6 +4,14 @@ All notable changes and conceptual evolutions are recorded here per Unit of Work
 
 ## [Unreleased]
 
+### [2026-11-25] [QMB-DOC-06a] [Actor: Blue Orchestrator (`gemini-pro-orchestrator-neon`)] — Author 3-Pillar `KNOWLEDGE_MAP.md` (`6/10` QMB Coverage)
+#### Ideas & Contracts Evolved
+- Added repository-root [`KNOWLEDGE_MAP.md`](KNOWLEDGE_MAP.md) (QMB Round 12 `QMB-DOC-06a`, branch `doc/qmb-doc-06a` from `main @ edc6eb4`), synthesizing: (1) the four strictly separated finite-CAR / polynomial-CCR / formal-series / analytic-limit carriers and `BL-1` quantitative product residuals (`V1S6PhysicalFields`) plus Ch21 $\mathbb{Z}^4$ Klein 2-cocycle (`epsZ4`, `fourKleinOp`, `fourKleinMod2Op`), off-margin counterexample, graded budget direct sum, and unital `CStarRing` analytic Schrieffer–Wolff remainder; (2) the live layer & lock contract map (`44/44` SHA-256-locked `Bosonize/Core/` modules [`31,712` LOC, `1,270` theorem/lemma declarations] + `5/5` Ch21 Phase B `BosonizeStubs/` modules [`6,867` LOC, `383/383` audited exported declarations with `5/5` mirrored companions] + `21` chapters / `7` appendices in `notes/latex/`); and (3) active cross-repo `HC-QMB-09`, `HC-QMB-02`, and `qed3-duality` interfaces alongside human-gated Phase C / V2 deferrals.
+- Preserved strictly `0` edits across all `.lean` files (`Bosonize/Core/`, `BosonizeStubs/`), `docs/spec/core_locks.json`, `docs/spec/stub_locks.v2.json`, `docs/`, `notes/`, `scripts/`, and `LOG_DISCOVERY_AND_PIVOTS.md`.
+
+#### Code & Artifacts Changed
+- Added `KNOWLEDGE_MAP.md`; updated `CHANGELOG.md` and `PROJECT_STATE.yaml`.
+
 ### [2026-11-21] [V1-S9-U8] [Actor: Antigravity] — Wave 38 V1-S9 Companion Closure & Audit Reconciliation (`Ch21CocycleAndLeakage.md`, `Ch21AnalyticSWCore.md`)
 #### Ideas & Contracts Evolved
 - Completed mirrored companion documentation for the remaining two Ch21 Phase B staging modules, bringing Ch21 mirrored companion coverage to `5/5` modules (`383/383` exported declarations documented):
