@@ -42,5 +42,15 @@
   "Bosonize/Core/V1S5FiniteVectorStates.lean": "2b1b6ce7eb6694abae1094a93a40b37bfb1cfedb7b659f4a702ce3c851f07822",
   "Bosonize/Core/V1S5MomentObstruction.lean": "5084ca9963ef0344f3ef9046a86f7faeb86387dc590d3b07de0f623dfeeea82c",
   "Bosonize/Core/V1S5SmallInteractingModel.lean": "b5a60d0c6f62544d1a825cda6e1cc4dd4980d28591fb87fb2c7b0a9019784a79",
-  "Bosonize/Core/V1S6PhysicalFields.lean": "6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e"
+  "Bosonize/Core/V1S6PhysicalFields.lean": "6517c0c738cbc63e970b5d794845547548965e04ea09a4bdf6b18340ac46577e",
+  "Bosonize/Core/CoupledWire.lean": "9a05681ffd0025b6d1f2ab11208e73fec6b96d23309374cab192d6819344b2c9",
+  "Bosonize/Core/CoupledWire/BlochDiracAndGauge.lean": "de67c09bfa2a568c1e570a1f5d8b178bf4128cfef82fd34e57d9095e0aa5b760",
+  "Bosonize/Core/CoupledWire/DiracMass.lean": "95d6c9fef4cce41fcc5ffe89d9efa773621f120b77e77eb115d91bd0e15860d0",
+  "Bosonize/Core/CoupledWire/DualityBoundary.lean": "c5e5a7b601a491ccc47673a98c7a14072c53bf3ec88b281b9be3f6e7b898c6aa",
+  "Bosonize/Core/CoupledWire/DualityMatrix.lean": "bad2005f5d52e382c5ec6f79755374b7405b649fa45fac206188529e92efe094",
+  "Bosonize/Core/CoupledWire/GaugeAndConductivity.lean": "1d8fb032396790730b294882a2436679094b7c297729919aa4306892b98e1f5e",
+  "Bosonize/Core/CoupledWire/N2BosonicTI.lean": "8a57ad155ffb72d6622eef40c9f51f5e608a8f8a8b3e946417c15b529f8c7933",
+  "Bosonize/Core/CoupledWire/QED3Duality.lean": "2c996062530419c57418bae380b8a9170a5183041bea210501d5ac36dc353a2f",
+  "Bosonize/Core/CoupledWire/SSHZeroModes.lean": "0ab9f5618b433c1fe2a73c6307bc89a6710f4d723b4756adf9966b0b88dc1297",
+  "Bosonize/Core/CoupledWire/TPfaffianThreeCone.lean": "bef3857c607c8a98ba8b842740fd462c9c82714f7866b2d29574f937482a307b"
 }

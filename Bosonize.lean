@@ -46,6 +46,7 @@ import Bosonize.Core.V1S5FiniteGroundState
 import Bosonize.Core.V1S5MomentObstruction
 import Bosonize.Core.V1S5SmallInteractingModel
 import Bosonize.Core.V1S6PhysicalFields
+import Bosonize.Core.CoupledWire
 
 /-!
 # Bosonize Core Library

@@ -24,12 +24,23 @@ active_milestone:
         - BosonizeStubs/Ch21CocycleAndLeakage.lean
         - docs/plans/v1-s9/v1_release_readiness_audit.md
       validation: 'PATH="$HOME/.elan/bin:$PATH" python3 scripts/webllm/audit_axioms.py BosonizeStubs/Ch21CocycleAndLeakage.lean'
+    - id: T3
+      title: 'QMB-P1B-04b: Consolidate 5 MAM coupled-wire duality Lean modules onto pinned Mathlib4 under Bosonize/Core/CoupledWire/ with BosonizeLab witness quarantine'
+      status: completed
+      target_files:
+        - Bosonize/Core/CoupledWire.lean
+        - BosonizeLab.lean
+        - BosonizeLab/Lab/CoupledWire/CoupledWireWitnesses.lean
+        - docs/spec/core_locks.json
+        - KNOWLEDGE_MAP.md
+      validation: 'PATH="$HOME/.elan/bin:$PATH" lake build Bosonize BosonizeStubs BosonizeLab && python3 scripts/guards/core_lock.py'
 milestone_history: []
 verified_invariants:
-  - 'core_lock.py: 44 frozen Core files intact'
+  - 'core_lock.py: 44 frozen V1 Core files intact + 10 CoupledWire Core files locked (54/54 verified)'
   - 'BosonizeStubs/Ch21SpinfulModels.lean: 148 exported declarations audited on standard axioms (0 sorry, 0 warnings; awaiting human Phase C)'
   - 'BosonizeStubs/Ch21CocycleAndLeakage.lean: 114 exported declarations audited on standard axioms (0 sorry, 0 warnings; awaiting human Phase C)'
   - 'BosonizeStubs/Ch21BudgetAndSWBridge.lean: 63 exported declarations audited on standard axioms (0 sorry, 0 warnings; W4 Carbon ACCEPT; awaiting human Phase C)'
   - 'BosonizeStubs/Ch21AnalyticSWCore.lean + BosonizeStubs/Ch21AnalyticRemainder.lean: 58 exported declarations (25 + 33) audited on standard axioms (0 sorry, 0 warnings under lake --wfail; W4 Carbon Pass-2 ACCEPT; awaiting human Phase C)'
   - 'Wave 38 V1-S9 companion closure: 5/5 Ch21 Phase B modules have complete mirrored companions in docs/companion/BosonizeStubs/ (383/383 exported declarations documented; awaiting human Phase C)'
   - 'QMB-DOC-06a (doc/qmb-doc-06a): 3-pillar KNOWLEDGE_MAP.md added (6/10 QMB coverage; 0 edits to Bosonize/Core, BosonizeStubs, docs/, notes/, scripts/, or locks)'
+  - 'QMB-P1B-04b (refactor/qmb-p1b-04b-coupled-wire-port): 10 modular Mathlib4-native CoupledWire Core modules (3,303 LOC, max 449 <= 450 LOC, 214 public theorems + 100 defs) + BosonizeLab quarantine (205 LOC, 20 witnesses) verified on standard axioms with 0 warnings, 0 Rank-0/orphan/wheel regressions, unblocking QMB-P1B-04c (-9,114 LOC xxz-benchmark/lean retirement)'

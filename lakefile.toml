@@ -17,3 +17,8 @@ moreLeanArgs = ["-DwarningAsError=true"]
 [[lean_lib]]
 name = "BosonizeStubs"
 globs = ["BosonizeStubs", "BosonizeStubs.+"]
+
+[[lean_lib]]
+name = "BosonizeLab"
+globs = ["BosonizeLab", "BosonizeLab.+"]
+moreLeanArgs = ["-DwarningAsError=true"]
