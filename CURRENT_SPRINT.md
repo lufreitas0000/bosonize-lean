@@ -20,4 +20,5 @@ The checked default branch contains the S5 acceptance receipt in `docs/plans/v1-
 First read the actual relevant `docs/plans/` and Core interface locks for the selected CH21/CH20b task; obtain independent specification review and an exact frozen statement before code changes. A green generic build does not establish that a missing/unimported module compiled, and `sorry`/new axioms are not legitimate success substitutes. Return an evidence-backed status decision before any new proof sprint.
 
 ## Exact Next Step
-- Reconcile accepted CH21 spinful models (`eba78ae`) against V1 release audits and finalize coverage/pedagogy closure before transitioning to Version 2.
+- `QMB-P1B-04b` (`Bosonize/Core/CoupledWire/*` + `BosonizeLab/`, `54/54` `core_locks.json`) and `QMB-P1C-02` (`docs/spec/stub_locks.v2.json` strict freeze across all `59` files / `1,845` headers / `1,837` commands; `make lock-check` and `./scripts/ci.sh` PASS with `BosonizeStubs/Ch21*.lean` frozen in-place) are complete.
+- Pending `⭐ PI` human Phase C review: audit and promote `BosonizeStubs/Ch21*.lean` (`383` audited exported declarations) into `Bosonize/Core/`, refresh post-Phase-C pedagogy disclaimers (`notes/latex/chapters/sections/21.1`–`21.4.tex`, `notes/md/ch21_spinful_models.md`), and close V1 release audits before transitioning to Version 2.

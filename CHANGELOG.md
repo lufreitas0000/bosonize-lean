@@ -4,6 +4,19 @@ All notable changes and conceptual evolutions are recorded here per Unit of Work
 
 ## [Unreleased]
 
+### [2026-11-27] [QMB-P1C-02] [Actor: Blue Orchestrator (`gemini-pro-orchestrator-neon`)] — Freeze All `15` Unbaselined CoupledWire & Ch21 Modules in `docs/spec/stub_locks.v2.json` (`make lock-check` & `./scripts/ci.sh` Strict Closure)
+#### Ideas & Contracts Evolved
+- Executed Phase 1C Priority 7 (`QMB-P1C-02`, branch `chore/qmb-p1c-02-ch21-stub-locks` stacked linearly off `refactor/qmb-p1b-04b-coupled-wire-port @ b813c5aa0d2f` per `R38-01`), auditing and freezing all `15` previously unbaselined modules in `docs/spec/stub_locks.v2.json` via `env -u CI python3 -B scripts/guards/stub_lock.py --update` **without** `--accept-changes`:
+  - **Zero mutation to frozen V1 baseline:** All `44` prior V1 Core entries (`1,317` headers, `1,394` frozen commands), `docs/spec/core_locks.json` (`54/54` complete Core SHA-256 hashes), and every `.lean` source file across `Bosonize/`, `BosonizeStubs/`, and `BosonizeLab/` remain `100%` byte-for-byte untouched.
+  - **15 newly locked modules (`+528` headers, `+443` frozen commands -> `59` files, `1,845` locked declaration headers, `1,837` frozen commands total):**
+    - `10` `Bosonize/Core/CoupledWire*.lean` modules (`+225` headers, `+250` frozen commands; `0` `sorry`/`admit`/`axiom`/`native_decide`/`set_option`/`whole` fallbacks).
+    - `5` `BosonizeStubs/Ch21*.lean` Phase B staging modules (`+303` headers, `+193` frozen commands; `0` `sorry`/`admit`/`axiom`/`native_decide`/`set_option`/`whole` fallbacks), frozen strictly in-place inside `BosonizeStubs/` (`_is_lab_lean == True`) while keeping promotion into `Bosonize/Core/` human-gated Phase C.
+- Verified strict lock and full CI compliance under `PATH="$HOME/.elan/bin:$PATH"`: `make lock-check` (`stub_lock.py --check --strict` + `core_lock.py`), `./scripts/ci.sh` (`CI OK`: `69/69` guard tests, strict `stub_lock`, `54/54` `core_lock`, `lake build Bosonize`, `lake build BosonizeStubs`, `20/20` `webllm` tests), `lake build BosonizeLab`, `uow.py check --repo bosonize-lean` & `--state qmb` (`12/12 PASS`), and `repo_governance_gate.py` (`0` errors).
+- Synced Front-3 & Four-Record documentation (`KNOWLEDGE_MAP.md`, `PROJECT_STATE.yaml` registering `T4`, `CURRENT_SPRINT.md`, `CHANGELOG.md`) to reflect the two-layer cryptographic lock contract (`stub_locks.v2.json` + `core_locks.json`).
+
+#### Code & Artifacts Changed
+- Updated `docs/spec/stub_locks.v2.json`, `KNOWLEDGE_MAP.md`, `PROJECT_STATE.yaml`, `CURRENT_SPRINT.md`, and `CHANGELOG.md` (`0` `.lean` files edited).
+
 ### [2026-11-27] [QMB-P1B-04b] [Actor: Blue Orchestrator (`gemini-pro-orchestrator-neon`)] — Consolidate All 5 MAM Coupled-Wire Duality Modules onto Pinned Mathlib4 (`Bosonize/Core/CoupledWire/` + `BosonizeLab/`)
 #### Ideas & Contracts Evolved
 - Executed Phase 1B Priority 4 Step 2 (`QMB-P1B-04b`, branch `refactor/qmb-p1b-04b-coupled-wire-port` off `main @ 1fc35e8`), porting all 5 Mross–Alicea–Motrunich (`arXiv:1510.08455`) coupled-wire duality modules from `xxz-benchmark/lean/XXZBenchmark/` (`5,978` zero-Mathlib LOC) onto pinned Mathlib4 (`v4.35.0-rc4`: `GaussianInt`, `Matrix`, `Matrix.det`, `Matrix.fromBlocks`, `Finset.sum`, `Polynomial`) with zero wheel reinventions and full `1.81x` compression:

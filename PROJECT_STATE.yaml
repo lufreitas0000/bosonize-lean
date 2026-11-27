@@ -34,6 +34,16 @@ active_milestone:
         - docs/spec/core_locks.json
         - KNOWLEDGE_MAP.md
       validation: 'PATH="$HOME/.elan/bin:$PATH" lake build Bosonize BosonizeStubs BosonizeLab && python3 scripts/guards/core_lock.py'
+    - id: T4
+      title: 'QMB-P1C-02: Audit and freeze all 15 unbaselined modules (10 Bosonize/Core/CoupledWire*.lean + 5 BosonizeStubs/Ch21*.lean) in docs/spec/stub_locks.v2.json so make lock-check and ./scripts/ci.sh pass strictly'
+      status: completed
+      target_files:
+        - docs/spec/stub_locks.v2.json
+        - KNOWLEDGE_MAP.md
+        - PROJECT_STATE.yaml
+        - CURRENT_SPRINT.md
+        - CHANGELOG.md
+      validation: 'PATH="$HOME/.elan/bin:$PATH" make lock-check && ./scripts/ci.sh && lake build BosonizeLab'
 milestone_history: []
 verified_invariants:
   - 'core_lock.py: 44 frozen V1 Core files intact + 10 CoupledWire Core files locked (54/54 verified)'
@@ -44,3 +54,4 @@ verified_invariants:
   - 'Wave 38 V1-S9 companion closure: 5/5 Ch21 Phase B modules have complete mirrored companions in docs/companion/BosonizeStubs/ (383/383 exported declarations documented; awaiting human Phase C)'
   - 'QMB-DOC-06a (doc/qmb-doc-06a): 3-pillar KNOWLEDGE_MAP.md added (6/10 QMB coverage; 0 edits to Bosonize/Core, BosonizeStubs, docs/, notes/, scripts/, or locks)'
   - 'QMB-P1B-04b (refactor/qmb-p1b-04b-coupled-wire-port): 10 modular Mathlib4-native CoupledWire Core modules (3,303 LOC, max 449 <= 450 LOC, 214 public theorems + 100 defs) + BosonizeLab quarantine (205 LOC, 20 witnesses) verified on standard axioms with 0 warnings, 0 Rank-0/orphan/wheel regressions, unblocking QMB-P1B-04c (-9,114 LOC xxz-benchmark/lean retirement)'
+  - 'QMB-P1C-02 (chore/qmb-p1c-02-ch21-stub-locks): stub_locks.v2.json cleanly updated without --accept-changes across all 59 files (44 V1 Core untouched + 10 CoupledWire Core [225 headers, 250 commands] + 5 Ch21 Phase B staging [303 headers, 193 commands] = 1,845 locked headers & 1,837 frozen commands, 0 sorry/admit/axiom/native_decide/whole notes); make lock-check, ./scripts/ci.sh (69 guard + 20 webllm tests, lake build Bosonize & BosonizeStubs), and lake build BosonizeLab PASS with 0 .lean or core_locks.json edits'
